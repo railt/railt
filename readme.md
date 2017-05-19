@@ -11,9 +11,10 @@ GraphQL implementation for Symfony and Laravel
     - [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL) 
         > Careful: Not Implemented Yet
     - [webonyx/graphql-php (0.9+)](https://github.com/webonyx/graphql-php#fields)
-- Core:
+- Core (one of):
     - [laravel/framework (5.1+)](https://github.com/laravel/framework)
     - [symfony/symfony (2.8+)](https://github.com/symfony/symfony)
+    - or nothing (native php)
 
 ## Types
 
@@ -77,7 +78,7 @@ $endpoint = (new Endpoint('test'))
 
 $response = $endpoint->request(
     Factory::create(
-        // Symfony, Laravel or Native (null) request objects
+        // Symfony, Laravel or Native (just send nothing aka null) request objects
         Request::createFromGlobals()
     )
 );
