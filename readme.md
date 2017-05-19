@@ -41,21 +41,25 @@ class User extends AbstractObjectType
 > TODO
 
 ```php
-class UsersQuery extends FieldDefinition
+class UsersQuery extends AbstractQuery
 {
-    public function __construct()
+    public function getType(): TypeDefinitionInterface
     {
-        parent::__construct(User::class);
+        return $this->listOf(User::class);
+    }
 
-        $this->many()->then(function () {
-            return [
-                [
-                    'id'       => 23,
-                    'login'    => 'Vasya',
-                    'comments' => [ ... ],
+    public function resolve($value, array $arguments = [])
+    {
+        return [
+            [
+                'id'       => 23,
+                'comments' => [
+                    ['id' => 1, 'content' => 'first content'],
+                    ['id' => 2, 'content' => 'second content'],
+                    ['id' => 3, 'content' => 'third content'],
                 ],
-            ];
-        });
+            ],
+        ];
     }
 }
 ```
