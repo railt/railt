@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\Type;
-use Serafim\Railgun\Adapters\Webonyx\Builders\DefinitionsBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Builders\PartialsBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Builders\TypesBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Support\IterablesBuilder;
@@ -41,11 +40,6 @@ class Builder implements BuilderInterface
      * @var PartialsBuilder|null
      */
     private $partials;
-
-    /**
-     * @var DefinitionsBuilder|null
-     */
-    private $definitions;
 
     /**
      * WebonyxDataTransfer constructor.
@@ -79,18 +73,6 @@ class Builder implements BuilderInterface
     public function type(string $name): Type
     {
         return $this->registry->get($name);
-    }
-
-    /**
-     * @return DefinitionsBuilder
-     */
-    public function getDefinitionsBuilder(): DefinitionsBuilder
-    {
-        if ($this->definitions === null) {
-            $this->definitions = new DefinitionsBuilder($this);
-        }
-
-        return $this->definitions;
     }
 
     /**

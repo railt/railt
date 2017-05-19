@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Contracts\Definitions;
+namespace Serafim\Railgun\Contracts\Partials;
 
 /**
- * Interface DefinitionInterface
- * @package Serafim\Railgun\Contracts\Definitions
+ * Interface QueryTypeInterface
+ * @package Serafim\Railgun\Contracts\Partials
  */
-interface DefinitionInterface
+interface QueryTypeInterface extends FieldTypeInterface
 {
 
 }

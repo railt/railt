@@ -15,6 +15,8 @@ use Serafim\Railgun\Adapters\Webonyx\Support\NameBuilder;
 use Serafim\Railgun\Contracts\Partials\ArgumentTypeInterface;
 use Serafim\Railgun\Contracts\Partials\EnumValueTypeInterface;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
+use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
+use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 use Serafim\Railgun\Contracts\Types\TypeInterface;
 
 /**
@@ -49,6 +51,12 @@ class PartialsBuilder
     public function build(TypeInterface $type, ?string $name = null): array
     {
         switch (true) {
+            case $type instanceof QueryTypeInterface:
+                return $this->makeQueryType($type, $name);
+
+            case $type instanceof MutationTypeInterface:
+                return $this->makeMutationType($type, $name);
+
             case $type instanceof FieldTypeInterface:
                 return $this->makeFieldType($type, $name);
 
@@ -71,16 +79,41 @@ class PartialsBuilder
     private function makeFieldType(FieldTypeInterface $field, ?string $name): array
     {
         $data = [
-            'type' => $this->builder->getDefinitionsBuilder()->build($field->getType()),
+            'type' => $this->builder->getTypesBuilder()->buildTypeDefinition($field->getType()),
             // TODO 'args' => [ ... ]
-            // TODO 'deprecationReason' => '...'
         ];
+
+        if ($field->isDeprecated()) {
+            $data['deprecationReason'] = $field->getDeprecationReason();
+        }
 
         if ($field->isResolvable()) {
             $data['resolve'] = [$field, 'resolve'];
         }
 
         return array_merge($this->makeName($field, $name), $data);
+    }
+
+    /**
+     * @param QueryTypeInterface $query
+     * @param null|string $name
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    private function makeQueryType(QueryTypeInterface $query, ?string $name): array
+    {
+        return $this->makeFieldType($query, $name);
+    }
+
+    /**
+     * @param MutationTypeInterface $mutation
+     * @param null|string $name
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    private function makeMutationType(MutationTypeInterface $mutation, ?string $name): array
+    {
+        return $this->makeFieldType($mutation, $name);
     }
 
     /**

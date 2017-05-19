@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Contracts\Adapters;
 
-use Serafim\Railgun\Requests\RequestInterface;
 use Serafim\Railgun\Contracts\ContainsNameInterface;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
+use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
+use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 use Serafim\Railgun\Contracts\ProvidesTypeRegistryInterface;
 
 /**
@@ -25,15 +26,15 @@ interface EndpointInterface extends
 {
     /**
      * @param string $name
-     * @param FieldTypeInterface $field
+     * @param QueryTypeInterface $query
      * @return EndpointInterface
      */
-    public function query(string $name, FieldTypeInterface $field): EndpointInterface;
+    public function query(string $name, QueryTypeInterface $query): EndpointInterface;
 
     /**
      * @param string $name
-     * @param FieldTypeInterface $field
+     * @param MutationTypeInterface $mutation
      * @return EndpointInterface
      */
-    public function mutation(string $name, FieldTypeInterface $field): EndpointInterface;
+    public function mutation(string $name, MutationTypeInterface $mutation): EndpointInterface;
 }

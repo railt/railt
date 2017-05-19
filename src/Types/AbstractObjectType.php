@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Types;
 
-use Serafim\Railgun\Types\Support\InteractWithFields;
+use Serafim\Railgun\Support\InteractWithFields;
 use Serafim\Railgun\Contracts\Types\ObjectTypeInterface;
 
 /**

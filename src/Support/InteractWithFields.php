@@ -7,112 +7,112 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Types\Support;
+namespace Serafim\Railgun\Support;
 
 use Serafim\Railgun\Types\TypesRegistry;
-use Serafim\Railgun\Types\Definitions\TypeDefinition;
-use Serafim\Railgun\Types\Definitions\FieldDefinition;
+use Serafim\Railgun\Types\Creators\FieldCreator;
+use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 
 /**
  * Trait InteractWithFields
- * @package Serafim\Railgun\Types\Support
+ * @package Serafim\Railgun\Support
  */
 trait InteractWithFields
 {
     /**
      * @param string $type
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function field(string $type): FieldDefinition
+    public function field(string $type): FieldTypeInterface
     {
-        return new FieldDefinition($type);
+        return new FieldCreator($type);
     }
 
     /**
      * @param string $type
-     * @return FieldDefinition|TypeDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function hasMany(string $type): FieldDefinition
+    public function hasMany(string $type): FieldTypeInterface
     {
         return $this->field($type)->many();
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function id(): FieldDefinition
+    public function id(): FieldTypeInterface
     {
         return $this->field(TypesRegistry::INTERNAL_TYPE_ID);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function ids(): FieldDefinition
+    public function ids(): FieldTypeInterface
     {
         return $this->hasMany(TypesRegistry::INTERNAL_TYPE_ID);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function integer(): FieldDefinition
+    public function integer(): FieldTypeInterface
     {
         return $this->field(TypesRegistry::INTERNAL_TYPE_INT);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function integers(): FieldDefinition
+    public function integers(): FieldTypeInterface
     {
         return $this->hasMany(TypesRegistry::INTERNAL_TYPE_INT);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function string(): FieldDefinition
+    public function string(): FieldTypeInterface
     {
         return $this->field(TypesRegistry::INTERNAL_TYPE_STRING);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function strings(): FieldDefinition
+    public function strings(): FieldTypeInterface
     {
         return $this->hasMany(TypesRegistry::INTERNAL_TYPE_STRING);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function boolean(): FieldDefinition
+    public function boolean(): FieldTypeInterface
     {
         return $this->field(TypesRegistry::INTERNAL_TYPE_BOOLEAN);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function booleans(): FieldDefinition
+    public function booleans(): FieldTypeInterface
     {
         return $this->hasMany(TypesRegistry::INTERNAL_TYPE_BOOLEAN);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function float(): FieldDefinition
+    public function float(): FieldTypeInterface
     {
         return $this->field(TypesRegistry::INTERNAL_TYPE_FLOAT);
     }
 
     /**
-     * @return FieldDefinition
+     * @return FieldTypeInterface|FieldCreator
      */
-    public function floats(): FieldDefinition
+    public function floats(): FieldTypeInterface
     {
         return $this->hasMany(TypesRegistry::INTERNAL_TYPE_FLOAT);
     }

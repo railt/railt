@@ -9,33 +9,40 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Tests\Queries;
 
+use Serafim\Railgun\AbstractQuery;
 use Serafim\Railgun\Tests\Types\Article;
-use Serafim\Railgun\Types\Definitions\FieldDefinition;
+use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 
 /**
  * Class ArticlesQuery
  * @package Serafim\Railgun\Tests\Queries
  */
-class ArticlesQuery extends FieldDefinition
+class ArticlesQuery extends AbstractQuery
 {
     /**
-     * ArticlesQuery constructor.
+     * @return TypeDefinitionInterface
      */
-    public function __construct()
+    public function getType(): TypeDefinitionInterface
     {
-        parent::__construct(Article::class);
+        return $this->listOf(Article::class);
+    }
 
-        $this->many()->then(function () {
-            return [
-                [
-                    'id'       => 23,
-                    'comments' => [
-                        ['id' => 1, 'content' => 'first content'],
-                        ['id' => 2, 'content' => 'second content'],
-                        ['id' => 3, 'content' => 'third content'],
-                    ],
+    /**
+     * @param $value
+     * @param array $arguments
+     * @return array
+     */
+    public function resolve($value, array $arguments = [])
+    {
+        return [
+            [
+                'id'       => 23,
+                'comments' => [
+                    ['id' => 1, 'content' => 'first content'],
+                    ['id' => 2, 'content' => 'second content'],
+                    ['id' => 3, 'content' => 'third content'],
                 ],
-            ];
-        });
+            ],
+        ];
     }
 }

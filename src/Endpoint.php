@@ -12,7 +12,8 @@ namespace Serafim\Railgun;
 use Serafim\Railgun\Adapters\Webonyx\Endpoint as Webonyx;
 use Serafim\Railgun\Contracts\Adapters\EndpointDriverInterface;
 use Serafim\Railgun\Contracts\Adapters\EndpointInterface;
-use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
+use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
+use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 use Serafim\Railgun\Requests\RequestInterface;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Support\InteractWithTypesRegistry;
@@ -71,22 +72,22 @@ class Endpoint implements EndpointInterface
 
     /**
      * @param string $name
-     * @param FieldTypeInterface $field
+     * @param QueryTypeInterface $query
      * @return EndpointInterface
      */
-    public function query(string $name, FieldTypeInterface $field): EndpointInterface
+    public function query(string $name, QueryTypeInterface $query): EndpointInterface
     {
-        return $this->endpoint->query($name, $field);
+        return $this->endpoint->query($name, $query);
     }
 
     /**
      * @param string $name
-     * @param FieldTypeInterface $field
+     * @param MutationTypeInterface $mutation
      * @return EndpointInterface
      */
-    public function mutation(string $name, FieldTypeInterface $field): EndpointInterface
+    public function mutation(string $name, MutationTypeInterface $mutation): EndpointInterface
     {
-        return $this->endpoint->mutation($name, $field);
+        return $this->endpoint->mutation($name, $mutation);
     }
 
     /**

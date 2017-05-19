@@ -16,6 +16,8 @@ use GraphQL\Type\Definition\Type;
 use Serafim\Railgun\Contracts\Adapters\EndpointDriverInterface;
 use Serafim\Railgun\Contracts\Adapters\EndpointInterface;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
+use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
+use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 use Serafim\Railgun\Contracts\TypesRegistryInterface;
 use Serafim\Railgun\Requests\RequestInterface;
 use Serafim\Railgun\Support\InteractWithName;
@@ -69,24 +71,24 @@ class Endpoint implements EndpointDriverInterface
 
     /**
      * @param string $name
-     * @param FieldTypeInterface $field
+     * @param QueryTypeInterface $query
      * @return EndpointInterface|Endpoint
      */
-    public function query(string $name, FieldTypeInterface $field): EndpointInterface
+    public function query(string $name, QueryTypeInterface $query): EndpointInterface
     {
-        $this->queries[$name] = $field;
+        $this->queries[$name] = $query;
 
         return $this;
     }
 
     /**
      * @param string $name
-     * @param FieldTypeInterface $field
+     * @param MutationTypeInterface $mutation
      * @return EndpointInterface|Endpoint
      */
-    public function mutation(string $name, FieldTypeInterface $field): EndpointInterface
+    public function mutation(string $name, MutationTypeInterface $mutation): EndpointInterface
     {
-        $this->mutations[$name] = $field;
+        $this->mutations[$name] = $mutation;
 
         return $this;
     }

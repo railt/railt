@@ -7,23 +7,22 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Types\Definitions;
+namespace Serafim\Railgun\Types\Creators;
 
 use Serafim\Railgun\Support\InteractWithName;
+use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
-use Serafim\Railgun\Contracts\Registrars\FieldRegistrarInterface;
-use Serafim\Railgun\Contracts\Definitions\TypeDefinitionInterface;
 
 /**
- * Class FieldDefinition
- * @package Serafim\Railgun\Types\Definitions
+ * Class FieldRegistrar
+ * @package Serafim\Railgun\Types\Creators
  *
- * @method FieldDefinition many()
- * @method FieldDefinition single()
- * @method FieldDefinition nullable()
- * @method FieldDefinition notNull()
+ * @method FieldCreator many()
+ * @method FieldCreator single()
+ * @method FieldCreator nullable()
+ * @method FieldCreator notNull()
  */
-class FieldDefinition extends TypeDefinition implements FieldTypeInterface, FieldRegistrarInterface
+class FieldCreator extends TypeCreator implements FieldTypeInterface
 {
     use InteractWithName;
 
@@ -31,6 +30,11 @@ class FieldDefinition extends TypeDefinition implements FieldTypeInterface, Fiel
      * @var \Closure|null
      */
     private $resolver;
+
+    /**
+     * @var string|null
+     */
+    private $deprecationReason;
 
     /**
      * @return TypeDefinitionInterface
@@ -46,6 +50,33 @@ class FieldDefinition extends TypeDefinition implements FieldTypeInterface, Fiel
     public function isResolvable(): bool
     {
         return $this->resolver !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeprecated(): bool
+    {
+        return $this->deprecationReason !== null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeprecationReason(): string
+    {
+        return (string)$this->deprecationReason;
+    }
+
+    /**
+     * @param string $reason
+     * @return FieldCreator
+     */
+    public function deprecate(?string $reason = null): FieldCreator
+    {
+        $this->deprecationReason = $reason ?? ($this->getName() . ' is deprecated');
+
+        return $this;
     }
 
     /**
@@ -66,9 +97,9 @@ class FieldDefinition extends TypeDefinition implements FieldTypeInterface, Fiel
 
     /**
      * @param \Closure $then
-     * @return FieldRegistrarInterface|FieldDefinition
+     * @return FieldCreator
      */
-    public function then(\Closure $then): FieldRegistrarInterface
+    public function then(\Closure $then): FieldCreator
     {
         $this->resolver = $then;
 

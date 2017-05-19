@@ -21,11 +21,6 @@ use Serafim\Railgun\Adapters\Webonyx\Builders\TypesBuilder;
 interface BuilderInterface
 {
     /**
-     * @return DefinitionsBuilder
-     */
-    public function getDefinitionsBuilder(): DefinitionsBuilder;
-
-    /**
      * @return PartialsBuilder
      */
     public function getPartialsBuilder(): PartialsBuilder;

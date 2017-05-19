@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Contracts\Partials;
 
 use Serafim\Railgun\Contracts\Types\TypeInterface;
-use Serafim\Railgun\Contracts\Definitions\TypeDefinitionInterface;
+use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 
 /**
  * Interface FieldTypeInterface
@@ -29,9 +29,20 @@ interface FieldTypeInterface extends TypeInterface
     public function isResolvable(): bool;
 
     /**
+     * @return bool
+     */
+    public function isDeprecated(): bool;
+
+    /**
+     * @return string
+     */
+    public function getDeprecationReason(): string;
+
+    /**
      * @param $value
      * @param array $arguments
      * @return mixed
      */
     public function resolve($value, array $arguments = []);
+
 }

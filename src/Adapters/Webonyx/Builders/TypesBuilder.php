@@ -17,6 +17,7 @@ use GraphQL\Type\Definition\UnionType;
 use Serafim\Railgun\Adapters\Webonyx\BuilderInterface;
 use Serafim\Railgun\Adapters\Webonyx\Support\IterablesBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Support\NameBuilder;
+use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 use Serafim\Railgun\Contracts\Types\EnumTypeInterface;
 use Serafim\Railgun\Contracts\Types\InterfaceTypeInterface;
 use Serafim\Railgun\Contracts\Types\ObjectTypeInterface;
@@ -117,5 +118,21 @@ class TypesBuilder
             'fields' => $this->builder->getPartialsBuilder()->makeIterable($interface->getFields()),
             // TODO 'resolveType' => function($value, $context, ResolveInfo $info): ObjectType { ... }
         ]));
+    }
+
+    /**
+     * @param TypeDefinitionInterface $definition
+     * @return Type
+     * @throws \InvalidArgumentException
+     */
+    public function buildTypeDefinition(TypeDefinitionInterface $definition): Type
+    {
+        $type = $this->builder->type($definition->getTypeName());
+
+        if ($definition->isList()) {
+            $type = Type::listOf($type);
+        }
+
+        return $definition->isNullable() ? $type : Type::nonNull($type);
     }
 }

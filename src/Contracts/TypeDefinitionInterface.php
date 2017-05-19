@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Contracts\Definitions;
+namespace Serafim\Railgun\Contracts;
 
 /**
  * Interface TypeDefinitionInterface
- * @package Serafim\Railgun\Contracts\Definitions
+ * @package Serafim\Railgun\Contracts
  */
-interface TypeDefinitionInterface extends DefinitionInterface
+interface TypeDefinitionInterface
 {
     /**
      * @return string

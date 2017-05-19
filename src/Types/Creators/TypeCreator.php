@@ -7,16 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Types\Definitions;
+namespace Serafim\Railgun\Types\Creators;
 
-use Serafim\Railgun\Contracts\Definitions\TypeDefinitionInterface;
-use Serafim\Railgun\Contracts\Registrars\TypeDefinitionRegistrarInterface;
+use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 
 /**
- * Class TypeDefinition
- * @package Serafim\Railgun\Types\Definitions
+ * Class TypeCreator
+ * @package Serafim\Railgun\Types\Creators
  */
-class TypeDefinition implements TypeDefinitionInterface, TypeDefinitionRegistrarInterface
+class TypeCreator implements TypeDefinitionInterface
 {
     /**
      * @var string
@@ -43,9 +42,9 @@ class TypeDefinition implements TypeDefinitionInterface, TypeDefinitionRegistrar
     }
 
     /**
-     * @return TypeDefinitionRegistrarInterface|TypeDefinition
+     * @return TypeCreator
      */
-    public function many(): TypeDefinitionRegistrarInterface
+    public function many(): TypeCreator
     {
         $this->isList = true;
 
@@ -53,9 +52,9 @@ class TypeDefinition implements TypeDefinitionInterface, TypeDefinitionRegistrar
     }
 
     /**
-     * @return TypeDefinitionRegistrarInterface|TypeDefinition
+     * @return TypeCreator
      */
-    public function nullable(): TypeDefinitionRegistrarInterface
+    public function nullable(): TypeCreator
     {
         $this->isNullable = true;
 
@@ -63,9 +62,9 @@ class TypeDefinition implements TypeDefinitionInterface, TypeDefinitionRegistrar
     }
 
     /**
-     * @return TypeDefinitionRegistrarInterface|TypeDefinition
+     * @return TypeCreator
      */
-    public function notNull(): TypeDefinitionRegistrarInterface
+    public function notNull(): TypeCreator
     {
         $this->isNullable = false;
 
@@ -73,9 +72,9 @@ class TypeDefinition implements TypeDefinitionInterface, TypeDefinitionRegistrar
     }
 
     /**
-     * @return TypeDefinitionRegistrarInterface|TypeDefinition
+     * @return TypeCreator
      */
-    public function single(): TypeDefinitionRegistrarInterface
+    public function single(): TypeCreator
     {
         $this->isList = false;
 
