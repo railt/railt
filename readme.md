@@ -18,7 +18,6 @@ GraphQL implementation for Symfony and Laravel
 ## Types
 
 ```php
-<?php
 use Serafim\Railgun\Types\AbstractObjectType;
 
 class Comment extends AbstractObjectType
@@ -42,15 +41,8 @@ class User extends AbstractObjectType
 > TODO
 
 ```php
-/**
- * Class ArticlesQuery
- * @package Serafim\Railgun\Tests\Queries
- */
 class UsersQuery extends FieldDefinition
 {
-    /**
-     * UsersQuery constructor.
-     */
     public function __construct()
     {
         parent::__construct(User::class);
