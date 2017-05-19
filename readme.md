@@ -8,8 +8,7 @@ GraphQL implementation for Symfony and Laravel
 - PHP 7.1+
 - Composer
 - GraphQL base driver (one of):
-    - [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL) 
-        > Careful: Not Implemented Yet
+    - [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL) (Not Implemented Yet)
     - [webonyx/graphql-php (0.9+)](https://github.com/webonyx/graphql-php#fields)
 - Core (one of):
     - [laravel/framework (5.1+)](https://github.com/laravel/framework)
