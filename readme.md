@@ -94,10 +94,10 @@ use Serafim\Railgun\Requests\Factory;
 
 class MyController
 {
-    public function some(Request $request): array
+    // $router->get('/graphql', 'MyController@some');
+    public function some(Request $request, Endpoint $endpoint): array
     {
-        $endpoint = (new Endpoint('test'))
-            ->query('articles', new ArticlesQuery());
+        $endpoint->query('articles', new ArticlesQuery());
             
         return $endpoint->request(Factory::create($request));
     }
@@ -142,16 +142,11 @@ class UsersQuery extends AbstractQuery
 
     public function resolve($value, array $arguments = [])
     {
-        return [
-            [
-                'id'       => 23,
-                'comments' => [
-                    ['id' => 1, 'content' => 'first content'],
-                    ['id' => 2, 'content' => 'second content'],
-                    ['id' => 3, 'content' => 'third content'],
-                ],
-            ],
-        ];
+        yield [ 'comments' => [
+            ['id' => 1, 'content' => 'first content'],
+            ['id' => 2, 'content' => 'second content'],
+            ['id' => 3, 'content' => 'third content'],
+        ]];
     }
 }
 ```
