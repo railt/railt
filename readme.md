@@ -13,7 +13,7 @@
         <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/coverage.png?b=master">
     </a>
     <a href="https://raw.githubusercontent.com/SerafimArts/Railgun/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-MIT-green.svg">
+        <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
     </a>
 </p>
 
