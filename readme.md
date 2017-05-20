@@ -47,12 +47,16 @@ improvements over the old good **REST**:
 - PHP 7.1+
 - Composer
 - GraphQL base driver (one of):
-    - [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL) (Not Implemented Yet)
     - [webonyx/graphql-php (0.9+)](https://github.com/webonyx/graphql-php#fields)
+    - TODO: [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL)
 - Frameworks (one of):
     - [laravel/framework (5.1+)](https://github.com/laravel/framework)
     - [symfony/symfony (2.8+)](https://github.com/symfony/symfony)
     - or nothing (native php)
+    - TODO: [reactphp/http](https://github.com/reactphp/http)
+    - TODO (?): [zendframework/zendframework](https://github.com/zendframework/zendframework)
+    - TODO (?): [appserver-io/appserver](https://github.com/appserver-io/appserver)
+    - TODO (?): [php-pm/php-pm](https://github.com/php-pm/php-pm)
 
 ## Installation
 
