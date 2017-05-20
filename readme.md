@@ -6,28 +6,31 @@
     <a href="https://travis-ci.org/SerafimArts/Railgun">
         <img src="https://travis-ci.org/SerafimArts/Railgun.svg?branch=master">
     </a>
+    
     <a href="https://scrutinizer-ci.com/g/SerafimArts/Railgun/?branch=master">
         <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/quality-score.png?b=master">
     </a>
+    
     <a href="https://scrutinizer-ci.com/g/SerafimArts/Railgun/?branch=master">
         <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/coverage.png?b=master">
     </a>
+    
     <a href="https://raw.githubusercontent.com/SerafimArts/Railgun/master/LICENSE">
         <img src="https://img.shields.io/badge/license-MIT-green.svg">
     </a>
 </p>
 
-This is a pure async PHP realization of the GraphQL protocol based on the 
+This is a pure async PHP realization of the **GraphQL** protocol based on the 
 [youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
 [webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields)
 core drivers of the official GraphQL Specification 
 located on [Facebook GitHub](http://facebook.github.io/graphql/).
 
-GraphQL is a modern replacement of the almost obsolete REST approach to present API. 
-It's been almost 16 years since the REST idea was found in 2000 by Roy Fielding. 
+**GraphQL** is a modern replacement of the almost obsolete **REST** approach to present API. 
+It's been almost 16 years since the **REST** idea was found in 2000 by Roy Fielding. 
 With all credit to everything we accomplished using REST it's time to change for 
-something better. GraphQL advanced in many ways and has fundamental 
-improvements over the old good REST:
+something better. **GraphQL** advanced in many ways and has fundamental 
+improvements over the old good **REST**:
 
 - Self-checks embedded on the ground level of your backend architecture
 - Reusable API for different client versions and devices, i.e. no more need in maintaining "/v1", "/v2" or "/v10002545.07E20"
@@ -43,14 +46,65 @@ improvements over the old good REST:
 - GraphQL base driver (one of):
     - [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL) (Not Implemented Yet)
     - [webonyx/graphql-php (0.9+)](https://github.com/webonyx/graphql-php#fields)
-- Core (one of):
+- Frameworks integrations (one of):
     - [laravel/framework (5.1+)](https://github.com/laravel/framework)
     - [symfony/symfony (2.8+)](https://github.com/symfony/symfony)
     - or nothing (native php)
 
+## Installation
+
+- `composer require serafim/railgun`
+
+### Symfony integration
+
+```php
+use Serafim\Railgun\Endpoint;
+use Serafim\Railgun\Requests\Factory;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
+class MyController
+{
+    /**
+     * @Route("/graphql", methods={"GET", "POST")
+     */
+    public function someAction(Request $request): JsonResponse
+    {
+        $endpoint = (new Endpoint('test'))
+            ->query('articles', new ArticlesQuery());
+            
+        $response = $endpoint->request(Factory::create($request));
+        
+        return new JsonResponse($response);
+    }
+}
+```
+
+### Laravel integration
+
+```php
+use Illuminate\Http\Request;
+use Serafim\Railgun\Endpoint;
+use Illuminate\Http\JsonResponse;
+use Serafim\Railgun\Requests\Factory;
+
+class MyController
+{
+    public function some(Request $request): array
+    {
+        $endpoint = (new Endpoint('test'))
+            ->query('articles', new ArticlesQuery());
+            
+        return $endpoint->request(Factory::create($request));
+    }
+}
+```
+
 ## Usage
 
-> This package currently are under development. API can contains a little (or many) broken changes in future. 
+> This package currently are under development. 
+> API can contains a little (or many) broken changes in future. 
 
 ### Types
 
@@ -98,29 +152,3 @@ class UsersQuery extends AbstractQuery
     }
 }
 ```
-
-### Simple HTTP Endpoint
-
-```php
-use Illuminate\Http\Request;
-use Serafim\Railgun\Endpoint;
-use Illuminate\Http\JsonResponse;
-use Serafim\Railgun\Requests\Factory;
-
-require __DIR__ . '/../vendor/autoload.php';
-
-
-$endpoint = (new Endpoint('test'))
-    ->query('users', new UsersQuery());
-
-
-$response = $endpoint->request(
-    Factory::create(
-        // Symfony, Laravel or Native (just send nothing aka null) request objects
-        Request::createFromGlobals()
-    )
-);
-
-(new JsonResponse($response))->send();
-```
-
