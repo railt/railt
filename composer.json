@@ -16,7 +16,8 @@
         "webonyx/graphql-php": "~0.9.0",
         "youshido/graphql": "~1.4",
         "symfony/http-foundation": "~2.8|3.*",
-        "illuminate/http": "~5.1"
+        "illuminate/http": "~5.1",
+        "phpunit/phpunit": "~6.1"
     },
     "autoload-dev": {
         "psr-4": {
