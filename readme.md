@@ -12,8 +12,14 @@
     <a href="https://scrutinizer-ci.com/g/SerafimArts/Railgun/?branch=master">
         <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/coverage.png?b=master">
     </a>
+    <a href="https://packagist.org/packages/serafim/railgun">
+        <img src="https://poser.pugx.org/serafim/railgun/version" alt="Latest Stable Version">
+    </a>
+    <a href="https://packagist.org/packages/serafim/railgun">
+        <img src="https://poser.pugx.org/serafim/railgun/v/unstable" alt="Latest Stable Version">
+    </a>
     <a href="https://raw.githubusercontent.com/SerafimArts/Railgun/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+        <img src="https://poser.pugx.org/serafim/railgun/license" alt="License">
     </a>
 </p>
 
@@ -43,7 +49,7 @@ improvements over the old good **REST**:
 - GraphQL base driver (one of):
     - [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL) (Not Implemented Yet)
     - [webonyx/graphql-php (0.9+)](https://github.com/webonyx/graphql-php#fields)
-- Frameworks integrations (one of):
+- Frameworks (one of):
     - [laravel/framework (5.1+)](https://github.com/laravel/framework)
     - [symfony/symfony (2.8+)](https://github.com/symfony/symfony)
     - or nothing (native php)
