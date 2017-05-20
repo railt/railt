@@ -6,15 +6,12 @@
     <a href="https://travis-ci.org/SerafimArts/Railgun">
         <img src="https://travis-ci.org/SerafimArts/Railgun.svg?branch=master">
     </a>
-    
     <a href="https://scrutinizer-ci.com/g/SerafimArts/Railgun/?branch=master">
         <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/quality-score.png?b=master">
     </a>
-    
     <a href="https://scrutinizer-ci.com/g/SerafimArts/Railgun/?branch=master">
         <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/coverage.png?b=master">
     </a>
-    
     <a href="https://raw.githubusercontent.com/SerafimArts/Railgun/master/LICENSE">
         <img src="https://img.shields.io/badge/license-MIT-green.svg">
     </a>
