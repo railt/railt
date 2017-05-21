@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://habrastorage.org/web/04a/6ec/14b/04a6ec14bee84dcdba7a9002dbdfce1d.png" />
+    <img src="https://habrastorage.org/web/488/5c1/f6b/4885c1f6ba8f4e43957702bee9527abd.png" alt="Railgun" />
 </p>
 
 <p align="center">
