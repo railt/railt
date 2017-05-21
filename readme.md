@@ -90,19 +90,26 @@ class MyController
 
 ### Laravel integration
 
+1) Add a ServiceProvider into `config/app.php`
+
 ```php
-use Illuminate\Http\Request;
+    'providers' => [
+        // ...
+        Serafim\Railgun\Providers\Laravel\LaravelServiceProvider::class,
+    ]
+```
+
+2) Create your controller
+
+```php
 use Serafim\Railgun\Endpoint;
-use Illuminate\Http\JsonResponse;
-use Serafim\Railgun\Requests\Factory;
+use Serafim\Railgun\Requests\RequestInterface;
 
 class MyController
 {
     // $router->get('/graphql', 'MyController@some');
-    public function some(Request $request, Endpoint $endpoint): array
+    public function some(RequestInterface $request, Endpoint $endpoint): array
     {
-        $endpoint->query('articles', new ArticlesQuery());
-            
         return $endpoint->request(Factory::create($request));
     }
 }
