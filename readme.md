@@ -28,6 +28,8 @@
 
 - [About](#about)
 - [Requirements](#requirements)
+- [Examples](#examples)
+    - [Open `examples/*` directory](examples)
 - [Installation](#installation)
     - [Symfony](#symfony-integration)
     - [Laravel](#laravel-integration)
@@ -82,6 +84,10 @@ improvements over the old good **REST**:
 ## Installation
 
 - `composer require serafim/railgun`
+
+## Examples
+
+> See [`examples/*`](examples) directory
 
 ### Symfony integration
 
