@@ -23,6 +23,27 @@
     </a>
 </p>
 
+
+## Table of contents
+
+- [About](#about)
+- [Requirements](#requirements)
+- [Installation](#installation)
+    - [Symfony](#symfony-integration)
+    - [Laravel](#laravel-integration)
+    - ReactPHP
+    - Zend
+    - Appserver
+    - PPM (PHP Process Manager)
+- [Usage](#usage)
+    - [Types][#types]
+    - [Queries][#queries]
+- [Advanced usage](#advanced-usage)
+    - [Serializers](#serializers)
+    - [Schema extenders](#schema-extenders)
+    
+## About
+
 This is a pure async PHP realization of the **GraphQL** protocol based on the 
 [youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
 [webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields)
@@ -135,9 +156,12 @@ class User extends AbstractObjectType
 {
     public function getFields(Fields $schema): iterable
     {
-        yield 'id' => $schema->id(); // or $this->field('id')
-        yield 'login' => $schema->string();
-        yield 'comments' => $schema->hasMany(Comment::class);
+        yield 'id'         => $schema->id();
+        yield 'created_at' => $schema->string();
+        yield 'updated_at' => $schema->string();
+        
+        // Relation to list of "Comment" type
+        yield 'comments'   => $schema->hasMany(Comment::class);
     }
 }
 ```
@@ -163,6 +187,87 @@ class UserQuery extends AbstractQuery
                 ['id' => 3, 'content' => 'third content'],
             ]
         ];
+    }
+}
+```
+
+## Advanced usage
+
+### Serializers
+
+Creating a serializer:
+
+```php
+use Serafim\Railgun\Serializers\AbstractSerializer;
+
+class UserSerializer extends AbstractSerializer
+{
+    /**
+     * @param MyUserObject $user
+     */
+    public function toArray($user): array
+    {
+        return [
+            'id'         => $user->getId(),
+            'created_at' => $user->getCreatedAt(),
+            'updated_at' => $user->getUpdatedAt(),
+        ];
+    }
+}
+```
+
+Usage:
+
+```php
+class UserQuery extends AbstractQuery
+{
+    // ...
+    public function resolve($value, array $arguments = [])
+    {
+        // $repo = UsersRespoitory::class
+    
+        retrun UserSerializer::items($repo->findAll());
+    }
+}
+```
+
+### Schema extenders
+
+Add a new method (`timestamps()` as example):
+
+```php
+use Serafim\Railgun\Types\Schemas\Fields;
+
+// Take a Fields shema instance
+$fields = $endpoint->getRegistry()->schema(Fields::class);
+
+// Extend schema using method `timestamps`
+$fields->extend('timestamps', function (string $c = 'created_at', string $u = 'updated_at') use ($fields) {
+    yield $c => $fields->string();
+    yield $u => $fields->string();
+});
+```
+
+And use it:
+
+```php
+class User extends AbstractObjectType
+{
+    /**
+     *
+     * Definition example:
+     * <code>
+     * [ 
+     *  'id' => 'ID',
+     *  'created_at' => 'string',
+     *  'updated_at' => 'string'
+     * ]
+     * </code>
+     */
+    public function getFields(Fields $schema): iterable
+    {
+        yield 'id' => $schema->id();
+        yield from $schema->timestamps();
     }
 }
 ```
