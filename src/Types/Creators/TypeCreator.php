@@ -45,7 +45,7 @@ class TypeCreator implements TypeDefinitionInterface, CreatorInterface
     }
 
     /**
-     * @return TypeCreator
+     * @return TypeCreator|$this
      */
     public function many(): TypeCreator
     {
@@ -55,7 +55,7 @@ class TypeCreator implements TypeDefinitionInterface, CreatorInterface
     }
 
     /**
-     * @return TypeCreator
+     * @return TypeCreator|$this
      */
     public function nullable(): TypeCreator
     {
@@ -65,7 +65,7 @@ class TypeCreator implements TypeDefinitionInterface, CreatorInterface
     }
 
     /**
-     * @return TypeCreator
+     * @return TypeCreator|$this
      */
     public function required(): TypeCreator
     {
@@ -75,7 +75,7 @@ class TypeCreator implements TypeDefinitionInterface, CreatorInterface
     }
 
     /**
-     * @return TypeCreator
+     * @return TypeCreator|$this
      */
     public function single(): TypeCreator
     {

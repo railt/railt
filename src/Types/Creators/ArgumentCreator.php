@@ -44,10 +44,17 @@ class ArgumentCreator extends TypeCreator implements ArgumentTypeInterface
         parent::__construct($type, null);
     }
 
+    /**
+     * @return string
+     */
+    protected function getDescriptionSuffix(): string
+    {
+        return 'query argument';
+    }
 
     /**
-     * @param $value
-     * @return ArgumentCreator
+     * @param mixed $value
+     * @return ArgumentCreator|$this
      */
     public function default($value): ArgumentCreator
     {
@@ -58,7 +65,7 @@ class ArgumentCreator extends TypeCreator implements ArgumentTypeInterface
     }
 
     /**
-     * @return ArgumentCreator
+     * @return ArgumentCreator|$this
      */
     public function withoutDefaultValue(): ArgumentCreator
     {

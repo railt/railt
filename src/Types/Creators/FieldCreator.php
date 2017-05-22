@@ -19,11 +19,6 @@ use Serafim\Railgun\Types\Schemas\TypeDefinition;
 /**
  * Class FieldRegistrar
  * @package Serafim\Railgun\Types\Creators
- *
- * @method FieldCreator many()
- * @method FieldCreator single()
- * @method FieldCreator nullable()
- * @method FieldCreator notNull()
  */
 class FieldCreator extends TypeCreator implements FieldTypeInterface
 {
@@ -54,6 +49,14 @@ class FieldCreator extends TypeCreator implements FieldTypeInterface
         $this->name = $name;
 
         parent::__construct($type, null);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDescriptionSuffix(): string
+    {
+        return 'type field';
     }
 
     /**
@@ -100,7 +103,7 @@ class FieldCreator extends TypeCreator implements FieldTypeInterface
 
     /**
      * @param string $reason
-     * @return FieldCreator
+     * @return FieldCreator|$this
      */
     public function deprecate(?string $reason = null): FieldCreator
     {
@@ -127,7 +130,7 @@ class FieldCreator extends TypeCreator implements FieldTypeInterface
 
     /**
      * @param \Closure $then
-     * @return FieldCreator
+     * @return FieldCreator|$this
      */
     public function then(\Closure $then): FieldCreator
     {
