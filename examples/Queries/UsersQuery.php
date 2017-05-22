@@ -40,7 +40,7 @@ class UsersQuery extends AbstractQuery
      */
     public function getArguments(Arguments $schema): iterable
     {
-        yield 'name' => $schema->strings();
+        yield 'name' => $schema->strings()->default(null);
     }
 
     /**
@@ -53,7 +53,7 @@ class UsersQuery extends AbstractQuery
         $result = UserSerializer::collection($this->createFakeData());
 
         // users(name: ["Vasya"]) { ... }
-        if ($arguments['name'] ?? false) {
+        if ($arguments['name']) {
             $result = $result->whereIn('name', $arguments['name']);
         }
 

@@ -23,14 +23,9 @@ class ArgumentCreator extends TypeCreator implements ArgumentTypeInterface
     use InteractWithName;
 
     /**
-     * @var bool
-     */
-    private $hasDefaultValue = false;
-
-    /**
      * @var mixed
      */
-    private $defaultValue;
+    private $defaultValue = null;
 
     /**
      * ArgumentCreator constructor.
@@ -58,19 +53,7 @@ class ArgumentCreator extends TypeCreator implements ArgumentTypeInterface
      */
     public function default($value): ArgumentCreator
     {
-        $this->hasDefaultValue = true;
         $this->defaultValue = $value;
-
-        return $this;
-    }
-
-    /**
-     * @return ArgumentCreator|$this
-     */
-    public function withoutDefaultValue(): ArgumentCreator
-    {
-        $this->hasDefaultValue = false;
-        $this->defaultValue = null;
 
         return $this;
     }
@@ -82,14 +65,6 @@ class ArgumentCreator extends TypeCreator implements ArgumentTypeInterface
     public function getType(TypeDefinition $schema): TypeDefinitionInterface
     {
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasDefaultValue(): bool
-    {
-        return $this->hasDefaultValue;
     }
 
     /**

@@ -26,12 +26,7 @@ interface ArgumentTypeInterface extends TypeInterface
     public function getType(TypeDefinition $schema): TypeDefinitionInterface;
 
     /**
-     * @return bool
-     */
-    public function hasDefaultValue(): bool;
-
-    /**
-     * @return mixed
+     * @return mixed|null
      */
     public function getDefaultValue();
 }

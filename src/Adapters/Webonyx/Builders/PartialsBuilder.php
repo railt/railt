@@ -163,14 +163,11 @@ class PartialsBuilder
     private function makeArgumentType(ArgumentTypeInterface $argument, ?string $name): array
     {
         $data = [
-            'type' => $this->makeTypeDefinition(
+            'type'         => $this->makeTypeDefinition(
                 $argument->getType($this->getTypeDefinitionSchema())
-            )
+            ),
+            'defaultValue' => $argument->getDefaultValue(),
         ];
-
-        if ($argument->hasDefaultValue()) {
-            $data['defaultValue'] = $argument->getDefaultValue();
-        }
 
         return array_merge($this->makeName($argument, $name), $data);
     }
