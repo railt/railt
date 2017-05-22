@@ -243,7 +243,7 @@ class UserQuery extends AbstractQuery
     {
         // $repo = UsersRespoitory::class
     
-        retrun UserSerializer::items($repo->findAll());
+        return UserSerializer::items($repo->findAll());
     }
 }
 ```
@@ -259,9 +259,9 @@ use Serafim\Railgun\Types\Schemas\Fields;
 $fields = $endpoint->getRegistry()->schema(Fields::class);
 
 // Extend schema using method `timestamps`
-$fields->extend('timestamps', function (string $c = 'created_at', string $u = 'updated_at') use ($fields) {
-    yield $c => $fields->string();
-    yield $u => $fields->string();
+$fields->extend('timestamps', function () use ($fields) {
+    yield 'created_at' => $fields->string();
+    yield 'updated_at' => $fields->string();
 });
 ```
 
@@ -275,9 +275,9 @@ class User extends AbstractObjectType
      * Definition example:
      * <code>
      * [ 
-     *  'id' => 'ID',
-     *  'created_at' => 'string',
-     *  'updated_at' => 'string'
+     *      'id' => 'ID',
+     *      'created_at' => 'string',
+     *      'updated_at' => 'string'
      * ]
      * </code>
      */
