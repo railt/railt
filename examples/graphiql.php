@@ -102,16 +102,9 @@
         });
     }
 
-    var defaultQuery = `{
-  users(name: ["Vasya", "Petya"]) {
-    id
-    name
-    comments {
-      id
-      body
-    }
-  }
-}`;
+    var defaultQuery = "{\n  users(name: [\"Vasya\", \"Petya\"]) {" +
+            "\n    id\n    name\n    comments {\n      " +
+            "id\n      body\n    }\n  }\n}";
 
     // Render <GraphiQL /> into the body.
     ReactDOM.render(
