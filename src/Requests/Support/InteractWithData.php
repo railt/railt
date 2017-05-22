@@ -37,7 +37,7 @@ trait InteractWithData
      */
     public function getVariables(): ?string
     {
-        return trim($this->data[$this->getVariablesArgument()]) ?: null;
+        return trim($this->data[$this->getVariablesArgument()] ?? '') ?: null;
     }
 
     /**
