@@ -74,6 +74,30 @@ class Endpoint implements EndpointInterface
     }
 
     /**
+     * @param \Throwable[] ...$errors
+     * @return array
+     */
+    public static function error(\Throwable ...$errors): array
+    {
+        $response = [
+            'data'   => [],
+            'errors' => [],
+        ];
+
+        foreach ($errors as $error) {
+            $response['errors'][] = [
+                'message'   => $error->getMessage(),
+                'locations' => [
+                    'line'   => $error->getLine(),
+                    'column' => 0,
+                ],
+            ];
+        }
+
+        return $response;
+    }
+
+    /**
      * @param string $name
      * @param QueryTypeInterface $query
      * @return EndpointInterface
