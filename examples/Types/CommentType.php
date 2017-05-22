@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Types;
+namespace Serafim\Railgun\Example\Types;
 
 use Serafim\Railgun\Types\AbstractObjectType;
 use Serafim\Railgun\Types\Schemas\Fields;
 
 /**
- * Class Comment
- * @package Serafim\Railgun\Tests\Types
+ * Class CommentType
+ * @package Serafim\Railgun\Example\Types
  */
-class Comment extends AbstractObjectType
+class CommentType extends AbstractObjectType
 {
     /**
      * @param Fields $field
@@ -25,6 +25,6 @@ class Comment extends AbstractObjectType
     public function getFields(Fields $field): iterable
     {
         yield 'id' => $field->id();
-        yield 'content' => $field->string();
+        yield 'body' => $field->string();
     }
 }

@@ -102,11 +102,22 @@
         });
     }
 
+    var defaultQuery = `{
+  users(name: ["Vasya", "Petya"]) {
+    id
+    name
+    comments {
+      id
+      body
+    }
+  }
+}`;
+
     // Render <GraphiQL /> into the body.
     ReactDOM.render(
         React.createElement(GraphiQL, {
             fetcher: graphQLFetcher,
-            query: parameters.query,
+            query: parameters.query || defaultQuery,
             variables: parameters.variables,
             operationName: parameters.operationName,
             onEditQuery: onEditQuery,

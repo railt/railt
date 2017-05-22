@@ -21,7 +21,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Serafim\\Railgun\\Tests\\": "tests"
+            "Serafim\\Railgun\\Tests\\": "tests",
+            "Serafim\\Railgun\\Example\\": "examples"
         }
     },
     "suggest": {
