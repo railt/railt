@@ -40,7 +40,7 @@ class UsersQuery extends AbstractQuery
      */
     public function getArguments(Arguments $schema): iterable
     {
-        yield 'name' => $schema->strings()->default(null);
+        yield 'name' => $schema->strings();
     }
 
     /**
