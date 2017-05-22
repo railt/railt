@@ -31,13 +31,13 @@
 - [Installation](#installation)
     - [Symfony](#symfony-integration)
     - [Laravel](#laravel-integration)
-    - ReactPHP
-    - Zend
-    - Appserver
-    - PPM (PHP Process Manager)
+    - [Zend](#zend-integration)
+    - [ReactPHP](#reactphp-integration)
+    - [Appserver](#appserver-integration)
+    - [PPM (PHP Process Manager)](#ppm-integration)
 - [Usage](#usage)
-    - [Types][#types]
-    - [Queries][#queries]
+    - [Types](#types)
+    - [Queries](#queries)
 - [Advanced usage](#advanced-usage)
     - [Serializers](#serializers)
     - [Schema extenders](#schema-extenders)
@@ -135,6 +135,23 @@ class MyController
     }
 }
 ```
+
+### Zend integration
+
+> TODO
+
+### ReactPHP integration
+
+> TODO
+
+### Appserver integration
+
+> TODO
+
+### PPM integration
+
+> TODO
+
 
 ## Usage
 
