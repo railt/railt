@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Adapters\Webonyx\Builders;
 
+use GraphQL\Type\Definition\Type;
 use Serafim\Railgun\Adapters\Webonyx\BuilderInterface;
 use Serafim\Railgun\Adapters\Webonyx\Support\IterablesBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Support\NameBuilder;
@@ -18,7 +19,9 @@ use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
 use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 use Serafim\Railgun\Contracts\SchemaInterface;
+use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 use Serafim\Railgun\Contracts\Types\TypeInterface;
+use Serafim\Railgun\Types\Schemas\Arguments;
 use Serafim\Railgun\Types\Schemas\TypeDefinition;
 
 /**
@@ -73,11 +76,14 @@ class PartialsBuilder
     }
 
     /**
-     * @return TypeDefinition|SchemaInterface
+     * @param QueryTypeInterface $query
+     * @param null|string $name
+     * @return array
+     * @throws \InvalidArgumentException
      */
-    private function getTypeDefinitionSchema(): TypeDefinition
+    private function makeQueryType(QueryTypeInterface $query, ?string $name): array
     {
-        return $this->builder->getRegistry()->schema(TypeDefinition::class);
+        return $this->makeFieldType($query, $name);
     }
 
     /**
@@ -89,10 +95,13 @@ class PartialsBuilder
     private function makeFieldType(FieldTypeInterface $field, ?string $name): array
     {
         $data = [
-            'type' => $this->builder->getTypesBuilder()
-                ->buildTypeDefinition($field->getType($this->getTypeDefinitionSchema())),
+            'type' => $this->makeTypeDefinition(
+                $field->getType($this->getTypeDefinitionSchema())
+            ),
 
-            // TODO 'args' => [ ... ]
+            'args' => $this->makeIterable(
+                $field->getArguments($this->getArgumentsSchema())
+            ),
         ];
 
         if ($field->isDeprecated()) {
@@ -107,14 +116,19 @@ class PartialsBuilder
     }
 
     /**
-     * @param QueryTypeInterface $query
-     * @param null|string $name
-     * @return array
-     * @throws \InvalidArgumentException
+     * @return TypeDefinition|SchemaInterface
      */
-    private function makeQueryType(QueryTypeInterface $query, ?string $name): array
+    private function getTypeDefinitionSchema(): TypeDefinition
     {
-        return $this->makeFieldType($query, $name);
+        return $this->builder->getRegistry()->schema(TypeDefinition::class);
+    }
+
+    /**
+     * @return Arguments|SchemaInterface
+     */
+    private function getArgumentsSchema(): Arguments
+    {
+        return $this->builder->getRegistry()->schema(Arguments::class);
     }
 
     /**
@@ -144,14 +158,30 @@ class PartialsBuilder
      * @param ArgumentTypeInterface $argument
      * @param null|string $name
      * @return array
+     * @throws \InvalidArgumentException
      */
     private function makeArgumentType(ArgumentTypeInterface $argument, ?string $name): array
     {
-        return [
-            // TODO 'name'              => '...'
-            // TODO 'type'              => '...'
-            // TODO 'description'       => '...'
-            // TODO 'defaultValue'      => '...'
+        $data = [
+            'type' => $this->makeTypeDefinition(
+                $argument->getType($this->getTypeDefinitionSchema())
+            )
         ];
+
+        if ($argument->hasDefaultValue()) {
+            $data['defaultValue'] = $argument->getDefaultValue();
+        }
+
+        return array_merge($this->makeName($argument, $name), $data);
+    }
+
+    /**
+     * @param TypeDefinitionInterface $definition
+     * @return Type
+     * @throws \InvalidArgumentException
+     */
+    private function makeTypeDefinition(TypeDefinitionInterface $definition): Type
+    {
+        return $this->builder->getTypesBuilder()->buildTypeDefinition($definition);
     }
 }

@@ -11,6 +11,7 @@ namespace Serafim\Railgun\Tests\Queries;
 
 use Serafim\Railgun\AbstractQuery;
 use Serafim\Railgun\Tests\Types\Article;
+use Serafim\Railgun\Types\Schemas\Arguments;
 use Serafim\Railgun\Types\Schemas\TypeDefinition;
 use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 
@@ -27,6 +28,15 @@ class ArticlesQuery extends AbstractQuery
     public function getType(TypeDefinition $schema): TypeDefinitionInterface
     {
         return $schema->listOf(Article::class);
+    }
+
+    /**
+     * @param Arguments $schema
+     * @return iterable
+     */
+    public function getArguments(Arguments $schema): iterable
+    {
+        yield 'id' => $schema->ids();
     }
 
     /**

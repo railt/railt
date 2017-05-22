@@ -15,7 +15,7 @@ use Serafim\Railgun\Contracts\TypeDefinitionInterface;
  * Class TypeCreator
  * @package Serafim\Railgun\Types\Creators
  */
-class TypeCreator implements TypeDefinitionInterface
+class TypeCreator implements TypeDefinitionInterface, CreatorInterface
 {
     /**
      * @var string
@@ -33,11 +33,14 @@ class TypeCreator implements TypeDefinitionInterface
     private $isList = false;
 
     /**
-     * FieldType constructor.
+     * TypeCreator constructor.
      * @param string $type
+     * @param null|string $name
      */
-    public function __construct(string $type)
+    public function __construct(string $type, ?string $name = null)
     {
+        assert($name !== null, 'Type definition does not provide the "name" and "description"');
+
         $this->type = $type;
     }
 
@@ -64,7 +67,7 @@ class TypeCreator implements TypeDefinitionInterface
     /**
      * @return TypeCreator
      */
-    public function notNull(): TypeCreator
+    public function required(): TypeCreator
     {
         $this->isNullable = false;
 

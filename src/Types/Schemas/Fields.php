@@ -9,18 +9,34 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Types\Schemas;
 
-use Serafim\Railgun\Types\TypesRegistry;
-use Serafim\Railgun\Contracts\SchemaInterface;
 use Serafim\Railgun\Types\Creators\FieldCreator;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 
 /**
  * Class Fields
  * @package Serafim\Railgun\Types\Schemas
+ *
+ * @method FieldTypeInterface|FieldCreator id()
+ * @method FieldTypeInterface|FieldCreator ids()
+ * @method FieldTypeInterface|FieldCreator integer()
+ * @method FieldTypeInterface|FieldCreator integers()
+ * @method FieldTypeInterface|FieldCreator string()
+ * @method FieldTypeInterface|FieldCreator strings()
+ * @method FieldTypeInterface|FieldCreator boolean()
+ * @method FieldTypeInterface|FieldCreator booleans()
+ * @method FieldTypeInterface|FieldCreator float()
+ * @method FieldTypeInterface|FieldCreator floats()
+ *
  */
-class Fields implements SchemaInterface
+class Fields extends AbstractSchema
 {
-    use Extendable;
+    /**
+     * Fields constructor.
+     */
+    final public function __construct()
+    {
+        parent::__construct(FieldCreator::class);
+    }
 
     /**
      * @param string $type
@@ -28,7 +44,7 @@ class Fields implements SchemaInterface
      */
     public function field(string $type): FieldTypeInterface
     {
-        return new FieldCreator($type);
+        return parent::make($type);
     }
 
     /**
@@ -37,86 +53,6 @@ class Fields implements SchemaInterface
      */
     public function hasMany(string $type): FieldTypeInterface
     {
-        return $this->field($type)->many();
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function id(): FieldTypeInterface
-    {
-        return $this->field(TypesRegistry::INTERNAL_TYPE_ID);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function ids(): FieldTypeInterface
-    {
-        return $this->hasMany(TypesRegistry::INTERNAL_TYPE_ID);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function integer(): FieldTypeInterface
-    {
-        return $this->field(TypesRegistry::INTERNAL_TYPE_INT);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function integers(): FieldTypeInterface
-    {
-        return $this->hasMany(TypesRegistry::INTERNAL_TYPE_INT);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function string(): FieldTypeInterface
-    {
-        return $this->field(TypesRegistry::INTERNAL_TYPE_STRING);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function strings(): FieldTypeInterface
-    {
-        return $this->hasMany(TypesRegistry::INTERNAL_TYPE_STRING);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function boolean(): FieldTypeInterface
-    {
-        return $this->field(TypesRegistry::INTERNAL_TYPE_BOOLEAN);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function booleans(): FieldTypeInterface
-    {
-        return $this->hasMany(TypesRegistry::INTERNAL_TYPE_BOOLEAN);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function float(): FieldTypeInterface
-    {
-        return $this->field(TypesRegistry::INTERNAL_TYPE_FLOAT);
-    }
-
-    /**
-     * @return FieldTypeInterface|FieldCreator
-     */
-    public function floats(): FieldTypeInterface
-    {
-        return $this->hasMany(TypesRegistry::INTERNAL_TYPE_FLOAT);
+        return parent::list($type);
     }
 }

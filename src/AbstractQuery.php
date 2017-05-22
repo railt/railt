@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun;
 
+use Serafim\Railgun\Contracts\Partials\ArgumentTypeInterface;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
+use Serafim\Railgun\Types\Schemas\Arguments;
 
 /**
  * Class AbstractQuery
@@ -19,6 +21,15 @@ use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 abstract class AbstractQuery implements QueryTypeInterface
 {
     use InteractWithName;
+
+    /**
+     * @param Arguments $schema
+     * @return iterable|ArgumentTypeInterface[]
+     */
+    public function getArguments(Arguments $schema): iterable
+    {
+        return [];
+    }
 
     /**
      * @return bool

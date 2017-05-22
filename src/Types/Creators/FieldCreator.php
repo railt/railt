@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Types\Creators;
 
+use Serafim\Railgun\Contracts\Partials\ArgumentTypeInterface;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
+use Serafim\Railgun\Types\Schemas\Arguments;
 use Serafim\Railgun\Types\Schemas\TypeDefinition;
 
 /**
@@ -38,12 +40,38 @@ class FieldCreator extends TypeCreator implements FieldTypeInterface
     private $deprecationReason;
 
     /**
+     * @var array|ArgumentTypeInterface[]
+     */
+    private $arguments = [];
+
+    /**
+     * FieldCreator constructor.
+     * @param string $type
+     * @param null|string $name
+     */
+    public function __construct(string $type, ?string $name = null)
+    {
+        $this->name = $name;
+
+        parent::__construct($type, null);
+    }
+
+    /**
      * @param TypeDefinition $definition
      * @return TypeDefinitionInterface
      */
     public function getType(TypeDefinition $definition): TypeDefinitionInterface
     {
         return $this;
+    }
+
+    /**
+     * @param Arguments $schema
+     * @return iterable|ArgumentTypeInterface[]
+     */
+    public function getArguments(Arguments $schema): iterable
+    {
+        return $this->arguments;
     }
 
     /**

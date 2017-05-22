@@ -11,6 +11,7 @@ namespace Serafim\Railgun\Contracts\Partials;
 
 use Serafim\Railgun\Contracts\Types\TypeInterface;
 use Serafim\Railgun\Contracts\TypeDefinitionInterface;
+use Serafim\Railgun\Types\Schemas\Arguments;
 use Serafim\Railgun\Types\Schemas\TypeDefinition;
 
 /**
@@ -24,6 +25,12 @@ interface FieldTypeInterface extends TypeInterface
      * @return TypeDefinitionInterface
      */
     public function getType(TypeDefinition $schema): TypeDefinitionInterface;
+
+    /**
+     * @param Arguments $schema
+     * @return iterable|ArgumentTypeInterface[]
+     */
+    public function getArguments(Arguments $schema): iterable;
 
     /**
      * @return bool

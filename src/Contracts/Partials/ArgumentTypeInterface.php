@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Contracts\Partials;
 
+use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 use Serafim\Railgun\Contracts\Types\TypeInterface;
+use Serafim\Railgun\Types\Schemas\TypeDefinition;
 
 /**
  * Interface ArgumentTypeInterface
@@ -17,5 +19,19 @@ use Serafim\Railgun\Contracts\Types\TypeInterface;
  */
 interface ArgumentTypeInterface extends TypeInterface
 {
+    /**
+     * @param TypeDefinition $schema
+     * @return TypeDefinitionInterface
+     */
+    public function getType(TypeDefinition $schema): TypeDefinitionInterface;
 
+    /**
+     * @return bool
+     */
+    public function hasDefaultValue(): bool;
+
+    /**
+     * @return mixed
+     */
+    public function getDefaultValue();
 }

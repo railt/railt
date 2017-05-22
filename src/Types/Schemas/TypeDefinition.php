@@ -9,17 +9,34 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Types\Schemas;
 
-use Serafim\Railgun\Contracts\SchemaInterface;
 use Serafim\Railgun\Types\Creators\TypeCreator;
 use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 
 /**
  * Class TypeDefinition
  * @package Serafim\Railgun\Types\Schemas
+ *
+ * @method TypeDefinitionInterface|TypeCreator id()
+ * @method TypeDefinitionInterface|TypeCreator ids()
+ * @method TypeDefinitionInterface|TypeCreator integer()
+ * @method TypeDefinitionInterface|TypeCreator integers()
+ * @method TypeDefinitionInterface|TypeCreator string()
+ * @method TypeDefinitionInterface|TypeCreator strings()
+ * @method TypeDefinitionInterface|TypeCreator boolean()
+ * @method TypeDefinitionInterface|TypeCreator booleans()
+ * @method TypeDefinitionInterface|TypeCreator float()
+ * @method TypeDefinitionInterface|TypeCreator floats()
+ *
  */
-class TypeDefinition implements SchemaInterface
+class TypeDefinition extends AbstractSchema
 {
-    use Extendable;
+    /**
+     * Fields constructor.
+     */
+    final public function __construct()
+    {
+        parent::__construct(TypeCreator::class);
+    }
 
     /**
      * @param string $name
@@ -27,7 +44,7 @@ class TypeDefinition implements SchemaInterface
      */
     public function typeOf(string $name): TypeDefinitionInterface
     {
-        return new TypeCreator($name);
+        return parent::make($name);
     }
 
     /**
@@ -36,6 +53,6 @@ class TypeDefinition implements SchemaInterface
      */
     public function listOf(string $name): TypeDefinitionInterface
     {
-        return $this->typeOf($name)->many();
+        return parent::list($name);
     }
 }
