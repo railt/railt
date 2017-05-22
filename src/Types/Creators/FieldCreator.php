@@ -12,6 +12,7 @@ namespace Serafim\Railgun\Types\Creators;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
+use Serafim\Railgun\Types\Schemas\TypeDefinition;
 
 /**
  * Class FieldRegistrar
@@ -37,9 +38,10 @@ class FieldCreator extends TypeCreator implements FieldTypeInterface
     private $deprecationReason;
 
     /**
+     * @param TypeDefinition $definition
      * @return TypeDefinitionInterface
      */
-    public function getType(): TypeDefinitionInterface
+    public function getType(TypeDefinition $definition): TypeDefinitionInterface
     {
         return $this;
     }

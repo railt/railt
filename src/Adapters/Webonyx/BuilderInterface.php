@@ -10,15 +10,15 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\Type;
-use Serafim\Railgun\Adapters\Webonyx\Builders\DefinitionsBuilder;
-use Serafim\Railgun\Adapters\Webonyx\Builders\PartialsBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Builders\TypesBuilder;
+use Serafim\Railgun\Contracts\ProvidesTypeRegistryInterface;
+use Serafim\Railgun\Adapters\Webonyx\Builders\PartialsBuilder;
 
 /**
  * Interface BuilderInterface
  * @package Serafim\Railgun\Adapters\Webonyx
  */
-interface BuilderInterface
+interface BuilderInterface extends ProvidesTypeRegistryInterface
 {
     /**
      * @return PartialsBuilder

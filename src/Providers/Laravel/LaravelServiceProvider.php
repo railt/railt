@@ -9,14 +9,17 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Providers\Laravel;
 
-use Illuminate\Support\Arr;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\ServiceProvider;
+use Serafim\Railgun\Contracts\Adapters\EndpointInterface;
+use Serafim\Railgun\Contracts\TypesRegistryInterface;
 use Serafim\Railgun\Endpoint;
 use Serafim\Railgun\Requests\Factory;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Config\Repository;
 use Serafim\Railgun\Requests\RequestInterface;
-use Serafim\Railgun\Contracts\Adapters\EndpointInterface;
+use Serafim\Railgun\Types\TypesRegistry;
+use Illuminate\Contracts\Events\Dispatcher;
 
 /**
  * Class LaravelServiceProvider
@@ -33,6 +36,16 @@ class LaravelServiceProvider extends ServiceProvider
      * Default config path
      */
     private const CONFIG_PATH = '/config.php';
+
+    /**
+     * Default events prefix
+     */
+    private const EVENT_PREFIX = 'railgun.';
+
+    /**
+     * @var Dispatcher
+     */
+    private $dispatcher;
 
     /**
      * @return void
@@ -64,6 +77,8 @@ class LaravelServiceProvider extends ServiceProvider
 
     /**
      * @return void
+     * @throws \InvalidArgumentException
+     * @throws \DomainException
      */
     public function register(): void
     {
@@ -71,20 +86,83 @@ class LaravelServiceProvider extends ServiceProvider
 
         $config = $this->app->make(Repository::class)->get(self::CONFIG_NAME);
 
+        $this->registerRequests();
+        $this->registerEndpoint($config);
+        $this->registerTypesRepository();
+    }
+
+    /**
+     * @return void
+     */
+    private function registerRequests(): void
+    {
         $this->app->singleton(RequestInterface::class, function () {
             return Factory::create($this->app->make(Request::class));
         });
+    }
 
+    /**
+     * @param array $config
+     * @return void
+     * @throws \InvalidArgumentException
+     * @throws \DomainException
+     */
+    private function registerEndpoint(array $config): void
+    {
         $this->app->singleton(Endpoint::class, function () use ($config) {
             $name = Arr::get($config, 'schema', 'graphql');
 
-            $endpoint = new Endpoint($name);
+            $endpoint = new Endpoint($name, $this->app->make(TypesRegistryInterface::class));
 
             $this->loadQueries(Arr::get($config, $name . '.queries', []), $endpoint);
             $this->loadMutations(Arr::get($config, $name . '.mutations', []), $endpoint);
 
             return $endpoint;
         });
+    }
+
+    /**
+     * @return void
+     * @throws \InvalidArgumentException
+     */
+    private function registerTypesRepository(): void
+    {
+        $types = function (string $type) {
+            $this->fire('type:creating', $type);
+
+            $instance = $this->app->make($type);
+
+            $this->fire('type:created', $type, $instance);
+
+            return $instance;
+        };
+
+        $schemas = function (string $schema) {
+            $this->fire('schema:creating', $schema);
+
+            $instance = $this->app->make($schema);
+
+            $this->fire('schema:created', $schema, $instance);
+
+            return $instance;
+        };
+
+        $this->app->singleton(TypesRegistryInterface::class, function () use ($types, $schemas) {
+            return new TypesRegistry($types, $schemas);
+        });
+    }
+
+    /**
+     * @param string $event
+     * @param array $payload
+     */
+    private function fire(string $event, ...$payload): void
+    {
+        if ($this->dispatcher === null) {
+            $this->dispatcher = $this->app->make(Dispatcher::class);
+        }
+
+        $this->dispatcher->push(self::EVENT_PREFIX . $event, $payload);
     }
 
     /**

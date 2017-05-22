@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Types;
 
-use Serafim\Railgun\Support\InteractWithFields;
 use Serafim\Railgun\Contracts\Types\ObjectTypeInterface;
 
 /**
@@ -18,8 +17,6 @@ use Serafim\Railgun\Contracts\Types\ObjectTypeInterface;
  */
 abstract class AbstractObjectType extends AbstractType implements ObjectTypeInterface
 {
-    use InteractWithFields;
-
     /**
      * @return iterable
      */

@@ -7,18 +7,21 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Support;
+namespace Serafim\Railgun\Types\Schemas;
 
 use Serafim\Railgun\Types\TypesRegistry;
+use Serafim\Railgun\Contracts\SchemaInterface;
 use Serafim\Railgun\Types\Creators\FieldCreator;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 
 /**
- * Trait InteractWithFields
- * @package Serafim\Railgun\Support
+ * Class Fields
+ * @package Serafim\Railgun\Types\Schemas
  */
-trait InteractWithFields
+class Fields implements SchemaInterface
 {
+    use Extendable;
+
     /**
      * @param string $type
      * @return FieldTypeInterface|FieldCreator

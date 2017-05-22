@@ -16,6 +16,7 @@ use Serafim\Railgun\Adapters\Webonyx\Support\IterablesBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Support\NameBuilder;
 use Serafim\Railgun\Contracts\Types\TypeInterface;
 use Serafim\Railgun\Contracts\TypesRegistryInterface;
+use Serafim\Railgun\Types\Schemas\Fields;
 
 /**
  * Class Builder
@@ -29,17 +30,22 @@ class Builder implements BuilderInterface
     /**
      * @var TypesRegistry
      */
-    private $registry;
+    private $types;
 
     /**
      * @var TypesBuilder|null
      */
-    private $types;
+    private $builder;
 
     /**
      * @var PartialsBuilder|null
      */
     private $partials;
+
+    /**
+     * @var TypesRegistryInterface
+     */
+    private $registry;
 
     /**
      * WebonyxDataTransfer constructor.
@@ -48,9 +54,19 @@ class Builder implements BuilderInterface
      */
     public function __construct(TypesRegistryInterface $registry)
     {
-        $this->registry = new TypesRegistry($registry, function (TypeInterface $type): Type {
+        $this->registry = $registry;
+        
+        $this->types = new TypesRegistry($registry, function (TypeInterface $type): Type {
             return $this->getTypesBuilder()->build($type);
         });
+    }
+
+    /**
+     * @return TypesRegistryInterface
+     */
+    public function getRegistry(): TypesRegistryInterface
+    {
+        return $this->registry;
     }
 
     /**
@@ -58,11 +74,11 @@ class Builder implements BuilderInterface
      */
     public function getTypesBuilder(): TypesBuilder
     {
-        if ($this->types === null) {
-            $this->types = new TypesBuilder($this);
+        if ($this->builder === null) {
+            $this->builder = new TypesBuilder($this);
         }
 
-        return $this->types;
+        return $this->builder;
     }
 
     /**
@@ -72,7 +88,7 @@ class Builder implements BuilderInterface
      */
     public function type(string $name): Type
     {
-        return $this->registry->get($name);
+        return $this->types->get($name);
     }
 
     /**
@@ -94,7 +110,7 @@ class Builder implements BuilderInterface
     {
         $internal = Type::getInternalTypes();
 
-        foreach ($this->registry->all() as $type) {
+        foreach ($this->types->all() as $type) {
             if (!in_array($type, $internal, true)) {
                 yield $type;
             }

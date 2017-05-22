@@ -22,6 +22,7 @@ use Serafim\Railgun\Contracts\TypesRegistryInterface;
 use Serafim\Railgun\Requests\RequestInterface;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Support\InteractWithTypesRegistry;
+use Serafim\Railgun\Types\Schemas\Fields;
 use Serafim\Railgun\Types\TypesRegistry as BaseTypesRegistry;
 
 /**

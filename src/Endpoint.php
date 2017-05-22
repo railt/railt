@@ -14,9 +14,11 @@ use Serafim\Railgun\Contracts\Adapters\EndpointDriverInterface;
 use Serafim\Railgun\Contracts\Adapters\EndpointInterface;
 use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
 use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
+use Serafim\Railgun\Contracts\TypesRegistryInterface;
 use Serafim\Railgun\Requests\RequestInterface;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Support\InteractWithTypesRegistry;
+use Serafim\Railgun\Types\Creators\Fields;
 use Serafim\Railgun\Types\TypesRegistry;
 
 /**
@@ -43,13 +45,14 @@ class Endpoint implements EndpointInterface
     /**
      * Endpoint constructor.
      * @param string $name
+     * @param null|TypesRegistryInterface $registry
      * @throws \DomainException
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $name = 'root')
+    public function __construct(string $name = 'root', ?TypesRegistryInterface $registry)
     {
         $this->name = $name;
-        $this->registry = new TypesRegistry();
+        $this->registry = $registry ?? new TypesRegistry();
 
         $this->endpoint = $this->resolveDriver();
     }

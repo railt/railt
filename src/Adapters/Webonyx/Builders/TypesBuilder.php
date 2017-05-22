@@ -17,12 +17,14 @@ use GraphQL\Type\Definition\UnionType;
 use Serafim\Railgun\Adapters\Webonyx\BuilderInterface;
 use Serafim\Railgun\Adapters\Webonyx\Support\IterablesBuilder;
 use Serafim\Railgun\Adapters\Webonyx\Support\NameBuilder;
+use Serafim\Railgun\Contracts\SchemaInterface;
 use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 use Serafim\Railgun\Contracts\Types\EnumTypeInterface;
 use Serafim\Railgun\Contracts\Types\InterfaceTypeInterface;
 use Serafim\Railgun\Contracts\Types\ObjectTypeInterface;
 use Serafim\Railgun\Contracts\Types\TypeInterface;
 use Serafim\Railgun\Contracts\Types\UnionTypeInterface;
+use Serafim\Railgun\Types\Schemas\Fields;
 
 /**
  * Class TypesBuilder
@@ -79,10 +81,23 @@ class TypesBuilder
     private function makeObjectType(ObjectTypeInterface $object): ObjectType
     {
         return new ObjectType(array_merge($this->makeName($object), [
-            'fields'     => $this->builder->getPartialsBuilder()->makeIterable($object->getFields()),
+            // Fields
+            'fields'     => $this->builder->getPartialsBuilder()
+                ->makeIterable($object->getFields($this->getFieldsSchema())),
+
+            // Interfaces
             'interfaces' => $this->makeIterableValues($object->getInterfaces(), 'type'),
+
             // TODO 'isTypeOf' => function($value, $context, ResolveInfo $info) { ... }
         ]));
+    }
+
+    /**
+     * @return Fields|SchemaInterface
+     */
+    private function getFieldsSchema(): Fields
+    {
+        return $this->builder->getRegistry()->schema(Fields::class);
     }
 
     /**
@@ -115,7 +130,10 @@ class TypesBuilder
     private function makeInterfaceType(InterfaceTypeInterface $interface): InterfaceType
     {
         return new InterfaceType(array_merge($this->makeName($interface), [
-            'fields' => $this->builder->getPartialsBuilder()->makeIterable($interface->getFields()),
+            // Fields
+            'fields' => $this->builder->getPartialsBuilder()
+                ->makeIterable($interface->getFields($this->getFieldsSchema())),
+
             // TODO 'resolveType' => function($value, $context, ResolveInfo $info): ObjectType { ... }
         ]));
     }

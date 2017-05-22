@@ -17,7 +17,9 @@ use Serafim\Railgun\Contracts\Partials\EnumValueTypeInterface;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
 use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
+use Serafim\Railgun\Contracts\SchemaInterface;
 use Serafim\Railgun\Contracts\Types\TypeInterface;
+use Serafim\Railgun\Types\Schemas\TypeDefinition;
 
 /**
  * Class PartialsBuilder
@@ -71,6 +73,14 @@ class PartialsBuilder
     }
 
     /**
+     * @return TypeDefinition|SchemaInterface
+     */
+    private function getTypeDefinitionSchema(): TypeDefinition
+    {
+        return $this->builder->getRegistry()->schema(TypeDefinition::class);
+    }
+
+    /**
      * @param FieldTypeInterface $field
      * @param null|string $name
      * @return array
@@ -79,7 +89,9 @@ class PartialsBuilder
     private function makeFieldType(FieldTypeInterface $field, ?string $name): array
     {
         $data = [
-            'type' => $this->builder->getTypesBuilder()->buildTypeDefinition($field->getType()),
+            'type' => $this->builder->getTypesBuilder()
+                ->buildTypeDefinition($field->getType($this->getTypeDefinitionSchema())),
+
             // TODO 'args' => [ ... ]
         ];
 

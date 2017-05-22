@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun;
 
 use Serafim\Railgun\Support\InteractWithName;
-use Serafim\Railgun\Support\InteractWithTypes;
 use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 
 /**
@@ -20,7 +19,6 @@ use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 abstract class AbstractQuery implements QueryTypeInterface
 {
     use InteractWithName;
-    use InteractWithTypes;
 
     /**
      * @return bool

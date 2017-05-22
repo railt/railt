@@ -7,17 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Support;
+namespace Serafim\Railgun\Types\Schemas;
 
+use Serafim\Railgun\Contracts\SchemaInterface;
 use Serafim\Railgun\Types\Creators\TypeCreator;
 use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 
 /**
- * Trait InteractWithTypes
- * @package Serafim\Railgun\Support
+ * Class TypeDefinition
+ * @package Serafim\Railgun\Types\Schemas
  */
-trait InteractWithTypes
+class TypeDefinition implements SchemaInterface
 {
+    use Extendable;
+
     /**
      * @param string $name
      * @return TypeDefinitionInterface|TypeCreator

@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Contracts\Types;
 
+use Serafim\Railgun\Contracts\SchemaInterface;
+use Serafim\Railgun\Types\Schemas\Fields;
 use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 
 /**
@@ -18,9 +20,10 @@ use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 interface ObjectTypeInterface extends TypeInterface
 {
     /**
+     * @param Fields|SchemaInterface $schema
      * @return iterable|FieldTypeInterface[]
      */
-    public function getFields(): iterable;
+    public function getFields(Fields $schema): iterable;
 
     /**
      * @return iterable|string

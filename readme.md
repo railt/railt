@@ -123,20 +123,21 @@ class MyController
 ### Types
 
 ```php
+use Serafim\Railgun\Types\Schemas\Fields;
 use Serafim\Railgun\Types\AbstractObjectType;
 
 class Comment extends AbstractObjectType
 {
-    // public function getFields(): iterable { ... }
+    // public function getFields(Fields $schema): iterable { ... }
 }
 
 class User extends AbstractObjectType
 {
-    public function getFields(): iterable
+    public function getFields(Fields $schema): iterable
     {
-        yield 'id' => $this->id(); // or $this->field('id')
-        yield 'login' => $this->string();
-        yield 'comments' => $this->hasMany(Comment::class);
+        yield 'id' => $schema->id(); // or $this->field('id')
+        yield 'login' => $schema->string();
+        yield 'comments' => $schema->hasMany(Comment::class);
     }
 }
 ```
@@ -144,20 +145,24 @@ class User extends AbstractObjectType
 ### Queries
 
 ```php
-class UsersQuery extends AbstractQuery
+use Serafim\Railgun\Types\Schemas\TypeDefinition;
+
+class UserQuery extends AbstractQuery
 {
-    public function getType(): TypeDefinitionInterface
+    public function getType(TypeDefinition $schema): TypeDefinitionInterface
     {
-        return $this->listOf(User::class);
+        return $schema->typeOf(User::class);
     }
 
     public function resolve($value, array $arguments = [])
     {
-        yield [ 'comments' => [
-            ['id' => 1, 'content' => 'first content'],
-            ['id' => 2, 'content' => 'second content'],
-            ['id' => 3, 'content' => 'third content'],
-        ]];
+        return [ 
+            'comments' => [
+                ['id' => 1, 'content' => 'first content'],
+                ['id' => 2, 'content' => 'second content'],
+                ['id' => 3, 'content' => 'third content'],
+            ]
+        ];
     }
 }
 ```

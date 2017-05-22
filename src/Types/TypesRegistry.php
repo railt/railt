@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Types;
 
 use Illuminate\Support\Str;
+use Serafim\Railgun\Contracts\SchemaInterface;
 use Serafim\Railgun\Contracts\Types\TypeInterface;
 use Serafim\Railgun\Contracts\TypesRegistryInterface;
 use Serafim\Railgun\Contracts\Types\InternalTypeInterface;
@@ -73,21 +74,50 @@ class TypesRegistry implements TypesRegistryInterface
     /**
      * @var \Closure
      */
-    private $onCreate;
+    private $onCreateType;
+
+    /**
+     * @var \Closure
+     */
+    private $onCreateSchema;
+
+    /**
+     * @var array|SchemaInterface
+     */
+    private $schemas = [];
 
     /**
      * TypesRegistry constructor.
-     * @param \Closure|null $onCreate
+     * @param \Closure|null $onCreateType
+     * @param \Closure|null $onCreateSchema
      * @throws \InvalidArgumentException
      */
-    public function __construct(\Closure $onCreate = null)
+    public function __construct(\Closure $onCreateType = null, \Closure $onCreateSchema = null)
     {
         $this->bootInternalTypes();
 
-        $this->onCreate = $onCreate ?? function(string $class) {
+        $this->onCreateType = $onCreateType ?? function(string $class) {
+            return new $class;
+        };
+
+        $this->onCreateSchema = $onCreateSchema ?? function(string $class) {
             return new $class;
         };
     }
+
+    /**
+     * @param string|SchemaInterface $class
+     * @return SchemaInterface
+     */
+    public function schema(string $class): SchemaInterface
+    {
+        if (!array_key_exists($class, $this->schemas)) {
+            $this->schemas[$class] = ($this->onCreateSchema)($class);
+        }
+
+        return $this->schemas[$class];
+    }
+
 
     /**
      * @return void
@@ -187,7 +217,7 @@ class TypesRegistry implements TypesRegistryInterface
      */
     private function create(string $class): TypeInterface
     {
-        $result = ($this->onCreate)($class);
+        $result = ($this->onCreateType)($class);
 
         if (!($result instanceof TypeInterface)) {
             throw new \InvalidArgumentException('Incompatible GraphQL type ' . $class);

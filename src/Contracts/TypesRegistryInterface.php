@@ -19,6 +19,12 @@ use Serafim\Railgun\Contracts\Types\TypeInterface;
 interface TypesRegistryInterface
 {
     /**
+     * @param string|SchemaInterface $class
+     * @return SchemaInterface
+     */
+    public function schema(string $class): SchemaInterface;
+
+    /**
      * @param TypeInterface $type Type class implementation
      * @param string[] ...$aliases type aliases
      * @return TypesRegistryInterface

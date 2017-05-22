@@ -14,6 +14,7 @@ use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
 use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 use Serafim\Railgun\Contracts\ProvidesTypeRegistryInterface;
+use Serafim\Railgun\Types\Creators\Fields;
 
 /**
  * Interface ResponderInterface
