@@ -49,7 +49,7 @@ class Endpoint implements EndpointInterface
      * @throws \DomainException
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $name = 'root', ?TypesRegistryInterface $registry)
+    public function __construct(string $name = 'root', ?TypesRegistryInterface $registry = null)
     {
         $this->name = $name;
         $this->registry = $registry ?? new TypesRegistry();
