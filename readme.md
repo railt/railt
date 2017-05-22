@@ -1,25 +1,25 @@
 <p align="center">
-    <img src="https://habrastorage.org/web/488/5c1/f6b/4885c1f6ba8f4e43957702bee9527abd.png" alt="Railgun" />
+    <img src="https://habrastorage.org/web/c4f/7b8/a43/c4f7b8a430814a7e924d4419e685ec92.png" alt="Railgun" />
 </p>
 
 <p align="center">
     <a href="https://travis-ci.org/SerafimArts/Railgun">
-        <img src="https://travis-ci.org/SerafimArts/Railgun.svg?branch=master">
+        <img src="https://travis-ci.org/SerafimArts/Railgun.svg?branch=master" alt="Travis CI" />
     </a>
     <a href="https://scrutinizer-ci.com/g/SerafimArts/Railgun/?branch=master">
-        <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/quality-score.png?b=master">
+        <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/quality-score.png?b=master" alt="Scrutinizer CI" />
     </a>
     <a href="https://scrutinizer-ci.com/g/SerafimArts/Railgun/?branch=master">
-        <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/coverage.png?b=master">
+        <img src="https://scrutinizer-ci.com/g/SerafimArts/Railgun/badges/coverage.png?b=master" alt="Code coverage" />
     </a>
     <a href="https://packagist.org/packages/serafim/railgun">
         <img src="https://poser.pugx.org/serafim/railgun/version" alt="Latest Stable Version">
     </a>
     <a href="https://packagist.org/packages/serafim/railgun">
-        <img src="https://poser.pugx.org/serafim/railgun/v/unstable" alt="Latest Stable Version">
+        <img src="https://poser.pugx.org/serafim/railgun/v/unstable" alt="Latest Unstable Version">
     </a>
     <a href="https://raw.githubusercontent.com/SerafimArts/Railgun/master/LICENSE">
-        <img src="https://poser.pugx.org/serafim/railgun/license" alt="License">
+        <img src="https://poser.pugx.org/serafim/railgun/license" alt="License MIT">
     </a>
 </p>
 
