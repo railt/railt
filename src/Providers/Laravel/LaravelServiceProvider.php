@@ -109,7 +109,7 @@ class LaravelServiceProvider extends ServiceProvider
      */
     private function registerEndpoint(array $config): void
     {
-        $this->app->singleton(Endpoint::class, function () use ($config) {
+        $this->app->singleton(EndpointInterface::class, function () use ($config) {
             $name = Arr::get($config, 'schema', 'graphql');
 
             $endpoint = new Endpoint($name, $this->app->make(TypesRegistryInterface::class));
@@ -119,6 +119,8 @@ class LaravelServiceProvider extends ServiceProvider
 
             return $endpoint;
         });
+
+        $this->app->alias(EndpointInterface::class, Endpoint::class);
     }
 
     /**

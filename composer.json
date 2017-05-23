@@ -30,5 +30,9 @@
         "webonyx/graphql-php": "(~0.9) Webonyx GraphQL root driver support",
         "symfony/http-foundation": "(~2.8|3.*) Symfony framework support",
         "illuminate/http": "(~5.1) Laravel (illuminate) framework support"
+    },
+    "scripts": {
+        "docs-make": "daux --destination=../railgun-docs",
+        "docs": "daux serve"
     }
 }
