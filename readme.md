@@ -25,8 +25,8 @@
    
 ## [Documentation](https://serafimarts.github.io/Railgun/)
 
-- RU: https://serafimarts.github.io/Railgun/ru/
-- EN: https://serafimarts.github.io/Railgun/en/
+- RU: [https://serafimarts.github.io/Railgun/ru/](https://serafimarts.github.io/Railgun/ru/Introduction.html)
+- EN: [https://serafimarts.github.io/Railgun/en/](https://serafimarts.github.io/Railgun/en/Introduction.html)
     
 ## About
 
