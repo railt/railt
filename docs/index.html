@@ -39,7 +39,7 @@
         plugins: [
             function(hook) {
                 hook.beforeEach(function (html) {
-                    return '> **WARNING**: Package currently in development and can contains a broken changes in future!' + "\n\n" + html
+                    return '!> **WARNING**: Package currently in development and can contains a broken changes in future!' + "\n\n" + html
                 })
             }
         ]
