@@ -23,12 +23,13 @@
     </a>
 </p>
    
-## [Documentation](https://serafimarts.github.io/Railgun/index.html)
 
-- RU: [https://serafimarts.github.io/Railgun/ru/](https://serafimarts.github.io/Railgun/ru/Introduction.html)
-- EN: [https://serafimarts.github.io/Railgun/en/](https://serafimarts.github.io/Railgun/en/Introduction.html)
-    
-## About
+## Introduction
+
+[Documentation](https://serafimarts.github.io/Railgun) 
+([Russian](https://serafimarts.github.io/Railgun/#/ru/), [English](https://serafimarts.github.io/Railgun))
+
+-------------
 
 This is a pure async PHP realization of the **GraphQL** protocol based on the 
 [youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
