@@ -1,0 +1,2 @@
+- :uk: [English](/)
+- :ru: [Russian](/ru/)
