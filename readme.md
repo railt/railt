@@ -23,7 +23,7 @@
     </a>
 </p>
    
-## [Documentation](https://serafimarts.github.io/Railgun/)
+## [Documentation](https://serafimarts.github.io/Railgun/index.html)
 
 - RU: [https://serafimarts.github.io/Railgun/ru/](https://serafimarts.github.io/Railgun/ru/Introduction.html)
 - EN: [https://serafimarts.github.io/Railgun/en/](https://serafimarts.github.io/Railgun/en/Introduction.html)
