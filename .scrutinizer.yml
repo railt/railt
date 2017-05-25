@@ -46,8 +46,7 @@ coding_style:
             constants:
                 true_false_null: lower
 filter:
-  excluded_paths:
-    - "tests/"
+  paths: ["src/*", "examples/*"]
 build:
     environment:
         php:
