@@ -10,7 +10,7 @@ declare(strict_types=1);
 use Illuminate\Http\Request;
 use Serafim\Railgun\Endpoint;
 use Illuminate\Http\JsonResponse;
-use Serafim\Railgun\Requests\Factory;
+use Serafim\Railgun\Http\Request;
 use Serafim\Railgun\Example\Queries\UsersQuery;
 
 /*
@@ -62,7 +62,7 @@ try {
     */
 
     $request    = Request::createFromGlobals();
-    $gql        = Factory::create($request);
+    $gql        = Request::create($request);
 
     $response   = $endpoint->request($gql);
 

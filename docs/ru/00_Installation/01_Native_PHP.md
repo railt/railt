@@ -21,9 +21,9 @@ $endpoint->query('example', new ExampleQuery());
 наше замечательное приложение, которое мы подготовили для них.
 
 ```php
-use Serafim\Railgun\Requests\Factory;
+use Serafim\Railgun\Http\Request;
 
-$response = $endpoint->request(Factory::create());
+$response = $endpoint->request(Request::create());
 ```
 
 ## Получение ответа

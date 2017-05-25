@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Requests;
+namespace Serafim\Railgun\Http;
 
 use Illuminate\Http\Request as IlluminateHttpRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 
 /**
- * Class Factory
- * @package Serafim\Railgun\Requests
+ * Class Request
+ * @package Serafim\Railgun\Http
  */
-class Factory
+class Request
 {
     /**
      * @var array
@@ -28,20 +28,19 @@ class Factory
 
     /**
      * @param null $request
-     * @return NativeRequest
+     * @return RequestInterface
      */
-    public static function create($request = null)
+    public static function create($request = null): RequestInterface
     {
-        if ($request === null) {
-            return new NativeRequest();
-        }
-
-        foreach (self::$adapters as $original => $adapter) {
-            if ($request instanceof $original) {
-                return new $adapter($request);
+        if ($request !== null) {
+            foreach (self::$adapters as $original => $adapter) {
+                if ($request instanceof $original) {
+                    return new $adapter($request);
+                }
             }
         }
 
         return new NativeRequest();
     }
+
 }

@@ -7,17 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Requests;
+namespace Serafim\Railgun\Http;
 
 use Symfony\Component\HttpFoundation\Request;
-use Serafim\Railgun\Requests\Support\InteractWithData;
-use Serafim\Railgun\Requests\Support\ConfigurableRequest;
-use Serafim\Railgun\Requests\Support\JsonContentTypeHelper;
-use Serafim\Railgun\Requests\Support\ConfigurableRequestInterface;
+use Serafim\Railgun\Http\Support\InteractWithData;
+use Serafim\Railgun\Http\Support\ConfigurableRequest;
+use Serafim\Railgun\Http\Support\JsonContentTypeHelper;
+use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
 
 /**
  * Class SymfonyRequest
- * @package Serafim\Railgun\Requests
+ * @package Serafim\Railgun\Http
  */
 class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
 {
@@ -32,7 +32,7 @@ class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
      */
     public function __construct(Request $request)
     {
-        $this->data = $this->isJson($request->headers->get('CONTENT_TYPE'))
+        $this->data = $this->isJson($request->headers->get('CONTENT_TYPE') ?? 'text/html')
             ? $this->getJsonQueryAttributes($request)
             : $this->getAllQueryAttributes($request);
     }

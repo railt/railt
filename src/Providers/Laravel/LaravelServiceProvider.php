@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Providers\Laravel;
 
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request as IlluminateRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Serafim\Railgun\Contracts\Adapters\EndpointInterface;
 use Serafim\Railgun\Contracts\TypesRegistryInterface;
 use Serafim\Railgun\Endpoint;
-use Serafim\Railgun\Requests\Factory;
-use Serafim\Railgun\Requests\RequestInterface;
+use Serafim\Railgun\Http\Request;
+use Serafim\Railgun\Http\RequestInterface;
 use Serafim\Railgun\Types\TypesRegistry;
 use Illuminate\Contracts\Events\Dispatcher;
 
@@ -97,7 +97,7 @@ class LaravelServiceProvider extends ServiceProvider
     private function registerRequests(): void
     {
         $this->app->singleton(RequestInterface::class, function () {
-            return Factory::create($this->app->make(Request::class));
+            return Request::create($this->app->make(IlluminateRequest::class));
         });
     }
 

@@ -6,7 +6,7 @@
 
 ```php
 use Serafim\Railgun\Endpoint;
-use Serafim\Railgun\Requests\Factory;
+use Serafim\Railgun\Http\Request;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,7 +21,7 @@ class MyController
         $endpoint = (new Endpoint('test'))
             ->query('articles', new ArticlesQuery());
             
-        $response = $endpoint->request(Factory::create($request));
+        $response = $endpoint->request(Request::create($request));
         
         return new JsonResponse($response);
     }

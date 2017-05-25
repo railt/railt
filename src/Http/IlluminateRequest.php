@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Requests;
+namespace Serafim\Railgun\Http;
 
 use Illuminate\Http\Request;
-use Serafim\Railgun\Requests\Support\InteractWithData;
-use Serafim\Railgun\Requests\Support\ConfigurableRequest;
-use Serafim\Railgun\Requests\Support\ConfigurableRequestInterface;
+use Serafim\Railgun\Http\Support\InteractWithData;
+use Serafim\Railgun\Http\Support\ConfigurableRequest;
+use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
 
 /**
  * Class IlluminateRequest
- * @package Serafim\Railgun\Requests
+ * @package Serafim\Railgun\Http
  */
 class IlluminateRequest implements RequestInterface, ConfigurableRequestInterface
 {
@@ -31,6 +31,6 @@ class IlluminateRequest implements RequestInterface, ConfigurableRequestInterfac
     {
         $this->data = $request->isJson()
             ? $request->json()->all()
-            : $request->all();
+            : array_merge($request->all(), $request->request->all());
     }
 }

@@ -18,14 +18,14 @@ Then add `Serafim\Railgun\Providers\Laravel\LaravelServiceProvider` class.
 
 ```php
 use Serafim\Railgun\Endpoint;
-use Serafim\Railgun\Requests\RequestInterface;
+use Serafim\Railgun\Http\RequestInterface;
 
 class MyController
 {
     // Route can be like "$router->get('/graphql', 'MyController@some');"
     public function some(RequestInterface $request, Endpoint $endpoint): array
     {
-        return $endpoint->request(Factory::create($request));
+        return $endpoint->request(Request::create($request));
     }
 }
 ```
@@ -39,7 +39,7 @@ class MyController
 
 After installation you can select services from service container: 
 
-- `Serafim\Railgun\Requests\RequestInterface::class` 
+- `Serafim\Railgun\Http\RequestInterface::class` 
     > returns a GraphQL request object.
     
 - `Serafim\Railgun\Contracts\Adapters\EndpointInterface::class` 

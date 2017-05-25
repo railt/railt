@@ -17,14 +17,14 @@
 
 ```php
 use Serafim\Railgun\Endpoint;
-use Serafim\Railgun\Requests\RequestInterface;
+use Serafim\Railgun\Http\RequestInterface;
 
 class MyController
 {
     // Роут: $router->get('/graphql', 'MyController@some');
     public function some(RequestInterface $request, Endpoint $endpoint): array
     {
-        return $endpoint->request(Factory::create($request));
+        return $endpoint->request(Request::create($request));
     }
 }
 ```
@@ -40,7 +40,7 @@ class MyController
 станут доступны для получения через «сервис-локацию», 
 «автовайринг» и «двойную диспатчеризацию», т.е. будут находиться внутри контейнера:
 
-- `Serafim\Railgun\Requests\RequestInterface::class`
+- `Serafim\Railgun\Http\RequestInterface::class`
     > Возвращает GraphQL объект-запрос, связанный с текущим HTTP-запросом.
     
 - `Serafim\Railgun\Contracts\Adapters\EndpointInterface::class` 

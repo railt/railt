@@ -22,9 +22,9 @@ the client's browser allowing them to enjoy the creative
 and wonderful application we have prepared for them.
 
 ```php
-use Serafim\Railgun\Requests\Factory;
+use Serafim\Railgun\Http\Request;
 
-$response = $endpoint->request(Factory::create());
+$response = $endpoint->request(Request::create());
 ```
 
 ## Send The Response

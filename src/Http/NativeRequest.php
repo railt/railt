@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Requests;
+namespace Serafim\Railgun\Http;
 
-use Serafim\Railgun\Requests\Support\InteractWithData;
-use Serafim\Railgun\Requests\Support\ConfigurableRequest;
-use Serafim\Railgun\Requests\Support\JsonContentTypeHelper;
-use Serafim\Railgun\Requests\Support\ConfigurableRequestInterface;
+use Serafim\Railgun\Http\Support\InteractWithData;
+use Serafim\Railgun\Http\Support\ConfigurableRequest;
+use Serafim\Railgun\Http\Support\JsonContentTypeHelper;
+use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
 
 /**
  * Class NativeRequest
- * @package Serafim\Railgun\Requests
+ * @package Serafim\Railgun\Http
  */
 class NativeRequest implements RequestInterface, ConfigurableRequestInterface
 {
@@ -39,9 +39,15 @@ class NativeRequest implements RequestInterface, ConfigurableRequestInterface
      */
     private function readJsonRequest(): array
     {
-        $input = @file_get_contents('php://input') ?: '';
+        return (array)json_decode($this->getInputStream(), true);
+    }
 
-        return (array)json_decode($input, true);
+    /**
+     * @return string
+     */
+    protected function getInputStream(): string
+    {
+        return @file_get_contents('php://input') ?: '';
     }
 
     /**
@@ -49,6 +55,6 @@ class NativeRequest implements RequestInterface, ConfigurableRequestInterface
      */
     private function readRawRequest(): array
     {
-        return array_merge($_POST, $_REQUEST, $_GET);
+        return array_merge($_GET, $_POST, $_REQUEST);
     }
 }

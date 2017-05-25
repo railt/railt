@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Contracts\Adapters;
 
-use Serafim\Railgun\Requests\RequestInterface;
+use Serafim\Railgun\Http\RequestInterface;
 
 /**
  * Interface ResponderInterface

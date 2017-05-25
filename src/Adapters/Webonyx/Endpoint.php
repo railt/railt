@@ -19,7 +19,7 @@ use Serafim\Railgun\Contracts\Partials\FieldTypeInterface;
 use Serafim\Railgun\Contracts\Partials\MutationTypeInterface;
 use Serafim\Railgun\Contracts\Partials\QueryTypeInterface;
 use Serafim\Railgun\Contracts\TypesRegistryInterface;
-use Serafim\Railgun\Requests\RequestInterface;
+use Serafim\Railgun\Http\RequestInterface;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Support\InteractWithTypesRegistry;
 use Serafim\Railgun\Types\Schemas\Fields;

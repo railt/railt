@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Requests;
+namespace Serafim\Railgun\Http;
 
 /**
  * Interface RequestInterface
- * @package Serafim\Railgun\Requests
+ * @package Serafim\Railgun\Http
  */
 interface RequestInterface
 {
