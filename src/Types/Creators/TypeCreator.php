@@ -39,8 +39,6 @@ class TypeCreator implements TypeDefinitionInterface, CreatorInterface
      */
     public function __construct(string $type, ?string $name = null)
     {
-        assert($name !== null, 'Type definition does not provide the "name" and "description"');
-
         $this->type = $type;
     }
 
