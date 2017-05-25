@@ -7,9 +7,7 @@
  */
 declare(strict_types=1);
 
-use Illuminate\Http\Request;
 use Serafim\Railgun\Endpoint;
-use Illuminate\Http\JsonResponse;
 use Serafim\Railgun\Http\Request;
 use Serafim\Railgun\Example\Queries\UsersQuery;
 
@@ -61,8 +59,7 @@ try {
     |
     */
 
-    $request    = Request::createFromGlobals();
-    $gql        = Request::create($request);
+    $gql        = Request::create();
 
     $response   = $endpoint->request($gql);
 
@@ -91,7 +88,11 @@ try {
     |
     */
 
-    (new JsonResponse($response))->send();
+    header('Content-Type: application/json');
+
+    echo json_encode($response);
+
+    ob_end_flush();
 }
 
 
