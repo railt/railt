@@ -21,9 +21,6 @@ use Serafim\Railgun\Schema\Definitions\TypeDefinitionInterface;
 use Serafim\Railgun\Tests\Concerns\ContainsName;
 
 /**
- * TODO Add then(...) tests
- * TODO Add withArgument(...) tests
- *
  * Class FieldDefinitionTestCase
  * @package Serafim\Railgun\Tests\Creators
  */
