@@ -10,12 +10,11 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Support;
 
 use Illuminate\Support\Str;
-use Serafim\Railgun\Contracts\ContainsNameInterface;
 
 /**
  * Trait InteractWithName
  * @package Serafim\Railgun\Support
- * @mixin ContainsNameInterface
+ * @mixin NameableInterface
  */
 trait InteractWithName
 {
@@ -30,43 +29,33 @@ trait InteractWithName
     protected $description;
 
     /**
+     * @var bool
+     */
+    protected $camelize = true;
+
+    /**
+     * @var bool
+     */
+    protected $formatName = true;
+
+    /**
      * @var array
      */
     protected $suffixes = [
         'Type',
         'Query',
-        'Mutation'
+        'Mutation',
     ];
 
     /**
-     * @param string $name
-     * @return ContainsNameInterface
+     * @param null|string $name
+     * @return NameableInterface|$this
      */
-    protected function rename(string $name): ContainsNameInterface
+    public function rename(?string $name)
     {
-        $this->name = $name;
+        $this->name = $this->formatName($name);
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        if ($this->name === null) {
-            $this->name = $this->resolveNameFromDefinition();
-        }
-
-        return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    private function resolveNameFromDefinition(): string
-    {
-        return $this->formatName(static::class);
     }
 
     /**
@@ -75,11 +64,70 @@ trait InteractWithName
      */
     protected function formatName(string $name): string
     {
+        // Escape fully qualified class names
         $name = array_last(explode('\\', $name));
 
-        $name = Str::studly(str_replace($this->suffixes, '', $name));
+        //
+        // If formatting required remove suffixes and check formatter options:
+        //  - camelize = true: "Some string\n" => "SomeString"
+        //  - camelize = false: "Some string\n" => "some_string"
+        //
+        if ($this->formatName) {
+            $name = str_replace($this->suffixes, '', $name);
 
-        return $name;
+            return $this->camelize
+                ? Str::studly($name)
+                : Str::snake(preg_replace('/\W+/iu', '_', $name));
+        }
+
+        //
+        // Otherwise remove non-writable special chars:
+        //  - "Some string\n" => "Somestring"
+        //
+        return preg_replace('/\W+/iu', '', $name);
+    }
+
+    /**
+     * @param null|string $description
+     * @return NameableInterface|$this
+     */
+    public function about(?string $description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return NameableInterface|$this
+     */
+    public function inSnakeCase()
+    {
+        $this->formatName = true;
+        $this->camelize = false;
+
+        return $this;
+    }
+
+    /**
+     * @return NameableInterface|$this
+     */
+    public function inCamelCase()
+    {
+        $this->formatName = true;
+        $this->camelize = true;
+
+        return $this;
+    }
+
+    /**
+     * @return NameableInterface|$this
+     */
+    public function withoutNameFormatting()
+    {
+        $this->formatName = false;
+
+        return $this;
     }
 
     /**
@@ -92,6 +140,14 @@ trait InteractWithName
         }
 
         return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    private function resolveDescription(): string
+    {
+        return $this->formatDescription($this->getDescriptionSuffix());
     }
 
     /**
@@ -108,9 +164,34 @@ trait InteractWithName
     /**
      * @return string
      */
-    private function resolveDescription(): string
+    public function getName(): string
     {
-        return $this->formatDescription($this->getDescriptionSuffix());
+        if ($this->name === null) {
+            $this->name = $this->resolveNameFromDefinition();
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     * @throws \ReflectionException
+     */
+    private function resolveNameFromDefinition(): string
+    {
+        $isAnonymous = Str::startsWith(static::class, 'class@anonymous');
+
+        if (! $isAnonymous) {
+            return $this->formatName(static::class);
+        }
+
+        $reflection = new \ReflectionClass(static::class);
+
+        if ($reflection->getParentClass()) {
+            return $this->formatName($reflection->getParentClass()->getShortName());
+        }
+
+        return $this->formatName('AnonymousClass');
     }
 
     /**
