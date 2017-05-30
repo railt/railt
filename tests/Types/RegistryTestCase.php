@@ -116,7 +116,7 @@ class RegistryTestCase extends AbstractTestCase
         $registry->alias(Registry::INTERNAL_TYPE_ID, 'IdAlias');
 
         Assert::assertInstanceOf(InternalType::class, $registry->get('IdAlias'));
-        Assert::assertEquals('Id', $registry->get('IdAlias')->getName());
+        Assert::assertEquals('id', $registry->get('IdAlias')->getName());
     }
 
     /**
@@ -130,7 +130,7 @@ class RegistryTestCase extends AbstractTestCase
         Assert::assertEquals($expected, $registry->get('integer'));
 
         // This is super-puper-hack for tests and cant be use in real code. Please +)
-        $expected->rename('new_name');
+        $expected->rename('New Name');
 
         Assert::assertEquals('NewName', $registry->get('integer')->getName());
 
@@ -161,13 +161,10 @@ class RegistryTestCase extends AbstractTestCase
 
 
         // Get by type class
-        Assert::assertEquals('Test', $registry->get(InternalType::class)->getName());
-
-        // Get by type internal name (it was "camelized")
-        Assert::assertEquals('Test', $registry->get('Test')->getName());
+        Assert::assertEquals('test', $registry->get(InternalType::class)->getName());
 
         // Get by type alias
-        Assert::assertEquals('Test', $registry->get('test')->getName());
+        Assert::assertEquals('test', $registry->get('test')->getName());
     }
 
     /**
@@ -190,10 +187,10 @@ class RegistryTestCase extends AbstractTestCase
         $registry->alias('test2', 'test3');
 
         //
-        Assert::assertEquals('String', $registry->get('test3')->getName());
-        Assert::assertEquals('String', $registry->get('test2')->getName());
-        Assert::assertEquals('String', $registry->get('test')->getName());
-        Assert::assertEquals('String', $registry->get('str')->getName());
+        Assert::assertEquals('string', $registry->get('test3')->getName());
+        Assert::assertEquals('string', $registry->get('test2')->getName());
+        Assert::assertEquals('string', $registry->get('test')->getName());
+        Assert::assertEquals('string', $registry->get('str')->getName());
 
         // Is aliases?
         Assert::assertTrue($registry->isAlias('test3'));
@@ -211,7 +208,7 @@ class RegistryTestCase extends AbstractTestCase
     {
         $registry = new Registry();
 
-        Assert::assertEquals('MockCustom',
+        Assert::assertEquals('MockCustomType',
             $registry->get(MockCustomType::class)->getName());
     }
 

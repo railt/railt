@@ -29,25 +29,6 @@ trait InteractWithName
     protected $description;
 
     /**
-     * @var bool
-     */
-    protected $camelize = true;
-
-    /**
-     * @var bool
-     */
-    protected $formatName = true;
-
-    /**
-     * @var array
-     */
-    protected $suffixes = [
-        'Type',
-        'Query',
-        'Mutation',
-    ];
-
-    /**
      * @param null|string $name
      * @return NameableInterface|$this
      */
@@ -67,23 +48,7 @@ trait InteractWithName
         // Escape fully qualified class names
         $name = array_last(explode('\\', $name));
 
-        //
-        // If formatting required remove suffixes and check formatter options:
-        //  - camelize = true: "Some string\n" => "SomeString"
-        //  - camelize = false: "Some string\n" => "some_string"
-        //
-        if ($this->formatName) {
-            $name = str_replace($this->suffixes, '', $name);
-
-            return $this->camelize
-                ? Str::studly($name)
-                : Str::snake(preg_replace('/\W+/iu', '_', $name));
-        }
-
-        //
-        // Otherwise remove non-writable special chars:
-        //  - "Some string\n" => "Somestring"
-        //
+        // Remove non-writable special chars
         return preg_replace('/\W+/iu', '', $name);
     }
 
@@ -99,39 +64,8 @@ trait InteractWithName
     }
 
     /**
-     * @return NameableInterface|$this
-     */
-    public function inSnakeCase()
-    {
-        $this->formatName = true;
-        $this->camelize = false;
-
-        return $this;
-    }
-
-    /**
-     * @return NameableInterface|$this
-     */
-    public function inCamelCase()
-    {
-        $this->formatName = true;
-        $this->camelize = true;
-
-        return $this;
-    }
-
-    /**
-     * @return NameableInterface|$this
-     */
-    public function withoutNameFormatting()
-    {
-        $this->formatName = false;
-
-        return $this;
-    }
-
-    /**
      * @return string
+     * @throws \ReflectionException
      */
     public function getDescription(): string
     {
@@ -144,6 +78,7 @@ trait InteractWithName
 
     /**
      * @return string
+     * @throws \ReflectionException
      */
     private function resolveDescription(): string
     {
@@ -153,6 +88,7 @@ trait InteractWithName
     /**
      * @param string $suffix
      * @return string
+     * @throws \ReflectionException
      */
     protected function formatDescription(string $suffix): string
     {
@@ -163,6 +99,7 @@ trait InteractWithName
 
     /**
      * @return string
+     * @throws \ReflectionException
      */
     public function getName(): string
     {

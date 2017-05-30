@@ -36,8 +36,6 @@ class ArgumentDefinition implements ArgumentDefinitionInterface
      */
     public function __construct(TypeDefinitionInterface $type, $defaultValue = null)
     {
-        $this->withoutNameFormatting();
-
         $this->type = $type;
         $this->defaultValue = $defaultValue;
     }

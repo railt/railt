@@ -53,8 +53,6 @@ class FieldDefinition implements FieldDefinitionInterface
         ?\Closure $resolver
     )
     {
-        $this->withoutNameFormatting();
-
         $this->type = $type;
         $this->arguments = $arguments;
         $this->deprecationReason = $deprecationReason;

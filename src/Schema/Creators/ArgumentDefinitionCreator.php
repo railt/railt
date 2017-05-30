@@ -55,6 +55,7 @@ class ArgumentDefinitionCreator implements CreatorInterface
 
     /**
      * @return ArgumentDefinitionInterface
+     * @throws \ReflectionException
      */
     public function build(): ArgumentDefinitionInterface
     {

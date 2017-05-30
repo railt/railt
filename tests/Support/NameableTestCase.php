@@ -21,7 +21,7 @@ use Serafim\Railgun\Tests\AbstractTestCase;
 class NameableTestCase extends AbstractTestCase
 {
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testNameAutoBuildable(): void
     {
@@ -30,7 +30,7 @@ class NameableTestCase extends AbstractTestCase
     }
 
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testDescriptionAutoBuildable(): void
     {
@@ -38,41 +38,19 @@ class NameableTestCase extends AbstractTestCase
             (new MockContainsName)->getDescription());
     }
 
-    /**
-     * @return void
-     */
-    public function testNameSnakeFormatting(): void
-    {
-        $mock = new MockContainsName();
-        $mock->inSnakeCase();
-
-        Assert::assertEquals('mock_contains_name', $mock->getName());
-    }
 
     /**
-     * @return void
-     */
-    public function testNameCamelFormatting(): void
-    {
-        $mock = new MockContainsName();
-        $mock->inCamelCase();
-
-        Assert::assertEquals('MockContainsName', $mock->getName());
-    }
-
-    /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testNameWithoutFormatting(): void
     {
         $mock = new MockContainsName();
-        $mock->withoutNameFormatting();
 
         Assert::assertEquals('MockContainsName', $mock->getName());
     }
 
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testNameResolvableFromAnonymousClassInherits(): void
     {
@@ -94,7 +72,7 @@ class NameableTestCase extends AbstractTestCase
     }
 
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testDescriptionSuffixOverwritten(): void
     {

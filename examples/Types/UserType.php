@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Example\Types;
 
-use Serafim\Railgun\Types\Schemas\Fields;
+use Serafim\Railgun\Schema\Fields;
 use Serafim\Railgun\Types\AbstractObjectType;
 
 /**
@@ -19,13 +19,13 @@ use Serafim\Railgun\Types\AbstractObjectType;
 class UserType extends AbstractObjectType
 {
     /**
-     * @param Fields $field
+     * @param Fields $fields
      * @return iterable
      */
-    public function getFields(Fields $field): iterable
+    public function getFields(Fields $fields): iterable
     {
-        yield 'id' => $field->id();
-        yield 'name' => $field->string();
-        yield 'comments' => $field->hasMany(CommentType::class);
+        yield 'id'       => $fields->id();
+        yield 'name'     => $fields->string();
+        yield 'comments' => $fields->hasMany(CommentType::class);
     }
 }

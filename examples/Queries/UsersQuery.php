@@ -9,15 +9,10 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Example\Queries;
 
-use Illuminate\Support\Collection;
 use Serafim\Railgun\AbstractQuery;
-use Serafim\Railgun\Example\Models\Comment;
-use Serafim\Railgun\Example\Models\User;
-use Serafim\Railgun\Example\Serializers\UserSerializer;
 use Serafim\Railgun\Example\Types\UserType;
-use Serafim\Railgun\Types\Schemas\Arguments;
-use Serafim\Railgun\Types\Schemas\TypeDefinition;
-use Serafim\Railgun\Contracts\TypeDefinitionInterface;
+use Serafim\Railgun\Schema\BelongsTo;
+use Serafim\Railgun\Schema\Creators\CreatorInterface;
 
 /**
  * Class UsersQuery
@@ -26,58 +21,27 @@ use Serafim\Railgun\Contracts\TypeDefinitionInterface;
 class UsersQuery extends AbstractQuery
 {
     /**
-     * @param TypeDefinition $schema
-     * @return TypeDefinitionInterface
+     * @param BelongsTo $schema
+     * @return CreatorInterface
      */
-    public function getType(TypeDefinition $schema): TypeDefinitionInterface
+    public function getType(BelongsTo $schema): CreatorInterface
     {
-        return $schema->listOf(UserType::class);
+        return $schema->typeOf(UserType::class);
     }
 
     /**
-     * @param Arguments $schema
-     * @return iterable
-     */
-    public function getArguments(Arguments $schema): iterable
-    {
-        yield 'name' => $schema->strings();
-    }
-
-    /**
-     * @param $value
      * @param array $arguments
-     * @return Collection
+     * @return array
      */
-    public function resolve($value, array $arguments = [])
+    public function resolve(array $arguments = [])
     {
-        $result = UserSerializer::collection($this->createFakeData());
-
-        // users(name: ["Vasya"]) { ... }
-        if ($arguments['name']) {
-            $result = $result->whereIn('name', $arguments['name']);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return Collection
-     */
-    private function createFakeData(): Collection
-    {
-        $users = [
-            new User('Vasya'),
-            new User('Petya'),
-            new User('Admin', 'admin@example.com'),
+        return [
+            'id'       => random_int(0, PHP_INT_MAX),
+            'name'     => random_int(0, PHP_INT_MAX),
+            'comments' => [
+                'id'   => random_int(0, PHP_INT_MAX),
+                'body' => random_int(0, PHP_INT_MAX),
+            ],
         ];
-
-        /** @var User $user */
-        foreach ($users as $user) {
-            foreach (range(1, random_int(1, 10)) as $i) {
-                $user->addComment(new Comment('Comment body ' . $i));
-            }
-        }
-
-        return new Collection($users);
     }
 }

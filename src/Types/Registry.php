@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Types;
 
 use Illuminate\Support\Str;
-use Serafim\Railgun\Schema\AbstractSchema;
 
 /**
  * Class TypesRegistry
@@ -69,11 +68,6 @@ class Registry
     private $aliases = [];
 
     /**
-     * @var array|AbstractSchema[]
-     */
-    private $schemas = [];
-
-    /**
      * @var \Closure
      */
     private $onCreate;
@@ -117,7 +111,7 @@ class Registry
     public function alias(string $original, string ...$aliases): Registry
     {
         $aliases = array_filter($aliases, function (string $alias) use ($original) {
-            return $alias !== $original;
+            return Str::lower($alias) !== Str::lower($original);
         });
 
         if ($this->isAlias($original)) {
@@ -146,7 +140,7 @@ class Registry
      */
     public function isInternal(string $name): bool
     {
-        return array_key_exists(Str::lower($name), self::INTERNAL_TYPE_ALIASES);
+        return array_key_exists($name, self::INTERNAL_TYPE_ALIASES);
     }
 
     /**

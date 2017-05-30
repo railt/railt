@@ -27,6 +27,7 @@ class ArgumentDefinitionTestCase extends AbstractTestCase
 
     /**
      * @return ArgumentDefinitionInterface
+     * @throws \ReflectionException
      */
     protected function mock(): ArgumentDefinitionInterface
     {
@@ -44,7 +45,7 @@ class ArgumentDefinitionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testDefaultValue(): void
     {
@@ -54,7 +55,7 @@ class ArgumentDefinitionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testOverwrittenDefaultValue(): void
     {
@@ -77,17 +78,17 @@ class ArgumentDefinitionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     public function testDefaultName(): void
     {
         $creator = new ArgumentDefinitionCreator('test');
 
-        Assert::assertEquals('Test', $creator->build()->getName());
+        Assert::assertEquals('test', $creator->build()->getName());
     }
 
     /**
-     * @return void
+     * @throws \ReflectionException
      */
     final public function testDefaultNameFormatting(): void
     {

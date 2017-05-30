@@ -38,64 +38,12 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $endpoint = new Endpoint('test');
 
-//
-// Add a simple query named "users"
-//
 
-$endpoint->query('users', new UsersQuery());
+$endpoint->addQuery(UsersQuery::class);
 
+$response = $endpoint->request(Request::create());
 
-try {
+header('Content-Type: application/json');
 
-    /*
-    |--------------------------------------------------------------------------
-    | Run The Application
-    |--------------------------------------------------------------------------
-    |
-    | Once we have the application, we can handle the incoming request
-    | through and send the associated response back to
-    | the client's browser allowing them to enjoy the creative
-    | and wonderful application we have prepared for them.
-    |
-    */
-
-    $gql        = Request::create();
-
-    $response   = $endpoint->request($gql);
-
-} catch (Throwable $e) {
-
-    /*
-    |--------------------------------------------------------------------------
-    | Catch 'em All!
-    |--------------------------------------------------------------------------
-    |
-    | Don't worry about runtime exceptions. We'll try to catch and format them.
-    |
-    */
-
-    $response = Endpoint::error($e);
-
-} finally {
-
-    /*
-    |--------------------------------------------------------------------------
-    | Send The Response
-    |--------------------------------------------------------------------------
-    |
-    | Finally send our very important answer in json format and
-    | close the connection.
-    |
-    */
-
-    header('Content-Type: application/json');
-
-    echo json_encode($response);
-
-    ob_end_flush();
-}
-
-
-
-
+echo json_encode($response);
 

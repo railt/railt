@@ -26,7 +26,7 @@ trait ContainsName
      */
     protected function mockDefaultFormattedName(): \Traversable
     {
-        yield 'new name' => 'NewName';
+        yield 'new name' => 'newname';
     }
 
     /**
@@ -57,35 +57,9 @@ trait ContainsName
      */
     public function testDisabledNameFormatting(): void
     {
-        $mock = $this->mock()
-            ->withoutNameFormatting()
-            ->rename('new Name');
+        $mock = $this->mock()->rename('new Name');
 
         Assert::assertEquals('newName', $mock->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testSnakeNameFormatting(): void
-    {
-        $mock = $this->mock()
-            ->inSnakeCase()
-            ->rename('new name');
-
-        Assert::assertEquals('new_name', $mock->getName());
-    }
-
-    /**
-     * @return void
-     */
-    public function testCamelCaseNameFormatting(): void
-    {
-        $mock = $this->mock()
-            ->inCamelCase()
-            ->rename('new name');
-
-        Assert::assertEquals('NewName', $mock->getName());
     }
 
     /**

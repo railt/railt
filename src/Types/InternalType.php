@@ -24,6 +24,6 @@ final class InternalType extends AbstractType
      */
     public function __construct(string $name)
     {
-        $this->inCamelCase()->rename($name);
+        $this->rename($name);
     }
 }

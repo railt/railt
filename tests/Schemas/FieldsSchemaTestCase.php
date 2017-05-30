@@ -38,7 +38,7 @@ class FieldsSchemaTestCase extends AbstractDefinitionsTestCase
     {
         $creator = $this->getSchema()->hasOne('id');
 
-        Assert::assertEquals('Id', $creator->build()->getName());
+        Assert::assertEquals('id', $creator->build()->getName());
         Assert::assertTrue($creator->build()->getTypeDefinition()->isNullable());
         Assert::assertFalse($creator->build()->getTypeDefinition()->isList());
     }
@@ -47,7 +47,7 @@ class FieldsSchemaTestCase extends AbstractDefinitionsTestCase
     {
         $creator = $this->getSchema()->hasMany('id');
 
-        Assert::assertEquals('Id', $creator->build()->getName());
+        Assert::assertEquals('id', $creator->build()->getName());
         Assert::assertTrue($creator->build()->getTypeDefinition()->isNullable());
         Assert::assertTrue($creator->build()->getTypeDefinition()->isList());
     }
