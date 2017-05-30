@@ -26,7 +26,7 @@ trait ContainsName
      */
     protected function mockDefaultFormattedName(): \Traversable
     {
-        yield 'new name' => 'new_name';
+        yield 'new name' => 'NewName';
     }
 
     /**
@@ -35,9 +35,8 @@ trait ContainsName
     public function testMutableName(): void
     {
         $mock = $this->mock();
-        Assert::assertEquals('test', $mock->getName());
-
         $mock->rename('name');
+
         Assert::assertEquals('name', $mock->getName());
     }
 

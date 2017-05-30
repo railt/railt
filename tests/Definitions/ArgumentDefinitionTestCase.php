@@ -59,7 +59,7 @@ class ArgumentDefinitionTestCase extends AbstractTestCase
     protected function mock(): NameableInterface
     {
         return $this->argumentDefinition()
-            ->rename('test');
+            ->rename('Test');
     }
 
     /**

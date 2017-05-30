@@ -92,7 +92,7 @@ class FieldDefinitionTestCase extends AbstractTestCase
     {
         $creator = new FieldDefinitionCreator('test');
 
-        Assert::assertEquals('test', $creator->build()->getName());
+        Assert::assertEquals('Test', $creator->build()->getName());
     }
 
     /**
@@ -191,7 +191,7 @@ class FieldDefinitionTestCase extends AbstractTestCase
 
         foreach ($definition->getArguments() as $name => $argument) {
             Assert::assertEquals('name', $name);
-            Assert::assertEquals('argument', $argument->getName());
+            Assert::assertEquals('Argument', $argument->getName());
         }
     }
 }

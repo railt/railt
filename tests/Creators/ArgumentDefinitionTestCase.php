@@ -83,7 +83,7 @@ class ArgumentDefinitionTestCase extends AbstractTestCase
     {
         $creator = new ArgumentDefinitionCreator('test');
 
-        Assert::assertEquals('test', $creator->build()->getName());
+        Assert::assertEquals('Test', $creator->build()->getName());
     }
 
     /**
