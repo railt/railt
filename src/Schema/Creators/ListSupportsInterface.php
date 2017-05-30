@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Schema\Creators;
 
 /**
- * Interface CreatorInterface
+ * Interface ListSupportsInterface
  * @package Serafim\Railgun\Schema\Creators
  */
-interface CreatorInterface extends ListSupportsInterface
+interface ListSupportsInterface
 {
     /**
-     * @return mixed
+     * @return CreatorInterface
      */
-    public function build();
+    public function many(): CreatorInterface;
 }

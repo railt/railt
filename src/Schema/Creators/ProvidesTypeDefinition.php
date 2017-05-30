@@ -12,6 +12,7 @@ namespace Serafim\Railgun\Schema\Creators;
 /**
  * Trait ProvidesTypeDefinition
  * @package Serafim\Railgun\Schema\Creators
+ * @mixin ListSupportsInterface
  */
 trait ProvidesTypeDefinition
 {

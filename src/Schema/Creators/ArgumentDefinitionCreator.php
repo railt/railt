@@ -39,7 +39,6 @@ class ArgumentDefinitionCreator implements CreatorInterface
      */
     public function __construct(string $type)
     {
-        $this->inSnakeCase();
         $this->rename($this->type = $type);
     }
 

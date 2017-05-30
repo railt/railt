@@ -9,16 +9,19 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Schema;
 
+use Serafim\Railgun\Schema\Creators\TypeDefinitionCreator;
+
 /**
- * Interface SchemaInterface
+ * Class BelongsTo
  * @package Serafim\Railgun\Schema
  */
-interface SchemaInterface
+class BelongsTo extends AbstractSchema
 {
     /**
-     * @param string $action
-     * @param \Closure $then
-     * @return mixed
+     * Arguments constructor.
      */
-    public function extend(string $action, \Closure $then);
+    public function __construct()
+    {
+        parent::__construct(TypeDefinitionCreator::class);
+    }
 }
