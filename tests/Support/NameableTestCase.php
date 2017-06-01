@@ -13,6 +13,7 @@ use PHPUnit\Framework\Assert;
 use Serafim\Railgun\Support\InteractWithName;
 use Serafim\Railgun\Support\NameableInterface;
 use Serafim\Railgun\Tests\AbstractTestCase;
+use Serafim\Railgun\Tests\Mocks\MockContainsName;
 
 /**
  * Class NameableTestCase
@@ -26,7 +27,7 @@ class NameableTestCase extends AbstractTestCase
     public function testNameAutoBuildable(): void
     {
         Assert::assertEquals('MockContainsName',
-            (new MockContainsName)->getName());
+            (new MockContainsName())->getName());
     }
 
     /**

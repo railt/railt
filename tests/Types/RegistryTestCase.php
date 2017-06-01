@@ -12,6 +12,7 @@ namespace Serafim\Railgun\Tests\Types;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\AssertionFailedError;
 use Serafim\Railgun\Tests\AbstractTestCase;
+use Serafim\Railgun\Tests\Mocks\MockCustomType;
 use Serafim\Railgun\Types\InternalType;
 use Serafim\Railgun\Types\Registry;
 

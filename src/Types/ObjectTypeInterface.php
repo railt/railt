@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Types;
 
-use Serafim\Railgun\Schema\Creators\FieldDefinitionCreator;
 use Serafim\Railgun\Schema\Fields;
+use Serafim\Railgun\Schema\SchemaInterface;
+use Serafim\Railgun\Schema\Creators\FieldDefinitionCreator;
 
 /**
  * Interface ObjectTypeInterface
@@ -19,7 +20,7 @@ use Serafim\Railgun\Schema\Fields;
 interface ObjectTypeInterface extends TypeInterface
 {
     /**
-     * @param Fields $fields
+     * @param Fields|SchemaInterface $fields
      * @return iterable|FieldDefinitionCreator[]
      */
     public function getFields(Fields $fields): iterable;
