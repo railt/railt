@@ -17,7 +17,10 @@ use Serafim\Railgun\Support\InteractWithName;
  */
 class ArgumentDefinition implements ArgumentDefinitionInterface
 {
-    use InteractWithName;
+    use InteractWithName {
+        rename as private;
+        about as private;
+    }
 
     /**
      * @var TypeDefinitionInterface

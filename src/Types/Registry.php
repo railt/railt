@@ -150,23 +150,18 @@ class Registry
      */
     public function get(string $name): TypeInterface
     {
-        $result = null;
+        switch (true) {
+            case array_key_exists($name, $this->types):
+                return $this->types[$name];
 
-        if (array_key_exists($name, $this->types)) {
-            $result = $this->types[$name];
+            case $this->isAlias($name):
+                return $this->get($this->aliases[$name]);
 
-        } elseif ($this->isAlias($name)) {
-            $result = $this->get($this->aliases[$name]);
-
-        } elseif (class_exists($name)) {
-            $result = $this->add($this->create($name))->get($name);
+            case class_exists($name):
+                return $this->add($this->create($name))->get($name);
         }
 
-        if ($result === null) {
-            throw new \InvalidArgumentException('Invalid type ' . $name);
-        }
-
-        return $result;
+        throw new \InvalidArgumentException('Invalid type ' . $name);
     }
 
     /**

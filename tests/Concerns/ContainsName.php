@@ -35,7 +35,9 @@ trait ContainsName
     public function testMutableName(): void
     {
         $mock = $this->mock();
-        $mock->rename('name');
+        (function() {
+            $this->rename('name');
+        })->call($mock);
 
         Assert::assertEquals('name', $mock->getName());
     }
@@ -46,7 +48,11 @@ trait ContainsName
     public function testDefaultNameFormatting(): void
     {
         foreach ($this->mockDefaultFormattedName() as $source => $expected) {
-            $mock = $this->mock()->rename($source);
+            $mock = $this->mock();
+
+            (function(string $source) {
+                $this->rename($source);
+            })->call($mock, $source);
 
             Assert::assertEquals($expected, $mock->getName());
         }
@@ -57,7 +63,11 @@ trait ContainsName
      */
     public function testDisabledNameFormatting(): void
     {
-        $mock = $this->mock()->rename('new Name');
+        $mock = $this->mock();
+
+        (function() {
+            $this->rename('new Name');
+        })->call($mock);
 
         Assert::assertEquals('newName', $mock->getName());
     }

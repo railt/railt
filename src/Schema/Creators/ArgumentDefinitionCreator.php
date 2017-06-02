@@ -20,8 +20,14 @@ use Serafim\Railgun\Schema\Definitions\ArgumentDefinitionInterface;
  */
 class ArgumentDefinitionCreator implements CreatorInterface
 {
-    use InteractWithName;
+    use InteractWithName {
+        getName as private;
+        hasName as private;
+        getDescription as private;
+        hasDescription as private;
+    }
     use ProvidesTypeDefinition;
+    use ProvidesNameableDefinition;
 
     /**
      * @var string
@@ -55,17 +61,16 @@ class ArgumentDefinitionCreator implements CreatorInterface
 
     /**
      * @return ArgumentDefinitionInterface
-     * @throws \ReflectionException
+     * @internal This method is used to create a definition and should not be used during the declaration.
      */
     public function build(): ArgumentDefinitionInterface
     {
-        return (
-            new ArgumentDefinition(
-                new TypeDefinition($this->type, $this->isNullable, $this->isList),
-                $this->defaultValue
-            )
-        )
-            ->rename($this->getName())
-            ->about($this->getDescription());
+        $type = new TypeDefinition($this->type, $this->isNullable, $this->isList);
+
+        $definition = new ArgumentDefinition($type, $this->defaultValue);
+
+        $this->applyNameable($definition, $this->getName(), $this->getDescription());
+
+        return $definition;
     }
 }

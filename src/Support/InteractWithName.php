@@ -65,7 +65,6 @@ trait InteractWithName
 
     /**
      * @return string
-     * @throws \ReflectionException
      */
     public function getDescription(): string
     {
@@ -78,7 +77,6 @@ trait InteractWithName
 
     /**
      * @return string
-     * @throws \ReflectionException
      */
     private function resolveDescription(): string
     {
@@ -87,19 +85,20 @@ trait InteractWithName
 
     /**
      * @param string $suffix
+     * @param null|string $prefix
      * @return string
-     * @throws \ReflectionException
      */
-    protected function formatDescription(string $suffix): string
+    protected function formatDescription(string $suffix, ?string $prefix = null): string
     {
-        $prefix = Str::ucfirst(Str::snake($this->getName(), ' '));
+        if ($prefix === null) {
+            $prefix = Str::ucfirst(Str::snake($this->getName(), ' '));
+        }
 
-        return $prefix . ($suffix ? ' ' . $suffix : '');
+        return $prefix . ($suffix ? ' ' . trim($suffix) : '');
     }
 
     /**
      * @return string
-     * @throws \ReflectionException
      */
     public function getName(): string
     {
@@ -112,7 +111,6 @@ trait InteractWithName
 
     /**
      * @return string
-     * @throws \ReflectionException
      */
     private function resolveNameFromDefinition(): string
     {
@@ -122,10 +120,14 @@ trait InteractWithName
             return $this->formatName(static::class);
         }
 
-        $reflection = new \ReflectionClass(static::class);
+        try {
+            $reflection = new \ReflectionClass(static::class);
 
-        if ($reflection->getParentClass()) {
-            return $this->formatName($reflection->getParentClass()->getShortName());
+            if ($reflection->getParentClass()) {
+                return $this->formatName($reflection->getParentClass()->getShortName());
+            }
+        } catch (\ReflectionException $e) {
+            // Do nothing if Houston have a problem
         }
 
         return $this->formatName('AnonymousClass');
@@ -137,5 +139,21 @@ trait InteractWithName
     protected function getDescriptionSuffix(): string
     {
         return 'custom definition';
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasName(): bool
+    {
+        return $this->name !== null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDescription(): bool
+    {
+        return $this->description !== null;
     }
 }

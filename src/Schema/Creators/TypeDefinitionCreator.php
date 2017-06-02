@@ -36,6 +36,7 @@ class TypeDefinitionCreator implements CreatorInterface
 
     /**
      * @return TypeDefinitionInterface
+     * @internal This method is used to create a definition and should not be used during the declaration.
      */
     public function build(): TypeDefinitionInterface
     {

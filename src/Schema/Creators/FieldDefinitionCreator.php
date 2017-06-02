@@ -11,9 +11,9 @@ namespace Serafim\Railgun\Schema\Creators;
 
 use Serafim\Railgun\Schema\Definitions\ArgumentDefinitionInterface;
 use Serafim\Railgun\Schema\Definitions\FieldDefinition;
+use Serafim\Railgun\Schema\Definitions\FieldDefinitionInterface;
 use Serafim\Railgun\Schema\Definitions\TypeDefinition;
 use Serafim\Railgun\Support\InteractWithName;
-use Serafim\Railgun\Schema\Definitions\FieldDefinitionInterface;
 
 /**
  * Class FieldDefinitionCreator
@@ -21,8 +21,14 @@ use Serafim\Railgun\Schema\Definitions\FieldDefinitionInterface;
  */
 class FieldDefinitionCreator implements CreatorInterface
 {
-    use InteractWithName;
+    use InteractWithName {
+        getName as private;
+        hasName as private;
+        getDescription as private;
+        hasDescription as private;
+    }
     use ProvidesTypeDefinition;
+    use ProvidesNameableDefinition;
 
     /**
      * @var string
@@ -97,19 +103,21 @@ class FieldDefinitionCreator implements CreatorInterface
 
     /**
      * @return FieldDefinitionInterface
+     * @internal This method is used to create a definition and should not be used during the declaration.
      */
     public function build(): FieldDefinitionInterface
     {
-        return (
-            new FieldDefinition(
-                new TypeDefinition($this->type, $this->isNullable, $this->isList),
-                iterator_to_array($this->buildArguments()),
-                $this->deprecationReason,
-                $this->resolver
-            )
-        )
-            ->rename($this->getName())
-            ->about($this->getDescription());
+        $type = new TypeDefinition($this->type, $this->isNullable, $this->isList);
+
+        $definition = new FieldDefinition($type, $this->buildArguments(), $this->resolver, $this->deprecationReason);
+
+        $this->applyNameable(
+            $definition,
+            $this->getName(),
+            $this->getDescription()
+        );
+
+        return $definition;
     }
 
     /**
@@ -120,5 +128,13 @@ class FieldDefinitionCreator implements CreatorInterface
         foreach ($this->arguments as $name => $argument) {
             yield $name => $argument->build();
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDescriptionSuffix(): string
+    {
+        return 'field';
     }
 }

@@ -35,14 +35,6 @@ abstract class AbstractSchema implements SchemaInterface
     }
 
     /**
-     * @return CreatorInterface
-     */
-    public function id(): CreatorInterface
-    {
-        return $this->typeOf(Registry::INTERNAL_TYPE_ID);
-    }
-
-    /**
      * @param string $type
      * @return CreatorInterface
      */
@@ -60,6 +52,14 @@ abstract class AbstractSchema implements SchemaInterface
     public function listOf(string $type): CreatorInterface
     {
         return $this->typeOf($type)->many();
+    }
+
+    /**
+     * @return CreatorInterface
+     */
+    public function id(): CreatorInterface
+    {
+        return $this->typeOf(Registry::INTERNAL_TYPE_ID);
     }
 
     /**

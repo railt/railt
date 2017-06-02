@@ -17,7 +17,10 @@ use Serafim\Railgun\Support\InteractWithName;
  */
 class FieldDefinition implements FieldDefinitionInterface
 {
-    use InteractWithName;
+    use InteractWithName {
+        rename as private;
+        about as private;
+    }
 
     /**
      * @var TypeDefinitionInterface
@@ -42,21 +45,21 @@ class FieldDefinition implements FieldDefinitionInterface
     /**
      * FieldDefinition constructor.
      * @param TypeDefinitionInterface $type
-     * @param iterable $arguments
-     * @param null|string $deprecationReason
+     * @param iterable $args
+     * @param null|string $deprecation
      * @param \Closure|null $resolver
      */
     public function __construct(
         TypeDefinitionInterface $type,
-        iterable $arguments,
-        ?string $deprecationReason,
-        ?\Closure $resolver
+        iterable $args,
+        ?\Closure $resolver,
+        ?string $deprecation
     )
     {
         $this->type = $type;
-        $this->arguments = $arguments;
-        $this->deprecationReason = $deprecationReason;
         $this->resolver = $resolver;
+        $this->deprecationReason = $deprecation;
+        $this->arguments = $args instanceof \Traversable ? iterator_to_array($args) : $args;
     }
 
     /**

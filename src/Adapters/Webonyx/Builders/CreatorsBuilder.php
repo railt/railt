@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\Type;
-use Serafim\Railgun\Types\TypeInterface;
 use Serafim\Railgun\Schema\Creators\CreatorInterface;
-use Serafim\Railgun\Schema\Definitions\TypeDefinitionInterface;
-use Serafim\Railgun\Schema\Definitions\FieldDefinitionInterface;
-use Serafim\Railgun\Schema\Definitions\ArgumentDefinitionInterface;
-use Serafim\Railgun\Schema\Definitions\ProvidesTypeDefinitionInterface;
+use Serafim\Railgun\Schema\Creators\FieldDefinitionCreator;
+use Serafim\Railgun\Schema\Definitions\{
+    ArgumentDefinitionInterface, FieldDefinition, FieldDefinitionInterface, TypeDefinitionInterface
+};
+use Serafim\Railgun\Types\TypeInterface;
 
 /**
  * Class CreatorsBuilder
@@ -69,15 +69,13 @@ class CreatorsBuilder
     }
 
     /**
-     * @param CreatorInterface|TypeDefinitionInterface|ProvidesTypeDefinitionInterface $creatorOrDefinition
+     * @param CreatorInterface $creator
      * @return Type|array
      * @throws \InvalidArgumentException
      */
-    public function build($creatorOrDefinition)
+    public function build(CreatorInterface $creator)
     {
-        $definition = $creatorOrDefinition instanceof CreatorInterface
-            ? $creatorOrDefinition->build()
-            : $creatorOrDefinition;
+        $definition = $creator->build();
 
 
         switch (true) {
@@ -117,17 +115,24 @@ class CreatorsBuilder
 
     /**
      * @param FieldDefinitionInterface $definition
+     * @param null|string $name
      * @return array
      * @throws \InvalidArgumentException
      */
-    public function buildFieldDefinition(FieldDefinitionInterface $definition): array
+    public function buildFieldDefinition(FieldDefinitionInterface $definition, ?string $name = null): array
     {
-        return static::withInfo($definition, static::withDeprecation($definition, [
-            'type' => $this->buildTypeDefinition($definition->getTypeDefinition()),
-            'args' => $this->buildCollectionOf($definition->getArguments()),
+        $result = [
+            'name'        => $name ?? $definition->getName(),
+            'description' => $definition->getDescription(),
+            'type'        => $this->buildTypeDefinition($definition->getTypeDefinition()),
+            'args'        => [],
             // TODO
             // 'resolve' => function($value, array $arguments, $context) { ... }
-        ]));
+        ];
+
+        $result = static::withDeprecation($definition, $result);
+
+        return $result;
     }
 
     /**
@@ -138,5 +143,39 @@ class CreatorsBuilder
     {
         // TODO
         return [];
+    }
+
+    /**
+     * @param iterable $fields
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    public function buildFields(iterable $fields): array
+    {
+        $result = [];
+
+        /** @var FieldDefinitionCreator $creator */
+        foreach ($fields as $name => $creator) {
+            /** @var FieldDefinition $definition */
+            $definition = $creator->build();
+
+            $result[] = $this->buildFieldDefinition($definition, $this->resolveName($name, $definition));
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string|int $name
+     * @param FieldDefinition $definition
+     * @return null|string
+     */
+    private function resolveName($name, FieldDefinition $definition): ?string
+    {
+        if (is_string($name)) {
+            return $name;
+        }
+
+        return $definition->hasName() ? $definition->getName() : null;
     }
 }

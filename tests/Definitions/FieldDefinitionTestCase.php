@@ -39,8 +39,13 @@ class FieldDefinitionTestCase extends AbstractTestCase
      */
     protected function mock(): NameableInterface
     {
-        return $this->fieldDefinition()
-            ->rename('test');
+        $definition = $this->fieldDefinition();
+
+        (function() {
+            $this->rename('test');
+        })->call($definition);
+
+        return $definition;
     }
 
     /**
@@ -54,8 +59,8 @@ class FieldDefinitionTestCase extends AbstractTestCase
         return new FieldDefinition(
             new TypeDefinition((string)random_int(PHP_INT_MIN, PHP_INT_MAX)),
             $arguments,
-            $deprecation,
-            $then
+            $then,
+            $deprecation
         );
     }
 

@@ -28,8 +28,11 @@ class MockObjectType implements ObjectTypeInterface
      */
     public function getFields(Fields $fields): iterable
     {
-        yield 'id' => $fields->id();
-        yield 'some' => $fields->string();
+        yield $fields->typeOf('id')
+            ->named('id')
+            ->means('This is identifier of mock object');
+
+        yield 'some' => $fields->string()->deprecated('This field is deprecated', '1.0.0');
     }
 
     /**

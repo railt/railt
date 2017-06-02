@@ -10,15 +10,26 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\{
-    EnumType, InterfaceType, ObjectType, Type, UnionType
+    Type,
+    EnumType,
+    UnionType,
+    ObjectType,
+    InterfaceType
+};
+use Serafim\Railgun\{
+    Endpoint,
+    Schema\Fields,
+    Schema\SchemaInterface
 };
 use Serafim\Railgun\Adapters\Webonyx\HashMap;
-use Serafim\Railgun\Endpoint;
-use Serafim\Railgun\Schema\Creators\FieldDefinitionCreator;
-use Serafim\Railgun\Schema\Fields;
-use Serafim\Railgun\Schema\SchemaInterface;
 use Serafim\Railgun\Types\{
-    EnumTypeInterface, InterfaceTypeInterface, InternalType, ObjectTypeInterface, Registry, TypeInterface, UnionTypeInterface
+    Registry,
+    InternalType,
+    TypeInterface,
+    EnumTypeInterface,
+    UnionTypeInterface,
+    ObjectTypeInterface,
+    InterfaceTypeInterface
 };
 
 /**
@@ -69,7 +80,6 @@ class TypeBuilder
      * @param TypeInterface $type
      * @return Type
      * @throws \InvalidArgumentException
-     * @throws \ReflectionException
      */
     public function build(TypeInterface $type): Type
     {
@@ -84,7 +94,6 @@ class TypeBuilder
      * @param TypeInterface $type
      * @return Type
      * @throws \InvalidArgumentException
-     * @throws \ReflectionException
      */
     private function create(TypeInterface $type): Type
     {
@@ -112,7 +121,6 @@ class TypeBuilder
      * @param InternalType $type
      * @return Type
      * @throws \InvalidArgumentException
-     * @throws \ReflectionException
      */
     private function resolveInternalType(InternalType $type): Type
     {
@@ -134,33 +142,6 @@ class TypeBuilder
         }
 
         throw new \InvalidArgumentException('Invalid scalar type ' . $type->getName());
-    }
-
-    /**
-     * @param ObjectTypeInterface $type
-     * @return ObjectType
-     * @throws \InvalidArgumentException
-     */
-    public function buildObjectType(ObjectTypeInterface $type): ObjectType
-    {
-        $fields = $type->getFields($this->schema(Fields::class));
-
-        return new ObjectType(static::withInfo($type, [
-            'fields'     => $this->creators->buildCollectionOf($fields),
-
-            // TODO
-            'interfaces' => [],
-        ]));
-    }
-
-    /**
-     * @param string $name
-     * @return SchemaInterface
-     * @throws \InvalidArgumentException
-     */
-    public function schema(string $name): SchemaInterface
-    {
-        return $this->endpoint->getSchemas()->get($name);
     }
 
     /**
@@ -201,5 +182,32 @@ class TypeBuilder
 
             // TODO 'resolveType' => function ($obj, $context, ResolveInfo $info) { ... }
         ]));
+    }
+
+    /**
+     * @param ObjectTypeInterface $type
+     * @return ObjectType
+     * @throws \InvalidArgumentException
+     */
+    public function buildObjectType(ObjectTypeInterface $type): ObjectType
+    {
+        $fields = $type->getFields($this->schema(Fields::class));
+
+        return new ObjectType(static::withInfo($type, [
+            'fields'     => $this->creators->buildFields($fields),
+
+            // TODO
+            'interfaces' => [],
+        ]));
+    }
+
+    /**
+     * @param string $name
+     * @return SchemaInterface
+     * @throws \InvalidArgumentException
+     */
+    public function schema(string $name): SchemaInterface
+    {
+        return $this->endpoint->getSchemas()->get($name);
     }
 }
