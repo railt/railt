@@ -1,0 +1,95 @@
+macro ·global ·unsafe {
+    type T_STRING·typeName ·optional(
+        ·chain(
+            ·token(T_IMPLEMENTS),
+            ·lst(T_STRING·interfaceName, ·token(','))·interfaces
+        )·interfacesDefinition
+    ) {
+        ·optional(
+            ·lst(
+                ·chain(
+                    T_STRING·fieldName,
+                    ·token(':'),
+                    ·chain(
+                        ·either(
+                            ·token(T_STRING),
+                            ·chain(
+                                ·token('['),
+                                ·token(T_STRING),
+                                ·optional(·token('!')),
+                                ·token(']')
+                            )
+                        ),
+                        ·optional(·token('!'))
+                    )·fieldType
+                )·fieldDefinition,
+                ·optional(
+                    ·lst(
+                        ·chain(
+                            ·token('@'),
+                            T_STRING·directiveName,
+                            ·optional(
+                                ·chain(
+                                    ·token('('),
+                                    ·optional(
+                                        ·lst(
+                                            ·chain(
+                                                T_STRING·directiveArgument,
+                                                ·token(':'),
+                                                graphql_value
+                                                ·either(
+                                                    ·label(),
+                                                    ·token(T_STRING),
+                                                    ·token(T_DNUMBER),
+                                                    ·token(T_LNUMBER),
+                                                    ·token(T_NUM_STRING),
+                                                    ·token(T_ENCAPSED_AND_WHITESPACE),
+                                                    ·token(T_CONSTANT_ENCAPSED_STRING)
+                                                )·directiveValue
+                                            ),
+                                            ·token(',')
+                                        )·directiveValues
+                                    ),
+                                    ·token(')')
+                                )
+                            )·directiveDefinition
+                        ),
+                        ·token(T_WHITESPACE)
+                    )
+                )·directives,
+                ·token(',')
+            )·fields
+        )
+    }
+} >> {
+type([
+    'name' => ··stringify(T_STRING·typeName),
+    'fields' => [
+        ·fields ··· {
+            ·fieldDefinition ··· {
+                ··stringify(T_STRING·fieldName) => [
+                    'type' => type(··stringify(·fieldType)),
+                    'directives' => [
+                        ·directives ··· {
+                            ··stringify(T_STRING·directiveName) => [
+                                ·directiveDefinition ··· {
+                                    ·directiveValues ··· {
+                                        ··stringify(T_STRING·directiveArgument) => ··hygienize(·directiveValue)
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                ],
+            }
+        }
+    ],
+    ·interfacesDefinition ··· {
+        'interfaces' => [
+            ·interfaces ··· {
+                type(··stringify(T_STRING·interfaceName)),
+            }
+        ],
+    }
+]);
+}
