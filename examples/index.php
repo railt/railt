@@ -7,13 +7,17 @@
  */
 declare(strict_types=1);
 
-use Serafim\Railgun\Schema;
-
+use Serafim\Railgun\Idl\Compiler;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+try {
+    $schema = new Compiler();
+    $result = $schema->compile(__DIR__ . '/schema.graphqls');
 
-$schema = new Schema();
-$result = $schema->loadFile(__DIR__ . '/schema.graphqls');
+    dd($result);
+} catch (Throwable $e) {
+    echo $e->getMessage();
+    throw $e;
+}
 
-dd($result);

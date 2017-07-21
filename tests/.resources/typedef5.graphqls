@@ -1,0 +1,37 @@
+type A {
+    id: ID
+    idList: [ID]
+    idNonNull: ID!
+    idNonNullList: [ID]!
+    idListOfNonNulls: [ID!]!
+
+    int: Int
+    intList: [Int]
+    intNonNull: Int!
+    intNonNullList: [Int]!
+    intListOfNonNulls: [Int!]!
+
+    float: Float
+    floatList: [Float]
+    floatNonNull: Float!
+    floatNonNullList: [Float]!
+    floatListOfNonNulls: [Float!]!
+
+    string: String
+    stringList: [String]
+    stringNonNull: String!
+    stringNonNullList: [String]!
+    stringListOfNonNulls: [String!]!
+
+    boolean: Boolean
+    booleanList: [Boolean]
+    booleanNonNull: Boolean!
+    booleanNonNullList: [Boolean]!
+    booleanListOfNonNulls: [Boolean!]!
+
+    relation: Relation
+    relationList: [Relation]
+    relationNonNull: Relation!
+    relationNonNullList: [Relation]!
+    relationListOfNonNulls: [Relation!]!
+}

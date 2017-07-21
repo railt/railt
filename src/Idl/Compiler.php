@@ -7,20 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun;
+namespace Serafim\Railgun\Idl;
 
 use Yay\Engine;
 
 /**
  * Class Schema
- * @package Serafim\Railgun
+ * @package Serafim\Railgun\Idl
  */
-class Schema
+class Compiler
 {
     /**
-     * @
+     *
      */
-    private const EXEC_SUFFIX = '<?php ';
+    private const EXECUTION_SUFFIX = '<?php ';
 
     /**
      * @var Engine
@@ -38,13 +38,13 @@ class Schema
     }
 
     /**
-     * @return void
      * @throws \RuntimeException
+     * @throws \Yay\Halt
      */
     private function loadMacros(): void
     {
         foreach ($this->getMacros() as $file) {
-            $this->loadFile($file);
+            $this->compile($file);
         }
     }
 
@@ -52,10 +52,26 @@ class Schema
      * @param string $file
      * @return string
      * @throws \RuntimeException
+     * @throws \Yay\Halt
      */
-    public function loadFile(string $file): string
+    public function compile(string $file): string
     {
-        return $this->load(new \SplFileInfo($file));
+        return $this->compileFile(new \SplFileInfo($file));
+    }
+
+    /**
+     * @param \SplFileInfo $file
+     * @return string
+     * @throws \RuntimeException
+     * @throws \Yay\Halt
+     */
+    private function compileFile(\SplFileInfo $file): string
+    {
+        $sources = $this->readFile($file);
+
+        $result = $this->engine->expand(self::EXECUTION_SUFFIX . $sources, $file->getRealPath());
+
+        return substr($result, strlen(self::EXECUTION_SUFFIX));
     }
 
     /**
@@ -63,28 +79,13 @@ class Schema
      * @return string
      * @throws \RuntimeException
      */
-    public function load(\SplFileInfo $file): string
-    {
-        return $this->read($file, true);
-    }
-
-    /**
-     * @param \SplFileInfo $file
-     * @param bool $suffix
-     * @return string
-     * @throws \RuntimeException
-     */
-    private function read(\SplFileInfo $file, bool $suffix = false): string
+    private function readFile(\SplFileInfo $file): string
     {
         if (!$file->isReadable()) {
             throw new \RuntimeException('Can not read source file ' . $file->getRealPath());
         }
 
-        $source = @file_get_contents($file->getRealPath());
-
-        $result = $this->engine->expand(($suffix ? self::EXEC_SUFFIX : '') . $source, $file->getRealPath());
-
-        return substr($result, strlen(self::EXEC_SUFFIX));
+        return @file_get_contents($file->getRealPath());
     }
 
     /**
@@ -92,6 +93,7 @@ class Schema
      */
     private function getMacros(): iterable
     {
-        yield __DIR__ . '/../macros/macro.yay';
+        //yield __DIR__ . '/../../resources/processing/macro.yay';
+        yield __DIR__ . '/../../resources/processing/grammar.yay';
     }
 }

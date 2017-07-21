@@ -10,8 +10,13 @@
          stopOnFailure="false"
          syntaxCheck="false">
     <testsuites>
-        <testsuite name="Application Suite">
-            <directory suffix="TestCase.php">./tests</directory>
+        <!--
+        <testsuite name="Http Tests Suite">
+            <directory suffix="TestCase.php">./tests/Http</directory>
+        </testsuite>
+        -->
+        <testsuite name="Idl Tests Suite">
+            <directory suffix="TestCase.php">./tests/Idl</directory>
         </testsuite>
     </testsuites>
     <filter>

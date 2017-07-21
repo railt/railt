@@ -1,6 +1,15 @@
-type Story implements Test {
-    id: ID! @id(some: "any")
-    text: String! @text(some: "other")
-    author: Author! @author(some: 23)
-    comments: [Comment!]! @comments(some: 0.3)
+type Test {
+
+}
+
+type Test1 implements TestInterface {
+}
+
+type Test2 {
+    id: ID
+    some: String
+}
+
+type Test3 {
+
 }

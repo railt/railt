@@ -23,6 +23,7 @@ class LaravelRequestTestCase extends AbstractHttpRequestTestCase
      * @param string $body
      * @param bool $makeJson
      * @return RequestInterface
+     * @throws \LogicException
      */
     protected function request(string $body, bool $makeJson = true): RequestInterface
     {

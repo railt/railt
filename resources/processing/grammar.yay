@@ -1,0 +1,108 @@
+macro ·global ·grammar ·unsafe {
+    << ·typedef {
+        ''type'' T_STRING !! ·implements ''{'' ·fields ''}''
+    }
+    ·implements? {
+        ''implements'' ·interfacesList
+    }
+    ·interface {
+        T_STRING
+    }
+    ·interfacesList {
+        list(·interface , '','')
+    }
+    ·fieldName {
+        T_STRING
+    }
+    ·fieldValue {
+        ·gqlType
+    }
+    ·field {
+        ·fieldName{}·key '':'' ·fieldValue
+    }
+    ·fields {
+        list(·field, '','')
+    }
+
+    /**
+     * GraphQL Scalar Types
+     *
+     * A GraphQL object type has a name and fields, but at some point
+     * those fields have to resolve to some concrete data.
+     * That's where the scalar types come in:
+     * they represent the leaves of the query.
+     *
+     * @see http://graphql.org/learn/schema/#scalar-types
+     */
+    ·gqlType {
+        ·gqlTypeID |
+        ·gqlTypeInt |
+        ·gqlTypeFloat |
+        ·gqlTypeString |
+        ·gqlTypeBoolean |
+        ·gqlTypeCustom
+    }
+    ·gqlTypeID {
+        ''ID''
+    }
+    ·gqlTypeInt {
+        ''Int''
+    }
+    ·gqlTypeFloat {
+        ''Float''
+    }
+    ·gqlTypeString {
+        ''String''
+    }
+    ·gqlTypeBoolean {
+        ''Boolean''
+    }
+    ·gqlTypeCustom {
+        T_STRING
+    }
+
+    /**
+     * GraphQL Type Values
+     * Allowed GraphQL Type values
+     */
+    /*
+    ·gqlValue {
+        ·gqlValueID |
+        ·gqlValueInt |
+        ·gqlValueFloat |
+        ·gqlValueBoolean |
+        ·gqlValueString |
+        ·gqlValueNull
+    }
+    ·gqlValueID {
+        ·gqlValueString
+    }
+    ·gqlValueInt {
+        // TODO add between(2147483647, -2147483648)
+        T_LNUMBER
+    }
+    ·gqlValueFloat {
+        T_LNUMBER
+    }
+    ·gqlValueBoolean {
+        ·gqlValueTrue | ·gqlValueFalse
+    }
+    ·gqlValueTrue {
+        ''true''
+    }
+    ·gqlValueFalse {
+        ''false''
+    }
+    ·gqlValueString {
+        T_CONSTANT_ENCAPSED_STRING |
+        T_ENCAPSED_AND_WHITESPACE |
+        T_NUM_STRING |
+        T_STRING_VARNAME
+    }
+    ·gqlValueNull {
+        ''null''
+    }
+    */
+} >> {
+    return true;
+}
