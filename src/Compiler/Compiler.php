@@ -12,6 +12,7 @@ namespace Serafim\Railgun\Compiler;
 use Hoa\File\Read;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser;
+use Hoa\Compiler\Exception as LlkException;
 use Hoa\Compiler\Exception\UnrecognizedToken;
 use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Compiler\Exceptions\NotReadableException;
@@ -26,7 +27,7 @@ class Compiler
     /**
      * Default grammar path
      */
-    private const GRAMMAR_PP = __DIR__ . '/../../resources/processing/grammar.pp';
+    private const GRAMMAR_PP = __DIR__ . '/../../resources/grammar.pp';
 
     /**
      * @var Parser
@@ -52,18 +53,18 @@ class Compiler
     {
         try {
             return Llk::load(new Read($grammar));
-        } catch (\Hoa\Compiler\Exception $e) {
+        } catch (LlkException $e) {
             throw new CompilerException($e->getMessage());
         }
     }
 
     /**
      * @param string $filePath
-     * @return Definition
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @return Document
+     * @throws NotReadableException
      * @throws UnexpectedTokenException
      */
-    public function parseFile(string $filePath): Definition
+    public function parseFile(string $filePath): Document
     {
         $file = $this->createFileSystemInfo($filePath);
         $sources = $this->read($file);
@@ -74,10 +75,10 @@ class Compiler
     /**
      * @param string $sources
      * @param null|\SplFileInfo $file
-     * @return Definition
+     * @return Document
      * @throws UnexpectedTokenException
      */
-    public function parse(string $sources, ?\SplFileInfo $file = null): Definition
+    public function parse(string $sources, ?\SplFileInfo $file = null): Document
     {
         try {
             $ast = $this->llk->parse($sources);
@@ -87,7 +88,7 @@ class Compiler
             throw new UnexpectedTokenException($e, $file);
         }
 
-        return new Definition($sources, $ast, $file);
+        return new Document($sources, $ast, $file);
     }
 
     /**

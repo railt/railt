@@ -13,10 +13,10 @@ use Hoa\Compiler\Llk\TreeNode;
 use Hoa\Compiler\Visitor\Dump;
 
 /**
- * Class Definition
+ * Class Document
  * @package Serafim\Railgun\Compiler
  */
-class Definition
+class Document
 {
     /**
      * @var \SplFileInfo|null
@@ -45,6 +45,30 @@ class Definition
         $this->file = $file;
         $this->sources = $sources;
         $this->ast = $ast;
+    }
+
+    /**
+     * @return null|\SplFileInfo
+     */
+    public function getFile(): ?\SplFileInfo
+    {
+        return $this->file;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSources(): string
+    {
+        return $this->sources;
+    }
+
+    /**
+     * @return TreeNode
+     */
+    public function getAst(): TreeNode
+    {
+        return $this->ast;
     }
 
     /**

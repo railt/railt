@@ -107,16 +107,13 @@
 
 
 #Document:
-    TypeDefinition()*
+    Type()*
 
-#TypeDefinition:
+#Type:
     ::T_TYPE:: <T_NAME> Implements()? ::T_BRACE_OPEN:: Field()* ::T_BRACE_CLOSE::
 
 Implements:
-    ::T_IMPLEMENTS:: Interface()+
-
-#Interface:
-    <T_NAME> ::T_COMMA::?
+    ::T_IMPLEMENTS:: (<T_NAME> ::T_COMMA::? #Implements)+
 
 #Directive:
     ::T_DIRECTIVE_AT:: <T_NAME> DirectiveArguments()?

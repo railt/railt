@@ -1,2 +1,2 @@
-type A implements B {
+type A implements B, C {
 }
