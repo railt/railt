@@ -9,13 +9,9 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Http\Support;
 
-use Serafim\Railgun\Http\RequestInterface;
-
 /**
  * Trait InteractWithData
  * @package Serafim\Railgun\Http\Support
- * @mixin RequestInterface
- * @mixin ConfigurableRequestInterface
  */
 trait InteractWithData
 {

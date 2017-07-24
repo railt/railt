@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.1",
         "illuminate/support": "~5.1",
-        "yay/yay": "~0.2"
+        "hoa/compiler": "~3.17"
     },
     "autoload": {
         "psr-4": {

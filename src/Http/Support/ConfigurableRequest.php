@@ -14,7 +14,6 @@ use Serafim\Railgun\Http\RequestInterface;
 /**
  * Trait ConfigurableRequest
  * @package Serafim\Railgun\Http\Support
- * @mixin ConfigurableRequestInterface
  */
 trait ConfigurableRequest
 {

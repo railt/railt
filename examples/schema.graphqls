@@ -1,15 +1,4 @@
 type Test {
-
-}
-
-type Test1 implements TestInterface {
-}
-
-type Test2 {
-    id: ID
-    some: String
-}
-
-type Test3 {
-
+    id: [ID!]
+    some: Any
 }

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Tests;
 
 use PHPUnit\Framework\Assert;
-use Serafim\Railgun\Idl\Compiler;
+use Serafim\Railgun\IDL\Compiler;
 
 /**
  * Class CompilerTestCase
