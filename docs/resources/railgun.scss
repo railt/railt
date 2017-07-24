@@ -1,0 +1,80 @@
+@import "./base.scss";
+
+.app-nav {
+  a {
+    font-size: 13px;
+    margin-left: 5px;
+  }
+}
+
+.cover {
+  box-shadow: inset 0 -1px 0 #eee;
+}
+
+.sidebar {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+
+  &-nav {
+    margin-top: 2em;
+  }
+
+  ul li {
+    & > p {
+      color: #888;
+      font-size: 0.86em;
+      letter-spacing: 0.1em;
+      font-weight: normal;
+      text-transform: uppercase;
+      margin: 1.8em 10px 0.7em 2px;
+      padding: 0.5em 10px;
+      box-shadow: 0 1px 0 0 #eee;
+    }
+
+    a {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      color: #4a4a4a;
+    }
+  }
+
+  ul li,
+  ul li a {
+    font-size: 14px;
+
+    li li,
+    li li a {
+      font-size: 12px;
+      margin-left: 14px;
+      padding: 0;
+
+      a:before {
+        content: '-';
+        display: inline;
+        position: absolute;
+        margin-left: -10px;
+      }
+    }
+  }
+}
+
+.markdown {
+  &-section {
+    padding-bottom: 300px;
+    a {
+      &.anchor {
+        text-decoration: none;
+      }
+    }
+
+    h3 {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+.screencast {
+  padding-left: 30px;
+  background: url('https://asciinema.org/assets/logo-red-976f0504537a25e73aaef858d78b4d13c3c25bd10d3a51d65c20aa9bd3fa01a5.svg') no-repeat;
+  text-decoration: none;
+}
