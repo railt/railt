@@ -1,4 +1,4 @@
-![logo](https://habrastorage.org/web/ced/5e8/bcb/ced5e8bcbc324b15964a7b3eb805aaf5.png)
+![logo](https://raw.githubusercontent.com/SerafimArts/Railgun/master/docs/resources/logo-big.png)
 
 [GitHub](https://github.com/SerafimArts/Railgun)
 [Get Started](/README)
