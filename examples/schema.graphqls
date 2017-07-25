@@ -1,4 +1,0 @@
-type Test {
-    id: [ID!]
-    some: Any
-}
