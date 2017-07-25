@@ -26,6 +26,7 @@ class IlluminateRequest implements RequestInterface, ConfigurableRequestInterfac
     /**
      * IlluminateRequest constructor.
      * @param Request $request
+     * @throws \LogicException
      */
     public function __construct(Request $request)
     {
