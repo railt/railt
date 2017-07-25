@@ -12,7 +12,6 @@ namespace Serafim\Railgun\Compiler;
 use Hoa\File\Read;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser;
-use Hoa\Compiler\Exception as LlkException;
 use Hoa\Compiler\Exception\UnrecognizedToken;
 use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Compiler\Exceptions\NotReadableException;
@@ -37,7 +36,7 @@ class Compiler
     /**
      * Compiler constructor.
      * @param string|null $grammar
-     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws CompilerException
      */
     public function __construct(string $grammar = null)
     {
@@ -53,7 +52,7 @@ class Compiler
     {
         try {
             return Llk::load(new Read($grammar));
-        } catch (LlkException $e) {
+        } catch (\Throwable $e) {
             throw new CompilerException($e->getMessage());
         }
     }
