@@ -10,6 +10,6 @@ interface InterfaceName {
 --EXPECTF--
 
 #Document
-    #Interface
+    #InterfaceDefinition
         #Name
             token(T_NAME, InterfaceName)

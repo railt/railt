@@ -9,7 +9,6 @@
 // @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0
 //
 
-
 //
 // --------------------------------------------------------------------------
 //  GraphQL Ignored Tokens
@@ -30,7 +29,7 @@
 //
 
 %skip T_IGNORE                 [\xfe\xff|\x20|\x09|\x0a|\x0d]+
-%skip T_COMMENT                (#.*)
+%skip T_COMMENT                #.*
 
 //
 // --------------------------------------------------------------------------
@@ -56,10 +55,18 @@
 %token T_BRACKET_OPEN           \[
 %token T_BRACKET_CLOSE          \]
 %token T_BRACE_OPEN             {
-%token T_BRACE_CLOSE            }
+%token T_BRACE_CLOSE            }   -> default
 %token T_OR                     \|
-
 %token T_COMMA                  ,
+%token T_ON                     on\b
+%token T_NUMBER_VALUE           \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?
+%token T_BOOL_TRUE              true\b
+%token T_BOOL_FALSE             false\b
+%token T_NULL                   null\b
+%token T_QUOTE_OPEN             "   -> string
+%token string:T_STRING          [^"\\]+(\\.[^"\\]*)*
+%token string:T_QUOTE_CLOSE     "   -> default
+
 
 //
 // --------------------------------------------------------------------------
@@ -85,30 +92,6 @@
 %token T_SCALAR_BOOLEAN         Boolean\b
 %token T_SCALAR_ID              ID\b
 
-//
-// --------------------------------------------------------------------------
-//  GraphQL Scalar Values
-// --------------------------------------------------------------------------
-//
-//  Field and directive arguments accept input values of various literal
-//  primitives; input values can be scalars, enumeration values, lists,
-//  or input objects.
-//
-//  If not defined as constant (for example, in DefaultValue), input values
-//  can be specified as a variable. List and inputs objects may also contain
-//  variables (unless defined to be constant).
-//
-//  @see http://facebook.github.io/graphql/#sec-Input-Values
-//
-
-%token T_NUMBER_VALUE           \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?
-%token T_BOOL_TRUE              true
-%token T_BOOL_FALSE             false
-%token T_NULL                   null
-
-%token T_QUOTE_OPEN             "   -> string
-%token string:T_STRING          [^"\\]+(\\.[^"\\]*)*
-%token string:T_QUOTE_CLOSE     "   -> default
 
 //
 // --------------------------------------------------------------------------
@@ -118,12 +101,29 @@
 // @see http://facebook.github.io/graphql/#sec-Type-System
 //
 
-%token T_TYPE                   type
-%token T_ENUM                   enum
-%token T_UNION                  union
-%token T_INTERFACE              interface
-%token T_IMPLEMENTS             implements
+// Object
+%token T_TYPE                   type\b
+%token T_TYPE_IMPLEMENTS        implements\b
+// Enum
+%token T_ENUM                   enum\b
+// Union
+%token T_UNION                  union\b
+// Interface
+%token T_INTERFACE              interface\b
+// Schema
+%token T_SCHEMA                 schema\b
+%token T_SCHEMA_QUERY           query\b
+%token T_SCHEMA_MUTATION        mutation\b
+// Scalar
+%token T_SCALAR                 scalar\b
+// Directive
+%token T_DIRECTIVE              directive\b
+// Input
+%token T_INPUT                  input\b
+// Extend
+%token T_EXTEND                 extend\b
 
+// Common
 %token T_NAME                   ([_A-Za-z][_0-9A-Za-z]*)
 
 
@@ -137,9 +137,23 @@
     Definitions()*
 
 Definitions:
-    Type() | Interface() | Enum() | Union()
-
-
+    TypeDefinition()
+        |
+    InterfaceDefinition()
+        |
+    EnumDefinition()
+        |
+    UnionDefinition()
+        |
+    SchemaDefinition()
+        |
+    ScalarDefinition()
+        |
+    InputDefinition()
+        |
+    ExtendDefinition()
+        |
+    DirectiveDefinition()
 
 //
 // --------------------------------------------------------------------------
@@ -165,7 +179,11 @@ Keyword:
         |
     <T_NULL>
         |
+    <T_ON>
+        |
     <T_TYPE>
+        |
+    <T_TYPE_IMPLEMENTS>
         |
     <T_ENUM>
         |
@@ -173,7 +191,19 @@ Keyword:
         |
     <T_INTERFACE>
         |
-    <T_IMPLEMENTS>
+    <T_SCHEMA>
+        |
+    <T_SCHEMA_QUERY>
+        |
+    <T_SCHEMA_MUTATION>
+        |
+    <T_SCALAR>
+        |
+    <T_DIRECTIVE>
+        |
+    <T_INPUT>
+        |
+    <T_EXTEND>
 
 Number:
     <T_NUMBER_VALUE>
@@ -214,15 +244,96 @@ Value:
         Relation()
             |
         Object()
+            |
+        List()
     ) #Value
 
-Object:
-    ::T_BRACE_OPEN:: Pair()* ::T_COMMA::? ::T_BRACE_CLOSE::
+ValueDefinition:
+    (ValueListDefinition() <T_NON_NULL>?    #List)   |
+    (ValueScalarDefinition() <T_NON_NULL>?  #Scalar)
 
-Pair:
+ValueListDefinition:
+    ::T_BRACKET_OPEN::
+        (ValueScalarDefinition() <T_NON_NULL>? #Scalar)
+    ::T_BRACKET_CLOSE::
+
+ValueScalarDefinition:
+    Keyword() | Scalar() | <T_NAME>
+
+
+Object:
+    ::T_BRACE_OPEN::
+        (
+            ObjectPair() (
+                ::T_COMMA:: ObjectPair()
+            )?
+        )?
+    ::T_BRACE_CLOSE::
+
+ObjectPair:
     Key() ::T_COLON:: Value()
 
+List:
+    ::T_BRACKET_OPEN::
+        (
+            Value() (
+                ::T_COMMA:: Value()
+            )?
+        )?
+    ::T_BRACKET_CLOSE::
 
+
+// TODO Schema
+#SchemaDefinition:
+    ::T_SCHEMA:: Directive()* ::T_BRACE_OPEN:: SchemaBody() ::T_BRACE_CLOSE::
+
+SchemaBody:
+    (
+        SchemaQuery()
+        SchemaMutation()?
+    )
+        |
+    (
+        SchemaMutation()
+        SchemaQuery()
+    )
+
+SchemaQuery:
+    ::T_SCHEMA_QUERY:: ::T_COLON:: TypeFieldValue() #Query
+
+SchemaMutation:
+    ::T_SCHEMA_MUTATION:: ::T_COLON:: TypeFieldValue() #Mutation
+
+// TODO Scalar
+#ScalarDefinition:
+    ::T_SCALAR::
+
+// TODO Input
+#InputDefinition:
+    ::T_INPUT::
+
+// TODO Extend
+#ExtendDefinition:
+    ::T_EXTEND::
+
+// TODO Directive
+#DirectiveDefinition:
+    ::T_DIRECTIVE::
+
+// TODO Arguments
+#Arguments:
+    ::T_PARENTHESIS_OPEN::
+        ArgumentsBody()*
+    ::T_PARENTHESIS_CLOSE::
+
+ArgumentsBody:
+    ArgumentPair() (::T_COMMA:: ArgumentPair())*
+
+ArgumentPair:
+    Key() ::T_COLON:: ValueDefinition() ArgumentDefaultValue()? Directive()*
+
+ArgumentDefaultValue:
+    ::T_EQUAL:: Value() #DefaultValue
 
 //
 // --------------------------------------------------------------------------
@@ -240,10 +351,7 @@ Pair:
 //
 
 #Directive:
-    ::T_DIRECTIVE_AT:: DirectiveName() DirectiveArguments()?
-
-DirectiveName:
-    Key()
+    ::T_DIRECTIVE_AT:: Key() DirectiveArguments()?
 
 DirectiveArguments:
     ::T_PARENTHESIS_OPEN:: DirectiveArgument()* ::T_PARENTHESIS_CLOSE::
@@ -253,7 +361,7 @@ DirectiveArgument:
     DirectivePair() (::T_COMMA:: DirectivePair())*
 
 DirectivePair:
-    Pair() #Pair
+    ObjectPair() #Pair
 
 DirectiveArgumentName:
     Key()
@@ -269,8 +377,6 @@ DirectiveObjectValue:
 
 DirectiveStringValue:
     ::T_QUOTE_OPEN:: <T_STRING> ::T_QUOTE_CLOSE::
-
-
 
 //
 // --------------------------------------------------------------------------
@@ -292,35 +398,17 @@ DirectiveStringValue:
 //  @see http://facebook.github.io/graphql/#sec-Objects
 //
 
-#Type:
+#TypeDefinition:
     ::T_TYPE:: Key() TypeImplements()? Directive()* ::T_BRACE_OPEN:: TypeField()* ::T_BRACE_CLOSE::
 
 TypeImplements:
-    ::T_IMPLEMENTS:: (Key() ::T_COMMA::? #Interface)+
+    ::T_TYPE_IMPLEMENTS:: (Key() ::T_COMMA::? #Implements)+
 
 TypeField:
-    (TypeFieldKey() ::T_COLON:: TypeFieldValue() Directive()* ::T_COMMA::?) #Field
-
-TypeFieldKey:
-    Key()
+    (Key() Arguments()? ::T_COLON:: TypeFieldValue()) #Field
 
 TypeFieldValue:
-    (TypeFieldListValue() <T_NON_NULL>? #List)   |
-    (TypeFieldScalar() <T_NON_NULL>?    #Scalar)
-
-TypeFieldListValue:
-    ::T_BRACKET_OPEN::
-        (TypeFieldScalar() <T_NON_NULL>? #Scalar)
-    ::T_BRACKET_CLOSE::
-
-TypeFieldScalar:
-    Keyword()
-        |
-    Scalar()
-        |
-    <T_NAME>
-
-
+    ValueDefinition() Directive()* ::T_COMMA::?
 
 //
 // --------------------------------------------------------------------------
@@ -339,36 +427,20 @@ TypeFieldScalar:
 //  @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0/#interface
 //
 
-#Interface:
-    ::T_INTERFACE:: Key() ::T_BRACE_OPEN:: InterfaceBody() ::T_BRACE_CLOSE::
+#InterfaceDefinition:
+    ::T_INTERFACE:: Key() Directive()* ::T_BRACE_OPEN:: InterfaceBody() ::T_BRACE_CLOSE::
 
 InterfaceBody:
     InterfaceField()*
 
 InterfaceField:
-    (InterfaceFieldKey() ::T_COLON:: InterfaceFieldValue() ::T_COMMA::?) #Field
+    (
+        InterfaceFieldKey() ::T_COLON:: TypeFieldValue()
+    )
+    #Field
 
 InterfaceFieldKey:
-    Key()
-
-InterfaceFieldValue:
-    (InterfaceFieldListValue() <T_NON_NULL>? #List)
-        |
-    (InterfaceFieldScalar() <T_NON_NULL>?    #Scalar)
-
-InterfaceFieldListValue:
-    ::T_BRACKET_OPEN::
-        (InterfaceFieldScalar() <T_NON_NULL>? #Scalar)
-    ::T_BRACKET_CLOSE::
-
-InterfaceFieldScalar:
-    Keyword()
-        |
-    Scalar()
-        |
-    <T_NAME>
-
-
+    Key() Arguments()?
 
 //
 // --------------------------------------------------------------------------
@@ -386,7 +458,7 @@ InterfaceFieldScalar:
 //  @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0/?r#enum
 //
 
-#Enum:
+#EnumDefinition:
     ::T_ENUM:: Key() ::T_BRACE_OPEN:: EnumBody() ::T_BRACE_CLOSE::
 
 EnumBody:
@@ -417,8 +489,9 @@ EnumField:
 //  @see http://facebook.github.io/graphql/#sec-Unions
 //
 
-#Union:
-    ::T_UNION:: Key() ::T_EQUAL:: UnionBody()
+#UnionDefinition:
+    ::T_UNION:: Key() Directive()* ::T_EQUAL:: UnionBody()
+
 
 UnionBody:
     UnionUnites()+ #Relations

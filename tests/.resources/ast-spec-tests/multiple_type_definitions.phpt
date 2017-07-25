@@ -15,10 +15,10 @@ type B {
 --EXPECTF--
 
 #Document
-    #Type
+    #TypeDefinition
         #Name
             token(T_NAME, A)
-        #Interface
+        #Implements
             #Name
                 token(T_NAME, A)
             #Name
@@ -41,7 +41,7 @@ type B {
             #Directive
                 #Name
                     token(T_NAME, isUnique)
-    #Type
+    #TypeDefinition
         #Name
             token(T_NAME, B)
         #Field

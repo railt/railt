@@ -3,36 +3,37 @@
 Complex type declaration
 
 --FILE--
-#
-# @see https://github.com/graphql/graphql-js/blob/master/src/language/__tests__/schema-kitchen-sink.graphql
-#
+schema {
+    query: QueryType
+    mutation: MutationType
+}
 
 schema {
-  query: QueryType
-  mutation: MutationType
+    mutation: MutationType
+    query: QueryType
 }
 
 type Foo implements Bar {
-  one: Type
-  two(argument: InputType!): Type
-  three(argument: InputType, other: String): Int
-  four(argument: String = "string"): String
-  five(argument: [String] = ["string", "string"]): String
-  six(argument: InputType = {key: "value"}): Type
-  seven(argument: Int = null): Type
+    one: Type
+    two(argument: InputType!): Type
+    three(argument: InputType, other: String): Int
+    four(argument: String = "string"): String
+    five(argument: [String] = ["string", "string"]): String
+    six(argument: InputType = {key: "value"}): Type
+    seven(argument: Int = null): Type
 }
 
 type AnnotatedObject @onObject(arg: "value") {
-  annotatedField(arg: Type = "default" @onArg): Type @onField
+    annotatedField(arg: Type = "default" @onArg): Type @onField
 }
 
 interface Bar {
-  one: Type
-  four(argument: String = "string"): String
+    one: Type
+    four(argument: String = "string"): String
 }
 
 interface AnnotatedInterface @onInterface {
-  annotatedField(arg: Type @onArg): Type @onField
+    annotatedField(arg: Type @onArg): Type @onField
 }
 
 union Feed = Story | Article | Advert
@@ -46,26 +47,26 @@ scalar CustomScalar
 scalar AnnotatedScalar @onScalar
 
 enum Site {
-  DESKTOP
-  MOBILE
+    DESKTOP
+    MOBILE
 }
 
 enum AnnotatedEnum @onEnum {
-  ANNOTATED_VALUE @onEnumValue
-  OTHER_VALUE
+    ANNOTATED_VALUE @onEnumValue
+    OTHER_VALUE
 }
 
 input InputType {
-  key: String!
-  answer: Int = 42
+    key: String!
+    answer: Int = 42
 }
 
 input AnnotatedInput @onInputObjectType {
-  annotatedField: Type @onField
+    annotatedField: Type @onField
 }
 
 extend type Foo {
-  seven(argument: [String]): Type
+    seven(argument: [String]): Type
 }
 
 extend type Foo @onType {}
@@ -75,18 +76,18 @@ type NoFields {}
 directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
 
 directive @include(if: Boolean!)
-  on FIELD
-   | FRAGMENT_SPREAD
-   | INLINE_FRAGMENT
+on FIELD
+    | FRAGMENT_SPREAD
+    | INLINE_FRAGMENT
 
 directive @include2(if: Boolean!) on
-  | FIELD
-  | FRAGMENT_SPREAD
-  | INLINE_FRAGMENT
+    | FIELD
+    | FRAGMENT_SPREAD
+    | INLINE_FRAGMENT
 --EXPECTF--
 
 #Document
-    #Interface
+    #InterfaceDefinition
         #Name
             token(T_NAME, HasTimestamps)
         #Field
@@ -99,7 +100,7 @@ directive @include2(if: Boolean!) on
                 token(T_NAME, updatedAt)
             #Scalar
                 token(T_SCALAR_STRING, String)
-    #Interface
+    #InterfaceDefinition
         #Name
             token(T_NAME, UserInterface)
         #Field
@@ -121,10 +122,10 @@ directive @include2(if: Boolean!) on
             #Scalar
                 token(T_NAME, UserStatus)
                 token(T_NON_NULL, !)
-    #Type
+    #TypeDefinition
         #Name
             token(T_NAME, User)
-        #Interface
+        #InterfaceDefinition
             #Name
                 token(T_NAME, UserInterface)
             #Name
@@ -183,7 +184,7 @@ directive @include2(if: Boolean!) on
                 token(T_NAME, UserInterface)
             #Name
                 token(T_NAME, HasTimestamps)
-    #Type
+    #TypeDefinition
         #Name
             token(T_NAME, SearchQuery)
         #Field

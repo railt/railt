@@ -10,7 +10,7 @@ type A @Directive(key: value, key2: value2) {
 --EXPECTF--
 
 #Document
-    #Type
+    #TypeDefinition
         #Name
             token(T_NAME, A)
         #Directive

@@ -18,13 +18,21 @@ type A {
     # Fields named as keywords
     #
     null: Null
-    enum: Enum
-    type: Type
     true: True
     false: False
+    on: On
+    type: Type
+    enum: Enum
     union: Union
     interface: Interface
     implements: Implements
+    schema: Schema
+    query: Query
+    mutation: Mutation
+    scalar: Scalar
+    directive: Directive
+    input: Input
+    extend: Extend
 
     #
     # List of fields in alphabetical order
@@ -60,7 +68,7 @@ type A {
 --EXPECTF--
 
 #Document
-    #Type
+    #TypeDefinition
         #Name
             token(T_NAME, A)
         #Field
@@ -95,16 +103,6 @@ type A {
                 token(T_NAME, Null)
         #Field
             #Name
-                token(T_ENUM, enum)
-            #Scalar
-                token(T_NAME, Enum)
-        #Field
-            #Name
-                token(T_TYPE, type)
-            #Scalar
-                token(T_NAME, Type)
-        #Field
-            #Name
                 token(T_BOOL_TRUE, true)
             #Scalar
                 token(T_NAME, True)
@@ -113,6 +111,21 @@ type A {
                 token(T_BOOL_FALSE, false)
             #Scalar
                 token(T_NAME, False)
+        #Field
+            #Name
+                token(T_ON, on)
+            #Scalar
+                token(T_NAME, On)
+        #Field
+            #Name
+                token(T_TYPE, type)
+            #Scalar
+                token(T_NAME, Type)
+        #Field
+            #Name
+                token(T_ENUM, enum)
+            #Scalar
+                token(T_NAME, Enum)
         #Field
             #Name
                 token(T_UNION, union)
@@ -125,9 +138,44 @@ type A {
                 token(T_NAME, Interface)
         #Field
             #Name
-                token(T_IMPLEMENTS, implements)
+                token(T_TYPE_IMPLEMENTS, implements)
             #Scalar
                 token(T_NAME, Implements)
+        #Field
+            #Name
+                token(T_SCHEMA, schema)
+            #Scalar
+                token(T_NAME, Schema)
+        #Field
+            #Name
+                token(T_SCHEMA_QUERY, query)
+            #Scalar
+                token(T_NAME, Query)
+        #Field
+            #Name
+                token(T_SCHEMA_MUTATION, mutation)
+            #Scalar
+                token(T_NAME, Mutation)
+        #Field
+            #Name
+                token(T_SCALAR, scalar)
+            #Scalar
+                token(T_NAME, Scalar)
+        #Field
+            #Name
+                token(T_DIRECTIVE, directive)
+            #Scalar
+                token(T_NAME, Directive)
+        #Field
+            #Name
+                token(T_INPUT, input)
+            #Scalar
+                token(T_NAME, Input)
+        #Field
+            #Name
+                token(T_EXTEND, extend)
+            #Scalar
+                token(T_NAME, Extend)
         #Field
             #Name
                 token(T_NAME, aa)

@@ -10,10 +10,10 @@ type A implements B, C @Directive(key: value) {
 --EXPECTF--
 
 #Document
-    #Type
+    #TypeDefinition
         #Name
             token(T_NAME, A)
-        #Interface
+        #Implements
             #Name
                 token(T_NAME, B)
             #Name

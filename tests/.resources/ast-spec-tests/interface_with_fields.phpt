@@ -13,7 +13,7 @@ interface HasTimestamps {
 --EXPECTF--
 
 #Document
-    #Interface
+    #InterfaceDefinition
         #Name
             token(T_NAME, HasTimestamps)
         #Field
