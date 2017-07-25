@@ -1,2 +1,5 @@
 .idea/
 vendor/
+*.phpt.out
+*.phpt.exp
+*.phpt.diff

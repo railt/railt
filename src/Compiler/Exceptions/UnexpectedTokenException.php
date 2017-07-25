@@ -26,10 +26,7 @@ class UnexpectedTokenException extends \ParseError
     {
         parent::__construct($parent->getMessage(), $parent->getCode());
 
-        if ($info !== null) {
-            $this->file = $info->getPathname();
-        }
-
+        $this->file = $info === null ? 'php://input' : $info->getPathname();
         $this->line = $parent->getLine();
     }
 }

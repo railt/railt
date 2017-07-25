@@ -76,6 +76,11 @@ class Document
      */
     public function dump(): string
     {
-        return (string)(new Dump())->visit($this->ast);
+        $result = (string)(new Dump())->visit($this->ast);
+
+        $result = str_replace('>  ', '    ', $result);
+        $result = preg_replace('/^\s{4}/ium', '', $result);
+
+        return $result;
     }
 }
