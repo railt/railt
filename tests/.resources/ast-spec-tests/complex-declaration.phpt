@@ -3,38 +3,86 @@
 Complex type declaration
 
 --FILE--
-interface HasTimestamps {
-    createdAt: String
-    updatedAt: String
+#
+# @see https://github.com/graphql/graphql-js/blob/master/src/language/__tests__/schema-kitchen-sink.graphql
+#
+
+schema {
+  query: QueryType
+  mutation: MutationType
 }
 
-interface UserInterface {
-    id: ID!
-    friends: [User!]
-    status: UserStatus!
+type Foo implements Bar {
+  one: Type
+  two(argument: InputType!): Type
+  three(argument: InputType, other: String): Int
+  four(argument: String = "string"): String
+  five(argument: [String] = ["string", "string"]): String
+  six(argument: InputType = {key: "value"}): Type
+  seven(argument: Int = null): Type
 }
 
-type User implements UserInterface, HasTimestamps {
-    id: ID! @isUnique
-    friends: [User!] @meta(
-        relatedTo: User,
-        description: "List of friends which contains a friendship with parent =)"
-    )
-    status: UserStatus!
-    createdAt: String
-    updatedAt: String
+type AnnotatedObject @onObject(arg: "value") {
+  annotatedField(arg: Type = "default" @onArg): Type @onField
 }
 
-union SearchResult = UserInterface | HasTimestamps
-
-type SearchQuery {
-    result: SearchResult
+interface Bar {
+  one: Type
+  four(argument: String = "string"): String
 }
 
-enum UserStatus {
-    ACTIVE,
-    NOT_ACTIVE
+interface AnnotatedInterface @onInterface {
+  annotatedField(arg: Type @onArg): Type @onField
 }
+
+union Feed = Story | Article | Advert
+
+union AnnotatedUnion @onUnion = A | B
+
+union AnnotatedUnionTwo @onUnion = | A | B
+
+scalar CustomScalar
+
+scalar AnnotatedScalar @onScalar
+
+enum Site {
+  DESKTOP
+  MOBILE
+}
+
+enum AnnotatedEnum @onEnum {
+  ANNOTATED_VALUE @onEnumValue
+  OTHER_VALUE
+}
+
+input InputType {
+  key: String!
+  answer: Int = 42
+}
+
+input AnnotatedInput @onInputObjectType {
+  annotatedField: Type @onField
+}
+
+extend type Foo {
+  seven(argument: [String]): Type
+}
+
+extend type Foo @onType {}
+
+type NoFields {}
+
+directive @skip(if: Boolean!) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+directive @include(if: Boolean!)
+  on FIELD
+   | FRAGMENT_SPREAD
+   | INLINE_FRAGMENT
+
+directive @include2(if: Boolean!) on
+  | FIELD
+  | FRAGMENT_SPREAD
+  | INLINE_FRAGMENT
 --EXPECTF--
 
 #Document
