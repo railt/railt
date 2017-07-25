@@ -82,7 +82,7 @@ trait SpecSupport
     private function specDiff(SpecTest $spec, string $actual): string
     {
         if (0 === stripos(PHP_OS, 'WIN')) {
-            $this->markTestIncomplete('Windows OS probably does not support "diff" command');
+            //$this->markTestIncomplete('Windows OS probably does not support "diff" command');
 
             return '';
         }

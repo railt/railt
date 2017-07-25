@@ -110,7 +110,13 @@
 %token string:T_STRING          [^"\\]+(\\.[^"\\]*)*
 %token string:T_QUOTE_CLOSE     "   -> default
 
-// Keywords
+//
+// --------------------------------------------------------------------------
+//  GraphQL Keywords
+// --------------------------------------------------------------------------
+//
+// @see http://facebook.github.io/graphql/#sec-Type-System
+//
 
 %token T_TYPE                   type
 %token T_ENUM                   enum
@@ -121,11 +127,25 @@
 %token T_NAME                   ([_A-Za-z][_0-9A-Za-z]*)
 
 
+//
+// --------------------------------------------------------------------------
+//  GraphQL Document Definition
+// --------------------------------------------------------------------------
+//
+
 #Document:
     Definitions()*
 
 Definitions:
     Type() | Interface() | Enum() | Union()
+
+
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Common Structures
+// --------------------------------------------------------------------------
+//
 
 Scalar:
     <T_SCALAR_INTEGER>
@@ -203,6 +223,7 @@ Pair:
     Key() ::T_COLON:: Value()
 
 
+
 //
 // --------------------------------------------------------------------------
 //  GraphQL Directives
@@ -249,6 +270,8 @@ DirectiveObjectValue:
 DirectiveStringValue:
     ::T_QUOTE_OPEN:: <T_STRING> ::T_QUOTE_CLOSE::
 
+
+
 //
 // --------------------------------------------------------------------------
 // GraphQL Object (Type) Definitions
@@ -291,13 +314,17 @@ TypeFieldListValue:
     ::T_BRACKET_CLOSE::
 
 TypeFieldScalar:
-    Keyword() |
-    Scalar()  |
+    Keyword()
+        |
+    Scalar()
+        |
     <T_NAME>
+
+
 
 //
 // --------------------------------------------------------------------------
-// GraphQL Interface Definitions
+//  GraphQL Interface Definitions
 // --------------------------------------------------------------------------
 //
 //  GraphQL Interfaces represent a list of named fields and their arguments.
@@ -325,7 +352,8 @@ InterfaceFieldKey:
     Key()
 
 InterfaceFieldValue:
-    (InterfaceFieldListValue() <T_NON_NULL>? #List)   |
+    (InterfaceFieldListValue() <T_NON_NULL>? #List)
+        |
     (InterfaceFieldScalar() <T_NON_NULL>?    #Scalar)
 
 InterfaceFieldListValue:
@@ -334,12 +362,29 @@ InterfaceFieldListValue:
     ::T_BRACKET_CLOSE::
 
 InterfaceFieldScalar:
-    Keyword() |
-    Scalar()  |
+    Keyword()
+        |
+    Scalar()
+        |
     <T_NAME>
 
 
-// TODO Enums
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Enum Definitions
+// --------------------------------------------------------------------------
+//
+//  GraphQL Enums are a variant on the Scalar type, which represents one
+//  of a finite set of possible values.
+//
+//  GraphQL Enums are not references for a numeric value, but are unique
+//  values in their own right. They serialize as a string: the name
+//  of the represented value.
+//
+//  @see http://facebook.github.io/graphql/#sec-Enums
+//  @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0/?r#enum
+//
 
 #Enum:
     ::T_ENUM:: Key() ::T_BRACE_OPEN:: EnumBody() ::T_BRACE_CLOSE::
@@ -351,7 +396,26 @@ EnumField:
     Key() ::T_COMMA::?
 
 
-// TODO Unions
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Union Definitions
+// --------------------------------------------------------------------------
+//
+//  GraphQL Unions represent an object that could be one of a list of
+//  GraphQL Object types, but provides for no guaranteed fields between
+//  those types. They also differ from interfaces in that Object types
+//  declare what interfaces they implement, but are not aware of
+//  what unions contain them.
+//
+//  With interfaces and objects, only those fields defined on the type can
+//  be queried directly; to query other fields on an interface, typed
+//  fragments must be used. This is the same as for unions, but unions
+//  do not define any fields, so no fields may be queried on this
+//  type without the use of typed fragments.
+//
+//  @see http://facebook.github.io/graphql/#sec-Unions
+//
 
 #Union:
     ::T_UNION:: Key() ::T_EQUAL:: UnionBody()

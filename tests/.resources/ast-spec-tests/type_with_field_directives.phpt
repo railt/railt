@@ -4,11 +4,12 @@ Type parsing with type and field directives
 
 --FILE--
 
-type A implements A, B @DirectiveA(key: value) {
-    fieldA: Value @DirectiveB(key: value)
+type A {
+    fieldA: Value
+        @DirectiveB(key: value)
         @DirectiveC(key: value)
-    fieldB: ID @DirectiveD(key: value)
-        @DirectiveE(key: value)
+
+    fieldB: ID @DirectiveD(key: value) @DirectiveE
 }
 
 --EXPECTF--
@@ -17,20 +18,6 @@ type A implements A, B @DirectiveA(key: value) {
     #Type
         #Name
             token(T_NAME, A)
-        #Interface
-            #Name
-                token(T_NAME, A)
-            #Name
-                token(T_NAME, B)
-        #Directive
-            #Name
-                token(T_NAME, DirectiveA)
-            #Arguments
-                #Pair
-                    #Name
-                        token(T_NAME, key)
-                    #Value
-                        token(T_NAME, value)
         #Field
             #Name
                 token(T_NAME, fieldA)
@@ -71,9 +58,3 @@ type A implements A, B @DirectiveA(key: value) {
             #Directive
                 #Name
                     token(T_NAME, DirectiveE)
-                #Arguments
-                    #Pair
-                        #Name
-                            token(T_NAME, key)
-                        #Value
-                            token(T_NAME, value)
