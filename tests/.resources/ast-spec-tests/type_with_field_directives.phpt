@@ -15,19 +15,19 @@ type A {
 --EXPECTF--
 
 #Document
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, A)
         #Field
             #Name
                 token(T_NAME, fieldA)
-            #Scalar
+            #Type
                 token(T_NAME, Value)
             #Directive
                 #Name
                     token(T_NAME, DirectiveB)
-                #Arguments
-                    #Pair
+                #Argument
+                    #Object
                         #Name
                             token(T_NAME, key)
                         #Value
@@ -35,8 +35,8 @@ type A {
             #Directive
                 #Name
                     token(T_NAME, DirectiveC)
-                #Arguments
-                    #Pair
+                #Argument
+                    #Object
                         #Name
                             token(T_NAME, key)
                         #Value
@@ -44,13 +44,13 @@ type A {
         #Field
             #Name
                 token(T_NAME, fieldB)
-            #Scalar
+            #Type
                 token(T_SCALAR_ID, ID)
             #Directive
                 #Name
                     token(T_NAME, DirectiveD)
-                #Arguments
-                    #Pair
+                #Argument
+                    #Object
                         #Name
                             token(T_NAME, key)
                         #Value

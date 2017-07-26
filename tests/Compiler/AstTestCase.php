@@ -34,6 +34,7 @@ class AstTestCase extends AbstractTestCase
     /**
      * @dataProvider specProvider
      * @param SpecTest $spec
+     * @throws ExpectationFailedException
      * @throws UnexpectedTokenException
      */
     public function testSpecs(SpecTest $spec): void
@@ -45,6 +46,7 @@ class AstTestCase extends AbstractTestCase
         $compiler = new Compiler();
 
         $document = $compiler->parse($spec->getIn());
+
         $dump = trim($document->dump());
 
         try {

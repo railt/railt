@@ -15,7 +15,7 @@ type A {
     String: String  # Allowed name "String"
 
     #
-    # Fields named as keywords
+    # Fields named as keywords WAS NOT BE SUPPORTED
     #
     null: Null
     true: True
@@ -68,241 +68,241 @@ type A {
 --EXPECTF--
 
 #Document
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, A)
         #Field
             #Name
                 token(T_SCALAR_ID, ID)
-            #Scalar
+            #Type
                 token(T_SCALAR_ID, ID)
         #Field
             #Name
                 token(T_SCALAR_INTEGER, Int)
-            #Scalar
+            #Type
                 token(T_SCALAR_INTEGER, Int)
         #Field
             #Name
                 token(T_NAME, Bool)
-            #Scalar
+            #Type
                 token(T_NAME, Bool)
         #Field
             #Name
                 token(T_SCALAR_FLOAT, Float)
-            #Scalar
+            #Type
                 token(T_SCALAR_FLOAT, Float)
         #Field
             #Name
                 token(T_SCALAR_STRING, String)
-            #Scalar
+            #Type
                 token(T_SCALAR_STRING, String)
         #Field
             #Name
                 token(T_NULL, null)
-            #Scalar
+            #Type
                 token(T_NAME, Null)
         #Field
             #Name
                 token(T_BOOL_TRUE, true)
-            #Scalar
+            #Type
                 token(T_NAME, True)
         #Field
             #Name
                 token(T_BOOL_FALSE, false)
-            #Scalar
+            #Type
                 token(T_NAME, False)
         #Field
             #Name
                 token(T_ON, on)
-            #Scalar
+            #Type
                 token(T_NAME, On)
         #Field
             #Name
                 token(T_TYPE, type)
-            #Scalar
+            #Type
                 token(T_NAME, Type)
         #Field
             #Name
                 token(T_ENUM, enum)
-            #Scalar
+            #Type
                 token(T_NAME, Enum)
         #Field
             #Name
                 token(T_UNION, union)
-            #Scalar
+            #Type
                 token(T_NAME, Union)
         #Field
             #Name
                 token(T_INTERFACE, interface)
-            #Scalar
+            #Type
                 token(T_NAME, Interface)
         #Field
             #Name
                 token(T_TYPE_IMPLEMENTS, implements)
-            #Scalar
+            #Type
                 token(T_NAME, Implements)
         #Field
             #Name
                 token(T_SCHEMA, schema)
-            #Scalar
+            #Type
                 token(T_NAME, Schema)
         #Field
             #Name
                 token(T_SCHEMA_QUERY, query)
-            #Scalar
+            #Type
                 token(T_NAME, Query)
         #Field
             #Name
                 token(T_SCHEMA_MUTATION, mutation)
-            #Scalar
+            #Type
                 token(T_NAME, Mutation)
         #Field
             #Name
                 token(T_SCALAR, scalar)
-            #Scalar
+            #Type
                 token(T_NAME, Scalar)
         #Field
             #Name
                 token(T_DIRECTIVE, directive)
-            #Scalar
+            #Type
                 token(T_NAME, Directive)
         #Field
             #Name
                 token(T_INPUT, input)
-            #Scalar
+            #Type
                 token(T_NAME, Input)
         #Field
             #Name
                 token(T_EXTEND, extend)
-            #Scalar
+            #Type
                 token(T_NAME, Extend)
         #Field
             #Name
                 token(T_NAME, aa)
-            #Scalar
+            #Type
                 token(T_NAME, aa)
         #Field
             #Name
                 token(T_NAME, bb)
-            #Scalar
+            #Type
                 token(T_NAME, bb)
         #Field
             #Name
                 token(T_NAME, cc)
-            #Scalar
+            #Type
                 token(T_NAME, cc)
         #Field
             #Name
                 token(T_NAME, dd)
-            #Scalar
+            #Type
                 token(T_NAME, dd)
         #Field
             #Name
                 token(T_NAME, ee)
-            #Scalar
+            #Type
                 token(T_NAME, ee)
         #Field
             #Name
                 token(T_NAME, ff)
-            #Scalar
+            #Type
                 token(T_NAME, ff)
         #Field
             #Name
                 token(T_NAME, gg)
-            #Scalar
+            #Type
                 token(T_NAME, gg)
         #Field
             #Name
                 token(T_NAME, hh)
-            #Scalar
+            #Type
                 token(T_NAME, hh)
         #Field
             #Name
                 token(T_NAME, ii)
-            #Scalar
+            #Type
                 token(T_NAME, ii)
         #Field
             #Name
                 token(T_NAME, jj)
-            #Scalar
+            #Type
                 token(T_NAME, jj)
         #Field
             #Name
                 token(T_NAME, kk)
-            #Scalar
+            #Type
                 token(T_NAME, kk)
         #Field
             #Name
                 token(T_NAME, ll)
-            #Scalar
+            #Type
                 token(T_NAME, ll)
         #Field
             #Name
                 token(T_NAME, mm)
-            #Scalar
+            #Type
                 token(T_NAME, mm)
         #Field
             #Name
                 token(T_NAME, nn)
-            #Scalar
+            #Type
                 token(T_NAME, nn)
         #Field
             #Name
                 token(T_NAME, oo)
-            #Scalar
+            #Type
                 token(T_NAME, oo)
         #Field
             #Name
                 token(T_NAME, pp)
-            #Scalar
+            #Type
                 token(T_NAME, pp)
         #Field
             #Name
                 token(T_NAME, qq)
-            #Scalar
+            #Type
                 token(T_NAME, qq)
         #Field
             #Name
                 token(T_NAME, rr)
-            #Scalar
+            #Type
                 token(T_NAME, rr)
         #Field
             #Name
                 token(T_NAME, ss)
-            #Scalar
+            #Type
                 token(T_NAME, ss)
         #Field
             #Name
                 token(T_NAME, tt)
-            #Scalar
+            #Type
                 token(T_NAME, tt)
         #Field
             #Name
                 token(T_NAME, uu)
-            #Scalar
+            #Type
                 token(T_NAME, uu)
         #Field
             #Name
                 token(T_NAME, vv)
-            #Scalar
+            #Type
                 token(T_NAME, vv)
         #Field
             #Name
                 token(T_NAME, ww)
-            #Scalar
+            #Type
                 token(T_NAME, ww)
         #Field
             #Name
                 token(T_NAME, xx)
-            #Scalar
+            #Type
                 token(T_NAME, xx)
         #Field
             #Name
                 token(T_NAME, yy)
-            #Scalar
+            #Type
                 token(T_NAME, yy)
         #Field
             #Name
                 token(T_NAME, zz)
-            #Scalar
+            #Type
                 token(T_NAME, zz)

@@ -15,7 +15,7 @@ type B {
 --EXPECTF--
 
 #Document
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, A)
         #Implements
@@ -26,8 +26,8 @@ type B {
         #Directive
             #Name
                 token(T_NAME, DirectiveA)
-            #Arguments
-                #Pair
+            #Argument
+                #Object
                     #Name
                         token(T_NAME, key)
                     #Value
@@ -35,19 +35,19 @@ type B {
         #Field
             #Name
                 token(T_NAME, id)
-            #Scalar
+            #Type
                 token(T_SCALAR_ID, ID)
                 token(T_NON_NULL, !)
             #Directive
                 #Name
                     token(T_NAME, isUnique)
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, B)
         #Field
             #Name
                 token(T_NAME, id)
-            #Scalar
+            #Type
                 token(T_SCALAR_ID, ID)
             #Directive
                 #Name

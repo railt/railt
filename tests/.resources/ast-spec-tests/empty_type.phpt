@@ -10,7 +10,7 @@ type A {
 --EXPECTF--
 
 #Document
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, A)
 

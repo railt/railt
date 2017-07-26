@@ -10,7 +10,7 @@ type A implements B, C @Directive(key: value) {
 --EXPECTF--
 
 #Document
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, A)
         #Implements
@@ -21,8 +21,8 @@ type A implements B, C @Directive(key: value) {
         #Directive
             #Name
                 token(T_NAME, Directive)
-            #Arguments
-                #Pair
+            #Argument
+                #Object
                     #Name
                         token(T_NAME, key)
                     #Value

@@ -10,7 +10,7 @@ type A implements B, C {
 --EXPECTF--
 
 #Document
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, A)
         #Implements

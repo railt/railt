@@ -14,47 +14,47 @@ type User {
 --EXPECTF--
 
 #Document
-    #TypeDefinition
+    #ObjectDefinition
         #Name
             token(T_NAME, User)
         #Field
             #Name
                 token(T_NAME, id)
-            #Scalar
+            #Type
                 token(T_SCALAR_ID, ID)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, name)
-            #Arguments
+            #Argument
                 #Name
                     token(T_NAME, firstName)
-                #Scalar
+                #Type
                     token(T_SCALAR_BOOLEAN, Boolean)
+            #Argument
                 #Name
                     token(T_NAME, lastName)
-                #Scalar
+                #Type
                     token(T_SCALAR_BOOLEAN, Boolean)
-            #List
-                #Scalar
+            #Type
+                #List
                     token(T_SCALAR_STRING, String)
-                token(T_NON_NULL, !)
+                    token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, email)
-            #Scalar
+            #Type
                 token(T_SCALAR_STRING, String)
         #Field
             #Name
                 token(T_NAME, createdAt)
-            #Arguments
+            #Argument
                 #Name
                     token(T_NAME, dateFormat)
-                #Scalar
+                #Type
                     token(T_SCALAR_STRING, String)
                     token(T_NON_NULL, !)
-                #DefaultValue
-                    #Value
-                        token(string:T_STRING, Some)
-            #Scalar
+                #Value
+                    token(string:T_STRING, Some)
+            #Type
                 token(T_SCALAR_STRING, String)

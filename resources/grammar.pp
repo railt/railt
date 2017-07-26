@@ -27,10 +27,14 @@
 //  @see http://facebook.github.io/graphql/#sec-Appendix-Grammar-Summary.Ignored-Tokens
 //
 //
-
+//                             [ BOM | WHITESPACE | HTAB | LF | CR ]
 %skip T_IGNORE                 [\xfe\xff|\x20|\x09|\x0a|\x0d]+
 %skip T_COMMENT                #.*
 
+
+// ==========================================================================
+//                                  TOKENS
+// ==========================================================================
 //
 // --------------------------------------------------------------------------
 // GraphQL Punctuators
@@ -59,7 +63,7 @@
 %token T_OR                     \|
 %token T_COMMA                  ,
 %token T_ON                     on\b
-%token T_NUMBER_VALUE           \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?
+%token T_NUMBER_VALUE           \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b
 %token T_BOOL_TRUE              true\b
 %token T_BOOL_FALSE             false\b
 %token T_NULL                   null\b
@@ -127,17 +131,15 @@
 %token T_NAME                   ([_A-Za-z][_0-9A-Za-z]*)
 
 
-//
-// --------------------------------------------------------------------------
-//  GraphQL Document Definition
-// --------------------------------------------------------------------------
-//
+// ==========================================================================
+//                                 DOCUMENT
+// ==========================================================================
 
 #Document:
     Definitions()*
 
 Definitions:
-    TypeDefinition()
+    ObjectDefinition()
         |
     InterfaceDefinition()
         |
@@ -155,11 +157,9 @@ Definitions:
         |
     DirectiveDefinition()
 
-//
-// --------------------------------------------------------------------------
-//  GraphQL Common Structures
-// --------------------------------------------------------------------------
-//
+// ==========================================================================
+//                           COMMON STRUCTURES
+// ==========================================================================
 
 Scalar:
     <T_SCALAR_INTEGER>
@@ -172,13 +172,14 @@ Scalar:
         |
     <T_SCALAR_ID>
 
-Keyword:
+ValueKeyword:
     <T_BOOL_TRUE>
         |
     <T_BOOL_FALSE>
         |
     <T_NULL>
-        |
+
+Keyword:
     <T_ON>
         |
     <T_TYPE>
@@ -220,11 +221,22 @@ String:
 Relation:
     <T_NAME>
 
+Name:
+    (
+        Scalar()
+            |
+        ValueKeyword()
+            |
+        Relation()
+    ) #Name
+
 Key:
     (
         Scalar()
             |
         Keyword()
+            |
+        ValueKeyword()
             |
         Relation()
     ) #Name
@@ -248,13 +260,18 @@ Value:
         List()
     ) #Value
 
+
+
 ValueDefinition:
-    (ValueListDefinition() <T_NON_NULL>?    #List)   |
-    (ValueScalarDefinition() <T_NON_NULL>?  #Scalar)
+    ValueDefinitionResolver() #Type
+
+ValueDefinitionResolver:
+    (ValueListDefinition() <T_NON_NULL>? #List) |
+    (ValueScalarDefinition() <T_NON_NULL>?)
 
 ValueListDefinition:
     ::T_BRACKET_OPEN::
-        (ValueScalarDefinition() <T_NON_NULL>? #Scalar)
+        (ValueScalarDefinition() <T_NON_NULL>?)
     ::T_BRACKET_CLOSE::
 
 ValueScalarDefinition:
@@ -266,78 +283,67 @@ Object:
         (
             ObjectPair() (
                 ::T_COMMA:: ObjectPair()
-            )?
+            )*
         )?
     ::T_BRACE_CLOSE::
 
 ObjectPair:
-    Key() ::T_COLON:: Value()
+    Key() ::T_COLON:: Value() #Object
 
 List:
     ::T_BRACKET_OPEN::
         (
             Value() (
                 ::T_COMMA:: Value()
-            )?
+            )*
         )?
     ::T_BRACKET_CLOSE::
+    #List
 
 
-// TODO Schema
-#SchemaDefinition:
-    ::T_SCHEMA:: Directive()* ::T_BRACE_OPEN:: SchemaBody() ::T_BRACE_CLOSE::
 
-SchemaBody:
-    (
-        SchemaQuery()
-        SchemaMutation()?
-    )
-        |
-    (
-        SchemaMutation()
-        SchemaQuery()
-    )
-
-SchemaQuery:
-    ::T_SCHEMA_QUERY:: ::T_COLON:: TypeFieldValue() #Query
-
-SchemaMutation:
-    ::T_SCHEMA_MUTATION:: ::T_COLON:: TypeFieldValue() #Mutation
-
-// TODO Scalar
-#ScalarDefinition:
-    ::T_SCALAR::
-
-// TODO Input
-#InputDefinition:
-    ::T_INPUT::
-
-// TODO Extend
-#ExtendDefinition:
-    ::T_EXTEND::
-
-// TODO Directive
-#DirectiveDefinition:
-    ::T_DIRECTIVE::
-
-// TODO Arguments
-#Arguments:
+// ==========================================================================
+//                                  PARTIALS
+// ==========================================================================
+//
+// --------------------------------------------------------------------------
+//  GraphQL Arguments Partial
+// --------------------------------------------------------------------------
+//
+//  Fields can define arguments that the client passes up with the query,
+//  to configure their behavior. These inputs can be Strings or Enums,
+//  but they sometimes need to be more complex than this.
+//
+//  <code>
+//      field(argumentKey: "value")
+//  </code>
+//
+//  @see http://facebook.github.io/graphql/#sec-Input-Objects
+//
+Arguments:
     ::T_PARENTHESIS_OPEN::
-        ArgumentsBody()*
+        (
+            ArgumentPair() (
+                ::T_COMMA:: ArgumentPair()
+            )*
+        )?
     ::T_PARENTHESIS_CLOSE::
 
-ArgumentsBody:
-    ArgumentPair() (::T_COMMA:: ArgumentPair())*
-
 ArgumentPair:
-    Key() ::T_COLON:: ValueDefinition() ArgumentDefaultValue()? Directive()*
+    Key() ::T_COLON:: ValueDefinition()
+        ArgumentDefaultValue()?
+        Directive()*
+    #Argument
+
+ArgumentValue:
+    ValueDefinition() #Type
 
 ArgumentDefaultValue:
-    ::T_EQUAL:: Value() #DefaultValue
+    ::T_EQUAL:: Value()
 
 //
 // --------------------------------------------------------------------------
-//  GraphQL Directives
+//  GraphQL Directive Partial
 // --------------------------------------------------------------------------
 //
 //  A schema file follows the SDL syntax and can contain additional static
@@ -346,37 +352,208 @@ ArgumentDefaultValue:
 //  Static directives describe additional information about types or fields
 //  in the GraphQL schema.
 //
+//  <code>
+//      @directive(key: "value", key2: "value2")
+//  </code>
+//
 //  @see http://facebook.github.io/graphql/#sec-Language.Directives
 //  @see https://www.graph.cool/docs/reference/schema/directives-aeph6oyeez/
 //
 
 #Directive:
-    ::T_DIRECTIVE_AT:: Key() DirectiveArguments()?
+    ::T_DIRECTIVE_AT:: Name() DirectiveArguments()?
 
 DirectiveArguments:
-    ::T_PARENTHESIS_OPEN:: DirectiveArgument()* ::T_PARENTHESIS_CLOSE::
-    #Arguments
-
-DirectiveArgument:
-    DirectivePair() (::T_COMMA:: DirectivePair())*
+    ::T_PARENTHESIS_OPEN::
+        (
+            DirectivePair() (
+                ::T_COMMA:: DirectivePair()
+            )*
+        )?
+    ::T_PARENTHESIS_CLOSE::
 
 DirectivePair:
-    ObjectPair() #Pair
+    ObjectPair() #Argument
 
 DirectiveArgumentName:
     Key()
 
 DirectiveValue:
+    Value() #Value
+
+// ==========================================================================
+//                             TYPE DEFINITIONS
+// ==========================================================================
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Schema Definition
+// --------------------------------------------------------------------------
+//
+//  Root input object requires "query" field and can contains
+//  "mutation" field.
+//
+//  <code>
+//      schema {
+//          query: QueryType
+//          mutation: MutationType
+//      }
+//  </code>
+//
+
+#SchemaDefinition:
+    ::T_SCHEMA:: Directive()*
+    ::T_BRACE_OPEN::
+        SchemaDefinitionBody()
+    ::T_BRACE_CLOSE::
+
+SchemaDefinitionBody:
     (
-        Value()
-        DirectiveObjectValue()
-    ) #Value
+        SchemaDefinitionQuery()
+        SchemaDefinitionMutation()?
+    )
+        |
+    (
+        SchemaDefinitionMutation()
+        SchemaDefinitionQuery()
+    )
 
-DirectiveObjectValue:
-    ::T_BRACE_OPEN:: DirectiveArgument()* ::T_BRACE_CLOSE::
+SchemaDefinitionQuery:
+    ::T_SCHEMA_QUERY:: ::T_COLON:: SchemaDefinitionFieldValue() #Query
 
-DirectiveStringValue:
-    ::T_QUOTE_OPEN:: <T_STRING> ::T_QUOTE_CLOSE::
+SchemaDefinitionMutation:
+    ::T_SCHEMA_MUTATION:: ::T_COLON:: SchemaDefinitionFieldValue() #Mutation
+
+SchemaDefinitionFieldValue:
+    ValueDefinition() Directive()* ::T_COMMA::?
+
+
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Scalar Type Definitions
+// --------------------------------------------------------------------------
+//
+//  As expected by the name, a scalar represents a primitive value in
+//  GraphQL. GraphQL responses take the form of a hierarchical tree;
+//  the leaves on these trees are GraphQL scalars.
+//
+//  <code>
+//      scalar DateTime @directive(key: val)
+//  </code>
+//
+//  @see http://facebook.github.io/graphql/#sec-Scalars
+//
+
+#ScalarDefinition:
+    ::T_SCALAR:: Name() Directive()*
+
+
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Input Type Definitions
+// --------------------------------------------------------------------------
+//
+//  Fields can define arguments that the client passes up with the query,
+//  to configure their behavior. These inputs can be Strings or Enums,
+//  but they sometimes need to be more complex than this.
+//
+//  The Object type defined above is inappropriate for re‐use here,
+//  because Objects can contain fields that express circular references
+//  or references to interfaces and unions, neither of which is appropriate
+//  for use as an input argument. For this reason, input objects have a
+//  separate type in the system.
+//
+//  An Input Object defines a set of input fields; the input fields are
+//  either scalars, enums, or other input objects. This allows arguments
+//  to accept arbitrarily complex structs.
+//
+//  <code>
+//      input UserType {
+//          id: ID!
+//      }
+//  </code>
+//
+//  @see http://facebook.github.io/graphql/#sec-Input-Objects
+//
+
+#InputDefinition:
+    ::T_INPUT:: Name() Directive()*
+    ::T_BRACE_OPEN::
+        InputDefinitionField()+
+    ::T_BRACE_CLOSE::
+
+InputDefinitionField:
+    Key() ::T_COLON:: ValueDefinition()
+        InputDefinitionDefaultValue()?
+        Directive()*
+    ::T_COMMA::? #Field
+
+InputDefinitionDefaultValue:
+    ::T_EQUAL:: Value() #DefaultValue
+
+
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Leaf Definitions
+// --------------------------------------------------------------------------
+//
+//  <code>
+//      extend type User {
+//          createdAt: String
+//      }
+//  </code>
+//
+//  @see http://facebook.github.io/graphql/#sec-Leaf-Field-Selections
+//
+
+#ExtendDefinition:
+    ::T_EXTEND:: (
+        ObjectDefinition()
+            |
+        InterfaceDefinition()
+            |
+        InputDefinition()
+    )
+
+
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Directive Definitions
+// --------------------------------------------------------------------------
+//
+//  A GraphQL schema includes a list of the directives the execution
+//  engine supports.
+//
+//  <code>
+//      directive @deprecated(reason: String!) on FIELD
+//  </code>
+//
+//  @see http://facebook.github.io/graphql/#sec-Type-System.Directives
+//
+
+#DirectiveDefinition:
+    ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: Name()
+        DirectiveDefinitionArguments()*
+        ::T_ON:: DirectiveDefinitionTargets()+
+
+DirectiveDefinitionArguments:
+    ::T_PARENTHESIS_OPEN::
+        (
+            DirectiveDefinitionArgument() (
+                ::T_COMMA:: DirectiveDefinitionArgument()
+            )*
+        )?
+    ::T_PARENTHESIS_CLOSE:: #Argument
+
+DirectiveDefinitionArgument:
+    Key() ::T_COLON:: ValueDefinition()
+
+DirectiveDefinitionTargets:
+    Key() (::T_OR:: Key())* #Target
 
 //
 // --------------------------------------------------------------------------
@@ -393,22 +570,43 @@ DirectiveStringValue:
 //  and the result of evaluating the field is the value, ordered by the
 //  order in which they appear in the query.
 //
+//  <code>
+//      type User implements Person {
+//          id: ID!
+//          name(
+//              firstName: Boolean = true,
+//              lastName: Boolean = false
+//          ): String @deprecated(reason: "Because")
+//      }
+//  </code>
+//
 //  @see https://github.com/facebook/graphql/pull/90
 //  @see https://www.graph.cool/docs/reference/schema/types-ij2choozae/
 //  @see http://facebook.github.io/graphql/#sec-Objects
 //
 
-#TypeDefinition:
-    ::T_TYPE:: Key() TypeImplements()? Directive()* ::T_BRACE_OPEN:: TypeField()* ::T_BRACE_CLOSE::
+#ObjectDefinition:
+    ::T_TYPE:: Name() ObjectDefinitionImplements()? Directive()*
+    ::T_BRACE_OPEN::
+        ObjectDefinitionField()*
+    ::T_BRACE_CLOSE::
 
-TypeImplements:
-    ::T_TYPE_IMPLEMENTS:: (Key() ::T_COMMA::? #Implements)+
+ObjectDefinitionImplements:
+    ::T_TYPE_IMPLEMENTS:: Key() (
+        ::T_COMMA:: Key()
+    )* #Implements
 
-TypeField:
-    (Key() Arguments()? ::T_COLON:: TypeFieldValue()) #Field
+ObjectDefinitionField:
+    (
+        Key() Arguments()?
+        ::T_COLON::
+        ObjectDefinitionFieldValue()
+    ) #Field
 
-TypeFieldValue:
-    ValueDefinition() Directive()* ::T_COMMA::?
+ObjectDefinitionFieldValue:
+    ValueDefinition()
+        Directive()*
+    ::T_COMMA::?
 
 //
 // --------------------------------------------------------------------------
@@ -423,23 +621,29 @@ TypeFieldValue:
 //  GraphQL object; their type can be Scalar, Object, Enum, Interface,
 //  or Union, or any wrapping type whose base type is one of those five.
 //
+//  <code>
+//      interface Person {
+//          id: ID!
+//          name: String @deprecated(reason: "Because")
+//      }
+//  </code>
+//
 //  @see http://facebook.github.io/graphql/#sec-Interfaces
 //  @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0/#interface
 //
 
 #InterfaceDefinition:
-    ::T_INTERFACE:: Key() Directive()* ::T_BRACE_OPEN:: InterfaceBody() ::T_BRACE_CLOSE::
+    ::T_INTERFACE:: Name() Directive()*
+    ::T_BRACE_OPEN::
+        InterfaceDefinitionBody()*
+    ::T_BRACE_CLOSE::
 
-InterfaceBody:
-    InterfaceField()*
-
-InterfaceField:
-    (
-        InterfaceFieldKey() ::T_COLON:: TypeFieldValue()
-    )
+InterfaceDefinitionBody:
+    InterfaceDefinitionFieldKey() ::T_COLON:: ValueDefinition()
+        Directive()* ::T_COMMA::?
     #Field
 
-InterfaceFieldKey:
+InterfaceDefinitionFieldKey:
     Key() Arguments()?
 
 //
@@ -454,19 +658,46 @@ InterfaceFieldKey:
 //  values in their own right. They serialize as a string: the name
 //  of the represented value.
 //
+//  <code>
+//      enum Status {
+//          ACTIVE
+//          NOT_ACTIVE
+//      }
+//  </code>
+//
 //  @see http://facebook.github.io/graphql/#sec-Enums
 //  @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0/?r#enum
 //
 
 #EnumDefinition:
-    ::T_ENUM:: Key() ::T_BRACE_OPEN:: EnumBody() ::T_BRACE_CLOSE::
+    ::T_ENUM:: Name() Directive()*
+    ::T_BRACE_OPEN::
+        EnumBody()
+    ::T_BRACE_CLOSE::
 
 EnumBody:
-    EnumField()+ #Values
+    EnumField()+
 
 EnumField:
-    Key() ::T_COMMA::?
+    EnumValue() Directive()* ::T_COMMA::? #Value
 
+//
+//  !!! WARN !!!
+//
+//  Enum Value can be any excepts "true", "false" and "null".
+//  This means we cant use "Key()" rule call. e.g. redefine
+//  it excepts T_BOOL_TRUE, T_BOOL_FALSE and T_NULL
+//
+//  @see http://facebook.github.io/graphql/#EnumValue
+//
+EnumValue:
+    (
+        Scalar()
+            |
+        Keyword()
+            |
+        Relation()
+    ) #Name
 
 
 //
@@ -486,15 +717,22 @@ EnumField:
 //  do not define any fields, so no fields may be queried on this
 //  type without the use of typed fragments.
 //
+//  <code>
+//      union SearchResult = User | Post | Category
+//  </code>
+//
 //  @see http://facebook.github.io/graphql/#sec-Unions
 //
 
 #UnionDefinition:
-    ::T_UNION:: Key() Directive()* ::T_EQUAL:: UnionBody()
-
+    ::T_UNION:: Name() Directive()*
+    ::T_EQUAL::
+        UnionBody()
 
 UnionBody:
-    UnionUnites()+ #Relations
+    ::T_OR::? UnionUnitesList()+ #Relations
 
-UnionUnites:
-    Key() (::T_OR:: Key())*
+UnionUnitesList:
+    Name() (::T_OR:: Name())*
+
+
