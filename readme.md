@@ -15,6 +15,8 @@
 
 ## Introduction
 
+> This documentation contains information about the old version and is NOT RELEVANT at all. Im complete it later.
+
 [Documentation](https://serafimarts.github.io/Railgun) 
 ([Russian](https://serafimarts.github.io/Railgun/#/ru/), [English](https://serafimarts.github.io/Railgun))
 
