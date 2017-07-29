@@ -67,6 +67,14 @@ class Document
     }
 
     /**
+     * @return Compiler
+     */
+    public function getCompiler(): Compiler
+    {
+        return $this->compiler;
+    }
+
+    /**
      * @return void
      * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      * @throws SemanticException
@@ -85,6 +93,11 @@ class Document
             $instance = new $node($child, $this);
 
             $this->register($instance);
+        }
+
+        /** @var Definition $definition */
+        foreach ($this->getDefinitions() as $definition) {
+            $definition->bootIfNotBooted();
         }
     }
 
@@ -118,7 +131,7 @@ class Document
      */
     public function getDefinitions(): iterable
     {
-        yield from $this->compiler->getDictionary()
+        return $this->compiler->getDictionary()
             ->contextDefinitions($this);
     }
 

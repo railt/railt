@@ -1,3 +1,3 @@
 type QueryType {
-    say(message: String!)
+    say(message: String!): String!
 }

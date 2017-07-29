@@ -8,6 +8,8 @@
 declare(strict_types=1);
 
 namespace Serafim\Railgun\Compiler\Reflection;
+use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Compiler\Autoloader;
 
 /**
  * Class ExtendDefinition
@@ -29,5 +31,16 @@ class ExtendDefinition extends Definition
     public static function getAstId(): string
     {
         return '#ExtendDefinition';
+    }
+
+    /**
+     * @internal
+     * @param TreeNode $node
+     * @param Autoloader $loader
+     * @return void
+     */
+    public function compile(TreeNode $node, Autoloader $loader): void
+    {
+        // TODO: Implement compile() method.
     }
 }

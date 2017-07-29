@@ -55,11 +55,12 @@ class Autoloader
     /**
      * @param string $type
      * @return null|Definition
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException
-     * @throws \RuntimeException
-     * @throws \OutOfRangeException
+     * @throws Exceptions\NotReadableException
+     * @throws Exceptions\SemanticException
+     * @throws Exceptions\TypeNotFoundException
      * @throws Exceptions\UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \RuntimeException
      */
     public function load(string $type): ?Definition
     {

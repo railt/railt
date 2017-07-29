@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Tests\Compiler;
 
 use Serafim\Railgun\Compiler\Compiler;
-use Serafim\Railgun\Compiler\Document;
-use Serafim\Railgun\Compiler\Exceptions\SemanticException;
 use Serafim\Railgun\Tests\AbstractTestCase;
+use Serafim\Railgun\Compiler\Exceptions\SemanticException;
+use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
 
 /**
@@ -22,18 +22,6 @@ use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
 class DocumentTestCase extends AbstractTestCase
 {
     /**
-     * @param string $file
-     * @return Document
-     * @throws UnexpectedTokenException
-     */
-    private function mock(string $file = 'schema-1.graphqls'): Document
-    {
-        $compiler = new Compiler();
-
-        return $compiler->parseFile(__DIR__ . '/../.resources/reflection/' . $file);
-    }
-
-    /**
      * @throws UnexpectedTokenException
      */
     public function testTypeRedefinition(): void
@@ -42,16 +30,41 @@ class DocumentTestCase extends AbstractTestCase
         $this->expectExceptionMessage('Can not register type named "A" as Object. ' .
             'Type "A" already registered as Interface');
 
-        $this->mock('err-redefinition.graphqls');
+        (new Compiler())
+            ->parseFile(__DIR__ . '/../.resources/reflection/err-redefinition.graphqls');
     }
 
     /**
      * @throws UnexpectedTokenException
      */
-    public function testSimpleSchema(): void
+    public function testTypeNotFound(): void
     {
-        $schema = $this->mock()->getSchema();
+        $this->expectException(TypeNotFoundException::class);
+        $this->expectExceptionMessage('Type "QueryType" not found and could not be loaded');
 
-        $this->assertNotNull($schema);
+        (new Compiler())
+            ->parseFile(__DIR__ . '/../.resources/reflection/schema-1.graphqls');
+    }
+
+    /**
+     * @throws SemanticException
+     * @throws UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     */
+    public function testTypeLoading()
+    {
+        $compiler = new Compiler();
+
+        $dir = __DIR__ . '/../.resources/reflection';
+
+        $compiler->getLoader()->autoload(function (string $queryType) use ($dir) {
+            return $dir . '/' . $queryType . '.graphqls';
+        });
+
+        $document = $compiler->parseFile($dir. '/schema-1.graphqls');
+
+        $this->assertNotNull($document->getSchema());
     }
 }

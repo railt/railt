@@ -79,7 +79,7 @@ class Dictionary
         $id = $definition->getContext()->getId();
 
         if (!array_key_exists($id, $this->context)) {
-            $this->context[$id] = $this->context;
+            $this->context[$id] = [];
         }
 
         $this->context[$id][] = $definition;

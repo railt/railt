@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Compiler\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Compiler\Autoloader;
 use Serafim\Railgun\Compiler\Document;
+use Serafim\Railgun\Compiler\Reflection\Support\NameResolvable;
 
 /**
  * Interface DefinitionInterface
@@ -18,10 +20,7 @@ use Serafim\Railgun\Compiler\Document;
  */
 abstract class Definition
 {
-    /**
-     * @var string|null
-     */
-    private $name;
+    use NameResolvable;
 
     /**
      * @var TreeNode
@@ -34,6 +33,11 @@ abstract class Definition
     private $parent;
 
     /**
+     * @var bool
+     */
+    private $booted = false;
+
+    /**
      * Definition constructor.
      * @param TreeNode $ast
      * @param Document $parent
@@ -44,6 +48,28 @@ abstract class Definition
         $this->parent = $parent;
 
         $this->compileName($ast);
+    }
+
+    /**
+     * @internal
+     * @param TreeNode $node
+     * @param Autoloader $loader
+     * @return void
+     */
+    abstract public function compile(TreeNode $node, Autoloader $loader): void;
+
+    /**
+     * @internal
+     * @return void
+     */
+    public function bootIfNotBooted(): void
+    {
+        if (!$this->booted) {
+            $this->booted = true;
+            foreach ($this->ast->getChildren() as $child) {
+                $this->compile($child, $this->getContext()->getCompiler()->getLoader());
+            }
+        }
     }
 
     /**
@@ -70,26 +96,6 @@ abstract class Definition
     public function getContext(): Document
     {
         return $this->parent;
-    }
-
-    /**
-     * @param TreeNode $ast
-     */
-    private function compileName(TreeNode $ast): void
-    {
-        $name = $ast->getChild(0);
-
-        if ($name && $name->getId() === '#Name') {
-            $this->name = $name->getChild(0)->getValueValue();
-        }
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getName(): ?string
-    {
-        return $this->name;
     }
 
     /**

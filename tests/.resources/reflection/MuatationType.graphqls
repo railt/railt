@@ -1,3 +1,0 @@
-type MutationType {
-    update(message: String!)
-}
