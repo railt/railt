@@ -11,9 +11,10 @@ namespace Serafim\Railgun\Compiler;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\Compiler\Visitor\Dump;
+use Serafim\Railgun\Compiler\Exceptions\CompilerException;
+use Serafim\Railgun\Compiler\Exceptions\SemanticException;
 use Serafim\Railgun\Compiler\Reflection\Definition;
-use Serafim\Railgun\Compiler\Reflection\Dictionary;
-use Serafim\Railgun\Compiler\Reflection\Schema;
+use Serafim\Railgun\Compiler\Reflection\SchemaDefinition;
 
 /**
  * Class Document
@@ -22,14 +23,14 @@ use Serafim\Railgun\Compiler\Reflection\Schema;
 class Document
 {
     /**
-     * @var \SplFileInfo|null
+     * @var int
      */
-    private $file;
+    private static $lastId = 0;
 
     /**
-     * @var string
+     * @var int
      */
-    private $sources;
+    private $id = 0;
 
     /**
      * @var TreeNode
@@ -37,92 +38,102 @@ class Document
     private $ast;
 
     /**
-     * @var Dictionary
+     * @var string
      */
-    private $dictionary;
+    private $fileName;
 
     /**
-     * @var string[]|Definition[]
+     * @var Compiler
      */
-    private $definitions = [];
+    private $compiler;
 
     /**
-     * Definition constructor.
-     * @param string $sources
+     * Document constructor.
      * @param TreeNode $ast
-     * @param null|\SplFileInfo $file
-     * @throws \RuntimeException
+     * @param string $fileName
+     * @param Compiler $compiler
+     * @throws SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      */
-    public function __construct(string $sources, TreeNode $ast, ?\SplFileInfo $file)
+    public function __construct(TreeNode $ast, string $fileName, Compiler $compiler)
     {
+        $this->id = ++self::$lastId;
+
         $this->ast = $ast;
-        $this->file = $file;
-        $this->sources = $sources;
-        $this->dictionary = new Dictionary();
+        $this->fileName = $fileName;
+        $this->compiler = $compiler;
 
         $this->prepare();
-        $this->build();
     }
 
     /**
      * @return void
-     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws SemanticException
      */
     private function prepare(): void
     {
-        $definitions = [
-            Schema::class,
-        ];
+        /** @var TreeNode $child */
+        foreach ($this->ast->getChildren() as $child) {
+            /** @var string|Definition|null $node */
+            $node = $this->compiler->getRootNode($child);
 
-        try {
-            foreach ($definitions as $definition) {
-                $this->addDefinition($definition);
+            if ($node === null) {
+                throw new CompilerException('Could not resolve AST type ' . $child->getId());
             }
-        } catch (\InvalidArgumentException $e) {
-            throw new \RuntimeException('Error while initializing document reflection');
+            
+            $instance = new $node($child, $this);
+
+            $this->register($instance);
         }
     }
 
     /**
-     * @param string[]|Definition[] ...$classes
-     * @return Document|$this
-     * @throws \InvalidArgumentException
+     * @param Definition $definition
+     * @throws SemanticException
      */
-    public function addDefinition(string ...$classes): Document
+    private function register(Definition $definition): void
     {
-        foreach ($classes as $class) {
-            if (!is_subclass_of($class, Definition::class, true)) {
-                throw new \InvalidArgumentException($class . ' must be instance of ' . Definition::class . ' class');
-            }
-
-            $this->definitions[$class::getAstNodeId()] = $class;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return null|\SplFileInfo
-     */
-    public function getFile(): ?\SplFileInfo
-    {
-        return $this->file;
+        $this->compiler->getDictionary()->register($definition);
     }
 
     /**
      * @return string
      */
-    public function getSources(): string
+    public function getFileName(): string
     {
-        return $this->sources;
+        return $this->fileName;
     }
 
     /**
-     * @return TreeNode
+     * @return int
      */
-    public function getAst(): TreeNode
+    public function getId(): int
     {
-        return $this->ast;
+        return $this->id;
+    }
+
+    /**
+     * @return iterable|Definition[]
+     */
+    public function getDefinitions(): iterable
+    {
+        yield from $this->compiler->getDictionary()
+            ->contextDefinitions($this);
+    }
+
+    /**
+     * @return null|SchemaDefinition
+     */
+    public function getSchema(): ?SchemaDefinition
+    {
+        foreach ($this->getDefinitions() as $definition) {
+            if ($definition instanceof SchemaDefinition) {
+                return $definition;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -136,40 +147,5 @@ class Document
         $result = preg_replace('/^\s{4}/ium', '', $result);
 
         return $result;
-    }
-
-    private function build(): void
-    {
-        /** @var TreeNode $child */
-        foreach ($this->ast->getChildren() as $child) {
-            $name = $child->getId();
-
-            if (!isset($this->definitions[$name])) {
-                throw new \OutOfRangeException('Invalid AST node name ' . $name);
-            }
-
-            $this->dictionary->push($this->buildValue($this->definitions[$name], $child));
-
-        }
-    }
-
-    /**
-     * @param string|Definition $definition
-     * @param TreeNode $node
-     * @return array
-     */
-    private function buildValue(string $definition, TreeNode $node): array
-    {
-        return [
-            'ast'  => [
-                'name'   => $node->getId(),
-                'value'  => $node->getValue(),
-                'parent' => [
-                    'name'  => $node->getParent()->getId(),
-                    'value' => $node->getParent()->getValue(),
-                ],
-            ],
-            'type' => new $definition($node, $this->dictionary),
-        ];
     }
 }

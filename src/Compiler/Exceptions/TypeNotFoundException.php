@@ -7,14 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler\Reflection;
-
-use Illuminate\Support\Collection;
+namespace Serafim\Railgun\Compiler\Exceptions;
 
 /**
- * Class Dictionary
- * @package Serafim\Railgun\Compiler\Reflection
+ * Class TypeNotFoundException
+ * @package Serafim\Railgun\Compiler\Exceptions
  */
-class Dictionary extends Collection
+class TypeNotFoundException extends SemanticException
 {
+
 }
