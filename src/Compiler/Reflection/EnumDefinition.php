@@ -35,6 +35,24 @@ class EnumDefinition extends Definition
     }
 
     /**
+     * @return iterable|Directive[]
+     * @throws \LogicException
+     */
+    public function getDirectives(): iterable
+    {
+        throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    /**
+     * @return iterable|EnumValue[]
+     * @throws \LogicException
+     */
+    public function getValues(): iterable
+    {
+        throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    /**
      * @internal
      * @param TreeNode $node
      * @param Dictionary $dictionary
