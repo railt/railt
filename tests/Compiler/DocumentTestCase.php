@@ -22,6 +22,31 @@ use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
 class DocumentTestCase extends AbstractTestCase
 {
     /**
+     * @param string $file
+     * @param bool $enableAutoloader
+     * @return \Serafim\Railgun\Compiler\Document
+     * @throws SemanticException
+     * @throws UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     */
+    private function mock(string $file = 'schema-1.graphqls', bool $enableAutoloader = true)
+    {
+        $compiler = new Compiler();
+
+        $dir = __DIR__ . '/../.resources/reflection/';
+
+        if ($enableAutoloader) {
+            $compiler->getLoader()->autoload(function (string $queryType) use ($dir) {
+                return $dir . $queryType . '.graphqls';
+            });
+        }
+
+        return $compiler->parseFile($dir . $file);
+    }
+
+    /**
      * @throws UnexpectedTokenException
      */
     public function testTypeRedefinition(): void
@@ -30,8 +55,7 @@ class DocumentTestCase extends AbstractTestCase
         $this->expectExceptionMessage('Can not register type named "A" as Object. ' .
             'Type "A" already registered as Interface');
 
-        (new Compiler())
-            ->parseFile(__DIR__ . '/../.resources/reflection/err-redefinition.graphqls');
+        $this->mock('err-redefinition.graphqls', false);
     }
 
     /**
@@ -42,8 +66,7 @@ class DocumentTestCase extends AbstractTestCase
         $this->expectException(TypeNotFoundException::class);
         $this->expectExceptionMessage('Type "QueryType" not found and could not be loaded');
 
-        (new Compiler())
-            ->parseFile(__DIR__ . '/../.resources/reflection/schema-1.graphqls');
+        $this->mock('schema-1.graphqls', false);
     }
 
     /**
@@ -55,16 +78,15 @@ class DocumentTestCase extends AbstractTestCase
      */
     public function testTypeLoading()
     {
-        $compiler = new Compiler();
+        $document = $this->mock();
+        $schema = $document->getSchema();
 
-        $dir = __DIR__ . '/../.resources/reflection';
+        $this->assertNotNull($schema);
 
-        $compiler->getLoader()->autoload(function (string $queryType) use ($dir) {
-            return $dir . '/' . $queryType . '.graphqls';
-        });
+        $this->assertEquals('QueryType', $schema->getQuery()->getName());
+        $this->assertEquals('MutationType', $schema->getMutation()->getName());
 
-        $document = $compiler->parseFile($dir. '/schema-1.graphqls');
-
-        $this->assertNotNull($document->getSchema());
+        $interfaces = $schema->getQuery()->getInterfaces();
+        $this->assertCount(2, $interfaces);
     }
 }

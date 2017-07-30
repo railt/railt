@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Compiler\Reflection\Support;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Autoloader;
+use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Compiler\Exceptions\NotReadableException;
-use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
 use Serafim\Railgun\Compiler\Reflection\Definition;
 use Serafim\Railgun\Compiler\Exceptions\SemanticException;
+use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 
 /**
  * Trait TypeRelated
@@ -25,16 +25,16 @@ trait TypeRelated
 {
     /**
      * @param TreeNode $ast
-     * @param Autoloader $loader
+     * @param Dictionary $dictionary
      * @return Definition
      * @throws SemanticException
+     * @throws TypeNotFoundException
      * @throws \OutOfRangeException
      * @throws \RuntimeException
      * @throws NotReadableException
-     * @throws TypeNotFoundException
      * @throws UnexpectedTokenException
      */
-    private function loadRelation(TreeNode $ast, Autoloader $loader): Definition
+    private function loadRelation(TreeNode $ast, Dictionary $dictionary): Definition
     {
         $node = $ast->getChild(0);
 
@@ -44,13 +44,6 @@ trait TypeRelated
 
         $type = $node->getValueValue();
 
-        $result = $loader->load($type);
-
-        if ($result === null) {
-            $error = 'Type "%s" not found and could not be loaded';
-            throw new TypeNotFoundException(sprintf($error, $type));
-        }
-
-        return $result;
+        return $dictionary->get($type);
     }
 }

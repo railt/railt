@@ -135,6 +135,11 @@ class Dictionary
     /**
      * @param string $name
      * @return Definition
+     * @throws \Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \RuntimeException
+     * @throws \OutOfRangeException
      * @throws TypeNotFoundException
      */
     public function get(string $name): Definition
@@ -143,7 +148,9 @@ class Dictionary
             return $this->namedDefinitions[$name];
         }
 
-        // Apply autoloader
+        if ($result = $this->loader->load($name)) {
+            return $result;
+        }
 
         $error = 'Type "%s" not found and could not be loaded';
         throw new TypeNotFoundException(sprintf($error, $name));

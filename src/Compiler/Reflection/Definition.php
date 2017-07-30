@@ -10,9 +10,11 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Compiler\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Hoa\Compiler\Visitor\Dump;
 use Serafim\Railgun\Compiler\Autoloader;
+use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Compiler\Document;
-use Serafim\Railgun\Compiler\Reflection\Support\NameResolvable;
+use Serafim\Railgun\Compiler\Reflection\Support\HasName;
 
 /**
  * Interface DefinitionInterface
@@ -20,7 +22,7 @@ use Serafim\Railgun\Compiler\Reflection\Support\NameResolvable;
  */
 abstract class Definition
 {
-    use NameResolvable;
+    use HasName;
 
     /**
      * @var TreeNode
@@ -53,10 +55,9 @@ abstract class Definition
     /**
      * @internal
      * @param TreeNode $node
-     * @param Autoloader $loader
-     * @return void
+     * @param Dictionary $dictionary
      */
-    abstract public function compile(TreeNode $node, Autoloader $loader): void;
+    abstract public function compile(TreeNode $node, Dictionary $dictionary): void;
 
     /**
      * @internal
@@ -67,7 +68,7 @@ abstract class Definition
         if (!$this->booted) {
             $this->booted = true;
             foreach ($this->ast->getChildren() as $child) {
-                $this->compile($child, $this->getContext()->getCompiler()->getLoader());
+                $this->compile($child, $this->getContext()->getCompiler()->getDictionary());
             }
         }
     }
@@ -107,5 +108,18 @@ abstract class Definition
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * TODO Remove it in future
+     * @param TreeNode $node
+     * @param bool $die
+     */
+    protected function dump(TreeNode $node, bool $die = true): void
+    {
+        var_dump((new Dump())->visit($node));
+        if ($die) {
+            die;
+        }
     }
 }

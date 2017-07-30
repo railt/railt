@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Compiler\Reflection;
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Autoloader;
+use Serafim\Railgun\Compiler\Dictionary;
 
 /**
  * Class UnionDefinition
@@ -36,10 +37,10 @@ class UnionDefinition extends Definition
     /**
      * @internal
      * @param TreeNode $node
-     * @param Autoloader $loader
+     * @param Dictionary $dictionary
      * @return void
      */
-    public function compile(TreeNode $node, Autoloader $loader): void
+    public function compile(TreeNode $node, Dictionary $dictionary): void
     {
         // TODO: Implement compile() method.
     }

@@ -12,10 +12,10 @@ namespace Serafim\Railgun\Compiler\Reflection\Support;
 use Hoa\Compiler\Llk\TreeNode;
 
 /**
- * Trait NameResolvable
+ * Trait HasName
  * @package Serafim\Railgun\Compiler\Reflection\Support
  */
-trait NameResolvable
+trait HasName
 {
     /**
      * @var string|null
