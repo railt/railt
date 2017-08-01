@@ -45,7 +45,7 @@ class SchemaDefinition extends Definition implements SchemaTypeInterface
         '#Mutation'
     ];
 
-    protected function compile(TreeNode $ast, Dictionary $dictionary): void
+    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }

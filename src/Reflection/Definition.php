@@ -60,7 +60,6 @@ abstract class Definition implements DefinitionInterface
             $this->name = $ast->getChild(0)->getValueValue();
         }
 
-
         foreach (class_uses_recursive($this) as $trait) {
             $name = 'compile' . class_basename($trait);
             if (method_exists($this, $name)) {
@@ -88,9 +87,9 @@ abstract class Definition implements DefinitionInterface
     /**
      * @param TreeNode $ast
      * @param Dictionary $dictionary
-     * @return void
+     * @return null|TreeNode
      */
-    abstract protected function compile(TreeNode $ast, Dictionary $dictionary): void;
+    abstract protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode;
 
     /**
      * @param Dictionary $dictionary
@@ -103,11 +102,16 @@ abstract class Definition implements DefinitionInterface
         }
 
         foreach ($this->ast->getChildren() as $child) {
+            $redefined = $this->compile($child, $dictionary);
+
+            if ($redefined instanceof TreeNode) {
+                $child = $redefined;
+            }
+
             foreach ($this->beforeCompile as $callable) {
                 call_user_func($callable, $child, $dictionary);
             }
 
-            $this->compile($child, $dictionary);
         }
 
         return $this->compiled = true;

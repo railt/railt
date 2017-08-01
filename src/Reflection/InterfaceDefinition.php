@@ -28,7 +28,7 @@ class InterfaceDefinition extends Definition implements InterfaceTypeInterface
      * @param TreeNode $ast
      * @param Dictionary $dictionary
      */
-    protected function compile(TreeNode $ast, Dictionary $dictionary): void
+    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }

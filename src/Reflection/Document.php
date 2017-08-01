@@ -73,9 +73,10 @@ class Document extends Definition implements DocumentTypeInterface
     /**
      * @param TreeNode $ast
      * @param Dictionary $dictionary
+     * @return TreeNode|null
      * @throws \LogicException
      */
-    protected function compile(TreeNode $ast, Dictionary $dictionary): void
+    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
     {
         /** @var Definition $class */
         $class = $this->resolveDefinition($ast);
@@ -83,6 +84,8 @@ class Document extends Definition implements DocumentTypeInterface
         $definition = new $class($this, $ast);
 
         $this->dictionary->register($definition);
+
+        return $ast;
     }
 
     /**

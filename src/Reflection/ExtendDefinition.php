@@ -25,7 +25,7 @@ class ExtendDefinition extends Definition implements ExtendTypeInterface
     use HasFields;
     use HasDirectives;
 
-    protected function compile(TreeNode $ast, Dictionary $dictionary): void
+    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
