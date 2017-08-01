@@ -27,20 +27,18 @@ type A {
                 #Name
                     token(T_NAME, DirectiveB)
                 #Argument
-                    #Object
-                        #Name
-                            token(T_NAME, key)
-                        #Value
-                            token(T_NAME, value)
+                    #Name
+                        token(T_NAME, key)
+                    #Value
+                        token(T_NAME, value)
             #Directive
                 #Name
                     token(T_NAME, DirectiveC)
                 #Argument
-                    #Object
-                        #Name
-                            token(T_NAME, key)
-                        #Value
-                            token(T_NAME, value)
+                    #Name
+                        token(T_NAME, key)
+                    #Value
+                        token(T_NAME, value)
         #Field
             #Name
                 token(T_NAME, fieldB)
@@ -50,11 +48,10 @@ type A {
                 #Name
                     token(T_NAME, DirectiveD)
                 #Argument
-                    #Object
-                        #Name
-                            token(T_NAME, key)
-                        #Value
-                            token(T_NAME, value)
+                    #Name
+                        token(T_NAME, key)
+                    #Value
+                        token(T_NAME, value)
             #Directive
                 #Name
                     token(T_NAME, DirectiveE)

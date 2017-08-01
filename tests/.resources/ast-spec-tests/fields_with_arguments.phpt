@@ -36,10 +36,10 @@ type User {
                     token(T_NAME, lastName)
                 #Type
                     token(T_SCALAR_BOOLEAN, Boolean)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_STRING, String)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, email)

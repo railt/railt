@@ -1,0 +1,4 @@
+enum DateFormat {
+    RFC3339,
+    DATE_TIME
+}

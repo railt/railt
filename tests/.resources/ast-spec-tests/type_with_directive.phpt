@@ -17,14 +17,12 @@ type A @Directive(key: value, key2: value2) {
             #Name
                 token(T_NAME, Directive)
             #Argument
-                #Object
-                    #Name
-                        token(T_NAME, key)
-                    #Value
-                        token(T_NAME, value)
+                #Name
+                    token(T_NAME, key)
+                #Value
+                    token(T_NAME, value)
             #Argument
-                #Object
-                    #Name
-                        token(T_NAME, key2)
-                    #Value
-                        token(T_NAME, value2)
+                #Name
+                    token(T_NAME, key2)
+                #Value
+                    token(T_NAME, value2)

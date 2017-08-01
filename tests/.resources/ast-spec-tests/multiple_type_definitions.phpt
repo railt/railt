@@ -27,11 +27,10 @@ type B {
             #Name
                 token(T_NAME, DirectiveA)
             #Argument
-                #Object
-                    #Name
-                        token(T_NAME, key)
-                    #Value
-                        token(T_NAME, value)
+                #Name
+                    token(T_NAME, key)
+                #Value
+                    token(T_NAME, value)
         #Field
             #Name
                 token(T_NAME, id)

@@ -26,7 +26,7 @@ type Foo implements Bar {
     seven(argument: Int = null): Type
 }
 
-type AnnotatedObject @onObject(arg: "value") {
+type AnnotatedObject @onObject(arg: "value", arg2: [Relation]) {
     annotatedField(arg: Type = "default" @onArg): Type @onField
 }
 
@@ -160,8 +160,8 @@ directive @include2(if: Boolean!) on
             #Argument
                 #Name
                     token(T_NAME, argument)
-                #Type
-                    #List
+                #List
+                    #Type
                         token(T_SCALAR_STRING, String)
                 #Value
                     #List
@@ -215,11 +215,17 @@ directive @include2(if: Boolean!) on
             #Name
                 token(T_NAME, onObject)
             #Argument
-                #Object
-                    #Name
-                        token(T_NAME, arg)
-                    #Value
-                        token(string:T_STRING, value)
+                #Name
+                    token(T_NAME, arg)
+                #Value
+                    token(string:T_STRING, value)
+            #Argument
+                #Name
+                    token(T_NAME, arg2)
+                #Value
+                    #List
+                        #Value
+                            token(T_NAME, Relation)
         #Field
             #Name
                 token(T_NAME, annotatedField)
@@ -386,8 +392,8 @@ directive @include2(if: Boolean!) on
                 #Argument
                     #Name
                         token(T_NAME, argument)
-                    #Type
-                        #List
+                    #List
+                        #Type
                             token(T_SCALAR_STRING, String)
                 #Type
                     token(T_NAME, Type)

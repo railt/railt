@@ -56,8 +56,8 @@ type A {
         #Field
             #Name
                 token(T_NAME, idList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_ID, ID)
         #Field
             #Name
@@ -68,18 +68,18 @@ type A {
         #Field
             #Name
                 token(T_NAME, idNonNullList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_ID, ID)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, idListOfNonNulls)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_ID, ID)
                     token(T_NON_NULL, !)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, int)
@@ -88,8 +88,8 @@ type A {
         #Field
             #Name
                 token(T_NAME, intList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_INTEGER, Int)
         #Field
             #Name
@@ -100,18 +100,18 @@ type A {
         #Field
             #Name
                 token(T_NAME, intNonNullList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_INTEGER, Int)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, intListOfNonNulls)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_INTEGER, Int)
                     token(T_NON_NULL, !)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, float)
@@ -120,8 +120,8 @@ type A {
         #Field
             #Name
                 token(T_NAME, floatList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_FLOAT, Float)
         #Field
             #Name
@@ -132,18 +132,18 @@ type A {
         #Field
             #Name
                 token(T_NAME, floatNonNullList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_FLOAT, Float)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, floatListOfNonNulls)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_FLOAT, Float)
                     token(T_NON_NULL, !)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, string)
@@ -152,8 +152,8 @@ type A {
         #Field
             #Name
                 token(T_NAME, stringList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_STRING, String)
         #Field
             #Name
@@ -164,18 +164,18 @@ type A {
         #Field
             #Name
                 token(T_NAME, stringNonNullList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_STRING, String)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, stringListOfNonNulls)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_STRING, String)
                     token(T_NON_NULL, !)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, boolean)
@@ -184,8 +184,8 @@ type A {
         #Field
             #Name
                 token(T_NAME, booleanList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_BOOLEAN, Boolean)
         #Field
             #Name
@@ -196,18 +196,18 @@ type A {
         #Field
             #Name
                 token(T_NAME, booleanNonNullList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_BOOLEAN, Boolean)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, booleanListOfNonNulls)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_BOOLEAN, Boolean)
                     token(T_NON_NULL, !)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, relation)
@@ -216,8 +216,8 @@ type A {
         #Field
             #Name
                 token(T_NAME, relationList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_NAME, Relation)
         #Field
             #Name
@@ -228,15 +228,15 @@ type A {
         #Field
             #Name
                 token(T_NAME, relationNonNullList)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_NAME, Relation)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, relationListOfNonNulls)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_NAME, Relation)
                     token(T_NON_NULL, !)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)

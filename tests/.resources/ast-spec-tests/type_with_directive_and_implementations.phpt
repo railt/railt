@@ -22,8 +22,7 @@ type A implements B, C @Directive(key: value) {
             #Name
                 token(T_NAME, Directive)
             #Argument
-                #Object
-                    #Name
-                        token(T_NAME, key)
-                    #Value
-                        token(T_NAME, value)
+                #Name
+                    token(T_NAME, key)
+                #Value
+                    token(T_NAME, value)

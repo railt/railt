@@ -17,5 +17,17 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractTestCase extends TestCase
 {
+    /**
+     * @var string
+     */
+    protected $resourcesPath = '';
 
+    /**
+     * @param string $file
+     * @return string
+     */
+    public function resource(string $file): string
+    {
+        return __DIR__ . '/.resources/' . $this->resourcesPath . $file;
+    }
 }

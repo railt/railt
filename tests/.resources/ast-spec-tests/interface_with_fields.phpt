@@ -30,8 +30,8 @@ interface HasTimestamps {
         #Field
             #Name
                 token(T_NAME, timestamps)
-            #Type
-                #List
+            #List
+                #Type
                     token(T_SCALAR_STRING, String)
                     token(T_NON_NULL, !)
-                    token(T_NON_NULL, !)
+                token(T_NON_NULL, !)
