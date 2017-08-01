@@ -14,19 +14,11 @@ use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\File\Read;
-use Serafim\Railgun\Compiler\Exceptions\CompilerException;
-use Serafim\Railgun\Compiler\Exceptions\NotReadableException;
-use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
-use Serafim\Railgun\Compiler\Reflection\Definition;
-use Serafim\Railgun\Compiler\Reflection\DirectiveDefinition;
-use Serafim\Railgun\Compiler\Reflection\EnumDefinition;
-use Serafim\Railgun\Compiler\Reflection\ExtendDefinition;
-use Serafim\Railgun\Compiler\Reflection\InputDefinition;
-use Serafim\Railgun\Compiler\Reflection\InterfaceDefinition;
-use Serafim\Railgun\Compiler\Reflection\ObjectDefinition;
-use Serafim\Railgun\Compiler\Reflection\ScalarDefinition;
-use Serafim\Railgun\Compiler\Reflection\SchemaDefinition;
-use Serafim\Railgun\Compiler\Reflection\UnionDefinition;
+use Serafim\Railgun\Compiler\Exceptions\{
+    CompilerException, NotReadableException, UnexpectedTokenException
+};
+use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Serafim\Railgun\Reflection\Document;
 
 /**
  * Class Compiler
@@ -50,14 +42,14 @@ class Compiler
     private $dictionary;
 
     /**
-     * @var array
-     */
-    private $rootNodes = [];
-
-    /**
      * @var Autoloader
      */
     private $loader;
+
+    /**
+     * @var GraphQLStandard
+     */
+    private $standard;
 
     /**
      * Compiler constructor.
@@ -69,43 +61,13 @@ class Compiler
         $this->llk = $this->parser($grammar ?? self::GRAMMAR_PP);
         $this->loader = new Autoloader($this);
         $this->dictionary = new Dictionary($this->loader);
-
-        $this->prepare();
-    }
-
-    /**
-     * @return void
-     */
-    private function prepare(): void
-    {
-        $rootDefinitions = [
-            SchemaDefinition::class,
-            ObjectDefinition::class,
-            InterfaceDefinition::class,
-            UnionDefinition::class,
-            ScalarDefinition::class,
-            EnumDefinition::class,
-            InputDefinition::class,
-            ExtendDefinition::class,
-            DirectiveDefinition::class,
-        ];
-
-        $this->registerRootNode(...$rootDefinitions);
-    }
-
-    /**
-     * @return Autoloader
-     */
-    public function getLoader(): Autoloader
-    {
-        return $this->loader;
+        $this->standard = new GraphQLStandard($this->dictionary);
     }
 
     /**
      * @param string $grammar
      * @return Parser
      * @throws CompilerException
-     * @throws \Hoa\Compiler\Exception
      */
     private function parser(string $grammar): Parser
     {
@@ -117,37 +79,41 @@ class Compiler
     }
 
     /**
-     * @param string[]|Definition[] ...$classes
-     * @return $this|Compiler
+     * @return Autoloader
      */
-    public function registerRootNode(string ...$classes): Compiler
+    public function getLoader(): Autoloader
     {
-        foreach ($classes as $class) {
-            $this->rootNodes[$class::getAstId()] = $class;
-        }
-
-        return $this;
+        return $this->loader;
     }
 
     /**
-     * @param TreeNode $node
-     * @return null|string
+     * @param string $fileName
+     * @return DocumentTypeInterface
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \RuntimeException
+     * @throws \OutOfRangeException
+     * @throws UnexpectedTokenException
      */
-    public function getRootNode(TreeNode $node): ?string
+    public function compileFile(string $fileName): DocumentTypeInterface
     {
-        return $this->rootNodes[$node->getId()] ?? null;
+        $ast = $this->parseFile($fileName);
+
+        return new Document($fileName, $ast, $this->dictionary);
     }
 
     /**
      * @param string $filePath
-     * @return Document
+     * @return TreeNode
      * @throws Exceptions\SemanticException
      * @throws NotReadableException
      * @throws UnexpectedTokenException
      * @throws \OutOfRangeException
      * @throws \RuntimeException
      */
-    public function parseFile(string $filePath): Document
+    public function parseFile(string $filePath): TreeNode
     {
         $file = $this->createFileSystemInfo($filePath);
         $sources = $this->read($file);
@@ -192,25 +158,45 @@ class Compiler
     /**
      * @param string $sources
      * @param null|\SplFileInfo $file
-     * @return Document
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     * @throws \RuntimeException
-     * @throws \OutOfRangeException
+     * @return TreeNode
      * @throws UnexpectedTokenException
      */
-    public function parse(string $sources, ?\SplFileInfo $file = null): Document
+    public function parse(string $sources, ?\SplFileInfo $file = null): TreeNode
     {
         try {
-            $ast = $this->llk->parse($sources);
+            return $this->llk->parse($sources);
         } catch (UnexpectedToken $e) {
             throw new UnexpectedTokenException($e, $file);
         } catch (UnrecognizedToken $e) {
             throw new UnexpectedTokenException($e, $file);
         }
+    }
 
-        $fileName = $file !== null ? $file->getRealPath() : '<undefined>';
+    /**
+     * @param string $sources
+     * @param null|\SplFileInfo $file
+     * @return DocumentTypeInterface
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     */
+    public function compile(string $sources, ?\SplFileInfo $file = null): DocumentTypeInterface
+    {
+        $ast = $this->parse($sources, $file);
 
-        return new Document($ast, $fileName, $this);
+        $fileName = $file ? $file->getRealPath() : '<undefined>';
+
+        return new Document($fileName, $ast, $this->dictionary);
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return string
+     */
+    public function dump(TreeNode $ast): string
+    {
+        return dump($ast);
     }
 
     /**
