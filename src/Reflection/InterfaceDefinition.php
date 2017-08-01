@@ -11,37 +11,25 @@ namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
+use Serafim\Railgun\Reflection\Abstraction\InterfaceTypeInterface;
+use Serafim\Railgun\Reflection\Common\HasDirectives;
+use Serafim\Railgun\Reflection\Common\HasFields;
 
 /**
- * TODO Remove it in future (for development only)
- *
- * Class Stub
+ * Class InterfaceDefinition
  * @package Serafim\Railgun\Reflection
  */
-final class Stub extends Definition
+class InterfaceDefinition extends Definition implements InterfaceTypeInterface
 {
-    /**
-     * @var array
-     */
-    private $data = [];
+    use HasFields;
+    use HasDirectives;
 
     /**
      * @param TreeNode $ast
      * @param Dictionary $dictionary
-     * @return void
      */
     protected function compile(TreeNode $ast, Dictionary $dictionary): void
     {
-        $this->data[$ast->getId()] = $ast;
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return mixed|null
-     */
-    public function __call($name, $arguments)
-    {
-        return $this->data[@substr($name, 3)] ?? null;
+        throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
 }

@@ -97,15 +97,20 @@ class Document extends Definition implements DocumentTypeInterface
                 return SchemaDefinition::class;
             case '#ObjectDefinition':
                 return ObjectDefinition::class;
-
             case '#InterfaceDefinition':
+                return InterfaceDefinition::class;
             case '#UnionDefinition':
+                return UnionDefinition::class;
             case '#ScalarDefinition':
+                return ScalarDefinition::class;
             case '#EnumDefinition':
+                return EnumDefinition::class;
             case '#InputDefinition':
+                return InputDefinition::class;
             case '#ExtendDefinition':
+                return ExtendDefinition::class;
             case '#DirectiveDefinition':
-                return Stub::class;
+                return DirectiveDefinition::class;
         }
 
         throw new \LogicException('Unrecognized AST node name ' . $ast->getId());
