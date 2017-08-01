@@ -10,10 +10,8 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Class Definition
@@ -24,27 +22,12 @@ abstract class Definition implements DefinitionInterface
     /**
      * @var Document
      */
-    private $document;
-
-    /**
-     * @var bool
-     */
-    protected $compiled = false;
-
-    /**
-     * @var string|null
-     */
-    private $name;
-
-    /**
-     * @var array|callable[]
-     */
-    private $beforeCompile = [];
+    protected $document;
 
     /**
      * @var TreeNode
      */
-    private $ast;
+    protected $ast;
 
     /**
      * Definition constructor.
@@ -56,24 +39,12 @@ abstract class Definition implements DefinitionInterface
         $this->ast = $ast;
         $this->document = $document;
 
-        if ($this instanceof NamedDefinitionInterface && $ast->getChild(0)->getId() === '#Name') {
-            $this->name = $ast->getChild(0)->getValueValue();
-        }
-
         foreach (class_uses_recursive($this) as $trait) {
-            $name = 'compile' . class_basename($trait);
+            $name = 'boot' . class_basename($trait);
             if (method_exists($this, $name)) {
-                $this->beforeCompile[] = [$this, $name];
+                $this->{$name}($document, $ast);
             }
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return (string)$this->name;
     }
 
     /**
@@ -82,39 +53,6 @@ abstract class Definition implements DefinitionInterface
     public function getTypeName(): string
     {
         return class_basename(static::class);
-    }
-
-    /**
-     * @param TreeNode $ast
-     * @param Dictionary $dictionary
-     * @return null|TreeNode
-     */
-    abstract protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode;
-
-    /**
-     * @param Dictionary $dictionary
-     * @return bool
-     */
-    public function compileIfNotBooted(Dictionary $dictionary): bool
-    {
-        if ($this->compiled) {
-            return false;
-        }
-
-        foreach ($this->ast->getChildren() as $child) {
-            $redefined = $this->compile($child, $dictionary);
-
-            if ($redefined instanceof TreeNode) {
-                $child = $redefined;
-            }
-
-            foreach ($this->beforeCompile as $callable) {
-                call_user_func($callable, $child, $dictionary);
-            }
-
-        }
-
-        return $this->compiled = true;
     }
 
     /**

@@ -13,19 +13,26 @@ use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\ExtendTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasDirectives;
-use Serafim\Railgun\Reflection\Common\HasFields;
+use Serafim\Railgun\Reflection\Common\Directives;
+use Serafim\Railgun\Reflection\Common\Fields;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Common\HasName;
 
 /**
  * Class ExtendDefinition
  * @package Serafim\Railgun\Reflection
  */
-class ExtendDefinition extends Definition implements ExtendTypeInterface
+class ExtendDefinition extends Definition implements
+    ExtendTypeInterface,
+    HasLinkingStageInterface
 {
-    use HasFields;
-    use HasDirectives;
+    use HasName;
+    use Fields;
+    use Directives;
+    use LinkingStage;
 
-    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
@@ -33,5 +40,13 @@ class ExtendDefinition extends Definition implements ExtendTypeInterface
     public function getTarget(): DefinitionInterface
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Extender';
     }
 }

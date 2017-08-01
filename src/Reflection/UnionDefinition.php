@@ -13,7 +13,7 @@ use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\UnionTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasDirectives;
+use Serafim\Railgun\Reflection\Common\Directives;
 
 /**
  * Class UnionDefinition
@@ -21,7 +21,7 @@ use Serafim\Railgun\Reflection\Common\HasDirectives;
  */
 class UnionDefinition extends Definition implements UnionTypeInterface
 {
-    use HasDirectives;
+    use Directives;
 
     protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
     {
@@ -41,5 +41,13 @@ class UnionDefinition extends Definition implements UnionTypeInterface
     public function getType(string $name): ?NamedDefinitionInterface
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Union';
     }
 }

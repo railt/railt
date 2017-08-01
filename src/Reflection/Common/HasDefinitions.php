@@ -22,18 +22,27 @@ use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 trait HasDefinitions
 {
     /**
-     * @var Dictionary
+     * @return Dictionary
+     * @throws \LogicException
      */
-    protected $dictionary;
+    private function getDefinitionsDictionary(): Dictionary
+    {
+        if (!property_exists($this, 'dictionary')) {
+            throw new \LogicException(static::class . '::$dictionary property is not defined');
+        }
+
+        return $this->dictionary;
+    }
 
     /**
      * @param string[]|DefinitionInterface[] ...$types
      * @return iterable|DefinitionInterface[]
+     * @throws \LogicException
      */
     public function getDefinitions(string ...$types): iterable
     {
         /** @var DocumentTypeInterface $this */
-        $definitions = $this->dictionary->definitions($this);
+        $definitions = $this->getDefinitionsDictionary()->definitions($this);
 
         yield from count($types) !== 0
             ? $this->getDefinitionsFilteredBy($definitions, $types)
@@ -58,6 +67,7 @@ trait HasDefinitions
 
     /**
      * @return iterable
+     * @throws \LogicException
      */
     public function getNamedDefinitions(): iterable
     {
@@ -67,7 +77,7 @@ trait HasDefinitions
     /**
      * @param string $name
      * @return bool
-     * @throws TypeNotFoundException
+     * @throws \LogicException
      */
     public function hasDefinition(string $name): bool
     {
@@ -77,6 +87,7 @@ trait HasDefinitions
     /**
      * @param string $name
      * @return null|NamedDefinitionInterface
+     * @throws \LogicException
      */
     public function getDefinition(string $name): ?NamedDefinitionInterface
     {

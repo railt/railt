@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 /**
- * Trait HasUniqueId
+ * Trait UniqueId
  * @package Serafim\Railgun\Reflection\Common
  */
-trait HasUniqueId
+trait UniqueId
 {
     /**
      * @var int

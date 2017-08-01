@@ -13,20 +13,23 @@ use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
+use Serafim\Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
+use Serafim\Railgun\Reflection\Document;
 
 /**
  * Trait HasArguments
  * @package Serafim\Railgun\Reflection\Common
+ * @mixin HasArgumentsInterface
  */
-trait HasArguments
+trait Arguments
 {
     /**
+     * @param Document $document
      * @param TreeNode $ast
-     * @param Dictionary $dictionary
      */
-    protected function compileHasArguments(TreeNode $ast, Dictionary $dictionary): void
+    protected function compileArguments(Document $document, TreeNode $ast): void
     {
-        $allowed = in_array($ast->getId(), $this->astHasArguments ?? ['#Argument'], true);
+        $allowed = in_array($ast->getId(), (array)($this->astHasArguments ?? ['#Argument']), true);
 
         if ($allowed) {
             throw new CompilerException('TODO: Add arguments compilation for ' . get_class($this));

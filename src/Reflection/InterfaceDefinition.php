@@ -12,24 +12,35 @@ namespace Serafim\Railgun\Reflection;
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\InterfaceTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasDirectives;
-use Serafim\Railgun\Reflection\Common\HasFields;
+use Serafim\Railgun\Reflection\Common\Directives;
+use Serafim\Railgun\Reflection\Common\Fields;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Common\HasName;
 
 /**
  * Class InterfaceDefinition
  * @package Serafim\Railgun\Reflection
  */
-class InterfaceDefinition extends Definition implements InterfaceTypeInterface
+class InterfaceDefinition extends Definition implements
+    InterfaceTypeInterface,
+    HasLinkingStageInterface
 {
-    use HasFields;
-    use HasDirectives;
+    use HasName;
+    use Fields;
+    use Directives;
+    use LinkingStage;
 
-    /**
-     * @param TreeNode $ast
-     * @param Dictionary $dictionary
-     */
-    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Interface';
     }
 }

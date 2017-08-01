@@ -12,17 +12,24 @@ namespace Serafim\Railgun\Reflection;
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\DirectiveTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasArguments;
+use Serafim\Railgun\Reflection\Common\Arguments;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Common\HasName;
 
 /**
  * Class DirectiveDefinition
  * @package Serafim\Railgun\Reflection
  */
-class DirectiveDefinition extends Definition implements DirectiveTypeInterface
+class DirectiveDefinition extends Definition implements
+    DirectiveTypeInterface,
+    HasLinkingStageInterface
 {
-    use HasArguments;
+    use HasName;
+    use Arguments;
+    use LinkingStage;
 
-    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
@@ -40,5 +47,13 @@ class DirectiveDefinition extends Definition implements DirectiveTypeInterface
     public function getTarget(string $name): ?string
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Directive';
     }
 }

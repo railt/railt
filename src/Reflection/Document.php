@@ -16,7 +16,8 @@ use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
 use Serafim\Railgun\Reflection\Common\HasDefinitions;
-use Serafim\Railgun\Reflection\Common\HasUniqueId;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Common\UniqueId;
 
 /**
  * Class Document
@@ -24,7 +25,7 @@ use Serafim\Railgun\Reflection\Common\HasUniqueId;
  */
 class Document extends Definition implements DocumentTypeInterface
 {
-    use HasUniqueId;
+    use UniqueId;
     use HasDefinitions;
 
     /**
@@ -33,30 +34,29 @@ class Document extends Definition implements DocumentTypeInterface
     private $fileName;
 
     /**
-     * @var TreeNode
-     */
-    private $ast;
-
-    /**
      * @var SchemaTypeInterface|null
      */
     private $schema;
+
+    /**
+     * @var Dictionary
+     */
+    private $dictionary;
 
     /**
      * Document constructor.
      * @param null|string $fileName
      * @param TreeNode $ast
      * @param Dictionary $dictionary
+     * @throws \LogicException
      */
     public function __construct(?string $fileName, TreeNode $ast, Dictionary $dictionary)
     {
         parent::__construct($this, $ast);
 
-        $this->ast = $ast;
         $this->fileName = $fileName;
         $this->dictionary = $dictionary;
 
-        $this->compileIfNotBooted($dictionary);
         $this->compileChildren();
     }
 
@@ -68,24 +68,6 @@ class Document extends Definition implements DocumentTypeInterface
     public function load(string $type): NamedDefinitionInterface
     {
         return $this->dictionary->get($type);
-    }
-
-    /**
-     * @param TreeNode $ast
-     * @param Dictionary $dictionary
-     * @return TreeNode|null
-     * @throws \LogicException
-     */
-    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
-    {
-        /** @var Definition $class */
-        $class = $this->resolveDefinition($ast);
-
-        $definition = new $class($this, $ast);
-
-        $this->dictionary->register($definition);
-
-        return $ast;
     }
 
     /**
@@ -121,12 +103,24 @@ class Document extends Definition implements DocumentTypeInterface
 
     /**
      * @return void
+     * @throws \LogicException
      */
     private function compileChildren(): void
     {
+        foreach ($this->ast->getChildren() as $child) {
+            /** @var Definition $class */
+            $class = $this->resolveDefinition($child);
+
+            $definition = new $class($this, $child);
+
+            $this->dictionary->register($definition);
+        }
+
         /** @var Definition $definition */
         foreach ($this->getDefinitions() as $definition) {
-            $definition->compileIfNotBooted($this->dictionary);
+            if ($definition instanceof HasLinkingStageInterface) {
+                $definition->compileIfNotCompiled();
+            }
 
             if ($definition instanceof SchemaTypeInterface) {
                 $this->schema = $definition;
@@ -148,5 +142,13 @@ class Document extends Definition implements DocumentTypeInterface
     public function getSchema(): ?SchemaTypeInterface
     {
         return $this->schema;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return sprintf('Document<%s>', basename($this->getFileName()));
     }
 }

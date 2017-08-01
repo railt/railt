@@ -11,36 +11,29 @@ namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
-use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
 use Serafim\Railgun\Reflection\Common\Arguments;
 use Serafim\Railgun\Reflection\Common\Directives;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
-use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
+use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Common\HasName;
 
 /**
- * Class InputDefinition
+ * Class Field
  * @package Serafim\Railgun\Reflection
  */
-class InputDefinition extends Definition implements
-    InputTypeInterface,
-    HasLinkingStageInterface
+class Field extends Definition implements FieldInterface
 {
     use HasName;
     use Arguments;
     use Directives;
-    use LinkingStage;
 
-    public function compile(Document $document, TreeNode $ast): ?TreeNode
+    public function __construct(Document $document, TreeNode $ast)
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        parent::__construct($document, $ast);
     }
 
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
+    public function getType(): TypeInterface
     {
-        return 'Input';
+        throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
 }

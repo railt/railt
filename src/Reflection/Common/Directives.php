@@ -14,13 +14,14 @@ use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Reflection\Abstraction\CalleeDirectiveInterface;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Serafim\Railgun\Reflection\Document;
 
 /**
- * Trait HasDirectives
+ * Trait Directives
  * @package Serafim\Railgun\Reflection\Common
  * @mixin HasDirectivesInterface
  */
-trait HasDirectives
+trait Directives
 {
     /**
      * @var array|CalleeDirectiveInterface[]
@@ -28,12 +29,12 @@ trait HasDirectives
     private $directives = [];
 
     /**
+     * @param Document $document
      * @param TreeNode $ast
-     * @param Dictionary $dictionary
      */
-    protected function compileHasDirectives(TreeNode $ast, Dictionary $dictionary): void
+    protected function compileHasDirectives(Document $document, TreeNode $ast): void
     {
-        $allowed = in_array($ast->getId(), $this->astHasFields ?? ['#Directive'], true);
+        $allowed = in_array($ast->getId(), (array)($this->astHasFields ?? ['#Directive']), true);
 
         if ($allowed) {
             throw new CompilerException('TODO: Add directives compilation for ' . get_class($this));

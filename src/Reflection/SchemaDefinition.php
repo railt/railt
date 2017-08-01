@@ -11,59 +11,102 @@ namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
+use Serafim\Railgun\Compiler\Exceptions\CompilerException;
+use Serafim\Railgun\Compiler\Exceptions\SemanticException;
+use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
+use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasDirectives;
-use Serafim\Railgun\Reflection\Common\HasFields;
+use Serafim\Railgun\Reflection\Common\Directives;
+use Serafim\Railgun\Reflection\Common\Fields;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
 
 /**
  * Class SchemaDefinition
  * @package Serafim\Railgun\Reflection
  */
-class SchemaDefinition extends Definition implements SchemaTypeInterface
+class SchemaDefinition extends Definition implements
+    SchemaTypeInterface,
+    HasLinkingStageInterface
 {
-    use HasFields;
-    use HasDirectives;
+    use Directives;
+    use LinkingStage;
 
     /**
-     *
+     * @var ObjectDefinition|InputDefinition
      */
-    private const QUERY_FIELD_NAME = 'query';
+    private $query;
 
     /**
-     *
+     * @var ObjectDefinition|InputDefinition
      */
-    private const MUTATION_FIELD_NAME = 'mutation';
+    private $mutation;
 
     /**
-     * @var array
+     * @param Document $document
+     * @param TreeNode $ast
+     * @return TreeNode|null
+     * @throws SemanticException
      */
-    protected $astHasFields = [
-        '#Query',
-        '#Mutation'
-    ];
-
-    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        $name = $ast->getId();
+
+        switch ($name) {
+            case '#Query':
+                $type = $ast->getChild(0)->getChild(0)->getValueValue();
+                $this->query = $this->check('query', $document->load($type));
+                break;
+
+            case '#Mutation':
+                $type = $ast->getChild(0)->getChild(0)->getValueValue();
+                $this->mutation = $this->check('query', $document->load($type));
+                break;
+        }
+
+        return $ast;
+    }
+
+    /**
+     * @param string $fieldName
+     * @param DefinitionInterface $definition
+     * @return DefinitionInterface
+     * @throws SemanticException
+     */
+    private function check(string $fieldName, DefinitionInterface $definition): DefinitionInterface
+    {
+        if ($definition instanceof ObjectTypeInterface) {
+            return $definition;
+        }
+
+        if ($definition instanceof InputTypeInterface) {
+            return $definition;
+        }
+
+        $name = $definition->getTypeName();
+
+        if ($definition instanceof NamedDefinitionInterface) {
+            $name = $definition->getName() . ' ' . $name;
+        }
+
+        $error = 'Schema allows only Input type or Object type for %s field, %s given.';
+        throw new SemanticException(sprintf($error, $fieldName, $name));
     }
 
     /**
      * @return ObjectTypeInterface|NamedDefinitionInterface
-     * @throws \LogicException
+     * @throws CompilerException
      */
     public function getQuery(): ObjectTypeInterface
     {
-        /** @var FieldInterface $query */
-        $query = $this->getField(self::QUERY_FIELD_NAME);
-
-        if ($query === null) {
-            throw new \LogicException('Can not find query. Probably compiler internal error?');
+        if ($this->query === null) {
+            throw new CompilerException('Internal error: Can not resolve query data for schema');
         }
 
-        return $query->getType()->getDefinition();
+        return $this->query;
     }
 
     /**
@@ -71,13 +114,7 @@ class SchemaDefinition extends Definition implements SchemaTypeInterface
      */
     public function getMutation(): ?ObjectTypeInterface
     {
-        $mutation = $this->getField(self::MUTATION_FIELD_NAME);
-
-        if ($mutation === null) {
-            return null;
-        }
-
-        return $mutation->getType()->getDefinition();
+        return $this->mutation;
     }
 
     /**
@@ -85,6 +122,14 @@ class SchemaDefinition extends Definition implements SchemaTypeInterface
      */
     public function hasMutation(): bool
     {
-        return $this->getField(self::MUTATION_FIELD_NAME) !== null;
+        return $this->mutation !== null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Schema';
     }
 }

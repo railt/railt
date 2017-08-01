@@ -12,18 +12,33 @@ namespace Serafim\Railgun\Reflection;
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\ScalarTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasDirectives;
+use Serafim\Railgun\Reflection\Common\Directives;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Common\HasName;
 
 /**
  * Class ScalarDefinition
  * @package Serafim\Railgun\Reflection
  */
-class ScalarDefinition extends Definition implements ScalarTypeInterface
+class ScalarDefinition extends Definition implements
+    ScalarTypeInterface,
+    HasLinkingStageInterface
 {
-    use HasDirectives;
+    use HasName;
+    use Directives;
+    use LinkingStage;
 
-    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Scalar';
     }
 }

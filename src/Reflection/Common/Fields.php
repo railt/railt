@@ -14,13 +14,15 @@ use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
+use Serafim\Railgun\Reflection\Document;
+use Serafim\Railgun\Reflection\Field;
 
 /**
- * Trait HasFields
+ * Trait Fields
  * @package Serafim\Railgun\Reflection\Common
  * @mixin HasFieldsInterface
  */
-trait HasFields
+trait Fields
 {
     /**
      * @var array|FieldInterface[]
@@ -28,15 +30,16 @@ trait HasFields
     private $fields = [];
 
     /**
+     * @param Document $document
      * @param TreeNode $ast
-     * @param Dictionary $dictionary
      */
-    protected function compileHasFields(TreeNode $ast, Dictionary $dictionary): void
+    protected function compileFields(Document $document, TreeNode $ast): void
     {
-        $allowed = in_array($ast->getId(), $this->astHasFields ?? ['#Field'], true);
+        $allowed = in_array($ast->getId(), (array)($this->astHasFields ?? ['#Field']), true);
 
         if ($allowed) {
-            throw new CompilerException('TODO: Add fields compilation for ' . get_class($this));
+            $field = new Field($this->getDocument(), $ast);
+            $this->fields[$field->getName()] = $field;
         }
     }
 
