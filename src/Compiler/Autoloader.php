@@ -9,7 +9,10 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Compiler;
 
-use Serafim\Railgun\Compiler\Reflection\Definition;
+use Illuminate\Support\Str;
+use Serafim\Railgun\Compiler\Reflection\Definition\Definition;
+use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
+use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Class Autoloader
@@ -17,6 +20,13 @@ use Serafim\Railgun\Compiler\Reflection\Definition;
  */
 class Autoloader
 {
+    private const DEFAULT_EXTENSIONS = [
+        '.graphqls',
+        '.graphqle',
+        '.graphql',
+        '.gql',
+    ];
+
     /**
      * @var array|\Closure[]
      */
@@ -39,7 +49,7 @@ class Autoloader
     /**
      * @param \Closure $then
      * @param bool $prepend
-     * @return Autoloader
+     * @return Autoloader|$this
      */
     public function autoload(\Closure $then, bool $prepend = false): Autoloader
     {
@@ -54,7 +64,9 @@ class Autoloader
 
     /**
      * @param string $type
-     * @return null|Definition
+     * @return null|NamedDefinitionInterface
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      * @throws Exceptions\NotReadableException
      * @throws Exceptions\SemanticException
      * @throws Exceptions\TypeNotFoundException
@@ -62,13 +74,13 @@ class Autoloader
      * @throws \OutOfRangeException
      * @throws \RuntimeException
      */
-    public function load(string $type): ?Definition
+    public function load(string $type): ?NamedDefinitionInterface
     {
         foreach ($this->loaders as $loader) {
             $file = $loader($type);
 
             if (is_string($file)) {
-                $this->compiler->parseFile($file);
+                $this->compiler->compileFile($file);
 
                 if ($this->compiler->getDictionary()->has($type)) {
                     return $this->compiler->getDictionary()->get($type);
@@ -77,5 +89,32 @@ class Autoloader
         }
 
         return null;
+    }
+
+    /**
+     * @param string $directory
+     * @param bool $prepend
+     * @param array $extensions
+     * @return Autoloader
+     */
+    public function psr0(
+        string $directory,
+        bool $prepend = false,
+        array $extensions = self::DEFAULT_EXTENSIONS
+    ): Autoloader
+    {
+        if (!Str::endsWith($directory, '/')) {
+            $directory .= '/';
+        }
+
+        return $this->autoload(function (string $type) use ($directory, $extensions): ?string {
+            foreach ($extensions as $extension) {
+                $path = $directory . $type . $extension;
+                if (is_file($path) && is_readable($path)) {
+                    return $path;
+                }
+            }
+            return null;
+        }, $prepend);
     }
 }
