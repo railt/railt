@@ -9,26 +9,26 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Compiler;
 
-use Serafim\Railgun\Compiler\Exceptions\SemanticException;
-use Serafim\Railgun\Compiler\Exceptions\TypeException;
 use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
-use Serafim\Railgun\Compiler\Reflection\Definition;
+use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
+use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Class Dictionary
  * @package Serafim\Railgun\Compiler
  */
-class Dictionary
+class Dictionary implements \Countable, \IteratorAggregate
 {
     /**
-     * @var array|Definition[]
-     */
-    private $namedDefinitions = [];
-
-    /**
-     * @var array|Definition[]
+     * @var array
      */
     private $definitions = [];
+
+    /**
+     * @var array
+     */
+    private $namedDefinitions = [];
 
     /**
      * @var Autoloader
@@ -50,77 +50,59 @@ class Dictionary
     }
 
     /**
-     * @param Definition $definition
+     * @param DefinitionInterface $definition
      * @return Dictionary
-     * @throws SemanticException
      */
-    public function register(Definition $definition): Dictionary
+    public function register(DefinitionInterface $definition): Dictionary
     {
-        $name = $definition->getName();
-
-        if ($name !== null && $this->has($name)) {
-            $error = $this->getRedefiningError($definition, $this->get($name));
-            throw new TypeException($error, $definition->getContext()->getFileName());
+        if ($definition instanceof NamedDefinitionInterface) {
+            $this->registerNamedDefinition($definition);
+        } else {
+            $this->registerAnonymousDefinition($definition);
         }
 
-
-        $this->storeDefinition($definition);
-        $this->storeContext($definition);
+        $this->registerCached($definition);
 
         return $this;
     }
 
     /**
-     * @param Definition $definition
+     * @param DefinitionInterface $definition
      */
-    private function storeContext(Definition $definition): void
+    private function registerCached(DefinitionInterface $definition): void
     {
-        // Cache context
-        $id = $definition->getContext()->getId();
+        // Add hash map for fast type resolving from Document
+        $documentId = $definition->getDocument()->getId();
 
-        if (!array_key_exists($id, $this->context)) {
-            $this->context[$id] = [];
+        if (!array_key_exists($documentId, $this->context)) {
+            $this->context[$documentId] = [];
         }
 
-        $this->context[$id][] = $definition;
+        $this->context[$documentId][] = $definition;
     }
 
     /**
-     * @param Definition $definition
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @param NamedDefinitionInterface $definition
      */
-    private function storeDefinition(Definition $definition): void
+    private function registerNamedDefinition(NamedDefinitionInterface $definition): void
     {
-        $name = $definition->getName();
-
-        // Register definition
-        if ($name !== null) {
-            $this->namedDefinitions[$name] = $definition;
-        } else {
-            $this->definitions[] = $definition;
-        }
+        $this->namedDefinitions[$definition->getName()] = $definition;
     }
 
     /**
-     * @param Definition $target
-     * @param Definition $original
-     * @return string
+     * @param DefinitionInterface $definition
      */
-    private function getRedefiningError(Definition $target, Definition $original): string
+    private function registerAnonymousDefinition(DefinitionInterface $definition): void
     {
-        $info = function(Definition $definition) {
-            return [
-                $definition->getName(),
-                $definition::getType(),
-                $definition->getContext()->getFileName()
-            ];
-        };
+        $this->definitions[] = $definition;
+    }
 
-        $error   = 'Can not register type named "%s" as %s.';
-        $because = 'Type "%s" already registered as %s';
-
-        return sprintf($error, ...$info($target)) . ' ' .
-            sprintf($because, ...$info($original));
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->definitions) + count($this->namedDefinitions);
     }
 
     /**
@@ -134,63 +116,44 @@ class Dictionary
 
     /**
      * @param string $name
-     * @return Definition
-     * @throws \Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
-     * @throws \RuntimeException
-     * @throws \OutOfRangeException
+     * @return NamedDefinitionInterface
      * @throws TypeNotFoundException
      */
-    public function get(string $name): Definition
+    public function get(string $name): NamedDefinitionInterface
     {
+        $parent = null;
+        $error  = 'Type "%s" not found and could not be loaded';
+
         if ($this->has($name)) {
             return $this->namedDefinitions[$name];
         }
 
-        if ($result = $this->loader->load($name)) {
-            return $result;
+        try {
+            if ($result = $this->loader->load($name)) {
+                return $result;
+            }
+        } catch (\Exception $e) {
+            [$error, $parent] = ['Error while loading type "%s"', $e];
         }
 
-        $error = 'Type "%s" not found and could not be loaded';
-        throw new TypeNotFoundException(sprintf($error, $name));
+        throw new TypeNotFoundException(sprintf($error, $name), 0, $parent);
     }
 
     /**
-     * @param Document $document
-     * @return iterable
+     * @param DocumentTypeInterface $document
+     * @return array
      */
-    public function contextDefinitions(Document $document): iterable
+    public function definitions(DocumentTypeInterface $document): array
     {
         return $this->context[$document->getId()] ?? [];
     }
 
     /**
-     * @return iterable|Definition[]
+     * @return \Generator|\Traversable
      */
-    public function allNamed(): iterable
+    public function getIterator(): \Traversable
     {
-        foreach ($this->namedDefinitions as $definition) {
-            yield $definition->getContext() => $definition;
-        }
-    }
-
-    /**
-     * @return iterable|Definition[]
-     */
-    public function allAnonymous(): iterable
-    {
-        foreach ($this->definitions as $definition) {
-            yield $definition->getContext() => $definition;
-        }
-    }
-
-    /**
-     * @return iterable|Definition[]
-     */
-    public function all(): iterable
-    {
-        yield from $this->allNamed();
-        yield from $this->allAnonymous();
+        yield from array_values($this->definitions);
+        yield from array_values($this->namedDefinitions);
     }
 }
