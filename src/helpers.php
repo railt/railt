@@ -7,13 +7,21 @@
  */
 declare(strict_types=1);
 
-if (!function_exists('line_up')) {
+use Hoa\Compiler\Llk\TreeNode;
+use Hoa\Compiler\Visitor\Dump;
+
+if (!function_exists('dump')) {
     /**
-     * @param iterable $iterator
-     * @return array
+     * @param TreeNode $ast
+     * @return string
      */
-    function line_up(iterable $iterator): array
+    function dump(TreeNode $ast): string
     {
-        return is_array($iterator) ? $iterator : iterator_to_array($iterator);
+        $result = (string)(new Dump())->visit($ast);
+
+        $result = str_replace('>  ', '    ', $result);
+        $result = preg_replace('/^\s{4}/ium', '', $result);
+
+        return $result;
     }
 }
