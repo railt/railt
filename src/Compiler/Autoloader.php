@@ -80,11 +80,9 @@ class Autoloader
             $file = $loader($type);
 
             if (is_string($file)) {
-                $this->compiler->compileFile($file);
+                $document = $this->compiler->compileFile($file);
 
-                if ($this->compiler->getDictionary()->has($type)) {
-                    return $this->compiler->getDictionary()->get($type);
-                }
+                return $this->compiler->getDictionary()->definition($document, $type);
             }
         }
 
