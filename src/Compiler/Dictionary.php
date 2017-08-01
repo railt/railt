@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Compiler;
 
+use Serafim\Railgun\Compiler\Exceptions\SemanticException;
 use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
@@ -51,12 +52,14 @@ class Dictionary implements \Countable, \IteratorAggregate
 
     /**
      * @param DefinitionInterface $definition
+     * @param bool $force Allows types redefinition for already defined type with same name
      * @return Dictionary
+     * @throws SemanticException
      */
-    public function register(DefinitionInterface $definition): Dictionary
+    public function register(DefinitionInterface $definition, bool $force = false): Dictionary
     {
         if ($definition instanceof NamedDefinitionInterface) {
-            $this->registerNamedDefinition($definition);
+            $this->registerNamedDefinition($definition, $force);
         } else {
             $this->registerAnonymousDefinition($definition);
         }
@@ -83,9 +86,23 @@ class Dictionary implements \Countable, \IteratorAggregate
 
     /**
      * @param NamedDefinitionInterface $definition
+     * @param bool $force
+     * @throws SemanticException
      */
-    private function registerNamedDefinition(NamedDefinitionInterface $definition): void
+    private function registerNamedDefinition(NamedDefinitionInterface $definition, bool $force = false): void
     {
+        if (!$force && array_key_exists($definition->getName(), $this->namedDefinitions)) {
+            $sourceError = 'Can not register type named "%s" as %s.';
+            $targetError = 'Type "%s" already registered as %s';
+
+            $target = $this->namedDefinitions[$definition->getName()];
+
+            throw new SemanticException(
+                sprintf($sourceError, $definition->getName(), $definition->getTypeName()) . ' ' .
+                sprintf($targetError, $target->getName(), $target->getTypeName())
+            );
+        }
+
         $this->namedDefinitions[$definition->getName()] = $definition;
     }
 
@@ -133,7 +150,7 @@ class Dictionary implements \Countable, \IteratorAggregate
                 return $result;
             }
         } catch (\Exception $e) {
-            [$error, $parent] = ['Error while loading type "%s"', $e];
+            [$error, $parent] = ['"%s" type found and was be loaded but made an error while loading.', $e];
         }
 
         throw new TypeNotFoundException(sprintf($error, $name), 0, $parent);
@@ -146,6 +163,23 @@ class Dictionary implements \Countable, \IteratorAggregate
     public function definitions(DocumentTypeInterface $document): array
     {
         return $this->context[$document->getId()] ?? [];
+    }
+
+    /**
+     * @param DocumentTypeInterface $document
+     * @param string $name
+     * @return null|NamedDefinitionInterface
+     * @throws TypeNotFoundException
+     */
+    public function definition(DocumentTypeInterface $document, string $name): ?NamedDefinitionInterface
+    {
+        $definition = $this->get($name);
+
+        if ($definition === null || $document->getId() === $definition->getDocument()->getId()) {
+            return null;
+        }
+
+        return $definition;
     }
 
     /**
