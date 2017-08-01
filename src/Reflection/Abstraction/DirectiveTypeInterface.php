@@ -19,24 +19,24 @@ interface DirectiveTypeInterface extends
     NamedDefinitionInterface,
     HasArgumentsInterface
 {
-    public const ENUM                   = 'ENUM';
-    public const QUERY                  = 'QUERY';
-    public const UNION                  = 'UNION';
-    public const FIELD                  = 'FIELD';
-    public const SCALAR                 = 'SCALAR';
-    public const SCHEMA                 = 'SCHEMA';
-    public const OBJECT                 = 'OBJECT';
-    public const MUTATION               = 'MUTATION';
-    public const INTERFACE              = 'INTERFACE';
-    public const ENUM_VALUE             = 'ENUM_VALUE';
-    public const INPUT_OBJECT           = 'INPUT_OBJECT';
-    public const SUBSCRIPTION           = 'SUBSCRIPTION';
-    public const FRAGMENT_SPREAD        = 'FRAGMENT_SPREAD';
-    public const INLINE_FRAGMENT        = 'INLINE_FRAGMENT';
-    public const FIELD_DEFINITION       = 'FIELD_DEFINITION';
-    public const FRAGMENT_DEFINITION    = 'FRAGMENT_DEFINITION';
-    public const ARGUMENT_DEFINITION    = 'ARGUMENT_DEFINITION';
-    public const INPUT_FIELD_DEFINITION = 'INPUT_FIELD_DEFINITION';
+    public const TARGET_ENUM                   = 'ENUM';
+    public const TARGET_QUERY                  = 'QUERY';
+    public const TARGET_UNION                  = 'UNION';
+    public const TARGET_FIELD                  = 'FIELD';
+    public const TARGET_SCALAR                 = 'SCALAR';
+    public const TARGET_SCHEMA                 = 'SCHEMA';
+    public const TARGET_OBJECT                 = 'OBJECT';
+    public const TARGET_MUTATION               = 'MUTATION';
+    public const TARGET_INTERFACE              = 'INTERFACE';
+    public const TARGET_ENUM_VALUE             = 'ENUM_VALUE';
+    public const TARGET_INPUT_OBJECT           = 'INPUT_OBJECT';
+    public const TARGET_SUBSCRIPTION           = 'SUBSCRIPTION';
+    public const TARGET_FRAGMENT_SPREAD        = 'FRAGMENT_SPREAD';
+    public const TARGET_INLINE_FRAGMENT        = 'INLINE_FRAGMENT';
+    public const TARGET_FIELD_DEFINITION       = 'FIELD_DEFINITION';
+    public const TARGET_FRAGMENT_DEFINITION    = 'FRAGMENT_DEFINITION';
+    public const TARGET_ARGUMENT_DEFINITION    = 'ARGUMENT_DEFINITION';
+    public const TARGET_INPUT_FIELD_DEFINITION = 'INPUT_FIELD_DEFINITION';
 
     /**
      * @return iterable|string[]
