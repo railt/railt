@@ -62,3 +62,8 @@
 **[youshido/graphql](https://github.com/Youshido/GraphQL)**, которые реализуют официальную 
 GraphQL спецификацию, которая располагается на странице [Facebook GitHub](http://facebook.github.io/graphql/).
 
+Библиотека предоставляет:
+- Компилятор GraphQL IDL, полностью следющий [спецификации Facebook](http://facebook.github.io/graphql/)
+- Набор классов рефлексии и интроспеции файлов деклараций типов
+- Удобное API для работы с GraphQL 
+

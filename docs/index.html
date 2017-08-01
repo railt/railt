@@ -19,7 +19,7 @@
             name:        '<img src="./resources/logo.png" style="height: 64px;" alt="Railgun" />',
             maxLevel:    4,
             subMaxLevel: 2,
-            basePath:    '/Railgun/',
+            basePath:    document.location.host === 'serafimarts.github.io' ? '/Railgun/' : '/',
             repo:        'SerafimArts/Railgun',
             loadNavbar:  '_menu.md',
             loadSidebar: '_sidebar.md',
