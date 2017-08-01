@@ -258,20 +258,20 @@ Value:
         Object()
             |
         List()
+            |
+        ValueKeyword()
     ) #Value
 
-
-
 ValueDefinition:
-    ValueDefinitionResolver() #Type
+    ValueDefinitionResolver()
 
 ValueDefinitionResolver:
     (ValueListDefinition() <T_NON_NULL>? #List) |
-    (ValueScalarDefinition() <T_NON_NULL>?)
+    (ValueScalarDefinition() <T_NON_NULL>? #Type)
 
 ValueListDefinition:
     ::T_BRACKET_OPEN::
-        (ValueScalarDefinition() <T_NON_NULL>?)
+        (ValueScalarDefinition() <T_NON_NULL>? #Type)
     ::T_BRACKET_CLOSE::
 
 ValueScalarDefinition:
@@ -373,13 +373,12 @@ DirectiveArguments:
     ::T_PARENTHESIS_CLOSE::
 
 DirectivePair:
-    ObjectPair() #Argument
+    Key() ::T_COLON:: Value()
+        DirectiveArgumentDefaultValue()?
+    #Argument
 
-DirectiveArgumentName:
-    Key()
-
-DirectiveValue:
-    Value() #Value
+DirectiveArgumentDefaultValue:
+    ::T_EQUAL:: Value()
 
 // ==========================================================================
 //                             TYPE DEFINITIONS
