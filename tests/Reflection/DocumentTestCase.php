@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Tests\Reflection;
 
 use Serafim\Railgun\Compiler\Compiler;
-use Serafim\Railgun\Compiler\Document;
 use Serafim\Railgun\Compiler\Exceptions\NotReadableException;
 use Serafim\Railgun\Compiler\Exceptions\SemanticException;
 use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
-use Serafim\Railgun\Compiler\Reflection\Definition\Definition;
-use Serafim\Railgun\Compiler\Reflection\Definition\SchemaDefinition;
+use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
+use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Tests\AbstractTestCase;
 
 /**
@@ -63,7 +63,7 @@ class DocumentTestCase extends AbstractTestCase
     public function testTypeAutoloading(): void
     {
         $compiler = new Compiler();
-        $compiler->getLoader()->psr0($this->resource('/'));
+        $compiler->getLoader()->dir($this->resource('/'));
         $document = $compiler->compileFile($this->resource('schema-1.graphqls'));
 
 
@@ -85,8 +85,8 @@ class DocumentTestCase extends AbstractTestCase
     {
         $compiler = new Compiler();
 
-        $compiler->getLoader()->psr0($this->resource('/'));
-        $compiler->getLoader()->psr0($this->resource('/sub/'), true);
+        $compiler->getLoader()->dir($this->resource('/'));
+        $compiler->getLoader()->dir($this->resource('/sub/'), true);
 
         $document = $compiler->compileFile($this->resource('schema-1.graphqls'));
 
@@ -118,36 +118,56 @@ class DocumentTestCase extends AbstractTestCase
     public function testDictionary(): void
     {
         $compiler = new Compiler();
-        $compiler->getLoader()->psr0($this->resource('/'));
+        $compiler->getLoader()->dir($this->resource('/'));
         $document = $compiler->compileFile($this->resource('schema-1.graphqls'));
 
         $this->assertNotNull($document);
 
         $count = 0;
-        foreach ($compiler->getDictionary()->all() as $ctx => $definition) {
-            $count++;
-            $this->assertInstanceOf(Document::class, $ctx);
-            $this->assertInstanceOf(Definition::class, $definition);
+        /**
+         * @var DocumentTypeInterface $ctx
+         * @var DefinitionInterface $definition
+         */
+        foreach ($compiler->getDictionary() as $ctx => $definition) {
+            if (!$ctx->isStdlib()) {
+                $count++;
+            }
+
+            $this->assertInstanceOf(DocumentTypeInterface::class, $ctx);
+            $this->assertInstanceOf(DefinitionInterface::class, $definition);
         }
         $this->assertEquals(5, $count);
 
 
         $count = 0;
-        foreach ($compiler->getDictionary()->allNamed() as $ctx => $definition) {
-            $count++;
-            $this->assertInstanceOf(Document::class, $ctx);
-            $this->assertInstanceOf(Definition::class, $definition);
-            $this->assertNotNull($definition->getName());
+        /**
+         * @var DocumentTypeInterface $ctx
+         * @var NamedDefinitionInterface $definition
+         */
+        foreach ($compiler->getDictionary()->named() as $ctx => $definition) {
+            if (!$ctx->isStdlib()) {
+                $count++;
+            }
+
+            $this->assertInstanceOf(DocumentTypeInterface::class, $ctx);
+            $this->assertInstanceOf(NamedDefinitionInterface::class, $definition);
         }
         $this->assertEquals(4, $count);
 
 
         $count = 0;
-        foreach ($compiler->getDictionary()->allAnonymous() as $ctx => $definition) {
-            $count++;
-            $this->assertInstanceOf(Document::class, $ctx);
-            $this->assertInstanceOf(SchemaDefinition::class, $definition);
-            $this->assertNull($definition->getName());
+        /**
+         * @var DocumentTypeInterface $ctx
+         * @var DefinitionInterface $definition
+         */
+        foreach ($compiler->getDictionary()->anonymous() as $ctx => $definition) {
+            if (!$ctx->isStdlib()) {
+                $count++;
+            }
+
+            $this->assertInstanceOf(DocumentTypeInterface::class, $ctx);
+            $this->assertInstanceOf(DefinitionInterface::class, $definition);
+            $this->assertNotInstanceOf(NamedDefinitionInterface::class, $definition);
         }
         $this->assertEquals(1, $count);
     }
