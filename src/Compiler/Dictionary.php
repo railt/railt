@@ -22,12 +22,12 @@ use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 class Dictionary implements \Countable, \IteratorAggregate
 {
     /**
-     * @var array
+     * @var array|DefinitionInterface[]
      */
     private $definitions = [];
 
     /**
-     * @var array
+     * @var array|NamedDefinitionInterface[]
      */
     private $namedDefinitions = [];
 
@@ -136,24 +136,44 @@ class Dictionary implements \Countable, \IteratorAggregate
      * @return NamedDefinitionInterface
      * @throws TypeNotFoundException
      */
+    public function find(string $name): NamedDefinitionInterface
+    {
+        try {
+            /**
+             * Load existing type
+             */
+            return $this->get($name);
+
+        } catch (TypeNotFoundException $error) {
+            /**
+             * Otherwise start autoloader and try to resolve it from external files
+             */
+            $parent = null;
+            $error  = 'Type "%s" not found and could not be loaded';
+            try {
+                if ($result = $this->loader->load($name)) {
+                    return $result;
+                }
+            } catch (\Exception $e) {
+                [$error, $parent] = ['"%s" type found and was be loaded but has an error while loading.', $e];
+            }
+        }
+
+        throw new TypeNotFoundException(sprintf($error, $name), 0, $parent);
+    }
+
+    /**
+     * @param string $name
+     * @return NamedDefinitionInterface
+     * @throws TypeNotFoundException
+     */
     public function get(string $name): NamedDefinitionInterface
     {
-        $parent = null;
-        $error  = 'Type "%s" not found and could not be loaded';
-
         if ($this->has($name)) {
             return $this->namedDefinitions[$name];
         }
 
-        try {
-            if ($result = $this->loader->load($name)) {
-                return $result;
-            }
-        } catch (\Exception $e) {
-            [$error, $parent] = ['"%s" type found and was be loaded but made an error while loading.', $e];
-        }
-
-        throw new TypeNotFoundException(sprintf($error, $name), 0, $parent);
+        throw new TypeNotFoundException(sprintf('Type "%s" not found', $name));
     }
 
     /**
@@ -173,13 +193,9 @@ class Dictionary implements \Countable, \IteratorAggregate
      */
     public function definition(DocumentTypeInterface $document, string $name): ?NamedDefinitionInterface
     {
-        $definition = $this->get($name);
-
-        if ($definition === null || $document->getId() === $definition->getDocument()->getId()) {
-            return null;
-        }
-
-        return $definition;
+        return array_first($this->definitions($document), function (DefinitionInterface $definition) use ($name) {
+            return $definition instanceof NamedDefinitionInterface && $definition->getName() === $name;
+        });
     }
 
     /**
@@ -187,7 +203,35 @@ class Dictionary implements \Countable, \IteratorAggregate
      */
     public function getIterator(): \Traversable
     {
-        yield from array_values($this->definitions);
-        yield from array_values($this->namedDefinitions);
+        yield from $this->named();
+        yield from $this->anonymous();
+    }
+
+    /**
+     * @return \Traversable
+     */
+    public function all(): \Traversable
+    {
+        yield from $this->getIterator();
+    }
+
+    /**
+     * @return \Traversable
+     */
+    public function named(): \Traversable
+    {
+        foreach ($this->namedDefinitions as $definition) {
+            yield $definition->getDocument() => $definition;
+        }
+    }
+
+    /**
+     * @return \Traversable
+     */
+    public function anonymous(): \Traversable
+    {
+        foreach ($this->definitions as $definition) {
+            yield $definition->getDocument() => $definition;
+        }
     }
 }

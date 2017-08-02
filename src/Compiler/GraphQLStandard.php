@@ -26,6 +26,7 @@ final class GraphQLStandard implements DocumentTypeInterface
     /**
      * GraphQLStandard constructor.
      * @param Dictionary $dictionary
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
      */
     public function __construct(Dictionary $dictionary)
     {
@@ -157,5 +158,13 @@ final class GraphQLStandard implements DocumentTypeInterface
     public function getId(): int
     {
         return 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStdlib(): bool
+    {
+        return true;
     }
 }

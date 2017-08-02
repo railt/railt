@@ -68,7 +68,7 @@ class Document extends Definition implements DocumentTypeInterface
      */
     public function load(string $type): NamedDefinitionInterface
     {
-        return $this->dictionary->get($type);
+        return $this->dictionary->find($type);
     }
 
     /**
@@ -159,6 +159,14 @@ class Document extends Definition implements DocumentTypeInterface
      */
     public function getTypeName(): string
     {
-        return sprintf('Document<%s>', basename($this->getFileName()));
+        return sprintf('Document<%s>', basename((string)$this->getFileName()));
+    }
+
+    /**
+     * @return bool
+     */
+    public function isStdlib(): bool
+    {
+        return false;
     }
 }

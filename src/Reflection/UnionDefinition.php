@@ -14,16 +14,23 @@ use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\UnionTypeInterface;
 use Serafim\Railgun\Reflection\Common\Directives;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Common\HasName;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class UnionDefinition
  * @package Serafim\Railgun\Reflection
  */
-class UnionDefinition extends Definition implements UnionTypeInterface
+class UnionDefinition extends Definition implements
+    UnionTypeInterface,
+    HasLinkingStageInterface
 {
+    use HasName;
     use Directives;
+    use LinkingStage;
 
-    protected function compile(TreeNode $ast, Dictionary $dictionary): ?TreeNode
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }

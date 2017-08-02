@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
+use Serafim\Railgun\Reflection\Abstraction\InterfaceTypeInterface;
 use Serafim\Railgun\Reflection\Common\Directives;
 use Serafim\Railgun\Reflection\Common\Fields;
 use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
@@ -31,14 +31,54 @@ class ObjectDefinition extends Definition implements
     use Directives;
     use LinkingStage;
 
+    /**
+     * @var array|InterfaceTypeInterface[]
+     */
+    private $interfaces = [];
+
+    /**
+     * @param Document $document
+     * @param TreeNode $ast
+     * @return TreeNode|null
+     */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        switch ($ast->getId()) {
+            case '#Implements':
+                /** @var TreeNode $child */
+                foreach ($ast->getChildren() as $child) {
+                    $name = $child->getChild(0)->getValueValue();
+                    $this->interfaces[$name] = $document->load($name);
+                }
+        }
+
+        return $ast;
     }
 
+    /**
+     * @return iterable
+     */
     public function getInterfaces(): iterable
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return array_values($this->interfaces);
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasInterface(string $name): bool
+    {
+        return array_key_exists($name, $this->interfaces);
+    }
+
+    /**
+     * @param string $name
+     * @return null|InterfaceTypeInterface
+     */
+    public function getInterface(string $name): ?InterfaceTypeInterface
+    {
+        return $this->interfaces[$name] ?? null;
     }
 
     /**

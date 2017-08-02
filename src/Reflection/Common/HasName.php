@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Document;
 
 /**
  * Trait HasName
@@ -25,10 +25,10 @@ trait HasName
     protected $name;
 
     /**
-     * @param Document $document
+     * @param DocumentTypeInterface $document
      * @param TreeNode $ast
      */
-    public function bootHasName(Document $document, TreeNode $ast): void
+    public function bootHasName(DocumentTypeInterface $document, TreeNode $ast): void
     {
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {

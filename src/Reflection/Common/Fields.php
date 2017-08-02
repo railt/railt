@@ -14,6 +14,7 @@ use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
+use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Document;
 use Serafim\Railgun\Reflection\Field;
 
@@ -37,8 +38,8 @@ trait Fields
     {
         $allowed = in_array($ast->getId(), (array)($this->astHasFields ?? ['#Field']), true);
 
-        if ($allowed) {
-            $field = new Field($this->getDocument(), $ast);
+        if ($allowed && $this instanceof NamedDefinitionInterface) {
+            $field = new Field($this->getDocument(), $ast, $this);
             $this->fields[$field->getName()] = $field;
         }
     }

@@ -12,6 +12,7 @@ namespace Serafim\Railgun\Reflection;
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Class Definition
@@ -31,10 +32,10 @@ abstract class Definition implements DefinitionInterface
 
     /**
      * Definition constructor.
-     * @param Document $document
+     * @param DocumentTypeInterface $document
      * @param TreeNode $ast
      */
-    public function __construct(Document $document, TreeNode $ast)
+    public function __construct(DocumentTypeInterface $document, TreeNode $ast)
     {
         $this->ast = $ast;
         $this->document = $document;
@@ -48,18 +49,43 @@ abstract class Definition implements DefinitionInterface
     }
 
     /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return class_basename(static::class);
-    }
-
-    /**
      * @return DocumentTypeInterface
      */
     public function getDocument(): DocumentTypeInterface
     {
         return $this->document;
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'type' => $this->getTypeName(),
+            'name' => $this instanceof NamedDefinitionInterface ? $this->getName() : '@anonymous',
+            'file' => $this->getDocument()->getFileName(),
+            'ast'  => dump($this->ast),
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        if ($this instanceof NamedDefinitionInterface) {
+            return $this->getTypeName() . '<' . $this->getName() . '>';
+        }
+
+        return $this->getTypeName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return class_basename(static::class);
     }
 }
