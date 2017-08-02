@@ -1,2 +1,4 @@
-- Документация
-    - **В ПРОЦЕССЕ РАЗРАБОТКИ**
+- *Вступление*
+    - [Описание](/ru/README.md)
+    - [Установка](/ru/00_Introduction/00_Installation)
+    - [Жизненный цикл](/ru/00_Introduction/01_Lifecycle)

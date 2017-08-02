@@ -14,3 +14,15 @@
     
 - **Composer**
     > Руководство по установке Composer [можно найти здесь](https://getcomposer.org/download/).
+    
+## Зависимости
+
+- **[illuminate/support](https://packagist.org/packages/illuminate/support)**
+    > Бибилиотека, реализующая функции-хелперы для работы со строками, массивами, коллекциями и прочим.
+    
+- **[hoa/compiler](https://packagist.org/packages/hoa/compiler)**
+    > Библиотека, предоставляющая LL(k) &rarr; AST компилятор, предоставляющий `*.pp` грамматику.
+    
+!> В будущем возможен отказ от зависимости `illuminate/support`.
+    
+
