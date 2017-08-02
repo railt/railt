@@ -15,12 +15,16 @@
 
 ## Introduction
 
-> This documentation contains information about the old version and is NOT RELEVANT at all. Im complete it later.
+### Documentation
 
-[Documentation](https://serafimarts.github.io/Railgun) 
-([Russian](https://serafimarts.github.io/Railgun/#/ru/), [English](https://serafimarts.github.io/Railgun))
+- [Documentation](https://serafimarts.github.io/Railgun) 
+    - [Russian](https://serafimarts.github.io/Railgun/#/ru/)
+    - [English](https://serafimarts.github.io/Railgun)
+    
+> This documentation contains information about the old version and is 
+NOT RELEVANT at all. Im complete it later.
 
--------------
+### About
 
 This is a pure async PHP realization of the **GraphQL** protocol based on the 
 [youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
