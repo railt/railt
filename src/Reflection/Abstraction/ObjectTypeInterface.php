@@ -25,4 +25,16 @@ interface ObjectTypeInterface extends
      * @return iterable|InterfaceTypeInterface[]
      */
     public function getInterfaces(): iterable;
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasInterface(string $name): bool;
+
+    /**
+     * @param string $name
+     * @return null|InterfaceTypeInterface
+     */
+    public function getInterface(string $name): ?InterfaceTypeInterface;
 }

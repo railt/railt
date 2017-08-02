@@ -15,8 +15,5 @@ namespace Serafim\Railgun\Reflection\Abstraction\Type;
  */
 interface ListTypeInterface extends TypeInterface
 {
-    /**
-     * @return TypeInterface
-     */
-    public function getType(): TypeInterface;
+
 }

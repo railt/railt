@@ -12,9 +12,12 @@ namespace Serafim\Railgun\Reflection\Abstraction\Type;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
- * Interface ScalarTypeInterface
+ * Interface RelationTypeInterface
  * @package Serafim\Railgun\Reflection\Abstraction\Type
  */
-interface ScalarTypeInterface extends NamedDefinitionInterface
+interface RelationTypeInterface extends
+    NamedDefinitionInterface,
+    TypeInterface
 {
+
 }

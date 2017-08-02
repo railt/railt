@@ -52,4 +52,9 @@ interface DocumentTypeInterface extends DefinitionInterface
      * @return null|SchemaTypeInterface
      */
     public function getSchema(): ?SchemaTypeInterface;
+
+    /**
+     * @return bool
+     */
+    public function isStdlib(): bool;
 }

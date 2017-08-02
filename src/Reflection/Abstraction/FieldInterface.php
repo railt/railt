@@ -28,8 +28,32 @@ interface FieldInterface extends
     public function getType(): TypeInterface;
 
     /**
-     * TODO Add parent relation
      * @return NamedDefinitionInterface|InterfaceTypeInterface|ObjectTypeInterface
      */
-    //public function getParentType(): NamedDefinitionInterface;
+    public function getParentType(): NamedDefinitionInterface;
+
+    /**
+     * @return bool
+     */
+    public function isList(): bool;
+
+    /**
+     * @return bool
+     */
+    public function nonNull(): bool;
+
+    /**
+     * @return NamedDefinitionInterface
+     */
+    public function getRelationDefinition(): NamedDefinitionInterface;
+
+    /**
+     * @return string
+     */
+    public function getRelationTypeName(): string;
+
+    /**
+     * @return string
+     */
+    public function getRelationName(): string;
 }
