@@ -15,7 +15,11 @@
 
 ## Introduction
 
-### Documentation
+This is a pure async PHP realization of the **GraphQL** protocol based on the 
+[youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
+[webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields)
+core drivers of the official GraphQL Specification 
+located on [Facebook GitHub](http://facebook.github.io/graphql/).
 
 - [Documentation](https://serafimarts.github.io/Railgun) 
     - [Russian](https://serafimarts.github.io/Railgun/#/ru/)
@@ -23,14 +27,6 @@
     
 > This documentation contains information about the old version and is 
 NOT RELEVANT at all. Im complete it later.
-
-### About
-
-This is a pure async PHP realization of the **GraphQL** protocol based on the 
-[youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
-[webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields)
-core drivers of the official GraphQL Specification 
-located on [Facebook GitHub](http://facebook.github.io/graphql/).
 
 ## How it works?
 
