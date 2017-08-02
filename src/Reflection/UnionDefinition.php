@@ -30,24 +30,54 @@ class UnionDefinition extends Definition implements
     use Directives;
     use LinkingStage;
 
+    /**
+     * @var array
+     */
+    private $relations = [];
+
+    /**
+     * @param Document $document
+     * @param TreeNode $ast
+     * @return TreeNode|null
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException
+     */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        if ($ast->getId() === '#Relations') {
+            /** @var TreeNode $child */
+            foreach ($ast->getChildren() as $child) {
+                $name = $child->getChild(0)->getValueValue();
+                $this->relations[$name] = $document->load($name);
+            }
+        }
+
+        return $ast;
     }
 
+    /**
+     * @return iterable
+     */
     public function getTypes(): iterable
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return array_values($this->relations);
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     public function hasType(string $name): bool
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return array_key_exists($name, $this->relations);
     }
 
+    /**
+     * @param string $name
+     * @return null|NamedDefinitionInterface
+     */
     public function getType(string $name): ?NamedDefinitionInterface
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return $this->relations[$name] ?? null;
     }
 
     /**
