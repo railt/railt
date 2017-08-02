@@ -11,6 +11,7 @@ namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
+use Serafim\Railgun\Compiler\Exceptions\SemanticException;
 use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
@@ -102,19 +103,12 @@ class Document extends Definition implements DocumentTypeInterface
     }
 
     /**
-     * @return void
+     * @throws SemanticException
      * @throws \LogicException
      */
     private function compileChildren(): void
     {
-        foreach ($this->ast->getChildren() as $child) {
-            /** @var Definition $class */
-            $class = $this->resolveDefinition($child);
-
-            $definition = new $class($this, $child);
-
-            $this->dictionary->register($definition);
-        }
+        $this->collectChildren();
 
         /** @var Definition $definition */
         foreach ($this->getDefinitions() as $definition) {
@@ -125,6 +119,22 @@ class Document extends Definition implements DocumentTypeInterface
             if ($definition instanceof SchemaTypeInterface) {
                 $this->schema = $definition;
             }
+        }
+    }
+
+    /**
+     * @throws \LogicException
+     * @throws SemanticException
+     */
+    private function collectChildren(): void
+    {
+        foreach ($this->ast->getChildren() as $child) {
+            /** @var Definition $class */
+            $class = $this->resolveDefinition($child);
+
+            $definition = new $class($this, $child);
+
+            $this->dictionary->register($definition);
         }
     }
 
