@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Abstraction\Common;
 
 use Serafim\Railgun\Reflection\Abstraction\CalleeDirectiveInterface;
-use Serafim\Railgun\Reflection\Abstraction\DirectiveTypeInterface;
 
 /**
  * Interface HasDirectivesInterface

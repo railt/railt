@@ -14,11 +14,12 @@ use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\ListTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Common\Arguments;
 use Serafim\Railgun\Reflection\Common\Directives;
+use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
 use Serafim\Railgun\Reflection\Common\HasName;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
 use Serafim\Railgun\Reflection\Type\ListType;
 use Serafim\Railgun\Reflection\Type\RelationType;
 
@@ -26,11 +27,14 @@ use Serafim\Railgun\Reflection\Type\RelationType;
  * Class Field
  * @package Serafim\Railgun\Reflection
  */
-class Field extends Definition implements FieldInterface
+class Field extends Definition implements
+    HasLinkingStageInterface,
+    FieldInterface
 {
     use HasName;
     use Arguments;
     use Directives;
+    use LinkingStage;
 
     /**
      * @var DefinitionInterface
@@ -47,6 +51,7 @@ class Field extends Definition implements FieldInterface
      * @param DocumentTypeInterface $document
      * @param TreeNode $ast
      * @param NamedDefinitionInterface $parent
+     * @throws \LogicException
      */
     public function __construct(DocumentTypeInterface $document, TreeNode $ast, NamedDefinitionInterface $parent)
     {
@@ -55,17 +60,17 @@ class Field extends Definition implements FieldInterface
         $this->parent = $parent;
 
         $this->bootHasName($document, $ast);
+        $this->bootLinkingStage($document, $ast);
 
-        /** @var TreeNode $child */
-        foreach ($ast->getChildren() as $child) {
-            $this->compile($child);
-        }
+        $this->compileIfNotCompiled();
     }
 
     /**
+     * @param Document $document
      * @param TreeNode $ast
+     * @return TreeNode|null
      */
-    private function compile(TreeNode $ast): void
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
         switch ($ast->getId()) {
             case '#List':
@@ -75,20 +80,14 @@ class Field extends Definition implements FieldInterface
                 $this->type = new RelationType($this->document, $ast);
                 break;
         }
-    }
 
-    /**
-     * @return TypeInterface
-     */
-    public function getType(): TypeInterface
-    {
-        return $this->type;
+        return $ast;
     }
 
     /**
      * @return NamedDefinitionInterface
      */
-    public function getParentType(): NamedDefinitionInterface
+    public function getParent(): NamedDefinitionInterface
     {
         return $this->parent;
     }
@@ -102,6 +101,14 @@ class Field extends Definition implements FieldInterface
     }
 
     /**
+     * @return TypeInterface
+     */
+    public function getType(): TypeInterface
+    {
+        return $this->type;
+    }
+
+    /**
      * @return bool
      */
     public function nonNull(): bool
@@ -110,19 +117,19 @@ class Field extends Definition implements FieldInterface
     }
 
     /**
-     * @return NamedDefinitionInterface
-     */
-    public function getRelationDefinition(): NamedDefinitionInterface
-    {
-        return $this->getType()->getRelationDefinition();
-    }
-
-    /**
      * @return string
      */
     public function getRelationTypeName(): string
     {
         return $this->getRelationDefinition()->getTypeName();
+    }
+
+    /**
+     * @return NamedDefinitionInterface
+     */
+    public function getRelationDefinition(): NamedDefinitionInterface
+    {
+        return $this->getType()->getRelationDefinition();
     }
 
     /**

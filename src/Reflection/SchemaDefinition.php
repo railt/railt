@@ -10,19 +10,16 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Compiler\Exceptions\SemanticException;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
 use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
 use Serafim\Railgun\Reflection\Common\Directives;
-use Serafim\Railgun\Reflection\Common\Fields;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
 use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class SchemaDefinition

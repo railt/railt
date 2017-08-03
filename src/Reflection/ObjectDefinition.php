@@ -11,12 +11,12 @@ namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Reflection\Abstraction\InterfaceTypeInterface;
+use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
 use Serafim\Railgun\Reflection\Common\Directives;
 use Serafim\Railgun\Reflection\Common\Fields;
-use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
 use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
 use Serafim\Railgun\Reflection\Common\HasName;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class ObjectDefinition

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Reflection\Abstraction;
 
-use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
 
 /**
  * Interface InterfaceTypeInterface

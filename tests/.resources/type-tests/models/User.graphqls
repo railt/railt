@@ -6,6 +6,6 @@ type User implements PersonInterface {
     updatedAt(format: DateFormat = RFC3339): String
 
     # Custom fields
-    deletedAt(format: DateFormat = RFC3339): String
-    isBanned: Boolean
+    deletedAt(format: DateFormat): String
+    isBanned: Boolean!
 }

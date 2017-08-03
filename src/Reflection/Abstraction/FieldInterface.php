@@ -30,7 +30,7 @@ interface FieldInterface extends
     /**
      * @return NamedDefinitionInterface|InterfaceTypeInterface|ObjectTypeInterface
      */
-    public function getParentType(): NamedDefinitionInterface;
+    public function getParent(): NamedDefinitionInterface;
 
     /**
      * @return bool

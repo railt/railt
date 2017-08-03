@@ -62,47 +62,6 @@ class Document extends Definition implements DocumentTypeInterface
     }
 
     /**
-     * @param string $type
-     * @return NamedDefinitionInterface
-     * @throws TypeNotFoundException
-     */
-    public function load(string $type): NamedDefinitionInterface
-    {
-        return $this->dictionary->find($type);
-    }
-
-    /**
-     * @param TreeNode $ast
-     * @return string
-     * @throws \LogicException
-     */
-    private function resolveDefinition(TreeNode $ast): string
-    {
-        switch ($ast->getId()) {
-            case '#SchemaDefinition':
-                return SchemaDefinition::class;
-            case '#ObjectDefinition':
-                return ObjectDefinition::class;
-            case '#InterfaceDefinition':
-                return InterfaceDefinition::class;
-            case '#UnionDefinition':
-                return UnionDefinition::class;
-            case '#ScalarDefinition':
-                return ScalarDefinition::class;
-            case '#EnumDefinition':
-                return EnumDefinition::class;
-            case '#InputDefinition':
-                return InputDefinition::class;
-            case '#ExtendDefinition':
-                return ExtendDefinition::class;
-            case '#DirectiveDefinition':
-                return DirectiveDefinition::class;
-        }
-
-        throw new \LogicException('Unrecognized AST node name ' . $ast->getId());
-    }
-
-    /**
      * @throws SemanticException
      * @throws \LogicException
      */
@@ -139,11 +98,52 @@ class Document extends Definition implements DocumentTypeInterface
     }
 
     /**
-     * @return null|string
+     * @param TreeNode $ast
+     * @return string
+     * @throws \LogicException
      */
-    public function getFileName(): ?string
+    private function resolveDefinition(TreeNode $ast): string
     {
-        return $this->fileName;
+        switch ($ast->getId()) {
+            case '#SchemaDefinition':
+                return SchemaDefinition::class;
+            case '#ObjectDefinition':
+                return ObjectDefinition::class;
+            case '#InterfaceDefinition':
+                return InterfaceDefinition::class;
+            case '#UnionDefinition':
+                return UnionDefinition::class;
+            case '#ScalarDefinition':
+                return ScalarDefinition::class;
+            case '#EnumDefinition':
+                return EnumDefinition::class;
+            case '#InputDefinition':
+                return InputDefinition::class;
+            case '#ExtendDefinition':
+                return ExtendDefinition::class;
+            case '#DirectiveDefinition':
+                return DirectiveDefinition::class;
+        }
+
+        throw new \LogicException('Unrecognized AST node name ' . $ast->getId());
+    }
+
+    /**
+     * @return Dictionary
+     */
+    public function getDictionary(): Dictionary
+    {
+        return $this->dictionary;
+    }
+
+    /**
+     * @param string $type
+     * @return NamedDefinitionInterface
+     * @throws TypeNotFoundException
+     */
+    public function load(string $type): NamedDefinitionInterface
+    {
+        return $this->dictionary->find($type);
     }
 
     /**
@@ -160,6 +160,14 @@ class Document extends Definition implements DocumentTypeInterface
     public function getTypeName(): string
     {
         return sprintf('Document<%s>', basename((string)$this->getFileName()));
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
     }
 
     /**

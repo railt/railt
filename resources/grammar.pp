@@ -88,9 +88,11 @@
 //      - String:   http://facebook.github.io/graphql/#sec-String
 //      - Boolean:  http://facebook.github.io/graphql/#sec-Boolean
 //      - ID:       http://facebook.github.io/graphql/#sec-ID
+//      - Any:      https://github.com/facebook/graphql/pull/325
 //
 
 %token T_SCALAR_INTEGER         Int\b
+%token T_SCALAR_ANY             Any\b
 %token T_SCALAR_FLOAT           Float\b
 %token T_SCALAR_STRING          String\b
 %token T_SCALAR_BOOLEAN         Boolean\b
@@ -171,6 +173,8 @@ Scalar:
     <T_SCALAR_BOOLEAN>
         |
     <T_SCALAR_ID>
+        |
+    <T_SCALAR_ANY>
 
 ValueKeyword:
     <T_BOOL_TRUE>
@@ -286,9 +290,10 @@ Object:
             )*
         )?
     ::T_BRACE_CLOSE::
+    #Object
 
 ObjectPair:
-    Key() ::T_COLON:: Value() #Object
+    Key() ::T_COLON:: Value() #ObjectPair
 
 List:
     ::T_BRACKET_OPEN::

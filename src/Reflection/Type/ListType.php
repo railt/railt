@@ -14,7 +14,6 @@ use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\ListTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Document;
 
 /**
@@ -46,14 +45,6 @@ class ListType extends BaseType implements ListTypeInterface
     }
 
     /**
-     * @return RelationTypeInterface
-     */
-    public function getChild(): RelationTypeInterface
-    {
-        return $this->child;
-    }
-
-    /**
      * @return string
      */
     public function getTypeName(): string
@@ -68,5 +59,13 @@ class ListType extends BaseType implements ListTypeInterface
     public function getRelationDefinition(): NamedDefinitionInterface
     {
         return $this->getChild()->getRelationDefinition();
+    }
+
+    /**
+     * @return RelationTypeInterface
+     */
+    public function getChild(): RelationTypeInterface
+    {
+        return $this->child;
     }
 }

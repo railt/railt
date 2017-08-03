@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Common\HasName;
 use Serafim\Railgun\Reflection\Document;
 
@@ -55,20 +54,20 @@ class RelationType extends BaseType implements RelationTypeInterface
     }
 
     /**
-     * @return NamedDefinitionInterface
-     * @throws TypeNotFoundException
-     */
-    public function getRelationDefinition(): NamedDefinitionInterface
-    {
-        return $this->document->load($this->getName());
-    }
-
-    /**
      * @return string
      * @throws TypeNotFoundException
      */
     public function getTypeName(): string
     {
         return $this->getRelationDefinition()->getTypeName();
+    }
+
+    /**
+     * @return NamedDefinitionInterface
+     * @throws TypeNotFoundException
+     */
+    public function getRelationDefinition(): NamedDefinitionInterface
+    {
+        return $this->document->load($this->getName());
     }
 }

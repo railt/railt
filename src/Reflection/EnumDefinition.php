@@ -10,13 +10,12 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Abstraction\EnumTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\EnumValueInterface;
 use Serafim\Railgun\Reflection\Common\Directives;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
 use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
 use Serafim\Railgun\Reflection\Common\HasName;
+use Serafim\Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class EnumDefinition

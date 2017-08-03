@@ -41,7 +41,7 @@ type User {
                         #Name
                             token(T_NAME, test)
                         #Value
-                            token(T_NAME, Any)
+                            token(T_SCALAR_ANY, Any)
                         #Value
                             token(T_NUMBER_VALUE, 23)
             #List
