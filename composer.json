@@ -19,24 +19,25 @@
     "require-dev": {
         "webonyx/graphql-php": "~0.9.0",
         "youshido/graphql": "~1.4",
-        "symfony/http-foundation": "~2.8|3.*",
+        "symfony/http-foundation": "~2.8|3.*|4.*",
         "illuminate/http": "~5.1",
-        "phpunit/phpunit": "~6.1"
+        "phpunit/phpunit": "~6.1",
+        "brianium/paratest": "~1.0"
     },
     "autoload-dev": {
         "psr-4": {
-            "Serafim\\Railgun\\Tests\\": "tests",
-            "Serafim\\Railgun\\Example\\": "examples"
+            "Serafim\\Railgun\\Tests\\": "tests"
         }
     },
     "suggest": {
         "youshido/graphql": "(~1.4) Youshido GraphQL root driver support",
         "webonyx/graphql-php": "(~0.9) Webonyx GraphQL root driver support",
-        "symfony/http-foundation": "(~2.8|3.*) Symfony framework support",
+        "symfony/http-foundation": "(~2.8|3.*|4.*) Symfony framework support",
         "illuminate/http": "(~5.1) Laravel (illuminate) framework support"
     },
     "scripts": {
         "docs-make": "daux --destination=../railgun-docs",
-        "docs": "daux serve"
+        "docs": "daux serve",
+        "tests": "./vendor/bin/paratest --colors -p8"
     }
 }
