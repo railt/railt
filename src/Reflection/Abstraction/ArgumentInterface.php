@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Reflection\Abstraction;
 
-use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 
 /**
  * Interface ArgumentInterface
@@ -36,8 +36,7 @@ interface ArgumentInterface extends
     public function getDefaultValue();
 
     /**
-     * TODO Add parent field relation
      * @return NamedDefinitionInterface|FieldInterface|InputTypeInterface
      */
-    //public function getField(): NamedDefinitionInterface;
+    public function getParent(): NamedDefinitionInterface;
 }
