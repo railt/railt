@@ -14,9 +14,9 @@ use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\File\Read;
-use Serafim\Railgun\Compiler\Exceptions\{
-    CompilerException, NotReadableException, UnexpectedTokenException
-};
+use Serafim\Railgun\Compiler\Exceptions\CompilerException;
+use Serafim\Railgun\Compiler\Exceptions\NotReadableException;
+use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Document;
 
