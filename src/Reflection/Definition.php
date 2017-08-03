@@ -49,14 +49,6 @@ abstract class Definition implements DefinitionInterface
     }
 
     /**
-     * @return DocumentTypeInterface
-     */
-    public function getDocument(): DocumentTypeInterface
-    {
-        return $this->document;
-    }
-
-    /**
      * @return array
      */
     public function __debugInfo(): array
@@ -72,6 +64,22 @@ abstract class Definition implements DefinitionInterface
     /**
      * @return string
      */
+    public function getTypeName(): string
+    {
+        return class_basename(static::class);
+    }
+
+    /**
+     * @return DocumentTypeInterface
+     */
+    public function getDocument(): DocumentTypeInterface
+    {
+        return $this->document;
+    }
+
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         if ($this instanceof NamedDefinitionInterface) {
@@ -79,13 +87,5 @@ abstract class Definition implements DefinitionInterface
         }
 
         return $this->getTypeName();
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return class_basename(static::class);
     }
 }
