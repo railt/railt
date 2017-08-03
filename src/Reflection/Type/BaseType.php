@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\ListTypeInterface;
-use Serafim\Railgun\Reflection\Document;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Serafim\Railgun\Reflection\Abstraction\Type\ListTypeInterface;
+use Serafim\Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
+use Serafim\Railgun\Reflection\Document;
 
 /**
  * Class BaseType
@@ -63,7 +63,7 @@ abstract class BaseType implements TypeInterface
     public function __debugInfo(): array
     {
         $result = [
-            'nonNull' => $this->nonNull()
+            'nonNull' => $this->nonNull(),
         ];
 
         switch (true) {
@@ -79,19 +79,19 @@ abstract class BaseType implements TypeInterface
     }
 
     /**
-     * @return string
-     */
-    public function getRelationName(): string
-    {
-        return $this->getRelationDefinition()->getName();
-    }
-
-    /**
      * @return bool
      */
     public function nonNull(): bool
     {
         return $this->nonNull;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelationName(): string
+    {
+        return $this->getRelationDefinition()->getName();
     }
 
     /**
