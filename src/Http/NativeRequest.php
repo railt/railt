@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Http;
 
-use Serafim\Railgun\Http\Support\InteractWithData;
 use Serafim\Railgun\Http\Support\ConfigurableRequest;
-use Serafim\Railgun\Http\Support\JsonContentTypeHelper;
 use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
+use Serafim\Railgun\Http\Support\InteractWithData;
+use Serafim\Railgun\Http\Support\JsonContentTypeHelper;
 
 /**
  * Class NativeRequest

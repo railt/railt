@@ -18,7 +18,7 @@ interface RequestInterface
     /**
      * Query http (GET/POST) argument name passed by default
      */
-    public const DEFAULT_QUERY_ARGUMENT     = 'query';
+    public const DEFAULT_QUERY_ARGUMENT = 'query';
 
     /**
      * Variables http (GET/POST) argument name passed by default
