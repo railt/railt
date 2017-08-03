@@ -25,8 +25,13 @@ class TypeException extends SemanticException
      * @param int $code
      * @param null|Throwable $previous
      */
-    public function __construct(string $message, ?string $file, ?int $line = 0, int $code = 0, ?\Throwable $previous = null)
-    {
+    public function __construct(
+        string $message,
+        ?string $file,
+        ?int $line = 0,
+        int $code = 0,
+        ?\Throwable $previous = null
+    ) {
         parent::__construct($message, $code, $previous);
 
         $this->file = $file ?? 'php://input';
