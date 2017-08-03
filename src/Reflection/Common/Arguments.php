@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
-use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
-use Serafim\Railgun\Reflection\Document;
+use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Serafim\Railgun\Reflection\Argument;
 
 /**
  * Trait HasArguments
@@ -24,24 +24,16 @@ use Serafim\Railgun\Reflection\Document;
 trait Arguments
 {
     /**
-     * @param Document $document
-     * @param TreeNode $ast
+     * @var array
      */
-    protected function compileArguments(Document $document, TreeNode $ast): void
-    {
-        $allowed = in_array($ast->getId(), (array)($this->astHasArguments ?? ['#Argument']), true);
-
-        if ($allowed) {
-            throw new CompilerException('TODO: Add arguments compilation for ' . get_class($this));
-        }
-    }
+    private $arguments = [];
 
     /**
      * @return iterable|ArgumentInterface[]
      */
     public function getArguments(): iterable
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return array_values($this->arguments);
     }
 
     /**
@@ -50,7 +42,7 @@ trait Arguments
      */
     public function hasArgument(string $name): bool
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return array_key_exists($name, $this->arguments);
     }
 
     /**
@@ -59,6 +51,21 @@ trait Arguments
      */
     public function getArgument(string $name): ?ArgumentInterface
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return $this->arguments[$name] ?? null;
+    }
+
+    /**
+     * @param DocumentTypeInterface $document
+     * @param TreeNode $ast
+     * @throws \LogicException
+     */
+    protected function compileArguments(DocumentTypeInterface $document, TreeNode $ast): void
+    {
+        $allowed = in_array($ast->getId(), (array)($this->astHasArguments ?? ['#Argument']), true);
+
+        if ($allowed && $this instanceof NamedDefinitionInterface) {
+            $argument = new Argument($document, $ast, $this);
+            $this->arguments[$argument->getName()] = $argument;
+        }
     }
 }
