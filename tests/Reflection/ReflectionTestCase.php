@@ -35,6 +35,12 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return DocumentTypeInterface
      * @throws UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getDocument(): DocumentTypeInterface
     {
@@ -62,6 +68,12 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|SchemaTypeInterface
      * @throws UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getSchema(): ?SchemaTypeInterface
     {
@@ -71,6 +83,12 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|HasFieldsInterface
      * @throws UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getQuery(): ?HasFieldsInterface
     {
@@ -81,6 +99,12 @@ class ReflectionTestCase extends AbstractTestCase
      * @param string $name
      * @return null|FieldInterface
      * @throws UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getField(string $name): ?FieldInterface
     {
@@ -88,7 +112,8 @@ class ReflectionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return null|UnionTypeInterface|NamedDefinitionInterface
+     * @return null|UnionTypeInterface
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException
      */
     private function getPersonUnion(): ?UnionTypeInterface
     {
@@ -110,6 +135,13 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return void
      * @throws UnexpectedTokenException
+     * @throws \OutOfRangeException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     public function testSchema(): void
     {
@@ -246,6 +278,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @return void
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException
      */
     public function testUnionType(): void
     {
@@ -253,5 +288,18 @@ class ReflectionTestCase extends AbstractTestCase
 
         $this->assertNotNull($person);
 
+        $this->assertEquals('Union', $person->getTypeName());
+        $this->assertEquals('Person', $person->getName());
+
+        $this->assertCount(2, $person->getTypes());
+
+        $this->assertTrue($person->hasType('User'));
+        $this->assertEquals('Object', $person->getType('User')->getTypeName());
+
+        $this->assertTrue($person->hasType('Bot'));
+        $this->assertEquals('Object', $person->getType('Bot')->getTypeName());
+
+        $this->assertFalse($person->hasType('Person'));
+        $this->assertFalse($person->hasType('Document'));
     }
 }
