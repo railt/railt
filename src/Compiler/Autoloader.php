@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Compiler;
 
 use Illuminate\Support\Str;
-use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
-use Serafim\Railgun\Compiler\Reflection\Definition\Definition;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
@@ -64,15 +62,9 @@ class Autoloader
             $file = $loader($type);
 
             if (is_string($file)) {
-                try {
-                    return $this->compiler->getDictionary()
-                        ->definition(
-                            $this->compiler->compileFile($file),
-                            $type
-                        );
-                } catch (TypeNotFoundException $e) {
-                    return null;
-                }
+                $out = $this->compiler->compileFile($file);
+
+                return $this->compiler->getDictionary()->definition($out, $type);
             }
         }
 
