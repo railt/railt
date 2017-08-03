@@ -70,21 +70,6 @@ class Dictionary implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param DefinitionInterface $definition
-     */
-    private function registerCached(DefinitionInterface $definition): void
-    {
-        // Add hash map for fast type resolving from Document
-        $documentId = $definition->getDocument()->getId();
-
-        if (!array_key_exists($documentId, $this->context)) {
-            $this->context[$documentId] = [];
-        }
-
-        $this->context[$documentId][] = $definition;
-    }
-
-    /**
      * @param NamedDefinitionInterface $definition
      * @param bool $force
      * @throws SemanticException
@@ -115,20 +100,26 @@ class Dictionary implements \Countable, \IteratorAggregate
     }
 
     /**
+     * @param DefinitionInterface $definition
+     */
+    private function registerCached(DefinitionInterface $definition): void
+    {
+        // Add hash map for fast type resolving from Document
+        $documentId = $definition->getDocument()->getId();
+
+        if (!array_key_exists($documentId, $this->context)) {
+            $this->context[$documentId] = [];
+        }
+
+        $this->context[$documentId][] = $definition;
+    }
+
+    /**
      * @return int
      */
     public function count(): int
     {
         return count($this->definitions) + count($this->namedDefinitions);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function has(string $name): bool
-    {
-        return array_key_exists($name, $this->namedDefinitions);
     }
 
     /**
@@ -149,7 +140,7 @@ class Dictionary implements \Countable, \IteratorAggregate
              * Otherwise start autoloader and try to resolve it from external files
              */
             $parent = null;
-            $error  = 'Type "%s" not found and could not be loaded';
+            $error = 'Type "%s" not found and could not be loaded';
             try {
                 if ($result = $this->loader->load($name)) {
                     return $result;
@@ -177,12 +168,12 @@ class Dictionary implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param DocumentTypeInterface $document
-     * @return array
+     * @param string $name
+     * @return bool
      */
-    public function definitions(DocumentTypeInterface $document): array
+    public function has(string $name): bool
     {
-        return $this->context[$document->getId()] ?? [];
+        return array_key_exists($name, $this->namedDefinitions);
     }
 
     /**
@@ -199,12 +190,12 @@ class Dictionary implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @return \Generator|\Traversable
+     * @param DocumentTypeInterface $document
+     * @return array
      */
-    public function getIterator(): \Traversable
+    public function definitions(DocumentTypeInterface $document): array
     {
-        yield from $this->named();
-        yield from $this->anonymous();
+        return $this->context[$document->getId()] ?? [];
     }
 
     /**
@@ -213,6 +204,15 @@ class Dictionary implements \Countable, \IteratorAggregate
     public function all(): \Traversable
     {
         yield from $this->getIterator();
+    }
+
+    /**
+     * @return \Generator|\Traversable
+     */
+    public function getIterator(): \Traversable
+    {
+        yield from $this->named();
+        yield from $this->anonymous();
     }
 
     /**
