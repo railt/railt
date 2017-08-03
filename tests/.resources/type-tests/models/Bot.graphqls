@@ -2,6 +2,6 @@
 type Bot implements PersonInterface {
     id: ID!
     name: String!
-    createdAt(format: DateFormat = RFC3339): String!
-    updatedAt(format: DateFormat = RFC3339): String
+    createdAt(format: DateFormat = ISO8601): String!
+    updatedAt(format: DateFormat = RFC2822): String
 }
