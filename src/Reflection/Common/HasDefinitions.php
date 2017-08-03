@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Serafim\Railgun\Compiler\Dictionary;
-use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
@@ -22,16 +21,12 @@ use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 trait HasDefinitions
 {
     /**
-     * @return Dictionary
+     * @return iterable
      * @throws \LogicException
      */
-    private function getDefinitionsDictionary(): Dictionary
+    public function getNamedDefinitions(): iterable
     {
-        if (!property_exists($this, 'dictionary')) {
-            throw new \LogicException(static::class . '::$dictionary property is not defined');
-        }
-
-        return $this->dictionary;
+        yield from $this->getDefinitions(NamedDefinitionInterface::class);
     }
 
     /**
@@ -50,6 +45,19 @@ trait HasDefinitions
     }
 
     /**
+     * @return Dictionary
+     * @throws \LogicException
+     */
+    private function getDefinitionsDictionary(): Dictionary
+    {
+        if (!property_exists($this, 'dictionary')) {
+            throw new \LogicException(static::class . '::$dictionary property is not defined');
+        }
+
+        return $this->dictionary;
+    }
+
+    /**
      * @param iterable|DefinitionInterface[] $definitions
      * @param array|string[] $types
      * @return \Traversable
@@ -63,15 +71,6 @@ trait HasDefinitions
                 }
             }
         }
-    }
-
-    /**
-     * @return iterable
-     * @throws \LogicException
-     */
-    public function getNamedDefinitions(): iterable
-    {
-        yield from $this->getDefinitions(NamedDefinitionInterface::class);
     }
 
     /**

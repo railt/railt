@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
-use Serafim\Railgun\Compiler\Exceptions\CompilerException;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
@@ -29,20 +27,6 @@ trait Fields
      * @var array|FieldInterface[]
      */
     private $fields = [];
-
-    /**
-     * @param Document $document
-     * @param TreeNode $ast
-     */
-    protected function compileFields(Document $document, TreeNode $ast): void
-    {
-        $allowed = in_array($ast->getId(), (array)($this->astHasFields ?? ['#Field']), true);
-
-        if ($allowed && $this instanceof NamedDefinitionInterface) {
-            $field = new Field($this->getDocument(), $ast, $this);
-            $this->fields[$field->getName()] = $field;
-        }
-    }
 
     /**
      * @return iterable|FieldInterface
@@ -68,5 +52,19 @@ trait Fields
     public function getField(string $name): ?FieldInterface
     {
         return $this->fields[$name] ?? null;
+    }
+
+    /**
+     * @param Document $document
+     * @param TreeNode $ast
+     */
+    protected function compileFields(Document $document, TreeNode $ast): void
+    {
+        $allowed = in_array($ast->getId(), (array)($this->astHasFields ?? ['#Field']), true);
+
+        if ($allowed && $this instanceof NamedDefinitionInterface) {
+            $field = new Field($this->getDocument(), $ast, $this);
+            $this->fields[$field->getName()] = $field;
+        }
     }
 }

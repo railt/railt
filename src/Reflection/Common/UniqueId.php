@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Reflection\Common;
 
+use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+
 /**
  * Trait UniqueId
  * @package Serafim\Railgun\Reflection\Common
@@ -26,14 +29,19 @@ trait UniqueId
     private $id;
 
     /**
+     * @param DocumentTypeInterface $document
+     * @param TreeNode $ast
+     */
+    public function bootUniqueId(DocumentTypeInterface $document, TreeNode $ast): void
+    {
+        $this->id = ++self::$lastId;
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
     {
-        if ($this->id === null) {
-            $this->id = ++self::$lastId;
-        }
-
         return $this->id;
     }
 }

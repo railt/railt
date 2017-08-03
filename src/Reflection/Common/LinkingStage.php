@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Document;
 
 /**
@@ -29,10 +30,10 @@ trait LinkingStage
     protected $compiled = false;
 
     /**
-     * @param Document $document
+     * @param DocumentTypeInterface $document
      * @param TreeNode $ast
      */
-    public function bootLinkingStage(Document $document, TreeNode $ast): void
+    public function bootLinkingStage(DocumentTypeInterface $document, TreeNode $ast): void
     {
         foreach (class_uses_recursive($this) as $trait) {
             $name = 'compile' . class_basename($trait);
@@ -40,32 +41,6 @@ trait LinkingStage
                 $this->observers[] = [$this, $name];
             }
         }
-    }
-
-    /**
-     * @return TreeNode
-     * @throws \LogicException
-     */
-    private function getLinkingAstNode(): TreeNode
-    {
-        if (!property_exists($this, 'ast')) {
-            throw new \LogicException(static::class . '::$ast property is not defined');
-        }
-
-        return $this->ast;
-    }
-
-    /**
-     * @return Document
-     * @throws \LogicException
-     */
-    private function getLinkingDocument(): Document
-    {
-        if (!property_exists($this, 'document')) {
-            throw new \LogicException(static::class . '::$document property is not defined');
-        }
-
-        return $this->document;
     }
 
     /**
@@ -96,5 +71,31 @@ trait LinkingStage
         }
 
         return $this->compiled = true;
+    }
+
+    /**
+     * @return TreeNode
+     * @throws \LogicException
+     */
+    private function getLinkingAstNode(): TreeNode
+    {
+        if (!property_exists($this, 'ast')) {
+            throw new \LogicException(static::class . '::$ast property is not defined');
+        }
+
+        return $this->ast;
+    }
+
+    /**
+     * @return Document
+     * @throws \LogicException
+     */
+    private function getLinkingDocument(): Document
+    {
+        if (!property_exists($this, 'document')) {
+            throw new \LogicException(static::class . '::$document property is not defined');
+        }
+
+        return $this->document;
     }
 }

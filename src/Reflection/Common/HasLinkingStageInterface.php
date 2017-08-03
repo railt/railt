@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
 use Serafim\Railgun\Reflection\Document;
 
 /**
