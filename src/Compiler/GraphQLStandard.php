@@ -36,7 +36,7 @@ final class GraphQLStandard implements DocumentTypeInterface
             ->register($this->scalar('Float'))
             ->register($this->scalar('String'))
             ->register($this->scalar('Boolean'))
-        ;
+            ->register($this->scalar('Any'));
     }
 
     /**
