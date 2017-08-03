@@ -181,19 +181,20 @@ directive @include2(if: Boolean!) on
                     token(T_NAME, InputType)
                 #Value
                     #Object
-                        #Name
-                            token(T_NAME, key)
-                        #Value
-                            token(string:T_STRING, value)
-                    #Object
-                        #Name
-                            token(T_NAME, key2)
-                        #Value
-                            #List
-                                #Value
-                                    token(string:T_STRING, value1)
-                                #Value
-                                    token(string:T_STRING, value2)
+                        #ObjectPair
+                            #Name
+                                token(T_NAME, key)
+                            #Value
+                                token(string:T_STRING, value)
+                        #ObjectPair
+                            #Name
+                                token(T_NAME, key2)
+                            #Value
+                                #List
+                                    #Value
+                                        token(string:T_STRING, value1)
+                                    #Value
+                                        token(string:T_STRING, value2)
             #Type
                 token(T_NAME, Type)
         #Field
