@@ -11,8 +11,7 @@ namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Serafim\Railgun\Compiler\Dictionary;
-use Serafim\Railgun\Compiler\Exceptions\SemanticException;
-use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
@@ -46,12 +45,11 @@ class Document extends Definition implements DocumentTypeInterface
 
     /**
      * Document constructor.
-     * @param null|string $fileName
+     * @param string $fileName
      * @param TreeNode $ast
      * @param Dictionary $dictionary
-     * @throws \LogicException
      */
-    public function __construct(?string $fileName, TreeNode $ast, Dictionary $dictionary)
+    public function __construct(string $fileName, TreeNode $ast, Dictionary $dictionary)
     {
         parent::__construct($this, $ast);
 
@@ -62,8 +60,7 @@ class Document extends Definition implements DocumentTypeInterface
     }
 
     /**
-     * @throws SemanticException
-     * @throws \LogicException
+     *
      */
     private function compileChildren(): void
     {
@@ -81,10 +78,6 @@ class Document extends Definition implements DocumentTypeInterface
         }
     }
 
-    /**
-     * @throws \LogicException
-     * @throws SemanticException
-     */
     private function collectChildren(): void
     {
         foreach ($this->ast->getChildren() as $child) {
@@ -100,7 +93,6 @@ class Document extends Definition implements DocumentTypeInterface
     /**
      * @param TreeNode $ast
      * @return string
-     * @throws \LogicException
      */
     private function resolveDefinition(TreeNode $ast): string
     {
@@ -125,7 +117,7 @@ class Document extends Definition implements DocumentTypeInterface
                 return DirectiveDefinition::class;
         }
 
-        throw new \LogicException('Unrecognized AST node name ' . $ast->getId());
+        throw IndeterminateBehaviorException::make('Unrecognized AST node name %s', $ast->getId());
     }
 
     /**
@@ -136,11 +128,6 @@ class Document extends Definition implements DocumentTypeInterface
         return $this->dictionary;
     }
 
-    /**
-     * @param string $type
-     * @return NamedDefinitionInterface
-     * @throws TypeNotFoundException
-     */
     public function load(string $type): NamedDefinitionInterface
     {
         return $this->dictionary->find($type);
@@ -163,9 +150,9 @@ class Document extends Definition implements DocumentTypeInterface
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getFileName(): ?string
+    public function getFileName(): string
     {
         return $this->fileName;
     }

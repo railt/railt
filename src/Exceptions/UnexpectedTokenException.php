@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler\Exceptions;
+namespace Serafim\Railgun\Exceptions;
 
 /**
- * Class CompilerException
- * @package Serafim\Railgun\Compiler\Exceptions
+ * Class UnexpectedTokenException
+ * @package Serafim\Railgun\Exceptions
  */
-class CompilerException extends \InvalidArgumentException
+class UnexpectedTokenException extends UnrecognizedTokenException
 {
-
 }

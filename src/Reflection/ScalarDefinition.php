@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Reflection\Abstraction\ScalarTypeInterface;
 use Serafim\Railgun\Reflection\Common\Directives;
 use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
@@ -30,7 +31,7 @@ class ScalarDefinition extends Definition implements
 
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        IndeterminateBehaviorException::notImplemented(__METHOD__);
     }
 
     /**

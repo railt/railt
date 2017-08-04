@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Exceptions\CompilerException;
-use Serafim\Railgun\Compiler\Exceptions\SemanticException;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
+use Serafim\Railgun\Exceptions\SemanticException;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
@@ -46,7 +46,6 @@ class SchemaDefinition extends Definition implements
      * @param Document $document
      * @param TreeNode $ast
      * @return TreeNode|null
-     * @throws SemanticException
      */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
@@ -71,7 +70,6 @@ class SchemaDefinition extends Definition implements
      * @param string $fieldName
      * @param DefinitionInterface $definition
      * @return DefinitionInterface
-     * @throws SemanticException
      */
     private function check(string $fieldName, DefinitionInterface $definition): DefinitionInterface
     {
@@ -90,17 +88,16 @@ class SchemaDefinition extends Definition implements
         }
 
         $error = 'Schema allows only Input type or Object type for %s field, %s given.';
-        throw new SemanticException(sprintf($error, $fieldName, $name));
+        throw SemanticException::new($error, $fieldName, $name);
     }
 
     /**
      * @return ObjectTypeInterface|NamedDefinitionInterface
-     * @throws CompilerException
      */
     public function getQuery(): ObjectTypeInterface
     {
         if ($this->query === null) {
-            throw new CompilerException('Internal error: Can not resolve query data for schema');
+            IndeterminateBehaviorException::new('Can not resolve query data for schema');
         }
 
         return $this->query;

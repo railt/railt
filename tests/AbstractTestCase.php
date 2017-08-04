@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Serafim\Railgun\Compiler\File;
 
 /**
  * Class AbstractTestCase
@@ -29,5 +30,14 @@ abstract class AbstractTestCase extends TestCase
     public function resource(string $file): string
     {
         return __DIR__ . '/.resources/' . $this->resourcesPath . $file;
+    }
+
+    /**
+     * @param string $file
+     * @return File
+     */
+    public function file(string $file): File
+    {
+        return File::path($this->resource($file));
     }
 }

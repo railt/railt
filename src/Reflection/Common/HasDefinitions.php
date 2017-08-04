@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Serafim\Railgun\Compiler\Dictionary;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
@@ -22,7 +23,6 @@ trait HasDefinitions
 {
     /**
      * @return iterable
-     * @throws \LogicException
      */
     public function getNamedDefinitions(): iterable
     {
@@ -32,7 +32,6 @@ trait HasDefinitions
     /**
      * @param string[]|DefinitionInterface[] ...$types
      * @return iterable|DefinitionInterface[]
-     * @throws \LogicException
      */
     public function getDefinitions(string ...$types): iterable
     {
@@ -46,12 +45,14 @@ trait HasDefinitions
 
     /**
      * @return Dictionary
-     * @throws \LogicException
      */
     private function getDefinitionsDictionary(): Dictionary
     {
         if (!property_exists($this, 'dictionary')) {
-            throw new \LogicException(static::class . '::$dictionary property is not defined');
+            throw IndeterminateBehaviorException::new(
+                '%s::$dictionary property is not defined',
+                static::class
+            );
         }
 
         return $this->dictionary;
@@ -76,7 +77,6 @@ trait HasDefinitions
     /**
      * @param string $name
      * @return bool
-     * @throws \LogicException
      */
     public function hasDefinition(string $name): bool
     {
@@ -86,7 +86,6 @@ trait HasDefinitions
     /**
      * @param string $name
      * @return null|NamedDefinitionInterface
-     * @throws \LogicException
      */
     public function getDefinition(string $name): ?NamedDefinitionInterface
     {

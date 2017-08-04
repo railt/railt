@@ -11,6 +11,7 @@ namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Illuminate\Support\Str;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 
 /**
@@ -41,9 +42,9 @@ final class Value
     }
 
     /**
+     * TODO Bad code. Improve it
      * @param TreeNode $ast
      * @return object
-     * @throws \LogicException
      */
     private function parseObject(TreeNode $ast)
     {
@@ -67,7 +68,7 @@ final class Value
             }
 
             if (!$hasKey || !$hasValue) {
-                throw new \LogicException('Error while parsing object');
+                throw IndeterminateBehaviorException::new('Error while parsing object');
             }
 
             $result[$key] = $value;
@@ -79,7 +80,6 @@ final class Value
     /**
      * @param TreeNode $ast
      * @return array
-     * @throws \LogicException
      */
     private function parseArray(TreeNode $ast): array
     {
@@ -96,7 +96,6 @@ final class Value
     /**
      * @param TreeNode $ast
      * @return mixed
-     * @throws \LogicException
      */
     private function parsePrimitive(TreeNode $ast)
     {
@@ -118,7 +117,6 @@ final class Value
     /**
      * @param TreeNode $ast
      * @return array|mixed|object
-     * @throws \LogicException
      */
     private function parse(TreeNode $ast)
     {
@@ -134,12 +132,11 @@ final class Value
             }
         }
 
-        throw new \LogicException('Error while parsing ' . dump($child));
+        throw IndeterminateBehaviorException::new('Error while parsing ' . dump($child));
     }
 
     /**
      * @return array|mixed|object
-     * @throws \LogicException
      */
     public function compile()
     {
@@ -150,7 +147,6 @@ final class Value
      * @param DocumentTypeInterface $document
      * @param TreeNode $ast
      * @return mixed
-     * @throws \LogicException
      */
     public static function new(DocumentTypeInterface $document, TreeNode $ast)
     {

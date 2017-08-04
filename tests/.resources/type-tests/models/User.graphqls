@@ -4,6 +4,7 @@ type User implements PersonInterface {
     name: String!
     createdAt(format: DateFormat = RFC3339): String!
     updatedAt(format: DateFormat = RFC3339): String
+    tags(values: [String]! = ["Some", {any: "Any"}]): [String]!
 
     # Custom fields
     deletedAt(format: DateFormat): String

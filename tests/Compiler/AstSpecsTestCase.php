@@ -11,11 +11,11 @@ namespace Serafim\Railgun\Tests\Compiler;
 
 use PHPUnit\Framework\Assert;
 use Serafim\Railgun\Compiler\Compiler;
+use Serafim\Railgun\Compiler\File;
 use Serafim\Railgun\Tests\AbstractTestCase;
 use Serafim\Railgun\Tests\Support\SpecTest;
 use Serafim\Railgun\Tests\Support\SpecSupport;
 use PHPUnit\Framework\ExpectationFailedException;
-use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
 
 /**
  * Class CompilerTestCase
@@ -34,16 +34,16 @@ class AstSpecsTestCase extends AbstractTestCase
     /**
      * @dataProvider specProvider
      * @param SpecTest $spec
-     * @throws ExpectationFailedException
-     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testLanguageAstParsing(SpecTest $spec): void
     {
         $compiler = new Compiler();
 
-        $ast = $compiler->parse($spec->getIn());
+        $ast = $compiler->parse(File::virual($spec->getIn(), $spec->getPath()));
 
-        $dump = trim($compiler->dump($ast));
+        $dump = trim(dump($ast));
 
         try {
             $otherwise = 'Error in test "' . str_replace('"', "'", $spec->getName())

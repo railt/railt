@@ -58,7 +58,6 @@ class Argument extends Definition implements
      * @param DocumentTypeInterface $document
      * @param TreeNode $ast
      * @param NamedDefinitionInterface $parent
-     * @throws \LogicException
      */
     public function __construct(DocumentTypeInterface $document, TreeNode $ast, NamedDefinitionInterface $parent)
     {
@@ -108,7 +107,6 @@ class Argument extends Definition implements
      * @param Document $document
      * @param TreeNode $ast
      * @return TreeNode|null
-     * @throws \LogicException
      */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {

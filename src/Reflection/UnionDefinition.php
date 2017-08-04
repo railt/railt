@@ -38,7 +38,6 @@ class UnionDefinition extends Definition implements
      * @param Document $document
      * @param TreeNode $ast
      * @return TreeNode|null
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException
      */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {

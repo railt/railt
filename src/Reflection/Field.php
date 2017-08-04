@@ -51,7 +51,6 @@ class Field extends Definition implements
      * @param DocumentTypeInterface $document
      * @param TreeNode $ast
      * @param NamedDefinitionInterface $parent
-     * @throws \LogicException
      */
     public function __construct(DocumentTypeInterface $document, TreeNode $ast, NamedDefinitionInterface $parent)
     {
@@ -139,6 +138,4 @@ class Field extends Definition implements
     {
         return $this->getRelationDefinition()->getName();
     }
-
-
 }

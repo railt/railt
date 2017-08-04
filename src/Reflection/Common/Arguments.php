@@ -57,7 +57,6 @@ trait Arguments
     /**
      * @param DocumentTypeInterface $document
      * @param TreeNode $ast
-     * @throws \LogicException
      */
     protected function compileArguments(DocumentTypeInterface $document, TreeNode $ast): void
     {

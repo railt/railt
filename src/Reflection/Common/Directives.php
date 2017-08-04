@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Exceptions\CompilerException;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Reflection\Abstraction\CalleeDirectiveInterface;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
 use Serafim\Railgun\Reflection\Document;
@@ -62,7 +62,10 @@ trait Directives
         $allowed = in_array($ast->getId(), (array)($this->astHasFields ?? ['#Directive']), true);
 
         if ($allowed) {
-            throw new CompilerException('TODO: Add directives compilation for ' . get_class($this));
+            throw IndeterminateBehaviorException::new(
+                'TODO: Add directives compilation for %s',
+                get_class($this)
+            );
         }
     }
 }

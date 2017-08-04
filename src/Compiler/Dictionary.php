@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Compiler;
 
-use Serafim\Railgun\Compiler\Exceptions\SemanticException;
-use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
+use Serafim\Railgun\Exceptions\SemanticException;
+use Serafim\Railgun\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
@@ -52,9 +52,9 @@ class Dictionary implements \Countable, \IteratorAggregate
 
     /**
      * @param DefinitionInterface $definition
-     * @param bool $force Allows types redefinition for already defined type with same name
+     * @param bool $force
      * @return Dictionary
-     * @throws SemanticException
+     * @throws \Serafim\Railgun\Exceptions\SemanticException
      */
     public function register(DefinitionInterface $definition, bool $force = false): Dictionary
     {
@@ -72,23 +72,32 @@ class Dictionary implements \Countable, \IteratorAggregate
     /**
      * @param NamedDefinitionInterface $definition
      * @param bool $force
-     * @throws SemanticException
+     * @throws \Serafim\Railgun\Exceptions\SemanticException
      */
     private function registerNamedDefinition(NamedDefinitionInterface $definition, bool $force = false): void
     {
         if (!$force && array_key_exists($definition->getName(), $this->namedDefinitions)) {
-            $sourceError = 'Can not register type named "%s" as %s.';
-            $targetError = 'Type "%s" already registered as %s';
-
-            $target = $this->namedDefinitions[$definition->getName()];
-
-            throw new SemanticException(
-                sprintf($sourceError, $definition->getName(), $definition->getTypeName()) . ' ' .
-                sprintf($targetError, $target->getName(), $target->getTypeName())
-            );
+            $this->throwDictionaryOverridingException($definition);
         }
 
         $this->namedDefinitions[$definition->getName()] = $definition;
+    }
+
+    /**
+     * @param NamedDefinitionInterface $definition
+     * @throws SemanticException
+     */
+    private function throwDictionaryOverridingException(NamedDefinitionInterface $definition): void
+    {
+        $target = $this->namedDefinitions[$definition->getName()];
+
+        throw SemanticException::new(
+            'Can not register type named "%s" as %s. Type "%s" already registered as %s',
+            $definition->getName(),
+            $definition->getTypeName(),
+            $target->getName(),
+            $target->getTypeName()
+        );
     }
 
     /**
@@ -125,38 +134,39 @@ class Dictionary implements \Countable, \IteratorAggregate
     /**
      * @param string $name
      * @return NamedDefinitionInterface
-     * @throws TypeNotFoundException
+     * @throws \Serafim\Railgun\Exceptions\TypeNotFoundException
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function find(string $name): NamedDefinitionInterface
     {
         try {
-            /**
-             * Load existing type
-             */
             return $this->get($name);
-
         } catch (TypeNotFoundException $error) {
-            /**
-             * Otherwise start autoloader and try to resolve it from external files
-             */
-            $parent = null;
-            $error = 'Type "%s" not found and could not be loaded';
-            try {
-                if ($result = $this->loader->load($name)) {
-                    return $result;
-                }
-            } catch (\Exception $e) {
-                [$error, $parent] = ['"%s" type found and was be loaded but has an error while loading.', $e];
-            }
+            return $this->load($name);
         }
-
-        throw new TypeNotFoundException(sprintf($error, $name), 0, $parent);
     }
 
     /**
      * @param string $name
      * @return NamedDefinitionInterface
-     * @throws TypeNotFoundException
+     * @throws \Serafim\Railgun\Exceptions\TypeNotFoundException
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function load(string $name): NamedDefinitionInterface
+    {
+        if ($result = $this->loader->load($name)) {
+            return $result;
+        }
+
+        throw TypeNotFoundException::fromLoader($name);
+    }
+
+    /**
+     * @param string $name
+     * @return NamedDefinitionInterface
+     * @throws \Serafim\Railgun\Exceptions\TypeNotFoundException
      */
     public function get(string $name): NamedDefinitionInterface
     {
@@ -164,7 +174,7 @@ class Dictionary implements \Countable, \IteratorAggregate
             return $this->namedDefinitions[$name];
         }
 
-        throw new TypeNotFoundException(sprintf('Type "%s" not found', $name));
+        throw TypeNotFoundException::basic(sprintf('Type "%s" not found', $name));
     }
 
     /**
@@ -176,11 +186,11 @@ class Dictionary implements \Countable, \IteratorAggregate
         return array_key_exists($name, $this->namedDefinitions);
     }
 
+
     /**
      * @param DocumentTypeInterface $document
      * @param string $name
      * @return null|NamedDefinitionInterface
-     * @throws TypeNotFoundException
      */
     public function definition(DocumentTypeInterface $document, string $name): ?NamedDefinitionInterface
     {

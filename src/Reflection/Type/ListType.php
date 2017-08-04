@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\ListTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
@@ -54,7 +53,6 @@ class ListType extends BaseType implements ListTypeInterface
 
     /**
      * @return NamedDefinitionInterface
-     * @throws TypeNotFoundException
      */
     public function getRelationDefinition(): NamedDefinitionInterface
     {

@@ -28,7 +28,6 @@ class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
     /**
      * SymfonyRequest constructor.
      * @param Request $request
-     * @throws \LogicException
      */
     public function __construct(Request $request)
     {
@@ -40,7 +39,6 @@ class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
     /**
      * @param Request $request
      * @return array
-     * @throws \LogicException
      */
     private function getJsonQueryAttributes(Request $request): array
     {

@@ -4,4 +4,5 @@ type Bot implements PersonInterface {
     name: String!
     createdAt(format: DateFormat = ISO8601): String!
     updatedAt(format: DateFormat = RFC2822): String
+    tags(values: [String]!): [String]!
 }

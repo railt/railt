@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Document;
 
@@ -45,7 +46,6 @@ trait LinkingStage
 
     /**
      * @return bool
-     * @throws \LogicException
      */
     public function compileIfNotCompiled(): bool
     {
@@ -75,12 +75,11 @@ trait LinkingStage
 
     /**
      * @return TreeNode
-     * @throws \LogicException
      */
     private function getLinkingAstNode(): TreeNode
     {
         if (!property_exists($this, 'ast')) {
-            throw new \LogicException(static::class . '::$ast property is not defined');
+            throw IndeterminateBehaviorException::new(static::class . '::$ast property is not defined');
         }
 
         return $this->ast;
@@ -88,12 +87,11 @@ trait LinkingStage
 
     /**
      * @return Document
-     * @throws \LogicException
      */
     private function getLinkingDocument(): Document
     {
         if (!property_exists($this, 'document')) {
-            throw new \LogicException(static::class . '::$document property is not defined');
+            throw IndeterminateBehaviorException::new(static::class . '::$document property is not defined');
         }
 
         return $this->document;

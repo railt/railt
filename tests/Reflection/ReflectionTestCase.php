@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Tests\Reflection;
 
 use Serafim\Railgun\Compiler\Compiler;
+use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
@@ -42,13 +43,12 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getDocument(): DocumentTypeInterface
     {
         $compiler = $this->getCompiler();
 
-        return $compiler->compileFile($this->resource('schema-1.graphqls'));
+        return $compiler->compile($this->file('schema-1.graphqls'));
     }
 
     /**
@@ -75,7 +75,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getSchema(): ?SchemaTypeInterface
     {
@@ -90,7 +89,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getQuery(): ?HasFieldsInterface
     {
@@ -106,7 +104,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     private function getField(string $name): ?FieldInterface
     {
@@ -173,7 +170,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
      */
     public function testSchema(): void
     {
@@ -345,7 +341,7 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertEquals('Object', $user->getTypeName());
         $this->assertEquals('User', $user->getName());
 
-        $this->assertCount(6, $user->getFields());
+        $this->assertCount(7, $user->getFields());
 
 
         $this->assertNotNull($user->getField('id'));
@@ -394,6 +390,33 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertEquals('RFC3339', $format->getDefaultValue());
 
 
+        $this->assertNotNull($user->getField('tags'));
+        $this->assertEquals('tags', $user->getField('tags')->getName());
+        $this->assertEquals('String', $user->getField('tags')->getRelationName());
+        $this->assertTrue($user->getField('tags')->nonNull());
+        $this->assertTrue($user->getField('tags')->isList());
+        $this->assertFalse($user->getField('tags')->getType()->getChild()->nonNull());
+        $this->assertCount(1, $user->getField('tags')->getArguments());
+        // ------------------------------ Arguments ------------------------------
+        /** @var ArgumentInterface $values */
+        $values = $user->getField('tags')->getArgument('values');
+        $this->assertNotNull($values);
+        $this->assertEquals('Argument', $values->getTypeName());
+        $this->assertEquals('values', $values->getName());
+        // TODO Allow $argument->isList() like field
+        $this->assertTrue($values->getType()->isList());
+        $this->assertTrue($values->getType()->nonNull());
+        $this->assertFalse($values->getType()->getChild()->nonNull());
+        $this->assertEquals('String', $values->getType()->getRelationName());
+        $this->assertTrue($values->hasDefaultValue());
+        $this->assertInternalType('array', $values->getDefaultValue());
+        $this->assertCount(2, $values->getDefaultValue());
+        $this->assertEquals('Some', $values->getDefaultValue()[0]);
+        $this->assertInternalType('object', $values->getDefaultValue()[1]);
+        $this->assertNotNull($values->getDefaultValue()[1]->any);
+        $this->assertEquals('Any', $values->getDefaultValue()[1]->any);
+
+
         $this->assertNotNull($user->getField('deletedAt'));
         $this->assertEquals('deletedAt', $user->getField('deletedAt')->getName());
         $this->assertEquals('String', $user->getField('deletedAt')->getRelationName());
@@ -407,6 +430,7 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertEquals('format', $format->getName());
         $this->assertFalse($format->hasDefaultValue());
         $this->assertEquals(null, $format->getDefaultValue());
+
 
 
         $this->assertNotNull($user->getField('isBanned'));
@@ -430,7 +454,7 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertEquals('Object', $bot->getTypeName());
         $this->assertEquals('Bot', $bot->getName());
 
-        $this->assertCount(4, $bot->getFields());
+        $this->assertCount(5, $bot->getFields());
 
 
         $this->assertNotNull($bot->getField('id'));
@@ -477,6 +501,28 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertEquals('format', $format->getName());
         $this->assertTrue($format->hasDefaultValue());
         $this->assertEquals('RFC2822', $format->getDefaultValue());
+
+
+        $this->assertNotNull($bot->getField('tags'));
+        $this->assertEquals('tags', $bot->getField('tags')->getName());
+        $this->assertEquals('String', $bot->getField('tags')->getRelationName());
+        $this->assertTrue($bot->getField('tags')->nonNull());
+        $this->assertTrue($bot->getField('tags')->isList());
+        $this->assertFalse($bot->getField('tags')->getType()->getChild()->nonNull());
+        $this->assertCount(1, $bot->getField('tags')->getArguments());
+        // ------------------------------ Arguments ------------------------------
+        /** @var ArgumentInterface $values */
+        $values = $bot->getField('tags')->getArgument('values');
+        $this->assertNotNull($values);
+        $this->assertEquals('Argument', $values->getTypeName());
+        $this->assertEquals('values', $values->getName());
+        // TODO Allow $argument->isList() like field
+        $this->assertTrue($values->getType()->isList());
+        $this->assertTrue($values->getType()->nonNull());
+        $this->assertFalse($values->getType()->getChild()->nonNull());
+        $this->assertEquals('String', $values->getType()->getRelationName());
+        $this->assertFalse($values->hasDefaultValue());
+        $this->assertNull($values->getDefaultValue());
     }
 
     /**
@@ -515,7 +561,7 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertEquals('Interface', $personInterface->getTypeName());
         $this->assertEquals('PersonInterface', $personInterface->getName());
 
-        $this->assertCount(4, $personInterface->getFields());
+        $this->assertCount(5, $personInterface->getFields());
 
         
         $this->assertNotNull($personInterface->getField('id'));

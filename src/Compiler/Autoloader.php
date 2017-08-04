@@ -47,14 +47,8 @@ class Autoloader
     /**
      * @param string $type
      * @return null|NamedDefinitionInterface
-     * @throws \Serafim\Railgun\Compiler\Exceptions\TypeException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
-     * @throws Exceptions\NotReadableException
-     * @throws Exceptions\SemanticException
-     * @throws Exceptions\TypeNotFoundException
-     * @throws Exceptions\UnexpectedTokenException
-     * @throws \OutOfRangeException
-     * @throws \RuntimeException
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function load(string $type): ?NamedDefinitionInterface
     {
@@ -62,7 +56,7 @@ class Autoloader
             $file = $loader($type);
 
             if (is_string($file)) {
-                $out = $this->compiler->compileFile($file);
+                $out = $this->compiler->compile(File::path($file));
 
                 return $this->compiler->getDictionary()->definition($out, $type);
             }

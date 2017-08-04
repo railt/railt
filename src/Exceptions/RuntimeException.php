@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler\Exceptions;
+namespace Serafim\Railgun\Exceptions;
 
 /**
- * Class TypeNotFoundException
- * @package Serafim\Railgun\Compiler\Exceptions
+ * Class RuntimeException
+ * @package Serafim\Railgun\Exceptions
  */
-class TypeNotFoundException extends SemanticException
+class RuntimeException extends \RuntimeException
 {
-
+    use RailgunException;
 }

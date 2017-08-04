@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Reflection\Abstraction\EnumTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\EnumValueInterface;
 use Serafim\Railgun\Reflection\Common\Directives;
@@ -31,22 +32,22 @@ class EnumDefinition extends Definition implements
 
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        IndeterminateBehaviorException::notImplemented(__METHOD__);
     }
 
     public function getValues(): iterable
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        IndeterminateBehaviorException::notImplemented(__METHOD__);
     }
 
     public function hasValue(string $name): bool
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        IndeterminateBehaviorException::notImplemented(__METHOD__);
     }
 
     public function getValue(string $name): ?EnumValueInterface
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        IndeterminateBehaviorException::notImplemented(__METHOD__);
     }
 
     /**

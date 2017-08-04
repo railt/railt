@@ -21,9 +21,9 @@ interface DocumentTypeInterface extends DefinitionInterface
     public function getId(): int;
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getFileName(): ?string;
+    public function getFileName(): string;
 
     /**
      * @param string[] ...$types

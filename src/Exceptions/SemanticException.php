@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler\Exceptions;
+namespace Serafim\Railgun\Exceptions;
 
 /**
  * Class SemanticException
- * @package Serafim\Railgun\Compiler\Exceptions
+ * @package Serafim\Railgun\Exceptions
  */
-class SemanticException extends CompilerException
+class SemanticException extends \LogicException
 {
-
+    use RailgunException;
 }
 

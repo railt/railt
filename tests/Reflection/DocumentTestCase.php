@@ -10,10 +10,11 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Tests\Reflection;
 
 use Serafim\Railgun\Compiler\Compiler;
-use Serafim\Railgun\Compiler\Exceptions\NotReadableException;
-use Serafim\Railgun\Compiler\Exceptions\SemanticException;
-use Serafim\Railgun\Compiler\Exceptions\TypeNotFoundException;
-use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
+use Serafim\Railgun\Exceptions\NotReadableException;
+use Serafim\Railgun\Exceptions\SemanticException;
+use Serafim\Railgun\Exceptions\TypeNotFoundException;
+use Serafim\Railgun\Exceptions\UnexpectedTokenException;
+use Serafim\Railgun\Exceptions\UnrecognizedTokenException;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
@@ -31,7 +32,7 @@ class DocumentTestCase extends AbstractTestCase
     protected $resourcesPath = 'document-tests/';
 
     /**
-     * @throws UnexpectedTokenException
+     *
      */
     public function testTypeRedefinition(): void
     {
@@ -39,32 +40,29 @@ class DocumentTestCase extends AbstractTestCase
         $this->expectExceptionMessage('Can not register type named "A" as Object. ' .
             'Type "A" already registered as Interface');
 
-        (new Compiler())->compileFile($this->resource('err-redefinition.graphqls'));
+        (new Compiler())->compile($this->file('err-redefinition.graphqls'));
     }
 
     /**
-     * @throws UnexpectedTokenException
+     *
      */
     public function testTypeNotFound(): void
     {
         $this->expectException(TypeNotFoundException::class);
         $this->expectExceptionMessage('Type "QueryType" not found and could not be loaded');
 
-        (new Compiler())->compileFile($this->resource('schema-1.graphqls'));
+        (new Compiler())->compile($this->file('schema-1.graphqls'));
     }
 
     /**
-     * @throws SemanticException
-     * @throws UnexpectedTokenException
-     * @throws \OutOfRangeException
-     * @throws \RuntimeException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testTypeAutoloading(): void
     {
         $compiler = new Compiler();
         $compiler->getLoader()->dir($this->resource('/'));
-        $document = $compiler->compileFile($this->resource('schema-1.graphqls'));
+        $document = $compiler->compile($this->file('schema-1.graphqls'));
 
 
         $schema = $document->getSchema();
@@ -88,7 +86,7 @@ class DocumentTestCase extends AbstractTestCase
         $compiler->getLoader()->dir($this->resource('/'));
         $compiler->getLoader()->dir($this->resource('/sub/'), true);
 
-        $document = $compiler->compileFile($this->resource('schema-1.graphqls'));
+        $document = $compiler->compile($this->file('schema-1.graphqls'));
 
         $schema = $document->getSchema();
 
@@ -102,24 +100,26 @@ class DocumentTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFileWithoutSchema(): void
     {
         $compiler = new Compiler();
-        $document = $compiler->compileFile($this->resource('QueryType.graphqls'));
+        $document = $compiler->compile($this->file('QueryType.graphqls'));
 
         $this->assertNull($document->getSchema());
     }
 
     /**
-     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testDictionary(): void
     {
         $compiler = new Compiler();
         $compiler->getLoader()->dir($this->resource('/'));
-        $document = $compiler->compileFile($this->resource('schema-1.graphqls'));
+        $document = $compiler->compile($this->file('schema-1.graphqls'));
 
         $this->assertNotNull($document);
 
@@ -184,15 +184,16 @@ class DocumentTestCase extends AbstractTestCase
             '       ↑'
         );
 
-        (new Compiler())->compileFile($this->resource('unexpected.graphqls'));
+        (new Compiler())->compile($this->file('unexpected.graphqls'));
     }
 
     /**
      * @throws UnexpectedTokenException
+     * @throws UnrecognizedTokenException
      */
     public function testUnrecognizedToken(): void
     {
-        $this->expectException(UnexpectedTokenException::class);
+        $this->expectException(UnrecognizedTokenException::class);
         $this->expectExceptionMessage(
             'Unrecognized token "<" at line 1 and column 17:' . "\n" .
             'type Some {' . "\n" .
@@ -201,7 +202,7 @@ class DocumentTestCase extends AbstractTestCase
             '                ↑'
         );
 
-        (new Compiler())->compileFile($this->resource('unrecognized.graphqls'));
+        (new Compiler())->compile($this->file('unrecognized.graphqls'));
     }
 
     /**
@@ -209,11 +210,11 @@ class DocumentTestCase extends AbstractTestCase
      */
     public function testFileNotReadable(): void
     {
-        $error = sprintf('File "%s" not exists or not readable', $this->resource('nonexistent.file'));
+        $error = sprintf('File "%s" not readable. File not found.', $this->resource('nonexistent.file'));
 
         $this->expectException(NotReadableException::class);
         $this->expectExceptionMessage($error);
 
-        (new Compiler())->compileFile($this->resource('nonexistent.file'));
+        (new Compiler())->compile($this->file('nonexistent.file'));
     }
 }
