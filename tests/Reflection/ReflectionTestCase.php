@@ -499,9 +499,11 @@ class ReflectionTestCase extends AbstractTestCase
         $bot    = $person->getType('Bot');
         $this->assertNotNull($bot);
 
+        $this->assertTrue($user->hasInterface('PersonInterface'));
         $userInterface = $user->getInterface('PersonInterface');
         $this->assertNotNull($userInterface);
 
+        $this->assertTrue($bot->hasInterface('PersonInterface'));
         $botInterface  = $bot->getInterface('PersonInterface');
         $this->assertNotNull($botInterface);
 
