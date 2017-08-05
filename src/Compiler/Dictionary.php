@@ -134,7 +134,8 @@ class Dictionary implements \Countable, \IteratorAggregate
     /**
      * @param string $name
      * @return NamedDefinitionInterface
-     * @throws \Serafim\Railgun\Exceptions\TypeNotFoundException
+     * @throws TypeNotFoundException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
      * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
@@ -150,7 +151,8 @@ class Dictionary implements \Countable, \IteratorAggregate
     /**
      * @param string $name
      * @return NamedDefinitionInterface
-     * @throws \Serafim\Railgun\Exceptions\TypeNotFoundException
+     * @throws TypeNotFoundException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
      * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */

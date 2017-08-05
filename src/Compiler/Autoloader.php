@@ -47,6 +47,7 @@ class Autoloader
     /**
      * @param string $type
      * @return null|NamedDefinitionInterface
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
      * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
      * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */

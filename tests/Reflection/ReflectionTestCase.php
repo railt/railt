@@ -10,19 +10,18 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Tests\Reflection;
 
 use Serafim\Railgun\Compiler\Compiler;
+use Serafim\Railgun\Exceptions\UnexpectedTokenException;
 use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
 use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
 use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\InterfaceTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\UnionTypeInterface;
 use Serafim\Railgun\Reflection\Document;
 use Serafim\Railgun\Tests\AbstractTestCase;
-use Serafim\Railgun\Compiler\Exceptions\UnexpectedTokenException;
 
 /**
  * Class ReflectionTestCase
@@ -36,118 +35,10 @@ class ReflectionTestCase extends AbstractTestCase
     protected $resourcesPath = 'type-tests/';
 
     /**
-     * @return DocumentTypeInterface|Document
      * @throws UnexpectedTokenException
-     * @throws \OutOfRangeException
-     * @throws \RuntimeException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     */
-    private function getDocument(): DocumentTypeInterface
-    {
-        $compiler = $this->getCompiler();
-
-        return $compiler->compile($this->file('schema-1.graphqls'));
-    }
-
-    /**
-     * @return Compiler
-     */
-    private function getCompiler(): Compiler
-    {
-        $compiler = new Compiler();
-
-        $compiler->getLoader()->dir([
-            $this->resource(''),
-            $this->resource('enums'),
-            $this->resource('models'),
-        ]);
-
-        return $compiler;
-    }
-
-    /**
-     * @return null|SchemaTypeInterface
-     * @throws UnexpectedTokenException
-     * @throws \OutOfRangeException
-     * @throws \RuntimeException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     */
-    private function getSchema(): ?SchemaTypeInterface
-    {
-        return $this->getDocument()->getSchema();
-    }
-
-    /**
-     * @return null|HasFieldsInterface
-     * @throws UnexpectedTokenException
-     * @throws \OutOfRangeException
-     * @throws \RuntimeException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     */
-    private function getQuery(): ?HasFieldsInterface
-    {
-        return $this->getSchema()->getQuery();
-    }
-
-    /**
-     * @param string $name
-     * @return null|FieldInterface
-     * @throws UnexpectedTokenException
-     * @throws \OutOfRangeException
-     * @throws \RuntimeException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
-     */
-    private function getField(string $name): ?FieldInterface
-    {
-        return $this->getQuery()->getField($name);
-    }
-
-    /**
-     * @return null|UnionTypeInterface|NamedDefinitionInterface
-     * @throws UnexpectedTokenException
-     */
-    private function getPersonUnion(): ?UnionTypeInterface
-    {
-        return $this->getField('user')->getRelationDefinition();
-    }
-
-    /**
-     * @return null|ObjectTypeInterface
-     * @throws UnexpectedTokenException
-     */
-    private function getUserObject(): ?ObjectTypeInterface
-    {
-        return $this->getPersonUnion()->getType('User');
-    }
-
-    /**
-     * @return null|ObjectTypeInterface
-     * @throws UnexpectedTokenException
-     */
-    private function getBotObject(): ?ObjectTypeInterface
-    {
-        return $this->getPersonUnion()->getType('Bot');
-    }
-
-    /**
-     * @return null|InterfaceTypeInterface
-     * @throws UnexpectedTokenException
-     */
-    private function getPersonInterface(): ?InterfaceTypeInterface
-    {
-        return $this->getUserObject()->getInterface('PersonInterface');
-    }
-
-    /**
-     * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testDocument(): void
     {
@@ -162,14 +53,21 @@ class ReflectionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return void
+     * @param Document|DocumentTypeInterface $document
      * @throws UnexpectedTokenException
-     * @throws \OutOfRangeException
+     */
+    private function checkNames(DocumentTypeInterface $document): void
+    {
+        foreach ($document->getDictionary()->all() as $loadedType) {
+            $this->assertNotNull($loadedType->getTypeName());
+        }
+    }
+
+    /**
+     * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \RuntimeException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Compiler\Exceptions\SemanticException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testSchema(): void
     {
@@ -183,6 +81,10 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testQuery(): void
     {
@@ -196,6 +98,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFields(): void
     {
@@ -216,6 +121,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldUsers(): void
     {
@@ -231,6 +139,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNullableUsers(): void
     {
@@ -246,6 +157,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNonNullsUsers(): void
     {
@@ -261,6 +175,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNonNullUsers(): void
     {
@@ -276,6 +193,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldUser(): void
     {
@@ -291,6 +211,9 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNonNullUser(): void
     {
@@ -306,6 +229,10 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testUnionType(): void
     {
@@ -330,6 +257,10 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testUserObject(): void
     {
@@ -432,7 +363,6 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertEquals(null, $format->getDefaultValue());
 
 
-
         $this->assertNotNull($user->getField('isBanned'));
         $this->assertEquals('isBanned', $user->getField('isBanned')->getName());
         $this->assertEquals('Boolean', $user->getField('isBanned')->getRelationName());
@@ -443,6 +373,10 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @throws UnexpectedTokenException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testBotObject(): void
     {
@@ -526,6 +460,17 @@ class ReflectionTestCase extends AbstractTestCase
     }
 
     /**
+     * @return null|ObjectTypeInterface
+     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function getBotObject(): ?ObjectTypeInterface
+    {
+        return $this->getPersonUnion()->getType('Bot');
+    }
+
+    /**
      * @throws UnexpectedTokenException
      */
     public function testPersonInterface()
@@ -538,11 +483,11 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertNotNull($personInterface);
 
         /** @var ObjectTypeInterface $user */
-        $user   = $person->getType('User');
+        $user = $person->getType('User');
         $this->assertNotNull($user);
 
         /** @var ObjectTypeInterface $bot */
-        $bot    = $person->getType('Bot');
+        $bot = $person->getType('Bot');
         $this->assertNotNull($bot);
 
         $this->assertTrue($user->hasInterface('PersonInterface'));
@@ -550,7 +495,7 @@ class ReflectionTestCase extends AbstractTestCase
         $this->assertNotNull($userInterface);
 
         $this->assertTrue($bot->hasInterface('PersonInterface'));
-        $botInterface  = $bot->getInterface('PersonInterface');
+        $botInterface = $bot->getInterface('PersonInterface');
         $this->assertNotNull($botInterface);
 
         $this->assertEquals($userInterface, $botInterface);
@@ -563,7 +508,7 @@ class ReflectionTestCase extends AbstractTestCase
 
         $this->assertCount(5, $personInterface->getFields());
 
-        
+
         $this->assertNotNull($personInterface->getField('id'));
         $this->assertEquals('id', $personInterface->getField('id')->getName());
         $this->assertEquals('ID', $personInterface->getField('id')->getRelationName());
@@ -611,13 +556,98 @@ class ReflectionTestCase extends AbstractTestCase
     }
 
     /**
-     * @param Document|DocumentTypeInterface $document
+     * @return null|InterfaceTypeInterface
      * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
-    private function checkNames(DocumentTypeInterface $document): void
+    private function getPersonInterface(): ?InterfaceTypeInterface
     {
-        foreach ($document->getDictionary()->all() as $loadedType) {
-            $this->assertNotNull($loadedType->getTypeName());
-        }
+        return $this->getUserObject()->getInterface('PersonInterface');
+    }
+
+    /**
+     * @return null|ObjectTypeInterface
+     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function getUserObject(): ?ObjectTypeInterface
+    {
+        return $this->getPersonUnion()->getType('User');
+    }
+
+    /**
+     * @return null|UnionTypeInterface
+     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function getPersonUnion(): ?UnionTypeInterface
+    {
+        return $this->getField('user')->getRelationDefinition();
+    }
+
+    /**
+     * @param string $name
+     * @return null|FieldInterface
+     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function getField(string $name): ?FieldInterface
+    {
+        return $this->getQuery()->getField($name);
+    }
+
+    /**
+     * @return null|HasFieldsInterface
+     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function getQuery(): ?HasFieldsInterface
+    {
+        return $this->getSchema()->getQuery();
+    }
+
+    /**
+     * @return null|SchemaTypeInterface
+     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function getSchema(): ?SchemaTypeInterface
+    {
+        return $this->getDocument()->getSchema();
+    }
+
+    /**
+     * @return DocumentTypeInterface
+     * @throws UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     */
+    private function getDocument(): DocumentTypeInterface
+    {
+        $compiler = $this->getCompiler();
+
+        return $compiler->compile($this->file('schema-1.graphqls'));
+    }
+
+    /**
+     * @return Compiler
+     */
+    private function getCompiler(): Compiler
+    {
+        $compiler = new Compiler();
+
+        $compiler->getLoader()->dir([
+            $this->resource(''),
+            $this->resource('enums'),
+            $this->resource('models'),
+        ]);
+
+        return $compiler;
     }
 }

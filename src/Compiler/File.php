@@ -61,10 +61,6 @@ class File
 
         $sources = @file_get_contents($file->getPathname());
 
-        if (is_bool($sources)) {
-            throw new NotReadableException($file->getPathname());
-        }
-
         return new static($sources, $file->getPathname());
     }
 

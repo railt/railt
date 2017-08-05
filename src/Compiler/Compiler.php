@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Compiler;
 
-use Hoa\Compiler\Exception as HoaInternalException;
+use Hoa\Compiler\Exception;
 use Hoa\Compiler\Exception\UnexpectedToken;
 use Hoa\Compiler\Exception\UnrecognizedToken;
 use Hoa\Compiler\Llk\Llk;
@@ -17,7 +17,6 @@ use Hoa\Compiler\Llk\Parser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\File\Read;
 use Serafim\Railgun\Exceptions\CompilerException;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
 use Serafim\Railgun\Exceptions\UnexpectedTokenException;
 use Serafim\Railgun\Exceptions\UnrecognizedTokenException;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
@@ -53,12 +52,13 @@ class Compiler
      * Compiler constructor.
      * @param string|null $grammar
      * @throws CompilerException
+     * @throws \Serafim\Railgun\Exceptions\SemanticException
      */
     public function __construct(string $grammar = null)
     {
         $this->llk = $this->getParser($grammar);
 
-        $this->loader = new Autoloader($this);
+        $this->loader     = new Autoloader($this);
         $this->dictionary = new Dictionary($this->loader);
 
         new GraphQLStandard($this->dictionary);
@@ -73,13 +73,8 @@ class Compiler
     {
         try {
             return Llk::load($this->createReader($grammar));
-
-        } catch (\Throwable $e) {
+        } catch (Exception $e) {
             throw CompilerException::new($e->getMessage())->code(0);
-
-            // To resolve static code analysis errors: Hoa magic =\
-        } catch (HoaInternalException $e) {
-            throw IndeterminateBehaviorException::new($e->getMessage());
         }
     }
 
@@ -103,7 +98,6 @@ class Compiler
     /**
      * @param File $file
      * @return DocumentTypeInterface
-     * @throws UnexpectedTokenException
      * @throws UnrecognizedTokenException
      */
     public function compile(File $file): DocumentTypeInterface
@@ -116,8 +110,7 @@ class Compiler
     /**
      * @param File $file
      * @return TreeNode
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws UnrecognizedTokenException
      */
     public function parse(File $file): TreeNode
     {
@@ -127,8 +120,6 @@ class Compiler
             throw UnexpectedTokenException::fromHoa($e, $file);
         } catch (UnrecognizedToken $e) {
             throw UnrecognizedTokenException::fromHoa($e, $file);
-        } catch (\Throwable $e) {
-            throw IndeterminateBehaviorException::new($e->getMessage())->from($e);
         }
     }
 
