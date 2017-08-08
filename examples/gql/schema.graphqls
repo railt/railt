@@ -1,0 +1,18 @@
+schema {
+    query: Query
+}
+
+type Query {
+    users: [User]
+}
+
+type User implements UserInterface {
+    id: ID!
+    login: String
+    createdAt: String
+    updatedAt: String
+}
+
+interface UserInterface {
+    id: ID!
+}

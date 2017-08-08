@@ -54,6 +54,8 @@ class RelationType extends BaseType implements RelationTypeInterface
 
     /**
      * @return string
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function getTypeName(): string
     {
@@ -62,6 +64,8 @@ class RelationType extends BaseType implements RelationTypeInterface
 
     /**
      * @return NamedDefinitionInterface
+     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      */
     public function getRelationDefinition(): NamedDefinitionInterface
     {
