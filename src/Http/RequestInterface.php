@@ -36,12 +36,25 @@ interface RequestInterface
     public function getQuery(): string;
 
     /**
-     * @return null|string
+     * @return array
      */
-    public function getVariables(): ?string;
+    public function getVariables(): array;
 
     /**
      * @return null|string
      */
     public function getOperation(): ?string;
+
+    /**
+     * @param string $field
+     * @param null $default
+     * @return mixed
+     */
+    public function get(string $field, $default = null);
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    public function has(string $field): bool;
 }

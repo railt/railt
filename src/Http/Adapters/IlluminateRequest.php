@@ -7,9 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http;
+namespace Serafim\Railgun\Http\Adapters;
 
 use Illuminate\Http\Request;
+use Serafim\Railgun\Http\RequestInterface;
 use Serafim\Railgun\Http\Support\ConfigurableRequest;
 use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
 use Serafim\Railgun\Http\Support\InteractWithData;

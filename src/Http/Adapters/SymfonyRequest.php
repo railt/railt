@@ -7,8 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http;
+namespace Serafim\Railgun\Http\Adapters;
 
+use Serafim\Railgun\Http\RequestInterface;
 use Serafim\Railgun\Http\Support\ConfigurableRequest;
 use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
 use Serafim\Railgun\Http\Support\InteractWithData;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SymfonyRequest
- * @package Serafim\Railgun\Http
+ * @package Serafim\Railgun\Http\Adapters
  */
 class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
 {

@@ -29,11 +29,17 @@ trait InteractWithData
     }
 
     /**
-     * @return null|string
+     * @return array
      */
-    public function getVariables(): ?string
+    public function getVariables(): array
     {
-        return trim($this->data[$this->getVariablesArgument()] ?? '') ?: null;
+        $key = $this->getVariablesArgument();
+
+        if (array_key_exists($this->getVariablesArgument(), $this->data)) {
+            return (array)$this->data[$key];
+        }
+
+        return [];
     }
 
     /**
@@ -42,5 +48,24 @@ trait InteractWithData
     public function getOperation(): ?string
     {
         return $this->data[$this->getOperationArgument()] ?? null;
+    }
+
+    /**
+     * @param string $field
+     * @param mixed|null $default
+     * @return mixed
+     */
+    public function get(string $field, $default = null)
+    {
+        return $this->data[$field] ?? $default;
+    }
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    public function has(string $field): bool
+    {
+        return array_key_exists($field, $this->data);
     }
 }

@@ -10,6 +10,9 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Http;
 
 use Illuminate\Http\Request as IlluminateHttpRequest;
+use Serafim\Railgun\Http\Adapters\IlluminateRequest;
+use Serafim\Railgun\Http\Adapters\NativeRequest;
+use Serafim\Railgun\Http\Adapters\SymfonyRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 
 /**
@@ -21,26 +24,31 @@ class Request
     /**
      * @var array
      */
-    private static $adapters = [
+    protected static $adapters = [
         IlluminateHttpRequest::class => IlluminateRequest::class,
         SymfonyHttpRequest::class    => SymfonyRequest::class,
     ];
 
     /**
-     * @param null $request
+     * @var string
+     */
+    protected static $default = NativeRequest::class;
+
+    /**
+     * @param null|mixed $request
      * @return RequestInterface
      */
     public static function create($request = null): RequestInterface
     {
         if ($request !== null) {
-            foreach (self::$adapters as $original => $adapter) {
+            foreach (static::$adapters as $original => $adapter) {
                 if ($request instanceof $original) {
                     return new $adapter($request);
                 }
             }
         }
 
-        return new NativeRequest();
+        return new static::$default();
     }
 
 }
