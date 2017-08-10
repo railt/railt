@@ -1,0 +1,43 @@
+#
+# This is an example of GraphQL IDL Parser
+#   based on Hoa LL(k) -> AST compiler.
+#
+# Example code taken from: 
+#   SEE >> https://github.com/graphql/graphql-js/blob/master/src/language/__tests__/schema-kitchen-sink.graphql
+#
+# <code>
+#     // PHP resolve code
+#
+#     $endpoint->when('firstUser', function(RequestInterface $request) {
+#         return 'Бага, почему-то резолвит вообще всё (даже поля логина), хотя подписано на: ' .
+#            $request->getPath();
+#     });
+#
+#     $endpoint->when('*.id', function (RequestInterface $request) {
+#         return 'Id of user ' . $request->getPath();
+#     });
+# </code>
+#
+#
+
+# --------------------------------------------------------------------------
+#   GraphQL Schema
+# --------------------------------------------------------------------------
+
+schema {
+    query: QueryType
+}
+
+type QueryType {
+    firstUser: User
+}
+
+# --------------------------------------------------------------------------
+#   GraphQL Types
+# --------------------------------------------------------------------------
+
+type User {
+    id: ID!
+    login: String
+    bestFriend: User
+}

@@ -1,0 +1,15 @@
+[10-Aug-2017 16:38:37 Europe/Moscow] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/knesmeyanov/Projects/Railgun/resources/example/index.php:25) in /home/knesmeyanov/Projects/Railgun/resources/example/index.php on line 33
+[10-Aug-2017 16:38:59 Europe/Moscow] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/knesmeyanov/Projects/Railgun/resources/example/index.php:25) in /home/knesmeyanov/Projects/Railgun/resources/example/index.php on line 33
+[10-Aug-2017 18:51:42 Europe/Moscow] PHP Fatal error:  Uncaught TypeError: Return value of Serafim\Railgun\Endpoint::when() must be an instance of Serafim\Railgun\Runtime\EndpointInterface, instance of Serafim\Railgun\Endpoint returned in /home/knesmeyanov/Projects/Railgun/src/Endpoint.php:197
+Stack trace:
+#0 /home/knesmeyanov/Projects/Railgun/resources/example/index.php(26): Serafim\Railgun\Endpoint->when('*', Object(Closure))
+#1 {main}
+  thrown in /home/knesmeyanov/Projects/Railgun/src/Endpoint.php on line 197
+[10-Aug-2017 18:58:49 Europe/Moscow] PHP Fatal error:  Uncaught TypeError: Return value of Serafim\Railgun\Endpoint::when() must be an instance of Serafim\Railgun\Runtime\EndpointInterface, instance of Serafim\Railgun\Endpoint returned in /home/knesmeyanov/Projects/Railgun/src/Endpoint.php:197
+Stack trace:
+#0 /home/knesmeyanov/Projects/Railgun/resources/example/index.php(26): Serafim\Railgun\Endpoint->when('*', Object(Closure))
+#1 {main}
+  thrown in /home/knesmeyanov/Projects/Railgun/src/Endpoint.php on line 197
+[10-Aug-2017 20:27:45 Europe/Moscow] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/knesmeyanov/Projects/Railgun/src/Runtime/Dispatcher.php:86) in /home/knesmeyanov/Projects/Railgun/resources/example/index.php on line 37
+[10-Aug-2017 20:28:03 Europe/Moscow] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/knesmeyanov/Projects/Railgun/src/Runtime/Dispatcher.php:86) in /home/knesmeyanov/Projects/Railgun/resources/example/index.php on line 37
+[10-Aug-2017 20:38:38 Europe/Moscow] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/knesmeyanov/Projects/Railgun/resources/example/index.php:25) in /home/knesmeyanov/Projects/Railgun/resources/example/index.php on line 38
