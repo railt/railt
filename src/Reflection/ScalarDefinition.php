@@ -29,9 +29,14 @@ class ScalarDefinition extends Definition implements
     use Directives;
     use LinkingStage;
 
+    /**
+     * @param Document $document
+     * @param TreeNode $ast
+     * @return TreeNode|null
+     */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
-        IndeterminateBehaviorException::notImplemented(__METHOD__);
+        return $ast;
     }
 
     /**
