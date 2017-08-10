@@ -7,26 +7,31 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters;
+namespace Serafim\Railgun\Runtime\Webonyx;
 
-use GraphQL\GraphQL;
 use GraphQL\Schema;
-use Serafim\Railgun\Adapters\Webonyx\Builder\ScalarTypeBuilder;
-use Serafim\Railgun\Adapters\Webonyx\Builder\SchemaTypeBuilder;
-use Serafim\Railgun\Adapters\Webonyx\Loader;
+use GraphQL\GraphQL;
+use Serafim\Railgun\Runtime\Dispatcher;
+use Serafim\Railgun\Runtime\AdapterInterface;
 use Serafim\Railgun\Http\RequestInterface;
+use Serafim\Railgun\Runtime\Webonyx\Builder\SchemaTypeBuilder;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 
 /**
- * Class Webonyx
- * @package Serafim\Railgun\Adapters
+ * Class Adapter
+ * @package Serafim\Railgun\Runtime\Webonyx
  */
-class Webonyx implements AdapterInterface
+class Adapter implements AdapterInterface
 {
     /**
      * @var DocumentTypeInterface
      */
     private $document;
+
+    /**
+     * @var Dispatcher
+     */
+    private $events;
 
     /**
      * @return bool
@@ -39,20 +44,33 @@ class Webonyx implements AdapterInterface
     /**
      * Webonyx constructor.
      * @param DocumentTypeInterface $document
+     * @param Dispatcher $events
      */
-    public function __construct(DocumentTypeInterface $document)
+    public function __construct(DocumentTypeInterface $document, Dispatcher $events)
     {
         $this->document = $document;
+        $this->events = $events;
     }
 
     /**
      * @param RequestInterface $request
      * @return array
+     * @throws \LogicException
      */
     public function request(RequestInterface $request): array
     {
         $schema = $this->buildSchema();
 
+        return $this->executeSchema($request, $schema);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param Schema $schema
+     * @return array
+     */
+    private function executeSchema(RequestInterface $request, Schema $schema): array
+    {
         return GraphQL::execute(
             $schema,
             $request->getQuery(),
@@ -65,10 +83,13 @@ class Webonyx implements AdapterInterface
 
     /**
      * @return Schema
+     * @throws \LogicException
      */
     private function buildSchema(): Schema
     {
-        return Loader::new($this->document)
-            ->make($this->document->getSchema(), SchemaTypeBuilder::class);
+        $schema = $this->document->getSchema();
+
+        return Loader::new($this->document, $this->events)
+            ->make($schema, SchemaTypeBuilder::class);
     }
 }

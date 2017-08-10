@@ -7,16 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx\Builder\Common;
+namespace Serafim\Railgun\Runtime\Webonyx\Builder\Common;
 
 use Illuminate\Support\Str;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
+use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Trait HasDescription
- * @package Serafim\Railgun\Adapters\Webonyx\Builder\Common
+ * @package Serafim\Railgun\Runtime\Webonyx\Builder\Common
  */
 trait HasDescription
 {
@@ -45,7 +46,7 @@ trait HasDescription
     private function getTypeDescription(TypeInterface $target): string
     {
         return $target->getRelationName() . ($target->isList() ? 's' : '') . ' ' .
-            Str::lower($target->getRelationDefinition()->getTypeName());
+            $this->formatName($target->getRelationDefinition()->getTypeName());
     }
 
     /**
@@ -54,7 +55,13 @@ trait HasDescription
      */
     private function getNamedDefinitionDescription(NamedDefinitionInterface $definition): string
     {
-        return $definition->getName() . ' ' . Str::lower($definition->getName());
+        $result = '"' . $definition->getName() . '" ' . $this->formatName($definition->getTypeName());
+
+        if ($definition instanceof FieldInterface) {
+            $result .= ' of ' . $this->getTypeDescription($definition->getType());
+        }
+
+        return $result;
     }
 
     /**
@@ -63,7 +70,15 @@ trait HasDescription
      */
     private function getDefinitionDescription(DefinitionInterface $definition): string
     {
-        return $definition->getTypeName() . ' of ' .
-            $definition->getDocument()->getTypeName();
+        return $definition->getTypeName() . ' of ' . $definition->getDocument()->getTypeName();
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function formatName(string $name): string
+    {
+        return Str::snake($name, ' ');
     }
 }

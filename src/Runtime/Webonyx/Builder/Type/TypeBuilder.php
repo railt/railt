@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx\Builder\Type;
+namespace Serafim\Railgun\Runtime\Webonyx\Builder\Type;
 
 use GraphQL\Type\Definition\Type;
-use Serafim\Railgun\Adapters\Webonyx\Builder\Builder;
+use Serafim\Railgun\Runtime\Webonyx\Builder\Builder;
 
 /**
  * Class TypeBuilder
- * @package Serafim\Railgun\Adapters\Webonyx
+ * @package Serafim\Railgun\Runtime\Webonyx
  */
 class TypeBuilder extends Builder
 {

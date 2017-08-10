@@ -7,23 +7,25 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx;
+namespace Serafim\Railgun\Runtime\Webonyx;
 
+use Serafim\Railgun\Runtime\Dispatcher;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 
 /**
  * Interface BuilderInterface
- * @package Serafim\Railgun\Adapters\Webonyx
+ * @package Serafim\Railgun\Runtime\Webonyx
  */
 interface BuilderInterface
 {
     /**
      * BuilderInterface constructor.
+     * @param Dispatcher $events
      * @param Loader $loader
      * @param DefinitionInterface|TypeInterface $target
      */
-    public function __construct(Loader $loader, $target);
+    public function __construct(Dispatcher $events, Loader $loader, $target);
 
     /**
      * @return Loader

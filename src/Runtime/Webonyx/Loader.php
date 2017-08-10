@@ -7,26 +7,27 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx;
+namespace Serafim\Railgun\Runtime\Webonyx;
 
-use Serafim\Railgun\Adapters\Webonyx\Builder\FieldBuilder;
-use Serafim\Railgun\Adapters\Webonyx\Builder\ObjectTypeBuilder;
-use Serafim\Railgun\Adapters\Webonyx\Builder\ScalarTypeBuilder;
-use Serafim\Railgun\Adapters\Webonyx\Builder\SchemaTypeBuilder;
-use Serafim\Railgun\Adapters\Webonyx\Builder\Type\TypeBuilder;
+use Serafim\Railgun\Runtime\Dispatcher;
+use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
 use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\ScalarTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Document;
+use Serafim\Railgun\Runtime\Webonyx\Builder\ArgumentBuilder;
+use Serafim\Railgun\Runtime\Webonyx\Builder\FieldBuilder;
+use Serafim\Railgun\Runtime\Webonyx\Builder\ObjectTypeBuilder;
+use Serafim\Railgun\Runtime\Webonyx\Builder\ScalarTypeBuilder;
+use Serafim\Railgun\Runtime\Webonyx\Builder\Type\TypeBuilder;
 
 /**
  * Class BuilderResolver
- * @package Serafim\Railgun\Adapters\Webonyx
+ * @package Serafim\Railgun\Runtime\Webonyx
  */
 class Loader
 {
@@ -49,26 +50,35 @@ class Loader
         ScalarTypeInterface::class => ScalarTypeBuilder::class,
 
         // Partials
-        FieldInterface::class => FieldBuilder::class,
-        TypeInterface::class => TypeBuilder::class,
+        FieldInterface::class      => FieldBuilder::class,
+        TypeInterface::class       => TypeBuilder::class,
+        ArgumentInterface::class   => ArgumentBuilder::class,
     ];
+
+    /**
+     * @var Dispatcher
+     */
+    private $events;
 
     /**
      * Builder constructor.
      * @param DocumentTypeInterface|Document $document
+     * @param Dispatcher $events
      */
-    public function __construct(DocumentTypeInterface $document)
+    public function __construct(DocumentTypeInterface $document, Dispatcher $events)
     {
         $this->document = $document;
+        $this->events = $events;
     }
 
     /**
      * @param DocumentTypeInterface $document
+     * @param Dispatcher $events
      * @return Loader
      */
-    public static function new(DocumentTypeInterface $document): Loader
+    public static function new(DocumentTypeInterface $document, Dispatcher $events): Loader
     {
-        return new static($document);
+        return new static($document, $events);
     }
 
     /**
@@ -95,6 +105,7 @@ class Loader
      * @param DefinitionInterface|TypeInterface $definition
      * @param string $class
      * @return mixed
+     * @throws \LogicException
      */
     private function makeCached($definition, string $class)
     {
@@ -109,6 +120,7 @@ class Loader
      * @param NamedDefinitionInterface $definition
      * @param string $class
      * @return mixed
+     * @throws \LogicException
      */
     private function makeCachedNamedDefinition(NamedDefinitionInterface $definition, string $class)
     {
@@ -123,12 +135,14 @@ class Loader
      * @param DefinitionInterface|TypeInterface $definition
      * @param string $class
      * @return mixed
+     * @throws \LogicException
      */
     public function make($definition, string $class)
     {
         /** @var BuilderInterface $instance */
-        $instance = new $class($this, $definition);
+        $instance = new $class($this->events, $this, $definition);
 
         return $instance->build();
     }
+
 }

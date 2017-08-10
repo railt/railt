@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx\Builder;
+namespace Serafim\Railgun\Runtime\Webonyx\Builder;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ScalarType;
@@ -15,7 +15,7 @@ use Serafim\Railgun\Reflection\Abstraction\ScalarTypeInterface;
 
 /**
  * Class ScalarTypeBuilder
- * @package Serafim\Railgun\Adapters\Webonyx\Builder
+ * @package Serafim\Railgun\Runtime\Webonyx\Builder
  * @property-read ScalarTypeInterface $type
  */
 class ScalarTypeBuilder extends Builder

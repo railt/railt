@@ -7,16 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx\Builder;
+namespace Serafim\Railgun\Runtime\Webonyx\Builder;
 
-use Serafim\Railgun\Adapters\Webonyx\Loader;
-use Serafim\Railgun\Adapters\Webonyx\BuilderInterface;
+use Serafim\Railgun\Runtime\Dispatcher;
+use Serafim\Railgun\Runtime\Webonyx\Loader;
+use Serafim\Railgun\Runtime\Webonyx\BuilderInterface;
 use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
 
 /**
  * Class Builder
- * @package Serafim\Railgun\Adapters\Webonyx
+ * @package Serafim\Railgun\Runtime\Webonyx
  */
 abstract class Builder implements BuilderInterface
 {
@@ -31,14 +32,33 @@ abstract class Builder implements BuilderInterface
     protected $type;
 
     /**
+     * @var Dispatcher
+     */
+    protected $events;
+
+    /**
      * Builder constructor.
+     * @param Dispatcher $events
      * @param Loader $loader
      * @param DefinitionInterface|TypeInterface $target
      */
-    public function __construct(Loader $loader, $target)
+    public function __construct(Dispatcher $events, Loader $loader, $target)
     {
         $this->type = $target;
         $this->loader = $loader;
+        $this->events = $events;
+    }
+
+    /**
+     * @param string $event
+     * @param array ...$args
+     * @return $this
+     */
+    protected function fire(string $event, ...$args)
+    {
+        $this->events->dispatch($event, $args);
+
+        return $this;
     }
 
     /**
@@ -73,6 +93,7 @@ abstract class Builder implements BuilderInterface
      * @param DefinitionInterface|TypeInterface $definition
      * @param string $class
      * @return mixed
+     * @throws \LogicException
      */
     protected function make($definition, string $class)
     {

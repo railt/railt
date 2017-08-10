@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx\Builder;
+namespace Serafim\Railgun\Runtime\Webonyx\Builder;
 
 use GraphQL\Schema;
 use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
 
 /**
  * Class SchemaTypeBuilder
- * @package Serafim\Railgun\Adapters\Webonyx\Builder
+ * @package Serafim\Railgun\Runtime\Webonyx\Builder
  * @property-read SchemaTypeInterface $type
  */
 class SchemaTypeBuilder extends Builder

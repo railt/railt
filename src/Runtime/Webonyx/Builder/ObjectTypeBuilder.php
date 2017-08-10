@@ -7,15 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Adapters\Webonyx\Builder;
+namespace Serafim\Railgun\Runtime\Webonyx\Builder;
 
 use GraphQL\Type\Definition\ObjectType;
 use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
-use Serafim\Railgun\Adapters\Webonyx\Builder\Common\HasDescription;
+use Serafim\Railgun\Runtime\Webonyx\Builder\Common\HasDescription;
 
 /**
  * Class ObjectTypeBuilder
- * @package Serafim\Railgun\Adapters\Webonyx\Builder
+ * @package Serafim\Railgun\Runtime\Webonyx\Builder
  * @property-read ObjectTypeInterface $type
  */
 class ObjectTypeBuilder extends Builder
@@ -30,7 +30,9 @@ class ObjectTypeBuilder extends Builder
         return new ObjectType([
             'name'        => $this->type->getName(),
             'description' => $this->getDescription(),
-            'fields'      => iterator_to_array($this->getObjectFields()),
+            'fields'      => function (): array {
+                return iterator_to_array($this->getObjectFields());
+            },
         ]);
     }
 
