@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Runtime;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Serafim\Railgun\Exceptions\GraphQLSchemaException;
 
 /**
  * Class Error
@@ -28,16 +29,6 @@ class Error implements Arrayable
     private $debug;
 
     /**
-     * @param \Throwable $e
-     * @param bool $debug
-     * @return array
-     */
-    public static function render(\Throwable $e, bool $debug = false): array
-    {
-        return (new static($e, $debug))->toArray();
-    }
-
-    /**
      * Error constructor.
      * @param \Throwable $e
      * @param bool $debug
@@ -50,39 +41,12 @@ class Error implements Arrayable
 
     /**
      * @param \Throwable $e
+     * @param bool $debug
      * @return array
      */
-    private function renderItem(\Throwable $e)
+    public static function render(\Throwable $e, bool $debug = false): array
     {
-        $result = [ 'message' => $e->getMessage() ];
-
-        if ($this->debug) {
-            $result['in']    = $e->getFile() . ':' . $e->getLine();
-            $result['trace'] = $this->renderTrace($e);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param \Throwable $e
-     * @return array
-     */
-    private function renderTrace(\Throwable $e): array
-    {
-        $trace = explode("\n", $e->getTraceAsString());
-
-        $trace = array_map(function(string $trace): string {
-            $trace = preg_replace('/#\d+\s+/iu', '', $trace);
-            return $trace;
-        }, $trace);
-
-
-        $trace = array_filter($trace, function (string $item): bool {
-            return $item !== '{main}';
-        });
-
-        return $trace;
+        return (new static($e, $debug))->toArray();
     }
 
     /**
@@ -102,5 +66,57 @@ class Error implements Arrayable
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return array
+     */
+    private function renderItem(\Throwable $e)
+    {
+        $result = [
+            'message' => $e->getMessage(),
+        ];
+
+        if ($e instanceof GraphQLSchemaException) {
+            $result = [
+                'message'   => 'GraphQL Schema Error: ' . $e->getMessage(),
+                'locations' => [
+                    [
+                        'line'   => $e->getCodeLine(),
+                        'column' => $e->getCodeColumn(),
+                    ],
+                ],
+            ];
+        }
+
+        if ($this->debug) {
+            $result['in'] = $e->getFile() . ':' . $e->getLine();
+            $result['trace'] = $this->renderTrace($e);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return array
+     */
+    private function renderTrace(\Throwable $e): array
+    {
+        $trace = explode("\n", $e->getTraceAsString());
+
+        $trace = array_map(function (string $trace): string {
+            $trace = preg_replace('/#\d+\s+/iu', '', $trace);
+
+            return $trace;
+        }, $trace);
+
+
+        $trace = array_filter($trace, function (string $item): bool {
+            return $item !== '{main}';
+        });
+
+        return $trace;
     }
 }
