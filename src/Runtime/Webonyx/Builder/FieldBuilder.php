@@ -37,11 +37,7 @@ class FieldBuilder extends Builder
             'description' => $this->getDescription(),
             'args'        => iterator_to_array($this->getFieldArguments()),
             'resolve'     => function ($value, array $args = [], $context, ResolveInfo $info) {
-                $request = new Request($args ?? [], $this->type, $info);
-
-                return array_first($this->events->dispatch($request->getPath(), $request), function ($result) {
-                    return $result !== null;
-                }, $value);
+                return $info->fieldName;
             },
         ];
     }

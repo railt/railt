@@ -20,11 +20,14 @@ export default function (schema) {
     }
 
     function updateURL() {
+        parameters.schema = schema.getValue();
+
         let newSearch = "?" + Object.keys(parameters).filter(function (key) {
             return Boolean(parameters[key]);
         }).map(function (key) {
             return encodeURIComponent(key) + "=" + encodeURIComponent(parameters[key]);
         }).join("&");
+
         history.replaceState(null, null, newSearch);
     }
 

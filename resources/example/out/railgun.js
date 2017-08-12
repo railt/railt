@@ -10028,11 +10028,14 @@ exports.default = function (schema) {
     }
 
     function updateURL() {
+        parameters.schema = schema.getValue();
+
         var newSearch = "?" + (0, _keys2.default)(parameters).filter(function (key) {
             return Boolean(parameters[key]);
         }).map(function (key) {
             return encodeURIComponent(key) + "=" + encodeURIComponent(parameters[key]);
         }).join("&");
+
         history.replaceState(null, null, newSearch);
     }
 

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 use Serafim\Railgun\Endpoint;
 use Serafim\Railgun\Http\Request;
+use Serafim\Railgun\Routing\Router;
 use Serafim\Railgun\Runtime\RequestInterface;
 
 require __DIR__ . '/../../vendor/autoload.php';
@@ -16,20 +17,36 @@ require __DIR__ . '/../../vendor/autoload.php';
 $request = Request::create();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $router = new class extends Router {
+        /**
+         * @param RequestInterface $request
+         * @return iterable
+         */
+        public function resolve(RequestInterface $request): iterable
+        {
+            yield 'user' => $this->belongsTo(UserQuery::class);
+
+            yield $this->route('{any}/id')->where('any', '.*?') => $this->id();
+        }
+
+        /**
+         * @return Closure
+         */
+        private function id(): \Closure
+        {
+            return function(RequestInterface $request) {
+                $result = 'Id of user ' . $request->getPath();
+
+                return $request->has('upper')
+                    ? mb_strtoupper($result) . ' + ' . $request->get('upper')
+                    : $result;
+            };
+        }
+    };
+
     $endpoint = $request->has('schema')
-        ? Endpoint::fromSources($request->get('schema'))
-        : Endpoint::fromFilePath(__DIR__ . '/gql/schema.graphqls');
-
-    // Endpoint
-    $endpoint->when('firstUser', function(RequestInterface $request, string $event) {
-        return 'Бага, почему-то резолвит вообще всё (даже поля логина), хотя подписано на: ' .
-            (string)$request->getPath();
-    });
-
-    $endpoint->when('*.id', function (RequestInterface $request, string $event) {
-        return 'Id of user ' . (string)$request->getPath();
-    });
-
+        ? Endpoint::sources($request->get('schema'), $router)
+        : Endpoint::filePath(__DIR__ . '/gql/schema.graphqls', $router);
 
     // Request
     $response = $endpoint->request($request);
@@ -53,9 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div style="display: none" id="schemaValue"><?php
         if ($request->has('schema')) {
-            echo $request->get('schema');
+            echo htmlspecialchars($request->get('schema'));
         } else {
-            echo file_get_contents(__DIR__ . '/gql/schema.graphqls');
+            echo htmlspecialchars(file_get_contents(__DIR__ . '/gql/schema.graphqls'));
         }
     ?></div>
     <div id="graphiql">Loading...</div>

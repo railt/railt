@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun;
 
+use Serafim\Railgun\Routing\Router;
 use Serafim\Railgun\Runtime\Dispatcher;
 use Serafim\Railgun\Http\ResponderInterface;
 use Serafim\Railgun\Runtime\AdapterInterface;
@@ -54,55 +55,63 @@ class Endpoint implements ResponderInterface
     ];
 
     /**
+     * @var Router
+     */
+    private $router;
+
+    /**
      * @param \SplFileInfo $info
+     * @param Router $router
      * @return Endpoint
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      * @throws \Serafim\Railgun\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      * @throws \Serafim\Railgun\Exceptions\NotReadableException
      */
-    public static function fromFile(\SplFileInfo $info): Endpoint
+    public static function file(\SplFileInfo $info, Router $router): Endpoint
     {
-        return new static(File::physics($info));
+        return new static(File::physics($info), $router);
     }
 
     /**
      * @param string $pathName
+     * @param Router $router
      * @return Endpoint
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      * @throws \Serafim\Railgun\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
      * @throws \Serafim\Railgun\Exceptions\NotReadableException
      */
-    public static function fromFilePath(string $pathName): Endpoint
+    public static function filePath(string $pathName, Router $router): Endpoint
     {
-        return new static(File::path($pathName));
+        return new static(File::path($pathName), $router);
     }
 
     /**
      * @param string $sources
+     * @param Router $router
      * @return Endpoint
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      * @throws \Serafim\Railgun\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Serafim\Railgun\Exceptions\NotReadableException
      */
-    public static function fromSources(string $sources): Endpoint
+    public static function sources(string $sources, Router $router): Endpoint
     {
-        return new static(File::virual($sources));
+        return new static(File::virual($sources), $router);
     }
 
     /**
      * Endpoint constructor.
      * @param File $file
+     * @param Router $router
      * @throws \Serafim\Railgun\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      */
-    public function __construct(File $file)
+    public function __construct(File $file, Router $router)
     {
         $this->file = $file;
 
         $this->compiler = new Compiler();
         $this->events = new Dispatcher();
+        $this->router = $router;
     }
 
     /**

@@ -63,12 +63,20 @@ class Request implements RequestInterface
         foreach ($defaults as $default) {
             $name = $default->getName();
 
-            if (!array_key_exists($name, $input) && !$default->hasDefaultValue()) {
+            if (
+                !array_key_exists($name, $input) && // Empty argument
+                !$default->hasDefaultValue() && // And has no default value
+                $default->getType()->nonNull() // And required
+            ) {
                 $message = 'Argument %s required for field %s';
                 throw RuntimeException::new($message, $name, $default->getParent()->getName());
             }
 
-            $result[$name] = $input[$name] ?? $default->getDefaultValue();
+            if (array_key_exists($name, $input)) {
+                $result[$name] = $input[$name];
+            } elseif ($default->hasDefaultValue()) {
+                $result[$name] = $default->getDefaultValue();
+            }
         }
 
         return $result;
@@ -90,14 +98,23 @@ class Request implements RequestInterface
         return $this->arguments;
     }
 
+    /**
+     * @param string $argument
+     * @param null $default
+     * @return mixed|null
+     */
     public function get(string $argument, $default = null)
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return $this->arguments[$argument] ?? $default;
     }
 
+    /**
+     * @param string $argument
+     * @return bool
+     */
     public function has(string $argument): bool
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        return array_key_exists($argument, $this->arguments);
     }
 
     public function getRelations(): iterable

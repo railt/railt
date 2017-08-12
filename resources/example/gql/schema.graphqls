@@ -1,43 +1,43 @@
 #
-# This is an example of GraphQL IDL Parser
-#   based on Hoa LL(k) -> AST compiler.
+# PHP code example:
 #
-# Example code taken from: 
-#   SEE >> https://github.com/graphql/graphql-js/blob/master/src/language/__tests__/schema-kitchen-sink.graphql
+# $endpoint->when('user', function (RequestInterface $request) {
+#     return 'Field of ' . $request->getPath();
+# });
 #
-# <code>
-#     // PHP resolve code
+# $endpoint->when('*.id', function (RequestInterface $request) {
+#     $result = 'Id of user ' . $request->getPath();
 #
-#     $endpoint->when('firstUser', function(RequestInterface $request) {
-#         return 'Бага, почему-то резолвит вообще всё (даже поля логина), хотя подписано на: ' .
-#            $request->getPath();
-#     });
-#
-#     $endpoint->when('*.id', function (RequestInterface $request) {
-#         return 'Id of user ' . $request->getPath();
-#     });
-# </code>
-#
+#     return $request->has('upper')
+#         ? mb_strtoupper($result) . ' + ' . $request->get('upper')
+#         : $result;
+# });
 #
 
-# --------------------------------------------------------------------------
-#   GraphQL Schema
-# --------------------------------------------------------------------------
+interface Person {
+    id: ID!
+}
+
+type User implements Person {
+    id(upper: String): ID!
+    login: String
+    friend: User
+}
+
+type Bot implements Person {
+    id: ID!
+    name: String
+}
+
+#
+# Schema definition here
+#
+
+type QueryType {
+    user: User
+    bot: Bot
+}
 
 schema {
     query: QueryType
-}
-
-type QueryType {
-    firstUser: User
-}
-
-# --------------------------------------------------------------------------
-#   GraphQL Types
-# --------------------------------------------------------------------------
-
-type User {
-    id: ID!
-    login: String
-    bestFriend: User
 }

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Serafim\Railgun\Runtime\Webonyx\Builder;
 
 use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\ResolveInfo;
 use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
 use Serafim\Railgun\Runtime\Webonyx\Builder\Common\HasDescription;
 
@@ -24,6 +25,7 @@ class ObjectTypeBuilder extends Builder
 
     /**
      * @return ObjectType
+     * @throws \Serafim\Railgun\Exceptions\RuntimeException
      */
     public function build(): ObjectType
     {
@@ -33,11 +35,15 @@ class ObjectTypeBuilder extends Builder
             'fields'      => function (): array {
                 return iterator_to_array($this->getObjectFields());
             },
+            'resolveFields' => function ($value, array $args = [], $context, ResolveInfo $info) {
+                return $this->type->getName() . ' => ' . $value;
+            },
         ]);
     }
 
     /**
      * @return \Traversable
+     * @throws \LogicException
      */
     private function getObjectFields(): \Traversable
     {
