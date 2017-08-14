@@ -9,45 +9,82 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Routing;
 
-use Serafim\Railgun\Exceptions\RuntimeException;
 use Serafim\Railgun\Runtime\RequestInterface;
-use Serafim\Railgun\Runtime\Resolvable;
 
 /**
  * Class Router
  * @package Serafim\Railgun\Routing
  */
-abstract class Router
+class Router
 {
     /**
-     * @param RequestInterface $request
-     * @return iterable
+     * @var array|Route[]
      */
-    abstract public function resolve(RequestInterface $request): iterable;
+    private $routes = [];
+
+    /**
+     * @var array
+     */
+    private $parameters = [];
 
     /**
      * @param string $pattern
      * @return Route
      */
-    public function route(string $pattern): Route
+    public function when(string $pattern): Route
     {
-        return Route::new($pattern);
+        return $this->routes[] = Route::new($pattern);
     }
 
     /**
-     * @param string $class
-     * @return \Closure
+     * @param string $parameter
+     * @param string $regex
+     * @return Router
      */
-    public function belongsTo(string $class): \Closure
+    public function where(string $parameter, string $regex): Router
     {
-        return function (RequestInterface $request) use ($class) {
-            $instance = new $class();
+        $this->parameters[$parameter] = $regex;
 
-            if ($instance instanceof Resolvable) {
-                return $instance->resolve($request);
+        return $this;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @throws \Serafim\Railgun\Exceptions\CompilerException
+     */
+    public function dispatch(RequestInterface $request)
+    {
+        $this->compile();
+
+        foreach ($this->groups($request) as $route) {
+            dd($route);
+        }
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return \Traversable|Route[]
+     * @throws \Serafim\Railgun\Exceptions\CompilerException
+     */
+    private function groups(RequestInterface $request): \Traversable
+    {
+        foreach ($this->routes as $route) {
+            if ($route->startsWith($request->getPath())) {
+                yield $route;
             }
+        }
+    }
 
-            throw RuntimeException::new('%s::class must be instance of %s', $class, Resolvable::class);
-        };
+    /**
+     * @return void
+     */
+    private function compile(): void
+    {
+        foreach ($this->parameters as $name => $regex) {
+            /** @var Route $route */
+            foreach ($this->routes as $route) {
+                $route->where($name, $regex);
+            }
+        }
     }
 }

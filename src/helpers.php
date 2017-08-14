@@ -9,18 +9,26 @@ declare(strict_types=1);
 
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\Compiler\Visitor\Dump;
+use Illuminate\Support\Debug\Dumper;
 
 if (!function_exists('dump')) {
     /**
-     * @param TreeNode $ast
+     * @param TreeNode|mixed $value
      * @return string
      */
-    function dump(TreeNode $ast): string
+    function dump($value): string
     {
-        $result = (string)(new Dump())->visit($ast);
+        if ($value instanceof TreeNode) {
+            $result = (string)(new Dump())->visit($value);
 
-        $result = str_replace('>  ', '    ', $result);
-        $result = preg_replace('/^\s{4}/ium', '', $result);
+            $result = str_replace('>  ', '    ', $result);
+            $result = preg_replace('/^\s{4}/ium', '', $result);
+        } else {
+            ob_start();
+            (new Dumper())->dump($value);
+            $result = ob_get_contents();
+            ob_end_clean();
+        }
 
         return $result;
     }

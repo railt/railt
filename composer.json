@@ -5,6 +5,7 @@
     "license": "MIT",
     "require": {
         "php": ">=7.1",
+        "psr/log": "~1.0",
         "illuminate/support": "~5.1",
         "hoa/compiler": "~3.17"
     },
@@ -17,6 +18,7 @@
         ]
     },
     "require-dev": {
+        "monolog/monolog": "~1.9",
         "webonyx/graphql-php": "~0.9.0",
         "youshido/graphql": "~1.4",
         "symfony/http-foundation": "~2.8|3.*|4.*",

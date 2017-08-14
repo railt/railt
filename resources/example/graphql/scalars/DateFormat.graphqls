@@ -1,0 +1,17 @@
+
+enum DateFormat {
+    DATE     # Format "Y-m-d"
+    TIME     # Format "H:i:s"
+    DATETIME # Format "Y-m-d\TH:i:s"
+    ATOM     # Format "Y-m-d\TH:i:s"
+    COOKIE   # Format "l, d-M-y H:i:s T"
+    ISO8601  # Format "Y-m-d\TH:i:sO"
+    RFC822   # Format "D, d M y H:i:s O"
+    RFC850   # Format "l, d-M-y H:i:s T"
+    RFC1036  # Format "D, d M y H:i:s O"
+    RFC1123  # Format "D, d M Y H:i:s O"
+    RFC2822  # Format "D, d M Y H:i:s O"
+    RFC3339  # Format "Y-m-d\TH:i:sP"
+    RSS      # Format "D, d M Y H:i:s O"
+    W3C      # Format "Y-m-d\TH:i:sP"
+}

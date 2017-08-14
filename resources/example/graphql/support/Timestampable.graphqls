@@ -1,0 +1,7 @@
+#
+# Has created and updated timestamps
+#
+interface Timestampable {
+    createdAt(format: DateFormat = RFC3339): DateTime
+    updatedAt(format: DateFormat = RFC3339): DateTime
+}

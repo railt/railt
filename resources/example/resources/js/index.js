@@ -2,7 +2,7 @@
  * Railgun example
  */
 
-import "./layout.scss";
+import "../css/layout.scss";
 
 import graphiql from "./graphiql";
 import CodeMirror from "codemirror";

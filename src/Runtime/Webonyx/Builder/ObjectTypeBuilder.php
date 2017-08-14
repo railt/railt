@@ -25,6 +25,7 @@ class ObjectTypeBuilder extends Builder
 
     /**
      * @return ObjectType
+     * @throws \LogicException
      * @throws \Serafim\Railgun\Exceptions\RuntimeException
      */
     public function build(): ObjectType
@@ -36,7 +37,8 @@ class ObjectTypeBuilder extends Builder
                 return iterator_to_array($this->getObjectFields());
             },
             'resolveFields' => function ($value, array $args = [], $context, ResolveInfo $info) {
-                return $this->type->getName() . ' => ' . $value;
+                $this->events->dispatch(implode('/', $info->path), $info);
+                return 23;
             },
         ]);
     }

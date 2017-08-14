@@ -1,0 +1,7 @@
+
+#
+# The Person example interface
+#
+interface Person {
+    id: ID!
+}

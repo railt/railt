@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Runtime\Webonyx\Builder;
 
-use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\ResolveInfo;
+use Serafim\Railgun\Reflection\Abstraction\ScalarTypeInterface;
+use Serafim\Railgun\Runtime\Webonyx\Request;
 use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
 use Serafim\Railgun\Runtime\Webonyx\Builder\Common\HasDescription;
 use Serafim\Railgun\Runtime\Webonyx\Builder\Type\TypeBuilder;
-use Serafim\Railgun\Runtime\Webonyx\Request;
 
 /**
  * Class FieldBuilder
@@ -27,6 +28,7 @@ class FieldBuilder extends Builder
 
     /**
      * @return array
+     * @throws \Serafim\Railgun\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Exceptions\RuntimeException
      * @throws \LogicException
      */
@@ -36,9 +38,6 @@ class FieldBuilder extends Builder
             'type'        => $this->makeType(),
             'description' => $this->getDescription(),
             'args'        => iterator_to_array($this->getFieldArguments()),
-            'resolve'     => function ($value, array $args = [], $context, ResolveInfo $info) {
-                return $info->fieldName;
-            },
         ];
     }
 

@@ -9,11 +9,13 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun;
 
+use GraphQL\Type\Definition\ResolveInfo;
 use Serafim\Railgun\Routing\Router;
 use Serafim\Railgun\Runtime\Dispatcher;
 use Serafim\Railgun\Http\ResponderInterface;
 use Serafim\Railgun\Runtime\AdapterInterface;
 use Serafim\Railgun\Runtime\Error;
+use Serafim\Railgun\Runtime\Loggable;
 use Serafim\Railgun\Runtime\Webonyx\Adapter;
 use Serafim\Railgun\Compiler\Compiler;
 use Serafim\Railgun\Compiler\File;
@@ -27,6 +29,8 @@ use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
  */
 class Endpoint implements ResponderInterface
 {
+    use Loggable;
+
     /**
      * @var Compiler
      */
@@ -43,16 +47,16 @@ class Endpoint implements ResponderInterface
     private $debug = false;
 
     /**
-     * @var Dispatcher
-     */
-    private $events;
-
-    /**
      * @var array|AdapterInterface[]
      */
     private $adapters = [
         Adapter::class
     ];
+
+    /**
+     * @var Dispatcher
+     */
+    private $events;
 
     /**
      * @var Router
@@ -61,57 +65,56 @@ class Endpoint implements ResponderInterface
 
     /**
      * @param \SplFileInfo $info
-     * @param Router $router
      * @return Endpoint
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      * @throws \Serafim\Railgun\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Exceptions\NotReadableException
      */
-    public static function file(\SplFileInfo $info, Router $router): Endpoint
+    public static function file(\SplFileInfo $info): Endpoint
     {
-        return new static(File::physics($info), $router);
+        return new static(File::physics($info));
     }
 
     /**
      * @param string $pathName
-     * @param Router $router
      * @return Endpoint
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      * @throws \Serafim\Railgun\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Exceptions\NotReadableException
      */
-    public static function filePath(string $pathName, Router $router): Endpoint
+    public static function filePath(string $pathName): Endpoint
     {
-        return new static(File::path($pathName), $router);
+        return new static(File::path($pathName));
     }
 
     /**
      * @param string $sources
-     * @param Router $router
      * @return Endpoint
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      * @throws \Serafim\Railgun\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Exceptions\NotReadableException
      */
-    public static function sources(string $sources, Router $router): Endpoint
+    public static function sources(string $sources): Endpoint
     {
-        return new static(File::virual($sources), $router);
+        return new static(File::virual($sources));
     }
 
     /**
      * Endpoint constructor.
      * @param File $file
-     * @param Router $router
      * @throws \Serafim\Railgun\Exceptions\CompilerException
      * @throws \Serafim\Railgun\Exceptions\SemanticException
      */
-    public function __construct(File $file, Router $router)
+    public function __construct(File $file)
     {
         $this->file = $file;
-
         $this->compiler = new Compiler();
         $this->events = new Dispatcher();
-        $this->router = $router;
+        $this->router = new Router();
+
+        $this->events->listen('*', function($info, string $event) {
+            file_put_contents(__DIR__ . '/../some.txt', dump($info));
+        });
     }
 
     /**
@@ -154,12 +157,12 @@ class Endpoint implements ResponderInterface
     }
 
     /**
-     * @param string $path
+     * @param string|array|string[] $directories
      * @return Endpoint
      */
-    public function autoloadDirectory(string $path): Endpoint
+    public function autoloadDirectory(string ...$directories): Endpoint
     {
-        $this->compiler->getLoader()->dir($path);
+        $this->compiler->getLoader()->dir($directories);
 
         return $this;
     }
@@ -195,16 +198,10 @@ class Endpoint implements ResponderInterface
     }
 
     /**
-     * @param string|string[] $path
-     * @param \Closure $then
-     * @return Endpoint
+     * @return Router
      */
-    public function when($path, \Closure $then): Endpoint
+    public function routes(): Router
     {
-        foreach ((array)$path as $name) {
-            $this->events->listen($name, $then);
-        }
-
-        return $this;
+        return $this->router;
     }
 }

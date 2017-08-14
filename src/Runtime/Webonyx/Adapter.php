@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Runtime\Webonyx;
 
-use GraphQL\Schema;
 use GraphQL\GraphQL;
-use Serafim\Railgun\Runtime\Dispatcher;
-use Serafim\Railgun\Runtime\AdapterInterface;
+use GraphQL\Schema;
 use Serafim\Railgun\Http\RequestInterface;
-use Serafim\Railgun\Runtime\Webonyx\Builder\SchemaTypeBuilder;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Serafim\Railgun\Runtime\AdapterInterface;
+use Serafim\Railgun\Runtime\Dispatcher;
+use Serafim\Railgun\Runtime\Webonyx\Builder\SchemaTypeBuilder;
 
 /**
  * Class Adapter
@@ -34,14 +34,6 @@ class Adapter implements AdapterInterface
     private $events;
 
     /**
-     * @return bool
-     */
-    public static function isSupported(): bool
-    {
-        return class_exists(GraphQL::class);
-    }
-
-    /**
      * Webonyx constructor.
      * @param DocumentTypeInterface $document
      * @param Dispatcher $events
@@ -50,6 +42,14 @@ class Adapter implements AdapterInterface
     {
         $this->document = $document;
         $this->events = $events;
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isSupported(): bool
+    {
+        return class_exists(GraphQL::class);
     }
 
     /**
@@ -62,6 +62,17 @@ class Adapter implements AdapterInterface
         $schema = $this->buildSchema();
 
         return $this->executeSchema($request, $schema);
+    }
+
+    /**
+     * @return Schema
+     * @throws \LogicException
+     */
+    private function buildSchema(): Schema
+    {
+        $schema = $this->document->getSchema();
+
+        return Loader::new($this->document, $this->events)->make($schema, SchemaTypeBuilder::class);
     }
 
     /**
@@ -79,17 +90,5 @@ class Adapter implements AdapterInterface
             $request->getVariables(),
             $request->getOperation()
         );
-    }
-
-    /**
-     * @return Schema
-     * @throws \LogicException
-     */
-    private function buildSchema(): Schema
-    {
-        $schema = $this->document->getSchema();
-
-        return Loader::new($this->document, $this->events)
-            ->make($schema, SchemaTypeBuilder::class);
     }
 }

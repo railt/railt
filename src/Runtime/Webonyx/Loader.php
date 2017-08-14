@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Runtime\Webonyx;
 
+use Serafim\Railgun\Endpoint;
 use Serafim\Railgun\Runtime\Dispatcher;
 use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
 use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
@@ -61,8 +62,8 @@ class Loader
     private $events;
 
     /**
-     * Builder constructor.
-     * @param DocumentTypeInterface|Document $document
+     * Loader constructor.
+     * @param DocumentTypeInterface $document
      * @param Dispatcher $events
      */
     public function __construct(DocumentTypeInterface $document, Dispatcher $events)

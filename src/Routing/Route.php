@@ -194,6 +194,56 @@ class Route
      */
     public function match(string $input): bool
     {
+        $this->compileIfNotCompiled();
+
+        $input = $this->filterInput($input);
+
+        return (bool)preg_match(sprintf('/^%s$/isu', $this->pattern), $input);
+    }
+
+    /**
+     * @param string $input
+     * @return bool
+     * @throws CompilerException
+     */
+    public function startsWith(string $input): bool
+    {
+        $this->compileIfNotCompiled();
+
+        $input = $this->filterInput($input);
+
+        return (bool)preg_match(sprintf('/^%s/isu', $this->pattern), $input);
+    }
+
+    /**
+     * @param string $input
+     * @return bool
+     * @throws CompilerException
+     */
+    public function endsWith(string $input): bool
+    {
+        $this->compileIfNotCompiled();
+
+        $input = $this->filterInput($input);
+
+        return (bool)preg_match(sprintf('/%s$/isu', $this->pattern), $input);
+    }
+
+    /**
+     * @param string $input
+     * @return string
+     * @throws CompilerException
+     */
+    private function filterInput(string $input): string
+    {
+        return rtrim($input, $this->delimiter) . $this->delimiter;
+    }
+
+    /**
+     * @throws CompilerException
+     */
+    private function compileIfNotCompiled(): void
+    {
         if ($this->pattern === null) {
             try {
                 $this->pattern = $this->compile();
@@ -202,10 +252,6 @@ class Route
                 throw new CompilerException($error, 0, $e);
             }
         }
-
-        $input = rtrim($input, $this->delimiter) . $this->delimiter;
-
-        return (bool)preg_match($this->pattern, $input);
     }
 
     /**
@@ -230,9 +276,7 @@ class Route
         $route = rtrim($this->route, $this->delimiter) . $this->delimiter;
         $route = $this->quote($route);
 
-        $pattern = preg_replace_callback($regex, [$this, 'compileArgument'], $route);
-
-        return sprintf('/^%s$/isu', $pattern);
+        return preg_replace_callback($regex, [$this, 'compileArgument'], $route);
     }
 
     /**

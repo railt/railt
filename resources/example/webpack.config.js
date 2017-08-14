@@ -1,12 +1,12 @@
 const config = {
     css: [
-        `${__dirname}/src`
+        `${__dirname}/resources/css`
     ],
     entry: [
-        `${__dirname}/src/index`
+        `${__dirname}/resources/js/index`
     ],
     out: {
-        dir:  `${__dirname}/out/`,
+        dir:  `${__dirname}/public/`,
         name: 'railgun'
     }
 };

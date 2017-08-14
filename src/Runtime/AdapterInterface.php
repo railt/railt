@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Serafim\Railgun\Runtime;
 
+
 use Serafim\Railgun\Http\ResponderInterface;
 use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
 

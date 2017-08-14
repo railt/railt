@@ -1,0 +1,7 @@
+#
+# This is a Bot example type
+#
+type Bot implements Person {
+    id: ID!
+    name: String
+}
