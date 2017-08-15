@@ -7,17 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Common;
+namespace Railgun\Reflection\Common;
 
-use Serafim\Railgun\Compiler\Dictionary;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Compiler\Dictionary;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Reflection\Abstraction\DefinitionInterface;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Trait HasDefinitions
- * @package Serafim\Railgun\Reflection\Common
+ * @package Railgun\Reflection\Common
  */
 trait HasDefinitions
 {

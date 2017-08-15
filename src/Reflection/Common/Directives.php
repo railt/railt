@@ -7,17 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Common;
+namespace Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Reflection\Abstraction\CalleeDirectiveInterface;
-use Serafim\Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
-use Serafim\Railgun\Reflection\Document;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Reflection\Abstraction\CalleeDirectiveInterface;
+use Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Railgun\Reflection\Document;
 
 /**
  * Trait Directives
- * @package Serafim\Railgun\Reflection\Common
+ * @package Railgun\Reflection\Common
  * @mixin HasDirectivesInterface
  */
 trait Directives

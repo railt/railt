@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Support;
+namespace Railgun\Tests\Support;
 
 /**
  * Trait SpecSupport
- * @package Serafim\Railgun\Tests
+ * @package Railgun\Tests
  *
  * @property string $specDirectory
  */

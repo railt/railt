@@ -7,84 +7,25 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Routing;
-
-use Serafim\Railgun\Runtime\RequestInterface;
+namespace Railgun\Routing;
 
 /**
  * Class Router
- * @package Serafim\Railgun\Routing
+ * @package Railgun\Routing
  */
 class Router
 {
     /**
-     * @var array|Route[]
+     * @var \Closure
      */
-    private $routes = [];
+    private $resolver;
 
     /**
-     * @var array
+     * Router constructor.
+     * @param \Closure $resolver
      */
-    private $parameters = [];
-
-    /**
-     * @param string $pattern
-     * @return Route
-     */
-    public function when(string $pattern): Route
+    public function __construct(\Closure $resolver)
     {
-        return $this->routes[] = Route::new($pattern);
-    }
-
-    /**
-     * @param string $parameter
-     * @param string $regex
-     * @return Router
-     */
-    public function where(string $parameter, string $regex): Router
-    {
-        $this->parameters[$parameter] = $regex;
-
-        return $this;
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @throws \Serafim\Railgun\Exceptions\CompilerException
-     */
-    public function dispatch(RequestInterface $request)
-    {
-        $this->compile();
-
-        foreach ($this->groups($request) as $route) {
-            dd($route);
-        }
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return \Traversable|Route[]
-     * @throws \Serafim\Railgun\Exceptions\CompilerException
-     */
-    private function groups(RequestInterface $request): \Traversable
-    {
-        foreach ($this->routes as $route) {
-            if ($route->startsWith($request->getPath())) {
-                yield $route;
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private function compile(): void
-    {
-        foreach ($this->parameters as $name => $regex) {
-            /** @var Route $route */
-            foreach ($this->routes as $route) {
-                $route->where($name, $regex);
-            }
-        }
+        $this->resolver = $resolver;
     }
 }

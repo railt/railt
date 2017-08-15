@@ -7,24 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler;
+namespace Railgun\Compiler;
 
 use Illuminate\Support\Str;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Compiler\Autoloader\Directory;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Support\File;
 
 /**
  * Class Autoloader
- * @package Serafim\Railgun\Compiler
+ * @package Railgun\Compiler
  */
 class Autoloader
 {
-    private const EXTENSIONS = [
-        '.graphqls',
-        '.graphqle',
-        '.graphql',
-        '.gql',
-    ];
-
     /**
      * @var array|\Closure[]
      */
@@ -47,9 +42,9 @@ class Autoloader
     /**
      * @param string $type
      * @return null|NamedDefinitionInterface
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function load(string $type): ?NamedDefinitionInterface
     {
@@ -69,35 +64,19 @@ class Autoloader
     /**
      * @param string|array|string[] $directories
      * @param bool $prepend
-     * @param array $extensions
      * @return Autoloader
      */
-    public function dir($directories, bool $prepend = false, array $extensions = self::EXTENSIONS): Autoloader
+    public function dir($directories, bool $prepend = false): Autoloader
     {
-        return $this->autoload(function (string $type) use ($directories, $extensions): ?string {
-            foreach ((array)$directories as $dir) {
-                if (!Str::endsWith($dir, '/')) {
-                    $dir .= '/';
-                }
-
-                foreach ($extensions as $extension) {
-                    $path = $dir . $type . $extension;
-                    if (is_file($path) && is_readable($path)) {
-                        return $path;
-                    }
-                }
-            }
-
-            return null;
-        }, $prepend);
+        return $this->autoload(new Directory(...(array)$directories), $prepend);
     }
 
     /**
-     * @param \Closure $then
+     * @param callable $then
      * @param bool $prepend
      * @return Autoloader|$this
      */
-    public function autoload(\Closure $then, bool $prepend = false): Autoloader
+    public function autoload(callable $then, bool $prepend = false): Autoloader
     {
         if ($prepend) {
             array_unshift($this->loaders, $then);

@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Exceptions;
+namespace Railgun\Exceptions;
 
 /**
  * Class CompilerException
- * @package Serafim\Railgun\Exceptions
+ * @package Railgun\Exceptions
  */
 class CompilerException extends \TypeError
 {

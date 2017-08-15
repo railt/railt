@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Exceptions;
+namespace Railgun\Exceptions;
 
 /**
  * Interface GraphQLSchemaException
- * @package Serafim\Railgun\Exceptions
+ * @package Railgun\Exceptions
  */
 interface GraphQLSchemaException
 {

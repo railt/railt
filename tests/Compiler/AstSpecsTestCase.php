@@ -7,19 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Compiler;
+namespace Railgun\Tests\Compiler;
 
 use PHPUnit\Framework\Assert;
-use Serafim\Railgun\Compiler\Compiler;
-use Serafim\Railgun\Compiler\File;
-use Serafim\Railgun\Tests\AbstractTestCase;
-use Serafim\Railgun\Tests\Support\SpecTest;
-use Serafim\Railgun\Tests\Support\SpecSupport;
+use Railgun\Compiler\Compiler;
+use Railgun\Compiler\File;
+use Railgun\Tests\AbstractTestCase;
+use Railgun\Tests\Support\SpecTest;
+use Railgun\Tests\Support\SpecSupport;
 use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Class CompilerTestCase
- * @package Serafim\Railgun\Tests\Compiler
+ * @package Railgun\Tests\Compiler
  * @group large
  */
 class AstSpecsTestCase extends AbstractTestCase
@@ -34,8 +34,8 @@ class AstSpecsTestCase extends AbstractTestCase
     /**
      * @dataProvider specProvider
      * @param SpecTest $spec
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testLanguageAstParsing(SpecTest $spec): void
     {

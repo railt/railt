@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Common;
+namespace Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Document;
+use Railgun\Reflection\Document;
 
 /**
  * Interface HasLinkingStageInterface
- * @package Serafim\Railgun\Reflection\Common
+ * @package Railgun\Reflection\Common
  *
  * @property-read TreeNode $ast
  * @property-read Document $document

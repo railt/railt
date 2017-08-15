@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection;
+namespace Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Abstraction\DefinitionInterface;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Class Definition
- * @package Serafim\Railgun\Reflection
+ * @package Railgun\Reflection
  */
 abstract class Definition implements DefinitionInterface
 {

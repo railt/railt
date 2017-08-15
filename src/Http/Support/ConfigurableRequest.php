@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http\Support;
+namespace Railgun\Http\Support;
 
-use Serafim\Railgun\Http\RequestInterface;
+use Railgun\Http\RequestInterface;
 
 /**
  * Trait ConfigurableRequest
- * @package Serafim\Railgun\Http\Support
+ * @package Railgun\Http\Support
  */
 trait ConfigurableRequest
 {

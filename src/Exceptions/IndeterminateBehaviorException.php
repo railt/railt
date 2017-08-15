@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Exceptions;
+namespace Railgun\Exceptions;
 
 /**
  * Class IndeterminateBehaviorException
@@ -15,7 +15,7 @@ namespace Serafim\Railgun\Exceptions;
  * This exception serves to identify those parts that are
  * yet to be finalized and must never throws in future.
  *
- * @package Serafim\Railgun\Exceptions
+ * @package Railgun\Exceptions
  */
 class IndeterminateBehaviorException extends RuntimeException
 {

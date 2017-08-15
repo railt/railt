@@ -1,8 +1,0 @@
-#
-# This is an User example type
-#
-type User implements Person, Timestampable {
-    id(upper: String): ID!
-    login: String
-    friend: User
-}

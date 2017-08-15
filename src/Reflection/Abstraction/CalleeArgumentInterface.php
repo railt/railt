@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Abstraction;
+namespace Railgun\Reflection\Abstraction;
 
 /**
  * Interface CalleeArgumentInterface
- * @package Serafim\Railgun\Reflection\Abstraction
+ * @package Railgun\Reflection\Abstraction
  */
 interface CalleeArgumentInterface extends NamedDefinitionInterface
 {

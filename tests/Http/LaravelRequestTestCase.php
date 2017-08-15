@@ -7,15 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Http;
+namespace Railgun\Tests\Http;
 
-use Serafim\Railgun\Http\Request;
-use Serafim\Railgun\Http\RequestInterface;
+use Railgun\Http\Request;
+use Railgun\Http\RequestInterface;
 use Illuminate\Http\Request as LaravelNativeRequest;
 
 /**
  * Class LaravelRequestTestCase
- * @package Serafim\Railgun\Tests\Http
+ * @package Railgun\Tests\Http
  */
 class LaravelRequestTestCase extends AbstractHttpRequestTestCase
 {

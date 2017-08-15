@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Abstraction;
+namespace Railgun\Reflection\Abstraction;
 
-use Serafim\Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
+use Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Railgun\Reflection\Abstraction\Type\TypeInterface;
 
 /**
  * Interface ArgumentInterface
- * @package Serafim\Railgun\Reflection\Abstraction\Field
+ * @package Railgun\Reflection\Abstraction\Field
  */
 interface ArgumentInterface extends
     NamedDefinitionInterface,

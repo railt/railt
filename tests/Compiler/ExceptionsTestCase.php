@@ -7,23 +7,23 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler;
+namespace Railgun\Compiler;
 
-use Serafim\Railgun\Exceptions\CompilerException;
-use Serafim\Railgun\Exceptions\NotReadableException;
-use Serafim\Railgun\Tests\AbstractTestCase;
+use Railgun\Exceptions\CompilerException;
+use Railgun\Exceptions\NotReadableException;
+use Railgun\Tests\AbstractTestCase;
 
 /**
  * Class ExceptionsTestCase
- * @package Serafim\Railgun\Compiler
+ * @package Railgun\Compiler
  */
 class ExceptionsTestCase extends AbstractTestCase
 {
     /**
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
-     * @throws \Serafim\Railgun\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railgun\Exceptions\NotReadableException
      */
     public function testCompilerException(): void
     {
@@ -36,10 +36,10 @@ class ExceptionsTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Serafim\Railgun\Exceptions\CompilerException
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
      */
     public function testNotReadableException(): void
     {

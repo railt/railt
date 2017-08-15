@@ -7,18 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Type;
+namespace Railgun\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\ListTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\TypeInterface;
-use Serafim\Railgun\Reflection\Document;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\Type\ListTypeInterface;
+use Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
+use Railgun\Reflection\Abstraction\Type\TypeInterface;
+use Railgun\Reflection\Document;
 
 /**
  * Class BaseType
- * @package Serafim\Railgun\Reflection\Type
+ * @package Railgun\Reflection\Type
  */
 abstract class BaseType implements TypeInterface
 {

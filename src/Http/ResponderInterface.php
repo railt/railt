@@ -7,17 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http;
+namespace Railgun\Http;
 
 /**
  * Interface ResponderInterface
- * @package Serafim\Railgun\Http
+ * @package Railgun\Http
  */
 interface ResponderInterface
 {
     /**
      * @param RequestInterface $request
-     * @return array
+     * @return ResponseInterface
      */
-    public function request(RequestInterface $request): array;
+    public function request(RequestInterface $request): ResponseInterface;
 }

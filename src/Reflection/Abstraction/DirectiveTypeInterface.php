@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Abstraction;
+namespace Railgun\Reflection\Abstraction;
 
-use Serafim\Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
+use Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
 
 /**
  * Interface DirectiveTypeInterface
- * @package Serafim\Railgun\Reflection\Abstraction
+ * @package Railgun\Reflection\Abstraction
  */
 interface DirectiveTypeInterface extends
     NamedDefinitionInterface,

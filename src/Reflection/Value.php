@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection;
+namespace Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Illuminate\Support\Str;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
 
 /**
  * Class Value
- * @package Serafim\Railgun\Reflection
+ * @package Railgun\Reflection
  */
 final class Value
 {

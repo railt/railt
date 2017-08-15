@@ -6,12 +6,13 @@
     "require": {
         "php": ">=7.1",
         "psr/log": "~1.0",
+        "illuminate/container": "~5.1",
         "illuminate/support": "~5.1",
         "hoa/compiler": "~3.17"
     },
     "autoload": {
         "psr-4": {
-            "Serafim\\Railgun\\": "src/"
+            "Railgun\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -28,7 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Serafim\\Railgun\\Tests\\": "tests"
+            "Railgun\\Tests\\": "tests"
         }
     },
     "suggest": {

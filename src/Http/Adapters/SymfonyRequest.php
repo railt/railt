@@ -7,18 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http\Adapters;
+namespace Railgun\Http\Adapters;
 
-use Serafim\Railgun\Http\RequestInterface;
-use Serafim\Railgun\Http\Support\ConfigurableRequest;
-use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
-use Serafim\Railgun\Http\Support\InteractWithData;
-use Serafim\Railgun\Http\Support\JsonContentTypeHelper;
+use Railgun\Http\RequestInterface;
+use Railgun\Http\Support\ConfigurableRequest;
+use Railgun\Http\Support\ConfigurableRequestInterface;
+use Railgun\Http\Support\InteractWithData;
+use Railgun\Http\Support\JsonContentTypeHelper;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class SymfonyRequest
- * @package Serafim\Railgun\Http\Adapters
+ * @package Railgun\Http\Adapters
  */
 class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
 {
@@ -29,6 +29,7 @@ class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
     /**
      * SymfonyRequest constructor.
      * @param Request $request
+     * @throws \LogicException
      */
     public function __construct(Request $request)
     {
@@ -40,6 +41,7 @@ class SymfonyRequest implements RequestInterface, ConfigurableRequestInterface
     /**
      * @param Request $request
      * @return array
+     * @throws \LogicException
      */
     private function getJsonQueryAttributes(Request $request): array
     {

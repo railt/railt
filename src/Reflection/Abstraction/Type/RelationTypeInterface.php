@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Abstraction\Type;
+namespace Railgun\Reflection\Abstraction\Type;
 
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Interface RelationTypeInterface
- * @package Serafim\Railgun\Reflection\Abstraction\Type
+ * @package Railgun\Reflection\Abstraction\Type
  */
 interface RelationTypeInterface extends
     NamedDefinitionInterface,

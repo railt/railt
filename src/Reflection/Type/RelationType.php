@@ -7,18 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Type;
+namespace Railgun\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Illuminate\Support\Str;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasName;
-use Serafim\Railgun\Reflection\Document;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
+use Railgun\Reflection\Common\HasName;
+use Railgun\Reflection\Document;
 
 /**
  * Class RelationType
- * @package Serafim\Railgun\Reflection\Type
+ * @package Railgun\Reflection\Type
  */
 class RelationType extends BaseType implements RelationTypeInterface
 {
@@ -54,8 +54,8 @@ class RelationType extends BaseType implements RelationTypeInterface
 
     /**
      * @return string
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function getTypeName(): string
     {
@@ -64,8 +64,8 @@ class RelationType extends BaseType implements RelationTypeInterface
 
     /**
      * @return NamedDefinitionInterface
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function getRelationDefinition(): NamedDefinitionInterface
     {

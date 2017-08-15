@@ -1,0 +1,14 @@
+schema {
+    query: Query
+}
+
+type Query {
+    users: [User]!
+}
+
+type User {
+    id: ID!
+    login: String!
+    createdAt: String
+    updatedAt: String
+}

@@ -7,21 +7,21 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Http;
+namespace Railgun\Tests\Http;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Exception;
-use Serafim\Railgun\Http\Request;
-use Serafim\Railgun\Http\NativeRequest;
-use Serafim\Railgun\Http\SymfonyRequest;
-use Serafim\Railgun\Http\IlluminateRequest;
-use Serafim\Railgun\Tests\AbstractTestCase;
+use Railgun\Http\Request;
+use Railgun\Http\NativeRequest;
+use Railgun\Http\SymfonyRequest;
+use Railgun\Http\IlluminateRequest;
+use Railgun\Tests\AbstractTestCase;
 use Illuminate\Http\Request as LaravelNativeRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyNativeRequest;
 
 /**
  * Class RequestsFactoryTestCase
- * @package Serafim\Railgun\Tests\Http
+ * @package Railgun\Tests\Http
  */
 class RequestsFactoryTestCase extends AbstractTestCase
 {

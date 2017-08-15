@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Http;
+namespace Railgun\Tests\Http;
 
 use PHPUnit\Framework\Assert;
-use Serafim\Railgun\Http\RequestInterface;
-use Serafim\Railgun\Tests\AbstractTestCase;
-use Serafim\Railgun\Http\Support\ConfigurableRequest;
+use Railgun\Http\RequestInterface;
+use Railgun\Tests\AbstractTestCase;
+use Railgun\Http\Support\ConfigurableRequest;
 
 /**
  * Class AbstractHttpRequestTestCase
- * @package Serafim\Railgun\Tests\Http
+ * @package Railgun\Tests\Http
  */
 abstract class AbstractHttpRequestTestCase extends AbstractTestCase
 {

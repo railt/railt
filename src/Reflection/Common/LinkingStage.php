@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Common;
+namespace Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Document;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Document;
 
 /**
  * Trait LinkingStage
- * @package Serafim\Railgun\Reflection\Common
+ * @package Railgun\Reflection\Common
  */
 trait LinkingStage
 {

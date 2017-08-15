@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests;
+namespace Railgun\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Serafim\Railgun\Compiler\File;
+use Railgun\Compiler\File;
 
 /**
  * Class AbstractTestCase
- * @package Serafim\Railgun\Tests
+ * @package Railgun\Tests
  */
 abstract class AbstractTestCase extends TestCase
 {

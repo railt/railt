@@ -7,17 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http\Adapters;
+namespace Railgun\Http\Adapters;
 
 use Illuminate\Http\Request;
-use Serafim\Railgun\Http\RequestInterface;
-use Serafim\Railgun\Http\Support\ConfigurableRequest;
-use Serafim\Railgun\Http\Support\ConfigurableRequestInterface;
-use Serafim\Railgun\Http\Support\InteractWithData;
+use Railgun\Http\RequestInterface;
+use Railgun\Http\Support\ConfigurableRequest;
+use Railgun\Http\Support\ConfigurableRequestInterface;
+use Railgun\Http\Support\InteractWithData;
 
 /**
  * Class IlluminateRequest
- * @package Serafim\Railgun\Http
+ * @package Railgun\Http
  */
 class IlluminateRequest implements RequestInterface, ConfigurableRequestInterface
 {
@@ -27,6 +27,7 @@ class IlluminateRequest implements RequestInterface, ConfigurableRequestInterfac
     /**
      * IlluminateRequest constructor.
      * @param Request $request
+     * @throws \LogicException
      */
     public function __construct(Request $request)
     {

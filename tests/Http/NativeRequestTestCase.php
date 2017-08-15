@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Http;
+namespace Railgun\Tests\Http;
 
 use PHPUnit\Framework\Assert;
-use Serafim\Railgun\Http\NativeRequest;
-use Serafim\Railgun\Http\RequestInterface;
-use Serafim\Railgun\Tests\AbstractTestCase;
+use Railgun\Http\NativeRequest;
+use Railgun\Http\RequestInterface;
+use Railgun\Tests\AbstractTestCase;
 
 /**
  * Class NativeRequestTestCase
- * @package Serafim\Railgun\Tests\Http
+ * @package Railgun\Tests\Http
  */
 class NativeRequestTestCase extends AbstractHttpRequestTestCase
 {

@@ -7,19 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http;
+namespace Railgun\Http;
 
 use Illuminate\Http\Request as IlluminateHttpRequest;
-use Serafim\Railgun\Http\Adapters\IlluminateRequest;
-use Serafim\Railgun\Http\Adapters\NativeRequest;
-use Serafim\Railgun\Http\Adapters\SymfonyRequest;
+use Railgun\Http\Adapters\IlluminateRequest;
+use Railgun\Http\Adapters\NativeRequest;
+use Railgun\Http\Adapters\SymfonyRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 
 /**
  * Class Request
- * @package Serafim\Railgun\Http
+ * @package Railgun\Http
  */
-class Request
+class Request extends NativeRequest
 {
     /**
      * @var array
@@ -30,15 +30,10 @@ class Request
     ];
 
     /**
-     * @var string
-     */
-    protected static $default = NativeRequest::class;
-
-    /**
      * @param null|mixed $request
      * @return RequestInterface
      */
-    public static function create($request = null): RequestInterface
+    public static function createFrom($request = null): RequestInterface
     {
         if ($request !== null) {
             foreach (static::$adapters as $original => $adapter) {
@@ -48,7 +43,6 @@ class Request
             }
         }
 
-        return new static::$default();
+        return new static();
     }
-
 }

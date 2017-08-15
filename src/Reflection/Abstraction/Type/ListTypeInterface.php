@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Abstraction\Type;
+namespace Railgun\Reflection\Abstraction\Type;
 
 /**
  * Interface ListTypeInterface
- * @package Serafim\Railgun\Reflection\Abstraction\Type
+ * @package Railgun\Reflection\Abstraction\Type
  */
 interface ListTypeInterface extends TypeInterface
 {

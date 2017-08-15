@@ -7,23 +7,23 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection;
+namespace Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Exceptions\SemanticException;
-use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
-use Serafim\Railgun\Reflection\Common\Directives;
-use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Exceptions\SemanticException;
+use Railgun\Reflection\Abstraction\DefinitionInterface;
+use Railgun\Reflection\Abstraction\InputTypeInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Abstraction\ObjectTypeInterface;
+use Railgun\Reflection\Abstraction\SchemaTypeInterface;
+use Railgun\Reflection\Common\Directives;
+use Railgun\Reflection\Common\HasLinkingStageInterface;
+use Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class SchemaDefinition
- * @package Serafim\Railgun\Reflection
+ * @package Railgun\Reflection
  */
 class SchemaDefinition extends Definition implements
     SchemaTypeInterface,

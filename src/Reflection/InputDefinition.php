@@ -7,20 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection;
+namespace Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
-use Serafim\Railgun\Reflection\Common\Arguments;
-use Serafim\Railgun\Reflection\Common\Directives;
-use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
-use Serafim\Railgun\Reflection\Common\HasName;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Reflection\Abstraction\InputTypeInterface;
+use Railgun\Reflection\Common\Arguments;
+use Railgun\Reflection\Common\Directives;
+use Railgun\Reflection\Common\HasLinkingStageInterface;
+use Railgun\Reflection\Common\HasName;
+use Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class InputDefinition
- * @package Serafim\Railgun\Reflection
+ * @package Railgun\Reflection
  */
 class InputDefinition extends Definition implements
     InputTypeInterface,

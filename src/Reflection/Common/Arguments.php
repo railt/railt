@@ -7,18 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Common;
+namespace Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
-use Serafim\Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Argument;
+use Railgun\Reflection\Abstraction\ArgumentInterface;
+use Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Argument;
 
 /**
  * Trait HasArguments
- * @package Serafim\Railgun\Reflection\Common
+ * @package Railgun\Reflection\Common
  * @mixin HasArgumentsInterface
  */
 trait Arguments

@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Exceptions;
+namespace Railgun\Exceptions;
 
 use Hoa\Compiler\Exception\UnrecognizedToken;
-use Serafim\Railgun\Compiler\File;
+use Railgun\Support\File;
 
 /**
  * Class UnrecognizedTokenException
- * @package Serafim\Railgun\Exceptions
+ * @package Railgun\Exceptions
  */
 class UnrecognizedTokenException extends \ParseError implements GraphQLSchemaException
 {

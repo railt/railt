@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Abstraction\Common;
+namespace Railgun\Reflection\Abstraction\Common;
 
-use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
+use Railgun\Reflection\Abstraction\ArgumentInterface;
 
 /**
  * Interface HasArgumentsInterface
- * @package Serafim\Railgun\Reflection\Abstraction\Common
+ * @package Railgun\Reflection\Abstraction\Common
  */
 interface HasArgumentsInterface
 {

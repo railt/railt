@@ -7,19 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection;
+namespace Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Reflection\Abstraction\DirectiveTypeInterface;
-use Serafim\Railgun\Reflection\Common\Arguments;
-use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
-use Serafim\Railgun\Reflection\Common\HasName;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Reflection\Abstraction\DirectiveTypeInterface;
+use Railgun\Reflection\Common\Arguments;
+use Railgun\Reflection\Common\HasLinkingStageInterface;
+use Railgun\Reflection\Common\HasName;
+use Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class DirectiveDefinition
- * @package Serafim\Railgun\Reflection
+ * @package Railgun\Reflection
  */
 class DirectiveDefinition extends Definition implements
     DirectiveTypeInterface,

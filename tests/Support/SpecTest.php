@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Support;
+namespace Railgun\Tests\Support;
 
 /**
  * Class SpecTest
- * @package Serafim\Railgun\Tests\Support
+ * @package Railgun\Tests\Support
  */
 class SpecTest
 {

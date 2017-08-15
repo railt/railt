@@ -7,18 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Common;
+namespace Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
-use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Document;
-use Serafim\Railgun\Reflection\Field;
+use Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
+use Railgun\Reflection\Abstraction\FieldInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Document;
+use Railgun\Reflection\Field;
 
 /**
  * Trait Fields
- * @package Serafim\Railgun\Reflection\Common
+ * @package Railgun\Reflection\Common
  * @mixin HasFieldsInterface
  */
 trait Fields

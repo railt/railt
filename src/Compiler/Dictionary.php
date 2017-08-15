@@ -7,17 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler;
+namespace Railgun\Compiler;
 
-use Serafim\Railgun\Exceptions\SemanticException;
-use Serafim\Railgun\Exceptions\TypeNotFoundException;
-use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Exceptions\SemanticException;
+use Railgun\Exceptions\TypeNotFoundException;
+use Railgun\Reflection\Abstraction\DefinitionInterface;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Class Dictionary
- * @package Serafim\Railgun\Compiler
+ * @package Railgun\Compiler
  */
 class Dictionary implements \Countable, \IteratorAggregate
 {
@@ -54,7 +54,7 @@ class Dictionary implements \Countable, \IteratorAggregate
      * @param DefinitionInterface $definition
      * @param bool $force
      * @return Dictionary
-     * @throws \Serafim\Railgun\Exceptions\SemanticException
+     * @throws \Railgun\Exceptions\SemanticException
      */
     public function register(DefinitionInterface $definition, bool $force = false): Dictionary
     {
@@ -72,7 +72,7 @@ class Dictionary implements \Countable, \IteratorAggregate
     /**
      * @param NamedDefinitionInterface $definition
      * @param bool $force
-     * @throws \Serafim\Railgun\Exceptions\SemanticException
+     * @throws \Railgun\Exceptions\SemanticException
      */
     private function registerNamedDefinition(NamedDefinitionInterface $definition, bool $force = false): void
     {
@@ -135,9 +135,9 @@ class Dictionary implements \Countable, \IteratorAggregate
      * @param string $name
      * @return NamedDefinitionInterface
      * @throws TypeNotFoundException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function find(string $name): NamedDefinitionInterface
     {
@@ -152,9 +152,9 @@ class Dictionary implements \Countable, \IteratorAggregate
      * @param string $name
      * @return NamedDefinitionInterface
      * @throws TypeNotFoundException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function load(string $name): NamedDefinitionInterface
     {
@@ -168,7 +168,7 @@ class Dictionary implements \Countable, \IteratorAggregate
     /**
      * @param string $name
      * @return NamedDefinitionInterface
-     * @throws \Serafim\Railgun\Exceptions\TypeNotFoundException
+     * @throws \Railgun\Exceptions\TypeNotFoundException
      */
     public function get(string $name): NamedDefinitionInterface
     {

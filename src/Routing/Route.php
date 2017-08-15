@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Routing;
+namespace Railgun\Routing;
 
-use Serafim\Railgun\Exceptions\CompilerException;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Exceptions\CompilerException;
+use Railgun\Exceptions\IndeterminateBehaviorException;
 
 /**
  * Class Route
- * @package Serafim\Railgun\Routing
+ * @package Railgun\Routing
  */
 class Route
 {

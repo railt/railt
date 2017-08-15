@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Exceptions;
+namespace Railgun\Exceptions;
 
 /**
  * Class NotReadableException
- * @package Serafim\Railgun\Exceptions
+ * @package Railgun\Exceptions
  */
 class NotReadableException extends RuntimeException
 {

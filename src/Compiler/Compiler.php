@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Compiler;
+namespace Railgun\Compiler;
 
 use Hoa\Compiler\Exception;
 use Hoa\Compiler\Exception\UnexpectedToken;
@@ -16,15 +16,16 @@ use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\File\Read;
-use Serafim\Railgun\Exceptions\CompilerException;
-use Serafim\Railgun\Exceptions\UnexpectedTokenException;
-use Serafim\Railgun\Exceptions\UnrecognizedTokenException;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Document;
+use Railgun\Exceptions\CompilerException;
+use Railgun\Exceptions\UnexpectedTokenException;
+use Railgun\Exceptions\UnrecognizedTokenException;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Document;
+use Railgun\Support\File;
 
 /**
  * Class Compiler
- * @package Serafim\Railgun\Compiler
+ * @package Railgun\Compiler
  */
 class Compiler
 {
@@ -52,7 +53,7 @@ class Compiler
      * Compiler constructor.
      * @param string|null $grammar
      * @throws CompilerException
-     * @throws \Serafim\Railgun\Exceptions\SemanticException
+     * @throws \Railgun\Exceptions\SemanticException
      */
     public function __construct(string $grammar = null)
     {
@@ -61,7 +62,7 @@ class Compiler
         $this->loader     = new Autoloader($this);
         $this->dictionary = new Dictionary($this->loader);
 
-        new GraphQLStandard($this->dictionary);
+        new Stdlib($this->dictionary);
     }
 
     /**

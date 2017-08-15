@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Common;
+namespace Railgun\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
 
 /**
  * Trait UniqueId
- * @package Serafim\Railgun\Reflection\Common
+ * @package Railgun\Reflection\Common
  */
 trait UniqueId
 {

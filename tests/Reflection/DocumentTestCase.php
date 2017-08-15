@@ -7,22 +7,22 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Reflection;
+namespace Railgun\Tests\Reflection;
 
-use Serafim\Railgun\Compiler\Compiler;
-use Serafim\Railgun\Exceptions\NotReadableException;
-use Serafim\Railgun\Exceptions\SemanticException;
-use Serafim\Railgun\Exceptions\TypeNotFoundException;
-use Serafim\Railgun\Exceptions\UnexpectedTokenException;
-use Serafim\Railgun\Exceptions\UnrecognizedTokenException;
-use Serafim\Railgun\Reflection\Abstraction\DefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Tests\AbstractTestCase;
+use Railgun\Compiler\Compiler;
+use Railgun\Exceptions\NotReadableException;
+use Railgun\Exceptions\SemanticException;
+use Railgun\Exceptions\TypeNotFoundException;
+use Railgun\Exceptions\UnexpectedTokenException;
+use Railgun\Exceptions\UnrecognizedTokenException;
+use Railgun\Reflection\Abstraction\DefinitionInterface;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Tests\AbstractTestCase;
 
 /**
  * Class CompilerTestCase
- * @package Serafim\Railgun\Tests\Reflection
+ * @package Railgun\Tests\Reflection
  */
 class DocumentTestCase extends AbstractTestCase
 {
@@ -55,8 +55,8 @@ class DocumentTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testTypeAutoloading(): void
     {
@@ -100,8 +100,8 @@ class DocumentTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFileWithoutSchema(): void
     {
@@ -112,8 +112,8 @@ class DocumentTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Serafim\Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testDictionary(): void
     {

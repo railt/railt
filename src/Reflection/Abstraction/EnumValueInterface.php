@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection\Abstraction;
+namespace Railgun\Reflection\Abstraction;
 
-use Serafim\Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Railgun\Reflection\Abstraction\Common\HasDirectivesInterface;
 
 /**
  * Interface EnumValueInterface
- * @package Serafim\Railgun\Reflection\Abstraction
+ * @package Railgun\Reflection\Abstraction
  */
 interface EnumValueInterface extends
     NamedDefinitionInterface,

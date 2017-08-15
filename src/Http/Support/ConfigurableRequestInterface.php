@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Http\Support;
+namespace Railgun\Http\Support;
 
 /**
  * Interface ConfigurableRequestInterface
- * @package Serafim\Railgun\Http\Support
+ * @package Railgun\Http\Support
  */
 interface ConfigurableRequestInterface
 {

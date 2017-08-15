@@ -7,25 +7,25 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Tests\Reflection;
+namespace Railgun\Tests\Reflection;
 
-use Serafim\Railgun\Compiler\Compiler;
-use Serafim\Railgun\Exceptions\UnexpectedTokenException;
-use Serafim\Railgun\Reflection\Abstraction\ArgumentInterface;
-use Serafim\Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\FieldInterface;
-use Serafim\Railgun\Reflection\Abstraction\InputTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\InterfaceTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\ObjectTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\UnionTypeInterface;
-use Serafim\Railgun\Reflection\Document;
-use Serafim\Railgun\Tests\AbstractTestCase;
+use Railgun\Compiler\Compiler;
+use Railgun\Exceptions\UnexpectedTokenException;
+use Railgun\Reflection\Abstraction\ArgumentInterface;
+use Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\FieldInterface;
+use Railgun\Reflection\Abstraction\InputTypeInterface;
+use Railgun\Reflection\Abstraction\InterfaceTypeInterface;
+use Railgun\Reflection\Abstraction\ObjectTypeInterface;
+use Railgun\Reflection\Abstraction\SchemaTypeInterface;
+use Railgun\Reflection\Abstraction\UnionTypeInterface;
+use Railgun\Reflection\Document;
+use Railgun\Tests\AbstractTestCase;
 
 /**
  * Class ReflectionTestCase
- * @package Serafim\Railgun\Tests\Reflection
+ * @package Railgun\Tests\Reflection
  */
 class ReflectionTestCase extends AbstractTestCase
 {
@@ -37,8 +37,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\Exception
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testDocument(): void
     {
@@ -66,8 +66,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testSchema(): void
     {
@@ -83,8 +83,8 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testQuery(): void
     {
@@ -99,8 +99,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFields(): void
     {
@@ -122,8 +122,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldUsers(): void
     {
@@ -140,8 +140,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNullableUsers(): void
     {
@@ -158,8 +158,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNonNullsUsers(): void
     {
@@ -176,8 +176,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNonNullUsers(): void
     {
@@ -194,8 +194,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldUser(): void
     {
@@ -212,8 +212,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testFieldNonNullUser(): void
     {
@@ -231,8 +231,8 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testUnionType(): void
     {
@@ -259,8 +259,8 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testUserObject(): void
     {
@@ -375,8 +375,8 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function testBotObject(): void
     {
@@ -462,8 +462,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|ObjectTypeInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getBotObject(): ?ObjectTypeInterface
     {
@@ -558,8 +558,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|InterfaceTypeInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getPersonInterface(): ?InterfaceTypeInterface
     {
@@ -569,8 +569,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|ObjectTypeInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getUserObject(): ?ObjectTypeInterface
     {
@@ -580,8 +580,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|UnionTypeInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getPersonUnion(): ?UnionTypeInterface
     {
@@ -592,8 +592,8 @@ class ReflectionTestCase extends AbstractTestCase
      * @param string $name
      * @return null|FieldInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getField(string $name): ?FieldInterface
     {
@@ -603,8 +603,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|HasFieldsInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getQuery(): ?HasFieldsInterface
     {
@@ -614,8 +614,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return null|SchemaTypeInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getSchema(): ?SchemaTypeInterface
     {
@@ -625,8 +625,8 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @return DocumentTypeInterface
      * @throws UnexpectedTokenException
-     * @throws \Serafim\Railgun\Exceptions\NotReadableException
-     * @throws \Serafim\Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     private function getDocument(): DocumentTypeInterface
     {

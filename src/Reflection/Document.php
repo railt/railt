@@ -7,21 +7,21 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection;
+namespace Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Compiler\Dictionary;
-use Serafim\Railgun\Exceptions\IndeterminateBehaviorException;
-use Serafim\Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\SchemaTypeInterface;
-use Serafim\Railgun\Reflection\Common\HasDefinitions;
-use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
-use Serafim\Railgun\Reflection\Common\UniqueId;
+use Railgun\Compiler\Dictionary;
+use Railgun\Exceptions\IndeterminateBehaviorException;
+use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Abstraction\SchemaTypeInterface;
+use Railgun\Reflection\Common\HasDefinitions;
+use Railgun\Reflection\Common\HasLinkingStageInterface;
+use Railgun\Reflection\Common\UniqueId;
 
 /**
  * Class Document
- * @package Serafim\Railgun\Reflection
+ * @package Railgun\Reflection
  */
 class Document extends Definition implements DocumentTypeInterface
 {

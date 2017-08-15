@@ -7,19 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Serafim\Railgun\Reflection;
+namespace Railgun\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Serafim\Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Serafim\Railgun\Reflection\Abstraction\UnionTypeInterface;
-use Serafim\Railgun\Reflection\Common\Directives;
-use Serafim\Railgun\Reflection\Common\HasLinkingStageInterface;
-use Serafim\Railgun\Reflection\Common\HasName;
-use Serafim\Railgun\Reflection\Common\LinkingStage;
+use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railgun\Reflection\Abstraction\UnionTypeInterface;
+use Railgun\Reflection\Common\Directives;
+use Railgun\Reflection\Common\HasLinkingStageInterface;
+use Railgun\Reflection\Common\HasName;
+use Railgun\Reflection\Common\LinkingStage;
 
 /**
  * Class UnionDefinition
- * @package Serafim\Railgun\Reflection
+ * @package Railgun\Reflection
  */
 class UnionDefinition extends Definition implements
     UnionTypeInterface,
