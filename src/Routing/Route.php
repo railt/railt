@@ -39,14 +39,19 @@ class Route
     private const REGEX_DELIMITER = '/';
 
     /**
+     * @var int
+     */
+    private static $lastId = 0;
+
+    /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $delimiter;
-
-    /**
-     * @var array
-     */
-    private $parameterGroup;
 
     /**
      * @var string
@@ -64,50 +69,36 @@ class Route
     private $pattern;
 
     /**
-     * Route constructor.
-     * @param string $route
-     * @param Route|null $parent
+     * @var Route
      */
-    public function __construct(string $route, ?Route $parent = null)
-    {
-        $this->route = $route;
+    private $parent;
 
-        $this
-            ->configureParameters(self::PARAMETER_OPEN, self::PARAMETER_CLOSE)
-            ->dividedBy(self::DEFAULT_DELIMITER);
+    /**
+     * Route constructor.
+     * @param null|string $route
+     * @param null|Route $parent
+     */
+    public function __construct(?string $route = null, ?Route $parent = null)
+    {
+        $this->id = self::$lastId++;
+
+        $this->dividedBy(self::DEFAULT_DELIMITER);
+
+        if ($route !== null) {
+            $this->when($route);
+        }
 
         if ($parent !== null) {
-            $this->parameters = $parent->parameters;
-            $this->setPath(array_merge($parent->getPath(), $this->getPath()));
+            $this->into($parent);
         }
     }
 
     /**
-     * @param array $parts
-     * @return Route
+     * @return bool
      */
-    private function setPath(array $parts): Route
+    public function isCompleted(): bool
     {
-        $this->route = implode($this->delimiter, array_filter($parts, 'trim'));
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    private function getPath(): array
-    {
-        return array_filter(explode($this->delimiter, $this->route), 'trim');
-    }
-
-    /**
-     * @param string $route
-     * @return Route
-     */
-    public static function new(string $route): Route
-    {
-        return new static($route);
+        return $this->route !== null;
     }
 
     /**
@@ -131,34 +122,35 @@ class Route
     }
 
     /**
-     * @param string $open
-     * @param string $close
+     * @param string $route
      * @return Route
      */
-    public function configureParameters(string $open, string $close): Route
+    public function when(string $route): Route
     {
         $this->reset();
-
-        $this->parameterGroup = [
-            $open,
-            $close,
-        ];
+        $this->route = trim($route, $this->delimiter);
 
         return $this;
     }
 
     /**
-     * @param string $char
-     * @param int $repeats
-     * @return string
+     * @param Route $route
+     * @return Route
      */
-    private function quote(string $char, int $repeats = 1): string
+    public function into(Route $route): Route
     {
-        for ($i = 0; $i < $repeats; ++$i) {
-            $char = preg_quote($char, self::REGEX_DELIMITER);
-        }
+        $this->reset();
+        $this->parent = $route;
 
-        return $char;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**
@@ -190,6 +182,7 @@ class Route
     /**
      * @param string $input
      * @return bool
+     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
      * @throws CompilerException
      */
     public function match(string $input): bool
@@ -202,45 +195,8 @@ class Route
     }
 
     /**
-     * @param string $input
-     * @return bool
      * @throws CompilerException
-     */
-    public function startsWith(string $input): bool
-    {
-        $this->compileIfNotCompiled();
-
-        $input = $this->filterInput($input);
-
-        return (bool)preg_match(sprintf('/^%s/isu', $this->pattern), $input);
-    }
-
-    /**
-     * @param string $input
-     * @return bool
-     * @throws CompilerException
-     */
-    public function endsWith(string $input): bool
-    {
-        $this->compileIfNotCompiled();
-
-        $input = $this->filterInput($input);
-
-        return (bool)preg_match(sprintf('/%s$/isu', $this->pattern), $input);
-    }
-
-    /**
-     * @param string $input
-     * @return string
-     * @throws CompilerException
-     */
-    private function filterInput(string $input): string
-    {
-        return rtrim($input, $this->delimiter) . $this->delimiter;
-    }
-
-    /**
-     * @throws CompilerException
+     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
      */
     private function compileIfNotCompiled(): void
     {
@@ -260,23 +216,121 @@ class Route
      */
     private function compile(): string
     {
-        if (in_array($this->delimiter, $this->parameterGroup, true)) {
+        if (in_array($this->delimiter, [self::PARAMETER_OPEN, self::PARAMETER_CLOSE], true)) {
             throw IndeterminateBehaviorException::new(
                 'The path separator "%s" conflicts with the definition of the parameter "%s...%s"',
                 $this->delimiter,
-                ...$this->parameterGroup
+                self::PARAMETER_OPEN,
+                self::PARAMETER_CLOSE
             );
         }
 
         $regex = sprintf('/%s(.*?)%s/isu',
-            $this->quote($this->parameterGroup[0], 2),
-            $this->quote($this->parameterGroup[1], 2)
+            $this->quote(self::PARAMETER_OPEN, 2),
+            $this->quote(self::PARAMETER_CLOSE, 2)
         );
 
-        $route = rtrim($this->route, $this->delimiter) . $this->delimiter;
-        $route = $this->quote($route);
+        $route = $this->quote($this->getRoute() . $this->delimiter);
 
         return preg_replace_callback($regex, [$this, 'compileArgument'], $route);
+    }
+
+    /**
+     * @param string $char
+     * @param int $repeats
+     * @return string
+     */
+    private function quote(string $char, int $repeats = 1): string
+    {
+        for ($i = 0; $i < $repeats; ++$i) {
+            $char = preg_quote($char, self::REGEX_DELIMITER);
+        }
+
+        return $char;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRoute(): string
+    {
+        if ($this->parent !== null) {
+            $parts = array_merge($this->parent->getPath(), $this->getPath());
+
+            return implode($this->delimiter, $parts);
+        }
+
+        return (string)$this->route;
+    }
+
+    /**
+     * @return array
+     */
+    private function getPath(): array
+    {
+        return array_filter(explode($this->delimiter, $this->route), 'trim');
+    }
+
+    /**
+     * @param string $input
+     * @return string
+     * @throws CompilerException
+     */
+    private function filterInput(string $input): string
+    {
+        return rtrim($input, $this->delimiter) . $this->delimiter;
+    }
+
+    /**
+     * @param string $input
+     * @return bool
+     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     * @throws CompilerException
+     */
+    public function startsWith(string $input): bool
+    {
+        $this->compileIfNotCompiled();
+
+        $input = $this->filterInput($input);
+
+        return (bool)preg_match(sprintf('/^%s/isu', $this->pattern), $input);
+    }
+
+    /**
+     * @param string $input
+     * @return bool
+     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     * @throws CompilerException
+     */
+    public function endsWith(string $input): bool
+    {
+        $this->compileIfNotCompiled();
+
+        $input = $this->filterInput($input);
+
+        return (bool)preg_match(sprintf('/%s$/isu', $this->pattern), $input);
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'route'      => $this->getRoute(),
+            'parameters' => $this->parameters,
+        ];
+    }
+
+    /**
+     * @param array $parts
+     * @return Route
+     */
+    private function setPath(array $parts): Route
+    {
+        $this->route = implode($this->delimiter, array_filter($parts, 'trim'));
+
+        return $this;
     }
 
     /**
@@ -288,8 +342,8 @@ class Route
         [$group, $argument] = $args;
 
         $regex = $this->parameters[$argument] ?? (
-            '[^' . $this->quote($this->delimiter) . '].*?'
-        );
+                '[^' . $this->quote($this->delimiter) . '].*?'
+            );
 
         return sprintf('(?P<%s>%s)', $this->quote($argument), $regex);
     }

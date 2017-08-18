@@ -1,12 +1,11 @@
 {
     "name": "serafim/railgun",
     "type": "library",
-    "description": "Fast GraphQL API implementation",
+    "description": "GraphQL IDL server implementation",
     "license": "MIT",
     "require": {
         "php": ">=7.1",
         "psr/log": "~1.0",
-        "illuminate/container": "~5.1",
         "illuminate/support": "~5.1",
         "hoa/compiler": "~3.17"
     },

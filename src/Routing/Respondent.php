@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railgun\Routing;
 
-use Railgun\Http\RequestInterface;
+use Illuminate\Support\Str;
 
 /**
  * Class Respondent
@@ -24,13 +24,31 @@ class Respondent
 
     /**
      * @param string $definition
-     * @return static|Respondent
+     * @return Respondent
+     * @throws \InvalidArgumentException
      */
     public static function fromStringDefinition(string $definition): Respondent
     {
-        return new static(function (Schema $schema, RequestInterface $request) {
-            return 23;
-        });
+        switch (true) {
+            case Str::contains($definition, '@'):
+                $delimiter = '@'; break;
+            case Str::contains($definition, '::'):
+                $delimiter = '::'; break;
+            case Str::contains($definition, '#'):
+                $delimiter = '#'; break;
+            default:
+                $message = 'Unresolvable delimiter at "%s" string';
+                throw new \InvalidArgumentException(sprintf($message, $definition));
+        }
+
+        $parts = explode($delimiter, $definition);
+
+        if (count($parts) !== 2) {
+            $message = 'Invalid callback type "%s"';
+            throw new \InvalidArgumentException(sprintf($message, $definition));
+        }
+
+        return static::fromCallable([new $parts[0], $parts[1]]);
     }
 
     /**
@@ -54,13 +72,15 @@ class Respondent
     public static function new($relation): Respondent
     {
         switch (true) {
-            case is_string($relation):
-                return static::fromStringDefinition($relation);
+            case $relation instanceof static:
+                return $relation;
             case is_callable($relation):
                 return static::fromCallable($relation);
+            case is_string($relation):
+                return static::fromStringDefinition($relation);
         }
 
-        throw new \InvalidArgumentException('Invalid respondend argument definition');
+        throw new \InvalidArgumentException('Invalid respondent argument definition');
     }
 
     /**
@@ -73,12 +93,20 @@ class Respondent
     }
 
     /**
-     * @param Schema $schema
-     * @param RequestInterface $request
-     * @return mixed
+     * @return array
      */
-    public function __invoke(Schema $schema, RequestInterface $request)
+    public function __debugInfo(): array
     {
-        return ($this->invocation)($schema, $request);
+        return [
+            'action' => $this->invocation
+        ];
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function toClosure(): \Closure
+    {
+        return $this->invocation;
     }
 }

@@ -33,3 +33,50 @@ if (!function_exists('dump')) {
         return $result;
     }
 }
+
+if (!function_exists('to_array')) {
+    /**
+     * @param iterable $items
+     * @return array
+     */
+    function to_array(iterable $items): array
+    {
+        return $items instanceof \Traversable ? iterator_to_array($items) : $items;
+    }
+}
+
+if (!function_exists('filter')) {
+    /**
+     * @param iterable $items
+     * @param callable $filter
+     * @return Traversable
+     */
+    function filter(iterable $items, callable $filter): \Traversable
+    {
+        foreach ($items as $key => $value) {
+            if (call_user_func($filter, $value, $key)) {
+                yield $key => $value;
+            }
+        }
+    }
+}
+
+if (!function_exists('map')) {
+    /**
+     * @param iterable $items
+     * @param callable $filter
+     * @return Traversable
+     */
+    function map(iterable $items, callable $filter): \Traversable
+    {
+        foreach ($items as $key => $value) {
+            $result = call_user_func($filter, $value, $key);
+
+            if ($result instanceof \Traversable) {
+                yield from $result;
+            } elseif ($result) {
+                yield $result;
+            }
+        }
+    }
+}
