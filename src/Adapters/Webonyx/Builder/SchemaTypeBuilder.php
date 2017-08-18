@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx\Builder;
+namespace Railgun\Adapters\Webonyx\Builder;
 
 use GraphQL\Schema;
 use Railgun\Reflection\Abstraction\SchemaTypeInterface;
 
 /**
  * Class SchemaTypeBuilder
- * @package Railgun\Webonyx\Builder
+ * @package Railgun\Adapters\Webonyx\Builder
  * @property-read SchemaTypeInterface $type
  */
 class SchemaTypeBuilder extends Builder

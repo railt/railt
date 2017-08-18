@@ -44,10 +44,19 @@ class Response implements ResponseInterface
      * @param array $data
      * @param array|\Throwable[] $errors
      */
-    public function __construct(array $data, array $errors = [])
+    public function __construct(array $data = [], array $errors = [])
     {
         $this->data   = $data;
         $this->errors = $errors;
+    }
+
+    /**
+     * @param \Throwable[] ...$errors
+     * @return Response|static
+     */
+    public static function error(\Throwable ...$errors): Response
+    {
+        return new static([], $errors);
     }
 
     /**
@@ -121,7 +130,9 @@ class Response implements ResponseInterface
     public function getErrors(): iterable
     {
         foreach ($this->errors as $error) {
-            yield ErrorFormatter::render($error, $this->debug);
+            yield $error instanceof \Throwable
+                ? ErrorFormatter::render($error, $this->debug)
+                : $error;
         }
     }
 

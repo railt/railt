@@ -7,10 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx;
+namespace Railgun\Adapters\Webonyx;
 
-use Railgun\Endpoint;
-use Railgun\Adapters\Dispatcher;
+use Railgun\Adapters\Webonyx\Builder\ArgumentBuilder;
+use Railgun\Adapters\Webonyx\Builder\FieldBuilder;
+use Railgun\Adapters\Webonyx\Builder\ObjectTypeBuilder;
+use Railgun\Adapters\Webonyx\Builder\ScalarTypeBuilder;
+use Railgun\Adapters\Webonyx\Builder\Type\TypeBuilder;
 use Railgun\Reflection\Abstraction\ArgumentInterface;
 use Railgun\Reflection\Abstraction\DefinitionInterface;
 use Railgun\Reflection\Abstraction\DocumentTypeInterface;
@@ -20,15 +23,12 @@ use Railgun\Reflection\Abstraction\ObjectTypeInterface;
 use Railgun\Reflection\Abstraction\ScalarTypeInterface;
 use Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Railgun\Reflection\Document;
-use Railgun\Webonyx\Builder\ArgumentBuilder;
-use Railgun\Webonyx\Builder\FieldBuilder;
-use Railgun\Webonyx\Builder\ObjectTypeBuilder;
-use Railgun\Webonyx\Builder\ScalarTypeBuilder;
-use Railgun\Webonyx\Builder\Type\TypeBuilder;
+use Railgun\Routing\Router;
+use Railgun\Support\Dispatcher;
 
 /**
  * Class BuilderResolver
- * @package Railgun\Webonyx
+ * @package Railgun\Adapters\Webonyx
  */
 class Loader
 {
@@ -62,24 +62,21 @@ class Loader
     private $events;
 
     /**
+     * @var Router
+     */
+    private $router;
+
+    /**
      * Loader constructor.
      * @param DocumentTypeInterface $document
      * @param Dispatcher $events
+     * @param Router $router
      */
-    public function __construct(DocumentTypeInterface $document, Dispatcher $events)
+    public function __construct(DocumentTypeInterface $document, Dispatcher $events, Router $router)
     {
         $this->document = $document;
         $this->events = $events;
-    }
-
-    /**
-     * @param DocumentTypeInterface $document
-     * @param Dispatcher $events
-     * @return Loader
-     */
-    public static function new(DocumentTypeInterface $document, Dispatcher $events): Loader
-    {
-        return new static($document, $events);
+        $this->router = $router;
     }
 
     /**
@@ -141,7 +138,7 @@ class Loader
     public function make($definition, string $class)
     {
         /** @var BuilderInterface $instance */
-        $instance = new $class($this->events, $this, $definition);
+        $instance = new $class($this->events, $this->router, $this, $definition);
 
         return $instance->build();
     }

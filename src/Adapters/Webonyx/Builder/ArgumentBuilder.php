@@ -7,15 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx\Builder;
+namespace Railgun\Adapters\Webonyx\Builder;
 
 use Railgun\Reflection\Abstraction\ArgumentInterface;
-use Railgun\Webonyx\Builder\Common\HasDescription;
-use Railgun\Webonyx\Builder\Type\TypeBuilder;
+use Railgun\Adapters\Webonyx\Builder\Common\HasDescription;
+use Railgun\Adapters\Webonyx\Builder\Type\TypeBuilder;
 
 /**
  * Class ArgumentBuilder
- * @package Railgun\Webonyx\Builder
+ * @package Railgun\Adapters\Webonyx\Builder
  * @property-read ArgumentInterface $type
  */
 class ArgumentBuilder extends Builder

@@ -93,6 +93,7 @@ class Respondent
     }
 
     /**
+     * @internal
      * @return array
      */
     public function __debugInfo(): array
@@ -108,5 +109,24 @@ class Respondent
     public function toClosure(): \Closure
     {
         return $this->invocation;
+    }
+
+    /**
+     * @param array ...$args
+     * @return mixed
+     */
+    public function invoke(...$args)
+    {
+        return ($this->invocation)(...$args);
+    }
+
+    /**
+     * @internal
+     * @param array ...$args
+     * @return mixed
+     */
+    public function __invoke(...$args)
+    {
+        return $this->invoke(...$args);
     }
 }

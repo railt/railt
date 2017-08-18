@@ -11,6 +11,7 @@ namespace Railgun\Adapters;
 
 use Railgun\Http\ResponderInterface;
 use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railgun\Routing\Router;
 use Railgun\Support\Dispatcher;
 
 /**
@@ -28,6 +29,7 @@ interface AdapterInterface extends ResponderInterface
      * AdapterInterface constructor.
      * @param DocumentTypeInterface $document
      * @param Dispatcher $events
+     * @param Router $router
      */
-    public function __construct(DocumentTypeInterface $document, Dispatcher $events);
+    public function __construct(DocumentTypeInterface $document, Dispatcher $events, Router $router);
 }

@@ -7,17 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx\Builder;
+namespace Railgun\Adapters\Webonyx\Builder;
 
-use Railgun\Adapters\Dispatcher;
-use Railgun\Webonyx\Loader;
-use Railgun\Webonyx\BuilderInterface;
+use Railgun\Routing\Router;
+use Railgun\Support\Dispatcher;
+use Railgun\Adapters\Webonyx\Loader;
+use Railgun\Adapters\Webonyx\BuilderInterface;
 use Railgun\Reflection\Abstraction\Type\TypeInterface;
 use Railgun\Reflection\Abstraction\DefinitionInterface;
 
 /**
  * Class Builder
- * @package Railgun\Webonyx
+ * @package Railgun\Adapters\Webonyx
  */
 abstract class Builder implements BuilderInterface
 {
@@ -37,16 +38,23 @@ abstract class Builder implements BuilderInterface
     protected $events;
 
     /**
+     * @var Router
+     */
+    protected $router;
+
+    /**
      * Builder constructor.
      * @param Dispatcher $events
+     * @param Router $router
      * @param Loader $loader
      * @param DefinitionInterface|TypeInterface $target
      */
-    public function __construct(Dispatcher $events, Loader $loader, $target)
+    public function __construct(Dispatcher $events, Router $router, Loader $loader, $target)
     {
         $this->type = $target;
         $this->loader = $loader;
         $this->events = $events;
+        $this->router = $router;
     }
 
     /**

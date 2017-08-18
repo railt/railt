@@ -51,7 +51,7 @@ class Router implements \IteratorAggregate
             $router = tap(new Router(), $body);
 
             /**
-             * @var Router $route
+             * @var Route $route
              */
             foreach ($router as $route => $then) {
                 $this->add($route->into($parent), $then);
@@ -74,7 +74,7 @@ class Router implements \IteratorAggregate
      * @return Route
      * @throws \InvalidArgumentException
      */
-    public function add($route, $then): Route
+    public function when($route, $then): Route
     {
         return tap($this->makeRoute($route), function (Route $route) use ($then) {
             $this->routes[$route] = Respondent::new($then);

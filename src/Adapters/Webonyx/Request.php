@@ -7,17 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx;
+namespace Railgun\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Railgun\Adapters\RequestInterface;
 use Railgun\Exceptions\RuntimeException;
 use Railgun\Reflection\Abstraction\ArgumentInterface;
 use Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
+use Railgun\Routing\Route;
+use Railgun\Routing\Router;
 
 /**
  * Class Request
- * @package Railgun\Webonyx
+ * @package Railgun\Adapters\Webonyx
  */
 class Request implements RequestInterface
 {
@@ -51,8 +53,8 @@ class Request implements RequestInterface
 
             if (
                 !array_key_exists($name, $input) && // Empty argument
-                !$default->hasDefaultValue() && // And has no default value
-                $default->getType()->nonNull() // And required
+                !$default->hasDefaultValue() &&     // And has no default value
+                $default->getType()->nonNull()      // And required
             ) {
                 $message = 'Argument %s required for field %s';
                 throw RuntimeException::new($message, $name, $default->getParent()->getName());
@@ -121,6 +123,14 @@ class Request implements RequestInterface
         //}
     }
 
+    /**
+     * @return string
+     */
+    public function getFieldName(): string
+    {
+        return $this->info->fieldName;
+    }
+
     public function hasRelation(string $name): bool
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
@@ -132,7 +142,7 @@ class Request implements RequestInterface
     public function getPath(): string
     {
         if ($this->path === null) {
-            $this->path = implode('.', $this->info->path);
+            $this->path = implode(Route::DEFAULT_DELIMITER, $this->info->path);
         }
 
         return $this->path;

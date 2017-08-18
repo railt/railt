@@ -15,12 +15,12 @@ namespace Railgun\Support;
  */
 class HashMap implements \IteratorAggregate, \ArrayAccess
 {
-    private const PREFIX_NUMBER = 's:';
-    private const PREFIX_BOOL = 'b:';
-    private const PREFIX_STRING = 'b:';
-    private const PREFIX_RESOURCE = 'b:';
-    private const PREFIX_ARRAY = 'a:';
-    private const PREFIX_OBJECT = 'o:';
+    private const PREFIX_NUMBER     = 'n:';
+    private const PREFIX_BOOL       = 'b:';
+    private const PREFIX_STRING     = 's:';
+    private const PREFIX_RESOURCE   = 'r:';
+    private const PREFIX_ARRAY      = 'a:';
+    private const PREFIX_OBJECT     = 'o:';
 
     /**
      * @var array

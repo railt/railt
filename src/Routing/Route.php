@@ -21,7 +21,7 @@ class Route
     /**
      * Default route delimiter
      */
-    private const DEFAULT_DELIMITER = '/';
+    public const DEFAULT_DELIMITER = '.';
 
     /**
      * Default parameter group opening
@@ -89,16 +89,8 @@ class Route
         }
 
         if ($parent !== null) {
-            $this->into($parent);
+            $this->inside($parent);
         }
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCompleted(): bool
-    {
-        return $this->route !== null;
     }
 
     /**
@@ -134,10 +126,18 @@ class Route
     }
 
     /**
+     * @return bool
+     */
+    public function isCompleted(): bool
+    {
+        return $this->route !== null;
+    }
+
+    /**
      * @param Route $route
      * @return Route
      */
-    public function into(Route $route): Route
+    public function inside(Route $route): Route
     {
         $this->reset();
         $this->parent = $route;
@@ -202,6 +202,9 @@ class Route
     {
         if ($this->pattern === null) {
             try {
+                if ($this->parent !== null) {
+                    $this->parameters = array_merge($this->parent->parameters, $this->parameters);
+                }
                 $this->pattern = $this->compile();
             } catch (\Throwable $e) {
                 $error = 'Can not compile the Route: ' . $e->getMessage();
@@ -264,6 +267,18 @@ class Route
     }
 
     /**
+     * @return string
+     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     * @throws CompilerException
+     */
+    public function getPattern(): string
+    {
+        $this->compileIfNotCompiled();
+
+        return $this->pattern;
+    }
+
+    /**
      * @return array
      */
     private function getPath(): array
@@ -313,12 +328,17 @@ class Route
 
     /**
      * @return array
+     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     * @throws \Railgun\Exceptions\CompilerException
      */
     public function __debugInfo(): array
     {
+        $this->compileIfNotCompiled();
+
         return [
             'route'      => $this->getRoute(),
             'parameters' => $this->parameters,
+            'pattern'    => $this->pattern,
         ];
     }
 

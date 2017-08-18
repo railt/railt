@@ -33,7 +33,7 @@ class Request extends NativeRequest
      * @param null|mixed $request
      * @return RequestInterface
      */
-    public static function createFrom($request = null): RequestInterface
+    public static function create($request = null): RequestInterface
     {
         if ($request !== null) {
             foreach (static::$adapters as $original => $adapter) {

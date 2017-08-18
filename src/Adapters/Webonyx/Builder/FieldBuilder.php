@@ -7,19 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx\Builder;
+namespace Railgun\Adapters\Webonyx\Builder;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
 use Railgun\Reflection\Abstraction\ScalarTypeInterface;
-use Railgun\Webonyx\Request;
+use Railgun\Adapters\Webonyx\Request;
 use Railgun\Reflection\Abstraction\FieldInterface;
-use Railgun\Webonyx\Builder\Common\HasDescription;
-use Railgun\Webonyx\Builder\Type\TypeBuilder;
+use Railgun\Adapters\Webonyx\Builder\Common\HasDescription;
+use Railgun\Adapters\Webonyx\Builder\Type\TypeBuilder;
 
 /**
  * Class FieldBuilder
- * @package Railgun\Webonyx
+ * @package Railgun\Adapters\Webonyx
  * @property-read FieldInterface $type
  */
 class FieldBuilder extends Builder
@@ -37,7 +37,7 @@ class FieldBuilder extends Builder
         return [
             'type'        => $this->makeType(),
             'description' => $this->getDescription(),
-            'args'        => iterator_to_array($this->getFieldArguments()),
+            'args'        => iterator_to_array($this->getFieldArguments())
         ];
     }
 

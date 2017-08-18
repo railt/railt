@@ -1,0 +1,15 @@
+schema {
+    query: Query
+}
+
+type Query {
+    user: User
+}
+
+type User {
+    id: ID!
+    login: String!
+    friends(count: Int = 10): [User]
+    createdAt(format: String = RFC3339): String
+    updatedAt(format: String = RFC3339): String
+}

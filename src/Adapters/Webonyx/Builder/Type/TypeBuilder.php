@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx\Builder\Type;
+namespace Railgun\Adapters\Webonyx\Builder\Type;
 
 use GraphQL\Type\Definition\Type;
-use Railgun\Webonyx\Builder\Builder;
+use Railgun\Adapters\Webonyx\Builder\Builder;
 
 /**
  * Class TypeBuilder
- * @package Railgun\Webonyx
+ * @package Railgun\Adapters\Webonyx
  */
 class TypeBuilder extends Builder
 {

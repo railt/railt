@@ -48,4 +48,9 @@ interface RequestInterface
      * @return string
      */
     public function getPath(): string;
+
+    /**
+     * @return string
+     */
+    public function getFieldName(): string;
 }

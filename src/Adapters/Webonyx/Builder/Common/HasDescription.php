@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx\Builder\Common;
+namespace Railgun\Adapters\Webonyx\Builder\Common;
 
 use Illuminate\Support\Str;
 use Railgun\Reflection\Abstraction\DefinitionInterface;
@@ -17,7 +17,7 @@ use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Trait HasDescription
- * @package Railgun\Webonyx\Builder\Common
+ * @package Railgun\Adapters\Webonyx\Builder\Common
  */
 trait HasDescription
 {

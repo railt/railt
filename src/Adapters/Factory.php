@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace Railgun\Adapters;
 
+use Railgun\Routing\Router;
 use Railgun\Support\Dispatcher;
-use Railgun\Webonyx\Adapter as Webonyx;
+use Railgun\Adapters\Webonyx\Adapter as Webonyx;
 use Railgun\Reflection\Abstraction\DocumentTypeInterface;
 
 /**
@@ -29,14 +30,15 @@ class Factory
     /**
      * @param DocumentTypeInterface $document
      * @param Dispatcher $events
+     * @param Router $router
      * @return AdapterInterface
      * @throws \LogicException
      */
-    public function create(DocumentTypeInterface $document, Dispatcher $events): AdapterInterface
+    public function create(DocumentTypeInterface $document, Dispatcher $events, Router $router): AdapterInterface
     {
         $adapter = $this->resolveAdapter();
 
-        return new $adapter($document, $events);
+        return new $adapter($document, $events, $router);
     }
 
     /**

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx\Builder;
+namespace Railgun\Adapters\Webonyx\Builder;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ScalarType;
@@ -15,7 +15,7 @@ use Railgun\Reflection\Abstraction\ScalarTypeInterface;
 
 /**
  * Class ScalarTypeBuilder
- * @package Railgun\Webonyx\Builder
+ * @package Railgun\Adapters\Webonyx\Builder
  * @property-read ScalarTypeInterface $type
  */
 class ScalarTypeBuilder extends Builder

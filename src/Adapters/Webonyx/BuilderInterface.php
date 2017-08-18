@@ -7,25 +7,27 @@
  */
 declare(strict_types=1);
 
-namespace Railgun\Webonyx;
+namespace Railgun\Adapters\Webonyx;
 
-use Railgun\Adapters\Dispatcher;
+use Railgun\Routing\Router;
+use Railgun\Support\Dispatcher;
 use Railgun\Reflection\Abstraction\DefinitionInterface;
 use Railgun\Reflection\Abstraction\Type\TypeInterface;
 
 /**
  * Interface BuilderInterface
- * @package Railgun\Webonyx
+ * @package Railgun\Adapters\Webonyx
  */
 interface BuilderInterface
 {
     /**
      * BuilderInterface constructor.
      * @param Dispatcher $events
+     * @param Router $router
      * @param Loader $loader
      * @param DefinitionInterface|TypeInterface $target
      */
-    public function __construct(Dispatcher $events, Loader $loader, $target);
+    public function __construct(Dispatcher $events, Router $router, Loader $loader, $target);
 
     /**
      * @return Loader

@@ -9,7 +9,13 @@ declare(strict_types=1);
 
 namespace Railgun;
 
+use Railgun\Adapters\AdapterInterface;
+use Railgun\Adapters\Factory;
+use Railgun\Compiler\Autoloader;
 use Railgun\Http\ResponderInterface;
+use Railgun\Http\Response;
+use Railgun\Http\ResponseInterface;
+use Railgun\Routing\Router;
 use Railgun\Support\Constructors;
 use Railgun\Compiler\Compiler;
 use Railgun\Exceptions\RuntimeException;
@@ -46,6 +52,11 @@ class Endpoint implements ResponderInterface
     private $events;
 
     /**
+     * @var Router
+     */
+    private $router;
+
+    /**
      * Endpoint constructor.
      * @param File $file
      * @throws \Railgun\Exceptions\CompilerException
@@ -56,45 +67,84 @@ class Endpoint implements ResponderInterface
         $this->file = $file;
         $this->compiler = new Compiler();
         $this->events = new Dispatcher();
+        $this->router = new Router();
     }
 
     /**
-     * @param \Closure $then
+     * @param \Closure|null $then
+     * @return Router
+     */
+    public function router(\Closure $then = null): Router
+    {
+        if ($then !== null) {
+            $then($this->router);
+        }
+
+        return $this->router;
+    }
+
+    /**
+     * @param \Closure|string|null $then
      * @param bool $prepend
-     * @return Endpoint
+     * @return Autoloader
+     * @throws \InvalidArgumentException
      */
-    public function autoload(\Closure $then, bool $prepend = false): Endpoint
+    public function autoload($then = null, bool $prepend = false): Autoloader
     {
-        $this->compiler->getLoader()->autoload($then, $prepend);
+        return tap($this->compiler->getLoader(), function(Autoloader $loader) use ($then, $prepend) {
+            if ($then !== null) {
+                switch (true) {
+                    case $then instanceof \Closure:
+                        return $loader->autoload($then, $prepend);
+                    case is_string($then) || is_array($then):
+                        return $loader->dir($then, $prepend);
+                }
 
-        return $this;
+                $error = 'First argument of method %s() must be a callable, string or array, but %s given';
+                throw new \InvalidArgumentException(sprintf($error, __METHOD__, gettype($then)));
+            }
+
+            return null;
+        });
     }
 
     /**
-     * @param string|array|string[] $directories
+     * @param string $event
+     * @param \Closure $then
      * @return Endpoint
      */
-    public function autoloadDirectory(string ...$directories): Endpoint
+    public function on(string $event, \Closure $then): Endpoint
     {
-        $this->compiler->getLoader()->dir($directories);
+        $this->events->listen($event, $then);
 
         return $this;
     }
 
     /**
      * @param RequestInterface $request
-     * @return array
+     * @return ResponseInterface
      * @throws \Railgun\Exceptions\RuntimeException
      * @throws \LogicException
      * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
-    public function request(RequestInterface $request): array
+    public function request(RequestInterface $request): ResponseInterface
     {
         try {
-            return $this->adapter($this->compileDocument())->request($request);
+            return $this->getAdapter()->request($request);
         } catch (\Throwable $e) {
-            return ['errors' => Error::render($e, $this->debug)];
+            return Response::error($e)->debug($this->debug);
         }
+    }
+
+    /**
+     * @return AdapterInterface
+     * @throws \Railgun\Exceptions\RuntimeException
+     * @throws \LogicException
+     * @throws Exceptions\UnrecognizedTokenException
+     */
+    private function getAdapter(): AdapterInterface
+    {
+        return (new Factory())->create($this->compileDocument(), $this->events, $this->router);
     }
 
     /**
