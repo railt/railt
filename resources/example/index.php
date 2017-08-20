@@ -7,6 +7,7 @@
  */
 declare(strict_types=1);
 
+use Example\HttpApiKernel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Railgun\Adapters\RequestInterface;
@@ -30,7 +31,9 @@ use Railgun\Routing\Router;
 require __DIR__ . '/../../vendor/autoload.php';
 
 // App
-require __DIR__ . '/src/UsersController.php';
+require __DIR__ . '/src/HttpApiKernel.php';
+require __DIR__ . '/src/Controllers/UsersController.php';
+require __DIR__ . '/src/Controllers/SupportController.php';
 
 
 /*
@@ -75,24 +78,6 @@ $logger = new Logger('Railgun', [new StreamHandler('php://stdout')]);
 
 $endpoint->withLogger($logger);
 
-// On all requests
-$endpoint->on('request:*', function (RequestInterface $request) use ($endpoint) {
-    $endpoint->debug('Request(' . $request->getPath() . ')');
-});
-
-// On all responses
-$endpoint->on('response:*', function ($response, RequestInterface $request) use ($endpoint) {
-    $endpoint->debug('    Body(' . json_encode($response) . ')');
-    $endpoint->debug('Response(' . $request->getPath() . ')');
-    $endpoint->debug(str_repeat('-', 80));
-});
-
-// On all responses
-$endpoint->on('route:*', function (Route $route) use ($endpoint) {
-    $endpoint->debug('    Route(' . $route->getRoute() . ') => ' . $route->getPattern());
-});
-
-
 /*
 |--------------------------------------------------------------------------
 | GraphQL Routes
@@ -103,10 +88,7 @@ $endpoint->on('route:*', function (Route $route) use ($endpoint) {
 |
 */
 
-$endpoint->router(function (Router $router) {
-    require __DIR__ . '/routes/routes.php';
-    require __DIR__ . '/routes/decorators.php';
-});
+$endpoint->kernel(HttpApiKernel::class);
 
 
 /*

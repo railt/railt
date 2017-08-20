@@ -24,8 +24,12 @@ class SupportController
      */
     public function dateTime(RequestInterface $request, \DateTimeInterface $time): string
     {
-        $key    = 'DateTime::' . $request->get('format');
-        $format = defined($key) ? constant($key) : \DateTime::RFC3339;
+        $format = \DateTime::RFC3339;
+
+        if ($request->has('format')) {
+            $key    = 'DateTime::' . $request->get('format');
+            $format = defined($key) ? constant($key) : $request->get('format');
+        }
 
         return $time->format($format);
     }

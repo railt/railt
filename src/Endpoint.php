@@ -9,9 +9,12 @@ declare(strict_types=1);
 
 namespace Railgun;
 
+use Psr\Log\LoggerInterface;
 use Railgun\Adapters\AdapterInterface;
 use Railgun\Adapters\Factory;
 use Railgun\Compiler\Autoloader;
+use Railgun\Foundation\ApiKernel;
+use Railgun\Foundation\KernelInterface;
 use Railgun\Http\ResponderInterface;
 use Railgun\Http\Response;
 use Railgun\Http\ResponseInterface;
@@ -57,6 +60,11 @@ class Endpoint implements ResponderInterface
     private $router;
 
     /**
+     * @var KernelInterface
+     */
+    private $kernel;
+
+    /**
      * Endpoint constructor.
      * @param File $file
      * @throws \Railgun\Exceptions\CompilerException
@@ -77,10 +85,21 @@ class Endpoint implements ResponderInterface
     public function router(\Closure $then = null): Router
     {
         if ($then !== null) {
-            $then($this->router);
+            $then($this->router, $this->events);
         }
 
         return $this->router;
+    }
+
+    /**
+     * @param string $kernel
+     * @return $this
+     */
+    public function kernel(string $kernel)
+    {
+        $this->kernel = new $kernel($this);
+
+        return $this;
     }
 
     /**
@@ -109,15 +128,19 @@ class Endpoint implements ResponderInterface
     }
 
     /**
-     * @param string $event
-     * @param \Closure $then
-     * @return Endpoint
+     * @return Dispatcher
      */
-    public function on(string $event, \Closure $then): Endpoint
+    public function getEvents(): Dispatcher
     {
-        $this->events->listen($event, $then);
+        return $this->events;
+    }
 
-        return $this;
+    /**
+     * @return Router
+     */
+    public function getRouter(): Router
+    {
+        return $this->router;
     }
 
     /**
@@ -130,9 +153,13 @@ class Endpoint implements ResponderInterface
     public function request(RequestInterface $request): ResponseInterface
     {
         try {
+            if ($this->kernel !== null) {
+                $this->kernel->boot();
+            }
+
             return $this->getAdapter()->request($request);
         } catch (\Throwable $e) {
-            return Response::error($e)->debug($this->debug);
+            return Response::error($e)->enableDebug($this->debug);
         }
     }
 
