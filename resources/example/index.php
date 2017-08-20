@@ -1,108 +1,124 @@
-<?php
-/**
- * This file is part of Railgun package.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-declare(strict_types=1);
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Railgun GraphiQL Explorer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.11.2/graphiql.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/0.11.2/graphiql.min.js"></script>
+    <style>
+        body {
+            height: 100%;
+            margin: 0;
+            width: 100%;
+            overflow: hidden;
+        }
 
-use Example\HttpApiKernel;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Railgun\Adapters\RequestInterface;
-use Railgun\Endpoint;
-use Railgun\Http\Request;
-use Railgun\Routing\Route;
-use Railgun\Routing\Router;
+        #graphiql {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id="graphiql">Loading...</div>
+    <script>
+        /**
+         * This GraphiQL example illustrates how to use some of GraphiQL's props
+         * in order to enable reading and updating the URL parameters, making
+         * link sharing of queries a little bit easier.
+         *
+         * This is only one example of this kind of feature, GraphiQL exposes
+         * various React params to enable interesting integrations.
+         */
+            // Parse the search string to get url parameters.
+        var search     = window.location.search;
+        var parameters = {};
+        search.substr(1).split('&').forEach(function (entry) {
+            var eq = entry.indexOf('=');
+            if (eq >= 0) {
+                parameters[decodeURIComponent(entry.slice(0, eq))] =
+                    decodeURIComponent(entry.slice(eq + 1));
+            }
+        });
+        // if variables was provided, try to format it.
+        if (parameters.variables) {
+            try {
+                parameters.variables =
+                    JSON.stringify(JSON.parse(parameters.variables), null, 2);
+            } catch (e) {
+                // Do nothing, we want to display the invalid JSON as a string, rather
+                // than present an error.
+            }
+        }
+        // When the query and variables string is edited, update the URL bar so
+        // that it can be easily shared
+        function onEditQuery(newQuery) {
+            parameters.query = newQuery;
+            updateURL();
+        }
 
-/*
-|--------------------------------------------------------------------------
-| Register The Composer Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader
-| for our application. We just need to utilize it! We'll require it
-| into the script here so we do not have to manually load any of
-| our application's PHP classes. It just feels great to relax.
-|
-*/
+        function onEditVariables(newVariables) {
+            parameters.variables = newVariables;
+            updateURL();
+        }
 
-require __DIR__ . '/../../vendor/autoload.php';
+        function onEditOperationName(newOperationName) {
+            parameters.operationName = newOperationName;
+            updateURL();
+        }
 
-// App
-require __DIR__ . '/src/HttpApiKernel.php';
-require __DIR__ . '/src/Controllers/UsersController.php';
-require __DIR__ . '/src/Controllers/SupportController.php';
+        function updateURL() {
+            var newSearch = '?' + Object.keys(parameters).filter(function (key) {
+                return Boolean(parameters[key]);
+            }).map(function (key) {
+                return encodeURIComponent(key) + '=' +
+                    encodeURIComponent(parameters[key]);
+            }).join('&');
+            history.replaceState(null, null, newSearch);
+        }
 
+        // Defines a GraphQL fetcher using the fetch API. You're not required to
+        // use fetch, and could instead implement graphQLFetcher however you like,
+        // as long as it returns a Promise or Observable.
+        function graphQLFetcher(graphQLParams) {
+            // This example expects a GraphQL server at the path /graphql.
+            // Change this to point wherever you host your GraphQL server.
+            return fetch('./graphql.php', {
+                method:      'post',
+                headers:     {
+                    'Accept':       'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body:        JSON.stringify(graphQLParams),
+                credentials: 'include',
+            }).then(function (response) {
+                return response.text();
+            }).then(function (responseBody) {
+                try {
+                    return JSON.parse(responseBody);
+                } catch (error) {
+                    return responseBody;
+                }
+            });
+        }
 
-/*
-|--------------------------------------------------------------------------
-| Create The Endpoint
-|--------------------------------------------------------------------------
-|
-| The first thing we will do is create a new Railgun endpoint instance
-| which serves as the "glue" for all the components of your application.
-|
-*/
-
-$endpoint = Endpoint::fromFilePath(__DIR__ . '/schema/index.graphqls');
-
-
-/*
-|--------------------------------------------------------------------------
-| Register The GraphQL Auto Loader
-|--------------------------------------------------------------------------
-|
-| Railgun provides a convenient, automatically GraphQL Types loader for
-| our application. We just need to utilize it! We'll simply require it
-| into the script here so that we don't have to worry about manual
-| loading any of our GraphQL Types later on. It feels great to relax.
-|
-*/
-
-$endpoint->autoload()->dir(__DIR__ . '/schema');
-
-
-/*
-|--------------------------------------------------------------------------
-| Create The Logger
-|--------------------------------------------------------------------------
-|
-| Let's just use the Monolog library and see what requests are made in
-| our greatest application.
-|
-*/
-
-$logger = new Logger('Railgun', [new StreamHandler('php://stdout')]);
-
-$endpoint->withLogger($logger);
-
-/*
-|--------------------------------------------------------------------------
-| GraphQL Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register api routes for your application.
-| Now create something great!
-|
-*/
-
-$endpoint->kernel(HttpApiKernel::class);
-
-
-/*
-|--------------------------------------------------------------------------
-| Run The Endpoint
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request
-| through the kernel, and send the associated response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application we have prepared for them.
-|
-*/
-
-$response = $endpoint->request(Request::create());
-
-$response->send();
+        // Render <GraphiQL /> into the body.
+        // See the README in the top level of this module to learn more about
+        // how you can customize GraphiQL by providing different values or
+        // additional child elements.
+        ReactDOM.render(
+            React.createElement(GraphiQL, {
+                fetcher:             graphQLFetcher,
+                query:               parameters.query,
+                variables:           parameters.variables,
+                operationName:       parameters.operationName,
+                onEditQuery:         onEditQuery,
+                onEditVariables:     onEditVariables,
+                onEditOperationName: onEditOperationName
+            }),
+            document.getElementById('graphiql')
+        );
+    </script>
+</body>
+</html>
