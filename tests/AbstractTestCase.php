@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railgun\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Railgun\Compiler\File;
+use Railgun\Support\File;
 
 /**
  * Class AbstractTestCase

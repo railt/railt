@@ -11,7 +11,7 @@ namespace Railgun\Tests\Compiler;
 
 use PHPUnit\Framework\Assert;
 use Railgun\Compiler\Compiler;
-use Railgun\Compiler\File;
+use Railgun\Support\File;
 use Railgun\Tests\AbstractTestCase;
 use Railgun\Tests\Support\SpecTest;
 use Railgun\Tests\Support\SpecSupport;

@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railgun\Tests\Http;
 
+use Illuminate\Http\Request as LaravelNativeRequest;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Exception;
+use Railgun\Http\Adapters\IlluminateRequest;
+use Railgun\Http\Adapters\NativeRequest;
+use Railgun\Http\Adapters\SymfonyRequest;
 use Railgun\Http\Request;
-use Railgun\Http\NativeRequest;
-use Railgun\Http\SymfonyRequest;
-use Railgun\Http\IlluminateRequest;
 use Railgun\Tests\AbstractTestCase;
-use Illuminate\Http\Request as LaravelNativeRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyNativeRequest;
 
 /**

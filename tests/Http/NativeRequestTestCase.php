@@ -10,9 +10,8 @@ declare(strict_types=1);
 namespace Railgun\Tests\Http;
 
 use PHPUnit\Framework\Assert;
-use Railgun\Http\NativeRequest;
 use Railgun\Http\RequestInterface;
-use Railgun\Tests\AbstractTestCase;
+use Railgun\Http\Adapters\NativeRequest;
 
 /**
  * Class NativeRequestTestCase
@@ -20,7 +19,6 @@ use Railgun\Tests\AbstractTestCase;
  */
 class NativeRequestTestCase extends AbstractHttpRequestTestCase
 {
-
     /**
      * @param string $body
      * @param bool $makeJson
