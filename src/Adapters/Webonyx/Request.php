@@ -42,6 +42,7 @@ class Request implements RequestInterface
      * @param HasArgumentsInterface $node
      * @param array $input
      * @return array
+     * @throws RuntimeException
      */
     public static function resolveArguments(HasArgumentsInterface $node, array $input = []): array
     {
@@ -116,11 +117,13 @@ class Request implements RequestInterface
         return array_key_exists($argument, $this->arguments);
     }
 
+    /**
+     * TODO
+     * @return iterable
+     */
     public function getRelations(): iterable
     {
-        //foreach ($this->info) {
-        //
-        //}
+        throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
 
     /**
@@ -142,7 +145,10 @@ class Request implements RequestInterface
     public function getPath(): string
     {
         if ($this->path === null) {
-            $this->path = implode(Route::DEFAULT_DELIMITER, $this->info->path);
+            $path = $this->info->path;
+            $path[count($path) - 1] = $this->info->fieldName;
+
+            $this->path = implode(Route::DEFAULT_DELIMITER, $path);
         }
 
         return $this->path;
@@ -157,5 +163,23 @@ class Request implements RequestInterface
             'path' => $this->path,
             'arguments' => $this->arguments
         ];
+    }
+
+    /**
+     * @return string
+     * @throws \LogicException
+     */
+    public function getAlias(): string
+    {
+        return $this->info->path[count($this->info->path) - 1];
+    }
+
+    /**
+     * @return bool
+     * @throws \LogicException
+     */
+    public function hasAlias(): bool
+    {
+        return $this->getAlias() !== $this->getFieldName();
     }
 }

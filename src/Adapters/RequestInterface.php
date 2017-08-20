@@ -53,4 +53,14 @@ interface RequestInterface
      * @return string
      */
     public function getFieldName(): string;
+
+    /**
+     * @return string
+     */
+    public function getAlias(): string;
+
+    /**
+     * @return bool
+     */
+    public function hasAlias(): bool;
 }
