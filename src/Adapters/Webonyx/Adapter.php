@@ -74,7 +74,7 @@ class Adapter implements AdapterInterface
 
         $value = $this->executeSchema($request, $schema);
 
-        return new Response((array)$value['data'] ?? [], (array)$value['errors'] ?? []);
+        return new Response((array)($value['data'] ?? []), (array)($value['errors'] ?? []));
     }
 
     /**

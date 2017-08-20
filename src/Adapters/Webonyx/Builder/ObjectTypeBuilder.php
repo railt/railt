@@ -69,15 +69,8 @@ class ObjectTypeBuilder extends Builder
         }
 
         // When route allowed
-        if ($responder = $this->router->resolve($request->getPath())) {
-            $route = $this->router->find($request->getPath());
-            $this->events->dispatch('route:' . $route->getRoute(), $route);
-
-            if (is_array($value) && array_key_exists($request->getFieldName(), $value)) {
-                $value = $value[$request->getFieldName()];
-            }
-
-            return $responder->invoke($request, $value);
+        if ($this->router->has($request->getPath())) {
+            return $this->resolveResponder($request, $value);
         }
 
         // If defined in parent
@@ -86,6 +79,26 @@ class ObjectTypeBuilder extends Builder
         }
 
         return null;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param mixed $value
+     * @return mixed
+     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     */
+    private function resolveResponder(RequestInterface $request, $value)
+    {
+        if (is_array($value) && array_key_exists($request->getFieldName(), $value)) {
+            $value = $value[$request->getFieldName()];
+        }
+
+        foreach ($this->router->resolve($request->getPath()) as $responder) {
+            $value = $responder->invoke($request, $value);
+        }
+
+        return $value;
     }
 
     /**

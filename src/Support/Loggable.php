@@ -36,7 +36,7 @@ trait Loggable
     /**
      * @param string $message
      */
-    public function debugMessage(string $message): void
+    public function debug(string $message): void
     {
         if ($this->logger !== null) {
             $this->logger->debug($message);
@@ -46,7 +46,7 @@ trait Loggable
     /**
      * @param string $message
      */
-    public function noticeMessage(string $message): void
+    public function notice(string $message): void
     {
         if ($this->logger !== null) {
             $this->logger->notice($message);
@@ -56,7 +56,7 @@ trait Loggable
     /**
      * @param string $message
      */
-    public function errorMessage(string $message): void
+    public function error(string $message): void
     {
         if ($this->logger !== null) {
             $this->logger->error($message);

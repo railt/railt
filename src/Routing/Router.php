@@ -26,7 +26,7 @@ class Router implements \IteratorAggregate
     private $routes;
 
     /**
-     * @var array|Router[]
+     * @var array[]
      */
     private $compiled = [];
 
@@ -117,22 +117,22 @@ class Router implements \IteratorAggregate
     private function memoiseRouteFor(string $uri): bool
     {
         if (!array_key_exists($uri, $this->compiled)) {
+            $this->compiled[$uri] = [];
+
             /**
              * @var Route $route
              * @var Respondent $respondent
              */
             foreach ($this->routes as $route => $respondent) {
                 if ($route->match($uri)) {
-                    $this->compiled[$uri] = [
+                    $this->compiled[$uri][] = [
                         self::MEMOISED_ROUTE_KEY     => $route,
                         self::MEMOISED_RESPONDER_KEY => $respondent,
                     ];
-
-                    return true;
                 }
             }
 
-            return false;
+            return count($this->compiled[$uri]) > 0;
         }
 
         return true;
@@ -140,32 +140,32 @@ class Router implements \IteratorAggregate
 
     /**
      * @param string $uri
-     * @return null|Respondent
+     * @return iterable|Respondent[]
      * @throws \Railgun\Exceptions\IndeterminateBehaviorException
      * @throws \Railgun\Exceptions\CompilerException
      */
-    public function resolve(string $uri): ?Respondent
+    public function resolve(string $uri): iterable
     {
         if ($this->memoiseRouteFor($uri)) {
-            return $this->compiled[$uri][self::MEMOISED_RESPONDER_KEY];
+            foreach ($this->compiled[$uri] as $found) {
+                yield $found[self::MEMOISED_RESPONDER_KEY];
+            }
         }
-
-        return null;
     }
 
     /**
      * @param string $uri
-     * @return null|Route
+     * @return iterable|Route[]
      * @throws \Railgun\Exceptions\IndeterminateBehaviorException
      * @throws \Railgun\Exceptions\CompilerException
      */
-    public function find(string $uri): ?Route
+    public function find(string $uri): iterable
     {
         if ($this->memoiseRouteFor($uri)) {
-            return $this->compiled[$uri][self::MEMOISED_ROUTE_KEY];
+            foreach ($this->compiled[$uri] as $found) {
+                yield $found[self::MEMOISED_ROUTE_KEY];
+            }
         }
-
-        return null;
     }
 
     /**

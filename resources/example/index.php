@@ -29,6 +29,9 @@ use Railgun\Routing\Router;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
+// App
+require __DIR__ . '/src/UsersController.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -74,19 +77,19 @@ $endpoint->withLogger($logger);
 
 // On all requests
 $endpoint->on('request:*', function (RequestInterface $request) use ($endpoint) {
-    $endpoint->debugMessage('Request(' . $request->getPath() . ')');
+    $endpoint->debug('Request(' . $request->getPath() . ')');
 });
 
 // On all responses
 $endpoint->on('response:*', function ($response, RequestInterface $request) use ($endpoint) {
-    $endpoint->debugMessage('    Body(' . json_encode($response) . ')');
-    $endpoint->debugMessage('Response(' . $request->getPath() . ')');
-    $endpoint->debugMessage(str_repeat('-', 80));
+    $endpoint->debug('    Body(' . json_encode($response) . ')');
+    $endpoint->debug('Response(' . $request->getPath() . ')');
+    $endpoint->debug(str_repeat('-', 80));
 });
 
 // On all responses
 $endpoint->on('route:*', function (Route $route) use ($endpoint) {
-    $endpoint->debugMessage('    Route(' . $route->getRoute() . ') => ' . $route->getPattern());
+    $endpoint->debug('    Route(' . $route->getRoute() . ') => ' . $route->getPattern());
 });
 
 
@@ -100,44 +103,11 @@ $endpoint->on('route:*', function (Route $route) use ($endpoint) {
 |
 */
 
-function fake_user($id): array {
-    return [
-        'id'        => $id,
-        'login'     => 'Fake User #' . $id,
-        'createdAt' => new DateTime(),
-        'updatedAt' => new DateTime(),
-    ];
-}
-
 $endpoint->router(function (Router $router) {
-
-    $user = $router->when('user', function () {
-        return fake_user(random_int(1, 100));
-    });
-
-
-    $router->when('friends', function (RequestInterface $request) {
-        $count = $request->get('count', 10);
-        $count = max(1, min($count, 100));
-
-        $iterator = range(1, $count);
-
-        foreach ($iterator as $i) {
-            yield fake_user($i);
-        }
-    })->inside($user);
-
-
-    // All dates
-    $router->when('{any}.{dateTime}', function (RequestInterface $request, DateTimeInterface $time) {
-        $key    = 'DateTime::' . $request->get('format');
-        $format = defined($key) ? constant($key) : DateTime::RFC3339;
-
-        return $time->format($format);
-    })
-        ->where('any', '.*?')
-        ->where('dateTime', 'createdAt|updatedAt');
+    require __DIR__ . '/routes/routes.php';
+    require __DIR__ . '/routes/decorators.php';
 });
+
 
 /*
 |--------------------------------------------------------------------------

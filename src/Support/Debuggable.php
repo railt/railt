@@ -24,7 +24,7 @@ trait Debuggable
      * @param bool $enabled
      * @return $this|self|Debuggable
      */
-    public function debug(bool $enabled = true): self
+    public function enableDebug(bool $enabled = true): self
     {
         $this->debug = $enabled;
 
