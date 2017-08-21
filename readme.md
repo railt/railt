@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/SerafimArts/Railgun/master/docs/resources/logo-big.png" alt="Railgun" />
+    <img src="https://raw.githubusercontent.com/SerafimArts/Railgun/master/docs/resources/logo-big-white-bg.png" alt="Railgun" />
 </p>
 
 <p align="center">
