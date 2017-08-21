@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Railgun\Compiler\Autoloader | Railgun API Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Railgun_Compiler_Autoloader" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Railgun API Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Railgun.html">Railgun</a></li><li class="backslash">\</li><li><a href="../../Railgun/Compiler.html">Compiler</a></li><li class="backslash">\</li><li>Autoloader</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Autoloader
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Autoloader</strong>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Class Autoloader</p>                                </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../../Railgun/Compiler/Compiler.html"><abbr title="Railgun\Compiler\Compiler">Compiler</abbr></a> $compiler)
+        
+                                            <p>Autoloader constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    null|<a href="../../Railgun/Reflection/Abstraction/NamedDefinitionInterface.html"><abbr title="Railgun\Reflection\Abstraction\NamedDefinitionInterface">NamedDefinitionInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_load">load</a>(string $type)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Railgun/Compiler/Autoloader.html"><abbr title="Railgun\Compiler\Autoloader">Autoloader</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_dir">dir</a>(string|array|string[] $directories, bool $prepend = false)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Railgun/Compiler/Autoloader.html"><abbr title="Railgun\Compiler\Autoloader">Autoloader</abbr></a>|<abbr title="Railgun\Compiler\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_autoload">autoload</a>(callable $then, bool $prepend = false)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         line 37</div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../../Railgun/Compiler/Compiler.html"><abbr title="Railgun\Compiler\Compiler">Compiler</abbr></a> $compiler)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Autoloader constructor.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Compiler/Compiler.html"><abbr title="Railgun\Compiler\Compiler">Compiler</abbr></a></td>
+                <td>$compiler</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_load">
+        <div class="location">at         line 49</div>
+        <code>                    null|<a href="../../Railgun/Reflection/Abstraction/NamedDefinitionInterface.html"><abbr title="Railgun\Reflection\Abstraction\NamedDefinitionInterface">NamedDefinitionInterface</abbr></a>
+    <strong>load</strong>(string $type)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>null|<a href="../../Railgun/Reflection/Abstraction/NamedDefinitionInterface.html"><abbr title="Railgun\Reflection\Abstraction\NamedDefinitionInterface">NamedDefinitionInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Exceptions/NotReadableException.html"><abbr title="Railgun\Exceptions\NotReadableException">NotReadableException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Railgun/Exceptions/UnexpectedTokenException.html"><abbr title="Railgun\Exceptions\UnexpectedTokenException">UnexpectedTokenException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../Railgun/Exceptions/UnrecognizedTokenException.html"><abbr title="Railgun\Exceptions\UnrecognizedTokenException">UnrecognizedTokenException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_dir">
+        <div class="location">at         line 69</div>
+        <code>                    <a href="../../Railgun/Compiler/Autoloader.html"><abbr title="Railgun\Compiler\Autoloader">Autoloader</abbr></a>
+    <strong>dir</strong>(string|array|string[] $directories, bool $prepend = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string|array|string[]</td>
+                <td>$directories</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$prepend</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Railgun/Compiler/Autoloader.html"><abbr title="Railgun\Compiler\Autoloader">Autoloader</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_autoload">
+        <div class="location">at         line 79</div>
+        <code>                    <a href="../../Railgun/Compiler/Autoloader.html"><abbr title="Railgun\Compiler\Autoloader">Autoloader</abbr></a>|<abbr title="Railgun\Compiler\$this">$this</abbr>
+    <strong>autoload</strong>(callable $then, bool $prepend = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>callable</td>
+                <td>$then</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$prepend</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Railgun/Compiler/Autoloader.html"><abbr title="Railgun\Compiler\Autoloader">Autoloader</abbr></a>|<abbr title="Railgun\Compiler\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

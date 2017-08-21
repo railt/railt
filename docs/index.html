@@ -25,6 +25,9 @@
             loadSidebar: '_sidebar.md',
             coverpage:   true,
             auto2top:    true,
+            noCompileLinks: [
+                '/api/index.html'
+            ],
             markdown:    {
                 smartypants: true
             },
@@ -51,6 +54,41 @@
 
     <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
-    <script src="//unpkg.com/prismjs/components/prism-php.min.js"></script>
+    <script src="//unpkg.com/prismjs@1.6.0/components/prism-php.min.js"></script>
+    <script>
+        Prism.languages.graphql = {
+            'comment': /#.*/,
+            'string': {
+                pattern: /"(?:\\.|[^\\"])*"/,
+                greedy: true
+            },
+            'number': /(?:\B-|\b)\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/,
+            'boolean': /\b(?:true|false)\b/,
+            'variable': /\$[a-z_]\w*/i,
+            'directive': {
+                pattern: /@[a-z_]\w*/i,
+                alias: 'function'
+            },
+            'attr-name': /[a-z_]\w*(?=\s*:)/i,
+            'keyword': [
+                {
+                    pattern: /(fragment\s+(?!on)[a-z_]\w*\s+|\.\.\.\s*)on\b/,
+                    lookbehind: true
+                },
+                /\b(?:query|fragment|mutation|type|implements|enum|union|interface|schema|scalar|directive|input|extend)\b/
+            ],
+            'operator': /!|=|\.{3}/,
+            'punctuation': /[!(){}\[\]:=,]/
+        };
+
+        Prism.languages.pp = {
+            'comment': /\/\/.*/,
+            'keyword': /(<|::).*?(::|>)/,
+            'variable': /\w+\(\)\*?/,
+            'important': /%token|%skip|#?\w+:/i,
+            'attr-name': /#?\w+:|T_.+?\s/,
+            'string': /#\w+/,
+        };
+    </script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 # Установка
 
-- `composer require serafim/railgun`
+- [Системные требования](/ru/installation#системные-требования)
+- [Composer](/ru/installation#composer)
+- [Зависимости](/ru/installation#зависимости)
 
 ## Системные требования
 
@@ -14,6 +16,10 @@
     
 - **Composer**
     > Руководство по установке Composer [можно найти здесь](https://getcomposer.org/download/).
+    
+## Composer
+
+- `composer require serafim/railgun`
     
 ## Зависимости
 

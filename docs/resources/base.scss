@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Sans+Pro:300,400,600");
 
-$color-ui: #2D9AAB;
+$color-ui: #2d9aab;
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -805,7 +805,7 @@ section.cover.has-mask .mask {
 
 .markdown-section code {
   border-radius: 2px;
-  color: #29958c;
+  color: desaturate($color-ui, 25%);
   font-size: 12.8px;
   font-size: .8rem;
   margin: 0 2px;
@@ -856,8 +856,7 @@ section.cover.has-mask .mask {
 }
 
 .token.string {
-  color: $color-ui;
-  color: var(--theme-color, $color-ui)
+  color: #2aafc7;
 }
 
 .token.selector {

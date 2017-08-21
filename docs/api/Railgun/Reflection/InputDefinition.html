@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Railgun\Reflection\InputDefinition | Railgun API Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Railgun_Reflection_InputDefinition" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">Railgun API Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../Railgun.html">Railgun</a></li><li class="backslash">\</li><li><a href="../../Railgun/Reflection.html">Reflection</a></li><li class="backslash">\</li><li>InputDefinition</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            InputDefinition
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>InputDefinition</strong>        extends <a href="../../Railgun/Reflection/Definition.html"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a>        implements
+        <a href="../../Railgun/Reflection/Abstraction/InputTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\InputTypeInterface">InputTypeInterface</abbr></a>, <a href="../../Railgun/Reflection/Common/HasLinkingStageInterface.html"><abbr title="Railgun\Reflection\Common\HasLinkingStageInterface">HasLinkingStageInterface</abbr></a>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Class InputDefinition</p>                                </div>
+    
+            <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Railgun/Reflection/Common/HasName.html"><abbr title="Railgun\Reflection\Common\HasName">HasName</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Trait HasName
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Railgun/Reflection/Common/Arguments.html"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Trait HasArguments
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Railgun/Reflection/Common/Directives.html"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Trait Directives
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../Railgun/Reflection/Common/LinkingStage.html"><abbr title="Railgun\Reflection\Common\LinkingStage">LinkingStage</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Trait LinkingStage
+                </div>
+            </div>
+            </div>
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_document">
+                                        protected                                        <a href="../../Railgun/Reflection/Document.html"><abbr title="Railgun\Reflection\Document">Document</abbr></a>
+                </td>
+                <td>$document</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../Railgun/Reflection/Definition.html#property_document"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_ast">
+                                        protected                                        <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr>
+                </td>
+                <td>$ast</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../Railgun/Reflection/Definition.html#property_ast"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_name">
+                                        protected                                        string
+                </td>
+                <td>$name</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../Railgun/Reflection/Common/HasName.html#property_name"><abbr title="Railgun\Reflection\Common\HasName">HasName</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_observers">
+                                        protected                                        array|callable[]
+                </td>
+                <td>$observers</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../Railgun/Reflection/Common/LinkingStage.html#property_observers"><abbr title="Railgun\Reflection\Common\LinkingStage">LinkingStage</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_compiled">
+                                        protected                                        bool
+                </td>
+                <td>$compiled</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../Railgun/Reflection/Common/LinkingStage.html#property_compiled"><abbr title="Railgun\Reflection\Common\LinkingStage">LinkingStage</abbr></a></small></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        
+                                            <p>Definition constructor.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Definition.html#method___construct"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___debugInfo">__debugInfo</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Definition.html#method___debugInfo"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTypeName">getTypeName</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDocument">getDocument</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Definition.html#method_getDocument"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___toString">__toString</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Definition.html#method___toString"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_bootHasName">bootHasName</a>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/HasName.html#method_bootHasName"><abbr title="Railgun\Reflection\Common\HasName">HasName</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/HasName.html#method_getName"><abbr title="Railgun\Reflection\Common\HasName">HasName</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Railgun\Reflection\Common\iterable">iterable</abbr>|<a href="../../Railgun/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railgun\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getArguments">getArguments</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Arguments.html#method_getArguments"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_hasArgument">hasArgument</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Arguments.html#method_hasArgument"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    null|<a href="../../Railgun/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railgun\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getArgument">getArgument</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Arguments.html#method_getArgument"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compileArguments">compileArguments</a>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Arguments.html#method_compileArguments"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Railgun\Reflection\Common\iterable">iterable</abbr>|<a href="../../Railgun/Reflection/Abstraction/CalleeDirectiveInterface.html"><abbr title="Railgun\Reflection\Abstraction\CalleeDirectiveInterface">CalleeDirectiveInterface</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDirectives">getDirectives</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Directives.html#method_getDirectives"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_hasDirective">hasDirective</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Directives.html#method_hasDirective"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    null|<a href="../../Railgun/Reflection/Abstraction/CalleeDirectiveInterface.html"><abbr title="Railgun\Reflection\Abstraction\CalleeDirectiveInterface">CalleeDirectiveInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDirective">getDirective</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Directives.html#method_getDirective"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compileDirectives">compileDirectives</a>(<a href="../../Railgun/Reflection/Document.html"><abbr title="Railgun\Reflection\Document">Document</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/Directives.html#method_compileDirectives"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_bootLinkingStage">bootLinkingStage</a>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/LinkingStage.html#method_bootLinkingStage"><abbr title="Railgun\Reflection\Common\LinkingStage">LinkingStage</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compileIfNotCompiled">compileIfNotCompiled</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../Railgun/Reflection/Common/LinkingStage.html#method_compileIfNotCompiled"><abbr title="Railgun\Reflection\Common\LinkingStage">LinkingStage</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr>|null
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compile">compile</a>(<a href="../../Railgun/Reflection/Document.html"><abbr title="Railgun\Reflection\Document">Document</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../../Railgun/Reflection/Definition.html#method___construct"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a> at         line 38</div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Definition constructor.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a></td>
+                <td>$document</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr></td>
+                <td>$ast</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___debugInfo">
+        <div class="location">in <a href="../../Railgun/Reflection/Definition.html#method___debugInfo"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a> at         line 54</div>
+        <code>                    array
+    <strong>__debugInfo</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTypeName">
+        <div class="location">at         line 42</div>
+        <code>                    string
+    <strong>getTypeName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDocument">
+        <div class="location">in <a href="../../Railgun/Reflection/Definition.html#method_getDocument"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a> at         line 75</div>
+        <code>                    <a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a>
+    <strong>getDocument</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___toString">
+        <div class="location">in <a href="../../Railgun/Reflection/Definition.html#method___toString"><abbr title="Railgun\Reflection\Definition">Definition</abbr></a> at         line 83</div>
+        <code>                    string
+    <strong>__toString</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_bootHasName">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/HasName.html#method_bootHasName"><abbr title="Railgun\Reflection\Common\HasName">HasName</abbr></a> at         line 31</div>
+        <code>                    
+    <strong>bootHasName</strong>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a></td>
+                <td>$document</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr></td>
+                <td>$ast</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/HasName.html#method_getName"><abbr title="Railgun\Reflection\Common\HasName">HasName</abbr></a> at         line 48</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getArguments">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Arguments.html#method_getArguments"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a> at         line 34</div>
+        <code>                    <abbr title="Railgun\Reflection\Common\iterable">iterable</abbr>|<a href="../../Railgun/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railgun\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>[]
+    <strong>getArguments</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Railgun\Reflection\Common\iterable">iterable</abbr>|<a href="../../Railgun/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railgun\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_hasArgument">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Arguments.html#method_hasArgument"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a> at         line 43</div>
+        <code>                    bool
+    <strong>hasArgument</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getArgument">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Arguments.html#method_getArgument"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a> at         line 52</div>
+        <code>                    null|<a href="../../Railgun/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railgun\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>
+    <strong>getArgument</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>null|<a href="../../Railgun/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railgun\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compileArguments">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Arguments.html#method_compileArguments"><abbr title="Railgun\Reflection\Common\Arguments">Arguments</abbr></a> at         line 61</div>
+        <code>            protected        
+    <strong>compileArguments</strong>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a></td>
+                <td>$document</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr></td>
+                <td>$ast</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDirectives">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Directives.html#method_getDirectives"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a> at         line 33</div>
+        <code>                    <abbr title="Railgun\Reflection\Common\iterable">iterable</abbr>|<a href="../../Railgun/Reflection/Abstraction/CalleeDirectiveInterface.html"><abbr title="Railgun\Reflection\Abstraction\CalleeDirectiveInterface">CalleeDirectiveInterface</abbr></a>[]
+    <strong>getDirectives</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Railgun\Reflection\Common\iterable">iterable</abbr>|<a href="../../Railgun/Reflection/Abstraction/CalleeDirectiveInterface.html"><abbr title="Railgun\Reflection\Abstraction\CalleeDirectiveInterface">CalleeDirectiveInterface</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_hasDirective">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Directives.html#method_hasDirective"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a> at         line 42</div>
+        <code>                    bool
+    <strong>hasDirective</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDirective">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Directives.html#method_getDirective"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a> at         line 51</div>
+        <code>                    null|<a href="../../Railgun/Reflection/Abstraction/CalleeDirectiveInterface.html"><abbr title="Railgun\Reflection\Abstraction\CalleeDirectiveInterface">CalleeDirectiveInterface</abbr></a>
+    <strong>getDirective</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>null|<a href="../../Railgun/Reflection/Abstraction/CalleeDirectiveInterface.html"><abbr title="Railgun\Reflection\Abstraction\CalleeDirectiveInterface">CalleeDirectiveInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compileDirectives">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/Directives.html#method_compileDirectives"><abbr title="Railgun\Reflection\Common\Directives">Directives</abbr></a> at         line 60</div>
+        <code>            protected        
+    <strong>compileDirectives</strong>(<a href="../../Railgun/Reflection/Document.html"><abbr title="Railgun\Reflection\Document">Document</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Reflection/Document.html"><abbr title="Railgun\Reflection\Document">Document</abbr></a></td>
+                <td>$document</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr></td>
+                <td>$ast</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_bootLinkingStage">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/LinkingStage.html#method_bootLinkingStage"><abbr title="Railgun\Reflection\Common\LinkingStage">LinkingStage</abbr></a> at         line 37</div>
+        <code>                    
+    <strong>bootLinkingStage</strong>(<a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railgun\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a></td>
+                <td>$document</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr></td>
+                <td>$ast</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compileIfNotCompiled">
+        <div class="location">in <a href="../../Railgun/Reflection/Common/LinkingStage.html#method_compileIfNotCompiled"><abbr title="Railgun\Reflection\Common\LinkingStage">LinkingStage</abbr></a> at         line 50</div>
+        <code>                    bool
+    <strong>compileIfNotCompiled</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compile">
+        <div class="location">at         line 34</div>
+        <code>                    <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr>|null
+    <strong>compile</strong>(<a href="../../Railgun/Reflection/Document.html"><abbr title="Railgun\Reflection\Document">Document</abbr></a> $document, <abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr> $ast)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../Railgun/Reflection/Document.html"><abbr title="Railgun\Reflection\Document">Document</abbr></a></td>
+                <td>$document</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr></td>
+                <td>$ast</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Hoa\Compiler\Llk\TreeNode">TreeNode</abbr>|null</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

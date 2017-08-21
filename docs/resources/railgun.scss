@@ -61,6 +61,45 @@
 .markdown {
   &-section {
     padding-bottom: 300px;
+
+    h1 {
+      font-size: 2.4rem;
+
+      & + ul {
+        padding: 25px 0;
+        box-shadow: 0 1px 0 #f0f0f0;
+
+        li {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          &:before {
+            content: '#';
+            margin-right: 5px;
+            color: rgba(desaturate($color-ui, 20%), .5);
+          }
+
+          a {
+            text-decoration: none;
+            font-size: 16px;
+            &:hover {
+              color: darken($color-ui, 10%);
+            }
+          }
+
+          ul {
+            margin-top: 0;
+            padding-left: 40px;
+
+            li a {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+
     a {
       &.anchor {
         text-decoration: none;
