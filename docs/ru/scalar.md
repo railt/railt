@@ -1,14 +1,14 @@
-# Скаляр
+# Scalar
 
-- [Описание](/ru/scalar#Описание)
-- [Стандартные](/ru/scalar#Стандартные)
+- [Описание](/ru/scalar#описание)
+- [Стандартные](/ru/scalar#стандартные)
     - [Int](/ru/scalar#int)
     - [Float](/ru/scalar#float)
     - [String](/ru/scalar#string)
     - [Boolean](/ru/scalar#boolean)
     - [ID](/ru/scalar#id)
     - [Any](/ru/scalar#any)
-- [Модификаторы](/ru/scalar#Модификаторы)
+- [Модификаторы](/ru/scalar#модификаторы)
     - [List](/ru/scalar#list)
     - [Non-Null](/ru/scalar#non-null)
 - [Иерархия стандартных типов](/ru/scalar#иерархия-стандартных-типов)
@@ -25,8 +25,6 @@
 ## Стандартные
 
 GraphQL предоставляет набор стандартных скалярных типов, встроенных в язык (спецификацию).
-
-
 
 ### Int
 
