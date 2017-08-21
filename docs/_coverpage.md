@@ -1,6 +1,6 @@
-![logo](https://raw.githubusercontent.com/SerafimArts/Railgun/master/docs/resources/logo-big.png)
+![logo](./resources/logo-big.png)
 
 [GitHub](https://github.com/SerafimArts/Railgun)
 [Get Started](/README)
 
-![color](#fff)
+![color](#171E26 url(./resources/graph-wash.png))

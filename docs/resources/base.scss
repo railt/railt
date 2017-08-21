@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Source+Sans+Pro:300,400,600");
 
-$color-ui: #2d9aab;
+$color-ui: #65429a;
+$color-bg: #171e26;
+$color-text: #413e45;
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -65,7 +67,7 @@ body, html {
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  color: #34495e;
+  color: $color-text;
   font-family: Source Sans Pro, Helvetica Neue, Arial, sans-serif;
   font-size: 15px;
   letter-spacing: 0;
@@ -220,7 +222,7 @@ main {
 }
 
 .anchor span {
-  color: #34495e
+  color: $color-text
 }
 
 .anchor:hover {
@@ -407,7 +409,7 @@ body.sticky .sidebar, body.sticky .sidebar-toggle {
 }
 
 .markdown-section p.tip em {
-  color: #34495e
+  color: $color-text
 }
 
 .markdown-section p.tip:before {
@@ -550,9 +552,8 @@ section.cover {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background-position: 50%;
-  background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed !important;
   height: 100vh;
   display: none
 }
@@ -617,7 +618,7 @@ section.cover ul {
   padding: 0
 }
 
-section.cover .cover-main > p:last-child a {
+section.cover .cover-main > p a {
   border-color: $color-ui;
   border: 1px solid var(--theme-color, $color-ui);
   border-radius: 2rem;
@@ -637,19 +638,19 @@ section.cover .cover-main > p:last-child a {
   transition: all .15s ease
 }
 
-section.cover .cover-main > p:last-child a:last-child {
+section.cover .cover-main > p a {
   background-color: $color-ui;
   background-color: var(--theme-color, $color-ui);
   color: #fff;
-  margin-right: 0
+  margin: 0 15px;
 }
 
-section.cover .cover-main > p:last-child a:last-child:hover {
-  color: inherit;
+section.cover .cover-main > p a:hover {
+  color: #fff !important;
   opacity: .8
 }
 
-section.cover .cover-main > p:last-child a:hover {
+section.cover .cover-main > p a:hover {
   color: inherit
 }
 
@@ -657,11 +658,6 @@ section.cover blockquote > p > a {
   border-bottom: 2px solid $color-ui;
   border-bottom: 2px solid var(--theme-color, $color-ui);
   transition: color .3s
-}
-
-section.cover blockquote > p > a:hover {
-  color: $color-ui;
-  color: var(--theme-color, $color-ui)
 }
 
 section.cover.show {
@@ -856,7 +852,7 @@ section.cover.has-mask .mask {
 }
 
 .token.string {
-  color: #2aafc7;
+  color: #8f65b1;
 }
 
 .token.selector {
@@ -868,7 +864,7 @@ section.cover.has-mask .mask {
 }
 
 .language-css .token.string, .style .token.string, .token.entity, .token.url {
-  color: #22a2c9
+  color: #2284ab
 }
 
 .token.attr-value, .token.control, .token.directive, .token.unit {

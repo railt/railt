@@ -1,9 +1,26 @@
 @import "./base.scss";
 
 .app-nav {
-  a {
+  ul {
+    display: block;
+    background: rgba($color-bg, .3);
+    float: right;
+    padding: 4px 10px;
+    margin: 0;
+    border-radius: 3px;
+  }
+
+  a,
+  a:hover {
     font-size: 13px;
     margin-left: 5px;
+    color: #fff;
+
+    &.active {
+      font-weight: bold;
+      color: #fff !important;
+      border-color: #fff;
+    }
   }
 }
 
@@ -63,37 +80,41 @@
     padding-bottom: 300px;
 
     h1 {
-      font-size: 2.4rem;
-
       & + ul {
         padding: 25px 0;
-        box-shadow: 0 1px 0 #f0f0f0;
 
         li {
           list-style: none;
+          font-size: 17px;
+          line-height: 24px;
           margin: 0;
           padding: 0;
 
           &:before {
             content: '#';
-            margin-right: 5px;
-            color: rgba(desaturate($color-ui, 20%), .5);
+            margin-right: 8px;
+            font-size: 80%;
+            font-weight: bold;
+            color: rgba(desaturate($color-ui, 20%), .16);
           }
 
           a {
             text-decoration: none;
-            font-size: 16px;
             &:hover {
               color: darken($color-ui, 10%);
             }
           }
 
           ul {
-            margin-top: 0;
-            padding-left: 40px;
+            margin: 0 0 5px 0;
+            padding: 0 0 0 40px;
+            line-height: 18px;
 
-            li a {
-              font-size: 14px;
+            li {
+              a {
+                font-size: 16px;
+                font-weight: normal;
+              }
             }
           }
         }
@@ -106,8 +127,26 @@
       }
     }
 
+    h1 {
+      font-size: 4rem;
+      span {
+        font-weight: 300;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      padding-top: 40px;
+      box-shadow: 0 -1px 0 #f0f0f0;
+    }
+
     h3 {
-      font-size: 1.3rem;
+      font-size: 1.6rem;
+    }
+
+    h1 + ul + h2 {
+      padding-top: 0;
+      box-shadow: none;
     }
   }
 }

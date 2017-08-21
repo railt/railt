@@ -20,7 +20,6 @@
             maxLevel:    4,
             subMaxLevel: 2,
             basePath:    document.location.host === 'serafimarts.github.io' ? '/Railgun/' : '/',
-            repo:        'SerafimArts/Railgun',
             loadNavbar:  '_menu.md',
             loadSidebar: '_sidebar.md',
             coverpage:   true,
@@ -88,6 +87,12 @@
             'important': /%token|%skip|#?\w+:/i,
             'attr-name': /#?\w+:|T_.+?\s/,
             'string': /#\w+/,
+        };
+
+        Prism.languages.coercion = {
+            'comment': /\/\/.*|#.*/,
+            'important': /ERROR:(.*?)$/mi,
+            'keyword': /(.*?)→/,
         };
     </script>
 </body>
