@@ -1,5 +1,5 @@
 {
-    "name": "serafim/railt",
+    "name": "railt/railt",
     "type": "library",
     "description": "GraphQL IDL server implementation",
     "license": "MIT",

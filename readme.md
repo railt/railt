@@ -1,14 +1,14 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/SerafimArts/Railt/master/docs/resources/logo-big-white-bg.png" alt="Railt" />
+    <img src="https://raw.githubusercontent.com/railt/railt/master/docs/resources/logo-big-white-bg.png" alt="Railt" />
 </p>
 
 <p align="center">
-    <a href="https://travis-ci.org/SerafimArts/Railt"><img src="https://travis-ci.org/SerafimArts/Railt.svg?branch=master" alt="Travis CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/SerafimArts/Railt/?branch=master"><img src="https://scrutinizer-ci.com/g/SerafimArts/Railt/badges/quality-score.png?b=master" alt="Scrutinizer CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/SerafimArts/Railt/?branch=master"><img src="https://scrutinizer-ci.com/g/SerafimArts/Railt/badges/coverage.png?b=master" alt="Code coverage" /></a>
+    <a href="https://travis-ci.org/railt/railt"><img src="https://travis-ci.org/railt/railt.svg?branch=master" alt="Travis CI" /></a>
+    <a href="https://scrutinizer-ci.com/g/railt/railt/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/railt/badges/quality-score.png?b=master" alt="Scrutinizer CI" /></a>
+    <a href="https://scrutinizer-ci.com/g/railt/railt/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/railt/badges/coverage.png?b=master" alt="Code coverage" /></a>
     <a href="https://packagist.org/packages/serafim/railt"><img src="https://poser.pugx.org/serafim/railt/version" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/serafim/railt"><img src="https://poser.pugx.org/serafim/railt/v/unstable" alt="Latest Unstable Version"></a>
-    <a href="https://raw.githubusercontent.com/SerafimArts/Railt/master/LICENSE"><img src="https://poser.pugx.org/serafim/railt/license" alt="License MIT"></a>
+    <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE"><img src="https://poser.pugx.org/serafim/railt/license" alt="License MIT"></a>
 </p>
 
 > Not ready for real world usage yet :bomb: :scream:   
@@ -21,9 +21,9 @@ This is a pure async PHP realization of the **GraphQL** protocol based on the
 core drivers of the official GraphQL Specification 
 located on [Facebook GitHub](http://facebook.github.io/graphql/).
 
-- [Documentation](https://serafimarts.github.io/Railt) 
-    - [Russian](https://serafimarts.github.io/Railt/#/ru/)
-    - [English](https://serafimarts.github.io/Railt)
+- [Documentation](https://railt.github.io/railt) 
+    - [Russian](https://railt.github.io/railt/#/ru/)
+    - [English](https://railt.github.io/railt)
     
 > This documentation contains information about the old version and is 
 NOT RELEVANT at all. Im complete it later.
@@ -36,7 +36,7 @@ But this diagram will be useful in the future.
 The diagram is not complete and only the stage that is implemented 
 at the moment is presented.
 
-![https://serafimarts.github.io/Railt/resources/lifecycle.png](https://serafimarts.github.io/Railt/resources/lifecycle.png)
+![https://railt.github.io/railt/resources/lifecycle.png](https://railt.github.io/railt/resources/lifecycle.png)
 
 ## Requirements
 
