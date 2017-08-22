@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/railt/railt/master/docs/resources/logo-big-white-bg.png" alt="Railt" />
+    <img src="https://railt.github.io/docs/resources/logo-big-white-bg.png" alt="Railt" />
 </p>
 
 <p align="center">
@@ -21,22 +21,12 @@ This is a pure async PHP realization of the **GraphQL** protocol based on the
 core drivers of the official GraphQL Specification 
 located on [Facebook GitHub](http://facebook.github.io/graphql/).
 
-- [Documentation](https://railt.github.io/railt) 
-    - [Russian](https://railt.github.io/railt/#/ru/)
-    - [English](https://railt.github.io/railt)
+- [Documentation](https://railt.github.io/docs) 
+    - [Russian](https://railt.github.io/docs/#/ru/)
+    - [English](https://railt.github.io/docs)
     
 > This documentation contains information about the old version and is 
 NOT RELEVANT at all. Im complete it later.
-
-## How it works?
-
-Below is a diagram for the life cycle of the instance.
-You do not need to fully understand everything happening right now,
-But this diagram will be useful in the future. 
-The diagram is not complete and only the stage that is implemented 
-at the moment is presented.
-
-![https://railt.github.io/railt/resources/lifecycle.png](https://railt.github.io/railt/resources/lifecycle.png)
 
 ## Requirements
 
@@ -53,10 +43,4 @@ at the moment is presented.
 
 ## Installation
 
-- `composer require serafim/railt`
-
-## Usage
-
-Not yet.
-
-...you can see the `./tests` if you're curious =)
+- `composer require railt/railt`
