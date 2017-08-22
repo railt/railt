@@ -447,7 +447,7 @@ type Info {
 _Запрос:_
 ```graphql
 {
-    currentDate
+    currentDateTime
 }
 ```
 
