@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://railt.github.io/docs/resources/logo-big-white-bg.png" alt="Railt" />
+    <img src="https://raw.githubusercontent.com/railt/docs/master/resources/logo-big-white-bg.png" alt="Railt" />
 </p>
 
 <p align="center">
