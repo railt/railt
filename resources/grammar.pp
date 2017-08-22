@@ -29,7 +29,7 @@
 //
 //                             [ BOM | WHITESPACE | HTAB | LF | CR ]
 %skip T_IGNORE                 [\xfe\xff|\x20|\x09|\x0a|\x0d]+
-%skip T_COMMENT                #.*
+%skip T_COMMENT                #\h*(#[^\n]*)?\n?
 
 
 // ==========================================================================
@@ -48,6 +48,7 @@
 //  @see http://facebook.github.io/graphql/#sec-Punctuators
 //
 
+%token T_DOCBLOCK               #[^\n]*
 %token T_NON_NULL               !
 %token T_VAR                    \$
 %token T_PARENTHESIS_OPEN       \(
