@@ -782,8 +782,11 @@ section.cover.has-mask .mask {
   border-left: 4px solid $color-ui;
   border-left: 4px solid var(--theme-color, $color-ui);
   color: #858585;
+  font-weight: 400;
+  padding: 5px 20px;
+  background: #f9f9f9;
   margin: 2em 0;
-  padding-left: 20px
+  font-style: italic;
 }
 
 .markdown-section blockquote p {
