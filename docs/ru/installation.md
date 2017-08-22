@@ -19,7 +19,7 @@
     
 ## Composer
 
-- `composer require serafim/railgun`
+- `composer require serafim/railt`
     
 ## Зависимости
 

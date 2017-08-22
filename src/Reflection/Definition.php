@@ -1,22 +1,22 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection;
+namespace Railt\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Abstraction\DefinitionInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Class Definition
- * @package Railgun\Reflection
+ * @package Railt\Reflection
  */
 abstract class Definition implements DefinitionInterface
 {

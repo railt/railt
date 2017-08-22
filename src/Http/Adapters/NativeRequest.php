@@ -1,23 +1,23 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Http\Adapters;
+namespace Railt\Http\Adapters;
 
-use Railgun\Http\RequestInterface;
-use Railgun\Http\Support\ConfigurableRequest;
-use Railgun\Http\Support\ConfigurableRequestInterface;
-use Railgun\Http\Support\InteractWithData;
-use Railgun\Http\Support\JsonContentTypeHelper;
+use Railt\Http\RequestInterface;
+use Railt\Http\Support\ConfigurableRequest;
+use Railt\Http\Support\ConfigurableRequestInterface;
+use Railt\Http\Support\InteractWithData;
+use Railt\Http\Support\JsonContentTypeHelper;
 
 /**
  * Class NativeRequest
- * @package Railgun\Http
+ * @package Railt\Http
  */
 class NativeRequest implements RequestInterface, ConfigurableRequestInterface
 {

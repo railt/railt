@@ -1,27 +1,27 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Tests\Http;
+namespace Railt\Tests\Http;
 
 use Illuminate\Http\Request as LaravelNativeRequest;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\Exception;
-use Railgun\Http\Adapters\IlluminateRequest;
-use Railgun\Http\Adapters\NativeRequest;
-use Railgun\Http\Adapters\SymfonyRequest;
-use Railgun\Http\Request;
-use Railgun\Tests\AbstractTestCase;
+use Railt\Http\Adapters\IlluminateRequest;
+use Railt\Http\Adapters\NativeRequest;
+use Railt\Http\Adapters\SymfonyRequest;
+use Railt\Http\Request;
+use Railt\Tests\AbstractTestCase;
 use Symfony\Component\HttpFoundation\Request as SymfonyNativeRequest;
 
 /**
  * Class RequestsFactoryTestCase
- * @package Railgun\Tests\Http
+ * @package Railt\Tests\Http
  */
 class RequestsFactoryTestCase extends AbstractTestCase
 {

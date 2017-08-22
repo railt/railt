@@ -1,28 +1,28 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx;
+namespace Railt\Adapters\Webonyx;
 
 use GraphQL\GraphQL;
 use GraphQL\Schema;
-use Railgun\Http\RequestInterface;
-use Railgun\Http\Response;
-use Railgun\Http\ResponseInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Adapters\AdapterInterface;
-use Railgun\Routing\Router;
-use Railgun\Support\Dispatcher;
-use Railgun\Adapters\Webonyx\Builder\SchemaTypeBuilder;
+use Railt\Http\RequestInterface;
+use Railt\Http\Response;
+use Railt\Http\ResponseInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Adapters\AdapterInterface;
+use Railt\Routing\Router;
+use Railt\Support\Dispatcher;
+use Railt\Adapters\Webonyx\Builder\SchemaTypeBuilder;
 
 /**
  * Class Adapter
- * @package Railgun\Adapters\Webonyx
+ * @package Railt\Adapters\Webonyx
  */
 class Adapter implements AdapterInterface
 {

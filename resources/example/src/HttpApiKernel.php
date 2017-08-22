@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Example;
 
-use Railgun\Adapters\RequestInterface;
-use Railgun\Endpoint;
-use Railgun\Routing\Route;
-use Railgun\Routing\Router;
-use Railgun\Foundation\ApiKernel;
+use Railt\Adapters\RequestInterface;
+use Railt\Endpoint;
+use Railt\Routing\Route;
+use Railt\Routing\Router;
+use Railt\Foundation\ApiKernel;
 
 /**
  * Class HttpApiKernel
@@ -24,8 +24,8 @@ class HttpApiKernel extends ApiKernel
     /**
      * HttpApiKernel constructor.
      * @param Endpoint $endpoint
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
      */
     public function __construct(Endpoint $endpoint)
     {
@@ -36,8 +36,8 @@ class HttpApiKernel extends ApiKernel
 
     /**
      * @param Endpoint $endpoint
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
      */
     private function bootLogger(Endpoint $endpoint)
     {

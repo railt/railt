@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Railt\Reflection\Abstraction\DirectiveTypeInterface | Railt API Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Railt_Reflection_Abstraction_DirectiveTypeInterface" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">Railt API Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">interface</span></li>
+                        <li><a href="../../../Railt.html">Railt</a></li><li class="backslash">\</li><li><a href="../../../Railt/Reflection.html">Reflection</a></li><li class="backslash">\</li><li><a href="../../../Railt/Reflection/Abstraction.html">Abstraction</a></li><li class="backslash">\</li><li>DirectiveTypeInterface</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            DirectiveTypeInterface
+                
+        </h1>
+    </div>
+
+    <p>    interface
+    <strong>DirectiveTypeInterface</strong>        implements
+        <a href="../../../Railt/Reflection/Abstraction/NamedDefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\NamedDefinitionInterface">NamedDefinitionInterface</abbr></a>, <a href="../../../Railt/Reflection/Abstraction/Common/HasArgumentsInterface.html"><abbr title="Railt\Reflection\Abstraction\Common\HasArgumentsInterface">HasArgumentsInterface</abbr></a>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Interface DirectiveTypeInterface</p>                                </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>TARGET_ENUM</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_QUERY</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_UNION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_FIELD</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_SCALAR</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_SCHEMA</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_OBJECT</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_MUTATION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_INTERFACE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_ENUM_VALUE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_INPUT_OBJECT</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_SUBSCRIPTION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_FRAGMENT_SPREAD</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_INLINE_FRAGMENT</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_FIELD_DEFINITION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_FRAGMENT_DEFINITION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_ARGUMENT_DEFINITION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>TARGET_INPUT_FIELD_DEFINITION</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTypeName">getTypeName</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Railt/Reflection/Abstraction/DefinitionInterface.html#method_getTypeName"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../Railt/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railt\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDocument">getDocument</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Railt/Reflection/Abstraction/DefinitionInterface.html#method_getDocument"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getName">getName</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Railt/Reflection/Abstraction/NamedDefinitionInterface.html#method_getName"><abbr title="Railt\Reflection\Abstraction\NamedDefinitionInterface">NamedDefinitionInterface</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Railt\Reflection\Abstraction\Common\iterable">iterable</abbr>|<a href="../../../Railt/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railt\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getArguments">getArguments</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Railt/Reflection/Abstraction/Common/HasArgumentsInterface.html#method_getArguments"><abbr title="Railt\Reflection\Abstraction\Common\HasArgumentsInterface">HasArgumentsInterface</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_hasArgument">hasArgument</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Railt/Reflection/Abstraction/Common/HasArgumentsInterface.html#method_hasArgument"><abbr title="Railt\Reflection\Abstraction\Common\HasArgumentsInterface">HasArgumentsInterface</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    null|<a href="../../../Railt/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railt\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getArgument">getArgument</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../Railt/Reflection/Abstraction/Common/HasArgumentsInterface.html#method_getArgument"><abbr title="Railt\Reflection\Abstraction\Common\HasArgumentsInterface">HasArgumentsInterface</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Railt\Reflection\Abstraction\iterable">iterable</abbr>|string[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTargets">getTargets</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_hasTarget">hasTarget</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    null|string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTarget">getTarget</a>(string $name)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_getTypeName">
+        <div class="location">in <a href="../../../Railt/Reflection/Abstraction/DefinitionInterface.html#method_getTypeName"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a> at         line 21</div>
+        <code>                    string
+    <strong>getTypeName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDocument">
+        <div class="location">in <a href="../../../Railt/Reflection/Abstraction/DefinitionInterface.html#method_getDocument"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a> at         line 26</div>
+        <code>                    <a href="../../../Railt/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railt\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a>
+    <strong>getDocument</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../Railt/Reflection/Abstraction/DocumentTypeInterface.html"><abbr title="Railt\Reflection\Abstraction\DocumentTypeInterface">DocumentTypeInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getName">
+        <div class="location">in <a href="../../../Railt/Reflection/Abstraction/NamedDefinitionInterface.html#method_getName"><abbr title="Railt\Reflection\Abstraction\NamedDefinitionInterface">NamedDefinitionInterface</abbr></a> at         line 21</div>
+        <code>                    string
+    <strong>getName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getArguments">
+        <div class="location">in <a href="../../../Railt/Reflection/Abstraction/Common/HasArgumentsInterface.html#method_getArguments"><abbr title="Railt\Reflection\Abstraction\Common\HasArgumentsInterface">HasArgumentsInterface</abbr></a> at         line 23</div>
+        <code>                    <abbr title="Railt\Reflection\Abstraction\Common\iterable">iterable</abbr>|<a href="../../../Railt/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railt\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>[]
+    <strong>getArguments</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Railt\Reflection\Abstraction\Common\iterable">iterable</abbr>|<a href="../../../Railt/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railt\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_hasArgument">
+        <div class="location">in <a href="../../../Railt/Reflection/Abstraction/Common/HasArgumentsInterface.html#method_hasArgument"><abbr title="Railt\Reflection\Abstraction\Common\HasArgumentsInterface">HasArgumentsInterface</abbr></a> at         line 29</div>
+        <code>                    bool
+    <strong>hasArgument</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getArgument">
+        <div class="location">in <a href="../../../Railt/Reflection/Abstraction/Common/HasArgumentsInterface.html#method_getArgument"><abbr title="Railt\Reflection\Abstraction\Common\HasArgumentsInterface">HasArgumentsInterface</abbr></a> at         line 35</div>
+        <code>                    null|<a href="../../../Railt/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railt\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a>
+    <strong>getArgument</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>null|<a href="../../../Railt/Reflection/Abstraction/ArgumentInterface.html"><abbr title="Railt\Reflection\Abstraction\ArgumentInterface">ArgumentInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTargets">
+        <div class="location">at         line 44</div>
+        <code>                    <abbr title="Railt\Reflection\Abstraction\iterable">iterable</abbr>|string[]
+    <strong>getTargets</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Railt\Reflection\Abstraction\iterable">iterable</abbr>|string[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_hasTarget">
+        <div class="location">at         line 50</div>
+        <code>                    bool
+    <strong>hasTarget</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTarget">
+        <div class="location">at         line 56</div>
+        <code>                    null|string
+    <strong>getTarget</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>null|string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

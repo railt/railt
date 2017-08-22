@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection\Abstraction\Type;
+namespace Railt\Reflection\Abstraction\Type;
 
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Interface RelationTypeInterface
- * @package Railgun\Reflection\Abstraction\Type
+ * @package Railt\Reflection\Abstraction\Type
  */
 interface RelationTypeInterface extends
     NamedDefinitionInterface,

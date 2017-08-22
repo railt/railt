@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Support;
+namespace Railt\Support;
 
-use Railgun\Exceptions\NotReadableException;
+use Railt\Exceptions\NotReadableException;
 
 /**
  * Class File
- * @package Railgun\Support
+ * @package Railt\Support
  */
 class File
 {
@@ -51,7 +51,7 @@ class File
     /**
      * @param \SplFileInfo $file
      * @return static
-     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\NotReadableException
      */
     public static function physics(\SplFileInfo $file): File
     {
@@ -67,7 +67,7 @@ class File
     /**
      * @param string $path
      * @return File
-     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\NotReadableException
      */
     public static function path(string $path): File
     {

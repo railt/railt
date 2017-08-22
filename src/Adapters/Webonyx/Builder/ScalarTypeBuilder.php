@@ -1,21 +1,21 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder;
+namespace Railt\Adapters\Webonyx\Builder;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ScalarType;
-use Railgun\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Reflection\Abstraction\ScalarTypeInterface;
 
 /**
  * Class ScalarTypeBuilder
- * @package Railgun\Adapters\Webonyx\Builder
+ * @package Railt\Adapters\Webonyx\Builder
  * @property-read ScalarTypeInterface $type
  */
 class ScalarTypeBuilder extends Builder

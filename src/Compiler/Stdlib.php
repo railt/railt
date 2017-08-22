@@ -1,23 +1,23 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Compiler;
+namespace Railt\Compiler;
 
-use Railgun\Reflection\Abstraction\CalleeDirectiveInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\ScalarTypeInterface;
-use Railgun\Reflection\Abstraction\SchemaTypeInterface;
-use Railgun\Reflection\Common\HasDefinitions;
+use Railt\Reflection\Abstraction\CalleeDirectiveInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Reflection\Abstraction\SchemaTypeInterface;
+use Railt\Reflection\Common\HasDefinitions;
 
 /**
  * Class Stdlib
- * @package Railgun\Compiler
+ * @package Railt\Compiler
  */
 final class Stdlib implements DocumentTypeInterface
 {
@@ -26,7 +26,7 @@ final class Stdlib implements DocumentTypeInterface
     /**
      * GraphQLStandard constructor.
      * @param Dictionary $dictionary
-     * @throws \Railgun\Exceptions\SemanticException
+     * @throws \Railt\Exceptions\SemanticException
      */
     public function __construct(Dictionary $dictionary)
     {

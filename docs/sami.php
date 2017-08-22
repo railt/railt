@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@ $iterator = Symfony\Component\Finder\Finder::create()
 
 $options = [
     'theme'                => 'default',
-    'title'                => 'Railgun API Documentation',
+    'title'                => 'Railt API Documentation',
     'build_dir'            => __DIR__ . '/api',
     'cache_dir'            => __DIR__ . '/cache',
 ];

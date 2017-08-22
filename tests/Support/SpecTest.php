@@ -1,17 +1,17 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Tests\Support;
+namespace Railt\Tests\Support;
 
 /**
  * Class SpecTest
- * @package Railgun\Tests\Support
+ * @package Railt\Tests\Support
  */
 class SpecTest
 {

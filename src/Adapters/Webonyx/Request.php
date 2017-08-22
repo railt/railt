@@ -1,25 +1,25 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx;
+namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use Railgun\Adapters\RequestInterface;
-use Railgun\Exceptions\RuntimeException;
-use Railgun\Reflection\Abstraction\ArgumentInterface;
-use Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
-use Railgun\Routing\Route;
-use Railgun\Routing\Router;
+use Railt\Adapters\RequestInterface;
+use Railt\Exceptions\RuntimeException;
+use Railt\Reflection\Abstraction\ArgumentInterface;
+use Railt\Reflection\Abstraction\Common\HasArgumentsInterface;
+use Railt\Routing\Route;
+use Railt\Routing\Router;
 
 /**
  * Class Request
- * @package Railgun\Adapters\Webonyx
+ * @package Railt\Adapters\Webonyx
  */
 class Request implements RequestInterface
 {

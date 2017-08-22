@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Exceptions;
+namespace Railt\Exceptions;
 
 use Hoa\Compiler\Exception\UnrecognizedToken;
-use Railgun\Support\File;
+use Railt\Support\File;
 
 /**
  * Class UnrecognizedTokenException
- * @package Railgun\Exceptions
+ * @package Railt\Exceptions
  */
 class UnrecognizedTokenException extends \ParseError implements GraphQLSchemaException
 {
-    use RailgunException;
+    use RailtException;
 
     /**
      * @var int

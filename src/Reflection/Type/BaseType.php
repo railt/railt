@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection\Type;
+namespace Railt\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\Type\ListTypeInterface;
-use Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
-use Railgun\Reflection\Abstraction\Type\TypeInterface;
-use Railgun\Reflection\Document;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\Type\ListTypeInterface;
+use Railt\Reflection\Abstraction\Type\RelationTypeInterface;
+use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Document;
 
 /**
  * Class BaseType
- * @package Railgun\Reflection\Type
+ * @package Railt\Reflection\Type
  */
 abstract class BaseType implements TypeInterface
 {

@@ -1,25 +1,25 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Tests\Compiler;
+namespace Railt\Tests\Compiler;
 
 use PHPUnit\Framework\Assert;
-use Railgun\Compiler\Compiler;
-use Railgun\Support\File;
-use Railgun\Tests\AbstractTestCase;
-use Railgun\Tests\Support\SpecTest;
-use Railgun\Tests\Support\SpecSupport;
+use Railt\Compiler\Compiler;
+use Railt\Support\File;
+use Railt\Tests\AbstractTestCase;
+use Railt\Tests\Support\SpecTest;
+use Railt\Tests\Support\SpecSupport;
 use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Class CompilerTestCase
- * @package Railgun\Tests\Compiler
+ * @package Railt\Tests\Compiler
  * @group large
  */
 class AstSpecsTestCase extends AbstractTestCase
@@ -34,8 +34,8 @@ class AstSpecsTestCase extends AbstractTestCase
     /**
      * @dataProvider specProvider
      * @param SpecTest $spec
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function testLanguageAstParsing(SpecTest $spec): void
     {

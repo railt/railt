@@ -1,25 +1,25 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection;
+namespace Railt\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Exceptions\IndeterminateBehaviorException;
-use Railgun\Reflection\Abstraction\ScalarTypeInterface;
-use Railgun\Reflection\Common\Directives;
-use Railgun\Reflection\Common\HasLinkingStageInterface;
-use Railgun\Reflection\Common\HasName;
-use Railgun\Reflection\Common\LinkingStage;
+use Railt\Exceptions\IndeterminateBehaviorException;
+use Railt\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Reflection\Common\Directives;
+use Railt\Reflection\Common\HasLinkingStageInterface;
+use Railt\Reflection\Common\HasName;
+use Railt\Reflection\Common\LinkingStage;
 
 /**
  * Class ScalarDefinition
- * @package Railgun\Reflection
+ * @package Railt\Reflection
  */
 class ScalarDefinition extends Definition implements
     ScalarTypeInterface,

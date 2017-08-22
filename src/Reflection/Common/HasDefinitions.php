@@ -1,23 +1,23 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection\Common;
+namespace Railt\Reflection\Common;
 
-use Railgun\Compiler\Dictionary;
-use Railgun\Exceptions\IndeterminateBehaviorException;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Compiler\Dictionary;
+use Railt\Exceptions\IndeterminateBehaviorException;
+use Railt\Reflection\Abstraction\DefinitionInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Trait HasDefinitions
- * @package Railgun\Reflection\Common
+ * @package Railt\Reflection\Common
  */
 trait HasDefinitions
 {

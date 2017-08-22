@@ -1,37 +1,37 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun;
+namespace Railt;
 
 use Psr\Log\LoggerInterface;
-use Railgun\Adapters\AdapterInterface;
-use Railgun\Adapters\Factory;
-use Railgun\Compiler\Autoloader;
-use Railgun\Foundation\ApiKernel;
-use Railgun\Foundation\KernelInterface;
-use Railgun\Http\ResponderInterface;
-use Railgun\Http\Response;
-use Railgun\Http\ResponseInterface;
-use Railgun\Routing\Router;
-use Railgun\Support\Constructors;
-use Railgun\Compiler\Compiler;
-use Railgun\Exceptions\RuntimeException;
-use Railgun\Http\RequestInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Support\Debuggable;
-use Railgun\Support\Dispatcher;
-use Railgun\Support\File;
-use Railgun\Support\Loggable;
+use Railt\Adapters\AdapterInterface;
+use Railt\Adapters\Factory;
+use Railt\Compiler\Autoloader;
+use Railt\Foundation\ApiKernel;
+use Railt\Foundation\KernelInterface;
+use Railt\Http\ResponderInterface;
+use Railt\Http\Response;
+use Railt\Http\ResponseInterface;
+use Railt\Routing\Router;
+use Railt\Support\Constructors;
+use Railt\Compiler\Compiler;
+use Railt\Exceptions\RuntimeException;
+use Railt\Http\RequestInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Support\Debuggable;
+use Railt\Support\Dispatcher;
+use Railt\Support\File;
+use Railt\Support\Loggable;
 
 /**
  * Class Endpoint
- * @package Railgun
+ * @package Railt
  */
 class Endpoint implements ResponderInterface
 {
@@ -67,8 +67,8 @@ class Endpoint implements ResponderInterface
     /**
      * Endpoint constructor.
      * @param File $file
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\SemanticException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\SemanticException
      */
     public function __construct(File $file)
     {
@@ -146,9 +146,9 @@ class Endpoint implements ResponderInterface
     /**
      * @param RequestInterface $request
      * @return ResponseInterface
-     * @throws \Railgun\Exceptions\RuntimeException
+     * @throws \Railt\Exceptions\RuntimeException
      * @throws \LogicException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function request(RequestInterface $request): ResponseInterface
     {
@@ -165,7 +165,7 @@ class Endpoint implements ResponderInterface
 
     /**
      * @return AdapterInterface
-     * @throws \Railgun\Exceptions\RuntimeException
+     * @throws \Railt\Exceptions\RuntimeException
      * @throws \LogicException
      * @throws Exceptions\UnrecognizedTokenException
      */

@@ -1,23 +1,23 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder\Common;
+namespace Railt\Adapters\Webonyx\Builder\Common;
 
 use Illuminate\Support\Str;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
-use Railgun\Reflection\Abstraction\FieldInterface;
-use Railgun\Reflection\Abstraction\Type\TypeInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Abstraction\DefinitionInterface;
+use Railt\Reflection\Abstraction\FieldInterface;
+use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 
 /**
  * Trait HasDescription
- * @package Railgun\Adapters\Webonyx\Builder\Common
+ * @package Railt\Adapters\Webonyx\Builder\Common
  */
 trait HasDescription
 {

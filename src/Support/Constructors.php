@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Support;
+namespace Railt\Support;
 
-use Railgun\Endpoint;
+use Railt\Endpoint;
 
 /**
  * Trait Constructors
- * @package Railgun\Support
+ * @package Railt\Support
  * @mixin Endpoint
  */
 trait Constructors
@@ -21,9 +21,9 @@ trait Constructors
     /**
      * @param \SplFileInfo $info
      * @return Endpoint
-     * @throws \Railgun\Exceptions\SemanticException
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\SemanticException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\NotReadableException
      */
     public static function fromFileInfo(\SplFileInfo $info): Endpoint
     {
@@ -33,9 +33,9 @@ trait Constructors
     /**
      * @param string $pathName
      * @return Endpoint
-     * @throws \Railgun\Exceptions\SemanticException
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\SemanticException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\NotReadableException
      */
     public static function fromFilePath(string $pathName): Endpoint
     {
@@ -45,9 +45,9 @@ trait Constructors
     /**
      * @param string $sources
      * @return Endpoint
-     * @throws \Railgun\Exceptions\SemanticException
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\SemanticException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\NotReadableException
      */
     public static function fromSources(string $sources): Endpoint
     {
@@ -58,9 +58,9 @@ trait Constructors
      * @param \SplFileInfo|string $schema
      * @return Endpoint
      * @throws \InvalidArgumentException
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\NotReadableException
-     * @throws \Railgun\Exceptions\SemanticException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\SemanticException
      */
     public static function new($schema): Endpoint
     {

@@ -1,25 +1,25 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder;
+namespace Railt\Adapters\Webonyx\Builder;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ResolveInfo;
-use Railgun\Reflection\Abstraction\ScalarTypeInterface;
-use Railgun\Adapters\Webonyx\Request;
-use Railgun\Reflection\Abstraction\FieldInterface;
-use Railgun\Adapters\Webonyx\Builder\Common\HasDescription;
-use Railgun\Adapters\Webonyx\Builder\Type\TypeBuilder;
+use Railt\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Adapters\Webonyx\Request;
+use Railt\Reflection\Abstraction\FieldInterface;
+use Railt\Adapters\Webonyx\Builder\Common\HasDescription;
+use Railt\Adapters\Webonyx\Builder\Type\TypeBuilder;
 
 /**
  * Class FieldBuilder
- * @package Railgun\Adapters\Webonyx
+ * @package Railt\Adapters\Webonyx
  * @property-read FieldInterface $type
  */
 class FieldBuilder extends Builder
@@ -28,8 +28,8 @@ class FieldBuilder extends Builder
 
     /**
      * @return array
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\RuntimeException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\RuntimeException
      * @throws \LogicException
      */
     public function build(): array

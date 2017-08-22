@@ -1,22 +1,22 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Compiler;
+namespace Railt\Compiler;
 
 use Illuminate\Support\Str;
-use Railgun\Compiler\Autoloader\Directory;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Support\File;
+use Railt\Compiler\Autoloader\Directory;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Support\File;
 
 /**
  * Class Autoloader
- * @package Railgun\Compiler
+ * @package Railt\Compiler
  */
 class Autoloader
 {
@@ -42,9 +42,9 @@ class Autoloader
     /**
      * @param string $type
      * @return null|NamedDefinitionInterface
-     * @throws \Railgun\Exceptions\NotReadableException
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function load(string $type): ?NamedDefinitionInterface
     {

@@ -1,5 +1,5 @@
 {
-    "name": "serafim/railgun",
+    "name": "serafim/railt",
     "type": "library",
     "description": "GraphQL IDL server implementation",
     "license": "MIT",
@@ -11,7 +11,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railgun\\": "src/"
+            "Railt\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -29,7 +29,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railgun\\Tests\\": "tests"
+            "Railt\\Tests\\": "tests"
         }
     },
     "suggest": {
@@ -39,7 +39,7 @@
         "illuminate/http": "(~5.1) Laravel (illuminate) framework support"
     },
     "scripts": {
-        "docs-make": "daux --destination=../railgun-docs",
+        "docs-make": "daux --destination=../railt-docs",
         "docs": "daux serve",
         "tests": "./vendor/bin/paratest --colors -p8"
     }

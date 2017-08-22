@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection\Type;
+namespace Railt\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Illuminate\Support\Str;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Reflection\Abstraction\Type\RelationTypeInterface;
-use Railgun\Reflection\Common\HasName;
-use Railgun\Reflection\Document;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Abstraction\Type\RelationTypeInterface;
+use Railt\Reflection\Common\HasName;
+use Railt\Reflection\Document;
 
 /**
  * Class RelationType
- * @package Railgun\Reflection\Type
+ * @package Railt\Reflection\Type
  */
 class RelationType extends BaseType implements RelationTypeInterface
 {
@@ -54,8 +54,8 @@ class RelationType extends BaseType implements RelationTypeInterface
 
     /**
      * @return string
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function getTypeName(): string
     {
@@ -64,8 +64,8 @@ class RelationType extends BaseType implements RelationTypeInterface
 
     /**
      * @return NamedDefinitionInterface
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function getRelationDefinition(): NamedDefinitionInterface
     {

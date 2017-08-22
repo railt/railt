@@ -1,17 +1,17 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Http;
+namespace Railt\Http;
 
 /**
  * Interface ResponderInterface
- * @package Railgun\Http
+ * @package Railt\Http
  */
 interface ResponderInterface
 {

@@ -1,25 +1,25 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder;
+namespace Railt\Adapters\Webonyx\Builder;
 
 use Illuminate\Support\Arr;
-use Railgun\Adapters\RequestInterface;
-use Railgun\Adapters\Webonyx\Request;
+use Railt\Adapters\RequestInterface;
+use Railt\Adapters\Webonyx\Request;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
-use Railgun\Reflection\Abstraction\ObjectTypeInterface;
-use Railgun\Adapters\Webonyx\Builder\Common\HasDescription;
+use Railt\Reflection\Abstraction\ObjectTypeInterface;
+use Railt\Adapters\Webonyx\Builder\Common\HasDescription;
 
 /**
  * Class ObjectTypeBuilder
- * @package Railgun\Adapters\Webonyx\Builder
+ * @package Railt\Adapters\Webonyx\Builder
  * @property-read ObjectTypeInterface $type
  */
 class ObjectTypeBuilder extends Builder
@@ -28,10 +28,10 @@ class ObjectTypeBuilder extends Builder
 
     /**
      * @return ObjectType
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
-     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
      * @throws \LogicException
-     * @throws \Railgun\Exceptions\RuntimeException
+     * @throws \Railt\Exceptions\RuntimeException
      */
     public function build(): ObjectType
     {
@@ -59,8 +59,8 @@ class ObjectTypeBuilder extends Builder
      * @param RequestInterface $request
      * @param mixed $value
      * @return mixed
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
-     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
      */
     private function fetchData(RequestInterface $request, $value)
     {
@@ -85,8 +85,8 @@ class ObjectTypeBuilder extends Builder
      * @param RequestInterface $request
      * @param mixed $value
      * @return mixed
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
      */
     private function resolveResponder(RequestInterface $request, $value)
     {

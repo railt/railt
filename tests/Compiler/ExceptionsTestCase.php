@@ -1,29 +1,29 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Compiler;
+namespace Railt\Compiler;
 
-use Railgun\Exceptions\CompilerException;
-use Railgun\Exceptions\NotReadableException;
-use Railgun\Tests\AbstractTestCase;
+use Railt\Exceptions\CompilerException;
+use Railt\Exceptions\NotReadableException;
+use Railt\Tests\AbstractTestCase;
 
 /**
  * Class ExceptionsTestCase
- * @package Railgun\Compiler
+ * @package Railt\Compiler
  */
 class ExceptionsTestCase extends AbstractTestCase
 {
     /**
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\NotReadableException
      */
     public function testCompilerException(): void
     {
@@ -36,10 +36,10 @@ class ExceptionsTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Railgun\Exceptions\CompilerException
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
-     * @throws \Railgun\Exceptions\NotReadableException
+     * @throws \Railt\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\NotReadableException
      */
     public function testNotReadableException(): void
     {

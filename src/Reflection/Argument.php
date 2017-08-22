@@ -1,29 +1,29 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection;
+namespace Railt\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Reflection\Abstraction\ArgumentInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Reflection\Abstraction\Type\TypeInterface;
-use Railgun\Reflection\Common\Directives;
-use Railgun\Reflection\Common\HasLinkingStageInterface;
-use Railgun\Reflection\Common\HasName;
-use Railgun\Reflection\Common\LinkingStage;
-use Railgun\Reflection\Type\ListType;
-use Railgun\Reflection\Type\RelationType;
+use Railt\Reflection\Abstraction\ArgumentInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Common\Directives;
+use Railt\Reflection\Common\HasLinkingStageInterface;
+use Railt\Reflection\Common\HasName;
+use Railt\Reflection\Common\LinkingStage;
+use Railt\Reflection\Type\ListType;
+use Railt\Reflection\Type\RelationType;
 
 /**
  * Class Argument
- * @package Railgun\Reflection
+ * @package Railt\Reflection
  */
 class Argument extends Definition implements
     HasLinkingStageInterface,

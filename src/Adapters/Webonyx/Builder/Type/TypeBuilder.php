@@ -1,27 +1,27 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder\Type;
+namespace Railt\Adapters\Webonyx\Builder\Type;
 
 use GraphQL\Type\Definition\Type;
-use Railgun\Adapters\Webonyx\Builder\Builder;
+use Railt\Adapters\Webonyx\Builder\Builder;
 
 /**
  * Class TypeBuilder
- * @package Railgun\Adapters\Webonyx
+ * @package Railt\Adapters\Webonyx
  */
 class TypeBuilder extends Builder
 {
     /**
      * @return Type
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
      * @throws \LogicException
      */
     public function build(): Type
@@ -46,8 +46,8 @@ class TypeBuilder extends Builder
     /**
      * @return Type
      * @throws \LogicException
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     private function resolveRelationType(): Type
     {

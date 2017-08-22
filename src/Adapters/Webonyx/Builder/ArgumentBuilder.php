@@ -1,21 +1,21 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder;
+namespace Railt\Adapters\Webonyx\Builder;
 
-use Railgun\Reflection\Abstraction\ArgumentInterface;
-use Railgun\Adapters\Webonyx\Builder\Common\HasDescription;
-use Railgun\Adapters\Webonyx\Builder\Type\TypeBuilder;
+use Railt\Reflection\Abstraction\ArgumentInterface;
+use Railt\Adapters\Webonyx\Builder\Common\HasDescription;
+use Railt\Adapters\Webonyx\Builder\Type\TypeBuilder;
 
 /**
  * Class ArgumentBuilder
- * @package Railgun\Adapters\Webonyx\Builder
+ * @package Railt\Adapters\Webonyx\Builder
  * @property-read ArgumentInterface $type
  */
 class ArgumentBuilder extends Builder

@@ -1,22 +1,22 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection;
+namespace Railt\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Illuminate\Support\Str;
-use Railgun\Exceptions\IndeterminateBehaviorException;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Exceptions\IndeterminateBehaviorException;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
 
 /**
  * Class Value
- * @package Railgun\Reflection
+ * @package Railt\Reflection
  */
 final class Value
 {

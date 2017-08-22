@@ -1,27 +1,27 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection;
+namespace Railt\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Exceptions\IndeterminateBehaviorException;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
-use Railgun\Reflection\Abstraction\ExtendTypeInterface;
-use Railgun\Reflection\Common\Directives;
-use Railgun\Reflection\Common\Fields;
-use Railgun\Reflection\Common\HasLinkingStageInterface;
-use Railgun\Reflection\Common\HasName;
-use Railgun\Reflection\Common\LinkingStage;
+use Railt\Exceptions\IndeterminateBehaviorException;
+use Railt\Reflection\Abstraction\DefinitionInterface;
+use Railt\Reflection\Abstraction\ExtendTypeInterface;
+use Railt\Reflection\Common\Directives;
+use Railt\Reflection\Common\Fields;
+use Railt\Reflection\Common\HasLinkingStageInterface;
+use Railt\Reflection\Common\HasName;
+use Railt\Reflection\Common\LinkingStage;
 
 /**
  * Class ExtendDefinition
- * @package Railgun\Reflection
+ * @package Railt\Reflection
  */
 class ExtendDefinition extends Definition implements
     ExtendTypeInterface,

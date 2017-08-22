@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,11 +10,11 @@ declare(strict_types=1);
 use Example\HttpApiKernel;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use Railgun\Adapters\RequestInterface;
-use Railgun\Endpoint;
-use Railgun\Http\Request;
-use Railgun\Routing\Route;
-use Railgun\Routing\Router;
+use Railt\Adapters\RequestInterface;
+use Railt\Endpoint;
+use Railt\Http\Request;
+use Railt\Routing\Route;
+use Railt\Routing\Router;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ require __DIR__ . '/src/Controllers/SupportController.php';
 | Create The Endpoint
 |--------------------------------------------------------------------------
 |
-| The first thing we will do is create a new Railgun endpoint instance
+| The first thing we will do is create a new Railt endpoint instance
 | which serves as the "glue" for all the components of your application.
 |
 */
@@ -54,7 +54,7 @@ $endpoint = Endpoint::fromFilePath(__DIR__ . '/schema/index.graphqls');
 | Register The GraphQL Auto Loader
 |--------------------------------------------------------------------------
 |
-| Railgun provides a convenient, automatically GraphQL Types loader for
+| Railt provides a convenient, automatically GraphQL Types loader for
 | our application. We just need to utilize it! We'll simply require it
 | into the script here so that we don't have to worry about manual
 | loading any of our GraphQL Types later on. It feels great to relax.
@@ -74,7 +74,7 @@ $endpoint->autoload()->dir(__DIR__ . '/schema');
 |
 */
 
-$logger = new Logger('Railgun', [new StreamHandler('php://stdout')]);
+$logger = new Logger('Railt', [new StreamHandler('php://stdout')]);
 
 $endpoint->withLogger($logger);
 

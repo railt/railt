@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Tests\Compiler;
+namespace Railt\Tests\Compiler;
 
-use Railgun\Compiler\Compiler;
-use Railgun\Reflection\Document;
-use Railgun\Support\File;
-use Railgun\Tests\AbstractTestCase;
+use Railt\Compiler\Compiler;
+use Railt\Reflection\Document;
+use Railt\Support\File;
+use Railt\Tests\AbstractTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class AstABSpecsTestCase
- * @package Railgun\Tests\Compiler
+ * @package Railt\Tests\Compiler
  * @group large
  */
 class AstABSpecsTestCase extends AbstractTestCase
@@ -31,7 +31,7 @@ class AstABSpecsTestCase extends AbstractTestCase
     /**
      * @dataProvider positiveTests
      * @param string $file
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function testPositiveCompilation($file): void
     {
@@ -47,7 +47,7 @@ class AstABSpecsTestCase extends AbstractTestCase
     /**
      * @dataProvider negativeTests
      * @param string $file
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function testNegativeCompilation($file): void
     {

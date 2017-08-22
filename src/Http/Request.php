@@ -1,23 +1,23 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Http;
+namespace Railt\Http;
 
 use Illuminate\Http\Request as IlluminateHttpRequest;
-use Railgun\Http\Adapters\IlluminateRequest;
-use Railgun\Http\Adapters\NativeRequest;
-use Railgun\Http\Adapters\SymfonyRequest;
+use Railt\Http\Adapters\IlluminateRequest;
+use Railt\Http\Adapters\NativeRequest;
+use Railt\Http\Adapters\SymfonyRequest;
 use Symfony\Component\HttpFoundation\Request as SymfonyHttpRequest;
 
 /**
  * Class Request
- * @package Railgun\Http
+ * @package Railt\Http
  */
 class Request extends NativeRequest
 {

@@ -51,7 +51,7 @@ Could produce the **JSON** result:
 }
 ```
 
-## What is Railgun? 
+## What is Railt? 
 
 This is a pure async PHP realization of the **GraphQL** protocol based on the 
 [youshido/graphql](https://github.com/Youshido/GraphQL) and/or 

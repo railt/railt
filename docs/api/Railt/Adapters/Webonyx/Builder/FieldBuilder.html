@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Railt\Adapters\Webonyx\Builder\FieldBuilder | Railt API Documentation</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:Railt_Adapters_Webonyx_Builder_FieldBuilder" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">Railt API Documentation</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../Railt.html">Railt</a></li><li class="backslash">\</li><li><a href="../../../../Railt/Adapters.html">Adapters</a></li><li class="backslash">\</li><li><a href="../../../../Railt/Adapters/Webonyx.html">Webonyx</a></li><li class="backslash">\</li><li><a href="../../../../Railt/Adapters/Webonyx/Builder.html">Builder</a></li><li class="backslash">\</li><li>FieldBuilder</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            FieldBuilder
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>FieldBuilder</strong>        extends <a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a>
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Class FieldBuilder</p>                                </div>
+    
+            <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../../Railt/Adapters/Webonyx/Builder/Common/HasDescription.html"><abbr title="Railt\Adapters\Webonyx\Builder\Common\HasDescription">HasDescription</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Trait HasDescription
+                </div>
+            </div>
+            </div>
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_loader">
+                                        protected                                        <a href="../../../../Railt/Adapters/Webonyx/Loader.html"><abbr title="Railt\Adapters\Webonyx\Loader">Loader</abbr></a>
+                </td>
+                <td>$loader</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#property_loader"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_type">
+                                        protected                                        <a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a>
+                </td>
+                <td>$type</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#property_type"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_events">
+                                        protected                                        <a href="../../../../Railt/Support/Dispatcher.html"><abbr title="Railt\Support\Dispatcher">Dispatcher</abbr></a>
+                </td>
+                <td>$events</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#property_events"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_router">
+                                        protected                                        <a href="../../../../Railt/Routing/Router.html"><abbr title="Railt\Routing\Router">Router</abbr></a>
+                </td>
+                <td>$router</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#property_router"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(<a href="../../../../Railt/Support/Dispatcher.html"><abbr title="Railt\Support\Dispatcher">Dispatcher</abbr></a> $events, <a href="../../../../Railt/Routing/Router.html"><abbr title="Railt\Routing\Router">Router</abbr></a> $router, <a href="../../../../Railt/Adapters/Webonyx/Loader.html"><abbr title="Railt\Adapters\Webonyx\Loader">Loader</abbr></a> $loader, <a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a> $target)
+        
+                                            <p>Builder constructor.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method___construct"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="Railt\Adapters\Webonyx\Builder\$this">$this</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_fire">fire</a>(string $event, array $args)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_fire"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Railt/Adapters/Webonyx/Loader.html"><abbr title="Railt\Adapters\Webonyx\Loader">Loader</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLoader">getLoader</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_getLoader"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTarget">getTarget</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_getTarget"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_resolve">resolve</a>(string $type)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_resolve"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_make">make</a>(<a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a> $definition, string $class)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_make"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDescription">getDescription</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../Railt/Adapters/Webonyx/Builder/Common/HasDescription.html#method_getDescription"><abbr title="Railt\Adapters\Webonyx\Builder\Common\HasDescription">HasDescription</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_build">build</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method___construct"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a> at         line 52</div>
+        <code>                    
+    <strong>__construct</strong>(<a href="../../../../Railt/Support/Dispatcher.html"><abbr title="Railt\Support\Dispatcher">Dispatcher</abbr></a> $events, <a href="../../../../Railt/Routing/Router.html"><abbr title="Railt\Routing\Router">Router</abbr></a> $router, <a href="../../../../Railt/Adapters/Webonyx/Loader.html"><abbr title="Railt\Adapters\Webonyx\Loader">Loader</abbr></a> $loader, <a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a> $target)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Builder constructor.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Railt/Support/Dispatcher.html"><abbr title="Railt\Support\Dispatcher">Dispatcher</abbr></a></td>
+                <td>$events</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../Railt/Routing/Router.html"><abbr title="Railt\Routing\Router">Router</abbr></a></td>
+                <td>$router</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../Railt/Adapters/Webonyx/Loader.html"><abbr title="Railt\Adapters\Webonyx\Loader">Loader</abbr></a></td>
+                <td>$loader</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a></td>
+                <td>$target</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_fire">
+        <div class="location">in <a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_fire"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a> at         line 65</div>
+        <code>            protected        <abbr title="Railt\Adapters\Webonyx\Builder\$this">$this</abbr>
+    <strong>fire</strong>(string $event, array $args)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$event</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$args</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="Railt\Adapters\Webonyx\Builder\$this">$this</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLoader">
+        <div class="location">in <a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_getLoader"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a> at         line 75</div>
+        <code>                    <a href="../../../../Railt/Adapters/Webonyx/Loader.html"><abbr title="Railt\Adapters\Webonyx\Loader">Loader</abbr></a>
+    <strong>getLoader</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Railt/Adapters/Webonyx/Loader.html"><abbr title="Railt\Adapters\Webonyx\Loader">Loader</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTarget">
+        <div class="location">in <a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_getTarget"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a> at         line 83</div>
+        <code>                    <a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a>
+    <strong>getTarget</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_resolve">
+        <div class="location">in <a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_resolve"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a> at         line 95</div>
+        <code>            protected        mixed
+    <strong>resolve</strong>(string $type)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/LogicException">LogicException</a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../Railt/Exceptions/UnexpectedTokenException.html"><abbr title="Railt\Exceptions\UnexpectedTokenException">UnexpectedTokenException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../Railt/Exceptions/UnrecognizedTokenException.html"><abbr title="Railt\Exceptions\UnrecognizedTokenException">UnrecognizedTokenException</abbr></a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_make">
+        <div class="location">in <a href="../../../../Railt/Adapters/Webonyx/Builder/Builder.html#method_make"><abbr title="Railt\Adapters\Webonyx\Builder\Builder">Builder</abbr></a> at         line 106</div>
+        <code>            protected        mixed
+    <strong>make</strong>(<a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a> $definition, string $class)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Railt/Reflection/Abstraction/DefinitionInterface.html"><abbr title="Railt\Reflection\Abstraction\DefinitionInterface">DefinitionInterface</abbr></a>|<a href="../../../../Railt/Reflection/Abstraction/Type/TypeInterface.html"><abbr title="Railt\Reflection\Abstraction\Type\TypeInterface">TypeInterface</abbr></a></td>
+                <td>$definition</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$class</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/LogicException">LogicException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDescription">
+        <div class="location">in <a href="../../../../Railt/Adapters/Webonyx/Builder/Common/HasDescription.html#method_getDescription"><abbr title="Railt\Adapters\Webonyx\Builder\Common\HasDescription">HasDescription</abbr></a> at         line 27</div>
+        <code>                    string
+    <strong>getDescription</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_build">
+        <div class="location">at         line 35</div>
+        <code>                    mixed
+    <strong>build</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../Railt/Exceptions/CompilerException.html"><abbr title="Railt\Exceptions\CompilerException">CompilerException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../Railt/Exceptions/RuntimeException.html"><abbr title="Railt\Exceptions\RuntimeException">RuntimeException</abbr></a></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" href="http://php.net/LogicException">LogicException</a></td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

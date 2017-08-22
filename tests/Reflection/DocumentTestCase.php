@@ -1,28 +1,28 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Tests\Reflection;
+namespace Railt\Tests\Reflection;
 
-use Railgun\Compiler\Compiler;
-use Railgun\Exceptions\NotReadableException;
-use Railgun\Exceptions\SemanticException;
-use Railgun\Exceptions\TypeNotFoundException;
-use Railgun\Exceptions\UnexpectedTokenException;
-use Railgun\Exceptions\UnrecognizedTokenException;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Tests\AbstractTestCase;
+use Railt\Compiler\Compiler;
+use Railt\Exceptions\NotReadableException;
+use Railt\Exceptions\SemanticException;
+use Railt\Exceptions\TypeNotFoundException;
+use Railt\Exceptions\UnexpectedTokenException;
+use Railt\Exceptions\UnrecognizedTokenException;
+use Railt\Reflection\Abstraction\DefinitionInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Tests\AbstractTestCase;
 
 /**
  * Class CompilerTestCase
- * @package Railgun\Tests\Reflection
+ * @package Railt\Tests\Reflection
  */
 class DocumentTestCase extends AbstractTestCase
 {
@@ -55,8 +55,8 @@ class DocumentTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function testTypeAutoloading(): void
     {
@@ -100,8 +100,8 @@ class DocumentTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function testFileWithoutSchema(): void
     {
@@ -112,8 +112,8 @@ class DocumentTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function testDictionary(): void
     {

@@ -1,25 +1,25 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Exceptions;
+namespace Railt\Exceptions;
 
 /**
- * Class RailgunException
- * @package Railgun\Exceptions
+ * Class RailtException
+ * @package Railt\Exceptions
  * @method \Exception __construct(string $message, ?int $code, ?\Throwable $prev)
  */
-trait RailgunException
+trait RailtException
 {
     /**
      * @param string $message
      * @param array ...$args
-     * @return self|RailgunException
+     * @return self|RailtException
      */
     public static function new(string $message, ...$args): self
     {
@@ -39,7 +39,7 @@ trait RailgunException
 
     /**
      * @param \Throwable $previous
-     * @return RailgunException|$this
+     * @return RailtException|$this
      */
     public function from(\Throwable $previous): self
     {
@@ -51,7 +51,7 @@ trait RailgunException
     /**
      * @param string $file
      * @param int $line
-     * @return RailgunException|$this
+     * @return RailtException|$this
      */
     public function in(string $file, int $line = null): self
     {

@@ -1,20 +1,20 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder;
+namespace Railt\Adapters\Webonyx\Builder;
 
 use GraphQL\Schema;
-use Railgun\Reflection\Abstraction\SchemaTypeInterface;
+use Railt\Reflection\Abstraction\SchemaTypeInterface;
 
 /**
  * Class SchemaTypeBuilder
- * @package Railgun\Adapters\Webonyx\Builder
+ * @package Railt\Adapters\Webonyx\Builder
  * @property-read SchemaTypeInterface $type
  */
 class SchemaTypeBuilder extends Builder

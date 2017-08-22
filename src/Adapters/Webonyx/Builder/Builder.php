@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx\Builder;
+namespace Railt\Adapters\Webonyx\Builder;
 
-use Railgun\Routing\Router;
-use Railgun\Support\Dispatcher;
-use Railgun\Adapters\Webonyx\Loader;
-use Railgun\Adapters\Webonyx\BuilderInterface;
-use Railgun\Reflection\Abstraction\Type\TypeInterface;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
+use Railt\Routing\Router;
+use Railt\Support\Dispatcher;
+use Railt\Adapters\Webonyx\Loader;
+use Railt\Adapters\Webonyx\BuilderInterface;
+use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Abstraction\DefinitionInterface;
 
 /**
  * Class Builder
- * @package Railgun\Adapters\Webonyx
+ * @package Railt\Adapters\Webonyx
  */
 abstract class Builder implements BuilderInterface
 {
@@ -89,8 +89,8 @@ abstract class Builder implements BuilderInterface
      * @param string $type
      * @return mixed
      * @throws \LogicException
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     protected function resolve(string $type)
     {

@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection\Common;
+namespace Railt\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Reflection\Abstraction\Common\HasFieldsInterface;
-use Railgun\Reflection\Abstraction\FieldInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Reflection\Document;
-use Railgun\Reflection\Field;
+use Railt\Reflection\Abstraction\Common\HasFieldsInterface;
+use Railt\Reflection\Abstraction\FieldInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Document;
+use Railt\Reflection\Field;
 
 /**
  * Trait Fields
- * @package Railgun\Reflection\Common
+ * @package Railt\Reflection\Common
  * @mixin HasFieldsInterface
  */
 trait Fields

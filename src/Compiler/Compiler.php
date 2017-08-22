@@ -1,13 +1,13 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Compiler;
+namespace Railt\Compiler;
 
 use Hoa\Compiler\Exception;
 use Hoa\Compiler\Exception\UnexpectedToken;
@@ -16,16 +16,16 @@ use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\File\Read;
-use Railgun\Exceptions\CompilerException;
-use Railgun\Exceptions\UnexpectedTokenException;
-use Railgun\Exceptions\UnrecognizedTokenException;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Document;
-use Railgun\Support\File;
+use Railt\Exceptions\CompilerException;
+use Railt\Exceptions\UnexpectedTokenException;
+use Railt\Exceptions\UnrecognizedTokenException;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Document;
+use Railt\Support\File;
 
 /**
  * Class Compiler
- * @package Railgun\Compiler
+ * @package Railt\Compiler
  */
 class Compiler
 {
@@ -53,7 +53,7 @@ class Compiler
      * Compiler constructor.
      * @param string|null $grammar
      * @throws CompilerException
-     * @throws \Railgun\Exceptions\SemanticException
+     * @throws \Railt\Exceptions\SemanticException
      */
     public function __construct(string $grammar = null)
     {

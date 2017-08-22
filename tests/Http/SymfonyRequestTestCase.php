@@ -1,21 +1,21 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Tests\Http;
+namespace Railt\Tests\Http;
 
-use Railgun\Http\Request;
-use Railgun\Http\RequestInterface;
+use Railt\Http\Request;
+use Railt\Http\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as SymfonyNativeRequest;
 
 /**
  * Class SymfonyRequestTestCase
- * @package Railgun\Tests\Http
+ * @package Railt\Tests\Http
  */
 class SymfonyRequestTestCase extends AbstractHttpRequestTestCase
 {

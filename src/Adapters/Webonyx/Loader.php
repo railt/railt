@@ -1,34 +1,34 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Adapters\Webonyx;
+namespace Railt\Adapters\Webonyx;
 
-use Railgun\Adapters\Webonyx\Builder\ArgumentBuilder;
-use Railgun\Adapters\Webonyx\Builder\FieldBuilder;
-use Railgun\Adapters\Webonyx\Builder\ObjectTypeBuilder;
-use Railgun\Adapters\Webonyx\Builder\ScalarTypeBuilder;
-use Railgun\Adapters\Webonyx\Builder\Type\TypeBuilder;
-use Railgun\Reflection\Abstraction\ArgumentInterface;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\FieldInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Reflection\Abstraction\ObjectTypeInterface;
-use Railgun\Reflection\Abstraction\ScalarTypeInterface;
-use Railgun\Reflection\Abstraction\Type\TypeInterface;
-use Railgun\Reflection\Document;
-use Railgun\Routing\Router;
-use Railgun\Support\Dispatcher;
+use Railt\Adapters\Webonyx\Builder\ArgumentBuilder;
+use Railt\Adapters\Webonyx\Builder\FieldBuilder;
+use Railt\Adapters\Webonyx\Builder\ObjectTypeBuilder;
+use Railt\Adapters\Webonyx\Builder\ScalarTypeBuilder;
+use Railt\Adapters\Webonyx\Builder\Type\TypeBuilder;
+use Railt\Reflection\Abstraction\ArgumentInterface;
+use Railt\Reflection\Abstraction\DefinitionInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\FieldInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Abstraction\ObjectTypeInterface;
+use Railt\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Document;
+use Railt\Routing\Router;
+use Railt\Support\Dispatcher;
 
 /**
  * Class BuilderResolver
- * @package Railgun\Adapters\Webonyx
+ * @package Railt\Adapters\Webonyx
  */
 class Loader
 {
@@ -83,8 +83,8 @@ class Loader
      * @param string $name
      * @return mixed
      * @throws \LogicException
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function resolve(string $name)
     {

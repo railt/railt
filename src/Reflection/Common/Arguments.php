@@ -1,24 +1,24 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection\Common;
+namespace Railt\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Reflection\Abstraction\ArgumentInterface;
-use Railgun\Reflection\Abstraction\Common\HasArgumentsInterface;
-use Railgun\Reflection\Abstraction\DocumentTypeInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Reflection\Argument;
+use Railt\Reflection\Abstraction\ArgumentInterface;
+use Railt\Reflection\Abstraction\Common\HasArgumentsInterface;
+use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Argument;
 
 /**
  * Trait HasArguments
- * @package Railgun\Reflection\Common
+ * @package Railt\Reflection\Common
  * @mixin HasArgumentsInterface
  */
 trait Arguments

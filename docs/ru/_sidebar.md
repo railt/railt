@@ -2,7 +2,7 @@
     - [Описание](/ru/README.md)
     - [Обновление](/ru/upgrade)
     - [Участие в разработке](/ru/contributions)
-    - [API Документация](//serafimarts.github.io/Railgun/api/index.html)
+    - [API Документация](//serafimarts.github.io/Railt/api/index.html)
     
 - Вступление
     - [Установка](/ru/installation)

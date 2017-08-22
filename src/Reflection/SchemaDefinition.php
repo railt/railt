@@ -1,29 +1,29 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Reflection;
+namespace Railt\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railgun\Exceptions\IndeterminateBehaviorException;
-use Railgun\Exceptions\SemanticException;
-use Railgun\Reflection\Abstraction\DefinitionInterface;
-use Railgun\Reflection\Abstraction\InputTypeInterface;
-use Railgun\Reflection\Abstraction\NamedDefinitionInterface;
-use Railgun\Reflection\Abstraction\ObjectTypeInterface;
-use Railgun\Reflection\Abstraction\SchemaTypeInterface;
-use Railgun\Reflection\Common\Directives;
-use Railgun\Reflection\Common\HasLinkingStageInterface;
-use Railgun\Reflection\Common\LinkingStage;
+use Railt\Exceptions\IndeterminateBehaviorException;
+use Railt\Exceptions\SemanticException;
+use Railt\Reflection\Abstraction\DefinitionInterface;
+use Railt\Reflection\Abstraction\InputTypeInterface;
+use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Abstraction\ObjectTypeInterface;
+use Railt\Reflection\Abstraction\SchemaTypeInterface;
+use Railt\Reflection\Common\Directives;
+use Railt\Reflection\Common\HasLinkingStageInterface;
+use Railt\Reflection\Common\LinkingStage;
 
 /**
  * Class SchemaDefinition
- * @package Railgun\Reflection
+ * @package Railt\Reflection
  */
 class SchemaDefinition extends Definition implements
     SchemaTypeInterface,
@@ -46,8 +46,8 @@ class SchemaDefinition extends Definition implements
      * @param Document $document
      * @param TreeNode $ast
      * @return TreeNode|null
-     * @throws \Railgun\Exceptions\UnexpectedTokenException
-     * @throws \Railgun\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Exceptions\UnrecognizedTokenException
      */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {

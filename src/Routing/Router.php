@@ -1,19 +1,19 @@
 <?php
 /**
- * This file is part of Railgun package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 declare(strict_types=1);
 
-namespace Railgun\Routing;
+namespace Railt\Routing;
 
-use Railgun\Support\HashMap;
+use Railt\Support\HashMap;
 
 /**
  * Class Router
- * @package Railgun\Routing
+ * @package Railt\Routing
  */
 class Router implements \IteratorAggregate
 {
@@ -100,8 +100,8 @@ class Router implements \IteratorAggregate
     /**
      * @param string $uri
      * @return bool
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
-     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
      */
     public function has(string $uri): bool
     {
@@ -111,8 +111,8 @@ class Router implements \IteratorAggregate
     /**
      * @param string $uri
      * @return bool
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
-     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
      */
     private function memoiseRouteFor(string $uri): bool
     {
@@ -141,8 +141,8 @@ class Router implements \IteratorAggregate
     /**
      * @param string $uri
      * @return iterable|Respondent[]
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
-     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
      */
     public function resolve(string $uri): iterable
     {
@@ -156,8 +156,8 @@ class Router implements \IteratorAggregate
     /**
      * @param string $uri
      * @return iterable|Route[]
-     * @throws \Railgun\Exceptions\IndeterminateBehaviorException
-     * @throws \Railgun\Exceptions\CompilerException
+     * @throws \Railt\Exceptions\IndeterminateBehaviorException
+     * @throws \Railt\Exceptions\CompilerException
      */
     public function find(string $uri): iterable
     {
