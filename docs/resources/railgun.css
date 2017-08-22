@@ -884,7 +884,13 @@ pre:after {
     padding-top: 40px;
     box-shadow: 0 -1px 0 #f0f0f0; }
   .markdown-section h3 {
+    margin: 35px 0 5px 0;
     font-size: 1.6rem; }
+  .markdown-section h4 {
+    margin: 35px 0 5px 0;
+    font-size: 1.3rem; }
+    .markdown-section h4 span {
+      color: #534f58; }
   .markdown-section h1 + ul + h2 {
     padding-top: 0;
     box-shadow: none; }

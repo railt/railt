@@ -141,7 +141,16 @@
     }
 
     h3 {
+      margin: 35px 0 5px 0;
       font-size: 1.6rem;
+    }
+
+    h4 {
+      margin: 35px 0 5px 0;
+      font-size: 1.3rem;
+      span {
+        color: lighten($color-text, 7%);
+      }
     }
 
     h1 + ul + h2 {
