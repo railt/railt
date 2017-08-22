@@ -88,4 +88,13 @@ abstract class Definition implements DefinitionInterface
 
         return $this->getTypeName();
     }
+
+    /**
+     * @internal This method for debug usage only
+     * @return TreeNode
+     */
+    public function getAst():TreeNode
+    {
+        return $this->ast;
+    }
 }

@@ -87,7 +87,6 @@ directive @include2(if: Boolean!) on
     | FIELD
     | FRAGMENT_SPREAD
     | INLINE_FRAGMENT
-    
 --EXPECTF--
 
 #Document

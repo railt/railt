@@ -117,7 +117,8 @@ class Document extends Definition implements DocumentTypeInterface
                 return DirectiveDefinition::class;
         }
 
-        throw IndeterminateBehaviorException::make('Unrecognized AST node name %s', $ast->getId());
+        $message = 'Unrecognized AST node name %s: %s';
+        throw IndeterminateBehaviorException::new($message, $ast->getId(), dump($ast));
     }
 
     /**

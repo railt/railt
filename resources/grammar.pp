@@ -9,29 +9,6 @@
 // @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0
 //
 
-//
-// --------------------------------------------------------------------------
-//  GraphQL Ignored Tokens
-// --------------------------------------------------------------------------
-//
-//  Before and after every lexical token may be any amount of ignored
-//  tokens including WhiteSpace and Comment. No ignored regions of a source
-//  document are significant, however ignored source characters may appear
-//  within a lexical token in a significant way, for example a String may
-//  contain white space characters.
-//
-//  No characters are ignored while parsing a given token, as an example no white
-//  space characters are permitted between the characters defining a FloatValue.
-//
-//  @see http://facebook.github.io/graphql/#sec-Source-Text.Ignored-Tokens
-//  @see http://facebook.github.io/graphql/#sec-Appendix-Grammar-Summary.Ignored-Tokens
-//
-//
-//                             [ BOM | WHITESPACE | HTAB | LF | CR ]
-%skip T_IGNORE                 [\xfe\xff|\x20|\x09|\x0a|\x0d]+
-%skip T_COMMENT                #\h*(#[^\n]*)?\n?
-
-
 // ==========================================================================
 //                                  TOKENS
 // ==========================================================================
@@ -48,7 +25,7 @@
 //  @see http://facebook.github.io/graphql/#sec-Punctuators
 //
 
-%token T_DOCBLOCK               #[^\n]*
+%token T_DOCBLOCK               (?:\h*#[^\n]*\n)+
 %token T_NON_NULL               !
 %token T_VAR                    \$
 %token T_PARENTHESIS_OPEN       \(
@@ -69,8 +46,9 @@
 %token T_BOOL_FALSE             false\b
 %token T_NULL                   null\b
 %token T_QUOTE_OPEN             "   -> string
-%token string:T_STRING          [^"\\]+(\\.[^"\\]*)*
-%token string:T_QUOTE_CLOSE     "   -> default
+%token      string:T_STRING          [^"\\]+(\\.[^"\\]*)*
+%token      string:T_QUOTE_CLOSE     "   -> default
+
 
 
 //
@@ -134,8 +112,30 @@
 %token T_NAME                   ([_A-Za-z][_0-9A-Za-z]*)
 
 
+//
+// --------------------------------------------------------------------------
+//  GraphQL Ignored Tokens
+// --------------------------------------------------------------------------
+//
+//  Before and after every lexical token may be any amount of ignored
+//  tokens including WhiteSpace and Comment. No ignored regions of a source
+//  document are significant, however ignored source characters may appear
+//  within a lexical token in a significant way, for example a String may
+//  contain white space characters.
+//
+//  No characters are ignored while parsing a given token, as an example no white
+//  space characters are permitted between the characters defining a FloatValue.
+//
+//  @see http://facebook.github.io/graphql/#sec-Source-Text.Ignored-Tokens
+//  @see http://facebook.github.io/graphql/#sec-Appendix-Grammar-Summary.Ignored-Tokens
+//
+//
+//                             [ BOM | WHITESPACE | HTAB | LF | CR ]
+%skip T_IGNORE                 [\xfe\xff|\x20|\x09|\x0a|\x0d]+
+%skip T_COMMENT                \h*#[^\n]*
+
 // ==========================================================================
-//                                 DOCUMENT
+//                                  DOCUMENT
 // ==========================================================================
 
 #Document:
@@ -159,9 +159,11 @@ Definitions:
     ExtendDefinition()
         |
     DirectiveDefinition()
+        |
+    Comment()
 
 // ==========================================================================
-//                           COMMON STRUCTURES
+//                                 COMMON
 // ==========================================================================
 
 Scalar:
@@ -306,85 +308,11 @@ List:
     ::T_BRACKET_CLOSE::
     #List
 
+Comment:
+    ::T_DOCBLOCK::+
 
-
-// ==========================================================================
-//                                  PARTIALS
-// ==========================================================================
-//
-// --------------------------------------------------------------------------
-//  GraphQL Arguments Partial
-// --------------------------------------------------------------------------
-//
-//  Fields can define arguments that the client passes up with the query,
-//  to configure their behavior. These inputs can be Strings or Enums,
-//  but they sometimes need to be more complex than this.
-//
-//  <code>
-//      field(argumentKey: "value")
-//  </code>
-//
-//  @see http://facebook.github.io/graphql/#sec-Input-Objects
-//
-Arguments:
-    ::T_PARENTHESIS_OPEN::
-        (
-            ArgumentPair() (
-                ::T_COMMA:: ArgumentPair()
-            )*
-        )?
-    ::T_PARENTHESIS_CLOSE::
-
-ArgumentPair:
-    Key() ::T_COLON:: ValueDefinition()
-        ArgumentDefaultValue()?
-        Directive()*
-    #Argument
-
-ArgumentValue:
-    ValueDefinition() #Type
-
-ArgumentDefaultValue:
-    ::T_EQUAL:: Value()
-
-//
-// --------------------------------------------------------------------------
-//  GraphQL Directive Partial
-// --------------------------------------------------------------------------
-//
-//  A schema file follows the SDL syntax and can contain additional static
-//  and temporary GraphQL directives.
-//
-//  Static directives describe additional information about types or fields
-//  in the GraphQL schema.
-//
-//  <code>
-//      @directive(key: "value", key2: "value2")
-//  </code>
-//
-//  @see http://facebook.github.io/graphql/#sec-Language.Directives
-//  @see https://www.graph.cool/docs/reference/schema/directives-aeph6oyeez/
-//
-
-#Directive:
-    ::T_DIRECTIVE_AT:: Name() DirectiveArguments()?
-
-DirectiveArguments:
-    ::T_PARENTHESIS_OPEN::
-        (
-            DirectivePair() (
-                ::T_COMMA:: DirectivePair()
-            )*
-        )?
-    ::T_PARENTHESIS_CLOSE::
-
-DirectivePair:
-    Key() ::T_COLON:: Value()
-        DirectiveArgumentDefaultValue()?
-    #Argument
-
-DirectiveArgumentDefaultValue:
-    ::T_EQUAL:: Value()
+Documentation:
+    <T_DOCBLOCK> #Description
 
 // ==========================================================================
 //                             TYPE DEFINITIONS
@@ -407,30 +335,33 @@ DirectiveArgumentDefaultValue:
 //
 
 #SchemaDefinition:
+    Documentation()?
     ::T_SCHEMA:: Directive()*
     ::T_BRACE_OPEN::
-        SchemaDefinitionBody()
+        Comment()?
+            SchemaDefinitionBody()
+        Comment()?
     ::T_BRACE_CLOSE::
 
 SchemaDefinitionBody:
     (
         SchemaDefinitionQuery()
         SchemaDefinitionMutation()?
-    )
-        |
-    (
+    ) | (
         SchemaDefinitionMutation()
         SchemaDefinitionQuery()
     )
 
 SchemaDefinitionQuery:
+    Documentation()?
     ::T_SCHEMA_QUERY:: ::T_COLON:: SchemaDefinitionFieldValue() #Query
 
 SchemaDefinitionMutation:
+    Documentation()?
     ::T_SCHEMA_MUTATION:: ::T_COLON:: SchemaDefinitionFieldValue() #Mutation
 
 SchemaDefinitionFieldValue:
-    ValueDefinition() Directive()* ::T_COMMA::?
+    ValueDefinition() Directive()* ::T_COMMA::? Comment()?
 
 
 
@@ -591,9 +522,12 @@ DirectiveDefinitionTargets:
 //
 
 #ObjectDefinition:
+    Documentation()?
     ::T_TYPE:: Name() ObjectDefinitionImplements()? Directive()*
     ::T_BRACE_OPEN::
-        ObjectDefinitionField()*
+        Comment()?
+            ObjectDefinitionField()*
+        Comment()?
     ::T_BRACE_CLOSE::
 
 ObjectDefinitionImplements:
@@ -602,6 +536,7 @@ ObjectDefinitionImplements:
     )* #Implements
 
 ObjectDefinitionField:
+    Documentation()?
     (
         Key() Arguments()?
         ::T_COLON::
@@ -611,7 +546,7 @@ ObjectDefinitionField:
 ObjectDefinitionFieldValue:
     ValueDefinition()
         Directive()*
-    ::T_COMMA::?
+    ::T_COMMA::? Comment()?
 
 //
 // --------------------------------------------------------------------------
@@ -741,3 +676,80 @@ UnionUnitesList:
     Name() (::T_OR:: Name())*
 
 
+// ==========================================================================
+//                                  PARTIALS
+// ==========================================================================
+//
+// --------------------------------------------------------------------------
+//  GraphQL Arguments Partial
+// --------------------------------------------------------------------------
+//
+//  Fields can define arguments that the client passes up with the query,
+//  to configure their behavior. These inputs can be Strings or Enums,
+//  but they sometimes need to be more complex than this.
+//
+//  <code>
+//      field(argumentKey: "value")
+//  </code>
+//
+//  @see http://facebook.github.io/graphql/#sec-Input-Objects
+//
+Arguments:
+    ::T_PARENTHESIS_OPEN::
+        (
+            ArgumentPair() (
+                ::T_COMMA:: ArgumentPair()
+            )*
+        )?
+    ::T_PARENTHESIS_CLOSE::
+
+ArgumentPair:
+    Key() ::T_COLON:: ValueDefinition()
+        ArgumentDefaultValue()?
+        Directive()*
+    #Argument
+
+ArgumentValue:
+    ValueDefinition() #Type
+
+ArgumentDefaultValue:
+    ::T_EQUAL:: Value()
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Directive Partial
+// --------------------------------------------------------------------------
+//
+//  A schema file follows the SDL syntax and can contain additional static
+//  and temporary GraphQL directives.
+//
+//  Static directives describe additional information about types or fields
+//  in the GraphQL schema.
+//
+//  <code>
+//      @directive(key: "value", key2: "value2")
+//  </code>
+//
+//  @see http://facebook.github.io/graphql/#sec-Language.Directives
+//  @see https://www.graph.cool/docs/reference/schema/directives-aeph6oyeez/
+//
+
+#Directive:
+    ::T_DIRECTIVE_AT:: Name() DirectiveArguments()?
+
+DirectiveArguments:
+    ::T_PARENTHESIS_OPEN::
+        (
+            DirectivePair() (
+                ::T_COMMA:: DirectivePair()
+            )*
+        )?
+    ::T_PARENTHESIS_CLOSE::
+
+DirectivePair:
+    Key() ::T_COLON:: Value()
+        DirectiveArgumentDefaultValue()?
+    #Argument
+
+DirectiveArgumentDefaultValue:
+    ::T_EQUAL:: Value()

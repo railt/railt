@@ -5,18 +5,13 @@ Type name definition named like keyword will not throws an error.
 --FILE--
 
 type A {
-    #
-    # Fields list named like a GraphQL scalar
-    #
-    ID: ID          # Allowed name "ID"
-    Int: Int        # Allowed name "Int"
-    Bool: Bool      # Allowed name "Bool"
-    Float: Float    # Allowed name "Float"
-    String: String  # Allowed name "String"
+    ID: ID
+    Int: Int
+    Bool: Bool
+    Float: Float
+    String: String
 
-    #
-    # Fields named as keywords WAS NOT BE SUPPORTED
-    #
+
     null: Null
     true: True
     false: False
@@ -34,9 +29,7 @@ type A {
     input: Input
     extend: Extend
 
-    #
-    # List of fields in alphabetical order
-    #
+
     aa: aa
     bb: bb
     cc: cc

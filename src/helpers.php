@@ -23,6 +23,9 @@ if (!function_exists('dump')) {
 
             $result = str_replace('>  ', '    ', $result);
             $result = preg_replace('/^\s{4}/ium', '', $result);
+            $result = preg_replace_callback('/token\((\w+),(.*?)\)/isu', function ($args) {
+                return '<' . $args[1] . '> ' . str_replace(["\n"], ['\n'], trim($args[2]));
+            }, $result);
         } else {
             ob_start();
             (new Dumper())->dump($value);

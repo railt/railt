@@ -46,6 +46,8 @@ class SchemaDefinition extends Definition implements
      * @param Document $document
      * @param TreeNode $ast
      * @return TreeNode|null
+     * @throws \Railgun\Exceptions\UnexpectedTokenException
+     * @throws \Railgun\Exceptions\UnrecognizedTokenException
      */
     public function compile(Document $document, TreeNode $ast): ?TreeNode
     {
@@ -53,17 +55,34 @@ class SchemaDefinition extends Definition implements
 
         switch ($name) {
             case '#Query':
-                $type = $ast->getChild(0)->getChild(0)->getValueValue();
+                $type = $this->getRelatedType($ast)->getValueValue();
                 $this->query = $this->check('query', $document->load($type));
                 break;
 
             case '#Mutation':
-                $type = $ast->getChild(0)->getChild(0)->getValueValue();
+                $type = $this->getRelatedType($ast)->getValueValue();
                 $this->mutation = $this->check('query', $document->load($type));
                 break;
         }
 
         return $ast;
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return TreeNode
+     * @throws \RuntimeException
+     */
+    private function getRelatedType(TreeNode $ast): TreeNode
+    {
+        /** @var TreeNode $node */
+        foreach ($ast->getChildren() as $node) {
+            if ($node->getId() === '#Type') {
+                return $node->getChild(0);
+            }
+        }
+
+        throw new \RuntimeException('Can not resolve related type of ' . $ast->getId());
     }
 
     /**
