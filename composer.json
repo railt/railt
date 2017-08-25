@@ -1,31 +1,41 @@
 {
     "name": "railt/railt",
     "type": "library",
-    "description": "GraphQL IDL server implementation",
+    "description": "The Railt Framework.",
     "license": "MIT",
+    "keywords": [ "graphql", "idl", "otd", "ast", "framework", "railt" ],
+    "homepage": "http://railt.org",
+    "version": "dev-master",
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/railt"
+    },
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
     "require": {
         "php": ">=7.1",
+        "ext-mbstring": "*",
         "psr/log": "~1.0",
-        "illuminate/support": "~5.1",
-        "hoa/compiler": "~3.17"
+        "psr/container": "~1.0",
+        "railt/http": "self.version",
+        "railt/parser": "self.version",
+        "railt/routing": "self.version",
+        "railt/reflection": "self.version"
     },
     "autoload": {
         "psr-4": {
-            "Railt\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+            "Railt\\": "src/Railt/"
+        }
     },
     "require-dev": {
+        "railt/webonyx-adapter": "self.version",
         "monolog/monolog": "~1.9",
-        "webonyx/graphql-php": "~0.9.0",
-        "youshido/graphql": "~1.4",
-        "symfony/http-foundation": "~2.8|3.*|4.*",
-        "illuminate/http": "~5.1",
         "phpunit/phpunit": "~6.1",
-        "sami/sami": "~4.0",
-        "brianium/paratest": "~1.0"
+        "composer/composer": "~1.5"
     },
     "autoload-dev": {
         "psr-4": {
@@ -33,14 +43,24 @@
         }
     },
     "suggest": {
-        "youshido/graphql": "(~1.4) Youshido GraphQL root driver support",
-        "webonyx/graphql-php": "(~0.9) Webonyx GraphQL root driver support",
-        "symfony/http-foundation": "(~2.8|3.*|4.*) Symfony framework support",
-        "illuminate/http": "(~5.1) Laravel (illuminate) framework support"
+        "webonyx/graphql-php": "Webonyx GraphQL Adapter for Railt Framework (self.version)."
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "dev-master@dev"
+        }
     },
     "scripts": {
-        "docs-make": "daux --destination=../railt-docs",
-        "docs": "daux serve",
-        "tests": "./vendor/bin/paratest --colors -p8"
-    }
+        "init-devel-mode": [
+            "php bin/devel-mode"
+        ],
+        "post-create-project-cmd": [
+            "@init-devel-mode"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

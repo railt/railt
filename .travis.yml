@@ -2,10 +2,24 @@ language: php
 
 php:
   - 7.1
+  - 7.2
   - nightly
 
-before_script:
-  - composer self-update
-  - composer install --prefer-source --no-interaction --dev
+env:
+  global:
+    - setup=basic
 
-script: phpunit --coverage-text --debug
+matrix:
+  allow_failures:
+    - php: 7.2
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist --no-suggest; fi
+  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
+
+script: vendor/bin/phpunit --coverage-text --debug

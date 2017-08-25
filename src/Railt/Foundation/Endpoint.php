@@ -11,7 +11,7 @@ namespace Railt;
 
 use Psr\Log\LoggerInterface;
 use Railt\Adapters\AdapterInterface;
-use Railt\Adapters\Factory;
+use Railt\Adapters\Adapter;
 use Railt\Compiler\Autoloader;
 use Railt\Foundation\ApiKernel;
 use Railt\Foundation\KernelInterface;
@@ -171,7 +171,7 @@ class Endpoint implements ResponderInterface
      */
     private function getAdapter(): AdapterInterface
     {
-        return (new Factory())->create($this->compileDocument(), $this->events, $this->router);
+        return (new Adapter())->create($this->compileDocument(), $this->events, $this->router);
     }
 
     /**

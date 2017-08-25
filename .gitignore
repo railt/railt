@@ -1,6 +1,7 @@
 .idea/
 vendor/
-docs/cache/
-*.phpt.out
-*.phpt.exp
-*.phpt.diff
+src/Railt/Http/
+src/Railt/Parser/
+src/Railt/Reflection/
+src/Railt/Routing/
+src/Railt/Adapters/Webonyx/

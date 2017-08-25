@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation;
+namespace Railt\Adapters;
 
 use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;

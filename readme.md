@@ -15,32 +15,41 @@
 
 ## Introduction
 
-This is a pure async PHP realization of the **GraphQL** protocol based on the 
+This is a pure PHP realization of the **GraphQL** protocol based on the 
 [youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
-[webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields)
-core drivers of the official GraphQL Specification 
+[webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields) 
+implementations of the official GraphQL Specification 
 located on [Facebook GitHub](http://facebook.github.io/graphql/).
 
-- [Documentation](https://railt.github.io/docs) 
-    - [Russian](https://railt.github.io/docs/#/ru/)
-    - [English](https://railt.github.io/docs)
-    
-> This documentation contains information about the old version and is 
-NOT RELEVANT at all. Im complete it later.
+The difference from the above implementations is that the Railt provides the 
+ability to describe the types and extended control of their behavior, 
+thereby solving problems such as:
 
-## Requirements
+- Simplifying type declarations
+- Types reusage
+- Significant simplification of the construction of the API
+- More flexible integration with frameworks (e.g. 
+[Laravel](https://github.com/laravel/framework) or [Symfony](https://github.com/symfony/symfony))
+- And others
 
-- PHP 7.1 or greater
-    - ext-mbstring
-- Composer
-- GraphQL base driver:
-    - or [webonyx/graphql-php (0.9+)](https://github.com/webonyx/graphql-php#fields)
-    - or [youshido/graphql (1.4+)](https://github.com/Youshido/GraphQL)
-- Frameworks:
-    - Framework agnostic (Native PHP)
-    - or [laravel/framework (5.1+)](https://github.com/laravel/framework)
-    - or [symfony/symfony (2.8+)](https://github.com/symfony/symfony)
+## Learning Railt
 
-## Installation
+> This documentation can contain NOT RELEVANT information and currently in progress.
 
-- `composer require railt/railt`
+- [Russian](https://railt.github.io/docs/#/ru/)
+- [English](https://railt.github.io/docs)
+
+## Contributing
+
+Thank you for considering contributing to the Railt Framework! 
+The contribution guide can be found in the [documentation](http://railt.org/#/ru/contributions).
+
+## Security Vulnerabilities
+
+If you discover a security vulnerability within Railt, please send an e-mail to maintainer 
+at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
+
+## License
+
+The Railt Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
