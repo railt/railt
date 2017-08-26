@@ -1,7 +1,12 @@
+composer.phar
+.DS_Store
+Thumbs.db
+
 .idea/
 vendor/
+docs/
 src/Railt/Http/
 src/Railt/Parser/
-src/Railt/Reflection/
 src/Railt/Routing/
-src/Railt/Adapters/Webonyx/
+src/Railt/Reflection/
+src/Railt/WebonyxAdapter/
