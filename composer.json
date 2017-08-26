@@ -33,6 +33,7 @@
     },
     "require-dev": {
         "railt/webonyx-adapter": "self.version",
+        "sami/sami": "~4.0",
         "monolog/monolog": "~1.9",
         "phpunit/phpunit": "~6.1",
         "symfony/finder": "~2.8|3.*|4.*",
@@ -58,6 +59,9 @@
     "scripts": {
         "init-devel-mode": [
             "php bin/devel-mode"
+        ],
+        "api": [
+            "php vendor/sami/sami/sami.php update build/docs.config"
         ],
         "post-create-project-cmd": [
             "@init-devel-mode"

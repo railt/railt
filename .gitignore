@@ -2,9 +2,10 @@ composer.phar
 .DS_Store
 Thumbs.db
 
+docs/
 .idea/
 vendor/
-docs/
+build/.docs/
 src/Railt/Http/
 src/Railt/Parser/
 src/Railt/Routing/
