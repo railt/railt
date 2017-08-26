@@ -3,7 +3,7 @@
     "type": "library",
     "description": "The Railt Framework.",
     "license": "MIT",
-    "keywords": [ "graphql", "idl", "otd", "ast", "framework", "railt" ],
+    "keywords": [ "graphql", "idl", "otd", "ast", "framework", "railt", "application" ],
     "homepage": "http://railt.org",
     "version": "dev-master",
     "support": {
