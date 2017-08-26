@@ -43,12 +43,16 @@ foreach ($packages as $package) {
     $sourceFrom = $cloneTo . '/src';
     $sourceTo = __DIR__ . '/../src/Railt/' . Str::studly($name);
 
+    $testsFrom = $cloneTo . '/tests';
+    $testsTo = __DIR__ . '/../tests/' . Str::studly($name);
+
     echo shell_exec('rm -rf "' . $vendorLink . '"');
 
     $cloneTo = download($name);
 
     mklink($cloneTo, $vendorLink);
     mklink($sourceFrom, $sourceTo);
+    mklink($testsFrom, $testsTo);
 }
 
 $docsPath = download('docs');
