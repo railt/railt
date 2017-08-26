@@ -1105,12 +1105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/http.git",
-                "reference": "dbcd65556e20664d3d4db9a91ace3294925db219"
+                "reference": "e2b3878e7e36a0e3b014f088ad1442532f73a885"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/http/zipball/dbcd65556e20664d3d4db9a91ace3294925db219",
-                "reference": "dbcd65556e20664d3d4db9a91ace3294925db219",
+                "url": "https://api.github.com/repos/railt/http/zipball/e2b3878e7e36a0e3b014f088ad1442532f73a885",
+                "reference": "e2b3878e7e36a0e3b014f088ad1442532f73a885",
                 "shasum": ""
             },
             "require": {
@@ -1152,7 +1152,7 @@
                 "request",
                 "response"
             ],
-            "time": "2017-08-23T22:20:11+00:00"
+            "time": "2017-08-26T00:11:18+00:00"
         },
         {
             "name": "railt/parser",
@@ -1160,12 +1160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/parser.git",
-                "reference": "31fc8d0be8e5dc6cfc4d8b3fa21ad8ebd978093a"
+                "reference": "90b8897f19c8e1fc3f3d71732b571d694696748c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/parser/zipball/31fc8d0be8e5dc6cfc4d8b3fa21ad8ebd978093a",
-                "reference": "31fc8d0be8e5dc6cfc4d8b3fa21ad8ebd978093a",
+                "url": "https://api.github.com/repos/railt/parser/zipball/90b8897f19c8e1fc3f3d71732b571d694696748c",
+                "reference": "90b8897f19c8e1fc3f3d71732b571d694696748c",
                 "shasum": ""
             },
             "require": {
@@ -1204,7 +1204,7 @@
                 "otd",
                 "parser"
             ],
-            "time": "2017-08-23T22:23:15+00:00"
+            "time": "2017-08-26T00:11:17+00:00"
         },
         {
             "name": "railt/reflection",
@@ -1212,12 +1212,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/reflection.git",
-                "reference": "e6d496436fac1f6e9e96bb8c9e57a73cefe186ee"
+                "reference": "01cdc62a15ca884d871196247747618ee246104e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/reflection/zipball/e6d496436fac1f6e9e96bb8c9e57a73cefe186ee",
-                "reference": "e6d496436fac1f6e9e96bb8c9e57a73cefe186ee",
+                "url": "https://api.github.com/repos/railt/reflection/zipball/01cdc62a15ca884d871196247747618ee246104e",
+                "reference": "01cdc62a15ca884d871196247747618ee246104e",
                 "shasum": ""
             },
             "require": {
@@ -1255,7 +1255,7 @@
                 "reader",
                 "reflection"
             ],
-            "time": "2017-08-23T22:24:51+00:00"
+            "time": "2017-08-26T00:11:17+00:00"
         },
         {
             "name": "railt/routing",
@@ -1263,12 +1263,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/routing.git",
-                "reference": "baed4e9fa6ba6e142fb04348b2b39d64d46ea12d"
+                "reference": "80059719012480b42defc7d230265b4f141e6d97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/routing/zipball/baed4e9fa6ba6e142fb04348b2b39d64d46ea12d",
-                "reference": "baed4e9fa6ba6e142fb04348b2b39d64d46ea12d",
+                "url": "https://api.github.com/repos/railt/routing/zipball/80059719012480b42defc7d230265b4f141e6d97",
+                "reference": "80059719012480b42defc7d230265b4f141e6d97",
                 "shasum": ""
             },
             "require": {
@@ -1303,7 +1303,7 @@
                 "otd",
                 "routing"
             ],
-            "time": "2017-08-25T02:37:55+00:00"
+            "time": "2017-08-26T00:11:17+00:00"
         }
     ],
     "packages-dev": [
@@ -2517,12 +2517,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/webonyx-adapter.git",
-                "reference": "1f3d05eb56c5d17a15e01a91c7d8e38f765c381e"
+                "reference": "2f676eb22060a34d486ccd146bcdf1d219ff299e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/webonyx-adapter/zipball/1f3d05eb56c5d17a15e01a91c7d8e38f765c381e",
-                "reference": "1f3d05eb56c5d17a15e01a91c7d8e38f765c381e",
+                "url": "https://api.github.com/repos/railt/webonyx-adapter/zipball/2f676eb22060a34d486ccd146bcdf1d219ff299e",
+                "reference": "2f676eb22060a34d486ccd146bcdf1d219ff299e",
                 "shasum": ""
             },
             "require": {
@@ -2557,7 +2557,7 @@
                 "railt",
                 "webonyx"
             ],
-            "time": "2017-08-25T23:52:10+00:00"
+            "time": "2017-08-26T00:11:17+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
