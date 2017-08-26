@@ -35,7 +35,7 @@
         "railt/webonyx-adapter": "self.version",
         "monolog/monolog": "~1.9",
         "phpunit/phpunit": "~6.1",
-        "composer/composer": "~1.5"
+        "symfony/finder": "~2.8|3.*|4.*"
     },
     "autoload-dev": {
         "psr-4": {
