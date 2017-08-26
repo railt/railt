@@ -50,7 +50,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "dev-master@dev"
+            "dev-master": "dev-master"
         }
     },
     "scripts": {
