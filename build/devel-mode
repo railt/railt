@@ -38,7 +38,7 @@ foreach ($packages as $package) {
     $name = $package->getFilename();
     $vendorLink = $package->getRealPath();
 
-    $cloneTo  = __DIR__ . '/../../' . $name;
+    $cloneTo  = __DIR__ . '/' . $name;
 
     $sourceFrom = $cloneTo . '/src';
     $sourceTo = __DIR__ . '/../src/Railt/' . Str::studly($name);
