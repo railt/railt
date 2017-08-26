@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "97fe2976e49927704f5ada40d238ef82",
+    "content-hash": "2d9ebfec240e462cc6c383ce065414a1",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1102,11 +1102,16 @@
         {
             "name": "railt/http",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/http.git",
+                "reference": "dbcd65556e20664d3d4db9a91ace3294925db219"
+            },
             "dist": {
-                "type": "path",
-                "url": "../http",
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/http/zipball/dbcd65556e20664d3d4db9a91ace3294925db219",
                 "reference": "dbcd65556e20664d3d4db9a91ace3294925db219",
-                "shasum": null
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
@@ -1127,11 +1132,7 @@
                     "Railt\\Http\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Railt\\Http\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1151,19 +1152,21 @@
                 "request",
                 "response"
             ],
-            "support": {
-                "issues": "https://github.com/railt/railt/issues",
-                "source": "https://github.com/railt/railt"
-            }
+            "time": "2017-08-23T22:20:11+00:00"
         },
         {
             "name": "railt/parser",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/parser.git",
+                "reference": "31fc8d0be8e5dc6cfc4d8b3fa21ad8ebd978093a"
+            },
             "dist": {
-                "type": "path",
-                "url": "../parser",
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/parser/zipball/31fc8d0be8e5dc6cfc4d8b3fa21ad8ebd978093a",
                 "reference": "31fc8d0be8e5dc6cfc4d8b3fa21ad8ebd978093a",
-                "shasum": null
+                "shasum": ""
             },
             "require": {
                 "hoa/compiler": "~3.17",
@@ -1179,11 +1182,7 @@
                     "Railt\\Parser\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Railt\\Parser\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1205,19 +1204,21 @@
                 "otd",
                 "parser"
             ],
-            "support": {
-                "issues": "https://github.com/railt/railt/issues",
-                "source": "https://github.com/railt/railt"
-            }
+            "time": "2017-08-23T22:23:15+00:00"
         },
         {
             "name": "railt/reflection",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/reflection.git",
+                "reference": "e6d496436fac1f6e9e96bb8c9e57a73cefe186ee"
+            },
             "dist": {
-                "type": "path",
-                "url": "../reflection",
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/reflection/zipball/e6d496436fac1f6e9e96bb8c9e57a73cefe186ee",
                 "reference": "e6d496436fac1f6e9e96bb8c9e57a73cefe186ee",
-                "shasum": null
+                "shasum": ""
             },
             "require": {
                 "illuminate/support": "~5.1",
@@ -1233,11 +1234,7 @@
                     "Railt\\Reflection\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Railt\\Reflection\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1258,19 +1255,21 @@
                 "reader",
                 "reflection"
             ],
-            "support": {
-                "issues": "https://github.com/railt/railt/issues",
-                "source": "https://github.com/railt/railt"
-            }
+            "time": "2017-08-23T22:24:51+00:00"
         },
         {
             "name": "railt/routing",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/routing.git",
+                "reference": "baed4e9fa6ba6e142fb04348b2b39d64d46ea12d"
+            },
             "dist": {
-                "type": "path",
-                "url": "../routing",
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/routing/zipball/baed4e9fa6ba6e142fb04348b2b39d64d46ea12d",
                 "reference": "baed4e9fa6ba6e142fb04348b2b39d64d46ea12d",
-                "shasum": null
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
@@ -1285,11 +1284,7 @@
                     "Railt\\Routing\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Railt\\Routing\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1308,10 +1303,7 @@
                 "otd",
                 "routing"
             ],
-            "support": {
-                "issues": "https://github.com/railt/railt/issues",
-                "source": "https://github.com/railt/railt"
-            }
+            "time": "2017-08-25T02:37:55+00:00"
         }
     ],
     "packages-dev": [
@@ -2522,11 +2514,16 @@
         {
             "name": "railt/webonyx-adapter",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/webonyx-adapter.git",
+                "reference": "1f3d05eb56c5d17a15e01a91c7d8e38f765c381e"
+            },
             "dist": {
-                "type": "path",
-                "url": "../webonyx-adapter",
-                "reference": "111a5640ee56a87f502f298a527f4f83673a141b",
-                "shasum": null
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/webonyx-adapter/zipball/1f3d05eb56c5d17a15e01a91c7d8e38f765c381e",
+                "reference": "1f3d05eb56c5d17a15e01a91c7d8e38f765c381e",
+                "shasum": ""
             },
             "require": {
                 "php": ">=7.1",
@@ -2541,11 +2538,7 @@
                     "Railt\\Adapters\\Webonyx\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Railt\\Routing\\Tests\\": "tests"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2564,10 +2557,7 @@
                 "railt",
                 "webonyx"
             ],
-            "support": {
-                "issues": "https://github.com/railt/railt/issues",
-                "source": "https://github.com/railt/railt"
-            }
+            "time": "2017-08-25T23:52:10+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

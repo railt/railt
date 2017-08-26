@@ -10,14 +10,8 @@
          stopOnFailure="false"
          syntaxCheck="true">
     <testsuites>
-        <testsuite name="Http Driver Tests">
-            <directory suffix="TestCase.php">./tests/Http</directory>
-        </testsuite>
-        <testsuite name="LL(k) Compiler Tests">
-            <directory suffix="TestCase.php">./tests/Compiler</directory>
-        </testsuite>
-        <testsuite name="Reflection Building Tests">
-            <directory suffix="TestCase.php">./tests/Reflection</directory>
+        <testsuite name="Test Case">
+            <directory suffix="TestCase.php">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>
