@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "10ed192d110caa3d667213ca2f8bad86",
+    "content-hash": "1dda58b90acf9d86ee96ccddd0985380",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1152,7 +1152,7 @@
                 "request",
                 "response"
             ],
-            "time": "2017-08-26T01:46:33+00:00"
+            "time": "2017-08-26 01:46:33"
         },
         {
             "name": "railt/parser",
@@ -1160,12 +1160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/parser.git",
-                "reference": "8c703e99b3d0cedfd6d0289b2372814977b7844b"
+                "reference": "3fe4ed19d81cdc873ce7dbe021fcd8a7067e9b2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/parser/zipball/8c703e99b3d0cedfd6d0289b2372814977b7844b",
-                "reference": "8c703e99b3d0cedfd6d0289b2372814977b7844b",
+                "url": "https://api.github.com/repos/railt/parser/zipball/3fe4ed19d81cdc873ce7dbe021fcd8a7067e9b2f",
+                "reference": "3fe4ed19d81cdc873ce7dbe021fcd8a7067e9b2f",
                 "shasum": ""
             },
             "require": {
@@ -1204,7 +1204,7 @@
                 "otd",
                 "parser"
             ],
-            "time": "2017-08-28T02:19:18+00:00"
+            "time": "2017-08-28 03:00:04"
         },
         {
             "name": "railt/reflection",
@@ -1255,7 +1255,7 @@
                 "reader",
                 "reflection"
             ],
-            "time": "2017-08-26T01:44:31+00:00"
+            "time": "2017-08-26 01:44:31"
         },
         {
             "name": "railt/routing",
@@ -1303,7 +1303,7 @@
                 "otd",
                 "routing"
             ],
-            "time": "2017-08-26T01:44:31+00:00"
+            "time": "2017-08-26 01:44:31"
         }
     ],
     "packages-dev": [
