@@ -23,4 +23,4 @@ install:
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
   - php ./build/devel-mode
 
-script: vendor/bin/phpunit --coverage-text --debug
+script: vendor/bin/phpunit --coverage-text
