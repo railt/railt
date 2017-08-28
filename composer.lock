@@ -1160,12 +1160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/parser.git",
-                "reference": "154e15670f4d6c631fd75ba5bb273be507fe346d"
+                "reference": "8c703e99b3d0cedfd6d0289b2372814977b7844b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/parser/zipball/154e15670f4d6c631fd75ba5bb273be507fe346d",
-                "reference": "154e15670f4d6c631fd75ba5bb273be507fe346d",
+                "url": "https://api.github.com/repos/railt/parser/zipball/8c703e99b3d0cedfd6d0289b2372814977b7844b",
+                "reference": "8c703e99b3d0cedfd6d0289b2372814977b7844b",
                 "shasum": ""
             },
             "require": {
@@ -1204,7 +1204,7 @@
                 "otd",
                 "parser"
             ],
-            "time": "2017-08-26T01:44:31+00:00"
+            "time": "2017-08-28T02:19:18+00:00"
         },
         {
             "name": "railt/reflection",
