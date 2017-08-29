@@ -1105,12 +1105,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/http.git",
-                "reference": "0ada104370367d9c50644dc3a543f03c824af4ed"
+                "reference": "012523dec7b79ac328eb7c1c0d2b8d4bf5103e3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/http/zipball/0ada104370367d9c50644dc3a543f03c824af4ed",
-                "reference": "0ada104370367d9c50644dc3a543f03c824af4ed",
+                "url": "https://api.github.com/repos/railt/http/zipball/012523dec7b79ac328eb7c1c0d2b8d4bf5103e3c",
+                "reference": "012523dec7b79ac328eb7c1c0d2b8d4bf5103e3c",
                 "shasum": ""
             },
             "require": {
@@ -1119,6 +1119,7 @@
             "require-dev": {
                 "illuminate/http": "~5.1",
                 "phpunit/phpunit": "~6.1",
+                "railt/railt": "self.version",
                 "symfony/finder": "~2.8|~3.0|~4.0",
                 "symfony/http-foundation": "~2.8|3.*|4.*"
             },
@@ -1152,7 +1153,7 @@
                 "request",
                 "response"
             ],
-            "time": "2017-08-28 16:10:16"
+            "time": "2017-08-29T22:59:05+00:00"
         },
         {
             "name": "railt/parser",
@@ -1160,12 +1161,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/parser.git",
-                "reference": "92cfc2774e6095fec19c6b227bc72195a6e967a9"
+                "reference": "a5ca568ce6c1b85e9e3ab567339b1b763d008d3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/parser/zipball/92cfc2774e6095fec19c6b227bc72195a6e967a9",
-                "reference": "92cfc2774e6095fec19c6b227bc72195a6e967a9",
+                "url": "https://api.github.com/repos/railt/parser/zipball/a5ca568ce6c1b85e9e3ab567339b1b763d008d3b",
+                "reference": "a5ca568ce6c1b85e9e3ab567339b1b763d008d3b",
                 "shasum": ""
             },
             "require": {
@@ -1174,6 +1175,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "~6.1",
+                "railt/railt": "self.version",
                 "symfony/finder": "~2.8|~3.0|~4.0"
             },
             "type": "library",
@@ -1204,7 +1206,7 @@
                 "otd",
                 "parser"
             ],
-            "time": "2017-08-28 16:10:16"
+            "time": "2017-08-29T22:59:05+00:00"
         },
         {
             "name": "railt/reflection",
@@ -1212,12 +1214,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/reflection.git",
-                "reference": "1037db32af274c1b7a1124acb59d759a8c751181"
+                "reference": "99b66fd65ad18f7832f91019a752ef42895a7ce1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/reflection/zipball/1037db32af274c1b7a1124acb59d759a8c751181",
-                "reference": "1037db32af274c1b7a1124acb59d759a8c751181",
+                "url": "https://api.github.com/repos/railt/reflection/zipball/99b66fd65ad18f7832f91019a752ef42895a7ce1",
+                "reference": "99b66fd65ad18f7832f91019a752ef42895a7ce1",
                 "shasum": ""
             },
             "require": {
@@ -1226,7 +1228,8 @@
                 "railt/parser": "dev-master@dev"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6.1"
+                "phpunit/phpunit": "~6.1",
+                "railt/railt": "self.version"
             },
             "type": "library",
             "autoload": {
@@ -1255,7 +1258,7 @@
                 "reader",
                 "reflection"
             ],
-            "time": "2017-08-28 16:10:16"
+            "time": "2017-08-29T22:59:05+00:00"
         },
         {
             "name": "railt/routing",
@@ -1263,12 +1266,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/routing.git",
-                "reference": "70c2d57d9c93fbda7fa52adec0ff0036053af273"
+                "reference": "f4a1e8dc6608b17b4ff9a51a9bc0f2573761f00f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/routing/zipball/70c2d57d9c93fbda7fa52adec0ff0036053af273",
-                "reference": "70c2d57d9c93fbda7fa52adec0ff0036053af273",
+                "url": "https://api.github.com/repos/railt/routing/zipball/f4a1e8dc6608b17b4ff9a51a9bc0f2573761f00f",
+                "reference": "f4a1e8dc6608b17b4ff9a51a9bc0f2573761f00f",
                 "shasum": ""
             },
             "require": {
@@ -1276,7 +1279,8 @@
                 "psr/container": "~1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6.1"
+                "phpunit/phpunit": "~6.1",
+                "railt/railt": "self.version"
             },
             "type": "library",
             "autoload": {
@@ -1303,7 +1307,7 @@
                 "otd",
                 "routing"
             ],
-            "time": "2017-08-28 16:10:16"
+            "time": "2017-08-29T22:59:05+00:00"
         }
     ],
     "packages-dev": [
@@ -2560,12 +2564,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/webonyx-adapter.git",
-                "reference": "e8507130a058ae2d755da7b7dcc5ee5de1a06b75"
+                "reference": "1e4f779866b85d844b09b3313324e59d9d09780d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/webonyx-adapter/zipball/e8507130a058ae2d755da7b7dcc5ee5de1a06b75",
-                "reference": "e8507130a058ae2d755da7b7dcc5ee5de1a06b75",
+                "url": "https://api.github.com/repos/railt/webonyx-adapter/zipball/1e4f779866b85d844b09b3313324e59d9d09780d",
+                "reference": "1e4f779866b85d844b09b3313324e59d9d09780d",
                 "shasum": ""
             },
             "require": {
@@ -2573,7 +2577,8 @@
                 "webonyx/graphql-php": "~0.9.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~6.1"
+                "phpunit/phpunit": "~6.1",
+                "railt/railt": "self.version"
             },
             "type": "library",
             "autoload": {
@@ -2600,7 +2605,7 @@
                 "railt",
                 "webonyx"
             ],
-            "time": "2017-08-28T16:10:16+00:00"
+            "time": "2017-08-29T22:59:05+00:00"
         },
         {
             "name": "sami/sami",
