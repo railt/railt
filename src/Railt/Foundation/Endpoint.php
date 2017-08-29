@@ -7,132 +7,104 @@
  */
 declare(strict_types=1);
 
-namespace Railt;
+namespace Railt\Foundation;
 
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
-use Railt\Adapters\AdapterInterface;
-use Railt\Adapters\Adapter;
-use Railt\Compiler\Autoloader;
-use Railt\Foundation\ApiKernel;
-use Railt\Foundation\KernelInterface;
-use Railt\Http\ResponderInterface;
-use Railt\Http\Response;
-use Railt\Http\ResponseInterface;
-use Railt\Routing\Router;
-use Railt\Support\Constructors;
-use Railt\Compiler\Compiler;
-use Railt\Exceptions\RuntimeException;
+use Railt\Adapters\Factory;
+use Railt\Container\Container;
+use Railt\Container\Proxy;
+use Railt\Events\Dispatcher;
+use Railt\Events\DispatcherInterface;
 use Railt\Http\RequestInterface;
+use Railt\Http\ResponseInterface;
+use Railt\Parser\File;
 use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Support\Debuggable;
-use Railt\Support\Dispatcher;
-use Railt\Support\File;
+use Railt\Reflection\Autoloader;
+use Railt\Reflection\Compiler;
+use Railt\Routing\Router;
 use Railt\Support\Loggable;
 
 /**
  * Class Endpoint
- * @package Railt
+ * @package Railt\Foundation
  */
-class Endpoint implements ResponderInterface
+class Endpoint
 {
     use Loggable;
-    use Constructors;
-    use Debuggable;
 
     /**
-     * @var Compiler
+     * @var ContainerInterface
      */
-    private $compiler;
-
-    /**
-     * @var File
-     */
-    private $file;
-
-    /**
-     * @var Dispatcher
-     */
-    private $events;
-
-    /**
-     * @var Router
-     */
-    private $router;
-
-    /**
-     * @var KernelInterface
-     */
-    private $kernel;
+    private $container;
 
     /**
      * Endpoint constructor.
-     * @param File $file
-     * @throws \Railt\Exceptions\CompilerException
-     * @throws \Railt\Exceptions\SemanticException
+     * @param ContainerInterface $container
+     * @param LoggerInterface|null $logger
+     * @throws \Railt\Parser\Exceptions\ParserException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    public function __construct(File $file)
+    public function __construct(ContainerInterface $container = null, LoggerInterface $logger = null)
     {
-        $this->file = $file;
-        $this->compiler = new Compiler();
-        $this->events = new Dispatcher();
-        $this->router = new Router();
-    }
+        $this->container = new Container();
 
-    /**
-     * @param \Closure|null $then
-     * @return Router
-     */
-    public function router(\Closure $then = null): Router
-    {
-        if ($then !== null) {
-            $then($this->router, $this->events);
+        if ($container !== null) {
+            $this->container = new Proxy($this->container, $container);
         }
 
-        return $this->router;
+        $this->bootContainer($this->container);
+
+        $this->withLogger($logger);
     }
 
     /**
-     * @param string $kernel
-     * @return $this
+     * @param Container $container
+     * @throws \Railt\Parser\Exceptions\ParserException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    public function kernel(string $kernel)
+    private function bootContainer(Container $container): void
     {
-        $this->kernel = new $kernel($this);
-
-        return $this;
+        // Compiler
+        $container->bind(Compiler::class, new Compiler());
+        // Router
+        $container->bind(Router::class, new Router($container));
+        // Dispatcher
+        $dispatcher = new Dispatcher();
+        $container->bind(Dispatcher::class, $dispatcher);
+        $container->bind(DispatcherInterface::class, $dispatcher);
     }
 
     /**
-     * @param \Closure|string|null $then
-     * @param bool $prepend
+     * @return ContainerInterface
+     */
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
+    }
+
+    /**
      * @return Autoloader
-     * @throws \InvalidArgumentException
      */
-    public function autoload($then = null, bool $prepend = false): Autoloader
+    public function getAutoloader(): Autoloader
     {
-        return tap($this->compiler->getLoader(), function(Autoloader $loader) use ($then, $prepend) {
-            if ($then !== null) {
-                switch (true) {
-                    case $then instanceof \Closure:
-                        return $loader->autoload($then, $prepend);
-                    case is_string($then) || is_array($then):
-                        return $loader->dir($then, $prepend);
-                }
-
-                $error = 'First argument of method %s() must be a callable, string or array, but %s given';
-                throw new \InvalidArgumentException(sprintf($error, __METHOD__, gettype($then)));
-            }
-
-            return null;
-        });
+        return $this->getCompiler()->getAutoloader();
     }
 
     /**
-     * @return Dispatcher
+     * @return Compiler
      */
-    public function getEvents(): Dispatcher
+    public function getCompiler(): Compiler
     {
-        return $this->events;
+        return $this->container->get(Compiler::class);
+    }
+
+    /**
+     * @return DispatcherInterface
+     */
+    public function getEvents(): DispatcherInterface
+    {
+        return $this->container->get(DispatcherInterface::class);
     }
 
     /**
@@ -140,53 +112,52 @@ class Endpoint implements ResponderInterface
      */
     public function getRouter(): Router
     {
-        return $this->router;
+        return $this->container->get(Router::class);
     }
 
     /**
+     * @param $schema
      * @param RequestInterface $request
      * @return ResponseInterface
-     * @throws \Railt\Exceptions\RuntimeException
+     * @throws \Railt\Parser\Exceptions\NotReadableException
+     * @throws \Railt\Reflection\Exceptions\UnrecognizedNodeException
      * @throws \LogicException
-     * @throws \Railt\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    public function request(RequestInterface $request): ResponseInterface
+    public function request($schema, RequestInterface $request): ResponseInterface
     {
-        try {
-            if ($this->kernel !== null) {
-                $this->kernel->boot();
-            }
-
-            return $this->getAdapter()->request($request);
-        } catch (\Throwable $e) {
-            return Response::error($e)->enableDebug($this->debug);
-        }
+        return Factory::create($this->createDocument($schema), $this->getEvents(), $this->getRouter())
+            ->request($request);
     }
 
     /**
-     * @return AdapterInterface
-     * @throws \Railt\Exceptions\RuntimeException
-     * @throws \LogicException
-     * @throws Exceptions\UnrecognizedTokenException
-     */
-    private function getAdapter(): AdapterInterface
-    {
-        return (new Adapter())->create($this->compileDocument(), $this->events, $this->router);
-    }
-
-    /**
+     * @param $schema
      * @return DocumentTypeInterface
-     * @throws Exceptions\UnrecognizedTokenException
-     * @throws RuntimeException
+     * @throws \Railt\Parser\Exceptions\NotReadableException
+     * @throws \Railt\Reflection\Exceptions\UnrecognizedNodeException
+     * @throws \LogicException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private function compileDocument(): DocumentTypeInterface
+    private function createDocument($schema): DocumentTypeInterface
     {
-        $document = $this->compiler->compile($this->file);
+        return $this->getCompiler()
+            ->compile($this->createSchemaFile($schema))
+            ->getDocument();
+    }
 
-        if (!$document->getSchema()) {
-            throw RuntimeException::new('%s does not contain available schema type', $this->file->getPathname());
+    /**
+     * @param string|File $schema
+     * @return File
+     * @throws \Railt\Parser\Exceptions\NotReadableException
+     */
+    private function createSchemaFile($schema): File
+    {
+        if (is_string($schema)) {
+            return File::make($schema);
         }
 
-        return $document;
+        return $schema;
     }
 }

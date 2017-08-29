@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation;
+namespace Railt\Events;
 
 /**
  * Class Dispatcher
- * @package Railt\Foundation
+ * @package Railt\Events
  */
-class Dispatcher
+class Dispatcher implements DispatcherInterface
 {
     /**
      * @var array|\Closure[][]
@@ -51,9 +51,9 @@ class Dispatcher
     /**
      * @param string $name
      * @param \Closure $then
-     * @return Dispatcher
+     * @return DispatcherInterface|Dispatcher
      */
-    public function listen(string $name, \Closure $then): Dispatcher
+    public function listen(string $name, \Closure $then): DispatcherInterface
     {
         $key = $this->key($name);
 

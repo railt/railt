@@ -11,6 +11,7 @@ namespace Railt\Adapters;
 
 use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;
+use Railt\Events\DispatcherInterface;
 use Railt\Reflection\Abstraction\DocumentTypeInterface;
 
 /**
@@ -20,15 +21,30 @@ use Railt\Reflection\Abstraction\DocumentTypeInterface;
 interface AdapterInterface extends ResponderInterface
 {
     /**
+     * AdapterInterface constructor.
+     * @param DocumentTypeInterface $document
+     * @param DispatcherInterface $events
+     * @param Router $router
+     */
+    public function __construct(DocumentTypeInterface $document, DispatcherInterface $events, Router $router);
+
+    /**
+     * @return DispatcherInterface
+     */
+    public function getEvents(): DispatcherInterface;
+
+    /**
+     * @return Router
+     */
+    public function getRouter(): Router;
+
+    /**
+     * @return TypeLoaderInterface
+     */
+    public function getLoader(): TypeLoaderInterface;
+
+    /**
      * @return bool
      */
     public static function isSupported(): bool;
-
-    /**
-     * AdapterInterface constructor.
-     * @param DocumentTypeInterface $document
-     * @param Dispatcher $events
-     * @param Router $router
-     */
-    public function __construct(DocumentTypeInterface $document, Dispatcher $events, Router $router);
 }
