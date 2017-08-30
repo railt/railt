@@ -39,6 +39,7 @@
         "phpunit/phpunit": "~6.1",
         "symfony/finder": "~2.8|3.*|4.*",
         "illuminate/http": "~5.1",
+        "symfony/console": "~2.8|3.*|4.*",
         "symfony/http-foundation": "~2.8|3.*|4.*"
     },
     "autoload-dev": {
@@ -52,15 +53,12 @@
     "config": {
         "sort-packages": true
     },
+    "bin": [
+        "bin/railt"
+    ],
     "scripts": {
-        "init-devel-mode": [
-            "php bin/devel-mode"
-        ],
-        "api": [
-            "php vendor/sami/sami/sami.php update build/docs.config"
-        ],
         "post-create-project-cmd": [
-            "@init-devel-mode"
+            "php bin/railt devel:init --force"
         ]
     },
     "minimum-stability": "dev",

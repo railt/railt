@@ -63,7 +63,7 @@ class Endpoint
      * @throws \Railt\Parser\Exceptions\ParserException
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private function bootContainer(Container $container): void
+    private function bootContainer($container): void
     {
         // Compiler
         $container->bind(Compiler::class, new Compiler());

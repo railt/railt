@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 $iterator = Symfony\Component\Finder\Finder::create()
     ->files()
-    ->in(__DIR__ . '/../src')
+    ->in(__DIR__ . '/../src/Railt')
     ->name('*.php');
 
 $options = [
     'theme'                => 'default',
     'title'                => 'Railt API Documentation',
     'build_dir'            => __DIR__ . '/../docs/api',
-    'cache_dir'            => __DIR__ . '/.docs',
+    'cache_dir'            => __DIR__ . '/../docs/.cache',
 ];
 
 return new Sami\Sami($iterator, $options);
