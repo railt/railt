@@ -17,7 +17,7 @@ use Psr\Container\NotFoundExceptionInterface;
  * Class Proxy
  * @package Railt\Container
  */
-class Proxy implements ContainerInterface
+class Proxy implements ContainerInterface, AllowsInvocations
 {
     /**
      * @var ContainerInterface
@@ -58,5 +58,26 @@ class Proxy implements ContainerInterface
     public function has($id): bool
     {
         return $this->front->has($id) || $this->back->has($id);
+    }
+
+    /**
+     * @param callable|\ReflectionFunctionAbstract|string $action
+     * @param array $params
+     * @param string $namespace
+     * @throws \LogicException
+     */
+    public function call($action, array $params = [], string $namespace = '')
+    {
+        return $this->front->call($action, $params, $namespace);
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        return $this->front->{$name}(...$arguments);
     }
 }
