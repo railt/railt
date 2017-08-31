@@ -23,6 +23,7 @@
         "railt/http": "self.version",
         "railt/parser": "self.version",
         "railt/routing": "self.version",
+        "railt/container": "self.version",
         "railt/reflection": "self.version"
     },
     "autoload": {
