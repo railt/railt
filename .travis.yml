@@ -21,6 +21,6 @@ install:
   - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist --no-suggest; fi
   - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
-  - php ./build/devel-mode
+  - php ./bin/railt devel:init --force
 
-script: vendor/bin/phpunit --coverage-text --debug
+script: vendor/bin/phpunit --coverage-text
