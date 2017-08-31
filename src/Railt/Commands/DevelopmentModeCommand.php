@@ -149,12 +149,12 @@ class DevelopmentModeCommand extends AbstractCommand
     private function linkVendor(string $project, string $package, string $namespace): void
     {
         $tests   = $project . '/tests/' . $namespace;
-        if (!@mkdir(dirname($tests)) && !is_dir(dirname($tests))) {
+        if (!@mkdir(dirname($tests), 0777, true) && !is_dir(dirname($tests))) {
             throw new \RuntimeException('Can not create tests directory ' . dirname($tests));
         }
 
         $sources = $project . '/src/Railt/' . $namespace;
-        if (!@mkdir(dirname($sources)) && !is_dir(dirname($sources))) {
+        if (!@mkdir(dirname($sources), 0777, true) && !is_dir(dirname($sources))) {
             throw new \RuntimeException('Can not create sources directory ' . dirname($sources));
         }
 
