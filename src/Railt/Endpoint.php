@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation;
+namespace Railt;
 
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
@@ -27,7 +27,7 @@ use Railt\Support\Loggable;
 
 /**
  * Class Endpoint
- * @package Railt\Foundation
+ * @package Railt
  */
 class Endpoint
 {
@@ -47,11 +47,7 @@ class Endpoint
      */
     public function __construct(ContainerInterface $container = null, LoggerInterface $logger = null)
     {
-        $this->container = new Container();
-
-        if ($container !== null) {
-            $this->container = new Proxy($this->container, $container);
-        }
+        $this->container = new Container($container);
 
         $this->bootContainer($this->container);
 
@@ -66,13 +62,15 @@ class Endpoint
     private function bootContainer($container): void
     {
         // Compiler
-        $container->bind(Compiler::class, new Compiler());
+        $container->singleton(Compiler::class, new Compiler());
+
         // Router
-        $container->bind(Router::class, new Router($container));
+        $container->singleton(Router::class, new Router($container));
+
         // Dispatcher
         $dispatcher = new Dispatcher();
-        $container->bind(Dispatcher::class, $dispatcher);
-        $container->bind(DispatcherInterface::class, $dispatcher);
+        $container->singleton(Dispatcher::class, $dispatcher);
+        $container->singleton(DispatcherInterface::class, $dispatcher);
     }
 
     /**

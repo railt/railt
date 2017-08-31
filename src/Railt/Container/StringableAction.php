@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
-use Psr\Container\ContainerInterface;
-
 /**
  * Class StringableAction
  * @package Railt\Container
@@ -28,31 +26,25 @@ class StringableAction
     private $container;
 
     /**
-     * @var string
-     */
-    private $namespace = '';
-
-    /**
      * StringableAction constructor.
      * @param Container $container
-     * @param string $namespace
      */
-    public function __construct(Container $container, string $namespace = '')
+    public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->namespace = $namespace;
     }
 
     /**
      * @param string $action
+     * @param string $namespace
      * @return array
      * @throws \InvalidArgumentException
      */
-    private function parse(string $action): array
+    private function parse(string $action, string $namespace): array
     {
         [$class, $action] = $this->stringToArray($action);
 
-        $class = $this->verifyActionClass($this->namespace, $class);
+        $class = $this->verifyActionClass($namespace, $class);
 
         $this->verifyActionMethod($class, $action);
 
@@ -61,15 +53,17 @@ class StringableAction
 
     /**
      * @param string $action
+     * @param string $namespace
      * @return \Closure
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \InvalidArgumentException
      * @throws \ReflectionException
+     * @throws Exceptions\ContainerResolutionException
+     * @throws \InvalidArgumentException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function toCallable(string $action): \Closure
+    public function toCallable(string $action, string $namespace = ''): \Closure
     {
-        [$class, $action] = $this->parse($action);
+        [$class, $action] = $this->parse($action, $namespace);
 
         $reflection = new \ReflectionClass($class);
 
@@ -79,7 +73,11 @@ class StringableAction
             return \Closure::fromCallable([$class, $action]);
         }
 
-        $instance = $this->container->make($class);
+        if (!$this->container->has($class)) {
+            $this->container->singleton($class, $class);
+        }
+
+        $instance = $this->container->get($class);
 
         return \Closure::fromCallable([$instance, $action]);
     }

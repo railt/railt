@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of Railt package.
+ * This file is part of railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,34 +10,43 @@ declare(strict_types=1);
 namespace Railt\Container;
 
 use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class Proxy
  * @package Railt\Container
  */
-class Proxy implements ContainerInterface, AllowsInvocations
+class Proxy implements ContainerInterface
 {
     /**
      * @var ContainerInterface
      */
-    private $front;
+    private $master;
 
     /**
      * @var ContainerInterface
      */
-    private $back;
+    private $slave;
 
     /**
      * Proxy constructor.
-     * @param ContainerInterface $front
-     * @param ContainerInterface $back
+     * @param ContainerInterface $master
+     * @param ContainerInterface $slave
      */
-    public function __construct(ContainerInterface $front, ContainerInterface $back)
+    public function __construct(ContainerInterface $master, ContainerInterface $slave)
     {
-        $this->front = $front;
-        $this->back = $back;
+        $this->master = $master;
+        $this->slave = $slave;
+    }
+
+    /**
+     * @param callable|string $callable
+     * @param array $params
+     * @return mixed
+     */
+    public function call($callable, array $params = [])
+    {
+        return $this->master->call($callable, $params);
     }
 
     /**
@@ -48,7 +57,11 @@ class Proxy implements ContainerInterface, AllowsInvocations
      */
     public function get($id)
     {
-        return $this->front->has($id) ? $this->front->get($id) : $this->back->get($id);
+        if ($this->master->has($id)) {
+            return $this->master->get($id);
+        }
+
+        return $this->slave->get($id);
     }
 
     /**
@@ -57,27 +70,6 @@ class Proxy implements ContainerInterface, AllowsInvocations
      */
     public function has($id): bool
     {
-        return $this->front->has($id) || $this->back->has($id);
-    }
-
-    /**
-     * @param callable|\ReflectionFunctionAbstract|string $action
-     * @param array $params
-     * @param string $namespace
-     * @throws \LogicException
-     */
-    public function call($action, array $params = [], string $namespace = '')
-    {
-        return $this->front->call($action, $params, $namespace);
-    }
-
-    /**
-     * @param $name
-     * @param $arguments
-     * @return mixed
-     */
-    public function __call($name, $arguments)
-    {
-        return $this->front->{$name}(...$arguments);
+        return $this->master->has($id) || $this->slave->has($id);
     }
 }

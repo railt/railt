@@ -5,7 +5,6 @@
     "license": "MIT",
     "keywords": [ "graphql", "idl", "otd", "ast", "framework", "railt", "application" ],
     "homepage": "http://railt.org",
-    "version": "dev-master",
     "support": {
         "issues": "https://github.com/railt/railt/issues",
         "source": "https://github.com/railt/railt"
@@ -48,7 +47,7 @@
         }
     },
     "suggest": {
-        "webonyx/graphql-php": "Webonyx GraphQL Adapter for Railt Framework (self.version)."
+        "webonyx/graphql-php": "Webonyx GraphQL Adapter for Railt Framework (~self.version)."
     },
     "config": {
         "sort-packages": true

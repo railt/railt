@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
-use Psr\Container\ContainerInterface;
 use Railt\Container\Exceptions\ParameterResolutionException;
 
 /**
@@ -34,17 +33,21 @@ class ParamResolver
 
     /**
      * @param \ReflectionFunctionAbstract $action
-     * @param Parameters|null $additional
+     * @param array $parameters
      * @return \Traversable
+     * @throws \ReflectionException
+     * @throws \BadMethodCallException
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function resolve(\ReflectionFunctionAbstract $action, Parameters $additional = null): \Traversable
+    public function resolve(\ReflectionFunctionAbstract $action, array $parameters = []): \Traversable
     {
-        $container = $additional !== null ? new Proxy($additional, $this->container) : $this->container;
+        $params = count($parameters)
+            ? new Proxy(new Parameters($parameters), $this->container)
+            : $this->container;
 
         foreach ($this->parameters($action) as $parameter) {
-            yield $this->getValueForParameter($parameter, $container);
+            yield $this->getValueForParameter($parameter, $params);
         }
     }
 

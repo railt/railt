@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of Railt package.
+ * This file is part of railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,17 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
+use Psr\Container\ContainerInterface as PsrContainer;
+
 /**
- * Interface AllowsInvocations
+ * Interface ContainerInterface
  * @package Railt\Container
  */
-interface AllowsInvocations
+interface ContainerInterface extends PsrContainer
 {
     /**
-     * @param string|callable|\ReflectionFunctionAbstract $action
+     * @param callable|string $callable
      * @param array $params
-     * @param string $namespace
      * @return mixed
      */
-    public function call($action, array $params = [], string $namespace = '');
+    public function call($callable, array $params = []);
 }

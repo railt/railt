@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Adapters;
 
 /**
- * Interface RequestInterface
+ * Interface InputInterface
  * @package Railt\Adapters
  */
-interface RequestInterface
+interface InputInterface
 {
     /**
      * @return array

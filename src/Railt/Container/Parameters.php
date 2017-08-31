@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of Railt package.
+ * This file is part of railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,20 +10,97 @@ declare(strict_types=1);
 namespace Railt\Container;
 
 /**
- * Class FlushParameters
+ * Class Parameters
  * @package Railt\Container
  */
-class Parameters extends Container
+class Parameters implements ContainerInterface
 {
+    /**
+     * @var array
+     */
+    private $parameters;
+
+    /**
+     * @var Container
+     */
+    private $container;
+
     /**
      * Parameters constructor.
      * @param array $parameters
+     * @throws \BadMethodCallException
      * @throws \ReflectionException
      */
     public function __construct(array $parameters = [])
     {
-        parent::__construct();
+        $this->parameters = $parameters;
+        $this->container  = new Container();
+
         $this->with($parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return Parameters
+     * @throws \ReflectionException
+     * @throws \BadMethodCallException
+     */
+    public function with(array $parameters = []): Parameters
+    {
+        foreach ($parameters as $key => $value) {
+            if (is_int($key)) {
+                $this->registerAnonymousParameter($value);
+            } else {
+                $this->registerNamedParameter($key, $value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $value
+     * @throws \BadMethodCallException
+     * @throws \ReflectionException
+     */
+    private function registerAnonymousParameter($value)
+    {
+        switch (true) {
+            case is_object($value):
+                return $this->registerNamedParameter(get_class($value), $value);
+            case is_string($value):
+                return $this->registerNamedParameter($value, $value);
+        }
+
+        $error = 'Can not register dynamic parameter %s without key.';
+        throw new \BadMethodCallException(sprintf($error, gettype($value)));
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @throws \ReflectionException
+     */
+    private function registerNamedParameter($key, $value)
+    {
+        $this->container->singleton($key, $value);
+
+        switch (true) {
+            case is_object($value):
+                foreach ($this->getObjectAliases($value) as $alias) {
+                    if (! $this->container->has($alias)) {
+                        $this->container->singleton($alias, $value);
+                    }
+                }
+                break;
+            case is_string($value) && class_exists($value):
+                foreach ($this->getClassAliases($value) as $alias) {
+                    if (! $this->container->has($alias)) {
+                        $this->container->singleton($alias, $value);
+                    }
+                }
+                break;
+        }
     }
 
     /**
@@ -53,38 +130,34 @@ class Parameters extends Container
     }
 
     /**
-     * @param array $parameters
-     * @return Parameters
-     * @throws \ReflectionException
+     * @param callable|string $callable
+     * @param array $params
+     * @return mixed|void
+     * @throws \BadMethodCallException
      */
-    public function with(array $parameters = []): Parameters
+    public function call($callable, array $params = [])
     {
-        foreach ($parameters as $key => $value) {
-            $this->add($value);
-
-            if (!is_int($key)) {
-                $this->bind($key, $value);
-            }
-        }
-
-        return $this;
+        throw new \BadMethodCallException('Method not allowed');
     }
 
     /**
-     * @param object|mixed $value
-     * @return Parameters
-     * @throws \ReflectionException
+     * @param string $id
+     * @return mixed
+     * @throws Exceptions\ContainerResolutionException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function add($value): Parameters
+    public function get($id)
     {
-        switch (true) {
-            case is_object($value):
-                foreach ($this->getObjectAliases($value) as $alias) {
-                    $this->bind($alias, $value);
-                }
-                break;
-        }
+        return $this->container->get($id);
+    }
 
-        return $this;
+    /**
+     * @param string $id
+     * @return bool
+     */
+    public function has($id): bool
+    {
+        return $this->container->has($id);
     }
 }

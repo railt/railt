@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "56e2d93278fdeaa6edebc7ed49afdc59",
+    "content-hash": "62260c2efec3d7170b1c80f65e88f4fd",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -1160,12 +1160,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/http.git",
-                "reference": "012523dec7b79ac328eb7c1c0d2b8d4bf5103e3c"
+                "reference": "eeae068d47ada14db5f95b8b2ccfaedfa09b3f12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/http/zipball/012523dec7b79ac328eb7c1c0d2b8d4bf5103e3c",
-                "reference": "012523dec7b79ac328eb7c1c0d2b8d4bf5103e3c",
+                "url": "https://api.github.com/repos/railt/http/zipball/eeae068d47ada14db5f95b8b2ccfaedfa09b3f12",
+                "reference": "eeae068d47ada14db5f95b8b2ccfaedfa09b3f12",
                 "shasum": ""
             },
             "require": {
@@ -1208,7 +1208,7 @@
                 "request",
                 "response"
             ],
-            "time": "2017-08-29 22:59:05"
+            "time": "2017-08-31T00:58:12+00:00"
         },
         {
             "name": "railt/parser",
@@ -1216,12 +1216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/parser.git",
-                "reference": "a5ca568ce6c1b85e9e3ab567339b1b763d008d3b"
+                "reference": "04cc5df70987da12fb60c2df57865848b8c1925d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/parser/zipball/a5ca568ce6c1b85e9e3ab567339b1b763d008d3b",
-                "reference": "a5ca568ce6c1b85e9e3ab567339b1b763d008d3b",
+                "url": "https://api.github.com/repos/railt/parser/zipball/04cc5df70987da12fb60c2df57865848b8c1925d",
+                "reference": "04cc5df70987da12fb60c2df57865848b8c1925d",
                 "shasum": ""
             },
             "require": {
@@ -1261,7 +1261,7 @@
                 "otd",
                 "parser"
             ],
-            "time": "2017-08-29 22:59:05"
+            "time": "2017-08-31T00:58:12+00:00"
         },
         {
             "name": "railt/reflection",
@@ -1269,12 +1269,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/reflection.git",
-                "reference": "99b66fd65ad18f7832f91019a752ef42895a7ce1"
+                "reference": "1f03c8e1ea46a96fed179493c37540512015448a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/reflection/zipball/99b66fd65ad18f7832f91019a752ef42895a7ce1",
-                "reference": "99b66fd65ad18f7832f91019a752ef42895a7ce1",
+                "url": "https://api.github.com/repos/railt/reflection/zipball/1f03c8e1ea46a96fed179493c37540512015448a",
+                "reference": "1f03c8e1ea46a96fed179493c37540512015448a",
                 "shasum": ""
             },
             "require": {
@@ -1313,7 +1313,7 @@
                 "reader",
                 "reflection"
             ],
-            "time": "2017-08-29 22:59:05"
+            "time": "2017-08-31T00:58:12+00:00"
         },
         {
             "name": "railt/routing",
@@ -1321,12 +1321,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/routing.git",
-                "reference": "f4a1e8dc6608b17b4ff9a51a9bc0f2573761f00f"
+                "reference": "d1109bc930d79c710475af8cab4f1150d692b9bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/routing/zipball/f4a1e8dc6608b17b4ff9a51a9bc0f2573761f00f",
-                "reference": "f4a1e8dc6608b17b4ff9a51a9bc0f2573761f00f",
+                "url": "https://api.github.com/repos/railt/routing/zipball/d1109bc930d79c710475af8cab4f1150d692b9bb",
+                "reference": "d1109bc930d79c710475af8cab4f1150d692b9bb",
                 "shasum": ""
             },
             "require": {
@@ -1362,7 +1362,7 @@
                 "otd",
                 "routing"
             ],
-            "time": "2017-08-29 22:59:05"
+            "time": "2017-08-31T00:58:12+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -2689,12 +2689,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/webonyx-adapter.git",
-                "reference": "1e4f779866b85d844b09b3313324e59d9d09780d"
+                "reference": "826c6e0d659a1d098998c8065df1a4259b909ce2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/webonyx-adapter/zipball/1e4f779866b85d844b09b3313324e59d9d09780d",
-                "reference": "1e4f779866b85d844b09b3313324e59d9d09780d",
+                "url": "https://api.github.com/repos/railt/webonyx-adapter/zipball/826c6e0d659a1d098998c8065df1a4259b909ce2",
+                "reference": "826c6e0d659a1d098998c8065df1a4259b909ce2",
                 "shasum": ""
             },
             "require": {
@@ -2730,7 +2730,7 @@
                 "railt",
                 "webonyx"
             ],
-            "time": "2017-08-29 22:59:05"
+            "time": "2017-08-31T00:58:12+00:00"
         },
         {
             "name": "sami/sami",
