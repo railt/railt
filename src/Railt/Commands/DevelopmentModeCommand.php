@@ -45,6 +45,7 @@ class DevelopmentModeCommand extends AbstractCommand
         'railt/routing'         => 'Routing',
         'railt/reflection'      => 'Reflection',
         'railt/webonyx-adapter' => 'Adapters/Webonyx',
+        'railt/laravel-adapter' => 'Adapters/Laravel',
     ];
 
     /**
@@ -143,11 +144,19 @@ class DevelopmentModeCommand extends AbstractCommand
      * @param string $package
      * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Filesystem\Exception\IOException
+     * @throws \RuntimeException
      */
     private function linkVendor(string $project, string $package, string $namespace): void
     {
         $tests   = $project . '/tests/' . $namespace;
+        if (!@mkdir(dirname($tests)) && !is_dir(dirname($tests))) {
+            throw new \RuntimeException('Can not create tests directory ' . dirname($tests));
+        }
+
         $sources = $project . '/src/Railt/' . $namespace;
+        if (!@mkdir(dirname($sources)) && !is_dir(dirname($sources))) {
+            throw new \RuntimeException('Can not create sources directory ' . dirname($sources));
+        }
 
         $fs = new Filesystem();
 
