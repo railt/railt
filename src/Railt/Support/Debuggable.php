@@ -12,6 +12,7 @@ namespace Railt\Support;
 /**
  * Trait Debuggable
  * @package Railt\Support
+ * @mixin DebuggableInterface
  */
 trait Debuggable
 {
@@ -22,12 +23,20 @@ trait Debuggable
 
     /**
      * @param bool $enabled
-     * @return $this|self|Debuggable
+     * @return $this|DebuggableInterface
      */
-    public function enableDebug(bool $enabled = true): self
+    public function debugMode(bool $enabled = true): DebuggableInterface
     {
         $this->debug = $enabled;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 }

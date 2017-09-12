@@ -23,15 +23,18 @@ use Railt\Reflection\Abstraction\DocumentTypeInterface;
 use Railt\Reflection\Autoloader;
 use Railt\Reflection\Compiler;
 use Railt\Routing\Router;
+use Railt\Support\Debuggable;
+use Railt\Support\DebuggableInterface;
 use Railt\Support\Loggable;
 
 /**
  * Class Endpoint
  * @package Railt
  */
-class Endpoint
+class Endpoint implements DebuggableInterface
 {
     use Loggable;
+    use Debuggable;
 
     /**
      * @var ContainerInterface
@@ -125,8 +128,13 @@ class Endpoint
      */
     public function request($schema, RequestInterface $request): ResponseInterface
     {
-        return Factory::create($this->createDocument($schema), $this->getEvents(), $this->getRouter())
-            ->request($request);
+        $adapter = Factory::create($this->createDocument($schema), $this->getEvents(), $this->getRouter());
+
+        if ($adapter instanceof DebuggableInterface) {
+            $adapter->debugMode($this->debug);
+        }
+
+        return $adapter->request($request);
     }
 
     /**

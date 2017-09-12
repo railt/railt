@@ -66,25 +66,20 @@ class Dispatcher implements DispatcherInterface
 
     /**
      * @param string $name
-     * @param array ...$payload
-     * @return array
+     * @param mixed $payload
+     * @return mixed
      */
-    public function dispatch(string $name, ...$payload): array
+    public function dispatch(string $name, $payload)
     {
-        return iterator_to_array($this->fire($name, ...$payload));
-    }
-
-    /**
-     * @param string $name
-     * @param array ...$payload
-     * @return \Traversable
-     */
-    private function fire(string $name, ...$payload): \Traversable
-    {
-        $payload[] = $name;
         foreach ($this->find($name) as $listener) {
-            yield $name => $listener(...$payload);
+            $result = $listener($name, $payload);
+
+            if ($result !== null) {
+                $payload = $result;
+            }
         }
+
+        return $payload;
     }
 
     /**

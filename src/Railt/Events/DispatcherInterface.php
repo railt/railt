@@ -24,8 +24,8 @@ interface DispatcherInterface
 
     /**
      * @param string $name
-     * @param array ...$payload
-     * @return array
+     * @param mixed $payload
+     * @return mixed
      */
-    public function dispatch(string $name, ...$payload): array;
+    public function dispatch(string $name, $payload);
 }
