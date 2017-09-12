@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
+use Railt\Container\ContainerInterface;
 use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;
 use Railt\Events\DispatcherInterface;
@@ -42,6 +43,11 @@ interface AdapterInterface extends ResponderInterface
      * @return TypeLoaderInterface
      */
     public function getLoader(): TypeLoaderInterface;
+
+    /**
+     * @return ContainerInterface
+     */
+    public function getContainer(): ContainerInterface;
 
     /**
      * @return bool

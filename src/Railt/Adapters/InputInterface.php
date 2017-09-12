@@ -47,6 +47,11 @@ interface InputInterface
     /**
      * @return string
      */
+    public function getQueryType(): string;
+
+    /**
+     * @return string
+     */
     public function getPath(): string;
 
     /**
