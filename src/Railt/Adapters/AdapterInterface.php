@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Container\ContainerInterface;
 use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;
 use Railt\Events\DispatcherInterface;
+use Railt\Container\ContainerInterface;
 use Railt\Reflection\Abstraction\DocumentTypeInterface;
 
 /**

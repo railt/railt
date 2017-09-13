@@ -1,0 +1,19 @@
+#
+# Skip
+#
+
+# DocBlock: Foo
+extend type Foo {
+    # DocBlock: seven
+    # DocBlock2: seven
+    seven(argument: [String]): Type
+    # Skip
+    # Skip
+# Skip
+} # Skip
+
+# DocBlock: Foo2
+extend type Foo2 @onType {
+    # Skip
+    # Skip
+} # Skip

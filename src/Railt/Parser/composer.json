@@ -1,0 +1,32 @@
+{
+    "name": "railt/parser",
+    "type": "library",
+    "description": "The Railt Parser component provides grammar/lexer to build AST from GraphQL IDL source code",
+    "license": "MIT",
+    "keywords": [ "graphql", "idl", "otd", "ast", "grammar", "lexer", "parser", "compiler" ],
+    "homepage": "http://railt.org",
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/railt"
+    },
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "hoa/compiler": "~3.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Parser\\": "/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

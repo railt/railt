@@ -1,0 +1,14 @@
+#
+# Skip
+#
+
+# DocBlock: Feed
+union Feed = Story | Article | Advert # Skip
+
+# DocBlock: AnnotatedUnion
+union AnnotatedUnion @onUnion = A | B # Skip
+
+# DocBlock: AnnotatedUnionTwo
+union AnnotatedUnionTwo @onUnion = | A | B # Skip
+#
+# Skip

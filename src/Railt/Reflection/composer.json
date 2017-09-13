@@ -1,0 +1,33 @@
+{
+    "name": "railt/reflection",
+    "type": "library",
+    "description": "The Railt Reflection component provides Reflection API to read GraphQL IDL source code",
+    "license": "MIT",
+    "keywords": [ "graphql", "idl", "otd", "ast", "reflection", "reader", "introspection" ],
+    "homepage": "http://railt.org",
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/railt"
+    },
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "railt/parser": "self.version",
+        "illuminate/support": "~5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Reflection\\": "/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

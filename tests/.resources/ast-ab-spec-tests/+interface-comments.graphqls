@@ -1,0 +1,15 @@
+#
+# Skip
+#
+
+# DocBlock: interface
+interface Example {
+    # DocBlock: a
+    a: TestQuery # Skip
+
+    # DocBlock: b
+    # DocBlock2: b
+    b: TestMutation # Skip
+    # Skip
+    # Skip
+} # Skip

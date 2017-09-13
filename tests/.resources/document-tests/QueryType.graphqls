@@ -1,0 +1,10 @@
+interface Sayable {
+    say(message: String): String
+}
+
+interface Vasya {
+}
+
+type QueryType implements Sayable, Vasya {
+    say(message: String!): String!
+}

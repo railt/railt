@@ -1,13 +1,17 @@
+
+# Development libraries
+
+.idea/
+vendor/
 composer.phar
+
+# OS Dependencies
+
 .DS_Store
 Thumbs.db
 
-docs/
-.idea/
-vendor/
-build/.docs/
-src/Railt/Http/
-src/Railt/Parser/
-src/Railt/Routing/
-src/Railt/Reflection/
-src/Railt/WebonyxAdapter/
+# Test generated files
+
+*.phpt.out
+*.phpt.exp
+*.phpt.diff

@@ -1,0 +1,13 @@
+"""
+Colour enum description
+"""
+enum Colour {
+    """
+    Value "Red" description
+    """
+    Red
+    """
+    Value 'Green' description
+    """
+    Green
+}

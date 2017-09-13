@@ -13,7 +13,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Railt\Adapters\Factory;
 use Railt\Container\Container;
-use Railt\Container\Proxy;
 use Railt\Events\Dispatcher;
 use Railt\Events\DispatcherInterface;
 use Railt\Http\RequestInterface;
@@ -101,22 +100,6 @@ class Endpoint implements DebuggableInterface
     }
 
     /**
-     * @return DispatcherInterface
-     */
-    public function getEvents(): DispatcherInterface
-    {
-        return $this->container->get(DispatcherInterface::class);
-    }
-
-    /**
-     * @return Router
-     */
-    public function getRouter(): Router
-    {
-        return $this->container->get(Router::class);
-    }
-
-    /**
      * @param $schema
      * @param RequestInterface $request
      * @return ResponseInterface
@@ -165,5 +148,21 @@ class Endpoint implements DebuggableInterface
         }
 
         return $schema;
+    }
+
+    /**
+     * @return DispatcherInterface
+     */
+    public function getEvents(): DispatcherInterface
+    {
+        return $this->container->get(DispatcherInterface::class);
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter(): Router
+    {
+        return $this->container->get(Router::class);
     }
 }

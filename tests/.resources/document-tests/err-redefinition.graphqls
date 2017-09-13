@@ -1,0 +1,12 @@
+interface A {
+
+}
+
+type A {
+
+}
+
+enum A {
+    VALUE
+    VALUE_2
+}

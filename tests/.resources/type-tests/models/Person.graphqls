@@ -1,0 +1,1 @@
+union Person = User | Bot

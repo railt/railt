@@ -1,0 +1,15 @@
+#
+# Skip
+#
+
+# DocBlock: schema
+schema {
+    # DocBlock: query
+    query: TestQuery # Skip
+
+    # DocBlock: mutation
+    # DocBlock2: mutation
+    mutation: TestMutation # Skip
+    # Skip
+    # Skip
+} # Skip

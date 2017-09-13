@@ -1,0 +1,14 @@
+schema {
+    query: Query
+}
+
+type Query {
+    users: [Person]!
+    nullableUsers: [Person]
+    nonNullsUsers: [Person!]
+    nonNullUsers: [Person!]!
+    user: Person
+    nonNullUser: Person!
+}
+
+
