@@ -38,7 +38,8 @@
     "require-dev": {
         "railt/webonyx-adapter": "self.version",
         "phpunit/phpunit": "~6.1",
-        "monolog/monolog": "~1.9"
+        "monolog/monolog": "~1.9",
+        "symfony/finder": "~3.0"
     },
     "autoload-dev": {
         "psr-4": {
