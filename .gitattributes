@@ -1,5 +1,9 @@
 * text=auto
 *.pp linguist-language=Antlr
+*.gql linguist-language=GraphQL
+*.graphqls linguist-language=GraphQL
+*.graphql linguist-language=GraphQL
+*.phpt linguist-language=GraphQL
 
 /.github export-ignore
 /tests export-ignore
