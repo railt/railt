@@ -5,4 +5,5 @@ git subsplit publish --heads="master" --no-tags src/Railt/Http:git@github.com:ra
 git subsplit publish --heads="master" --no-tags src/Railt/Parser:git@github.com:railt/parser.git
 git subsplit publish --heads="master" --no-tags src/Railt/Reflection:git@github.com:railt/reflection.git
 git subsplit publish --heads="master" --no-tags src/Railt/Routing:git@github.com:railt/routing.git
+git subsplit publish --heads="master" --no-tags src/Railt/Support:git@github.com:railt/support.git
 rm -rf .subsplit/
