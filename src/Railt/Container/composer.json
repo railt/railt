@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\Container\\": "/"
+            "Railt\\Container\\": ""
         }
     },
     "config": {

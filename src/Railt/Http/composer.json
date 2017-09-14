@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\Http\\": "/"
+            "Railt\\Http\\": ""
         }
     },
     "suggest": {
