@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Parser\Exceptions;
 
 /**
- * Class ParserException
+ * Class CompilerException
  * @package Railt\Parser\Exceptions
  */
-class ParserException extends \TypeError
+class CompilerException extends \LogicException
 {
 
 }

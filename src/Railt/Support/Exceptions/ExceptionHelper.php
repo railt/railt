@@ -10,13 +10,10 @@ declare(strict_types=1);
 namespace Railt\Support\Exceptions;
 
 /**
- * Trait ExceptionsSupportTrait
+ * Trait ExceptionHelper
  * @package Railt\Support\Exceptions
- *
- * @mixin \Throwable
- * @method $this __construct(string $message, int $code = 0, \Throwable $parent)
  */
-trait ExceptionsSupportTrait
+trait ExceptionHelper
 {
     /**
      * @var int
@@ -31,6 +28,28 @@ trait ExceptionsSupportTrait
     public static function create(string $message, ...$params): \Throwable
     {
         return new static(sprintf($message, ...$params));
+    }
+
+    /**
+     * @param int $code
+     * @return self|$this
+     */
+    public function withCode(int $code = 0)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * @param \Throwable $previous
+     * @return self|$this
+     */
+    public function withParent(\Throwable $previous)
+    {
+        $this->previous = $previous;
+
+        return $this;
     }
 
     /**

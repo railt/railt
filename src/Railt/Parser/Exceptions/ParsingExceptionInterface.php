@@ -10,18 +10,23 @@ declare(strict_types=1);
 namespace Railt\Parser\Exceptions;
 
 /**
- * Interface GraphQLSchemaException
+ * Interface ParsingExceptionInterface
  * @package Railt\Parser\Exceptions
  */
-interface GraphQLSchemaException
+interface ParsingExceptionInterface extends \Throwable
 {
     /**
-     * @return int
+     * @return string
      */
-    public function getCodeColumn(): int;
+    public function getFile()/*: string*/;
 
     /**
      * @return int
      */
-    public function getCodeLine(): int;
+    public function getLine()/*: int*/;
+
+    /**
+     * @return int
+     */
+    public function getColumn(): int;
 }

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Railt\Support\Exceptions\NotFoundException;
-use Railt\Parser\Exceptions\ParserException;
+use Railt\Parser\Exceptions\InitializationException;
 use Railt\Parser\Parser;
+use Railt\Support\Exceptions\NotFoundException;
 use Railt\Tests\AbstractTestCase;
 
 /**
@@ -23,11 +23,11 @@ class ExceptionsTestCase extends AbstractTestCase
     /**
      * @throws \PHPUnit\Framework\Exception
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Parser\Exceptions\ParserException
+     * @throws \Railt\Parser\Exceptions\ParsingException
      */
     public function testParserException(): void
     {
-        $this->expectException(ParserException::class);
+        $this->expectException(InitializationException::class);
 
         $resource = $this->resource('exceptions/bad.grammar.pp');
 
@@ -39,7 +39,7 @@ class ExceptionsTestCase extends AbstractTestCase
      * @throws NotFoundException
      * @throws \PHPUnit\Framework\Exception
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Parser\Exceptions\ParserException
+     * @throws \Railt\Parser\Exceptions\ParsingException
      */
     public function testNotReadableException(): void
     {

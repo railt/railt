@@ -44,7 +44,7 @@ class Endpoint implements DebuggableInterface
      * Endpoint constructor.
      * @param ContainerInterface $container
      * @param LoggerInterface|null $logger
-     * @throws \Railt\Parser\Exceptions\ParserException
+     * @throws \Railt\Parser\Exceptions\ParsingException
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(ContainerInterface $container = null, LoggerInterface $logger = null)
@@ -58,7 +58,7 @@ class Endpoint implements DebuggableInterface
 
     /**
      * @param Container $container
-     * @throws \Railt\Parser\Exceptions\ParserException
+     * @throws \Railt\Parser\Exceptions\ParsingException
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     private function bootContainer($container): void

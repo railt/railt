@@ -16,7 +16,7 @@ use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser as LlkParser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\File\Read;
-use Railt\Parser\Exceptions\ParserException;
+use Railt\Parser\Exceptions\InitializationException;
 use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Support\Filesystem\ReadableInterface;
@@ -38,9 +38,9 @@ class Parser
     private $llk;
 
     /**
-     * Compiler constructor.
+     * Parser constructor.
      * @param string|null $grammar
-     * @throws ParserException
+     * @throws InitializationException
      */
     public function __construct(string $grammar = null)
     {
@@ -50,14 +50,14 @@ class Parser
     /**
      * @param null|string $grammar
      * @return LlkParser
-     * @throws ParserException
+     * @throws InitializationException
      */
     private function getParser(?string $grammar): LlkParser
     {
         try {
             return Llk::load($this->createReader($grammar));
         } catch (Exception $e) {
-            throw new ParserException($e->getMessage());
+            throw new InitializationException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -96,9 +96,9 @@ class Parser
         try {
             return $this->llk->parse($file->read());
         } catch (UnexpectedToken $e) {
-            throw UnexpectedTokenException::fromHoaException($e, $file);
+            throw new UnexpectedTokenException($e->getMessage(), $e->getCode(), $e, $file);
         } catch (UnrecognizedToken $e) {
-            throw UnrecognizedTokenException::fromHoaException($e, $file);
+            throw new UnrecognizedTokenException($e->getMessage(), $e->getCode(), $e, $file);
         }
     }
 }

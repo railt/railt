@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Parser\Exceptions;
 
 /**
- * Class UnrecognizedTokenException
+ * Class InitializationException
  * @package Railt\Parser\Exceptions
  */
-class UnrecognizedTokenException extends ParsingException
+class InitializationException extends CompilerException
 {
 }

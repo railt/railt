@@ -47,7 +47,7 @@ class Compiler
     /**
      * Compiler constructor.
      * @param Parser|null $parser
-     * @throws \Railt\Parser\Exceptions\ParserException
+     * @throws \Railt\Parser\Exceptions\ParsingException
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(Parser $parser = null)
