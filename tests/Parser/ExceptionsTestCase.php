@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Railt\Parser\Exceptions\InitializationException;
 use Railt\Parser\Parser;
 use Railt\Support\Exceptions\NotFoundException;
 use Railt\Tests\AbstractTestCase;
+use Railt\Parser\Exceptions\InitializationException;
 
 /**
  * Class ExceptionsTestCase
@@ -31,7 +31,19 @@ class ExceptionsTestCase extends AbstractTestCase
 
         $resource = $this->resource('exceptions/bad.grammar.pp');
 
-        $parser = new Parser($resource);
+        $parser = new class($resource) extends Parser\SDLParser {
+            private $resource;
+            public function __construct(string $resource)
+            {
+                $this->resource = $resource;
+                parent::__construct();
+            }
+            protected function getGrammarFile(): string
+            {
+                return $this->resource;
+            }
+        };
+
         $parser->parse($this->file('exceptions/bad.grammar.pp'));
     }
 

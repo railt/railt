@@ -43,7 +43,7 @@ class AstSpecsTestCase extends AbstractTestCase
 
         $ast = $compiler->parse(File::fromSources($spec->getIn(), $spec->getPath()));
 
-        $dump = Parser::dump($ast);
+        $dump = $compiler->dump($ast);
 
         try {
             $otherwise = 'Error in test "' . str_replace('"', "'", $spec->getName())

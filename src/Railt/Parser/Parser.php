@@ -9,96 +9,89 @@ declare(strict_types=1);
 
 namespace Railt\Parser;
 
-use Hoa\Compiler\Exception;
-use Hoa\Compiler\Exception\UnexpectedToken;
-use Hoa\Compiler\Exception\UnrecognizedToken;
 use Hoa\Compiler\Llk\Llk;
+use Hoa\Compiler\Exception;
 use Hoa\Compiler\Llk\Parser as LlkParser;
-use Hoa\Compiler\Llk\TreeNode;
-use Hoa\File\Read;
-use Railt\Parser\Exceptions\InitializationException;
-use Railt\Parser\Exceptions\UnexpectedTokenException;
-use Railt\Parser\Exceptions\UnrecognizedTokenException;
-use Railt\Support\Filesystem\ReadableInterface;
+use Railt\Parser\Parser\SDLParser;
+use Railt\Parser\Exceptions\CompilerException;
+use Railt\Support\Debuggable;
+use Railt\Parser\Parser\CompiledSDLParser;
 
 /**
  * Class Parser
  * @package Railt\Parser
  */
-class Parser
+class Parser extends SDLParser
 {
-    /**
-     * Default grammar path
-     */
-    private const GRAMMAR_PP = __DIR__ . '/graphql-idl.pp';
+    use Debuggable;
 
     /**
-     * @var Parser
+     * Compiled parser namespace
      */
-    private $llk;
+    private const COMPILED_NAMESPACE = __NAMESPACE__ . '\\Parser';
 
     /**
-     * Parser constructor.
-     * @param string|null $grammar
-     * @throws InitializationException
+     * Compiled parser class
      */
-    public function __construct(string $grammar = null)
+    private const COMPILED_CLASS = 'CompiledSDLParser';
+
+    /**
+     * Compiled file path
+     */
+    private const COMPILED_FILE = __DIR__ . '/Parser/CompiledSDLParser.php';
+
+    /**
+     * @return void
+     * @throws CompilerException
+     */
+    public function compile(): void
     {
-        $this->llk = $this->getParser($grammar);
+        $sources = $this->compileSources(self::COMPILED_NAMESPACE, self::COMPILED_CLASS);
+
+        file_put_contents(self::COMPILED_FILE, $sources);
     }
 
     /**
-     * @param null|string $grammar
      * @return LlkParser
-     * @throws InitializationException
+     * @throws CompilerException
+     * @throws Exception
      */
-    private function getParser(?string $grammar): LlkParser
+    protected function createParser(): LlkParser
     {
-        try {
-            return Llk::load($this->createReader($grammar));
-        } catch (Exception $e) {
-            throw new InitializationException($e->getMessage(), $e->getCode(), $e);
+        if ($this->debug) {
+            $this->compile();
         }
+
+        if (class_exists(CompiledSDLParser::class)) {
+            return new CompiledSDLParser();
+        }
+
+        return parent::createParser();
     }
 
     /**
-     * @param null|string $grammar
-     * @return Read
-     */
-    private function createReader(?string $grammar): Read
-    {
-        return new Read($grammar ?? self::GRAMMAR_PP);
-    }
-
-    /**
-     * @param TreeNode $ast
-     * @param bool $stdout
+     * @param string $namespace
+     * @param string $class
      * @return string
+     * @throws CompilerException
      */
-    public static function dump(TreeNode $ast, bool $stdout = false): string
+    private function compileSources(string $namespace, string $class): string
     {
-        $result = (new Dumper($ast))->dump();
+        $doc = '/** ' . PHP_EOL .
+            ' * This is generated file. ' . PHP_EOL .
+            ' * For update sources from grammar use %s::%s() method.' . PHP_EOL .
+            ' */';
 
-        if ($stdout) {
-            echo $result;
-        }
+        $header = '<?php' . PHP_EOL .
+            sprintf($doc, __CLASS__, __FUNCTION__) . PHP_EOL .
+            'namespace ' . $namespace . ';' . PHP_EOL . PHP_EOL;
 
-        return $result;
-    }
-
-    /**
-     * @param ReadableInterface $file
-     * @return TreeNode
-     * @throws UnrecognizedTokenException
-     */
-    public function parse(ReadableInterface $file): TreeNode
-    {
         try {
-            return $this->llk->parse($file->read());
-        } catch (UnexpectedToken $e) {
-            throw new UnexpectedTokenException($e->getMessage(), $e->getCode(), $e, $file);
-        } catch (UnrecognizedToken $e) {
-            throw new UnrecognizedTokenException($e->getMessage(), $e->getCode(), $e, $file);
+            $sources = Llk::save(parent::createParser(), $class);
+        } catch (Exception $e) {
+            throw new CompilerException($e->getMessage(), $e->getCode(), $e);
         }
+
+        return $header . $sources;
     }
 }

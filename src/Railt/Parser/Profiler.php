@@ -11,29 +11,35 @@ namespace Railt\Parser;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\Compiler\Visitor\Dump;
+use Hoa\Compiler\Llk\Parser as LlkParser;
 
-class Dumper
+/**
+ * Class Profiler
+ * @package Railt\Parser
+ */
+class Profiler
 {
     /**
-     * @var TreeNode
+     * @var LlkParser
      */
-    private $ast;
+    private $parser;
 
     /**
-     * Dumper constructor.
-     * @param TreeNode $ast
+     * Profiler constructor.
+     * @param LlkParser $parser
      */
-    public function __construct(TreeNode $ast)
+    public function __construct(LlkParser $parser)
     {
-        $this->ast = $ast;
+        $this->parser = $parser;
     }
 
     /**
+     * @param TreeNode $ast
      * @return string
      */
-    public function dump(): string
+    public function dump(TreeNode $ast): string
     {
-        $result = (string)(new Dump())->visit($this->ast);
+        $result = (string)(new Dump())->visit($ast);
 
         $result = str_replace('>  ', '    ', $result);
         $result = preg_replace('/^\s{4}/ium', '', $result);
