@@ -43,7 +43,7 @@ class ObjectDefinition extends Definition implements
      * @param TreeNode $ast
      * @return TreeNode|null
      * @throws \LogicException
-     * @throws \Railt\Parser\Exceptions\NotReadableException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      * @throws \Railt\Reflection\Exceptions\TypeNotFoundException

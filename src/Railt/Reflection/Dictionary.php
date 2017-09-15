@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Reflection;
 
-use Railt\Parser\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Reflection\Abstraction\DefinitionInterface;
 use Railt\Reflection\Abstraction\DocumentTypeInterface;
@@ -17,6 +16,7 @@ use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
+use Railt\Support\Exceptions\NotReadableException;
 
 /**
  * Class Dictionary

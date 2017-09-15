@@ -18,7 +18,7 @@
     "require": {
         "php": ">=7.1",
         "railt/parser": "self.version",
-        "illuminate/support": "~5.1"
+        "railt/support": "self.version"
     },
     "autoload": {
         "psr-4": {

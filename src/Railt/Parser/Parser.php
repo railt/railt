@@ -19,6 +19,7 @@ use Hoa\File\Read;
 use Railt\Parser\Exceptions\ParserException;
 use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
+use Railt\Support\Filesystem\ReadableInterface;
 
 /**
  * Class Parser
@@ -86,14 +87,14 @@ class Parser
     }
 
     /**
-     * @param File $file
+     * @param ReadableInterface $file
      * @return TreeNode
      * @throws UnrecognizedTokenException
      */
-    public function parse(File $file): TreeNode
+    public function parse(ReadableInterface $file): TreeNode
     {
         try {
-            return $this->llk->parse($file->getSources());
+            return $this->llk->parse($file->read());
         } catch (UnexpectedToken $e) {
             throw UnexpectedTokenException::fromHoaException($e, $file);
         } catch (UnrecognizedToken $e) {

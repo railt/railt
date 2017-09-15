@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
-use Railt\Parser\Exceptions\NotReadableException;
+use Railt\Support\Exceptions\NotFoundException;
+use Railt\Support\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Reflection\Compiler;
@@ -219,11 +220,11 @@ class DocumentTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      */
-    public function testFileNotReadable(): void
+    public function testFileNotFound(): void
     {
-        $error = sprintf('File "%s" not readable. File not found.', $this->resource('nonexistent.file'));
+        $error = sprintf('File "%s" not found.', $this->resource('nonexistent.file'));
 
-        $this->expectException(NotReadableException::class);
+        $this->expectException(NotFoundException::class);
         $this->expectExceptionMessage($error);
 
         (new Compiler())->compile($this->file('nonexistent.file'));

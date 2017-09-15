@@ -11,7 +11,6 @@ namespace Railt\Reflection\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Illuminate\Support\Str;
-use Railt\Parser\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 use Railt\Reflection\Abstraction\Type\RelationTypeInterface;
@@ -73,12 +72,12 @@ class RelationType extends BaseType implements RelationTypeInterface
 
     /**
      * @return NamedDefinitionInterface
-     * @throws \LogicException
-     * @throws NotReadableException
-     * @throws UnrecognizedTokenException
      * @throws TypeConflictException
      * @throws TypeNotFoundException
      * @throws UnrecognizedNodeException
+     * @throws UnrecognizedTokenException
+     * @throws \LogicException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     public function getRelationDefinition(): NamedDefinitionInterface
     {

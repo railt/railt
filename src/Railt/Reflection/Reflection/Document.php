@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Parser\Exceptions\NotReadableException;
+use Railt\Support\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser;
 use Railt\Reflection\Abstraction\DocumentTypeInterface;
@@ -151,8 +151,8 @@ class Document extends Definition implements DocumentTypeInterface
      * @throws TypeConflictException
      * @throws TypeNotFoundException
      * @throws UnrecognizedNodeException
-     * @throws \LogicException
      * @throws UnrecognizedTokenException
+     * @throws \LogicException
      */
     public function load(string $type): NamedDefinitionInterface
     {

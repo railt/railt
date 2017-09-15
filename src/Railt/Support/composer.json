@@ -16,7 +16,10 @@
         }
     ],
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.1",
+        "psr/log": "~1.0",
+        "psr/cache": "~1.0",
+        "illuminate/support": "~5.1"
     },
     "autoload": {
         "psr-4": {

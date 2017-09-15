@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Railt\Parser\Exceptions\NotReadableException;
+use Railt\Support\Exceptions\NotFoundException;
 use Railt\Parser\Exceptions\ParserException;
 use Railt\Parser\Parser;
 use Railt\Tests\AbstractTestCase;
@@ -24,7 +24,6 @@ class ExceptionsTestCase extends AbstractTestCase
      * @throws \PHPUnit\Framework\Exception
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      * @throws \Railt\Parser\Exceptions\ParserException
-     * @throws \Railt\Parser\Exceptions\NotReadableException
      */
     public function testParserException(): void
     {
@@ -37,14 +36,14 @@ class ExceptionsTestCase extends AbstractTestCase
     }
 
     /**
-     * @throws NotReadableException
+     * @throws NotFoundException
      * @throws \PHPUnit\Framework\Exception
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      * @throws \Railt\Parser\Exceptions\ParserException
      */
     public function testNotReadableException(): void
     {
-        $this->expectException(NotReadableException::class);
+        $this->expectException(NotFoundException::class);
 
         $compiler = new Parser();
         $compiler->parse($this->file('invalid_file.php'));

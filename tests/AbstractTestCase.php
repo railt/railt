@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests;
 
-use Railt\Parser\File;
+use Railt\Support\Filesystem\File;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,10 +35,10 @@ abstract class AbstractTestCase extends TestCase
     /**
      * @param string $file
      * @return File
-     * @throws \Railt\Parser\Exceptions\NotReadableException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     public function file(string $file): File
     {
-        return File::path($this->resource($file));
+        return File::fromPathname($this->resource($file));
     }
 }

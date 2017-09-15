@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": ">=7.1",
-        "hoa/compiler": "~3.17"
+        "hoa/compiler": "~3.17",
+        "railt/support": "self.version"
     },
     "autoload": {
         "psr-4": {

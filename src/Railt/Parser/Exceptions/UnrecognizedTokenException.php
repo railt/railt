@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Exceptions;
 
-use Railt\Parser\File;
 use Hoa\Compiler\Exception\UnrecognizedToken;
+use Railt\Support\Filesystem\ReadableInterface;
 
 /**
  * Class UnrecognizedTokenException
@@ -31,10 +31,10 @@ class UnrecognizedTokenException extends \ParseError implements
 
     /**
      * @param UnrecognizedToken|\Exception $parent
-     * @param File $file
+     * @param ReadableInterface $file
      * @return UnrecognizedTokenException
      */
-    public static function fromHoaException(UnrecognizedToken $parent, File $file): UnrecognizedTokenException
+    public static function fromHoaException(UnrecognizedToken $parent, ReadableInterface $file): UnrecognizedTokenException
     {
         $self = (new static($parent->getMessage()))
             ->in($file->getPathname(), $parent->getLine())

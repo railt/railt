@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Reflection;
 
-use Railt\Parser\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
-use Railt\Parser\File;
 use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 use Railt\Reflection\Autoloader\Directory;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
+use Railt\Support\Exceptions\NotReadableException;
+use Railt\Support\Filesystem\File;
 
 /**
  * Class Autoloader
@@ -47,9 +47,9 @@ class Autoloader
      * @return null|NamedDefinitionInterface
      * @throws TypeConflictException
      * @throws UnrecognizedNodeException
+     * @throws UnrecognizedTokenException
      * @throws \LogicException
      * @throws NotReadableException
-     * @throws UnrecognizedTokenException
      */
     public function load(string $type): ?NamedDefinitionInterface
     {
@@ -57,7 +57,7 @@ class Autoloader
             $file = $loader($type);
 
             if (is_string($file)) {
-                $out = $this->compiler->compile(File::path($file));
+                $out = $this->compiler->compile(File::fromPathname($file));
 
                 return $this->compiler->getDictionary()->definition($out, $type);
             }

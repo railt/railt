@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Support;
+namespace Railt\Support\Log;
 
 use Psr\Log\LoggerInterface;
 
 /**
  * Trait Loggable
- * @package Railt\Support
+ * @package Railt\Support\Log
  */
 trait Loggable
 {
@@ -34,32 +34,43 @@ trait Loggable
     }
 
     /**
-     * @param string $message
+     * @return null|LoggerInterface
      */
-    public function debug(string $message): void
+    public function getLogger(): ?LoggerInterface
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     */
+    public function debug(string $message, array $context = []): void
     {
         if ($this->logger !== null) {
-            $this->logger->debug($message);
+            $this->logger->debug($message, $context);
         }
     }
 
     /**
      * @param string $message
+     * @param array $context
      */
-    public function notice(string $message): void
+    public function notice(string $message, array $context = []): void
     {
         if ($this->logger !== null) {
-            $this->logger->notice($message);
+            $this->logger->notice($message, $context);
         }
     }
 
     /**
      * @param string $message
+     * @param array $context
      */
-    public function error(string $message): void
+    public function error(string $message, array $context = []): void
     {
         if ($this->logger !== null) {
-            $this->logger->error($message);
+            $this->logger->error($message, $context);
         }
     }
 }

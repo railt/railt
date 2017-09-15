@@ -7,27 +7,23 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Exceptions;
+namespace Railt\Support\Exceptions;
 
 /**
- * Class NotReadableException
- * @package Railt\Parser\Exceptions
+ * Class NotFoundException
+ * @package Railt\Support\Exceptions
  */
-class NotReadableException extends \LogicException
+class NotFoundException extends NotReadableException
 {
     /**
-     * NotReadableException constructor.
+     * NotFoundException constructor.
      * @param string $file
      * @param int $code
      * @param \Throwable|null $previous
      */
     public function __construct(string $file = '', int $code = 0, \Throwable $previous = null)
     {
-        $suffix = is_file($file)
-            ? 'Probably not enough permissions to read the file.'
-            : 'File not found.';
-
-        $message = sprintf('File "%s" not readable. %s', $file, $suffix);
+        $message = sprintf('File "%s" not found.', $file);
 
         parent::__construct($message, $code, $previous);
     }

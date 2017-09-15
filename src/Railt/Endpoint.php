@@ -103,7 +103,7 @@ class Endpoint implements DebuggableInterface
      * @param $schema
      * @param RequestInterface $request
      * @return ResponseInterface
-     * @throws \Railt\Parser\Exceptions\NotReadableException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      * @throws \Railt\Reflection\Exceptions\UnrecognizedNodeException
      * @throws \LogicException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
@@ -123,7 +123,7 @@ class Endpoint implements DebuggableInterface
     /**
      * @param $schema
      * @return DocumentTypeInterface
-     * @throws \Railt\Parser\Exceptions\NotReadableException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      * @throws \Railt\Reflection\Exceptions\UnrecognizedNodeException
      * @throws \LogicException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
@@ -139,7 +139,7 @@ class Endpoint implements DebuggableInterface
     /**
      * @param string|File $schema
      * @return File
-     * @throws \Railt\Parser\Exceptions\NotReadableException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function createSchemaFile($schema): File
     {

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Parser\Exceptions\NotReadableException;
+use Railt\Support\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Reflection\Abstraction\NamedDefinitionInterface;
 use Railt\Reflection\Abstraction\UnionTypeInterface;
