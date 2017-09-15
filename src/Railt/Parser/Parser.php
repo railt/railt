@@ -62,7 +62,7 @@ class Parser extends SDLParser implements DebuggableInterface
      */
     protected function createParser(): LlkParser
     {
-        if (class_exists(CompiledSDLParser::class)) {
+        if (!class_exists(CompiledSDLParser::class)) {
             return new CompiledSDLParser();
         }
 
@@ -77,6 +77,8 @@ class Parser extends SDLParser implements DebuggableInterface
     public function debugMode(bool $enabled = true): DebuggableInterface
     {
         if ($this->debug = $enabled) {
+            // Recreate parser with grammar filed reader
+            $this->parser = parent::createParser();
             // Force regenerate compiler while debug mode is enabled
             $this->compile();
         }
