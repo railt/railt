@@ -29,7 +29,7 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @var LlkParser
      */
-    private $parser;
+    protected $parser;
 
     /**
      * @var Profiler
@@ -42,12 +42,8 @@ abstract class AbstractParser implements ParserInterface
      */
     public function __construct()
     {
-        try {
-            $this->parser   = $this->createParser();
-            $this->profiler = new Profiler($this->parser);
-        } catch (Exception $e) {
-            throw new InitializationException($e->getMessage(), $e->getCode(), $e);
-        }
+        $this->parser   = $this->createParser();
+        $this->profiler = new Profiler($this->parser);
     }
 
     /**

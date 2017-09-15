@@ -32,6 +32,7 @@ class AstABSpecsTestCase extends AbstractTestCase
      *
      * @param $file
      * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      * @throws \Railt\Support\Exceptions\NotReadableException
      */

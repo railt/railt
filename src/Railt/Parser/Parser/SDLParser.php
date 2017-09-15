@@ -9,11 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Parser;
 
+use Hoa\Compiler\Exception;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser;
 use Hoa\Compiler\Llk\Parser as LlkParser;
 use Hoa\File\Read;
 use Hoa\Stream\IStream\In;
+use Railt\Parser\Exceptions\CompilerException;
+use Railt\Parser\Exceptions\InitializationException;
 
 /**
  * Class SDLParser
@@ -27,12 +30,16 @@ class SDLParser extends AbstractParser
     protected const GRAPHQL_SDL_GRAMMAR_FILE = __DIR__ . '/../resources/grammar/sdl.pp';
 
     /**
-     * @return Parser
-     * @throws \Hoa\Compiler\Exception
+     * @return LlkParser
+     * @throws InitializationException
      */
     protected function createParser(): LlkParser
     {
-        return Llk::load($this->getStream());
+        try {
+            return Llk::load($this->getStream());
+        } catch (Exception $e) {
+            throw new InitializationException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

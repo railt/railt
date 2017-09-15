@@ -12,16 +12,21 @@ namespace Railt\Parser;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Exception;
 use Hoa\Compiler\Llk\Parser as LlkParser;
+use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Exceptions\InitializationException;
+use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser\SDLParser;
 use Railt\Parser\Exceptions\CompilerException;
 use Railt\Support\Debuggable;
 use Railt\Parser\Parser\CompiledSDLParser;
+use Railt\Support\DebuggableInterface;
+use Railt\Support\Filesystem\ReadableInterface;
 
 /**
  * Class Parser
  * @package Railt\Parser
  */
-class Parser extends SDLParser
+class Parser extends SDLParser implements DebuggableInterface
 {
     use Debuggable;
 
@@ -53,20 +58,41 @@ class Parser extends SDLParser
 
     /**
      * @return LlkParser
-     * @throws CompilerException
-     * @throws Exception
+     * @throws InitializationException
      */
     protected function createParser(): LlkParser
     {
-        if ($this->debug) {
-            $this->compile();
-        }
-
         if (class_exists(CompiledSDLParser::class)) {
             return new CompiledSDLParser();
         }
 
         return parent::createParser();
+    }
+
+    /**
+     * @param bool $enabled
+     * @return DebuggableInterface
+     * @throws CompilerException
+     */
+    public function debugMode(bool $enabled = true): DebuggableInterface
+    {
+        if ($this->debug = $enabled) {
+            // Force regenerate compiler while debug mode is enabled
+            $this->compile();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ReadableInterface $file
+     * @return TreeNode
+     * @throws CompilerException
+     * @throws UnrecognizedTokenException
+     */
+    public function parse(ReadableInterface $file): TreeNode
+    {
+        return parent::parse($file);
     }
 
     /**
