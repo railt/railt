@@ -39,7 +39,6 @@
 %token T_BRACE_OPEN             {
 %token T_BRACE_CLOSE            }   -> default
 %token T_OR                     \|
-%token T_COMMA                  ,
 %token T_ON                     on\b
 %token T_NUMBER_VALUE           \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b
 %token T_BOOL_TRUE              true\b
@@ -64,35 +63,6 @@
 %token string:T_STRING         [^"\\]+(\\.[^"\\]*)*
 %token string:T_STRING_CLOSE   "   -> default
 
-
-
-//
-// --------------------------------------------------------------------------
-//  GraphQL Scalar Types
-// --------------------------------------------------------------------------
-//
-//  A GraphQL object type has a name and fields, but at some point
-//  those fields have to resolve to some concrete data.
-//  That's where the scalar types come in:
-//  they represent the leaves of the query.
-//
-//  @see http://graphql.org/learn/schema/#scalar-types
-//      - Int:      http://facebook.github.io/graphql/#sec-Int
-//      - Float:    http://facebook.github.io/graphql/#sec-Float
-//      - String:   http://facebook.github.io/graphql/#sec-String
-//      - Boolean:  http://facebook.github.io/graphql/#sec-Boolean
-//      - ID:       http://facebook.github.io/graphql/#sec-ID
-//      - Any:      https://github.com/facebook/graphql/pull/325
-//
-
-%token T_SCALAR_INTEGER         Int\b
-%token T_SCALAR_ANY             Any\b
-%token T_SCALAR_FLOAT           Float\b
-%token T_SCALAR_STRING          String\b
-%token T_SCALAR_BOOLEAN         Boolean\b
-%token T_SCALAR_ID              ID\b
-
-
 //
 // --------------------------------------------------------------------------
 //  GraphQL Keywords
@@ -114,6 +84,7 @@
 %token T_SCHEMA                 schema\b
 %token T_SCHEMA_QUERY           query\b
 %token T_SCHEMA_MUTATION        mutation\b
+%token T_SCHEMA_SUBSCRIPTION    subscription\b
 // Scalar
 %token T_SCALAR                 scalar\b
 // Directive
@@ -147,6 +118,7 @@
 //                             [ BOM | WHITESPACE | HTAB | LF | CR ]
 %skip T_IGNORE                 [\xfe\xff|\x20|\x09|\x0a|\x0d]+
 %skip T_COMMENT                #[^\n]*
+%skip T_COMMA                  ,
 
 // ==========================================================================
 //                                  DOCUMENT
@@ -178,18 +150,26 @@ Definitions:
 //                                 COMMON
 // ==========================================================================
 
+//
+// --------------------------------------------------------------------------
+//  GraphQL Scalar Types
+// --------------------------------------------------------------------------
+//
+//  A GraphQL object type has a name and fields, but at some point
+//  those fields have to resolve to some concrete data.
+//  That's where the scalar types come in:
+//  they represent the leaves of the query.
+//
+//  @see http://graphql.org/learn/schema/#scalar-types
+//      - Int:      http://facebook.github.io/graphql/#sec-Int
+//      - Float:    http://facebook.github.io/graphql/#sec-Float
+//      - String:   http://facebook.github.io/graphql/#sec-String
+//      - Boolean:  http://facebook.github.io/graphql/#sec-Boolean
+//      - ID:       http://facebook.github.io/graphql/#sec-ID
+//      - Any:      https://github.com/facebook/graphql/pull/325
+//
 Scalar:
-    <T_SCALAR_INTEGER>
-        |
-    <T_SCALAR_FLOAT>
-        |
-    <T_SCALAR_STRING>
-        |
-    <T_SCALAR_BOOLEAN>
-        |
-    <T_SCALAR_ID>
-        |
-    <T_SCALAR_ANY>
+    <T_NAME>
 
 ValueKeyword:
     <T_BOOL_TRUE>
@@ -303,11 +283,7 @@ ValueScalarDefinition:
 
 Object:
     ::T_BRACE_OPEN::
-        (
-            ObjectPair() (
-                ::T_COMMA:: ObjectPair()
-            )*
-        )?
+        ObjectPair()*
     ::T_BRACE_CLOSE::
     #Object
 
@@ -316,11 +292,7 @@ ObjectPair:
 
 List:
     ::T_BRACKET_OPEN::
-        (
-            Value() (
-                ::T_COMMA:: Value()
-            )*
-        )?
+        Value()*
     ::T_BRACKET_CLOSE::
     #List
 
@@ -360,12 +332,16 @@ Documentation:
 
 SchemaDefinitionBody:
     (
-        SchemaDefinitionQuery()
-        SchemaDefinitionMutation()?
-    ) | (
         SchemaDefinitionMutation()
-        SchemaDefinitionQuery()
-    )
+            |
+        SchemaDefinitionSubscription()
+    )*
+    SchemaDefinitionQuery()
+    (
+        SchemaDefinitionMutation()
+            |
+        SchemaDefinitionSubscription()
+    )*
 
 SchemaDefinitionQuery:
     Documentation()?
@@ -375,8 +351,12 @@ SchemaDefinitionMutation:
     Documentation()?
     ::T_SCHEMA_MUTATION:: ::T_COLON:: SchemaDefinitionFieldValue() #Mutation
 
+SchemaDefinitionSubscription:
+    Documentation()?
+    ::T_SCHEMA_SUBSCRIPTION:: ::T_COLON:: SchemaDefinitionFieldValue() #Subscription
+
 SchemaDefinitionFieldValue:
-    ValueDefinition() Directive()* ::T_COMMA::?
+    ValueDefinition() Directive()*
 
 
 
@@ -442,7 +422,6 @@ InputDefinitionField:
     (
         Key() ::T_COLON:: ValueDefinition()
             InputDefinitionDefaultValue()? Directive()*
-        ::T_COMMA::?
      ) #Field
 
 InputDefinitionDefaultValue:
@@ -499,11 +478,7 @@ InputDefinitionDefaultValue:
 
 DirectiveDefinitionArguments:
     ::T_PARENTHESIS_OPEN::
-        (
-            DirectiveDefinitionArgument() (
-                ::T_COMMA:: DirectiveDefinitionArgument()
-            )*
-        )?
+        DirectiveDefinitionArgument()*
     ::T_PARENTHESIS_CLOSE:: #Argument
 
 DirectiveDefinitionArgument:
@@ -551,9 +526,7 @@ DirectiveDefinitionTargets:
     ::T_BRACE_CLOSE::
 
 ObjectDefinitionImplements:
-    ::T_TYPE_IMPLEMENTS:: Key() (
-        ::T_COMMA:: Key()
-    )* #Implements
+    ::T_TYPE_IMPLEMENTS:: Key()+ #Implements
 
 ObjectDefinitionField:
     Documentation()?
@@ -565,7 +538,6 @@ ObjectDefinitionField:
 ObjectDefinitionFieldValue:
     ValueDefinition()
         Directive()*
-    ::T_COMMA::?
 
 //
 // --------------------------------------------------------------------------
@@ -601,7 +573,7 @@ ObjectDefinitionFieldValue:
 InterfaceDefinitionBody:
     (
         InterfaceDefinitionFieldKey() ::T_COLON:: ValueDefinition()
-            Directive()* ::T_COMMA::?
+            Directive()*
     ) #Field
 
 InterfaceDefinitionFieldKey:
@@ -642,7 +614,6 @@ EnumField:
     Documentation()?
     (
         EnumValue() Directive()*
-            ::T_COMMA::?
     ) #Value
 
 //
@@ -720,11 +691,7 @@ UnionUnitesList:
 //
 Arguments:
     ::T_PARENTHESIS_OPEN::
-        (
-            ArgumentPair() (
-                ::T_COMMA:: ArgumentPair()
-            )*
-        )?
+        ArgumentPair()*
     ::T_PARENTHESIS_CLOSE::
 
 ArgumentPair:
@@ -764,11 +731,7 @@ ArgumentDefaultValue:
 
 DirectiveArguments:
     ::T_PARENTHESIS_OPEN::
-        (
-            DirectivePair() (
-                ::T_COMMA:: DirectivePair()
-            )*
-        )?
+        DirectivePair()*
     ::T_PARENTHESIS_CLOSE::
 
 DirectivePair:
