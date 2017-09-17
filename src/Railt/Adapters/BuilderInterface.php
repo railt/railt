@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Reflection\Abstraction\DefinitionInterface;
-use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Contracts\DefinitionInterface;
+use Railt\Reflection\Contracts\Type\TypeInterface;
 
 /**
  * Interface BuilderInterface
- * @package Railt\Adapters
  */
 interface BuilderInterface
 {

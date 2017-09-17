@@ -11,7 +11,6 @@ namespace Railt\Container\Exceptions;
 
 /**
  * Class ParameterResolutionException
- * @package Railt\Container\Exceptions
  */
 class ParameterResolutionException extends ContainerResolutionException
 {

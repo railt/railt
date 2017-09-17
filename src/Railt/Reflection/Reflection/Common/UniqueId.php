@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
 
 /**
  * Trait UniqueId
@@ -29,10 +29,10 @@ trait UniqueId
     private $id;
 
     /**
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      */
-    public function bootUniqueId(DocumentTypeInterface $document, TreeNode $ast): void
+    public function bootUniqueId(DocumentInterface $document, TreeNode $ast): void
     {
         $this->id = ++self::$lastId;
     }

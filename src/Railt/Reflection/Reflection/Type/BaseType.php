@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\Type\ListTypeInterface;
-use Railt\Reflection\Abstraction\Type\RelationTypeInterface;
-use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\Type\ListTypeInterface;
+use Railt\Reflection\Contracts\Type\RelationTypeInterface;
+use Railt\Reflection\Contracts\Type\TypeInterface;
 use Railt\Reflection\Reflection\Document;
 
 /**
@@ -50,9 +50,9 @@ abstract class BaseType implements TypeInterface
     }
 
     /**
-     * @return DocumentTypeInterface
+     * @return DocumentInterface
      */
-    public function getDocument(): DocumentTypeInterface
+    public function getDocument(): DocumentInterface
     {
         return $this->document;
     }

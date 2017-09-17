@@ -20,18 +20,18 @@ interface HasTimestamps {
             #Name
                 token(T_NAME, createdAt)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, updatedAt)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
         #Field
             #Name
                 token(T_NAME, timestamps)
             #List
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                     token(T_NON_NULL, !)
                 token(T_NON_NULL, !)

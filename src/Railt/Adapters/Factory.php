@@ -12,11 +12,10 @@ namespace Railt\Adapters;
 use Railt\Routing\Router;
 use Railt\Adapters\Webonyx\Adapter;
 use Railt\Events\DispatcherInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface as Document;
+use Railt\Reflection\Contracts\DocumentInterface as Document;
 
 /**
  * Class Factory
- * @package Railt\Adapters
  */
 class Factory
 {

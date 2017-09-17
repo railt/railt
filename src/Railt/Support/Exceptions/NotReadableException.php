@@ -11,7 +11,6 @@ namespace Railt\Support\Exceptions;
 
 /**
  * Class NotReadableException
- * @package Railt\Support\Exceptions
  */
 class NotReadableException extends \LogicException
 {

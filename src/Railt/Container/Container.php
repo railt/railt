@@ -17,7 +17,6 @@ use Railt\Container\Exceptions\ContainerResolutionException;
 
 /**
  * Class Container
- * @package Railt\Container
  */
 class Container implements ContainerInterface
 {

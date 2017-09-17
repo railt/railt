@@ -15,7 +15,6 @@ use Railt\Support\Filesystem\ReadableInterface;
 
 /**
  * Class ParsingException
- * @package Railt\Parser\Exceptions
  */
 class ParsingException extends \ParseError implements ParsingExceptionInterface
 {

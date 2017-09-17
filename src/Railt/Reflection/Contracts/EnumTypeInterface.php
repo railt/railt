@@ -7,14 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts;
 
-use Railt\Reflection\Abstraction\Common\HasDescription;
-use Railt\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Railt\Reflection\Contracts\Common\HasDescription;
+use Railt\Reflection\Contracts\Common\HasDirectivesInterface;
 
 /**
  * Interface EnumTypeInterface
- * @package Railt\Reflection\Abstraction
  */
 interface EnumTypeInterface extends
     NamedDefinitionInterface,
@@ -22,7 +21,7 @@ interface EnumTypeInterface extends
     HasDescription
 {
     /**
-     * @return iterable|EnumValueInterface[]
+     * @return iterable|ValueInterface[]
      */
     public function getValues(): iterable;
 
@@ -34,7 +33,7 @@ interface EnumTypeInterface extends
 
     /**
      * @param string $name
-     * @return null|EnumValueInterface
+     * @return null|ValueInterface
      */
-    public function getValue(string $name): ?EnumValueInterface;
+    public function getValue(string $name): ?ValueInterface;
 }

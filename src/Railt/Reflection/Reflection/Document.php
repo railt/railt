@@ -13,9 +13,9 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Support\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
-use Railt\Reflection\Abstraction\SchemaTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\SchemaTypeInterface;
 use Railt\Reflection\Dictionary;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
@@ -28,7 +28,7 @@ use Railt\Reflection\Reflection\Common\UniqueId;
  * Class Document
  * @package Railt\Reflection\Reflection
  */
-class Document extends Definition implements DocumentTypeInterface
+class Document extends Definition implements DocumentInterface
 {
     use UniqueId;
     use HasDefinitions;

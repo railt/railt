@@ -184,9 +184,9 @@ directive @include2(if: Boolean!) on # COMMENT
                 #Name
                     token(T_NAME, other)
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
             #Type
-                token(T_SCALAR_INTEGER, Int)
+                token(T_NAME, Int)
         #Field
             #Name
                 token(T_NAME, four)
@@ -194,11 +194,11 @@ directive @include2(if: Boolean!) on # COMMENT
                 #Name
                     token(T_NAME, argument)
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                 #Value
                     token(string:T_STRING, string)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
         #Field
             #Name
                 token(T_NAME, five)
@@ -207,7 +207,7 @@ directive @include2(if: Boolean!) on # COMMENT
                     token(T_NAME, argument)
                 #List
                     #Type
-                        token(T_SCALAR_STRING, String)
+                        token(T_NAME, String)
                 #Value
                     #List
                         #Value
@@ -215,7 +215,7 @@ directive @include2(if: Boolean!) on # COMMENT
                         #Value
                             token(string:T_STRING, string)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
         #Field
             #Name
                 token(T_NAME, six)
@@ -249,7 +249,7 @@ directive @include2(if: Boolean!) on # COMMENT
                 #Name
                     token(T_NAME, argument)
                 #Type
-                    token(T_SCALAR_INTEGER, Int)
+                    token(T_NAME, Int)
                 #Value
                     token(T_NULL, null)
             #Type
@@ -305,11 +305,11 @@ directive @include2(if: Boolean!) on # COMMENT
                 #Name
                     token(T_NAME, argument)
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                 #Value
                     token(string:T_STRING, string)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
     #InterfaceDefinition
         #Name
             token(T_NAME, AnnotatedInterface)
@@ -404,13 +404,13 @@ directive @include2(if: Boolean!) on # COMMENT
             #Name
                 token(T_NAME, key)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, answer)
             #Type
-                token(T_SCALAR_INTEGER, Int)
+                token(T_NAME, Int)
             #DefaultValue
                 #Value
                     token(T_NUMBER_VALUE, 42)
@@ -440,7 +440,7 @@ directive @include2(if: Boolean!) on # COMMENT
                         token(T_NAME, argument)
                     #List
                         #Type
-                            token(T_SCALAR_STRING, String)
+                            token(T_NAME, String)
                 #Type
                     token(T_NAME, Type)
     #ExtendDefinition
@@ -460,7 +460,7 @@ directive @include2(if: Boolean!) on # COMMENT
             #Name
                 token(T_NAME, if)
             #Type
-                token(T_SCALAR_BOOLEAN, Boolean)
+                token(T_NAME, Boolean)
                 token(T_NON_NULL, !)
         #Target
             #Name
@@ -478,7 +478,7 @@ directive @include2(if: Boolean!) on # COMMENT
             #Name
                 token(T_NAME, if)
             #Type
-                token(T_SCALAR_BOOLEAN, Boolean)
+                token(T_NAME, Boolean)
                 token(T_NON_NULL, !)
         #Target
             #Name
@@ -496,7 +496,7 @@ directive @include2(if: Boolean!) on # COMMENT
             #Name
                 token(T_NAME, if)
             #Type
-                token(T_SCALAR_BOOLEAN, Boolean)
+                token(T_NAME, Boolean)
                 token(T_NON_NULL, !)
         #Target
             #Name

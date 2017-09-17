@@ -14,15 +14,9 @@ use Railt\Support\Exceptions\NotReadableException;
 
 /**
  * Class File
- * @package Railt\Support
  */
 class File extends \SplFileInfo implements ReadableInterface
 {
-    /**
-     * Name of file when file name not defined
-     */
-    private const VIRTUAL_FILE_NAME = 'php://input';
-
     /**
      * @var string
      */
@@ -36,7 +30,7 @@ class File extends \SplFileInfo implements ReadableInterface
     public function __construct(string $sources, ?string $path)
     {
         $this->sources = $sources;
-        parent::__construct($path ?? self::VIRTUAL_FILE_NAME);
+        parent::__construct($path ?? static::VIRTUAL_FILE_NAME);
     }
 
     /**

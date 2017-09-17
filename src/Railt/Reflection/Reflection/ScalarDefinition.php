@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Reflection\Contracts\ScalarTypeInterface;
 use Railt\Reflection\Reflection\Common\Directives;
 use Railt\Reflection\Reflection\Common\HasDescription;
 use Railt\Reflection\Reflection\Common\HasLinkingStageInterface;

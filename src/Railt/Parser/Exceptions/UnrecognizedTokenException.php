@@ -11,7 +11,6 @@ namespace Railt\Parser\Exceptions;
 
 /**
  * Class UnrecognizedTokenException
- * @package Railt\Parser\Exceptions
  */
 class UnrecognizedTokenException extends ParsingException
 {

@@ -11,7 +11,6 @@ namespace Railt\Routing\Contracts;
 
 /**
  * Interface OutputInterface
- * @package Railt\Routing\Contracts
  */
 interface OutputInterface
 {

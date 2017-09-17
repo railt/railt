@@ -11,7 +11,6 @@ namespace Railt\Routing;
 
 /**
  * Class Pipeline
- * @package Railt\Routing
  */
 class Pipeline
 {

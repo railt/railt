@@ -13,7 +13,6 @@ use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class ContainerResolutionException
- * @package Railt\Container\Exceptions
  */
 class ContainerResolutionException extends \LogicException implements NotFoundExceptionInterface
 {

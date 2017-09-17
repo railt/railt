@@ -9,18 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
-use Railt\Parser\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
-use Railt\Reflection\Abstraction\ArgumentInterface;
-use Railt\Reflection\Abstraction\Common\HasFieldsInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\FieldInterface;
-use Railt\Reflection\Abstraction\InputTypeInterface;
-use Railt\Reflection\Abstraction\InterfaceTypeInterface;
-use Railt\Reflection\Abstraction\ObjectTypeInterface;
-use Railt\Reflection\Abstraction\SchemaTypeInterface;
-use Railt\Reflection\Abstraction\UnionTypeInterface;
+use Railt\Reflection\Contracts\ArgumentInterface;
+use Railt\Reflection\Contracts\Common\HasFieldsInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\FieldInterface;
+use Railt\Reflection\Contracts\InputTypeInterface;
+use Railt\Reflection\Contracts\InterfaceTypeInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\ObjectTypeInterface;
+use Railt\Reflection\Contracts\SchemaTypeInterface;
+use Railt\Reflection\Contracts\UnionTypeInterface;
 use Railt\Reflection\Compiler;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
@@ -39,7 +39,6 @@ class ReflectionTestCase extends AbstractTestCase
     protected $resourcesPath = 'type-tests/';
 
     /**
-     * @throws NotReadableException
      * @throws UnexpectedTokenException
      * @throws UnrecognizedTokenException
      * @throws \PHPUnit\Framework\Exception
@@ -56,14 +55,14 @@ class ReflectionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return DocumentTypeInterface|Document
-     * @throws NotReadableException
-     * @throws UnrecognizedTokenException
-     * @throws \LogicException
+     * @return DocumentInterface
      * @throws TypeConflictException
      * @throws UnrecognizedNodeException
+     * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
-    private function getDocument(): DocumentTypeInterface
+    private function getDocument(): DocumentInterface
     {
         $compiler = $this->getCompiler();
 
@@ -87,10 +86,10 @@ class ReflectionTestCase extends AbstractTestCase
     }
 
     /**
-     * @param Document|DocumentTypeInterface $document
+     * @param Document|DocumentInterface $document
      * @throws UnexpectedTokenException
      */
-    private function checkNames(DocumentTypeInterface $document): void
+    private function checkNames(DocumentInterface $document): void
     {
         foreach ($document->getDictionary()->all() as $loadedType) {
             $this->assertNotNull($loadedType->getTypeName());
@@ -100,7 +99,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testSchema(): void
@@ -115,9 +113,11 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @return null|SchemaTypeInterface
-     * @throws UnexpectedTokenException
-     * @throws NotReadableException
+     * @throws TypeConflictException
+     * @throws UnrecognizedNodeException
      * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function getSchema(): ?SchemaTypeInterface
     {
@@ -128,7 +128,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testQuery(): void
@@ -143,9 +142,11 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @return null|HasFieldsInterface
-     * @throws UnexpectedTokenException
-     * @throws NotReadableException
+     * @throws TypeConflictException
+     * @throws UnrecognizedNodeException
      * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function getQuery(): ?HasFieldsInterface
     {
@@ -155,7 +156,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testFields(): void
@@ -178,7 +178,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testFieldUsers(): void
@@ -196,9 +195,11 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @param string $name
      * @return null|FieldInterface
-     * @throws UnexpectedTokenException
-     * @throws NotReadableException
+     * @throws TypeConflictException
+     * @throws UnrecognizedNodeException
      * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function getField(string $name): ?FieldInterface
     {
@@ -208,7 +209,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testFieldNullableUsers(): void
@@ -226,7 +226,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testFieldNonNullsUsers(): void
@@ -244,7 +243,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testFieldNonNullUsers(): void
@@ -262,7 +260,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testFieldUser(): void
@@ -280,7 +277,6 @@ class ReflectionTestCase extends AbstractTestCase
     /**
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testFieldNonNullUser(): void
@@ -299,7 +295,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testUnionType(): void
@@ -324,10 +319,12 @@ class ReflectionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return null|UnionTypeInterface
-     * @throws UnexpectedTokenException
-     * @throws NotReadableException
+     * @return null|UnionTypeInterface|NamedDefinitionInterface
+     * @throws TypeConflictException
+     * @throws UnrecognizedNodeException
      * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function getPersonUnion(): ?UnionTypeInterface
     {
@@ -338,7 +335,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testUserObject(): void
@@ -452,9 +448,11 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @return null|ObjectTypeInterface
-     * @throws UnexpectedTokenException
-     * @throws NotReadableException
+     * @throws TypeConflictException
+     * @throws UnrecognizedNodeException
      * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function getUserObject(): ?ObjectTypeInterface
     {
@@ -465,7 +463,6 @@ class ReflectionTestCase extends AbstractTestCase
      * @throws UnexpectedTokenException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws NotReadableException
      * @throws UnrecognizedTokenException
      */
     public function testBotObject(): void
@@ -551,9 +548,11 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @return null|ObjectTypeInterface
-     * @throws UnexpectedTokenException
-     * @throws NotReadableException
+     * @throws TypeConflictException
+     * @throws UnrecognizedNodeException
      * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function getBotObject(): ?ObjectTypeInterface
     {
@@ -647,9 +646,11 @@ class ReflectionTestCase extends AbstractTestCase
 
     /**
      * @return null|InterfaceTypeInterface
-     * @throws UnexpectedTokenException
-     * @throws NotReadableException
+     * @throws TypeConflictException
+     * @throws UnrecognizedNodeException
      * @throws UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Support\Exceptions\NotReadableException
      */
     private function getPersonInterface(): ?InterfaceTypeInterface
     {

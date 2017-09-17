@@ -13,7 +13,6 @@ use Railt\Container\ContainerInterface;
 
 /**
  * Interface DefinitionInterface
- * @package Railt\Container\Definitions
  */
 interface DefinitionInterface
 {

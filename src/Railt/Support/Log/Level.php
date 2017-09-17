@@ -8,11 +8,11 @@
 declare(strict_types=1);
 
 namespace Railt\Support\Log;
-use Railt\Support\Str;
+
+use Illuminate\Support\Str;
 
 /**
  * Class Level
- * @package Railt\Support\Log
  */
 abstract class Level
 {
@@ -96,7 +96,7 @@ abstract class Level
     {
         foreach (self::getConstants() as $name => $value) {
             if ($level === $value) {
-                return Str::camelCase($name);
+                return Str::studly($name);
             }
         }
 

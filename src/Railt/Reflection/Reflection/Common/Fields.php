@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\Common\HasFieldsInterface;
-use Railt\Reflection\Abstraction\FieldInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\Common\HasFieldsInterface;
+use Railt\Reflection\Contracts\FieldInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Reflection\Document;
 use Railt\Reflection\Reflection\Field;
 

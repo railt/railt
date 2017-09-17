@@ -11,7 +11,6 @@ namespace Railt\Http;
 
 /**
  * Interface RequestInterface
- * @package Railt\Http
  */
 interface RequestInterface
 {

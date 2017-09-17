@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction\Common;
+namespace Railt\Reflection\Contracts\Common;
 
-use Railt\Reflection\Abstraction\ArgumentInterface;
+use Railt\Reflection\Contracts\ArgumentInterface;
 
 /**
  * Interface HasArgumentsInterface
- * @package Railt\Reflection\Abstraction\Common
  */
 interface HasArgumentsInterface
 {

@@ -11,7 +11,6 @@ namespace Railt\Parser\Exceptions;
 
 /**
  * Interface ParsingExceptionInterface
- * @package Railt\Parser\Exceptions
  */
 interface ParsingExceptionInterface extends \Throwable
 {

@@ -13,7 +13,6 @@ use Railt\Http\RequestInterface;
 
 /**
  * Trait ConfigurableRequest
- * @package Railt\Http\Support
  */
 trait ConfigurableRequest
 {

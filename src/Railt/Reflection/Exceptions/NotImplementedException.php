@@ -11,7 +11,6 @@ namespace Railt\Reflection\Exceptions;
 
 /**
  * Class NotImplementedException
- * @package Railt\Reflection\Exceptions
  */
 class NotImplementedException extends \LogicException
 {

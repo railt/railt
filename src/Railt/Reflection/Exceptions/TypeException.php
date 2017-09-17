@@ -11,7 +11,6 @@ namespace Railt\Reflection\Exceptions;
 
 /**
  * Class TypeException
- * @package Railt\Reflection\Exceptions
  */
 class TypeException extends \TypeError
 {

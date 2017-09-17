@@ -11,7 +11,6 @@ namespace Railt\Reflection\Exceptions;
 
 /**
  * Class TypeConflictException
- * @package Railt\Reflection\Exceptions
  */
 class TypeConflictException extends TypeException
 {

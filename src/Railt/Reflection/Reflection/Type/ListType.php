@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Type;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
-use Railt\Reflection\Abstraction\Type\ListTypeInterface;
-use Railt\Reflection\Abstraction\Type\RelationTypeInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\Type\ListTypeInterface;
+use Railt\Reflection\Contracts\Type\RelationTypeInterface;
 use Railt\Reflection\Reflection\Document;
 
 /**

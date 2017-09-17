@@ -7,16 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts\Enum;
 
-use Railt\Reflection\Abstraction\Common\HasDescription;
-use Railt\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Railt\Reflection\Contracts\Common\HasDescription;
+use Railt\Reflection\Contracts\Common\HasDirectivesInterface;
+use Railt\Reflection\Contracts\EnumTypeInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 
 /**
- * Interface EnumValueInterface
- * @package Railt\Reflection\Abstraction
+ * Interface ValueInterface
  */
-interface EnumValueInterface extends
+interface ValueInterface extends
     NamedDefinitionInterface,
     HasDirectivesInterface,
     HasDescription

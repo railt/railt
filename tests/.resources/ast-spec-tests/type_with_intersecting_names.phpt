@@ -66,14 +66,14 @@ type A {
             token(T_NAME, A)
         #Field
             #Name
-                token(T_SCALAR_ID, ID)
+                token(T_NAME, ID)
             #Type
-                token(T_SCALAR_ID, ID)
+                token(T_NAME, ID)
         #Field
             #Name
-                token(T_SCALAR_INTEGER, Int)
+                token(T_NAME, Int)
             #Type
-                token(T_SCALAR_INTEGER, Int)
+                token(T_NAME, Int)
         #Field
             #Name
                 token(T_NAME, Bool)
@@ -81,14 +81,14 @@ type A {
                 token(T_NAME, Bool)
         #Field
             #Name
-                token(T_SCALAR_FLOAT, Float)
+                token(T_NAME, Float)
             #Type
-                token(T_SCALAR_FLOAT, Float)
+                token(T_NAME, Float)
         #Field
             #Name
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
         #Field
             #Name
                 token(T_NULL, null)

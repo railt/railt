@@ -45,7 +45,10 @@
     "autoload": {
         "psr-4": {
             "Railt\\": "src/Railt/"
-        }
+        },
+        "files": [
+            "src/Railt/Support/helpers.php"
+        ]
     },
     "require-dev": {
         "railt/webonyx-adapter": "self.version",

@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts;
 
 /**
- * Interface DocumentTypeInterface
- * @package Railt\Reflection\Abstraction
+ * Interface DocumentInterface
  */
-interface DocumentTypeInterface extends DefinitionInterface
+interface DocumentInterface extends DefinitionInterface
 {
     /**
      * @return int

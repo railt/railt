@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\ArgumentInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
-use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Contracts\ArgumentInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\Type\TypeInterface;
 use Railt\Reflection\Exceptions\BrokenAstException;
 use Railt\Reflection\Reflection\Common\Directives;
 use Railt\Reflection\Reflection\Common\HasDescription;
@@ -58,12 +58,12 @@ class Argument extends Definition implements
 
     /**
      * Argument constructor.
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      * @param NamedDefinitionInterface $parent
      * @throws \LogicException
      */
-    public function __construct(DocumentTypeInterface $document, TreeNode $ast, NamedDefinitionInterface $parent)
+    public function __construct(DocumentInterface $document, TreeNode $ast, NamedDefinitionInterface $parent)
     {
         parent::__construct($document, $ast);
 

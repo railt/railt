@@ -11,7 +11,6 @@ namespace Railt\Container;
 
 /**
  * Interface RegistrableInterface
- * @package Railt\Container
  */
 interface RegistrableInterface
 {

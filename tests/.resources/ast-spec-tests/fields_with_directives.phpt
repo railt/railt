@@ -26,14 +26,14 @@ type User {
                 #Name
                     token(T_NAME, firstName)
                 #Type
-                    token(T_SCALAR_BOOLEAN, Boolean)
+                    token(T_NAME, Boolean)
                 #Value
                     token(T_BOOL_FALSE, false)
             #Argument
                 #Name
                     token(T_NAME, lastName)
                 #Type
-                    token(T_SCALAR_BOOLEAN, Boolean)
+                    token(T_NAME, Boolean)
                 #Directive
                     #Name
                         token(T_NAME, lastNameDirective)
@@ -41,12 +41,12 @@ type User {
                         #Name
                             token(T_NAME, test)
                         #Value
-                            token(T_SCALAR_ANY, Any)
+                            token(T_NAME, Any)
                         #Value
                             token(T_NUMBER_VALUE, 23)
             #List
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                 token(T_NON_NULL, !)
             #Directive
                 #Name
@@ -55,6 +55,6 @@ type User {
                     #Name
                         token(T_NAME, test)
                     #Value
-                        token(T_SCALAR_BOOLEAN, Boolean)
+                        token(T_NAME, Boolean)
                     #Value
                         token(T_BOOL_TRUE, true)

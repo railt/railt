@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection;
 
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Autoloader\Directory;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
@@ -19,7 +19,6 @@ use Railt\Support\Filesystem\File;
 
 /**
  * Class Autoloader
- * @package Railt\Reflection
  */
 class Autoloader
 {

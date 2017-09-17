@@ -14,7 +14,6 @@ use Illuminate\Contracts\Support\Renderable;
 
 /**
  * Interface ResponseInterface
- * @package Railt\Http
  */
 interface ResponseInterface extends Arrayable, Renderable
 {

@@ -11,7 +11,6 @@ namespace Railt\Parser\Exceptions;
 
 /**
  * Class CompilerException
- * @package Railt\Parser\Exceptions
  */
 class CompilerException extends \LogicException
 {

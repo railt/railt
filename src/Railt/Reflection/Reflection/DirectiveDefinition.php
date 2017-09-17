@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\DirectiveTypeInterface;
+use Railt\Reflection\Contracts\DirectiveTypeInterface;
 use Railt\Reflection\Exceptions\NotImplementedException;
 use Railt\Reflection\Reflection\Common\Arguments;
 use Railt\Reflection\Reflection\Common\HasDescription;

@@ -11,9 +11,9 @@ namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Parser\Parser;
-use Railt\Reflection\Abstraction\DefinitionInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\DefinitionInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 
 /**
  * Class Definition
@@ -33,10 +33,10 @@ abstract class Definition implements DefinitionInterface
 
     /**
      * Definition constructor.
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      */
-    public function __construct(DocumentTypeInterface $document, TreeNode $ast)
+    public function __construct(DocumentInterface $document, TreeNode $ast)
     {
         $this->ast      = $ast;
         $this->document = $document;
@@ -72,9 +72,9 @@ abstract class Definition implements DefinitionInterface
     }
 
     /**
-     * @return DocumentTypeInterface
+     * @return DocumentInterface
      */
-    public function getDocument(): DocumentTypeInterface
+    public function getDocument(): DocumentInterface
     {
         return $this->document;
     }

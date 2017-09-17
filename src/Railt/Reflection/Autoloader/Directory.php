@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 
 /**
  * Class Directory
- * @package Railt\Reflection\Compiler\Autoloader
  */
 class Directory implements Rule
 {

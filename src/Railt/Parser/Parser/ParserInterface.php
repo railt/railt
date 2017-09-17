@@ -14,7 +14,6 @@ use Railt\Support\Filesystem\ReadableInterface;
 
 /**
  * Interface ParserInterface
- * @package Railt\Parser\Parser
  */
 interface ParserInterface
 {

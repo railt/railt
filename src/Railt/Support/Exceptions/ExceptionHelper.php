@@ -11,7 +11,6 @@ namespace Railt\Support\Exceptions;
 
 /**
  * Trait ExceptionHelper
- * @package Railt\Support\Exceptions
  */
 trait ExceptionHelper
 {

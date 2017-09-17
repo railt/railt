@@ -13,10 +13,37 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Class Stdout
- * @package Railt\Support\Log
  */
 class Stdout implements LoggerInterface
 {
+    /**
+     * @var float
+     */
+    private $lastCheckpoint;
+
+    /**
+     * Stdout constructor.
+     */
+    public function __construct()
+    {
+        $this->checkpoint();
+    }
+
+    /**
+     * @return string
+     */
+    private function checkpoint(): string
+    {
+        $current = (float)microtime(true);
+        $delta   = $this->lastCheckpoint !== null
+            ? $current - $this->lastCheckpoint
+            : 0;
+
+        $this->lastCheckpoint = $current;
+
+        return number_format($delta, 5);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -90,8 +117,10 @@ class Stdout implements LoggerInterface
     public function log($level, $message, array $context = [])
     {
         $level   = is_int($level) ? Level::toString($level) : (string)$level;
-        $message = sprintf('[%s %s] %s', (string)$level, date('H:i:s'), $message);
+        $message = sprintf('[%s %s] %s', (string)$level, $this->checkpoint(), $message);
 
-        file_put_contents('php://stdout', $message . PHP_EOL . print_r($context, true));
+        file_put_contents('php://stdout', $message . PHP_EOL .
+            (count($context) ? print_r($context, true) : '')
+        );
     }
 }

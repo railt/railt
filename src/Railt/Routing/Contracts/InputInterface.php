@@ -11,7 +11,6 @@ namespace Railt\Routing\Contracts;
 
 /**
  * Interface InputInterface
- * @package Railt\Adapters
  */
 interface InputInterface
 {

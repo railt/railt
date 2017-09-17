@@ -37,7 +37,7 @@ extend type Foo2 @onType { # Skip
                         token(T_NAME, argument)
                     #List
                         #Type
-                            token(T_SCALAR_STRING, String)
+                            token(T_NAME, String)
                 #Type
                     token(T_NAME, Type)
     #ExtendDefinition

@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Reflection;
 
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
-use Railt\Reflection\Abstraction\DefinitionInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\DefinitionInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
@@ -20,7 +20,6 @@ use Railt\Support\Exceptions\NotReadableException;
 
 /**
  * Class Dictionary
- * @package Railt\Reflection
  */
 class Dictionary implements \Countable, \IteratorAggregate
 {
@@ -196,11 +195,11 @@ class Dictionary implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param string $name
      * @return null|NamedDefinitionInterface
      */
-    public function definition(DocumentTypeInterface $document, string $name): ?NamedDefinitionInterface
+    public function definition(DocumentInterface $document, string $name): ?NamedDefinitionInterface
     {
         return array_first($this->definitions($document), function (DefinitionInterface $definition) use ($name) {
             return $definition instanceof NamedDefinitionInterface && $definition->getName() === $name;
@@ -208,10 +207,10 @@ class Dictionary implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @return array|DefinitionInterface[]|NamedDefinitionInterface[]
      */
-    public function definitions(DocumentTypeInterface $document): array
+    public function definitions(DocumentInterface $document): array
     {
         return $this->context[$document->getId()] ?? [];
     }

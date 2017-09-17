@@ -7,11 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts;
 
 /**
  * Interface DirectiveInterface
- * @package Railt\Reflection\Abstraction
  */
 interface CalleeDirectiveInterface
 {

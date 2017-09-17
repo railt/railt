@@ -9,18 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler\Stdlib;
 
-use Railt\Reflection\Abstraction\CalleeDirectiveInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Reflection\Contracts\CalleeDirectiveInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\ScalarTypeInterface;
 
 /**
  * Class Scalar
- * @package Railt\Reflection\Compiler\Stdlib
  */
 class Scalar implements ScalarTypeInterface
 {
     /**
-     * @var DocumentTypeInterface
+     * @var DocumentInterface
      */
     private $parent;
 
@@ -31,10 +30,10 @@ class Scalar implements ScalarTypeInterface
 
     /**
      * Anonymous constructor.
-     * @param DocumentTypeInterface $parent
+     * @param DocumentInterface $parent
      * @param string $name
      */
-    public function __construct(DocumentTypeInterface $parent, string $name)
+    public function __construct(DocumentInterface $parent, string $name)
     {
         $this->parent = $parent;
         $this->name = $name;
@@ -57,9 +56,9 @@ class Scalar implements ScalarTypeInterface
     }
 
     /**
-     * @return DocumentTypeInterface
+     * @return DocumentInterface
      */
-    public function getDocument(): DocumentTypeInterface
+    public function getDocument(): DocumentInterface
     {
         return $this->parent;
     }

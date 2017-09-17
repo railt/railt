@@ -7,14 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts;
 
-use Railt\Reflection\Abstraction\Common\HasDescription;
-use Railt\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Railt\Reflection\Contracts\Common\HasDescription;
+use Railt\Reflection\Contracts\Common\HasDirectivesInterface;
 
 /**
  * Interface ScalarTypeInterface
- * @package Railt\Reflection\Abstraction
  */
 interface ScalarTypeInterface extends
     NamedDefinitionInterface,

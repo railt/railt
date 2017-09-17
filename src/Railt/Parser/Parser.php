@@ -21,13 +21,15 @@ use Railt\Support\Debuggable;
 use Railt\Parser\Parser\CompiledSDLParser;
 use Railt\Support\DebuggableInterface;
 use Railt\Support\Filesystem\ReadableInterface;
+use Railt\Support\Log\AllowsLoggerAddition;
+use Railt\Support\Log\Loggable;
 
 /**
  * Class Parser
- * @package Railt\Parser
  */
-class Parser extends SDLParser implements DebuggableInterface
+class Parser extends SDLParser implements DebuggableInterface, AllowsLoggerAddition
 {
+    use Loggable;
     use Debuggable;
 
     /**
@@ -62,7 +64,7 @@ class Parser extends SDLParser implements DebuggableInterface
      */
     protected function createParser(): LlkParser
     {
-        if (!class_exists(CompiledSDLParser::class)) {
+        if (class_exists(CompiledSDLParser::class)) {
             return new CompiledSDLParser();
         }
 

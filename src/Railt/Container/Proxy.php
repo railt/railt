@@ -14,7 +14,6 @@ use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class Proxy
- * @package Railt\Container
  */
 class Proxy implements ContainerInterface
 {

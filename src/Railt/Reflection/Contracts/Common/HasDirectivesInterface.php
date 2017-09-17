@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction\Common;
+namespace Railt\Reflection\Contracts\Common;
 
-use Railt\Reflection\Abstraction\CalleeDirectiveInterface;
+use Railt\Reflection\Contracts\CalleeDirectiveInterface;
 
 /**
  * Interface HasDirectivesInterface
- * @package Railt\Reflection\Abstraction\Common
  */
 interface HasDirectivesInterface
 {

@@ -7,16 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts;
 
-use Railt\Reflection\Abstraction\Common\HasArgumentsInterface;
-use Railt\Reflection\Abstraction\Common\HasDescription;
-use Railt\Reflection\Abstraction\Common\HasDirectivesInterface;
-use Railt\Reflection\Abstraction\Type\TypeInterface;
+use Railt\Reflection\Contracts\Common\HasArgumentsInterface;
+use Railt\Reflection\Contracts\Common\HasDescription;
+use Railt\Reflection\Contracts\Common\HasDirectivesInterface;
+use Railt\Reflection\Contracts\Type\TypeInterface;
 
 /**
  * Interface FieldInterface
- * @package Railt\Reflection\Abstraction
  */
 interface FieldInterface extends
     NamedDefinitionInterface,

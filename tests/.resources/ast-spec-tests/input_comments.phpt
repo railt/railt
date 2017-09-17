@@ -38,13 +38,13 @@ input AnnotatedInput @onInputObjectType {
             #Name
                 token(T_NAME, key)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, answer)
             #Type
-                token(T_SCALAR_INTEGER, Int)
+                token(T_NAME, Int)
             #DefaultValue
                 #Value
                     token(T_NUMBER_VALUE, 42)

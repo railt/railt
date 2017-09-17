@@ -18,7 +18,7 @@ use Railt\Events\DispatcherInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Parser\File;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
 use Railt\Reflection\Autoloader;
 use Railt\Reflection\Compiler;
 use Railt\Routing\Router;
@@ -28,7 +28,6 @@ use Railt\Support\Loggable;
 
 /**
  * Class Endpoint
- * @package Railt
  */
 class Endpoint implements DebuggableInterface
 {
@@ -122,14 +121,14 @@ class Endpoint implements DebuggableInterface
 
     /**
      * @param $schema
-     * @return DocumentTypeInterface
+     * @return DocumentInterface
      * @throws \Railt\Support\Exceptions\NotReadableException
      * @throws \Railt\Reflection\Exceptions\UnrecognizedNodeException
      * @throws \LogicException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private function createDocument($schema): DocumentTypeInterface
+    private function createDocument($schema): DocumentInterface
     {
         return $this->getCompiler()
             ->compile($this->createSchemaFile($schema))

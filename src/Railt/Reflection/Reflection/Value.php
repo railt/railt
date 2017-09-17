@@ -12,7 +12,7 @@ namespace Railt\Reflection\Reflection;
 use Hoa\Compiler\Llk\TreeNode;
 use Illuminate\Support\Str;
 use Railt\Parser\Parser;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
 use Railt\Reflection\Exceptions\BrokenAstException;
 
 /**
@@ -22,7 +22,7 @@ use Railt\Reflection\Exceptions\BrokenAstException;
 final class Value
 {
     /**
-     * @var DocumentTypeInterface
+     * @var DocumentInterface
      */
     private $document;
 
@@ -33,22 +33,22 @@ final class Value
 
     /**
      * Value constructor.
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      */
-    public function __construct(DocumentTypeInterface $document, TreeNode $ast)
+    public function __construct(DocumentInterface $document, TreeNode $ast)
     {
         $this->document = $document;
         $this->ast      = $ast;
     }
 
     /**
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      * @return array|mixed|object
      * @throws BrokenAstException
      */
-    public static function new(DocumentTypeInterface $document, TreeNode $ast)
+    public static function new(DocumentInterface $document, TreeNode $ast)
     {
         return (new Value($document, $ast))->compile();
     }

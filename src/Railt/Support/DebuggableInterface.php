@@ -11,7 +11,6 @@ namespace Railt\Support;
 
 /**
  * Interface DebuggableInterface
- * @package Railt\Support
  */
 interface DebuggableInterface
 {

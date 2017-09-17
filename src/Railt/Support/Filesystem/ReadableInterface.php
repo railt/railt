@@ -11,10 +11,14 @@ namespace Railt\Support\Filesystem;
 
 /**
  * Interface ReadableInterface
- * @package Railt\Support\Filesystem
  */
 interface ReadableInterface
 {
+    /**
+     * Name of file when file name not defined
+     */
+    public const VIRTUAL_FILE_NAME = 'php://input';
+
     /**
      * @return string
      */

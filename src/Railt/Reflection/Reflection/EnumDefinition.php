@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\EnumTypeInterface;
-use Railt\Reflection\Abstraction\EnumValueInterface;
+use Railt\Reflection\Contracts\EnumTypeInterface;
+use Railt\Reflection\Contracts\EnumValueInterface;
 use Railt\Reflection\Exceptions\NotImplementedException;
 use Railt\Reflection\Reflection\Common\Directives;
 use Railt\Reflection\Reflection\Common\HasDescription;

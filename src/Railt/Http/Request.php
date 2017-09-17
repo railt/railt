@@ -16,7 +16,6 @@ use Railt\Http\Support\JsonContentTypeHelper;
 
 /**
  * Class Request
- * @package Railt\Http
  */
 class Request implements RequestInterface, ConfigurableRequestInterface
 {

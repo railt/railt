@@ -11,7 +11,6 @@ namespace Railt\Reflection\Exceptions;
 
 /**
  * Class UnrecognizedNodeException
- * @package Railt\Reflection\Exceptions
  */
 class UnrecognizedNodeException extends \LogicException
 {

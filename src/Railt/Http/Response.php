@@ -14,7 +14,6 @@ use Railt\Support\DebuggableInterface;
 
 /**
  * Class Response
- * @package Railt\Http
  */
 class Response implements ResponseInterface, DebuggableInterface
 {

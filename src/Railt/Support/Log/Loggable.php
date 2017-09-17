@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Trait Loggable
- * @package Railt\Support\Log
+ * @mixin AllowsLoggerAddition
  */
 trait Loggable
 {
@@ -24,9 +24,9 @@ trait Loggable
 
     /**
      * @param null|LoggerInterface $logger
-     * @return $this
+     * @return AllowsLoggerAddition|$this
      */
-    public function withLogger(?LoggerInterface $logger)
+    public function withLogger(?LoggerInterface $logger): AllowsLoggerAddition
     {
         $this->logger = $logger;
 

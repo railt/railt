@@ -13,7 +13,6 @@ use Railt\Container\Exceptions\ParameterResolutionException;
 
 /**
  * Class ParamResolver
- * @package Railt\Container
  */
 class ParamResolver
 {

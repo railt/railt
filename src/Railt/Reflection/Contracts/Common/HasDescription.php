@@ -7,16 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts\Common;
 
 /**
- * Interface NamedDefinitionInterface
- * @package Railt\Reflection\Abstraction
+ * Interface HasDescription
  */
-interface NamedDefinitionInterface extends DefinitionInterface
+interface HasDescription
 {
     /**
      * @return string
      */
-    public function getName(): string;
+    public function getDescription(): string;
 }

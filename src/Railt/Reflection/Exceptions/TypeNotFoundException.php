@@ -11,7 +11,6 @@ namespace Railt\Reflection\Exceptions;
 
 /**
  * Class TypeNotFoundException
- * @package Railt\Reflection\Exceptions
  */
 class TypeNotFoundException extends TypeException
 {

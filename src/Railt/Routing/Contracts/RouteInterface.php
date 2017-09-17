@@ -11,7 +11,6 @@ namespace Railt\Routing\Contracts;
 
 /**
  * Interface RouteInterface
- * @package Railt\Routing\Contracts
  */
 interface RouteInterface
 {

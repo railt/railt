@@ -14,7 +14,6 @@ use Railt\Parser\Exceptions\GraphQLSchemaException;
 
 /**
  * Class ErrorFormatter
- * @package Railt\Http
  */
 class ErrorFormatter implements Arrayable
 {

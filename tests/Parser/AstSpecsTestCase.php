@@ -35,11 +35,40 @@ class AstSpecsTestCase extends AbstractTestCase
      * @dataProvider specProvider
      * @param SpecTest $spec
      * @throws ExpectationFailedException
+     * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      */
     public function testLanguageAstParsing(SpecTest $spec): void
     {
         $compiler = new Parser();
+
+        $ast = $compiler->parse(File::fromSources($spec->getIn(), $spec->getPath()));
+
+        $dump = $compiler->dump($ast);
+
+        try {
+            $otherwise = 'Error in test "' . str_replace('"', "'", $spec->getName())
+                . '" defined in ' . $spec->getPath();
+
+            Assert::assertEquals($spec->getOut(), $dump, $otherwise);
+        } catch (ExpectationFailedException $e) {
+            echo $this->specDiff($spec, $dump);
+            flush();
+            throw $e;
+        }
+    }
+
+    /**
+     * @dataProvider specProvider
+     * @param SpecTest $spec
+     * @throws ExpectationFailedException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     */
+    public function testLanguageAstParsingWithDebugMode(SpecTest $spec): void
+    {
+        $compiler = new Parser();
+        $compiler->debugMode(true);
 
         $ast = $compiler->parse(File::fromSources($spec->getIn(), $spec->getPath()));
 

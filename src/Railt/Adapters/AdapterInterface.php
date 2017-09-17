@@ -13,21 +13,20 @@ use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;
 use Railt\Events\DispatcherInterface;
 use Railt\Container\ContainerInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
 
 /**
  * Interface AdapterInterface
- * @package Railt\Adapters
  */
 interface AdapterInterface extends ResponderInterface
 {
     /**
      * AdapterInterface constructor.
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param DispatcherInterface $events
      * @param Router $router
      */
-    public function __construct(DocumentTypeInterface $document, DispatcherInterface $events, Router $router);
+    public function __construct(DocumentInterface $document, DispatcherInterface $events, Router $router);
 
     /**
      * @return DispatcherInterface

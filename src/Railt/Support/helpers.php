@@ -7,16 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction\Common;
+use Railt\Support\Tuple;
 
-/**
- * Interface HasDescription
- * @package Railt\Reflection\Abstraction\Common
- */
-interface HasDescription
-{
+if (! function_exists('tuple')) {
     /**
-     * @return string
+     * @param array ...$params
+     * @return array|\ArrayAccess|Tuple
      */
-    public function getDescription(): string;
+    function tuple(...$params): Tuple
+    {
+        return new Tuple(...$params);
+    }
 }

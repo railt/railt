@@ -13,7 +13,6 @@ use Psr\Container\ContainerInterface as PsrContainer;
 
 /**
  * Interface ContainerInterface
- * @package Railt\Container
  */
 interface ContainerInterface extends PsrContainer, RegistrableInterface
 {

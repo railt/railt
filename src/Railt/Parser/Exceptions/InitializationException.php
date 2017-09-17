@@ -11,7 +11,6 @@ namespace Railt\Parser\Exceptions;
 
 /**
  * Class InitializationException
- * @package Railt\Parser\Exceptions
  */
 class InitializationException extends CompilerException
 {

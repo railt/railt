@@ -11,7 +11,6 @@ namespace Railt\Reflection\Autoloader;
 
 /**
  * Interface Rule
- * @package Railt\Reflection\Autoloader
  */
 interface Rule
 {

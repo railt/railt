@@ -11,7 +11,6 @@ namespace Railt\Http\Support;
 
 /**
  * Interface ConfigurableRequestInterface
- * @package Railt\Http\Support
  */
 interface ConfigurableRequestInterface
 {

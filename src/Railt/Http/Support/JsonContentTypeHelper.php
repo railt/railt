@@ -11,7 +11,6 @@ namespace Railt\Http\Support;
 
 /**
  * Trait JsonContentTypeHelper
- * @package Railt\Http\Support
  */
 trait JsonContentTypeHelper
 {

@@ -445,13 +445,7 @@ InputDefinitionDefaultValue:
 
 #ExtendDefinition:
     Documentation()?
-    ::T_EXTEND:: (
-        ObjectDefinition()
-            |
-        InterfaceDefinition()
-            |
-        InputDefinition()
-    )
+    ::T_EXTEND:: ObjectDefinition()
 
 
 

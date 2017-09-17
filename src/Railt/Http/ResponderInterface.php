@@ -11,7 +11,6 @@ namespace Railt\Http;
 
 /**
  * Interface ResponderInterface
- * @package Railt\Http
  */
 interface ResponderInterface
 {

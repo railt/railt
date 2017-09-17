@@ -11,7 +11,6 @@ namespace Railt\Events;
 
 /**
  * Interface Dispatchable
- * @package Railt\Events
  */
 interface DispatcherInterface
 {

@@ -11,7 +11,6 @@ namespace Railt\Events;
 
 /**
  * Class Dispatcher
- * @package Railt\Events
  */
 class Dispatcher implements DispatcherInterface
 {

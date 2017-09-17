@@ -15,7 +15,6 @@ use Railt\Routing\Contracts\RouterInterface;
 
 /**
  * Class Router
- * @package Railt\Routing
  */
 class Router implements RouterInterface
 {

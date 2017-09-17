@@ -9,20 +9,20 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler;
 
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\ScalarTypeInterface;
-use Railt\Reflection\Abstraction\SchemaTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\ScalarTypeInterface;
+use Railt\Reflection\Contracts\SchemaTypeInterface;
 use Railt\Reflection\Dictionary;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Reflection\Common\HasDefinitions;
 
 /**
  * Class Stdlib
- * @package Railt\Reflection\Compiler
  */
-final class Stdlib implements DocumentTypeInterface
+final class Stdlib implements DocumentInterface
 {
     use HasDefinitions;
+    
     /**
      * @var Dictionary
      */
@@ -74,9 +74,9 @@ final class Stdlib implements DocumentTypeInterface
     }
 
     /**
-     * @return DocumentTypeInterface
+     * @return DocumentInterface
      */
-    public function getDocument(): DocumentTypeInterface
+    public function getDocument(): DocumentInterface
     {
         return $this;
     }

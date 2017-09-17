@@ -52,160 +52,160 @@ type A {
             #Name
                 token(T_NAME, id)
             #Type
-                token(T_SCALAR_ID, ID)
+                token(T_NAME, ID)
         #Field
             #Name
                 token(T_NAME, idList)
             #List
                 #Type
-                    token(T_SCALAR_ID, ID)
+                    token(T_NAME, ID)
         #Field
             #Name
                 token(T_NAME, idNonNull)
             #Type
-                token(T_SCALAR_ID, ID)
+                token(T_NAME, ID)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, idNonNullList)
             #List
                 #Type
-                    token(T_SCALAR_ID, ID)
+                    token(T_NAME, ID)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, idListOfNonNulls)
             #List
                 #Type
-                    token(T_SCALAR_ID, ID)
+                    token(T_NAME, ID)
                     token(T_NON_NULL, !)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, int)
             #Type
-                token(T_SCALAR_INTEGER, Int)
+                token(T_NAME, Int)
         #Field
             #Name
                 token(T_NAME, intList)
             #List
                 #Type
-                    token(T_SCALAR_INTEGER, Int)
+                    token(T_NAME, Int)
         #Field
             #Name
                 token(T_NAME, intNonNull)
             #Type
-                token(T_SCALAR_INTEGER, Int)
+                token(T_NAME, Int)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, intNonNullList)
             #List
                 #Type
-                    token(T_SCALAR_INTEGER, Int)
+                    token(T_NAME, Int)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, intListOfNonNulls)
             #List
                 #Type
-                    token(T_SCALAR_INTEGER, Int)
+                    token(T_NAME, Int)
                     token(T_NON_NULL, !)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, float)
             #Type
-                token(T_SCALAR_FLOAT, Float)
+                token(T_NAME, Float)
         #Field
             #Name
                 token(T_NAME, floatList)
             #List
                 #Type
-                    token(T_SCALAR_FLOAT, Float)
+                    token(T_NAME, Float)
         #Field
             #Name
                 token(T_NAME, floatNonNull)
             #Type
-                token(T_SCALAR_FLOAT, Float)
+                token(T_NAME, Float)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, floatNonNullList)
             #List
                 #Type
-                    token(T_SCALAR_FLOAT, Float)
+                    token(T_NAME, Float)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, floatListOfNonNulls)
             #List
                 #Type
-                    token(T_SCALAR_FLOAT, Float)
+                    token(T_NAME, Float)
                     token(T_NON_NULL, !)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, string)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
         #Field
             #Name
                 token(T_NAME, stringList)
             #List
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
         #Field
             #Name
                 token(T_NAME, stringNonNull)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, stringNonNullList)
             #List
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, stringListOfNonNulls)
             #List
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                     token(T_NON_NULL, !)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, boolean)
             #Type
-                token(T_SCALAR_BOOLEAN, Boolean)
+                token(T_NAME, Boolean)
         #Field
             #Name
                 token(T_NAME, booleanList)
             #List
                 #Type
-                    token(T_SCALAR_BOOLEAN, Boolean)
+                    token(T_NAME, Boolean)
         #Field
             #Name
                 token(T_NAME, booleanNonNull)
             #Type
-                token(T_SCALAR_BOOLEAN, Boolean)
+                token(T_NAME, Boolean)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, booleanNonNullList)
             #List
                 #Type
-                    token(T_SCALAR_BOOLEAN, Boolean)
+                    token(T_NAME, Boolean)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, booleanListOfNonNulls)
             #List
                 #Type
-                    token(T_SCALAR_BOOLEAN, Boolean)
+                    token(T_NAME, Boolean)
                     token(T_NON_NULL, !)
                 token(T_NON_NULL, !)
         #Field

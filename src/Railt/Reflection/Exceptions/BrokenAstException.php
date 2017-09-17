@@ -11,7 +11,6 @@ namespace Railt\Reflection\Exceptions;
 
 /**
  * Class BrokenAstException
- * @package Railt\Reflection\Exceptions
  */
 class BrokenAstException extends \LogicException
 {

@@ -20,7 +20,6 @@ use Railt\Parser\Exceptions\InitializationException;
 
 /**
  * Class SDLParser
- * @package Railt\Parser\Parser
  */
 class SDLParser extends AbstractParser
 {

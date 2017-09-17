@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Reflection\Common;
 
-use Railt\Reflection\Abstraction\DefinitionInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\DefinitionInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Dictionary;
 
 /**
@@ -36,7 +36,7 @@ trait HasDefinitions
      */
     public function getDefinitions(string ...$types): iterable
     {
-        /** @var DocumentTypeInterface $this */
+        /** @var DocumentInterface $this */
         $definitions = $this->getDefinitionsDictionary()->definitions($this);
 
         yield from count($types) !== 0

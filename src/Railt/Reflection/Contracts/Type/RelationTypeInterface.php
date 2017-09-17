@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction\Type;
+namespace Railt\Reflection\Contracts\Type;
 
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 
 /**
  * Interface RelationTypeInterface
- * @package Railt\Reflection\Abstraction\Type
  */
 interface RelationTypeInterface extends
     NamedDefinitionInterface,

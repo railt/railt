@@ -24,7 +24,10 @@
     "autoload": {
         "psr-4": {
             "Railt\\Support\\": ""
-        }
+        },
+        "files": [
+            "helpers.php"
+        ]
     },
     "config": {
         "sort-packages": true

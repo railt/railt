@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Tests\Parser;
 
 use Railt\Parser\Parser;
-use Railt\Tests\AbstractTestCase;
 use Railt\Support\Filesystem\File;
+use Railt\Tests\AbstractTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -31,18 +31,16 @@ class AstABSpecsTestCase extends AbstractTestCase
      * @dataProvider positiveTests
      *
      * @param $file
+     * @throws \Hoa\Compiler\Exception\UnrecognizedToken
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Support\Exceptions\NotReadableException
+     * @throws \Throwable
      */
     public function testPositiveCompilation($file): void
     {
         $compiler = new Parser();
 
         $compiler->parse(File::fromPathname($file));
-
-        $this->assertTrue(true, $file . ' compilation fail');
+        $this->assertTrue(true);
     }
 
     /**
@@ -51,6 +49,7 @@ class AstABSpecsTestCase extends AbstractTestCase
      * @param $file
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
+     * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      * @throws \Railt\Support\Exceptions\NotReadableException
      */
@@ -63,7 +62,8 @@ class AstABSpecsTestCase extends AbstractTestCase
         $ast = $compiler->parse(File::fromPathname($file));
 
         $this->assertFalse(true,
-            $file . ' must throw an error but complete successfully: ' . "\n" . Parser::dump($ast)
+            $file . ' must throw an error but complete successfully: ' . "\n" .
+            $compiler->dump($ast)
         );
     }
 

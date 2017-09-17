@@ -14,7 +14,6 @@ use Railt\Container\RegistrableInterface;
 
 /**
  * Class StringableAction
- * @package Railt\Routing
  */
 class StringableAction
 {

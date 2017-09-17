@@ -15,7 +15,6 @@ use Railt\Routing\Contracts\RouterInterface;
 
 /**
  * Class Route
- * @package Railt\Routing
  */
 class Route implements RouteInterface
 {

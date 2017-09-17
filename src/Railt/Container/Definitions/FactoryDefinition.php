@@ -14,7 +14,6 @@ use Railt\Container\ParamResolver;
 
 /**
  * Class FactoryDefinition
- * @package Railt\Container\Definitions
  */
 class FactoryDefinition implements DefinitionInterface
 {

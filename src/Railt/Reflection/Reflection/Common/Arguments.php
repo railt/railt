@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\ArgumentInterface;
-use Railt\Reflection\Abstraction\Common\HasArgumentsInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\ArgumentInterface;
+use Railt\Reflection\Contracts\Common\HasArgumentsInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Reflection\Argument;
 
 /**
@@ -55,11 +55,11 @@ trait Arguments
     }
 
     /**
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      * @throws \LogicException
      */
-    protected function compileArguments(DocumentTypeInterface $document, TreeNode $ast): void
+    protected function compileArguments(DocumentInterface $document, TreeNode $ast): void
     {
         $allowed = $this->isArgument($ast);
 

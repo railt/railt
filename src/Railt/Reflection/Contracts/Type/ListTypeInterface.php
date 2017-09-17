@@ -7,11 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction\Type;
+namespace Railt\Reflection\Contracts\Type;
 
 /**
  * Interface ListTypeInterface
- * @package Railt\Reflection\Abstraction\Type
  */
 interface ListTypeInterface extends TypeInterface
 {

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\DefinitionInterface;
-use Railt\Reflection\Abstraction\ExtendTypeInterface;
+use Railt\Reflection\Contracts\DefinitionInterface;
+use Railt\Reflection\Contracts\ExtendTypeInterface;
 use Railt\Reflection\Exceptions\NotImplementedException;
 use Railt\Reflection\Reflection\Common\Directives;
 use Railt\Reflection\Reflection\Common\Fields;

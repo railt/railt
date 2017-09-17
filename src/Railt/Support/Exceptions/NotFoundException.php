@@ -11,7 +11,6 @@ namespace Railt\Support\Exceptions;
 
 /**
  * Class NotFoundException
- * @package Railt\Support\Exceptions
  */
 class NotFoundException extends NotReadableException
 {

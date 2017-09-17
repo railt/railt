@@ -14,9 +14,9 @@ use Railt\Support\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Reflection\Compiler;
-use Railt\Reflection\Abstraction\DefinitionInterface;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\DefinitionInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Tests\AbstractTestCase;
@@ -137,7 +137,7 @@ class DocumentTestCase extends AbstractTestCase
 
         $count = 0;
         /**
-         * @var DocumentTypeInterface $ctx
+         * @var DocumentInterface $ctx
          * @var DefinitionInterface $definition
          */
         foreach ($compiler->getDictionary() as $ctx => $definition) {
@@ -145,7 +145,7 @@ class DocumentTestCase extends AbstractTestCase
                 $count++;
             }
 
-            $this->assertInstanceOf(DocumentTypeInterface::class, $ctx);
+            $this->assertInstanceOf(DocumentInterface::class, $ctx);
             $this->assertInstanceOf(DefinitionInterface::class, $definition);
         }
         $this->assertEquals(5, $count);
@@ -153,7 +153,7 @@ class DocumentTestCase extends AbstractTestCase
 
         $count = 0;
         /**
-         * @var DocumentTypeInterface $ctx
+         * @var DocumentInterface $ctx
          * @var NamedDefinitionInterface $definition
          */
         foreach ($compiler->getDictionary()->named() as $ctx => $definition) {
@@ -161,7 +161,7 @@ class DocumentTestCase extends AbstractTestCase
                 $count++;
             }
 
-            $this->assertInstanceOf(DocumentTypeInterface::class, $ctx);
+            $this->assertInstanceOf(DocumentInterface::class, $ctx);
             $this->assertInstanceOf(NamedDefinitionInterface::class, $definition);
         }
         $this->assertEquals(4, $count);
@@ -169,7 +169,7 @@ class DocumentTestCase extends AbstractTestCase
 
         $count = 0;
         /**
-         * @var DocumentTypeInterface $ctx
+         * @var DocumentInterface $ctx
          * @var DefinitionInterface $definition
          */
         foreach ($compiler->getDictionary()->anonymous() as $ctx => $definition) {
@@ -177,7 +177,7 @@ class DocumentTestCase extends AbstractTestCase
                 $count++;
             }
 
-            $this->assertInstanceOf(DocumentTypeInterface::class, $ctx);
+            $this->assertInstanceOf(DocumentInterface::class, $ctx);
             $this->assertInstanceOf(DefinitionInterface::class, $definition);
             $this->assertNotInstanceOf(NamedDefinitionInterface::class, $definition);
         }

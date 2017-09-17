@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\EnumTypeInterface;
-use Railt\Reflection\Abstraction\EnumValueInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\EnumTypeInterface;
+use Railt\Reflection\Contracts\EnumValueInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Reflection\Common\Directives;
 use Railt\Reflection\Reflection\Common\HasDescription;
 use Railt\Reflection\Reflection\Common\HasName;
@@ -42,11 +42,11 @@ class EnumValue extends Definition implements EnumValueInterface
     /**
      * EnumValue constructor.
      *
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      * @param EnumTypeInterface $parent
      */
-    public function __construct(DocumentTypeInterface $document, TreeNode $ast, EnumTypeInterface $parent)
+    public function __construct(DocumentInterface $document, TreeNode $ast, EnumTypeInterface $parent)
     {
         $this->parent = $parent;
         parent::__construct($document, $ast);

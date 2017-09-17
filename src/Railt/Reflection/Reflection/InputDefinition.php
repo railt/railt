@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\ArgumentInterface;
-use Railt\Reflection\Abstraction\InputTypeInterface;
-use Railt\Reflection\Abstraction\ObjectTypeInterface;
-use Railt\Reflection\Abstraction\ScalarTypeInterface;
+use Railt\Reflection\Contracts\ArgumentInterface;
+use Railt\Reflection\Contracts\InputTypeInterface;
+use Railt\Reflection\Contracts\ObjectTypeInterface;
+use Railt\Reflection\Contracts\ScalarTypeInterface;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Reflection\Common\Arguments;
 use Railt\Reflection\Reflection\Common\Directives;

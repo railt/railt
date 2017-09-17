@@ -7,11 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction;
+namespace Railt\Reflection\Contracts;
 
 /**
  * Interface CalleeDefinitionInterface
- * @package Railt\Reflection\Abstraction
  */
 interface DefinitionInterface
 {
@@ -21,7 +20,7 @@ interface DefinitionInterface
     public function getTypeName(): string;
 
     /**
-     * @return DocumentTypeInterface
+     * @return DocumentInterface
      */
-    public function getDocument(): DocumentTypeInterface;
+    public function getDocument(): DocumentInterface;
 }

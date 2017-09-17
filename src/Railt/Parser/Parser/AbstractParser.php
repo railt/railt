@@ -22,7 +22,6 @@ use Railt\Support\Filesystem\ReadableInterface;
 
 /**
  * Class AbstractParser
- * @package Railt\Parser\Parser
  */
 abstract class AbstractParser implements ParserInterface
 {
@@ -59,6 +58,25 @@ abstract class AbstractParser implements ParserInterface
     {
         return $this->profiler->dump($ast);
     }
+
+    /**
+     * @param string $sources
+     * @return string
+     * @throws UnrecognizedToken
+     */
+    public function tokens(string $sources): string
+    {
+        return $this->profiler->tokens($sources);
+    }
+
+    /**
+     * @return string
+     */
+    public function trace(): string
+    {
+        return $this->profiler->trace();
+    }
+
 
     /**
      * @param ReadableInterface $file

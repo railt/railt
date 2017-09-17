@@ -11,7 +11,6 @@ namespace Railt\Container;
 
 /**
  * Class Parameters
- * @package Railt\Container
  */
 class Parameters implements ContainerInterface
 {

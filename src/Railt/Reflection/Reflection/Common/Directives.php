@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\CalleeDirectiveInterface;
-use Railt\Reflection\Abstraction\Common\HasDirectivesInterface;
+use Railt\Reflection\Contracts\CalleeDirectiveInterface;
+use Railt\Reflection\Contracts\Common\HasDirectivesInterface;
 use Railt\Reflection\Exceptions\NotImplementedException;
 use Railt\Reflection\Reflection\Document;
 

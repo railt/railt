@@ -43,7 +43,7 @@ type A {
             #Name
                 token(T_NAME, fieldB)
             #Type
-                token(T_SCALAR_ID, ID)
+                token(T_NAME, ID)
             #Directive
                 #Name
                     token(T_NAME, DirectiveD)

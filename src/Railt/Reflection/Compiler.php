@@ -9,21 +9,26 @@ declare(strict_types=1);
 
 namespace Railt\Reflection;
 
+use Railt\Parser\Exceptions\CompilerException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Compiler\Stdlib;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
 use Railt\Reflection\Reflection\Document;
 use Railt\Support\Filesystem\ReadableInterface;
+use Railt\Support\Log\AllowsLoggerAddition;
+use Railt\Support\Log\Loggable;
 
 /**
  * Class Compiler
- * @package Railt\Reflection
  */
-class Compiler
+class Compiler implements CompilerInterface, AllowsLoggerAddition
 {
+    use Loggable;
+
     /**
      * @var Parser
      */
@@ -60,13 +65,13 @@ class Compiler
 
     /**
      * @param ReadableInterface $file
-     * @return DocumentTypeInterface
+     * @return DocumentInterface
+     * @throws CompilerException
      * @throws UnrecognizedNodeException
      * @throws TypeConflictException
-     * @throws \LogicException
      * @throws UnrecognizedTokenException
      */
-    public function compile(ReadableInterface $file): DocumentTypeInterface
+    public function compile(ReadableInterface $file): DocumentInterface
     {
         $ast = $this->parser->parse($file);
 

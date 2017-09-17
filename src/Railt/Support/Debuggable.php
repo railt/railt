@@ -11,7 +11,6 @@ namespace Railt\Support;
 
 /**
  * Trait Debuggable
- * @package Railt\Support
  * @mixin DebuggableInterface
  */
 trait Debuggable

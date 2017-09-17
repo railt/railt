@@ -21,7 +21,7 @@ type User {
             #Name
                 token(T_NAME, id)
             #Type
-                token(T_SCALAR_ID, ID)
+                token(T_NAME, ID)
                 token(T_NON_NULL, !)
         #Field
             #Name
@@ -30,21 +30,21 @@ type User {
                 #Name
                     token(T_NAME, firstName)
                 #Type
-                    token(T_SCALAR_BOOLEAN, Boolean)
+                    token(T_NAME, Boolean)
             #Argument
                 #Name
                     token(T_NAME, lastName)
                 #Type
-                    token(T_SCALAR_BOOLEAN, Boolean)
+                    token(T_NAME, Boolean)
             #List
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                 token(T_NON_NULL, !)
         #Field
             #Name
                 token(T_NAME, email)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)
         #Field
             #Name
                 token(T_NAME, createdAt)
@@ -52,9 +52,9 @@ type User {
                 #Name
                     token(T_NAME, dateFormat)
                 #Type
-                    token(T_SCALAR_STRING, String)
+                    token(T_NAME, String)
                     token(T_NON_NULL, !)
                 #Value
                     token(string:T_STRING, Some)
             #Type
-                token(T_SCALAR_STRING, String)
+                token(T_NAME, String)

@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Abstraction\Common;
+namespace Railt\Reflection\Contracts\Common;
 
-use Railt\Reflection\Abstraction\FieldInterface;
+use Railt\Reflection\Contracts\FieldInterface;
 
 /**
  * Interface HasFieldsInterface
- * @package Railt\Reflection\Abstraction\Common
  */
 interface HasFieldsInterface
 {

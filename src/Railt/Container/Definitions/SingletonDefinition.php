@@ -11,7 +11,6 @@ namespace Railt\Container\Definitions;
 
 /**
  * Class SingletonDefinition
- * @package Railt\Container\Definitions
  */
 class SingletonDefinition extends FactoryDefinition
 {

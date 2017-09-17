@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
 use Railt\Reflection\Reflection\Document;
 
 /**
@@ -30,10 +30,10 @@ trait LinkingStage
     protected $compiled = false;
 
     /**
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      */
-    public function bootLinkingStage(DocumentTypeInterface $document, TreeNode $ast): void
+    public function bootLinkingStage(DocumentInterface $document, TreeNode $ast): void
     {
         foreach (class_uses_recursive($this) as $trait) {
             $name = 'compile' . class_basename($trait);

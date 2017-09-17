@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Abstraction\DocumentTypeInterface;
-use Railt\Reflection\Abstraction\NamedDefinitionInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 
 /**
  * Trait HasDescription
@@ -25,10 +25,10 @@ trait HasDescription
     protected $description = '';
 
     /**
-     * @param DocumentTypeInterface $document
+     * @param DocumentInterface $document
      * @param TreeNode $ast
      */
-    public function bootHasDescription(DocumentTypeInterface $document, TreeNode $ast): void
+    public function bootHasDescription(DocumentInterface $document, TreeNode $ast): void
     {
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {

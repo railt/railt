@@ -11,7 +11,6 @@ namespace Railt\Http\Support;
 
 /**
  * Trait InteractWithData
- * @package Railt\Http\Support
  */
 trait InteractWithData
 {

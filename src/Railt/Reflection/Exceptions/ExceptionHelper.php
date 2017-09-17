@@ -11,7 +11,6 @@ namespace Railt\Reflection\Exceptions;
 
 /**
  * Trait ExceptionHelper
- * @package Railt\Reflection\Exceptions
  * @method \Exception __construct(string $message, ?int $code, ?\Throwable $prev)
  */
 trait ExceptionHelper
