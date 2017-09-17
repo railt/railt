@@ -17,12 +17,15 @@ use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
 use Railt\Support\Exceptions\NotReadableException;
+use Railt\Support\Log\Loggable;
 
 /**
  * Class Dictionary
  */
 class Dictionary implements \Countable, \IteratorAggregate
 {
+    use Loggable;
+
     /**
      * @var array|DefinitionInterface[]
      */
@@ -60,6 +63,10 @@ class Dictionary implements \Countable, \IteratorAggregate
      */
     public function register(DefinitionInterface $definition, bool $force = false): Dictionary
     {
+        if (method_exists($definition, '__toString')) {
+            $this->debug('Registering ' . (string)$definition);
+        }
+
         if ($definition instanceof NamedDefinitionInterface) {
             $this->registerNamedDefinition($definition, $force);
         } else {

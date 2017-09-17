@@ -14,6 +14,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Trait Loggable
  * @mixin AllowsLoggerAddition
+ * @mixin AllowsLogging
  */
 trait Loggable
 {
@@ -26,7 +27,7 @@ trait Loggable
      * @param null|LoggerInterface $logger
      * @return AllowsLoggerAddition|$this
      */
-    public function withLogger(?LoggerInterface $logger): AllowsLoggerAddition
+    public function withLogger(?LoggerInterface $logger)
     {
         $this->logger = $logger;
 

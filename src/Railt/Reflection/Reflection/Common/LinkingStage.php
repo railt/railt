@@ -11,8 +11,8 @@ namespace Railt\Reflection\Reflection\Common;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Reflection\Document;
-
 /**
  * Trait LinkingStage
  * @package Railt\Reflection\Reflection\Common
@@ -51,9 +51,12 @@ trait LinkingStage
     public function compileIfNotCompiled(): bool
     {
         /** @var HasLinkingStageInterface $this */
-
         if ($this->compiled) {
             return false;
+        }
+
+        if (method_exists($this, '__toString')) {
+            $this->debug('Run ' . (string)$this . ' linker');
         }
 
         $ast      = $this->getLinkingAstNode();
@@ -74,27 +77,6 @@ trait LinkingStage
         $this->complete($document, $ast);
 
         return $this->compiled = true;
-    }
-
-    /**
-     * @param Document $document
-     * @param TreeNode $ast
-     * @return TreeNode|null
-     */
-    public function compile(Document $document, TreeNode $ast): ?TreeNode
-    {
-        // Compilation process
-
-        return $ast;
-    }
-
-    /**
-     * @param Document $document
-     * @param TreeNode $ast
-     */
-    public function complete(Document $document, TreeNode $ast): void
-    {
-        // Post compilation event
     }
 
     /**
@@ -121,5 +103,26 @@ trait LinkingStage
         }
 
         return $this->document;
+    }
+
+    /**
+     * @param Document $document
+     * @param TreeNode $ast
+     * @return TreeNode|null
+     */
+    public function compile(Document $document, TreeNode $ast): ?TreeNode
+    {
+        // Compilation process
+
+        return $ast;
+    }
+
+    /**
+     * @param Document $document
+     * @param TreeNode $ast
+     */
+    public function complete(Document $document, TreeNode $ast): void
+    {
+        // Post compilation event
     }
 }

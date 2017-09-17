@@ -25,6 +25,7 @@ use Railt\Reflection\Compiler;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\UnrecognizedNodeException;
 use Railt\Reflection\Reflection\Document;
+use Railt\Support\Log\Stdout;
 use Railt\Tests\AbstractTestCase;
 
 /**
@@ -75,6 +76,7 @@ class ReflectionTestCase extends AbstractTestCase
     private function getCompiler(): Compiler
     {
         $compiler = new Compiler();
+        $compiler->withLogger(new Stdout());
 
         $compiler->getAutoloader()->dir([
             $this->resource(''),

@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Parser\Parser;
 use Railt\Reflection\Contracts\DefinitionInterface;
 use Railt\Reflection\Contracts\DocumentInterface;
 use Railt\Reflection\Contracts\NamedDefinitionInterface;
+use Railt\Support\Log\Loggable;
 
 /**
  * Class Definition
@@ -21,6 +21,8 @@ use Railt\Reflection\Contracts\NamedDefinitionInterface;
  */
 abstract class Definition implements DefinitionInterface
 {
+    use Loggable;
+
     /**
      * @var Document
      */
@@ -59,7 +61,6 @@ abstract class Definition implements DefinitionInterface
             'type' => $this->getTypeName(),
             'name' => $this instanceof NamedDefinitionInterface ? $this->getName() : '@anonymous',
             'file' => $this->getDocument()->getFileName(),
-            'ast'  => Parser::dump($this->ast),
         ];
     }
 

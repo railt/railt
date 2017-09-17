@@ -10,9 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Support\Exceptions\NotReadableException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
-use Railt\Parser\Parser;
 use Railt\Reflection\Contracts\DocumentInterface;
 use Railt\Reflection\Contracts\NamedDefinitionInterface;
 use Railt\Reflection\Contracts\SchemaTypeInterface;
@@ -23,6 +21,8 @@ use Railt\Reflection\Exceptions\UnrecognizedNodeException;
 use Railt\Reflection\Reflection\Common\HasDefinitions;
 use Railt\Reflection\Reflection\Common\HasLinkingStageInterface;
 use Railt\Reflection\Reflection\Common\UniqueId;
+use Railt\Support\Exceptions\NotReadableException;
+use Railt\Support\Log\AllowsLoggerAddition;
 
 /**
  * Class Document
@@ -63,8 +63,6 @@ class Document extends Definition implements DocumentInterface
 
         $this->fileName   = $fileName;
         $this->dictionary = $dictionary;
-
-        $this->compileChildren();
     }
 
     /**
@@ -72,7 +70,7 @@ class Document extends Definition implements DocumentInterface
      * @throws TypeConflictException
      * @throws UnrecognizedNodeException
      */
-    private function compileChildren(): void
+    public function compileChildren(): void
     {
         $this->collectChildren();
 
@@ -95,10 +93,11 @@ class Document extends Definition implements DocumentInterface
     private function collectChildren(): void
     {
         foreach ($this->ast->getChildren() as $child) {
-            /** @var Definition $class */
             $class = $this->resolveDefinition($child);
 
+            /** @var Definition $definition */
             $definition = new $class($this, $child);
+            $definition->withLogger($this->getLogger());
 
             $this->dictionary->register($definition);
         }
@@ -133,7 +132,7 @@ class Document extends Definition implements DocumentInterface
         }
 
         $message = UnrecognizedNodeException::DEFAULT_MESSAGE;
-        throw UnrecognizedNodeException::new($message, $ast->getId(), Parser::dump($ast));
+        throw UnrecognizedNodeException::new($message, $ast->getId());
     }
 
     /**
@@ -156,6 +155,8 @@ class Document extends Definition implements DocumentInterface
      */
     public function load(string $type): NamedDefinitionInterface
     {
+        $this->debug('Try to load type ' . $type);
+
         return $this->dictionary->find($type);
     }
 

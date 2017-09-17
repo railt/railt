@@ -7,17 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Contracts\Enum;
+namespace Railt\Reflection\Contracts;
 
 use Railt\Reflection\Contracts\Common\HasDescription;
 use Railt\Reflection\Contracts\Common\HasDirectivesInterface;
-use Railt\Reflection\Contracts\EnumTypeInterface;
-use Railt\Reflection\Contracts\NamedDefinitionInterface;
 
 /**
  * Interface ValueInterface
  */
-interface ValueInterface extends
+interface EnumValueInterface extends
     NamedDefinitionInterface,
     HasDirectivesInterface,
     HasDescription

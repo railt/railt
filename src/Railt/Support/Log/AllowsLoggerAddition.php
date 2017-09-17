@@ -18,7 +18,12 @@ interface AllowsLoggerAddition
 {
     /**
      * @param null|LoggerInterface $logger
-     * @return AllowsLoggerAddition
+     * @return AllowsLoggerAddition|$this
      */
-    public function withLogger(?LoggerInterface $logger): AllowsLoggerAddition;
+    public function withLogger(?LoggerInterface $logger);
+
+    /**
+     * @return null|LoggerInterface
+     */
+    public function getLogger(): ?LoggerInterface;
 }
