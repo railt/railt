@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Exceptions;
+namespace Railt\Reflection\Contracts\Behavior;
 
 /**
- * Class TypeNotFoundException
+ * Interface Inputable
  */
-class TypeNotFoundException extends \OutOfBoundsException
+interface Inputable
 {
 
 }

@@ -7,12 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Exceptions;
+namespace Railt\Reflection\Contracts\Types;
+
+use Railt\Reflection\Contracts\Behavior\Nameable;
 
 /**
- * Class TypeNotFoundException
+ * Interface NamedTypeInterface
  */
-class TypeNotFoundException extends \OutOfBoundsException
+interface NamedTypeInterface extends Nameable, TypeInterface
 {
 
 }

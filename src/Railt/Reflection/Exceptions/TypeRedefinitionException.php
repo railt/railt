@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Reflection\Exceptions;
 
 /**
- * Class TypeNotFoundException
+ * Class TypeRedefinitionException
  */
-class TypeNotFoundException extends \OutOfBoundsException
+class TypeRedefinitionException extends TypeConflictException
 {
 
 }

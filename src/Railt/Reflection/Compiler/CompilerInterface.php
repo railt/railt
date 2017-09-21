@@ -9,17 +9,24 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler;
 
-use Railt\Reflection\Contracts\DocumentInterface;
+use Hoa\Compiler\Llk\TreeNode;
+use Railt\Reflection\Contracts\Document;
 use Railt\Support\Filesystem\ReadableInterface;
 
 /**
- * Interface CompilerInterface
+ * Class CompilerInterface
  */
-interface CompilerInterface
+interface CompilerInterface extends Dictionary
 {
     /**
      * @param ReadableInterface $readable
-     * @return DocumentInterface
+     * @return Document
      */
-    public function compile(ReadableInterface $readable): DocumentInterface;
+    public function compile(ReadableInterface $readable): Document;
+
+    /**
+     * @param TreeNode $ast
+     * @return string
+     */
+    public function dump(TreeNode $ast): string;
 }

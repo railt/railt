@@ -10,9 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Exceptions;
 
 /**
- * Class TypeNotFoundException
+ * Class BuildingException
+ * @package Railt\Reflection\Exceptions
  */
-class TypeNotFoundException extends \OutOfBoundsException
+class BuildingException extends \LogicException
 {
 
 }

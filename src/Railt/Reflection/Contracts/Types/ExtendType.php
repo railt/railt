@@ -7,12 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Exceptions;
+namespace Railt\Reflection\Contracts\Types;
 
 /**
- * Class TypeNotFoundException
+ * Interface ExtendType
  */
-class TypeNotFoundException extends \OutOfBoundsException
+interface ExtendType extends NamedTypeInterface
 {
-
+    /**
+     * @return ObjectType
+     */
+    public function getType(): ObjectType;
 }

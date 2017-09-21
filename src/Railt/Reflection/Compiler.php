@@ -9,26 +9,31 @@ declare(strict_types=1);
 
 namespace Railt\Reflection;
 
+use Hoa\Compiler\Llk\TreeNode;
 use Railt\Parser\Exceptions\CompilerException;
+use Railt\Parser\Exceptions\InitializationException;
+use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser;
-use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
-use Railt\Reflection\Compiler\Stdlib;
-use Railt\Reflection\Contracts\NamedDefinitionInterface;
-use Railt\Reflection\Exceptions\TypeConflictException;
-use Railt\Reflection\Exceptions\UnrecognizedNodeException;
-use Railt\Reflection\Reflection\Document;
+use Railt\Reflection\Compiler\Dictionary;
+use Railt\Reflection\Compiler\Loader;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Standard\GraphQLDocument;
 use Railt\Support\Filesystem\ReadableInterface;
-use Railt\Support\Log\AllowsLoggerAddition;
-use Railt\Support\Log\Loggable;
 
 /**
  * Class Compiler
  */
-class Compiler implements CompilerInterface, AllowsLoggerAddition
+class Compiler implements CompilerInterface
 {
-    use Loggable;
+    /**
+     * @var Dictionary
+     */
+    private $loader;
 
     /**
      * @var Parser
@@ -36,90 +41,100 @@ class Compiler implements CompilerInterface, AllowsLoggerAddition
     private $parser;
 
     /**
-     * @var Autoloader
+     * @var GraphQLDocument
      */
-    private $autoloader;
-
-    /**
-     * @var Dictionary
-     */
-    private $dictionary;
-
-    /**
-     * @var Stdlib
-     */
-    private $stdlib;
+    private $standard;
 
     /**
      * Compiler constructor.
-     * @param Parser|null $parser
-     * @throws \Railt\Parser\Exceptions\ParsingException
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
-     * @throws \Railt\Parser\Exceptions\InitializationException
+     * @param array|null $experimental An additional features list
      */
-    public function __construct(Parser $parser = null)
+    public function __construct(array $experimental = null)
     {
-        $this->parser     = $parser ?? new Parser();
-        $this->autoloader = new Autoloader($this);
-        $this->dictionary = new Dictionary($this->autoloader);
-        $this->stdlib     = new Stdlib($this->dictionary);
+        $this->parser = new Parser();
+        $this->loader = new Loader($this);
+
+        $this->standard = $this->bootStandardLibrary($experimental);
     }
 
     /**
-     * @param ReadableInterface $file
-     * @return DocumentInterface
-     * @throws \LogicException
+     * @param array|null $experimental
+     * @return Document
+     */
+    private function bootStandardLibrary(?array $experimental): Document
+    {
+        $stdlib = new GraphQLDocument($experimental);
+
+        foreach ($stdlib->getTypes() as $type) {
+            $this->register($type);
+        }
+
+        return $stdlib;
+    }
+
+    /**
+     * @param ReadableInterface $readable
+     * @return Document
      * @throws CompilerException
-     * @throws UnrecognizedNodeException
-     * @throws TypeConflictException
+     * @throws UnexpectedTokenException
      * @throws UnrecognizedTokenException
      */
-    public function compile(ReadableInterface $file): DocumentInterface
+    public function compile(ReadableInterface $readable): Document
     {
-        $this->dictionary->withLogger($this->getLogger());
+        $ast = $this->parser->parse($readable);
 
-        $this->debug('Reading ' . $file->getPathname());
-
-        $ast = $this->parser->parse($file);
-
-        $this->debug('Building AST Nodes');
-
-        $document = new Document($file->getPathname(), $ast, $this->dictionary);
-        $document->withLogger($this->getLogger());
-        $document->compileChildren();
-
-        return $document;
+        try {
+            return new DocumentBuilder($ast, $readable, $this);
+        } catch (\Throwable $fatal) {
+            throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
+        }
     }
 
     /**
-     * @return Parser
-     */
-    public function getParser(): Parser
-    {
-        return $this->parser;
-    }
-
-    /**
-     * @return Autoloader
-     */
-    public function getAutoloader(): Autoloader
-    {
-        return $this->autoloader;
-    }
-
-    /**
+     * @param TypeInterface $type
+     * @param bool $force
      * @return Dictionary
      */
-    public function getDictionary(): Dictionary
+    public function register(TypeInterface $type, bool $force = false): Dictionary
     {
-        return $this->dictionary;
+        return $this->loader->register($type, $force);
     }
 
     /**
-     * @return Stdlib
+     * @param string $name
+     * @param Document|null $document
+     * @return null|TypeInterface|NamedTypeInterface
      */
-    public function getStdlib(): Stdlib
+    public function get(string $name, Document $document = null): ?TypeInterface
     {
-        return $this->stdlib;
+        return $this->loader->get($name, $document);
+    }
+
+    /**
+     * @param Document|null $document
+     * @return array
+     */
+    public function all(Document $document = null): array
+    {
+        return $this->loader->all($document);
+    }
+
+    /**
+     * @param string $name
+     * @param Document|null $document
+     * @return bool
+     */
+    public function has(string $name, Document $document = null): bool
+    {
+        return $this->loader->has($name, $document);
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return string
+     */
+    public function dump(TreeNode $ast): string
+    {
+        return $this->parser->dump($ast);
     }
 }

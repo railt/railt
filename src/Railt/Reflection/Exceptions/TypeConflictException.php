@@ -12,10 +12,7 @@ namespace Railt\Reflection\Exceptions;
 /**
  * Class TypeConflictException
  */
-class TypeConflictException extends TypeException
+class TypeConflictException extends \LogicException
 {
-    /**
-     * Type conflict default message
-     */
-    public const DEFAULT_MESSAGE = 'Can not register type named "%s" as %s. Type "%s" already registered as %s';
+
 }
