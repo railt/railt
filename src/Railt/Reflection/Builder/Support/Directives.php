@@ -28,12 +28,15 @@ trait Directives
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws \Railt\Reflection\Exceptions\BuildingException
      */
     protected function compileDirectives(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Directive') {
-            $directive = new DirectiveInvocationBuilder($ast, $this->getDocument());
+            $directive = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
+
             $this->directives[$directive->getName()] = $directive;
+
             return true;
         }
 

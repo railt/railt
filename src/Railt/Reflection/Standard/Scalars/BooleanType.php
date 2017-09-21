@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Standard\Scalars;
 
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Standard\Base\BaseScalar;
 use Railt\Reflection\Standard\StandardType;
 
 /**

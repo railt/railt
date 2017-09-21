@@ -11,7 +11,6 @@ namespace Railt\Reflection;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Parser\Exceptions\CompilerException;
-use Railt\Parser\Exceptions\InitializationException;
 use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser;
@@ -48,6 +47,7 @@ class Compiler implements CompilerInterface
     /**
      * Compiler constructor.
      * @param array|null $experimental An additional features list
+     * @throws \Railt\Parser\Exceptions\InitializationException
      */
     public function __construct(array $experimental = null)
     {
@@ -63,7 +63,7 @@ class Compiler implements CompilerInterface
      */
     private function bootStandardLibrary(?array $experimental): Document
     {
-        $stdlib = new GraphQLDocument($experimental);
+        $stdlib = new GraphQLDocument($this, $experimental);
 
         foreach ($stdlib->getTypes() as $type) {
             $this->register($type);

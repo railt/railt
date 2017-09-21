@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard;
 
-use Railt\Reflection\Contracts\Document;
-
 /**
  * An interface that standardizes the constructor
  * of all types of the standard library.
@@ -18,7 +16,13 @@ use Railt\Reflection\Contracts\Document;
 interface StandardType
 {
     /**
-     * @param Document $document
+     * RFC Implementation Description.
      */
-    public function __construct(Document $document);
+    public const RFC_IMPL_DESCRIPTION = 'At the moment the type is not supported by the 
+        GraphQL standard, its implementation is not allowed in the future.';
+
+    /**
+     *
+     */
+    public const CONSTANT_IDENTIFIER = '00000000-0000-0000-0000-000000000000';
 }

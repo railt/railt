@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Standard\Scalars;
+namespace Railt\Reflection\Standard\Base;
 
 use Railt\Reflection\Builder\Support\Deprecation;
 use Railt\Reflection\Contracts\Document;
@@ -26,12 +26,6 @@ abstract class BaseScalar implements ScalarType
      * @var Document
      */
     private $document;
-
-    /**
-     * RFC Description
-     */
-    protected const RFC_IMPL_DESCRIPTION = 'At the moment the type is not supported by the 
-        GraphQL standard, its implementation is not allowed in the future.';
 
     /**
      * BaseScalar constructor.

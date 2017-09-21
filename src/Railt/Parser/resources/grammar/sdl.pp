@@ -235,6 +235,8 @@ Name:
 
 Key:
     (
+        String()
+            |
         Scalar()
             |
         Keyword()

@@ -14,7 +14,6 @@ use Railt\Reflection\Builder\Support\Directives;
 use Railt\Reflection\Builder\Support\Fields;
 use Railt\Reflection\Contracts\Types\InterfaceType;
 use Railt\Reflection\Contracts\Types\ObjectType;
-use Railt\Reflection\Contracts\Types\TypeInterface;
 
 /**
  * Class ObjectBuilder
@@ -31,13 +30,18 @@ class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
      */
     private $interfaces = [];
 
+    /**
+     * @param TreeNode $ast
+     * @return bool
+     */
     public function compile(TreeNode $ast): bool
     {
         if ($ast->getId() === self::AST_ID_IMPLEMENTS) {
             /** @var TreeNode $child */
             foreach ($ast->getChildren() as $child) {
-                $this->compileInterface($child);
+                $this->addInterfaceRelation($child);
             }
+            return true;
         }
 
         return false;
@@ -47,7 +51,7 @@ class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
      * @param TreeNode $child
      * @return void
      */
-    private function compileInterface(TreeNode $child): void
+    private function addInterfaceRelation(TreeNode $child): void
     {
         $interface = $child->getChild(0)->getValueValue();
 
@@ -59,7 +63,7 @@ class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
      */
     public function getInterfaces(): iterable
     {
-        return \array_values($this->interfaces);
+        return \array_values($this->compiled()->interfaces);
     }
 
     /**
@@ -68,7 +72,7 @@ class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
      */
     public function hasInterface(string $name): bool
     {
-        return \array_key_exists($name, $this->interfaces);
+        return \array_key_exists($name, $this->compiled()->interfaces);
     }
 
     /**
@@ -77,7 +81,7 @@ class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
      */
     public function getInterface(string $name): ?InterfaceType
     {
-        return $this->interfaces[$name] ?? null;
+        return $this->compiled()->interfaces[$name] ?? null;
     }
 
     /**
@@ -85,7 +89,7 @@ class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
      */
     public function getNumberOfInterfaces(): int
     {
-        return \count($this->interfaces);
+        return \count($this->compiled()->interfaces);
     }
 
     /**

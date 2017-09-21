@@ -7,26 +7,45 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Standard;
+namespace Railt\Reflection\Standard\Base;
 
+use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\SchemaType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Standard\StandardType;
 
 /**
  * Class BaseDocument
  */
-abstract class BaseDocument implements Document
+abstract class BaseDocument implements Document, StandardType
 {
-    /**
-     *
-     */
-    private const CONSTANT_IDENTIFIER = '00000000-0000-0000-0000-000000000000';
-
     /**
      * @var array|TypeInterface[]
      */
     protected $types = [];
+
+    /**
+     * @var CompilerInterface
+     */
+    private $compiler;
+
+    /**
+     * BaseDocument constructor.
+     * @param CompilerInterface $compiler
+     */
+    public function __construct(CompilerInterface $compiler)
+    {
+        $this->compiler = $compiler;
+    }
+
+    /**
+     * @return CompilerInterface
+     */
+    public function getCompiler(): CompilerInterface
+    {
+        return $this->compiler;
+    }
 
     /**
      * @return bool

@@ -9,7 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard;
 
+use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Types\ScalarType;
+use Railt\Reflection\Standard\Base\BaseDocument;
+use Railt\Reflection\Standard\Directives\Deprecation;
 use Railt\Reflection\Standard\Scalars\AnyType;
 use Railt\Reflection\Standard\Scalars\BooleanType;
 use Railt\Reflection\Standard\Scalars\DateTimeType;
@@ -35,11 +38,20 @@ class GraphQLDocument extends BaseDocument
     public const RFC315 = DateTimeType::class;
 
     /**
+     * Adding an directive:
+     * <code>
+     *      @deprecated(reason: String = "No longer supported") on FIELD_DEFINITION | ENUM_VALUE
+     * </code>
+     */
+    public const RFC384 = Deprecation::class;
+
+    /**
      * Non-standard features
      */
     public const EXPERIMENTAL = [
         self::RFC315,
-        self::RFC325
+        self::RFC325,
+        self::RFC384
     ];
 
     /**
@@ -50,14 +62,17 @@ class GraphQLDocument extends BaseDocument
     /**
      * @var array
      */
-    private $experimentalFeatures = [];
+    private $experimentalFeatures;
 
     /**
      * GraphQLDocument constructor.
+     * @param CompilerInterface $compiler
      * @param array|null $experimental
      */
-    public function __construct(array $experimental = null)
+    public function __construct(CompilerInterface $compiler, array $experimental = null)
     {
+        parent::__construct($compiler);
+
         $this->experimentalFeatures = $experimental ?? static::EXPERIMENTAL;
         $this->createStandardTypes();
     }

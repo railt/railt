@@ -9,13 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Types;
 
-use Railt\Reflection\Contracts\Behavior\InvokableType;
+use Railt\Reflection\Contracts\Behavior\Child;
 use Railt\Reflection\Contracts\Containers\HasDirectives;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 
 /**
  * Interface ArgumentType
  */
-interface ArgumentType extends HasDirectives, NamedTypeInterface
+interface ArgumentType extends HasDirectives, AllowsTypeIndication, Child, NamedTypeInterface
 {
     /**
      * @return mixed
@@ -26,14 +27,4 @@ interface ArgumentType extends HasDirectives, NamedTypeInterface
      * @return bool
      */
     public function hasDefaultValue(): bool;
-
-    /**
-     * @return InvokableType
-     */
-    public function getRelatedType(): InvokableType;
-
-    /**
-     * @return int
-     */
-    public function getPosition(): int;
 }

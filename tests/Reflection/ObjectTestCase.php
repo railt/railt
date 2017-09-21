@@ -71,9 +71,10 @@ class ObjectTestCase extends AbstractReflectionTestCase
             static::assertEquals('deprecated', $directive->getName());
 
             static::assertEquals('Because', $directive->getArgument('reason')->getValue());
+            static::assertNotNull($directive->getArgument('reason')->getArgument());
             static::assertNull($directive->getArgument('not-exists'));
 
-            static::assertTrue($directive->hasArgument('deprecated'));
+            static::assertTrue($directive->hasArgument('reason'));
             static::assertFalse($directive->hasArgument('not-exists'));
 
             static::assertSame(1, $directive->getNumberOfArguments());
@@ -132,9 +133,10 @@ class ObjectTestCase extends AbstractReflectionTestCase
             static::assertCount(0, $field->getArguments());
             static::assertSame(0, $field->getNumberOfArguments());
             static::assertCount($field->getNumberOfArguments(), $field->getArguments());
-            static::assertCount(0, $field->getNumberOfRequiredArguments());
-            static::assertCount(0, $field->getNumberOfOptionalArguments());
+            static::assertSame(0, $field->getNumberOfRequiredArguments());
+            static::assertSame(0, $field->getNumberOfOptionalArguments());
             static::assertNull($field->getArgument('some'));
+            static::assertNull($field->getArgument('test'));
             static::assertFalse($field->hasArgument('some'));
         }
     }
@@ -189,7 +191,7 @@ class ObjectTestCase extends AbstractReflectionTestCase
      */
     public function testFieldsCount(ObjectType $type): void
     {
-        static::assertSame(0, $type->getNumberOfFields());
+        static::assertSame(1, $type->getNumberOfFields());
     }
 
     /**

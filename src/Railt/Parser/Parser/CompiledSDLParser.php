@@ -97,7 +97,7 @@ class CompiledSDLParser extends \Hoa\Compiler\Llk\Parser
                 'Relation' => new \Hoa\Compiler\Llk\Rule\Token('Relation', 'T_NAME', null, -1, true),
                 37 => new \Hoa\Compiler\Llk\Rule\Choice(37, ['Scalar', 'ValueKeyword', 'Relation'], null),
                 'Name' => new \Hoa\Compiler\Llk\Rule\Concatenation('Name', [37], '#Name'),
-                39 => new \Hoa\Compiler\Llk\Rule\Choice(39, ['Scalar', 'Keyword', 'ValueKeyword', 'Relation'], null),
+                39 => new \Hoa\Compiler\Llk\Rule\Choice(39, ['String', 'Scalar', 'Keyword', 'ValueKeyword', 'Relation'], null),
                 'Key' => new \Hoa\Compiler\Llk\Rule\Concatenation('Key', [39], '#Name'),
                 41 => new \Hoa\Compiler\Llk\Rule\Choice(41, ['String', 'Number', 'Nullable', 'Keyword', 'Scalar', 'Relation', 'Object', 'List', 'ValueKeyword'], null),
                 'Value' => new \Hoa\Compiler\Llk\Rule\Concatenation('Value', [41], '#Value'),
@@ -296,7 +296,7 @@ class CompiledSDLParser extends \Hoa\Compiler\Llk\Parser
         $this->getRule('String')->setPPRepresentation(' (::T_MULTILINE_STRING_OPEN:: <T_MULTILINE_STRING> ::T_MULTILINE_STRING_CLOSE::) | (::T_STRING_OPEN:: <T_STRING> ::T_STRING_CLOSE::)');
         $this->getRule('Relation')->setPPRepresentation(' <T_NAME>');
         $this->getRule('Name')->setPPRepresentation(' ( Scalar() | ValueKeyword() | Relation() ) #Name');
-        $this->getRule('Key')->setPPRepresentation(' ( Scalar() | Keyword() | ValueKeyword() | Relation() ) #Name');
+        $this->getRule('Key')->setPPRepresentation(' ( String() | Scalar() | Keyword() | ValueKeyword() | Relation() ) #Name');
         $this->getRule('Value')->setPPRepresentation(' ( String() | Number() | Nullable() | Keyword() | Scalar() | Relation() | Object() | List() | ValueKeyword() ) #Value');
         $this->getRule('ValueDefinition')->setPPRepresentation(' ValueDefinitionResolver()');
         $this->getRule('ValueDefinitionResolver')->setPPRepresentation(' (ValueListDefinition() <T_NON_NULL>? #List) | (ValueScalarDefinition() <T_NON_NULL>? #Type)');

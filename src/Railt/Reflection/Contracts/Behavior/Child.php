@@ -11,18 +11,11 @@ namespace Railt\Reflection\Contracts\Behavior;
 
 /**
  * Interface Child
- * @package Railt\Reflection\Contracts\Behavior
  */
 interface Child
 {
     /**
-     * @return null|Nameable
+     * @return Nameable
      */
-    public function getParent(): ?Nameable;
-
-    /**
-     * @param Child $type
-     * @return bool
-     */
-    public function isSibling(Child $type): bool;
+    public function getParent(): Nameable;
 }

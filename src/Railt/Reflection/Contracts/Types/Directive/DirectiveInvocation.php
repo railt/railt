@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Types\Directive;
 
+use Railt\Reflection\Contracts\Behavior\Child;
 use Railt\Reflection\Contracts\Behavior\Invokable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\DirectiveType;
@@ -16,7 +17,7 @@ use Railt\Reflection\Contracts\Types\DirectiveType;
 /**
  * Interface DirectiveInvocation
  */
-interface DirectiveInvocation extends Invokable, Nameable
+interface DirectiveInvocation extends Invokable, Nameable, Child
 {
     /**
      * @return DirectiveType
