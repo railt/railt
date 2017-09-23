@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Types;
 
-use Railt\Reflection\Contracts\Behavior\Deprecatable;
 use Railt\Reflection\Contracts\Document;
 
 /**
  * Interface TypeInterface
  */
-interface TypeInterface extends Deprecatable
+interface TypeInterface
 {
     /**
      * @return Document
@@ -26,4 +25,12 @@ interface TypeInterface extends Deprecatable
      * @return string
      */
     public function getTypeName(): string;
+
+    /**
+     * A unique identifier for the type is needed to identify the entity
+     * in cases of type names conflicts.
+     *
+     * @return string Type identifier
+     */
+    public function getUniqueId(): string;
 }

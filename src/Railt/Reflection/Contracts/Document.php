@@ -40,12 +40,4 @@ interface Document extends HasTypes, TypeInterface
      * @return null|SchemaType Schema object definition or null.
      */
     public function getSchema(): ?SchemaType;
-
-    /**
-     * A unique identifier for the document is needed to identify the entity
-     * in cases of document names conflicts (including file names).
-     *
-     * @return string Document identifier
-     */
-    public function getUniqueId(): string;
 }

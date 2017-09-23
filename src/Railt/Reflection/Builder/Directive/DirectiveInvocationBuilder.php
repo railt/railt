@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Directive;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\AbstractBuilder;
 use Railt\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Builder\Runtime\Builder;
 use Railt\Reflection\Builder\Support\NameBuilder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\Directive\Argument;
@@ -24,14 +24,15 @@ use Railt\Reflection\Exceptions\TypeNotFoundException;
 /**
  * Class DirectiveInvocationBuilder
  */
-class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInvocation
+class DirectiveInvocationBuilder implements DirectiveInvocation
 {
+    use Builder;
     use NameBuilder;
 
     /**
      *
      */
-    protected const AST_ID_ARGUMENT = '#Argument';
+    private const AST_ID_ARGUMENT = '#Argument';
 
     /**
      * @var array|Argument[]
@@ -53,11 +54,9 @@ class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInv
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
     {
         $this->parent = $parent;
-        parent::__construct($ast, $document);
 
+        $this->bootBuilder($ast, $document);
         $this->bootNameBuilder($ast);
-
-        $this->compileIfNotCompiled();
     }
 
     /**
@@ -67,8 +66,9 @@ class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInv
      */
     public function compile(TreeNode $ast): bool
     {
-        if ($ast->getId() === static::AST_ID_ARGUMENT) {
+        if ($ast->getId() === self::AST_ID_ARGUMENT) {
             $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
+
             $this->arguments[$argument->getName()] = $argument;
 
             return true;
@@ -83,6 +83,8 @@ class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInv
      */
     public function getDirective(): DirectiveType
     {
+        $this->compileIfNotCompiled();
+
         $directive = $this->getCompiler()->get($this->getName());
 
         if ($directive === null) {
@@ -98,7 +100,7 @@ class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInv
      */
     public function getArguments(): iterable
     {
-        return \array_values($this->arguments);
+        return \array_values($this->compiled()->arguments);
     }
 
     /**
@@ -107,7 +109,7 @@ class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInv
      */
     public function hasArgument(string $name): bool
     {
-        return \array_key_exists($name, $this->arguments);
+        return \array_key_exists($name, $this->compiled()->arguments);
     }
 
     /**
@@ -116,7 +118,7 @@ class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInv
      */
     public function getArgument(string $name): ?Argument
     {
-        return $this->arguments[$name] ?? null;
+        return $this->compiled()->arguments[$name] ?? null;
     }
 
     /**
@@ -124,7 +126,7 @@ class DirectiveInvocationBuilder extends AbstractBuilder implements DirectiveInv
      */
     public function getNumberOfArguments(): int
     {
-        return \count($this->arguments);
+        return \count($this->compiled()->arguments);
     }
 
     /**

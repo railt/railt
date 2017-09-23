@@ -7,18 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Standard\Common;
+namespace Railt\Reflection\Base\Behavior;
 
 use Railt\Reflection\Contracts\Behavior\Nameable;
 
 /**
- * Trait HasName
+ * Trait BaseName
  * @mixin Nameable
  */
-trait HasName
+trait BaseName
 {
     /**
-     * @var string|null
+     * @var string
      */
     protected $name;
 
@@ -32,7 +32,7 @@ trait HasName
      */
     public function getName(): string
     {
-        return $this->name;
+        return (string)$this->name;
     }
 
     /**
@@ -40,6 +40,6 @@ trait HasName
      */
     public function getDescription(): string
     {
-        return $this->description;
+        return (string)$this->description;
     }
 }

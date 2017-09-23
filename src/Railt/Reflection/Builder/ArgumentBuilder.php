@@ -10,23 +10,21 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\Support\Directives;
+use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
 use Railt\Reflection\Builder\Support\TypeIndication;
+use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\ArgumentType;
 
 /**
  * Class ArgumentBuilder
  */
-class ArgumentBuilder extends AbstractNamedTypeBuilder implements ArgumentType
+class ArgumentBuilder implements ArgumentType
 {
-    use Directives;
     use TypeIndication;
+    use NamedTypeBuilder;
 
-    /**
-     *
-     */
-    protected const AST_ID_DEFAULT_VALUE = '#Value';
+    private const AST_ID_ARGUMENT_VALUE = '#Value';
 
     /**
      * @var Nameable
@@ -53,18 +51,34 @@ class ArgumentBuilder extends AbstractNamedTypeBuilder implements ArgumentType
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
     {
         $this->parent = $parent;
-        parent::__construct($ast, $document);
+        $this->bootNamedTypeBuilder($ast, $document);
     }
 
+    /**
+     * @param TreeNode $ast
+     * @return bool
+     */
     public function compile(TreeNode $ast): bool
     {
-        if ($ast->getId() === static::AST_ID_DEFAULT_VALUE) {
+        if ($ast->getId() === self::AST_ID_ARGUMENT_VALUE) {
             $this->hasDefaultValue = true;
-            $this->defaultValue = ValueCoercion::parse($ast->getChild(0));
+            $this->defaultValue    = ValueCoercion::parse($ast->getChild(0));
+
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @return Inputable
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     */
+    public function getType(): Inputable
+    {
+        \assert($this->typeName !== null, 'Broken AST, #Type node required');
+
+        return $this->onlyInputable($this->getCompiler()->get($this->typeName));
     }
 
     /**
@@ -89,5 +103,13 @@ class ArgumentBuilder extends AbstractNamedTypeBuilder implements ArgumentType
     public function getParent(): Nameable
     {
         return $this->parent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Argument';
     }
 }

@@ -16,10 +16,6 @@ use Hoa\Compiler\Llk\TreeNode;
  */
 class ValueCoercion
 {
-    // Defaults:
-    // private const TOKEN_STRING = 'T_STRING';
-    // private const TOKEN_KEYWORD = 'T_NAME';
-
     private const AST_ID_ARRAY     = '#List';
     private const AST_ID_OBJECT    = '#Object';
 
@@ -37,6 +33,7 @@ class ValueCoercion
         switch ($ast->getId()) {
             case self::AST_ID_ARRAY:
                 return self::toArray($ast);
+
             case self::AST_ID_OBJECT:
                 return self::toObject($ast);
         }

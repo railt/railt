@@ -7,15 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Standard\Common;
+namespace Railt\Reflection\Base\Behavior;
 
 use Railt\Reflection\Contracts\Behavior\Deprecatable;
 
 /**
- * Trait HasDeprecation
+ * Trait BaseDeprecations
  * @mixin Deprecatable
  */
-trait HasDeprecation
+trait BaseDeprecations
 {
     /**
      * @var string|null
@@ -27,7 +27,7 @@ trait HasDeprecation
      */
     public function isDeprecated(): bool
     {
-        return $this->deprecationReason !== null;
+        return $this->compiled()->deprecationReason !== null;
     }
 
     /**
@@ -35,6 +35,6 @@ trait HasDeprecation
      */
     public function getDeprecationReason(): string
     {
-        return (string)$this->deprecationReason;
+        return (string)$this->compiled()->deprecationReason;
     }
 }

@@ -25,7 +25,7 @@ trait TypeIndication
     /**
      * @var string
      */
-    private $typeName;
+    protected $typeName;
 
     /**
      * @var bool
@@ -43,16 +43,12 @@ trait TypeIndication
     private $isNonNullList = false;
 
     /**
+     * @param NamedTypeInterface|TypeInterface $type
      * @return Inputable
      * @throws TypeConflictException
      */
-    public function getType(): Inputable
+    private function onlyInputable(NamedTypeInterface $type): Inputable
     {
-        \assert($this->typeName !== null, 'Broken AST, #Type node required');
-
-        /** @var NamedTypeInterface $type */
-        $type = $this->getCompiler()->get($this->typeName);
-
         if ($type instanceof Inputable) {
             return $type;
         }

@@ -10,12 +10,11 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Types;
 
 use Railt\Reflection\Contracts\Containers\HasTypes;
-use Railt\Reflection\Contracts\Containers\HasDirectives;
 
 /**
  * Interface UnionType
  */
-interface UnionType extends HasDirectives, HasTypes, NamedTypeInterface
+interface UnionType extends HasTypes, NamedTypeInterface
 {
 
 }

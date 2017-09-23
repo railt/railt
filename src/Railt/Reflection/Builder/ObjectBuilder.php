@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\Support\Directives;
+use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
 use Railt\Reflection\Builder\Support\Fields;
 use Railt\Reflection\Contracts\Types\InterfaceType;
 use Railt\Reflection\Contracts\Types\ObjectType;
@@ -18,17 +18,28 @@ use Railt\Reflection\Contracts\Types\ObjectType;
 /**
  * Class ObjectBuilder
  */
-class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
+class ObjectBuilder implements ObjectType
 {
     use Fields;
-    use Directives;
+    use NamedTypeBuilder;
 
-    protected const AST_ID_IMPLEMENTS = '#Implements';
+    private const AST_ID_IMPLEMENTS = '#Implements';
 
     /**
      * @var array|InterfaceType[]
      */
     private $interfaces = [];
+
+    /**
+     * ObjectBuilder constructor.
+     * @param TreeNode $ast
+     * @param DocumentBuilder $document
+     * @throws \Railt\Reflection\Exceptions\BuildingException
+     */
+    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    {
+        $this->bootNamedTypeBuilder($ast, $document);
+    }
 
     /**
      * @param TreeNode $ast
@@ -41,6 +52,7 @@ class ObjectBuilder extends AbstractNamedTypeBuilder implements ObjectType
             foreach ($ast->getChildren() as $child) {
                 $this->addInterfaceRelation($child);
             }
+
             return true;
         }
 

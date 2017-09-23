@@ -17,7 +17,7 @@ use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 /**
  * Interface Argument
  */
-interface Argument extends Invokable, NamedTypeInterface, Child
+interface Argument extends Invokable, Child, NamedTypeInterface
 {
     /**
      * @return mixed

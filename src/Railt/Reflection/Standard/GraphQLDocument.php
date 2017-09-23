@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard;
 
+use Railt\Reflection\Base\BaseDocument;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Types\ScalarType;
-use Railt\Reflection\Standard\Base\BaseDocument;
 use Railt\Reflection\Standard\Directives\Deprecation;
 use Railt\Reflection\Standard\Scalars\AnyType;
 use Railt\Reflection\Standard\Scalars\BooleanType;
@@ -25,7 +25,7 @@ use Railt\Reflection\Standard\Scalars\StringType;
  * This class contains a Document implementation for
  * the standard GraphQL library.
  */
-class GraphQLDocument extends BaseDocument
+class GraphQLDocument extends BaseDocument implements StandardType
 {
     /**
      * Adding an Any type implementation
@@ -65,14 +65,18 @@ class GraphQLDocument extends BaseDocument
     private $experimentalFeatures;
 
     /**
+     * @var CompilerInterface
+     */
+    private $compiler;
+
+    /**
      * GraphQLDocument constructor.
      * @param CompilerInterface $compiler
      * @param array|null $experimental
      */
     public function __construct(CompilerInterface $compiler, array $experimental = null)
     {
-        parent::__construct($compiler);
-
+        $this->compiler = $compiler;
         $this->experimentalFeatures = $experimental ?? static::EXPERIMENTAL;
         $this->createStandardTypes();
     }
@@ -97,6 +101,9 @@ class GraphQLDocument extends BaseDocument
             $instance = new $type($this);
 
             $this->types[$instance->getName()] = $instance;
+
+            // Eager registering
+            $this->compiler->register($instance);
         }
     }
 

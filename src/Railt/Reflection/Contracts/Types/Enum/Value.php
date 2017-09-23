@@ -9,16 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Types\Enum;
 
-use Railt\Reflection\Contracts\Containers\HasDirectives;
+use Railt\Reflection\Contracts\Behavior\Child;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 
 /**
  * Interface Value
  */
-interface Value extends HasDirectives, NamedTypeInterface
+interface Value extends Child, NamedTypeInterface
 {
     /**
-     * @return mixed
+     * @return string
      */
-    public function getValue();
+    public function getValue(): string;
 }

@@ -9,14 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Types;
 
-use Railt\Reflection\Contracts\Behavior\Child;
-use Railt\Reflection\Contracts\Containers\HasDirectives;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Reflection\Contracts\Behavior\Child;
 
 /**
  * Interface ArgumentType
  */
-interface ArgumentType extends HasDirectives, AllowsTypeIndication, Child, NamedTypeInterface
+interface ArgumentType extends AllowsTypeIndication, Child, NamedTypeInterface
 {
     /**
      * @return mixed

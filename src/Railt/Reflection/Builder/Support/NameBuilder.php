@@ -30,6 +30,22 @@ trait NameBuilder
     protected $description = '';
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return (string)$this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
      * @param TreeNode $ast
      * @return void
      * @throws BuildingException
@@ -50,24 +66,6 @@ trait NameBuilder
         }
 
         $this->verifyNameConsistency($ast, '#Name');
-    }
-
-
-    /**
-     * @param TreeNode $root
-     * @param string $name
-     * @return void
-     * @throws BuildingException
-     */
-    private function verifyNameConsistency(TreeNode $root, string $name): void
-    {
-        if ($this->name === null) {
-            $error  = 'The AST must contain the Node named %s for the correct %s construction. ' .
-                'The transmitted AST contains the following structure: ' . \PHP_EOL;
-            $error .=  $this->getCompiler()->dump($root);
-
-            throw new BuildingException(\sprintf($error, $name, $this->getTypeName()));
-        }
     }
 
     /**
@@ -95,18 +93,19 @@ trait NameBuilder
     }
 
     /**
-     * @return string
+     * @param TreeNode $root
+     * @param string $name
+     * @return void
+     * @throws BuildingException
      */
-    public function getName(): string
+    private function verifyNameConsistency(TreeNode $root, string $name): void
     {
-        return (string)$this->name;
-    }
+        if ($this->name === null) {
+            $error = 'The AST must contain the Node named %s for the correct %s construction. ' .
+                'The transmitted AST contains the following structure: ' . \PHP_EOL;
+            $error .= $this->getCompiler()->dump($root);
 
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
+            throw new BuildingException(\sprintf($error, $name, $this->getTypeName()));
+        }
     }
 }

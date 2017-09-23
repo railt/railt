@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler;
 
+use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Contracts\Types\TypeInterface;
@@ -22,7 +23,7 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     /**
      * Pattern for type override exception messages.
      */
-    private const REDEFINITION_ERROR = 'Cannot declare %s, because the name is already in use in %s';
+    private const REDEFINITION_ERROR = 'Cannot declare "%s", because the name is already in use in "%s"';
 
     /**
      * First level types storage.
@@ -131,9 +132,16 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     private function throwRedefinitionException(TypeInterface $registered, TypeInterface $type): void
     {
-        $error = \sprintf(self::REDEFINITION_ERROR, $type->getTypeName(),
-            $registered->getDocument()->getTypeName());
-        throw new TypeConflictException(\sprintf($error, $type->getTypeName()));
+        $what = $type->getTypeName();
+        if ($type instanceof Nameable) {
+            $what = \sprintf('%s<%s>', $type->getTypeName(), $type->getName());
+        }
+
+        $doc = $registered->getDocument();
+        $into = \sprintf('%s<%s>', $doc->getTypeName(), $doc->getName());
+
+        $error = \sprintf(self::REDEFINITION_ERROR, $what, $into);
+        throw new TypeConflictException($error);
     }
 
     /**

@@ -28,8 +28,18 @@ interface DirectiveType extends HasArguments, NamedTypeInterface
     public function hasLocation(string $name): bool;
 
     /**
-     * @param string $name
-     * @return null|string
+     * @param TypeInterface $type
+     * @return bool
      */
-    public function getLocation(string $name): ?string;
+    public function isAllowedFor(TypeInterface $type): bool;
+
+    /**
+     * @return bool
+     */
+    public function isAllowedForQueries(): bool;
+
+    /**
+     * @return bool
+     */
+    public function isAllowedForSchemaDefinitions(): bool;
 }

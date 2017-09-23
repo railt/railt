@@ -16,5 +16,5 @@ use Railt\Reflection\Contracts\Behavior\Inputable;
  */
 interface ScalarType extends Inputable, NamedTypeInterface
 {
-    
+
 }

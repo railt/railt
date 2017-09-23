@@ -10,23 +10,26 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Directive;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Reflection\Builder\AbstractNamedTypeBuilder;
 use Railt\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\ArgumentType;
-use Railt\Reflection\Builder\AbstractNamedTypeBuilder;
-use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Reflection\Contracts\Types\Directive\Argument;
 use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
+use Railt\Reflection\Exceptions\TypeNotFoundException;
 
 /**
  * Class ArgumentBuilder
  */
-class ArgumentBuilder extends AbstractNamedTypeBuilder implements Argument
+class ArgumentBuilder implements Argument
 {
+    use NamedTypeBuilder;
+
     /**
      *
      */
-    protected const AST_ID_VALUE = '#Value';
+    private const AST_ID_VALUE = '#Value';
 
     /**
      * @var DirectiveInvocation
@@ -50,7 +53,7 @@ class ArgumentBuilder extends AbstractNamedTypeBuilder implements Argument
         \assert($parent instanceof DirectiveInvocation);
 
         $this->parent = $parent;
-        parent::__construct($ast, $document);
+        $this->bootNamedTypeBuilder($ast, $document);
     }
 
     /**
@@ -59,7 +62,7 @@ class ArgumentBuilder extends AbstractNamedTypeBuilder implements Argument
      */
     public function compile(TreeNode $ast): bool
     {
-        if ($ast->getId() === static::AST_ID_VALUE) {
+        if ($ast->getId() === self::AST_ID_VALUE) {
             $this->value = $ast->getChild(0)->getValueValue();
         }
 
@@ -96,5 +99,13 @@ class ArgumentBuilder extends AbstractNamedTypeBuilder implements Argument
     public function getParent(): Nameable
     {
         return $this->parent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Argument';
     }
 }

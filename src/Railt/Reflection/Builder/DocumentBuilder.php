@@ -11,7 +11,7 @@ namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Parser\Exceptions\CompilerException;
-use Railt\Reflection\Builder\Support\Identifier;
+use Railt\Reflection\Builder\Runtime\TypeBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
@@ -24,8 +24,10 @@ use Railt\Support\Filesystem\ReadableInterface;
 /**
  * Class DocumentBuilder
  */
-class DocumentBuilder extends AbstractTypeBuilder implements Document
+class DocumentBuilder implements Document
 {
+    use TypeBuilder;
+
     /**
      *
      */
@@ -49,11 +51,6 @@ class DocumentBuilder extends AbstractTypeBuilder implements Document
     /**
      * @var string
      */
-    private $id;
-
-    /**
-     * @var string
-     */
     private $name;
 
     /**
@@ -73,13 +70,12 @@ class DocumentBuilder extends AbstractTypeBuilder implements Document
         $this->compiler = $compiler;
 
         try {
-            $this->id = Identifier::generate();
             $this->name = $this->createName($readable);
         } catch (\Exception $e) {
             throw new CompilerException($e->getMessage(), $e->getCode(), $e);
         }
 
-        parent::__construct($ast, $this);
+        $this->bootTypeBuilder($ast, $this);
     }
 
     /**
@@ -91,14 +87,6 @@ class DocumentBuilder extends AbstractTypeBuilder implements Document
         return $readable->getPathname() === File::VIRTUAL_FILE_NAME
             ? static::VIRTUAL_FILE_NAME
             : \sprintf('File(%s)', \basename($readable->getPathname()));
-    }
-
-    /**
-     * @return CompilerInterface
-     */
-    public function getCompiler(): CompilerInterface
-    {
-        return $this->compiler;
     }
 
     /**
@@ -114,12 +102,20 @@ class DocumentBuilder extends AbstractTypeBuilder implements Document
             $this->throwInvalidAstNodeError($ast);
         }
 
-        /** @var AbstractTypeBuilder $instance */
+        /** @var Compilable|TypeInterface $instance */
         $instance = new $class($ast, $this);
 
         $this->getCompiler()->register($instance);
 
         return true;
+    }
+
+    /**
+     * @return CompilerInterface
+     */
+    public function getCompiler(): CompilerInterface
+    {
+        return $this->compiler;
     }
 
     /**
@@ -179,7 +175,7 @@ class DocumentBuilder extends AbstractTypeBuilder implements Document
      */
     public function getTypeName(): string
     {
-        return \sprintf('%s<%s>', $this->getName(), $this->getUniqueId());
+        return 'Document';
     }
 
     /**
@@ -188,13 +184,5 @@ class DocumentBuilder extends AbstractTypeBuilder implements Document
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUniqueId(): string
-    {
-        return $this->id;
     }
 }

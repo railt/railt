@@ -10,20 +10,21 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Contracts\Types\FieldType;
+use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
 use Railt\Reflection\Builder\Support\Arguments;
-use Railt\Reflection\Builder\Support\Directives;
-use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Builder\Support\TypeIndication;
+use Railt\Reflection\Contracts\Behavior\Inputable;
+use Railt\Reflection\Contracts\Behavior\Nameable;
+use Railt\Reflection\Contracts\Types\FieldType;
 
 /**
  * Class FieldBuilder
  */
-class FieldBuilder extends AbstractNamedTypeBuilder implements FieldType
+class FieldBuilder implements FieldType
 {
     use Arguments;
-    use Directives;
     use TypeIndication;
+    use NamedTypeBuilder;
 
     /**
      * @var Nameable
@@ -40,7 +41,18 @@ class FieldBuilder extends AbstractNamedTypeBuilder implements FieldType
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
     {
         $this->parent = $parent;
-        parent::__construct($ast, $document);
+        $this->bootNamedTypeBuilder($ast, $document);
+    }
+
+    /**
+     * @return Inputable
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     */
+    public function getType(): Inputable
+    {
+        \assert($this->typeName !== null, 'Broken AST, #Type node required');
+
+        return $this->onlyInputable($this->getCompiler()->get($this->typeName));
     }
 
     /**
@@ -49,5 +61,13 @@ class FieldBuilder extends AbstractNamedTypeBuilder implements FieldType
     public function getParent(): Nameable
     {
         return $this->parent;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Field';
     }
 }

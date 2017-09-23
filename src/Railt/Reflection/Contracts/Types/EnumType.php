@@ -10,13 +10,12 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Types;
 
 use Railt\Reflection\Contracts\Behavior\Inputable;
-use Railt\Reflection\Contracts\Containers\HasDirectives;
 use Railt\Reflection\Contracts\Types\Enum\Value;
 
 /**
  * Interface EnumType
  */
-interface EnumType extends HasDirectives, NamedTypeInterface, Inputable
+interface EnumType extends NamedTypeInterface, Inputable
 {
     /**
      * @return iterable|Value[]
@@ -33,5 +32,5 @@ interface EnumType extends HasDirectives, NamedTypeInterface, Inputable
      * @param string $name
      * @return Value
      */
-    public function getValue(string $name): Value;
+    public function getValue(string $name): ?Value;
 }

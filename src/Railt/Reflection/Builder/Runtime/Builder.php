@@ -7,17 +7,21 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Builder;
+namespace Railt\Reflection\Builder\Runtime;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Reflection\Builder\AbstractTypeBuilder;
+use Railt\Reflection\Builder\Compilable;
+use Railt\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Exceptions\BuildingException;
 
 /**
- * Class AbstractBuilder
+ * Trait Builder
+ * @mixin Compilable
  */
-abstract class AbstractBuilder implements Compilable
+trait Builder
 {
     /**
      * @var TreeNode
@@ -35,11 +39,11 @@ abstract class AbstractBuilder implements Compilable
     private $compilationCompleted = false;
 
     /**
-     * TypeBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
+     * @return void
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    protected function bootBuilder(TreeNode $ast, DocumentBuilder $document): void
     {
         $this->ast      = $ast;
         $this->document = $document;
@@ -62,9 +66,9 @@ abstract class AbstractBuilder implements Compilable
     }
 
     /**
-     * @return AbstractTypeBuilder|$this
+     * @return $this|self
      */
-    protected function compiled(): AbstractTypeBuilder
+    protected function compiled(): self
     {
         $this->compileIfNotCompiled();
 
@@ -136,8 +140,6 @@ abstract class AbstractBuilder implements Compilable
      */
     protected function throwInvalidAstNodeError(TreeNode $ast): void
     {
-        $error = 'Invalid %s AST Node.';
-
-        throw new BuildingException(\sprintf($error, $ast->getId()));
+        throw new BuildingException(\sprintf('Invalid %s AST Node.', $ast->getId()));
     }
 }

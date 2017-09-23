@@ -12,8 +12,8 @@ namespace Railt\Reflection\Builder\Support;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Builder\FieldBuilder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
-use Railt\Reflection\Contracts\Types\FieldType;
 use Railt\Reflection\Contracts\Containers\HasFields;
+use Railt\Reflection\Contracts\Types\FieldType;
 
 /**
  * Trait Fields
@@ -25,23 +25,6 @@ trait Fields
      * @var array
      */
     private $fields = [];
-
-    /**
-     * @param TreeNode $ast
-     * @return bool
-     * @throws \Railt\Reflection\Exceptions\BuildingException
-     */
-    protected function compileFields(TreeNode $ast): bool
-    {
-        /** @var Nameable $this */
-        if ($ast->getId() === '#Field') {
-            $field = new FieldBuilder($ast, $this->getDocument(), $this);
-            $this->fields[$field->getName()] = $field;
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * @return iterable|FieldType[]
@@ -75,5 +58,24 @@ trait Fields
     public function getNumberOfFields(): int
     {
         return \count($this->compiled()->fields);
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return bool
+     * @throws \Railt\Reflection\Exceptions\BuildingException
+     */
+    protected function compileFields(TreeNode $ast): bool
+    {
+        /** @var Nameable $this */
+        if ($ast->getId() === '#Field') {
+            $field = new FieldBuilder($ast, $this->getDocument(), $this);
+
+            $this->fields[$field->getName()] = $field;
+
+            return true;
+        }
+
+        return false;
     }
 }

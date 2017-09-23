@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Types;
 
+use Railt\Reflection\Contracts\Behavior\Deprecatable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
+use Railt\Reflection\Contracts\Containers\HasDirectives;
 
 /**
  * Interface NamedTypeInterface
  */
-interface NamedTypeInterface extends Nameable, TypeInterface
+interface NamedTypeInterface extends Nameable, HasDirectives, Deprecatable, TypeInterface
 {
 
 }

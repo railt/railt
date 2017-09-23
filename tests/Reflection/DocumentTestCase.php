@@ -113,9 +113,6 @@ class DocumentTestCase extends AbstractReflectionTestCase
      */
     public function testDocumentTypeName(Document $document): void
     {
-        $name = DocumentBuilder::VIRTUAL_FILE_NAME;
-        $pattern = \sprintf('/^%s<%s>$/', $name, self::DOCUMENT_ID_PATTERN);
-
-        static::assertSame(1, \preg_match($pattern, $document->getTypeName()));
+        static::assertSame('Document', $document->getTypeName());
     }
 }

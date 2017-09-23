@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Reflection\Builder\Runtime\TypeBuilder;
 use Railt\Reflection\Contracts\Types\ObjectType;
 use Railt\Reflection\Contracts\Types\SchemaType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
@@ -18,12 +19,14 @@ use Railt\Reflection\Exceptions\BuildingException;
 /**
  * Class SchemaBuilder
  */
-class SchemaBuilder extends AbstractTypeBuilder implements SchemaType
+class SchemaBuilder implements SchemaType
 {
-    protected const AST_ID_QUERY = '#Query';
-    protected const AST_ID_MUTATION = '#Mutation';
-    protected const AST_ID_SUBSCRIPTION = '#Subscription';
-    protected const AST_ID_FIELD_NAME = '#Type';
+    use TypeBuilder;
+
+    private const AST_ID_QUERY = '#Query';
+    private const AST_ID_MUTATION = '#Mutation';
+    private const AST_ID_SUBSCRIPTION = '#Subscription';
+    private const AST_ID_FIELD_NAME = '#Type';
 
     /**
      * @var ObjectType
@@ -39,6 +42,16 @@ class SchemaBuilder extends AbstractTypeBuilder implements SchemaType
      * @var ObjectType|null
      */
     private $subscription;
+
+    /**
+     * SchemaBuilder constructor.
+     * @param TreeNode $ast
+     * @param DocumentBuilder $document
+     */
+    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    {
+        $this->bootTypeBuilder($ast, $document);
+    }
 
     /**
      * @param TreeNode $ast
@@ -79,7 +92,7 @@ class SchemaBuilder extends AbstractTypeBuilder implements SchemaType
     {
         $field = $ast->getChild(0);
 
-        if ($field->getId() !== static::AST_ID_FIELD_NAME) {
+        if ($field->getId() !== self::AST_ID_FIELD_NAME) {
             $this->throwInvalidAstNodeError($field);
         }
 
@@ -123,6 +136,14 @@ class SchemaBuilder extends AbstractTypeBuilder implements SchemaType
     }
 
     /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return 'Schema';
+    }
+
+    /**
      * @return null|ObjectType
      */
     public function getMutation(): ?ObjectType
@@ -152,13 +173,5 @@ class SchemaBuilder extends AbstractTypeBuilder implements SchemaType
     public function hasSubscription(): bool
     {
         return $this->compiled()->subscription !== null;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Schema';
     }
 }

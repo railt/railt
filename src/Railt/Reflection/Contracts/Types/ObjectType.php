@@ -10,12 +10,11 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Types;
 
 use Railt\Reflection\Contracts\Containers\HasFields;
-use Railt\Reflection\Contracts\Containers\HasDirectives;
 
 /**
  * Interface ObjectType
  */
-interface ObjectType extends HasDirectives, HasFields, NamedTypeInterface
+interface ObjectType extends HasFields, NamedTypeInterface
 {
     /**
      * @return iterable|InterfaceType[]

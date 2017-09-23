@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Builder\Support;
+namespace Railt\Reflection\Base\Support;
 
 use Ramsey\Uuid\Uuid;
 

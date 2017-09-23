@@ -63,13 +63,7 @@ class Compiler implements CompilerInterface
      */
     private function bootStandardLibrary(?array $experimental): Document
     {
-        $stdlib = new GraphQLDocument($this, $experimental);
-
-        foreach ($stdlib->getTypes() as $type) {
-            $this->register($type);
-        }
-
-        return $stdlib;
+        return new GraphQLDocument($this, $experimental);
     }
 
     /**

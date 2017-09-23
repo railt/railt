@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Scalars;
 
+use Railt\Reflection\Base\BaseScalar;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Standard\Base\BaseScalar;
 use Railt\Reflection\Standard\StandardType;
 
 /**
@@ -39,7 +39,8 @@ represent free-form human-readable text.';
      */
     public function __construct(Document $document)
     {
-        parent::__construct($document, self::TYPE_NAME);
+        $this->document = $document;
+        $this->name = self::TYPE_NAME;
         $this->description = self::TYPE_DESCRIPTION;
     }
 }
