@@ -17,6 +17,8 @@ use Railt\Reflection\Contracts\Behavior\Deprecatable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Containers\HasDirectives;
 use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
+use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Standard\Directives\Deprecation;
 
 /**
@@ -27,13 +29,16 @@ trait DirectivesBuilder
     /**
      * @param TreeNode $ast
      * @return bool
-     * @throws \Railt\Reflection\Exceptions\BuildingException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     protected function compileDirectivesBuilder(TreeNode $ast): bool
     {
         if ($this instanceof HasDirectives && $ast->getId() === '#Directive') {
             /** @var BaseDirectivesContainer|Nameable $this */
             $relation = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
+
+            $this->checkDirectiveLocation($relation);
+
             $this->directives[$relation->getName()] = $relation;
 
             $this->checkTheDeprecationDirective($relation);
@@ -42,6 +47,31 @@ trait DirectivesBuilder
         }
 
         return false;
+    }
+
+    /**
+     * @param DirectiveInvocation $relation
+     * @return void
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     */
+    private function checkDirectiveLocation(DirectiveInvocation $relation): void
+    {
+        $directive = $relation->getDirective();
+
+        if ($this instanceof TypeInterface && ! $directive->isAllowedFor($this)) {
+            $error = 'The usage of the @%s directive together with type %s<%s> is not allowed by the ' .
+                'locations of this directive (%s).';
+
+            $error = \sprintf(
+                $error,
+                $directive->getName(),
+                $this->getTypeName(),
+                $this->getName(),
+                \implode(', ', $directive->getLocations())
+            );
+
+            throw new TypeConflictException($error);
+        }
     }
 
     /**
