@@ -49,13 +49,7 @@ trait NameBuilder
      */
     private function parseName(TreeNode $ast): string
     {
-        $name = $ast->getChild(0)->getValueValue();
-
-        if ($name) {
-            return $name;
-        }
-
-        throw new TypeConflictException('Type name can not be empty');
+        return $ast->getChild(0)->getValueValue();
     }
 
     /**
@@ -64,13 +58,10 @@ trait NameBuilder
      */
     private function parseDescription(TreeNode $ast): string
     {
-        $description = $ast->getChild(0)->getValueValue();
+        $description = \trim($ast->getChild(0)->getValueValue());
 
-        if (\trim($description)) {
-            $description = \preg_replace('/^#?\h+(.*?)$/imsu', '$1', $description);
-            return \trim($description);
-        }
-
-        return $description;
+        return $description
+            ? \preg_replace('/^\h*#?\h+(.*?)\h*$/imsu', '$1', $description)
+            : $description;
     }
 }
