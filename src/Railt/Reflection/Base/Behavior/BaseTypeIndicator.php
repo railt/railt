@@ -69,4 +69,12 @@ trait BaseTypeIndicator
     {
         return $this->resolve()->isList && $this->isNonNullList;
     }
+
+    /**
+     * @return bool
+     */
+    private function isNullable(): bool
+    {
+        return !($this->isNonNull() || $this->isNonNullList());
+    }
 }
