@@ -40,11 +40,11 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
     }
 
     /**
-     * @return mixed
+     * @return string|float|int|array|bool|null
      */
     public function getDefaultValue()
     {
-        if ($this->resolve()->hasDefaultValue) {
+        if ($this->hasDefaultValue()) {
             return $this->defaultValue;
         }
 
@@ -56,7 +56,7 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
      */
     public function hasDefaultValue(): bool
     {
-        return $this->resolve()->defaultValue !== null || $this->hasDefaultValue;
+        return $this->resolve()->hasDefaultValue || $this->isNullable();
     }
 
     /**
