@@ -12,14 +12,16 @@ namespace Railt\Reflection\Builder;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseArgument;
 use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\TypeIndicationBuilder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 
 /**
  * Class ArgumentBuilder
  */
-class ArgumentBuilder extends BaseArgument
+class ArgumentBuilder extends BaseArgument implements Compilable
 {
     use Builder;
+    use TypeIndicationBuilder;
 
     /**
      * ArgumentBuilder constructor.
