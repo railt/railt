@@ -52,7 +52,7 @@ abstract class AbstractReflectionTestCase extends AbstractTestCase
     {
         $driver = new Local(__DIR__ . '/../.temp/');
         $fs = new Filesystem($driver);
-        $pool = new FilesystemCachePool($fs, \date('Y_m_d_His'));
+        $pool = new FilesystemCachePool($fs, \date('YmdHis'));
 
         $loader = function (ReadableInterface $readable, Contracts\Document $document) {
             return new CacheItem($readable->getHash(), true, $document);

@@ -11,6 +11,7 @@ namespace Railt\Reflection\Base;
 
 use Railt\Reflection\Base\Containers\BaseArgumentsContainer;
 use Railt\Reflection\Contracts\Types\ArgumentType;
+use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
 use Railt\Reflection\Contracts\Types\Directive\Location;
 use Railt\Reflection\Contracts\Types\DirectiveType;
 use Railt\Reflection\Contracts\Types\Enum\Value;
@@ -62,11 +63,15 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
     }
 
     /**
-     * @param TypeInterface $type
+     * @param null|TypeInterface $type
      * @return bool
      */
-    public function isAllowedFor(TypeInterface $type): bool
+    public function isAllowedFor(?TypeInterface $type): bool
     {
+        if ($type === null) {
+            return false;
+        }
+
         foreach (self::LOCATION_TARGET_MAPPINGS as $out => $allowedType) {
             if ($type instanceof $allowedType && $this->hasLocation($out)) {
                 //
@@ -147,6 +152,46 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
     public function getTypeName(): string
     {
         return 'Directive';
+    }
+
+    /**
+     * {@inheritdoc}
+     * @internal Not allowed
+     * @throws \BadMethodCallException
+     */
+    public function getDirectives(): iterable
+    {
+        throw new \BadMethodCallException(__METHOD__ . ' not allowed for directive type');
+    }
+
+    /**
+     * {@inheritdoc}
+     * @internal Not allowed
+     * @throws \BadMethodCallException
+     */
+    public function hasDirective(string $name): bool
+    {
+        throw new \BadMethodCallException(__METHOD__ . ' not allowed for directive type');
+    }
+
+    /**
+     * {@inheritdoc}
+     * @internal Not allowed
+     * @throws \BadMethodCallException
+     */
+    public function getDirective(string $name): ?DirectiveInvocation
+    {
+        throw new \BadMethodCallException(__METHOD__ . ' not allowed for directive type');
+    }
+
+    /**
+     * {@inheritdoc}
+     * @internal Not allowed
+     * @throws \BadMethodCallException
+     */
+    public function getNumberOfDirectives(): int
+    {
+        throw new \BadMethodCallException(__METHOD__ . ' not allowed for directive type');
     }
 
     /**

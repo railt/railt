@@ -11,6 +11,7 @@ namespace Railt\Reflection;
 
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Railt\Parser\Exceptions\CompilerException;
 use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Document;
 use Railt\Support\Filesystem\ReadableInterface;
@@ -77,6 +78,7 @@ class CachedCompiler extends Compiler
      * @param ReadableInterface $readable
      * @param \Closure $otherwise
      * @return Document
+     * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function cached(ReadableInterface $readable, \Closure $otherwise): Document
@@ -94,17 +96,25 @@ class CachedCompiler extends Compiler
      * @param ReadableInterface $readable
      * @param \Closure $otherwise
      * @return Document
+     * @throws \Railt\Parser\Exceptions\CompilerException
      */
     private function store(ReadableInterface $readable, \Closure $otherwise): Document
     {
-        /** @var Document $document */
-        $document = $otherwise($readable);
+        try {
+            /** @var Document $document */
+            $document = $otherwise($readable);
 
-        $this->forceBuildTheDocument($document);
+            $this->forceBuildTheDocument($document);
 
-        $this->storage->save(($this->persister)($readable, $document));
+            $data = ($this->persister)($readable, $document);
 
-        return $document;
+            $this->storage->save($data);
+
+        } catch (\Throwable $error) {
+            throw new CompilerException($error->getMessage(), $error->getCode(), $error);
+        } finally {
+            return $document;
+        }
     }
 
     /**

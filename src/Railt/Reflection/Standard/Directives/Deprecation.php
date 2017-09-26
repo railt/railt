@@ -14,6 +14,7 @@ use Railt\Reflection\Base\BaseDirective;
 use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\ArgumentType;
+use Railt\Reflection\Contracts\Types\Directive\Location;
 use Railt\Reflection\Contracts\Types\DirectiveType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
 use Railt\Reflection\Standard\Directives\Deprecation\Reason;
@@ -45,7 +46,7 @@ final class Deprecation extends BaseDirective implements StandardType
         $this->document          = $document;
         $this->name              = self::TYPE_NAME;
         $this->deprecationReason = self::RFC_IMPL_DESCRIPTION;
-
+        $this->locations         = Location::TARGET_GRAPHQL_SDL;
 
         $argument = $this->createReasonArgument();
         $this->arguments[$argument->getName()] = $argument;
