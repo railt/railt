@@ -16,6 +16,7 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\ArgumentType;
 use Railt\Reflection\Contracts\Types\DirectiveType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Standard\Directives\Deprecation\Reason;
 use Railt\Reflection\Standard\StandardType;
 
 /**
@@ -23,12 +24,17 @@ use Railt\Reflection\Standard\StandardType;
  *
  * @see https://github.com/graphql/graphql-js/pull/384
  */
-class Deprecation extends BaseDirective implements StandardType
+final class Deprecation extends BaseDirective implements StandardType
 {
     /**
      * Deprecation directive name
      */
-    private const TYPE_NAME = 'deprecated';
+    public const TYPE_NAME = 'deprecated';
+
+    /**
+     * Deprecation reason argument
+     */
+    public const REASON_ARGUMENT = 'reason';
 
     /**
      * Deprecation constructor.
@@ -50,36 +56,6 @@ class Deprecation extends BaseDirective implements StandardType
      */
     private function createReasonArgument(): ArgumentType
     {
-        return new class($this->getDocument(), $this) extends BaseArgument
-        {
-            private const ARGUMENT_NAME = 'reason';
-            private const ARGUMENT_TYPE = 'String';
-            private const ARGUMENT_DEFAULT_VALUE = 'No longer supported';
-            private const ARGUMENT_DESCRIPTION = 'You can either supply a reason argument ' .
-            'with a string value or not supply one and receive a "No longer supported" ' .
-            'message when introspected';
-
-            /**
-             * class#anonymous constructor.
-             * @param Document $document
-             * @param DirectiveType $type
-             */
-            public function __construct(Document $document, DirectiveType $type)
-            {
-                $this->parent       = $this;
-                $this->document     = $document;
-                $this->name         = self::ARGUMENT_NAME;
-                $this->description  = self::ARGUMENT_DESCRIPTION;
-                $this->defaultValue = self::ARGUMENT_DEFAULT_VALUE;
-            }
-
-            /**
-             * @return Inputable|TypeInterface
-             */
-            public function getType(): Inputable
-            {
-                return $this->document->getType(self::ARGUMENT_TYPE);
-            }
-        };
+        return new Reason($this->getDocument(), $this);
     }
 }

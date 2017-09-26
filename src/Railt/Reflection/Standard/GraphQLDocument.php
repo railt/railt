@@ -101,9 +101,6 @@ class GraphQLDocument extends BaseDocument implements StandardType
             $instance = new $type($this);
 
             $this->types[$instance->getName()] = $instance;
-
-            // Eager registering
-            $this->compiler->register($instance);
         }
     }
 

@@ -44,7 +44,7 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
      */
     public function getDefaultValue()
     {
-        if ($this->compiled()->hasDefaultValue) {
+        if ($this->resolve()->hasDefaultValue) {
             return $this->defaultValue;
         }
 
@@ -56,6 +56,22 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
      */
     public function hasDefaultValue(): bool
     {
-        return $this->compiled()->defaultValue !== null || $this->hasDefaultValue;
+        return $this->resolve()->defaultValue !== null || $this->hasDefaultValue;
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'type',
+            'isList',
+            'isNonNull',
+            'isNonNullList',
+            'parent',
+            'defaultValue',
+            'hasDefaultValue',
+        ]);
     }
 }

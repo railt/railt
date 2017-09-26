@@ -10,35 +10,27 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
-use Railt\Reflection\Builder\Support\Fields;
-use Railt\Reflection\Contracts\Types\InterfaceType;
-use Railt\Reflection\Contracts\Types\ObjectType;
+use Railt\Reflection\Base\BaseObject;
+use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
+use Railt\Reflection\Builder\Support\FieldsBuilder;
 
 /**
  * Class ObjectBuilder
  */
-class ObjectBuilder implements ObjectType
+class ObjectBuilder extends BaseObject implements Compilable
 {
-    use Fields;
-    use NamedTypeBuilder;
-
-    private const AST_ID_IMPLEMENTS = '#Implements';
+    use Builder;
+    use FieldsBuilder;
 
     /**
-     * @var array|InterfaceType[]
-     */
-    private $interfaces = [];
-
-    /**
-     * ObjectBuilder constructor.
+     * SchemaBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @throws \Railt\Reflection\Exceptions\BuildingException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootNamedTypeBuilder($ast, $document);
+        $this->bootBuilder($ast, $document);
     }
 
     /**
@@ -47,68 +39,19 @@ class ObjectBuilder implements ObjectType
      */
     public function compile(TreeNode $ast): bool
     {
-        if ($ast->getId() === self::AST_ID_IMPLEMENTS) {
-            /** @var TreeNode $child */
-            foreach ($ast->getChildren() as $child) {
-                $this->addInterfaceRelation($child);
-            }
+        switch ($ast->getId()) {
+            case '#Implements':
+                /** @var TreeNode $child */
+                foreach ($ast->getChildren() as $child) {
+                    $name = $child->getChild(0)->getValueValue();
+                    $this->interfaces[$name] = $this->getCompiler()->get($name);
+                }
 
-            return true;
+                return true;
         }
 
         return false;
     }
 
-    /**
-     * @param TreeNode $child
-     * @return void
-     */
-    private function addInterfaceRelation(TreeNode $child): void
-    {
-        $interface = $child->getChild(0)->getValueValue();
 
-        $this->interfaces[$interface] = $this->getCompiler()->get($interface);
-    }
-
-    /**
-     * @return iterable|InterfaceType[]
-     */
-    public function getInterfaces(): iterable
-    {
-        return \array_values($this->compiled()->interfaces);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasInterface(string $name): bool
-    {
-        return \array_key_exists($name, $this->compiled()->interfaces);
-    }
-
-    /**
-     * @param string $name
-     * @return null|InterfaceType
-     */
-    public function getInterface(string $name): ?InterfaceType
-    {
-        return $this->compiled()->interfaces[$name] ?? null;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumberOfInterfaces(): int
-    {
-        return \count($this->compiled()->interfaces);
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Object';
-    }
 }

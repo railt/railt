@@ -28,7 +28,7 @@ trait BaseDirectivesContainer
      */
     public function getDirectives(): iterable
     {
-        return \array_values($this->compiled()->directives);
+        return \array_values($this->resolve()->directives);
     }
 
     /**
@@ -37,7 +37,7 @@ trait BaseDirectivesContainer
      */
     public function hasDirective(string $name): bool
     {
-        return \array_key_exists($name, $this->compiled()->directives);
+        return \array_key_exists($name, $this->resolve()->directives);
     }
 
     /**
@@ -46,7 +46,7 @@ trait BaseDirectivesContainer
      */
     public function getDirective(string $name): ?DirectiveInvocation
     {
-        return $this->compiled()->directives[$name] ?? null;
+        return $this->resolve()->directives[$name] ?? null;
     }
 
     /**
@@ -54,6 +54,6 @@ trait BaseDirectivesContainer
      */
     public function getNumberOfDirectives(): int
     {
-        return \count($this->compiled()->directives);
+        return \count($this->resolve()->directives);
     }
 }

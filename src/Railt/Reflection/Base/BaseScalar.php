@@ -23,4 +23,14 @@ abstract class BaseScalar extends BaseNamedType implements ScalarType
     {
         return 'Scalar';
     }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+
+        ]);
+    }
 }

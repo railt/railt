@@ -26,4 +26,14 @@ abstract class BaseUnion extends BaseNamedType implements UnionType
     {
         return 'Union';
     }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'types',
+        ]);
+    }
 }

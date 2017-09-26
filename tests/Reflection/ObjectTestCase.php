@@ -18,6 +18,7 @@ class ObjectTestCase extends AbstractReflectionTestCase
 {
     /**
      * @return array
+     * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
@@ -30,12 +31,16 @@ class ObjectTestCase extends AbstractReflectionTestCase
             'type MyMutation implements Identifiable @deprecated(reason: "Because") { id: ID! }' .
             'type MySubscription implements Identifiable @deprecated(reason: "Because") { id: ID! }';
 
-        $schema = $this->getDocument($schema)->getSchema();
+        $normalSchema = $this->getDocument($schema)->getSchema();
+        $cachedSchema = $this->getCachedDocument($schema)->getSchema();
 
         return [
-            [$schema->getQuery()],
-            [$schema->getMutation()],
-            [$schema->getSubscription()],
+            [$normalSchema->getQuery()],
+            [$cachedSchema->getQuery()],
+            [$normalSchema->getMutation()],
+            [$cachedSchema->getMutation()],
+            [$normalSchema->getSubscription()],
+            [$cachedSchema->getSubscription()],
         ];
     }
 

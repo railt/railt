@@ -10,64 +10,41 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
-use Railt\Reflection\Builder\Support\Arguments;
-use Railt\Reflection\Builder\Support\TypeIndication;
+use Railt\Reflection\Base\BaseField;
+use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
+use Railt\Reflection\Builder\Support\TypeIndicationBuilder;
 use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
-use Railt\Reflection\Contracts\Types\FieldType;
+use Railt\Reflection\Contracts\Types\TypeInterface;
 
 /**
  * Class FieldBuilder
  */
-class FieldBuilder implements FieldType
+class FieldBuilder extends BaseField implements Compilable
 {
-    use Arguments;
-    use TypeIndication;
-    use NamedTypeBuilder;
+    use Builder;
+    use TypeIndicationBuilder;
 
     /**
-     * @var Nameable
-     */
-    private $parent;
-
-    /**
-     * FieldBuilder constructor.
+     * SchemaBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
      * @param Nameable $parent
-     * @throws \Railt\Reflection\Exceptions\BuildingException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
     {
         $this->parent = $parent;
-        $this->bootNamedTypeBuilder($ast, $document);
+        $this->bootBuilder($ast, $document);
     }
 
     /**
-     * @return Inputable
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @param TreeNode $ast
+     * @return bool
      */
-    public function getType(): Inputable
+    public function compile(TreeNode $ast): bool
     {
-        \assert($this->typeName !== null, 'Broken AST, #Type node required');
-
-        return $this->onlyInputable($this->getCompiler()->get($this->typeName));
-    }
-
-    /**
-     * @return Nameable
-     */
-    public function getParent(): Nameable
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Field';
+        return false;
     }
 }

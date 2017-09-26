@@ -36,7 +36,7 @@ abstract class BaseArgument extends BaseNamedType implements Argument
      */
     public function getValue()
     {
-        return $this->compiled()->value;
+        return $this->resolve()->value;
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class BaseArgument extends BaseNamedType implements Argument
      */
     public function getArgument(): ArgumentType
     {
-        return $this->compiled()->argument;
+        return $this->resolve()->argument;
     }
 
     /**
@@ -53,5 +53,17 @@ abstract class BaseArgument extends BaseNamedType implements Argument
     public function getTypeName(): string
     {
         return 'Argument';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'value',
+            'parent',
+            'argument',
+        ]);
     }
 }

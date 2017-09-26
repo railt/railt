@@ -10,48 +10,28 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
-use Railt\Reflection\Builder\Support\TypeIndication;
-use Railt\Reflection\Contracts\Behavior\Inputable;
+use Railt\Reflection\Base\BaseArgument;
+use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
-use Railt\Reflection\Contracts\Types\ArgumentType;
 
 /**
  * Class ArgumentBuilder
  */
-class ArgumentBuilder implements ArgumentType
+class ArgumentBuilder extends BaseArgument
 {
-    use TypeIndication;
-    use NamedTypeBuilder;
-
-    private const AST_ID_ARGUMENT_VALUE = '#Value';
-
-    /**
-     * @var Nameable
-     */
-    private $parent;
-
-    /**
-     * @var bool
-     */
-    private $hasDefaultValue = false;
-
-    /**
-     * @var mixed|null
-     */
-    private $defaultValue;
+    use Builder;
 
     /**
      * ArgumentBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
      * @param Nameable $parent
-     * @throws \Railt\Reflection\Exceptions\BuildingException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
     {
         $this->parent = $parent;
-        $this->bootNamedTypeBuilder($ast, $document);
+        $this->bootBuilder($ast, $document);
     }
 
     /**
@@ -60,56 +40,13 @@ class ArgumentBuilder implements ArgumentType
      */
     public function compile(TreeNode $ast): bool
     {
-        if ($ast->getId() === self::AST_ID_ARGUMENT_VALUE) {
+        if ($ast->getId() === '#Value') {
             $this->hasDefaultValue = true;
-            $this->defaultValue    = ValueCoercion::parse($ast->getChild(0));
+            $this->defaultValue = ValueCoercion::parse($ast->getChild(0));
 
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @return Inputable
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
-     */
-    public function getType(): Inputable
-    {
-        \assert($this->typeName !== null, 'Broken AST, #Type node required');
-
-        return $this->onlyInputable($this->getCompiler()->get($this->typeName));
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getDefaultValue()
-    {
-        return $this->compiled()->defaultValue;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasDefaultValue(): bool
-    {
-        return $this->compiled()->hasDefaultValue;
-    }
-
-    /**
-     * @return Nameable
-     */
-    public function getParent(): Nameable
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Argument';
     }
 }

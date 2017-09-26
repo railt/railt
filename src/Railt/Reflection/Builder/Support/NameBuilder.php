@@ -10,102 +10,67 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Support;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Contracts\Behavior\Nameable;
-use Railt\Reflection\Exceptions\BuildingException;
+use Railt\Reflection\Base\Behavior\BaseName;
+use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
  * Trait NameBuilder
- * @mixin Nameable
  */
 trait NameBuilder
 {
     /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return (string)$this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
      * @param TreeNode $ast
      * @return void
-     * @throws BuildingException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private function bootNameBuilder(TreeNode $ast): void
+    protected function precompileNameableType(TreeNode $ast): void
     {
-        /** @var TreeNode $child */
+        /**
+         * @var BaseName $this
+         * @var TreeNode $child
+         */
         foreach ($ast->getChildren() as $child) {
             switch ($child->getId()) {
                 case '#Name':
-                    $this->name = $this->compileName($child);
+                    $this->name = $this->parseName($child);
                     break;
 
                 case '#Description':
-                    $this->description = $this->compileDescription($child, true);
+                    $this->description = $this->parseDescription($child);
                     break;
             }
         }
-
-        $this->verifyNameConsistency($ast, '#Name');
     }
 
     /**
      * @param TreeNode $ast
      * @return string
+     * @throws TypeConflictException
      */
-    private function compileName(TreeNode $ast): string
+    private function parseName(TreeNode $ast): string
     {
-        return $ast->getChild(0)->getValueValue();
+        $name = $ast->getChild(0)->getValueValue();
+
+        if ($name) {
+            return $name;
+        }
+
+        throw new TypeConflictException('Type name can not be empty');
     }
 
     /**
      * @param TreeNode $ast
-     * @param bool $escapeComment
      * @return string
-     * @internal param string $description
      */
-    private function compileDescription(TreeNode $ast, bool $escapeComment = true): string
+    private function parseDescription(TreeNode $ast): string
     {
         $description = $ast->getChild(0)->getValueValue();
 
-        return $escapeComment
-            ? \preg_replace('/^#?\h+(.*?)$/imsu', '$1', $description)
-            : $description;
-    }
-
-    /**
-     * @param TreeNode $root
-     * @param string $name
-     * @return void
-     * @throws BuildingException
-     */
-    private function verifyNameConsistency(TreeNode $root, string $name): void
-    {
-        if ($this->name === null) {
-            $error = 'The AST must contain the Node named %s for the correct %s construction. ' .
-                'The transmitted AST contains the following structure: ' . \PHP_EOL;
-            $error .= $this->getCompiler()->dump($root);
-
-            throw new BuildingException(\sprintf($error, $name, $this->getTypeName()));
+        if (\trim($description)) {
+            $description = \preg_replace('/^#?\h+(.*?)$/imsu', '$1', $description);
+            return \trim($description);
         }
+
+        return $description;
     }
 }

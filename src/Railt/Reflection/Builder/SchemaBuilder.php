@@ -10,38 +10,18 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\Runtime\TypeBuilder;
+use Railt\Reflection\Base\BaseSchema;
+use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Types\ObjectType;
-use Railt\Reflection\Contracts\Types\SchemaType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
-use Railt\Reflection\Exceptions\BuildingException;
 
 /**
  * Class SchemaBuilder
  */
-class SchemaBuilder implements SchemaType
+class SchemaBuilder extends BaseSchema implements Compilable
 {
-    use TypeBuilder;
-
-    private const AST_ID_QUERY = '#Query';
-    private const AST_ID_MUTATION = '#Mutation';
-    private const AST_ID_SUBSCRIPTION = '#Subscription';
-    private const AST_ID_FIELD_NAME = '#Type';
-
-    /**
-     * @var ObjectType
-     */
-    private $query;
-
-    /**
-     * @var ObjectType|null
-     */
-    private $mutation;
-
-    /**
-     * @var ObjectType|null
-     */
-    private $subscription;
+    use Builder;
 
     /**
      * SchemaBuilder constructor.
@@ -50,7 +30,7 @@ class SchemaBuilder implements SchemaType
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootTypeBuilder($ast, $document);
+        $this->bootBuilder($ast, $document);
     }
 
     /**
@@ -63,15 +43,15 @@ class SchemaBuilder implements SchemaType
         $type = null;
 
         switch ($ast->getId()) {
-            case self::AST_ID_QUERY:
+            case '#Query':
                 $this->query = $type = $this->fetchType($ast);
                 break;
 
-            case self::AST_ID_MUTATION:
+            case '#Mutation':
                 $this->mutation = $type = $this->fetchType($ast);
                 break;
 
-            case self::AST_ID_SUBSCRIPTION:
+            case '#Subscription':
                 $this->subscription = $type = $this->fetchType($ast);
                 break;
         }
@@ -92,7 +72,7 @@ class SchemaBuilder implements SchemaType
     {
         $field = $ast->getChild(0);
 
-        if ($field->getId() !== self::AST_ID_FIELD_NAME) {
+        if ($field->getId() !== '#Type') {
             $this->throwInvalidAstNodeError($field);
         }
 
@@ -103,75 +83,5 @@ class SchemaBuilder implements SchemaType
         }
 
         return $this->getCompiler()->get($name);
-    }
-
-    /**
-     * @return ObjectType
-     * @throws BuildingException
-     */
-    public function getQuery(): ObjectType
-    {
-        $this->compileIfNotCompiled();
-
-        $this->verifyQuery($this->getAst());
-
-        return $this->query;
-    }
-
-    /**
-     * @param TreeNode $root
-     * @return void
-     * @throws BuildingException
-     */
-    private function verifyQuery(TreeNode $root): void
-    {
-        if ($this->query === null) {
-            $error = 'The %s must contain a query field, but an error occurred during ' .
-                'the compiling and there is no required field.' . \PHP_EOL .
-                'The transmitted AST contains the following structure: ' . \PHP_EOL .
-                $this->getCompiler()->dump($root);
-
-            throw new BuildingException(\sprintf($error, $this->getTypeName()));
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Schema';
-    }
-
-    /**
-     * @return null|ObjectType
-     */
-    public function getMutation(): ?ObjectType
-    {
-        return $this->compiled()->mutation;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasMutation(): bool
-    {
-        return $this->compiled()->mutation !== null;
-    }
-
-    /**
-     * @return null|ObjectType
-     */
-    public function getSubscription(): ?ObjectType
-    {
-        return $this->compiled()->subscription;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasSubscription(): bool
-    {
-        return $this->compiled()->subscription !== null;
     }
 }

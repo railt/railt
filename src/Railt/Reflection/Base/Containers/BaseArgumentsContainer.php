@@ -28,7 +28,7 @@ trait BaseArgumentsContainer
      */
     public function getArguments(): iterable
     {
-        return \array_values($this->compiled()->arguments);
+        return \array_values($this->resolve()->arguments);
     }
 
     /**
@@ -37,7 +37,7 @@ trait BaseArgumentsContainer
      */
     public function hasArgument(string $name): bool
     {
-        return \array_key_exists($name, $this->compiled()->arguments);
+        return \array_key_exists($name, $this->resolve()->arguments);
     }
 
     /**
@@ -46,7 +46,7 @@ trait BaseArgumentsContainer
      */
     public function getArgument(string $name): ?ArgumentType
     {
-        return $this->compiled()->arguments[$name] ?? null;
+        return $this->resolve()->arguments[$name] ?? null;
     }
 
     /**
@@ -54,7 +54,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfArguments(): int
     {
-        return \count($this->compiled()->arguments);
+        return \count($this->resolve()->arguments);
     }
 
     /**
@@ -62,7 +62,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfRequiredArguments(): int
     {
-        return (int)\array_reduce($this->compiled()->arguments, function (?int $carry, ArgumentType $argument): int {
+        return (int)\array_reduce($this->resolve()->arguments, function (?int $carry, ArgumentType $argument): int {
             return (int)$carry + (int)! $argument->hasDefaultValue();
         });
     }
@@ -72,7 +72,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfOptionalArguments(): int
     {
-        return (int)\array_reduce($this->compiled()->arguments, function (?int $carry, ArgumentType $argument): int {
+        return (int)\array_reduce($this->resolve()->arguments, function (?int $carry, ArgumentType $argument): int {
             return (int)$carry + (int)$argument->hasDefaultValue();
         });
     }

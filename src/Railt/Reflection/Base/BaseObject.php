@@ -30,7 +30,7 @@ abstract class BaseObject extends BaseNamedType implements ObjectType
      */
     public function getInterfaces(): iterable
     {
-        return \array_values($this->compiled()->interfaces);
+        return \array_values($this->resolve()->interfaces);
     }
 
     /**
@@ -39,7 +39,7 @@ abstract class BaseObject extends BaseNamedType implements ObjectType
      */
     public function hasInterface(string $name): bool
     {
-        return \array_key_exists($name, $this->compiled()->interfaces);
+        return \array_key_exists($name, $this->resolve()->interfaces);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class BaseObject extends BaseNamedType implements ObjectType
      */
     public function getInterface(string $name): ?InterfaceType
     {
-        return $this->compiled()->interfaces[$name] ?? null;
+        return $this->resolve()->interfaces[$name] ?? null;
     }
 
     /**
@@ -56,7 +56,7 @@ abstract class BaseObject extends BaseNamedType implements ObjectType
      */
     public function getNumberOfInterfaces(): int
     {
-        return \count($this->compiled()->interfaces);
+        return \count($this->resolve()->interfaces);
     }
 
     /**
@@ -65,5 +65,16 @@ abstract class BaseObject extends BaseNamedType implements ObjectType
     public function getTypeName(): string
     {
         return 'Object';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'fields',
+            'interfaces'
+        ]);
     }
 }

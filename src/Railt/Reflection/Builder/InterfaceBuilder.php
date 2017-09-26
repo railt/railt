@@ -10,34 +10,27 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
-use Railt\Reflection\Builder\Support\Fields;
-use Railt\Reflection\Contracts\Types\InterfaceType;
+use Railt\Reflection\Base\BaseInterface;
+use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
+use Railt\Reflection\Builder\Support\FieldsBuilder;
 
 /**
  * Class InterfaceBuilder
  */
-class InterfaceBuilder implements InterfaceType
+class InterfaceBuilder extends BaseInterface implements Compilable
 {
-    use Fields;
-    use NamedTypeBuilder;
+    use Builder;
+    use FieldsBuilder;
 
     /**
-     * InterfaceBuilder constructor.
+     * SchemaBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @throws \Railt\Reflection\Exceptions\BuildingException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootNamedTypeBuilder($ast, $document);
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Interface';
+        $this->bootBuilder($ast, $document);
     }
 }

@@ -26,24 +26,24 @@ trait BaseTypeIndicator
     /**
      * @var bool
      */
-    protected $nonNull = false;
+    protected $isNonNull = false;
 
     /**
      * @var bool
      */
-    protected $list = false;
+    protected $isList = false;
 
     /**
      * @var bool
      */
-    protected $nonNullList = false;
+    protected $isNonNullList = false;
 
     /**
      * @return Inputable
      */
     public function getType(): Inputable
     {
-        return $this->compiled()->type;
+        return $this->resolve()->type;
     }
 
     /**
@@ -51,7 +51,7 @@ trait BaseTypeIndicator
      */
     public function isList(): bool
     {
-        return $this->compiled()->list;
+        return $this->resolve()->isList;
     }
 
     /**
@@ -59,7 +59,7 @@ trait BaseTypeIndicator
      */
     public function isNonNull(): bool
     {
-        return $this->compiled()->nonNull;
+        return $this->resolve()->isNonNull;
     }
 
     /**
@@ -67,6 +67,6 @@ trait BaseTypeIndicator
      */
     public function isNonNullList(): bool
     {
-        return $this->compiled()->list && $this->compiled()->nonNullList;
+        return $this->resolve()->isList && $this->isNonNullList;
     }
 }

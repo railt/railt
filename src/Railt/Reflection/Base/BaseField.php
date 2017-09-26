@@ -30,4 +30,19 @@ abstract class BaseField extends BaseNamedType implements FieldType
     {
         return 'Field';
     }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'type',
+            'isList',
+            'isNonNull',
+            'isNonNullList',
+            'parent',
+            'arguments',
+        ]);
+    }
 }

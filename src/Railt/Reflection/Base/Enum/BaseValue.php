@@ -30,7 +30,7 @@ abstract class BaseValue extends BaseNamedType implements Value
      */
     public function getValue(): string
     {
-        return (string)$this->compiled()->value;
+        return (string)$this->resolve()->value;
     }
 
     /**
@@ -39,5 +39,16 @@ abstract class BaseValue extends BaseNamedType implements Value
     public function getTypeName(): string
     {
         return 'EnumValue';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'value',
+            'parent',
+        ]);
     }
 }

@@ -37,7 +37,7 @@ abstract class BaseSchema extends BaseType implements SchemaType
      */
     public function getQuery(): ObjectType
     {
-        return $this->compiled()->query;
+        return $this->resolve()->query;
     }
 
     /**
@@ -45,7 +45,7 @@ abstract class BaseSchema extends BaseType implements SchemaType
      */
     public function getMutation(): ?ObjectType
     {
-        return $this->compiled()->mutation;
+        return $this->resolve()->mutation;
     }
 
     /**
@@ -53,7 +53,7 @@ abstract class BaseSchema extends BaseType implements SchemaType
      */
     public function hasMutation(): bool
     {
-        return $this->compiled()->mutation instanceof ObjectType;
+        return $this->resolve()->mutation instanceof ObjectType;
     }
 
     /**
@@ -61,7 +61,7 @@ abstract class BaseSchema extends BaseType implements SchemaType
      */
     public function getSubscription(): ?ObjectType
     {
-        return $this->compiled()->subscription;
+        return $this->resolve()->subscription;
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class BaseSchema extends BaseType implements SchemaType
      */
     public function hasSubscription(): bool
     {
-        return $this->compiled()->subscription instanceof ObjectType;
+        return $this->resolve()->subscription instanceof ObjectType;
     }
 
     /**
@@ -78,5 +78,17 @@ abstract class BaseSchema extends BaseType implements SchemaType
     public function getTypeName(): string
     {
         return 'Schema';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'query',
+            'mutation',
+            'subscription'
+        ]);
     }
 }

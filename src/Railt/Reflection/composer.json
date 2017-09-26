@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": ">=7.1",
+        "psr/cache": "~1.0",
         "railt/parser": "self.version",
         "railt/support": "self.version"
     },

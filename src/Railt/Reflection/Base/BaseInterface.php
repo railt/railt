@@ -26,4 +26,14 @@ abstract class BaseInterface extends BaseNamedType implements InterfaceType
     {
         return 'Interface';
     }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'fields',
+        ]);
+    }
 }

@@ -27,7 +27,7 @@ abstract class BaseEnum extends BaseNamedType implements EnumType
      */
     public function getValues(): iterable
     {
-        return \array_values($this->compiled()->values);
+        return \array_values($this->resolve()->values);
     }
 
     /**
@@ -36,7 +36,7 @@ abstract class BaseEnum extends BaseNamedType implements EnumType
      */
     public function hasValue(string $name): bool
     {
-        return \array_key_exists($name, $this->compiled()->values);
+        return \array_key_exists($name, $this->resolve()->values);
     }
 
     /**
@@ -45,7 +45,7 @@ abstract class BaseEnum extends BaseNamedType implements EnumType
      */
     public function getValue(string $name): ?Value
     {
-        return $this->compiled()->values[$name] ?? null;
+        return $this->resolve()->values[$name] ?? null;
     }
 
     /**
@@ -54,5 +54,15 @@ abstract class BaseEnum extends BaseNamedType implements EnumType
     public function getTypeName(): string
     {
         return 'Enum';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'values',
+        ]);
     }
 }

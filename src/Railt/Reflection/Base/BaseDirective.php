@@ -58,7 +58,7 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
      */
     public function getLocations(): iterable
     {
-        return \array_values($this->compiled()->locations);
+        return \array_values($this->resolve()->locations);
     }
 
     /**
@@ -97,7 +97,7 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
     {
         $name = \strtoupper($name);
 
-        return \in_array($name, $this->compiled()->locations, true);
+        return \in_array($name, $this->resolve()->locations, true);
     }
 
     /**
@@ -118,7 +118,7 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
      */
     public function isAllowedForQueries(): bool
     {
-        foreach ($this->compiled()->locations as $location) {
+        foreach ($this->resolve()->locations as $location) {
             if (\in_array($location, Location::TARGET_GRAPHQL_QUERY, true)) {
                 return true;
             }
@@ -132,7 +132,7 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
      */
     public function isAllowedForSchemaDefinitions(): bool
     {
-        foreach ($this->compiled()->locations as $location) {
+        foreach ($this->resolve()->locations as $location) {
             if (\in_array($location, Location::TARGET_GRAPHQL_SDL, true)) {
                 return true;
             }
@@ -147,5 +147,16 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
     public function getTypeName(): string
     {
         return 'Directive';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'locations',
+            'arguments'
+        ]);
     }
 }

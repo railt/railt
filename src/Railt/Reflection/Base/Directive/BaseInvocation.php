@@ -40,7 +40,7 @@ abstract class BaseInvocation implements DirectiveInvocation
      */
     public function getDirective(): DirectiveType
     {
-        return $this->compiled()->directive;
+        return $this->resolve()->directive;
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class BaseInvocation implements DirectiveInvocation
      */
     public function getArguments(): iterable
     {
-        return \array_values($this->compiled()->arguments);
+        return \array_values($this->resolve()->arguments);
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class BaseInvocation implements DirectiveInvocation
      */
     public function hasArgument(string $name): bool
     {
-        return \array_key_exists($name, $this->compiled()->arguments);
+        return \array_key_exists($name, $this->resolve()->arguments);
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class BaseInvocation implements DirectiveInvocation
      */
     public function getArgument(string $name): ?Argument
     {
-        return $this->compiled()->arguments[$name] ?? null;
+        return $this->resolve()->arguments[$name] ?? null;
     }
 
     /**
@@ -74,6 +74,21 @@ abstract class BaseInvocation implements DirectiveInvocation
      */
     public function getNumberOfArguments(): int
     {
-        return \count($this->compiled()->arguments);
+        return \count($this->resolve()->arguments);
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return [
+            'name',
+            'parent',
+            'document',
+            'directive',
+            'arguments',
+            'description',
+        ];
     }
 }

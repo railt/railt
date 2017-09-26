@@ -27,7 +27,7 @@ abstract class BaseExtend extends BaseNamedType implements ExtendType
      */
     public function getType(): ObjectType
     {
-        return $this->compiled()->type;
+        return $this->resolve()->type;
     }
 
     /**
@@ -36,5 +36,15 @@ abstract class BaseExtend extends BaseNamedType implements ExtendType
     public function getTypeName(): string
     {
         return 'Extend';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'type',
+        ]);
     }
 }

@@ -28,7 +28,7 @@ trait BaseTypesContainer
      */
     public function getTypes(): iterable
     {
-        return \array_values($this->compiled()->types);
+        return \array_values($this->resolve()->types);
     }
 
     /**
@@ -37,7 +37,7 @@ trait BaseTypesContainer
      */
     public function hasType(string $name): bool
     {
-        return \array_key_exists($name, $this->compiled()->types);
+        return \array_key_exists($name, $this->resolve()->types);
     }
 
     /**
@@ -46,7 +46,7 @@ trait BaseTypesContainer
      */
     public function getType(string $name): ?TypeInterface
     {
-        return $this->compiled()->types[$name] ?? null;
+        return $this->resolve()->types[$name] ?? null;
     }
 
     /**
@@ -54,6 +54,6 @@ trait BaseTypesContainer
      */
     public function getNumberOfTypes(): int
     {
-        return \count($this->compiled()->types);
+        return \count($this->resolve()->types);
     }
 }

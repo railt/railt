@@ -10,12 +10,11 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Directive;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Reflection\Base\Directive\BaseInvocation;
 use Railt\Reflection\Builder\DocumentBuilder;
-use Railt\Reflection\Builder\Runtime\Builder;
-use Railt\Reflection\Builder\Support\NameBuilder;
+use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
-use Railt\Reflection\Contracts\Types\Directive\Argument;
-use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
 use Railt\Reflection\Contracts\Types\DirectiveType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
 use Railt\Reflection\Exceptions\BuildingException;
@@ -24,25 +23,9 @@ use Railt\Reflection\Exceptions\TypeNotFoundException;
 /**
  * Class DirectiveInvocationBuilder
  */
-class DirectiveInvocationBuilder implements DirectiveInvocation
+class DirectiveInvocationBuilder extends BaseInvocation implements Compilable
 {
     use Builder;
-    use NameBuilder;
-
-    /**
-     *
-     */
-    private const AST_ID_ARGUMENT = '#Argument';
-
-    /**
-     * @var array|Argument[]
-     */
-    private $arguments = [];
-
-    /**
-     * @var Nameable
-     */
-    private $parent;
 
     /**
      * DirectiveInvocationBuilder constructor.
@@ -50,23 +33,23 @@ class DirectiveInvocationBuilder implements DirectiveInvocation
      * @param DocumentBuilder $document
      * @param Nameable $parent
      * @throws BuildingException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
     {
         $this->parent = $parent;
-
         $this->bootBuilder($ast, $document);
-        $this->bootNameBuilder($ast);
     }
 
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      * @throws \Railt\Reflection\Exceptions\BuildingException
      */
     public function compile(TreeNode $ast): bool
     {
-        if ($ast->getId() === self::AST_ID_ARGUMENT) {
+        if ($ast->getId() === '#Argument') {
             $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
 
             $this->arguments[$argument->getName()] = $argument;
@@ -93,47 +76,5 @@ class DirectiveInvocationBuilder implements DirectiveInvocation
         }
 
         return $directive;
-    }
-
-    /**
-     * @return iterable|Argument[]
-     */
-    public function getArguments(): iterable
-    {
-        return \array_values($this->compiled()->arguments);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasArgument(string $name): bool
-    {
-        return \array_key_exists($name, $this->compiled()->arguments);
-    }
-
-    /**
-     * @param string $name
-     * @return null|Argument
-     */
-    public function getArgument(string $name): ?Argument
-    {
-        return $this->compiled()->arguments[$name] ?? null;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumberOfArguments(): int
-    {
-        return \count($this->compiled()->arguments);
-    }
-
-    /**
-     * @return Nameable
-     */
-    public function getParent(): Nameable
-    {
-        return $this->parent;
     }
 }

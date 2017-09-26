@@ -18,103 +18,98 @@ use Railt\Reflection\Contracts\Types;
 class SchemaTestCase extends AbstractReflectionTestCase
 {
     /**
-     * @return Types\SchemaType
+     * @return array
+     * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      */
-    protected function getSchema(): Types\SchemaType
+    public function provider(): array
     {
-        return $this->getDocument(
-            'schema { query:MyQuery, mutation:MyMutation, subscription:MySubscription }' .
+        $schema = 'schema { query:MyQuery, mutation:MyMutation, subscription:MySubscription }' .
             'type MyQuery {}' .
             'type MyMutation {}' .
-            'type MySubscription {}'
-        )->getSchema();
+            'type MySubscription {}';
+
+        return [
+            [$this->getDocument($schema)->getSchema()],
+            [$this->getCachedDocument($schema)->getSchema()]
+        ];
     }
 
     /**
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @dataProvider provider
+     *
+     * @param Types\SchemaType $schema
+     * @return void
      */
-    public function testSchemaHasQuery()
+    public function testSchemaHasQuery(Types\SchemaType $schema): void
     {
-        $schema = $this->getSchema();
-
         static::assertNotNull($schema->getQuery());
     }
 
     /**
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @dataProvider provider
+     *
+     * @param Types\SchemaType $schema
+     * @return void
      */
-    public function testSchemaQueryName()
+    public function testSchemaQueryName(Types\SchemaType $schema): void
     {
-        $schema = $this->getSchema();
-
         static::assertEquals('MyQuery', $schema->getQuery()->getName());
     }
 
     /**
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @dataProvider provider
+     *
+     * @param Types\SchemaType $schema
+     * @return void
      */
-    public function testSchemaHasMutation()
+    public function testSchemaHasMutation(Types\SchemaType $schema): void
     {
-        $schema = $this->getSchema();
-
         static::assertNotNull($schema->getMutation());
     }
 
     /**
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @dataProvider provider
+     *
+     * @param Types\SchemaType $schema
+     * @return void
      */
-    public function testSchemaMutationName()
+    public function testSchemaMutationName(Types\SchemaType $schema): void
     {
-        $schema = $this->getSchema();
-
         static::assertEquals('MyMutation', $schema->getMutation()->getName());
     }
 
     /**
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @dataProvider provider
+     *
+     * @param Types\SchemaType $schema
+     * @return void
      */
-    public function testSchemaHasSubscription()
+    public function testSchemaHasSubscription(Types\SchemaType $schema): void
     {
-        $schema = $this->getSchema();
-
         static::assertNotNull($schema->getSubscription());
     }
 
     /**
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @dataProvider provider
+     *
+     * @param Types\SchemaType $schema
+     * @return void
      */
-    public function testSchemaSubscriptionName()
+    public function testSchemaSubscriptionName(Types\SchemaType $schema): void
     {
-        $schema = $this->getSchema();
-
         static::assertEquals('MySubscription', $schema->getSubscription()->getName());
     }
 
     /**
+     * @dataProvider provider
+     * @param Types\SchemaType $schema
      * @return void
-     * @throws \Railt\Parser\Exceptions\CompilerException
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
      */
-    public function testSchemaTypeName(): void
+    public function testSchemaTypeName(Types\SchemaType $schema): void
     {
-        $schema = $this->getSchema();
-
         static::assertEquals('Schema', $schema->getTypeName());
     }
 }

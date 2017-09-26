@@ -22,6 +22,7 @@ class DocumentTestCase extends AbstractReflectionTestCase
 
     /**
      * @return array
+     * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
@@ -39,6 +40,7 @@ class DocumentTestCase extends AbstractReflectionTestCase
 
         foreach ($data as $body) {
             $result[] = [$this->getDocument($body)];
+            $result[] = [$this->getCachedDocument($body)];
         }
 
         return $result;

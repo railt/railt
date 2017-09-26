@@ -27,7 +27,7 @@ trait BaseDeprecations
      */
     public function isDeprecated(): bool
     {
-        return $this->compiled()->deprecationReason !== null;
+        return $this->resolve()->deprecationReason !== null;
     }
 
     /**
@@ -35,6 +35,6 @@ trait BaseDeprecations
      */
     public function getDeprecationReason(): string
     {
-        return (string)$this->compiled()->deprecationReason;
+        return (string)$this->resolve()->deprecationReason;
     }
 }

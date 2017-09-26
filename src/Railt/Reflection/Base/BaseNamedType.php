@@ -20,4 +20,16 @@ abstract class BaseNamedType extends BaseType implements NamedTypeInterface
 {
     use BaseName;
     use BaseDirectivesContainer;
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'name',
+            'description',
+            'directives'
+        ]);
+    }
 }

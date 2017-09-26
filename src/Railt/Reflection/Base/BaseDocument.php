@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base;
 
+use Railt\Reflection\Base\Containers\BaseTypesContainer;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\SchemaType;
-use Railt\Reflection\Base\Containers\BaseTypesContainer;
 
 /**
  * Class BaseDocument
@@ -43,7 +43,7 @@ abstract class BaseDocument extends BaseType implements Document
      */
     public function getSchema(): ?SchemaType
     {
-        return $this->compiled()->schema;
+        return $this->resolve()->schema;
     }
 
     /**
@@ -52,5 +52,17 @@ abstract class BaseDocument extends BaseType implements Document
     public function getTypeName(): string
     {
         return 'Document';
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'name',
+            'types',
+            'schema',
+        ]);
     }
 }

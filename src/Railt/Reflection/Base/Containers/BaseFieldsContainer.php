@@ -28,7 +28,7 @@ trait BaseFieldsContainer
      */
     public function getFields(): iterable
     {
-        return \array_values($this->compiled()->fields);
+        return \array_values($this->resolve()->fields);
     }
 
     /**
@@ -37,7 +37,7 @@ trait BaseFieldsContainer
      */
     public function hasField(string $name): bool
     {
-        return \array_key_exists($name, $this->compiled()->fields);
+        return \array_key_exists($name, $this->resolve()->fields);
     }
 
     /**
@@ -46,7 +46,7 @@ trait BaseFieldsContainer
      */
     public function getField(string $name): ?FieldType
     {
-        return $this->compiled()->fields[$name] ?? null;
+        return $this->resolve()->fields[$name] ?? null;
     }
 
     /**
@@ -54,6 +54,6 @@ trait BaseFieldsContainer
      */
     public function getNumberOfFields(): int
     {
-        return \count($this->compiled()->fields);
+        return \count($this->resolve()->fields);
     }
 }

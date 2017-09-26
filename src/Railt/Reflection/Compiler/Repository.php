@@ -107,7 +107,7 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
             $this->verifyNamedTypeConsistency($type);
         }
 
-        $this->l1cache[$type->getName()] = $this->l2cache[$key][$type->getName()] = $type;
+        $this->l1cache[$type->getName()] = $this->l2cache[$key][$this->getTypeIdentifier($type)] = $type;
     }
 
     /**
@@ -157,7 +157,7 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
             $this->verifyAnonymousTypeConsistency($type);
         }
 
-        $this->l1cache[$key] = $this->l2cache[$key][\get_class($type)] = $type;
+        $this->l1cache[$key] = $this->l2cache[$key][$this->getTypeIdentifier($type)] = $type;
     }
 
     /**
@@ -227,5 +227,18 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->l1cache);
+    }
+
+    /**
+     * @param TypeInterface $type
+     * @return string
+     */
+    public function getTypeIdentifier(TypeInterface $type): string
+    {
+        if ($type instanceof Nameable) {
+            return $type->getName();
+        }
+
+        return \get_class($type);
     }
 }

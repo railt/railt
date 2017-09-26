@@ -10,36 +10,21 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Directive;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Builder\AbstractNamedTypeBuilder;
+use Railt\Reflection\Base\Directive\BaseArgument;
 use Railt\Reflection\Builder\DocumentBuilder;
-use Railt\Reflection\Builder\Runtime\NamedTypeBuilder;
+use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\ArgumentType;
-use Railt\Reflection\Contracts\Types\Directive\Argument;
 use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 
 /**
  * Class ArgumentBuilder
  */
-class ArgumentBuilder implements Argument
+class ArgumentBuilder extends BaseArgument implements Compilable
 {
-    use NamedTypeBuilder;
-
-    /**
-     *
-     */
-    private const AST_ID_VALUE = '#Value';
-
-    /**
-     * @var DirectiveInvocation
-     */
-    private $parent;
-
-    /**
-     * @var mixed
-     */
-    private $value;
+    use Builder;
 
     /**
      * ArgumentBuilder constructor.
@@ -47,13 +32,14 @@ class ArgumentBuilder implements Argument
      * @param DocumentBuilder $document
      * @param Nameable|DirectiveInvocation $parent
      * @throws \Railt\Reflection\Exceptions\BuildingException
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
     {
         \assert($parent instanceof DirectiveInvocation);
 
         $this->parent = $parent;
-        $this->bootNamedTypeBuilder($ast, $document);
+        $this->bootBuilder($ast, $document);
     }
 
     /**
@@ -62,19 +48,11 @@ class ArgumentBuilder implements Argument
      */
     public function compile(TreeNode $ast): bool
     {
-        if ($ast->getId() === self::AST_ID_VALUE) {
+        if ($ast->getId() === '#Value') {
             $this->value = $ast->getChild(0)->getValueValue();
         }
 
         return false;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->compiled()->value;
     }
 
     /**
@@ -91,21 +69,5 @@ class ArgumentBuilder implements Argument
         }
 
         return $argument;
-    }
-
-    /**
-     * @return Nameable
-     */
-    public function getParent(): Nameable
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Argument';
     }
 }

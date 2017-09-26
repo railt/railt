@@ -17,7 +17,7 @@ trait Resolving
     /**
      * @return $this
      */
-    protected function compiled()
+    protected function resolve()
     {
         return $this;
     }

@@ -40,30 +40,15 @@ class Compiler implements CompilerInterface
     private $parser;
 
     /**
-     * @var GraphQLDocument
-     */
-    private $standard;
-
-    /**
      * Compiler constructor.
-     * @param array|null $experimental An additional features list
      * @throws \Railt\Parser\Exceptions\InitializationException
      */
-    public function __construct(array $experimental = null)
+    public function __construct()
     {
         $this->parser = new Parser();
         $this->loader = new Loader($this);
 
-        $this->standard = $this->bootStandardLibrary($experimental);
-    }
-
-    /**
-     * @param array|null $experimental
-     * @return Document
-     */
-    private function bootStandardLibrary(?array $experimental): Document
-    {
-        return new GraphQLDocument($this, $experimental);
+        $this->bootStandardLibrary();
     }
 
     /**
@@ -82,6 +67,21 @@ class Compiler implements CompilerInterface
         } catch (\Throwable $fatal) {
             throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
         }
+    }
+
+    /**
+     * @param array|null $extensions
+     * @return GraphQLDocument
+     */
+    private function bootStandardLibrary(array $extensions = null): GraphQLDocument
+    {
+        $std = new GraphQLDocument($this, $extensions);
+
+        foreach ($std->getTypes() as $type) {
+            $this->loader->register($type);
+        }
+
+        return $std;
     }
 
     /**

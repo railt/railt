@@ -26,4 +26,14 @@ abstract class BaseInput extends BaseNamedType implements InterfaceType
     {
         return 'Input';
     }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'fields',
+        ]);
+    }
 }

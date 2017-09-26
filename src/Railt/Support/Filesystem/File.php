@@ -23,13 +23,20 @@ class File extends \SplFileInfo implements ReadableInterface
     private $sources;
 
     /**
+     * @var bool
+     */
+    private $virtual;
+
+    /**
      * File constructor.
      * @param string $sources
      * @param string $path
+     * @param bool $virtual
      */
-    public function __construct(string $sources, ?string $path)
+    public function __construct(string $sources, ?string $path, bool $virtual = true)
     {
         $this->sources = $sources;
+        $this->virtual = $virtual;
         parent::__construct($path ?? static::VIRTUAL_FILE_NAME);
     }
 
@@ -45,11 +52,11 @@ class File extends \SplFileInfo implements ReadableInterface
             return static::fromSplFileInfo($file);
         }
 
-        if (! is_string($file)) {
+        if (! \is_string($file)) {
             throw new \InvalidArgumentException('File name must be a string.');
         }
 
-        if (is_file($file)) {
+        if (\is_file($file)) {
             return static::fromPathname($file);
         }
 
@@ -63,7 +70,7 @@ class File extends \SplFileInfo implements ReadableInterface
      */
     public static function fromSplFileInfo(\SplFileInfo $file): File
     {
-        if (! is_file($file->getPathname())) {
+        if (! \is_file($file->getPathname())) {
             throw new NotFoundException($file->getPathname());
         }
 
@@ -71,9 +78,9 @@ class File extends \SplFileInfo implements ReadableInterface
             throw new NotReadableException($file->getPathname());
         }
 
-        $sources = @file_get_contents($file->getPathname());
+        $sources = @\file_get_contents($file->getPathname());
 
-        return new static($sources, $file->getPathname());
+        return new static($sources, $file->getPathname(), false);
     }
 
     /**
@@ -93,7 +100,7 @@ class File extends \SplFileInfo implements ReadableInterface
      */
     public static function fromSources(string $sources, string $path = null): File
     {
-        return new static($sources, $path);
+        return new static($sources, $path, true);
     }
 
     /**
@@ -102,5 +109,17 @@ class File extends \SplFileInfo implements ReadableInterface
     public function read(): string
     {
         return $this->sources;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash(): string
+    {
+        if ($this->virtual) {
+            return \md5($this->sources);
+        }
+
+        return \md5($this->getPathname() . ':' . \filemtime($this->getPathname()));
     }
 }

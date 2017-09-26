@@ -27,7 +27,7 @@ abstract class BaseType
     /**
      * @var string|null
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Document
@@ -53,5 +53,17 @@ abstract class BaseType
         }
 
         return $this->id;
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return [
+            'id',
+            'document',
+            'deprecationReason'
+        ];
     }
 }

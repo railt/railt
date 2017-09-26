@@ -11,10 +11,11 @@ namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Parser\Exceptions\CompilerException;
-use Railt\Reflection\Builder\Runtime\TypeBuilder;
+use Railt\Reflection\Base\BaseDocument;
+use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Compiler\CompilerInterface;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\SchemaType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
 use Railt\Reflection\Exceptions\BuildingException;
@@ -24,9 +25,9 @@ use Railt\Support\Filesystem\ReadableInterface;
 /**
  * Class DocumentBuilder
  */
-class DocumentBuilder implements Document
+class DocumentBuilder extends BaseDocument implements Compilable
 {
-    use TypeBuilder;
+    use Builder;
 
     /**
      *
@@ -49,14 +50,9 @@ class DocumentBuilder implements Document
     ];
 
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @var CompilerInterface
      */
-    private $compiler;
+    public $compiler;
 
     /**
      * DocumentBuilder constructor.
@@ -71,11 +67,10 @@ class DocumentBuilder implements Document
 
         try {
             $this->name = $this->createName($readable);
-        } catch (\Exception $e) {
-            throw new CompilerException($e->getMessage(), $e->getCode(), $e);
+            $this->bootBuilder($ast, $this);
+        } catch (\Exception $exception) {
+            throw new CompilerException($exception->getMessage(), $exception->getCode(), $exception);
         }
-
-        $this->bootTypeBuilder($ast, $this);
     }
 
     /**
@@ -105,7 +100,20 @@ class DocumentBuilder implements Document
         /** @var Compilable|TypeInterface $instance */
         $instance = new $class($ast, $this);
 
-        $this->getCompiler()->register($instance);
+        switch (true) {
+            case $instance instanceof SchemaType:
+                $this->schema = $instance;
+                break;
+
+            case $instance instanceof Nameable:
+                $this->types[$instance->getName()] = $instance;
+                break;
+
+            default:
+                $this->types[] = $instance;
+        }
+
+        $this->compiler->register($instance);
 
         return true;
     }
@@ -116,73 +124,5 @@ class DocumentBuilder implements Document
     public function getCompiler(): CompilerInterface
     {
         return $this->compiler;
-    }
-
-    /**
-     * @return null|SchemaType|TypeInterface
-     */
-    public function getSchema(): ?SchemaType
-    {
-        $this->compileIfNotCompiled();
-
-        return $this->compiler->get(SchemaBuilder::class, $this);
-    }
-
-    /**
-     * @return iterable|TypeInterface[]|NamedTypeInterface[]
-     */
-    public function getTypes(): iterable
-    {
-        $this->compileIfNotCompiled();
-
-        return $this->compiler->all($this);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasType(string $name): bool
-    {
-        $this->compileIfNotCompiled();
-
-        return $this->compiler->has($name, $this);
-    }
-
-    /**
-     * @param string $name
-     * @return null|TypeInterface
-     */
-    public function getType(string $name): ?TypeInterface
-    {
-        $this->compileIfNotCompiled();
-
-        return $this->compiler->get($name, $this);
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumberOfTypes(): int
-    {
-        $this->compileIfNotCompiled();
-
-        return \count($this->compiler->all($this));
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Document';
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 }

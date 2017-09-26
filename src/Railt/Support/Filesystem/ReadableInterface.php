@@ -20,9 +20,14 @@ interface ReadableInterface
     public const VIRTUAL_FILE_NAME = 'php://input';
 
     /**
+     * @return string|mixed
+     */
+    public function getPathname();
+
+    /**
      * @return string
      */
-    public function getPathname()/*: string*/;
+    public function getHash(): string;
 
     /**
      * @return string
