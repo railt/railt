@@ -14,6 +14,7 @@ use Railt\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Types\TypeInterface;
 use Railt\Reflection\Exceptions\BuildingException;
 
 /**
@@ -40,6 +41,8 @@ trait Builder
      */
     public function getDocument(): Document
     {
+        \assert($this->document instanceof Document);
+
         return $this->document;
     }
 
@@ -48,6 +51,8 @@ trait Builder
      */
     public function getCompiler(): CompilerInterface
     {
+        \assert($this->getDocument()->getCompiler() instanceof CompilerInterface);
+
         return $this->getDocument()->getCompiler();
     }
 
@@ -92,6 +97,11 @@ trait Builder
     public function compileIfNotCompiled(): bool
     {
         if ($this->completed === false) {
+            if ($this instanceof TypeInterface) {
+                // Initialize identifier
+                $this->getUniqueId();
+            }
+
             $siblings = \class_uses_recursive(static::class);
 
             foreach ($this->getAst()->getChildren() as $child) {
@@ -115,6 +125,8 @@ trait Builder
      */
     public function getAst(): TreeNode
     {
+        \assert($this->ast instanceof TreeNode);
+
         return $this->ast;
     }
 
@@ -160,5 +172,44 @@ trait Builder
         }
 
         return $data;
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        $result = [];
+
+        foreach ($this->__sleep() as $param) {
+            $result[$param] = $this->valueToString($this->$param);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $value
+     * @return array|string
+     */
+    private function valueToString($value)
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        if (\is_scalar($value)) {
+            return $value;
+        }
+
+        if (\is_iterable($value)) {
+            $result = [];
+            foreach ($value as $key => $sub) {
+                $result[$key] = $this->valueToString($sub);
+            }
+            return $result;
+        }
+
+        return \get_class($value) . '[' . \spl_object_hash($value) . ']';
     }
 }
