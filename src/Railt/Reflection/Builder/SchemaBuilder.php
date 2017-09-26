@@ -27,6 +27,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
      * SchemaBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
@@ -40,27 +41,21 @@ class SchemaBuilder extends BaseSchema implements Compilable
      */
     public function compile(TreeNode $ast): bool
     {
-        $type = null;
-
         switch ($ast->getId()) {
             case '#Query':
-                $this->query = $type = $this->fetchType($ast);
-                break;
+                $this->query = $this->fetchType($ast);
+                return true;
 
             case '#Mutation':
-                $this->mutation = $type = $this->fetchType($ast);
-                break;
+                $this->mutation = $this->fetchType($ast);
+                return true;
 
             case '#Subscription':
-                $this->subscription = $type = $this->fetchType($ast);
-                break;
+                $this->subscription = $this->fetchType($ast);
+                return true;
         }
 
-        if ($type === null) {
-            $this->throwInvalidAstNodeError($ast);
-        }
-
-        return true;
+        return false;
     }
 
     /**
@@ -70,17 +65,14 @@ class SchemaBuilder extends BaseSchema implements Compilable
      */
     private function fetchType(TreeNode $ast): ObjectType
     {
-        $field = $ast->getChild(0);
-
-        if ($field->getId() !== '#Type') {
-            $this->throwInvalidAstNodeError($field);
-        }
-
-        $name = $field->getChild(0)->getValueValue();
-
-        if (! \is_string($name)) {
-            $this->throwInvalidAstNodeError($field);
-        }
+        /**
+         * <code>
+         * #Query|#Mutation|#Subscription   *->getChild(0)
+         *     #Type                        *->getChild(0)
+         *         token(T_NAME, TypeName)  *->getValueValue()
+         * </code>
+         */
+        $name = $ast->getChild(0)->getChild(0)->getValueValue();
 
         return $this->getCompiler()->get($name);
     }
