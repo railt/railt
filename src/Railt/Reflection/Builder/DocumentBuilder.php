@@ -41,12 +41,12 @@ class DocumentBuilder extends BaseDocument implements Compilable
         '#SchemaDefinition'    => SchemaBuilder::class,
         '#ObjectDefinition'    => ObjectBuilder::class,
         '#InterfaceDefinition' => InterfaceBuilder::class,
-        // '#UnionDefinition'     => UnionBuilder::class,
-        // '#ScalarDefinition'    => ScalarBuilder::class,
-        // '#EnumDefinition'      => EnumBuilder::class,
+        '#UnionDefinition'     => UnionBuilder::class,
+        '#ScalarDefinition'    => ScalarBuilder::class,
+        '#EnumDefinition'      => EnumBuilder::class,
         // '#InputDefinition'     => InputBuilder::class,
         // '#ExtendDefinition'    => ExtendBuilder::class,
-        // '#DirectiveDefinition' => DirectiveBuilder::class,
+        '#DirectiveDefinition' => DirectiveBuilder::class,
     ];
 
     /**
