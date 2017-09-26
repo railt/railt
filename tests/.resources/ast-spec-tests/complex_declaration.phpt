@@ -365,9 +365,8 @@ directive @include2(if: Boolean!) on
                 token(T_NAME, answer)
             #Type
                 token(T_NAME, Int)
-            #DefaultValue
-                #Value
-                    token(T_NUMBER_VALUE, 42)
+            #Value
+                token(T_NUMBER_VALUE, 42)
     #InputDefinition
         #Name
             token(T_NAME, AnnotatedInput)

@@ -8,9 +8,9 @@ type User {
     name(
         firstName: Boolean = false,
         lastName: Boolean
-            @lastNameDirective(test: Any = 23)
+            @lastNameDirective(test: 23)
     ): [String]!
-        @fieldDirective(test: Boolean = true)
+        @fieldDirective(test: true)
 }
 
 --EXPECTF--
@@ -41,8 +41,6 @@ type User {
                         #Name
                             token(T_NAME, test)
                         #Value
-                            token(T_NAME, Any)
-                        #Value
                             token(T_NUMBER_VALUE, 23)
             #List
                 #Type
@@ -54,7 +52,5 @@ type User {
                 #Argument
                     #Name
                         token(T_NAME, test)
-                    #Value
-                        token(T_NAME, Boolean)
                     #Value
                         token(T_BOOL_TRUE, true)
