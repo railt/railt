@@ -27,6 +27,7 @@ class ObjectBuilder extends BaseObject implements Compilable
      * SchemaBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
