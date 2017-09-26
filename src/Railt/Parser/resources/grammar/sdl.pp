@@ -319,8 +319,13 @@ Documentation:
 //
 //  <code>
 //      schema {
+//      ^^^^^^^^
 //          query: QueryType
+//          ^^^^^^
 //          mutation: MutationType
+//          ^^^^^^^^^
+//          subscription: Example
+//          ^^^^^^^^^^^^
 //      }
 //  </code>
 //
@@ -373,6 +378,7 @@ SchemaDefinitionFieldValue:
 //
 //  <code>
 //      scalar DateTime @directive(key: val)
+//      ^^^^^^^^^^^^^^^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Scalars
@@ -405,8 +411,10 @@ SchemaDefinitionFieldValue:
 //
 //  <code>
 //      input UserType {
+//      ^^^^^^^^^^^^^^^^
 //          id: ID!
 //      }
+//      ^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Input-Objects
@@ -427,7 +435,7 @@ InputDefinitionField:
      ) #Field
 
 InputDefinitionDefaultValue:
-    ::T_EQUAL:: Value() #DefaultValue
+    ::T_EQUAL:: Value()
 
 
 
@@ -438,6 +446,7 @@ InputDefinitionDefaultValue:
 //
 //  <code>
 //      extend type User {
+//      ^^^^^^
 //          createdAt: String
 //      }
 //  </code>
@@ -461,6 +470,7 @@ InputDefinitionDefaultValue:
 //
 //  <code>
 //      directive @deprecated(reason: String!) on FIELD
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Type-System.Directives
@@ -475,14 +485,19 @@ InputDefinitionDefaultValue:
 DirectiveDefinitionArguments:
     ::T_PARENTHESIS_OPEN::
         DirectiveDefinitionArgument()*
-    ::T_PARENTHESIS_CLOSE:: #Argument
+    ::T_PARENTHESIS_CLOSE::
 
 DirectiveDefinitionArgument:
     Documentation()?
         Key() ::T_COLON:: ValueDefinition()
+        DirectiveDefinitionDefaultValue()?
+    #Argument
 
 DirectiveDefinitionTargets:
     Key() (::T_OR:: Key())* #Target
+
+DirectiveDefinitionDefaultValue:
+    ::T_EQUAL:: Value()
 
 //
 // --------------------------------------------------------------------------
@@ -501,12 +516,14 @@ DirectiveDefinitionTargets:
 //
 //  <code>
 //      type User implements Person {
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //          id: ID!
 //          name(
 //              firstName: Boolean = true,
 //              lastName: Boolean = false
 //          ): String @deprecated(reason: "Because")
 //      }
+//      ^
 //  </code>
 //
 //  @see https://github.com/facebook/graphql/pull/90
@@ -550,9 +567,11 @@ ObjectDefinitionFieldValue:
 //
 //  <code>
 //      interface Person {
+//      ^^^^^^^^^^^^^^^^^^
 //          id: ID!
 //          name: String @deprecated(reason: "Because")
 //      }
+//      ^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Interfaces
@@ -590,9 +609,11 @@ InterfaceDefinitionFieldKey:
 //
 //  <code>
 //      enum Status {
+//      ^^^^^^^^^^^^^
 //          ACTIVE
 //          NOT_ACTIVE
 //      }
+//      ^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Enums
@@ -618,6 +639,15 @@ EnumField:
 //  Enum Value can be any excepts "true", "false" and "null".
 //  This means we cant use "Key()" rule call. e.g. redefine
 //  it excepts T_BOOL_TRUE, T_BOOL_FALSE and T_NULL
+//
+//  <code>
+//      enum Status {
+//          ACTIVE
+//          ^^^^^^
+//          NOT_ACTIVE
+//          ^^^^^^^^^^
+//      }
+//  </code>
 //
 //  @see http://facebook.github.io/graphql/#EnumValue
 //
@@ -650,6 +680,7 @@ EnumValue:
 //
 //  <code>
 //      union SearchResult = User | Post | Category
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Unions
@@ -680,7 +711,8 @@ UnionUnitesList:
 //  but they sometimes need to be more complex than this.
 //
 //  <code>
-//      field(argumentKey: "value")
+//      type Some { field(argumentKey: "value"): Type }
+//                        ^^^^^^^^^^^^^^^^^^^^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Input-Objects
@@ -715,7 +747,8 @@ ArgumentDefaultValue:
 //  in the GraphQL schema.
 //
 //  <code>
-//      @directive(key: "value", key2: "value2")
+//      type Some @directive(key: "value", key2: "value2") {}
+//                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //  </code>
 //
 //  @see http://facebook.github.io/graphql/#sec-Language.Directives
@@ -732,8 +765,4 @@ DirectiveArguments:
 
 DirectivePair:
     Key() ::T_COLON:: Value()
-        DirectiveArgumentDefaultValue()?
     #Argument
-
-DirectiveArgumentDefaultValue:
-    ::T_EQUAL:: Value()
