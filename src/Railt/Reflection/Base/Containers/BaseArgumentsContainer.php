@@ -62,9 +62,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfRequiredArguments(): int
     {
-        return (int)\array_reduce($this->resolve()->arguments, function (?int $carry, ArgumentType $argument): int {
-            return (int)$carry + (int)! $argument->hasDefaultValue();
-        });
+        return (int)\array_reduce($this->resolve()->arguments, [$this, 'requiredArgumentsCounter'], 0);
     }
 
     /**
@@ -72,8 +70,26 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfOptionalArguments(): int
     {
-        return (int)\array_reduce($this->resolve()->arguments, function (?int $carry, ArgumentType $argument): int {
-            return (int)$carry + (int)$argument->hasDefaultValue();
-        });
+        return (int)\array_reduce($this->resolve()->arguments, [$this, 'optionalArgumentsCounter'], 0);
+    }
+
+    /**
+     * @param int $carry
+     * @param ArgumentType $argument
+     * @return int
+     */
+    private function optionalArgumentsCounter(int $carry, ArgumentType $argument): int
+    {
+        return $carry + (int)$argument->hasDefaultValue();
+    }
+
+    /**
+     * @param int $carry
+     * @param ArgumentType $argument
+     * @return int
+     */
+    private function requiredArgumentsCounter(int $carry, ArgumentType $argument): int
+    {
+        return $carry + (int)! $argument->hasDefaultValue();
     }
 }
