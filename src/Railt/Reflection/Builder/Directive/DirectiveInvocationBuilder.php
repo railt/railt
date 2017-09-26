@@ -32,7 +32,6 @@ class DirectiveInvocationBuilder extends BaseInvocation implements Compilable
      * @param TreeNode $ast
      * @param DocumentBuilder $document
      * @param Nameable $parent
-     * @throws BuildingException
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
@@ -45,7 +44,6 @@ class DirectiveInvocationBuilder extends BaseInvocation implements Compilable
      * @param TreeNode $ast
      * @return bool
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
-     * @throws \Railt\Reflection\Exceptions\BuildingException
      */
     public function compile(TreeNode $ast): bool
     {
