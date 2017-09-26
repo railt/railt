@@ -14,9 +14,7 @@ use Railt\Reflection\Base\BaseField;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Builder\Support\TypeIndicationBuilder;
-use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
-use Railt\Reflection\Contracts\Types\TypeInterface;
 
 /**
  * Class FieldBuilder
