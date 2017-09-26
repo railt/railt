@@ -30,8 +30,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
      * ArgumentBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @param Nameable|DirectiveInvocation $parent
-     * @throws \Railt\Reflection\Exceptions\BuildingException
+     * @param Nameable $parent
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
