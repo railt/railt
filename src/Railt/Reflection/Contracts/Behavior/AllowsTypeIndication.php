@@ -9,13 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Behavior;
 
+use Railt\Reflection\Contracts\Types\EnumType;
+use Railt\Reflection\Contracts\Types\InputType;
+use Railt\Reflection\Contracts\Types\ScalarType;
+
 /**
  * Interface AllowsTypeIndication
  */
 interface AllowsTypeIndication
 {
     /**
-     * @return Inputable
+     * @return Inputable|ScalarType|EnumType|InputType
      */
     public function getType(): Inputable;
 
