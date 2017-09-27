@@ -31,17 +31,15 @@ class ObjectTestCase extends AbstractReflectionTestCase
             'type MyMutation implements Identifiable @deprecated(reason: "Because") { id: ID! }' .
             'type MySubscription implements Identifiable @deprecated(reason: "Because") { id: ID! }';
 
-        $normalSchema = $this->getDocument($schema)->getSchema();
-        $cachedSchema = $this->getCachedDocument($schema)->getSchema();
 
-        return [
-            [$normalSchema->getQuery()],
-            [$cachedSchema->getQuery()],
-            [$normalSchema->getMutation()],
-            [$cachedSchema->getMutation()],
-            [$normalSchema->getSubscription()],
-            [$cachedSchema->getSubscription()],
-        ];
+        $result = [];
+        foreach ($this->getDocuments($schema) as $document) {
+            $result[] = [$document->getSchema()->getQuery()];
+            $result[] = [$document->getSchema()->getMutation()];
+            $result[] = [$document->getSchema()->getSubscription()];
+        }
+
+        return $result;
     }
 
     /**
@@ -137,6 +135,7 @@ class ObjectTestCase extends AbstractReflectionTestCase
         foreach ($type->getFields() as $field) {
             static::assertCount(0, $field->getArguments());
             static::assertSame(0, $field->getNumberOfArguments());
+            static::assertSame('Field', $field->getTypeName());
             static::assertCount($field->getNumberOfArguments(), $field->getArguments());
             static::assertSame(0, $field->getNumberOfRequiredArguments());
             static::assertSame(0, $field->getNumberOfOptionalArguments());

@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base;
 
-use Railt\Reflection\Base\Containers\BaseFieldsContainer;
-use Railt\Reflection\Contracts\Types\InterfaceType;
+use Railt\Reflection\Base\Containers\BaseArgumentsContainer;
+use Railt\Reflection\Contracts\Types\InputType;
 
 /**
  * Class BaseInput
  */
-abstract class BaseInput extends BaseNamedType implements InterfaceType
+abstract class BaseInput extends BaseNamedType implements InputType
 {
-    use BaseFieldsContainer;
+    use BaseArgumentsContainer;
 
     /**
      * @return string
@@ -33,7 +33,7 @@ abstract class BaseInput extends BaseNamedType implements InterfaceType
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
-            'fields',
+            'arguments',
         ]);
     }
 }

@@ -432,7 +432,7 @@ InputDefinitionField:
     (
         Key() ::T_COLON:: ValueDefinition()
             InputDefinitionDefaultValue()? Directive()*
-     ) #Field
+     ) #Argument
 
 InputDefinitionDefaultValue:
     ::T_EQUAL:: Value()

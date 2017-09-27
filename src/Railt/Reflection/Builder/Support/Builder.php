@@ -210,6 +210,6 @@ trait Builder
             return $result;
         }
 
-        return \get_class($value) . '[' . \spl_object_hash($value) . ']';
+        return \get_class($value) . ' Object &' . \spl_object_hash($value) . '';
     }
 }

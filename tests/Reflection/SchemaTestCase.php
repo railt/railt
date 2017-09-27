@@ -31,10 +31,11 @@ class SchemaTestCase extends AbstractReflectionTestCase
             'type MyMutation {}' .
             'type MySubscription {}';
 
-        return [
-            [$this->getDocument($schema)->getSchema()],
-            [$this->getCachedDocument($schema)->getSchema()]
-        ];
+        $result = [];
+        foreach ($this->getDocuments($schema) as $document) {
+            $result[] = [$document->getSchema()];
+        }
+        return $result;
     }
 
     /**

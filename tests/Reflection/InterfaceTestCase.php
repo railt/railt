@@ -121,9 +121,6 @@ class InterfaceTestCase extends AbstractReflectionTestCase
             '"""' . "\n" .
             'interface Test @deprecated(reason: "Because") { id: ID! }';
 
-        return [
-            [$this->getDocument($schema)],
-            [$this->getCachedDocument($schema)],
-        ];
+        return $this->dataProviderDocuments($schema);
     }
 }

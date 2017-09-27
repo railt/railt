@@ -173,7 +173,7 @@ class CompiledSDLParser extends \Hoa\Compiler\Llk\Parser
                 112 => new \Hoa\Compiler\Llk\Rule\Repetition(112, 0, 1, 'InputDefinitionDefaultValue', null),
                 113 => new \Hoa\Compiler\Llk\Rule\Repetition(113, 0, -1, 'Directive', null),
                 114 => new \Hoa\Compiler\Llk\Rule\Concatenation(114, ['Key', 111, 'ValueDefinition', 112, 113], null),
-                'InputDefinitionField' => new \Hoa\Compiler\Llk\Rule\Concatenation('InputDefinitionField', [110, 114], '#Field'),
+                'InputDefinitionField' => new \Hoa\Compiler\Llk\Rule\Concatenation('InputDefinitionField', [110, 114], '#Argument'),
                 116 => new \Hoa\Compiler\Llk\Rule\Token(116, 'T_EQUAL', null, -1, false),
                 'InputDefinitionDefaultValue' => new \Hoa\Compiler\Llk\Rule\Concatenation('InputDefinitionDefaultValue', [116, 'Value'], null),
                 118 => new \Hoa\Compiler\Llk\Rule\Repetition(118, 0, 1, 'Documentation', null),
@@ -317,7 +317,7 @@ class CompiledSDLParser extends \Hoa\Compiler\Llk\Parser
         $this->getRule('ScalarDefinition')->setPPRepresentation(' Documentation()? ::T_SCALAR:: Name() Directive()*');
         $this->getRule('InputDefinition')->setDefaultId('#InputDefinition');
         $this->getRule('InputDefinition')->setPPRepresentation(' Documentation()? ::T_INPUT:: Name() Directive()* ::T_BRACE_OPEN:: InputDefinitionField()+ ::T_BRACE_CLOSE::');
-        $this->getRule('InputDefinitionField')->setPPRepresentation(' Documentation()? ( Key() ::T_COLON:: ValueDefinition() InputDefinitionDefaultValue()? Directive()* ) #Field');
+        $this->getRule('InputDefinitionField')->setPPRepresentation(' Documentation()? ( Key() ::T_COLON:: ValueDefinition() InputDefinitionDefaultValue()? Directive()* ) #Argument');
         $this->getRule('InputDefinitionDefaultValue')->setPPRepresentation(' ::T_EQUAL:: Value()');
         $this->getRule('ExtendDefinition')->setDefaultId('#ExtendDefinition');
         $this->getRule('ExtendDefinition')->setPPRepresentation(' Documentation()? ::T_EXTEND:: ObjectDefinition()');

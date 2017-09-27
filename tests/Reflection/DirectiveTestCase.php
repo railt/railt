@@ -48,10 +48,7 @@ type ExampleObject {}
 interface ExampleInterface {}
 GraphQL;
 
-        return [
-            [$this->getDocument($schema)],
-            [$this->getCachedDocument($schema)],
-        ];
+        return $this->dataProviderDocuments($schema);
     }
 
     /**
@@ -76,6 +73,7 @@ GraphQL;
      * @param Document $document
      * @return void
      * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
      */
     public function testDirectiveTest(Document $document): void
     {
@@ -110,6 +108,8 @@ GraphQL;
             }
         }
 
+        static::assertCount(2, $directive->getLocations());
+
         static::assertTrue($directive->isAllowedForQueries());
         static::assertTrue($directive->isAllowedForSchemaDefinitions());
 
@@ -124,6 +124,7 @@ GraphQL;
      * @param Document $document
      * @return void
      * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
      */
     public function testDirectiveSome(Document $document): void
     {
@@ -152,6 +153,8 @@ GraphQL;
         foreach (Location::TARGET_GRAPHQL_QUERY as $location) {
             static::assertFalse($directive->hasLocation($location));
         }
+
+        static::assertCount(1, $directive->getLocations());
 
         static::assertFalse($directive->isAllowedForQueries());
         static::assertTrue($directive->isAllowedForSchemaDefinitions());

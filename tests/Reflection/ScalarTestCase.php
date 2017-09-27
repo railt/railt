@@ -36,10 +36,7 @@ scalar Test @deprecated(reason: """
 """)
 GraphQL;
 
-        return [
-            [$this->getDocument($schema)],
-            [$this->getCachedDocument($schema)],
-        ];
+        return $this->dataProviderDocuments($schema);
     }
 
     /**
@@ -55,14 +52,7 @@ GraphQL;
 
         static::assertNotNull($scalar);
         static::assertSame('Test', $scalar->getName());
-        static::assertSame(
-            'This a test scalar using inside only this test case.' . "\n" .
-            'Defined by "scalar Test" declaration.',
-            $scalar->getDescription()
-        );
-        static::assertSame('Scalar', $scalar->getTypeName());
     }
-
 
     /**
      * @dataProvider provider
@@ -78,7 +68,6 @@ GraphQL;
 
         static::assertSame('Scalar', $scalar->getTypeName());
     }
-
 
     /**
      * @dataProvider provider

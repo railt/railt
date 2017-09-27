@@ -31,10 +31,7 @@ class UnionTestCase extends AbstractReflectionTestCase
             'type User {}' .
             'type Bot {}';
 
-        return [
-            [$this->getDocument($schema)],
-            [$this->getCachedDocument($schema)],
-        ];
+        return $this->dataProviderDocuments($schema);
     }
 
     /**
@@ -53,6 +50,8 @@ class UnionTestCase extends AbstractReflectionTestCase
 
         static::assertEquals('Person', $union->getName());
         static::assertEquals('This is an example union', $union->getDescription());
+
+        static::assertEquals('Union', $union->getTypeName());
 
         static::assertFalse($union->isDeprecated());
         static::assertSame('', $union->getDeprecationReason());

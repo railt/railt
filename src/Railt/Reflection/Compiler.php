@@ -18,6 +18,10 @@ use Railt\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Compiler\Dictionary;
 use Railt\Reflection\Compiler\Loader;
+use Railt\Reflection\Compiler\Persisting\ArrayPersister;
+use Railt\Reflection\Compiler\Persisting\NullablePersister;
+use Railt\Reflection\Compiler\Persisting\Persister;
+use Railt\Reflection\Compiler\Persisting\Proxy;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Contracts\Types\TypeInterface;
@@ -40,15 +44,39 @@ class Compiler implements CompilerInterface
     private $parser;
 
     /**
+     * @var Persister|ArrayPersister
+     */
+    private $persister;
+
+    /**
      * Compiler constructor.
+     * @param Persister|null $persister
      * @throws \Railt\Parser\Exceptions\InitializationException
      */
-    public function __construct()
+    public function __construct(Persister $persister = null)
     {
         $this->parser = new Parser();
         $this->loader = new Loader($this);
+        $this->persister = $this->bootPersister($persister);
 
         $this->bootStandardLibrary();
+    }
+
+    /**
+     * @param null|Persister $persister
+     * @return Persister
+     */
+    private function bootPersister(?Persister $persister): Persister
+    {
+        if ($persister === null) {
+            return new ArrayPersister();
+        }
+
+        if ($persister instanceof Proxy || $persister instanceof ArrayPersister) {
+            return $persister;
+        }
+
+        return new Proxy(new ArrayPersister(), $persister);
     }
 
     /**
@@ -60,13 +88,29 @@ class Compiler implements CompilerInterface
      */
     public function compile(ReadableInterface $readable): Document
     {
-        $ast = $this->parser->parse($readable);
-
         try {
-            return new DocumentBuilder($ast, $readable, $this);
+            /** @var DocumentBuilder $document */
+            $document = $this->persister->remember($readable, $this->onCompile());
+
+            return $document->withCompiler($this);
         } catch (\Throwable $fatal) {
             throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
         }
+    }
+
+    /**
+     * @return \Closure
+     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     */
+    private function onCompile(): \Closure
+    {
+        return function (ReadableInterface $readable): Document {
+            $ast = $this->parser->parse($readable);
+
+            return (new DocumentBuilder($ast, $readable))->withCompiler($this);
+        };
     }
 
     /**

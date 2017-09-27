@@ -28,6 +28,11 @@ class File extends \SplFileInfo implements ReadableInterface
     private $virtual;
 
     /**
+     * @var null|string
+     */
+    private $hash;
+
+    /**
      * File constructor.
      * @param string $sources
      * @param string $path
@@ -116,7 +121,28 @@ class File extends \SplFileInfo implements ReadableInterface
      */
     public function getHash(): string
     {
-        if ($this->virtual) {
+        if ($this->hash === null) {
+            $this->hash = $this->createHash();
+        }
+
+        return $this->hash;
+    }
+
+    /**
+     * @return string
+     */
+    public function rehash(): string
+    {
+        $this->hash = null;
+        return $this->getHash();
+    }
+
+    /**
+     * @return string
+     */
+    private function createHash(): string
+    {
+        if ( $this->virtual) {
             return \md5($this->sources);
         }
 

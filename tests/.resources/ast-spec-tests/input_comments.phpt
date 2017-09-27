@@ -34,13 +34,13 @@ input AnnotatedInput @onInputObjectType {
     #InputDefinition
         #Name
             token(T_NAME, InputType)
-        #Field
+        #Argument
             #Name
                 token(T_NAME, key)
             #Type
                 token(T_NAME, String)
                 token(T_NON_NULL, !)
-        #Field
+        #Argument
             #Name
                 token(T_NAME, answer)
             #Type
@@ -53,7 +53,7 @@ input AnnotatedInput @onInputObjectType {
         #Directive
             #Name
                 token(T_NAME, onInputObjectType)
-        #Field
+        #Argument
             #Name
                 token(T_NAME, annotatedField)
             #Type

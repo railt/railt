@@ -44,7 +44,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
         '#UnionDefinition'     => UnionBuilder::class,
         '#ScalarDefinition'    => ScalarBuilder::class,
         '#EnumDefinition'      => EnumBuilder::class,
-        // '#InputDefinition'     => InputBuilder::class,
+        '#InputDefinition'     => InputBuilder::class,
         // '#ExtendDefinition'    => ExtendBuilder::class,
         '#DirectiveDefinition' => DirectiveBuilder::class,
     ];
@@ -52,25 +52,33 @@ class DocumentBuilder extends BaseDocument implements Compilable
     /**
      * @var CompilerInterface
      */
-    public $compiler;
+    private $compiler;
 
     /**
      * DocumentBuilder constructor.
      * @param TreeNode $ast
      * @param ReadableInterface $readable
-     * @param CompilerInterface $compiler
      * @throws CompilerException
      */
-    public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
+    public function __construct(TreeNode $ast, ReadableInterface $readable)
     {
-        $this->compiler = $compiler;
-
         try {
             $this->name = $this->createName($readable);
             $this->bootBuilder($ast, $this);
         } catch (\Exception $exception) {
             throw new CompilerException($exception->getMessage(), $exception->getCode(), $exception);
         }
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @return DocumentBuilder
+     */
+    public function withCompiler(CompilerInterface $compiler): DocumentBuilder
+    {
+        $this->compiler = $compiler;
+
+        return $this;
     }
 
     /**

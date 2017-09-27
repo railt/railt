@@ -39,8 +39,9 @@ class DocumentTestCase extends AbstractReflectionTestCase
         $result = [];
 
         foreach ($data as $body) {
-            $result[] = [$this->getDocument($body)];
-            $result[] = [$this->getCachedDocument($body)];
+            foreach ($this->getDocuments($body) as $document) {
+                $result[] = [$document];
+            }
         }
 
         return $result;
