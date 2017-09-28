@@ -9,8 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Reflection\Contracts\DefinitionInterface;
-use Railt\Reflection\Contracts\Type\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeInterface;
 
 /**
  * Interface BuilderInterface
@@ -20,14 +19,14 @@ interface BuilderInterface
     /**
      * BuilderInterface constructor.
      * @param AdapterInterface $parent
-     * @param DefinitionInterface|TypeInterface $target
+     * @param TypeInterface $type
      */
-    public function __construct(AdapterInterface $parent, $target);
+    public function __construct(AdapterInterface $parent, TypeInterface $type);
 
     /**
-     * @return DefinitionInterface|TypeInterface
+     * @return TypeInterface
      */
-    public function getTarget();
+    public function getType(): TypeInterface;
 
     /**
      * @return mixed

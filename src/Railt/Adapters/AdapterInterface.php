@@ -13,7 +13,7 @@ use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;
 use Railt\Events\DispatcherInterface;
 use Railt\Container\ContainerInterface;
-use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\Document;
 
 /**
  * Interface AdapterInterface
@@ -22,11 +22,11 @@ interface AdapterInterface extends ResponderInterface
 {
     /**
      * AdapterInterface constructor.
-     * @param DocumentInterface $document
+     * @param Document $document
      * @param DispatcherInterface $events
      * @param Router $router
      */
-    public function __construct(DocumentInterface $document, DispatcherInterface $events, Router $router);
+    public function __construct(Document $document, DispatcherInterface $events, Router $router);
 
     /**
      * @return DispatcherInterface
@@ -51,5 +51,5 @@ interface AdapterInterface extends ResponderInterface
     /**
      * @return bool
      */
-    public static function isSupported(): bool;
+    public static function isSupportedBy(): bool;
 }
