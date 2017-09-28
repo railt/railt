@@ -12,10 +12,10 @@ namespace Railt\Reflection\Contracts\Types;
 /**
  * Interface ExtendType
  */
-interface ExtendType extends NamedTypeInterface
+interface ExtendType
 {
     /**
      * @return ObjectType
      */
-    public function getType(): ObjectType;
+    public function getRelatedType(): ObjectType;
 }

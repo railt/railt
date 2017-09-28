@@ -37,16 +37,21 @@ class DocumentBuilder extends BaseDocument implements Compilable
     /**
      *
      */
-    private const AST_TYPE_MAPPING = [
+    public const AST_TYPE_MAPPING = [
+        // Anonymous types
         '#SchemaDefinition'    => SchemaBuilder::class,
+
+        // Named types
         '#ObjectDefinition'    => ObjectBuilder::class,
         '#InterfaceDefinition' => InterfaceBuilder::class,
         '#UnionDefinition'     => UnionBuilder::class,
         '#ScalarDefinition'    => ScalarBuilder::class,
         '#EnumDefinition'      => EnumBuilder::class,
         '#InputDefinition'     => InputBuilder::class,
-        // '#ExtendDefinition'    => ExtendBuilder::class,
         '#DirectiveDefinition' => DirectiveBuilder::class,
+
+        // Modifiers
+        '#ExtendDefinition'    => ExtendBuilder::class,
     ];
 
     /**
@@ -121,7 +126,9 @@ class DocumentBuilder extends BaseDocument implements Compilable
                 $this->types[] = $instance;
         }
 
-        $this->compiler->register($instance);
+        if ($instance instanceof TypeInterface) {
+            $this->compiler->register($instance);
+        }
 
         return true;
     }

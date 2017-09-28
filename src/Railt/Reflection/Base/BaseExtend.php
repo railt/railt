@@ -9,14 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base;
 
+use Railt\Reflection\Base\Support\Resolving;
 use Railt\Reflection\Contracts\Types\ExtendType;
 use Railt\Reflection\Contracts\Types\ObjectType;
 
 /**
  * Class BaseExtend
  */
-abstract class BaseExtend extends BaseNamedType implements ExtendType
+abstract class BaseExtend implements ExtendType
 {
+    use Resolving;
+
     /**
      * @var ObjectType
      */
@@ -25,26 +28,8 @@ abstract class BaseExtend extends BaseNamedType implements ExtendType
     /**
      * @return ObjectType
      */
-    public function getType(): ObjectType
+    public function getRelatedType(): ObjectType
     {
         return $this->resolve()->type;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        return 'Extend';
-    }
-
-    /**
-     * @return array
-     */
-    public function __sleep(): array
-    {
-        return \array_merge(parent::__sleep(), [
-            'type',
-        ]);
     }
 }
