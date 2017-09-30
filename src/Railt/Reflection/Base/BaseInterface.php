@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base;
 
-use Railt\Reflection\Base\Containers\BaseFieldsContainer;
+use Railt\Reflection\Contracts\Types\ObjectType;
 use Railt\Reflection\Contracts\Types\InterfaceType;
+use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Base\Containers\BaseFieldsContainer;
 
 /**
  * Class BaseInterface
@@ -25,6 +27,36 @@ abstract class BaseInterface extends BaseNamedType implements InterfaceType
     public function getTypeName(): string
     {
         return 'Interface';
+    }
+
+    /**
+     * Interface type can be overriden by interface or child object.
+     *
+     * @param NamedTypeInterface $other
+     * @return bool
+     */
+    public function canBeOverridenBy($other): bool
+    {
+        if ($other instanceof InterfaceType) {
+            return $this->isSameName($other);
+        }
+
+        if ($other instanceof ObjectType) {
+            return $this->isImplementation($other);
+        }
+
+        return false;
+    }
+
+    /**
+     * Is the Object type implements this Interface?
+     *
+     * @param ObjectType $type
+     * @return bool
+     */
+    private function isImplementation(ObjectType $type): bool
+    {
+        return $type->hasInterface($this->getName());
     }
 
     /**

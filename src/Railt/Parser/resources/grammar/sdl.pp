@@ -456,7 +456,23 @@ InputDefinitionDefaultValue:
 
 #ExtendDefinition:
     Documentation()?
-    ::T_EXTEND:: ObjectDefinition()
+    ::T_EXTEND:: (
+        ObjectDefinition()
+            |
+        InterfaceDefinition()
+            |
+        EnumDefinition()
+            |
+        UnionDefinition()
+            |
+        SchemaDefinition()
+            |
+        ScalarDefinition()
+            |
+        InputDefinition()
+            |
+        DirectiveDefinition()
+    )
 
 
 

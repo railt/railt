@@ -13,6 +13,11 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseExtend;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
+use Railt\Reflection\Contracts\Containers\HasArguments;
+use Railt\Reflection\Contracts\Containers\HasDirectives;
+use Railt\Reflection\Contracts\Containers\HasFields;
+use Railt\Reflection\Contracts\Types\ExtendType;
+use Railt\Reflection\Contracts\Types\FieldType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
 
 /**
@@ -41,7 +46,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
     {
         $type = DocumentBuilder::AST_TYPE_MAPPING[$ast->getId()] ?? null;
 
-        if ($type !== null) {
+        if ($type !== null && !($type instanceof ExtendType)) {
             $this->applyExtender(new $type($ast, $this->getDocument()));
         }
 
@@ -69,8 +74,45 @@ class ExtendBuilder extends BaseExtend implements Compilable
      */
     private function extend(TypeInterface $original, TypeInterface $extend): TypeInterface
     {
-        throw new \LogicException('TODO');
+        if ($original instanceof HasFields && $extend instanceof HasFields) {
+            $this->extendFields($original, $extend);
+        }
+
+        if ($original instanceof HasDirectives && $extend instanceof HasDirectives) {
+            $this->extendDirectives($original, $extend);
+        }
+
+        if ($original instanceof HasArguments && $extend instanceof HasArguments) {
+            $this->extendArguments($original, $extend);
+        }
 
         return $original;
+    }
+
+    /**
+     * @param HasFields $original
+     * @param HasFields $extend
+     * @return TypeInterface
+     */
+    private function extendFields(HasFields $original, HasFields $extend): TypeInterface
+    {
+        foreach ($extend->getFields() as $extendField) {
+            if ($original->hasField($extendField->getName())) {
+                /** @var FieldType $originalField */
+                $originalField = $original->getField($extendField->getName());
+
+                $this->extendArguments($originalField, $extendField);
+            }
+        }
+    }
+
+    private function extendArguments(HasArguments $original, HasArguments $extend): TypeInterface
+    {
+        throw new \LogicException('TODO');
+    }
+
+    private function extendDirectives(HasDirectives $original, HasDirectives $extend): TypeInterface
+    {
+        throw new \LogicException('TODO');
     }
 }

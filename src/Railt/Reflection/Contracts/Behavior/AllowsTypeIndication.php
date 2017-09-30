@@ -37,4 +37,10 @@ interface AllowsTypeIndication
      * @return bool
      */
     public function isNonNullList(): bool;
+
+    /**
+     * @param AllowsTypeIndication $type
+     * @return bool
+     */
+    public function canBeOverridenBy($type): bool;
 }

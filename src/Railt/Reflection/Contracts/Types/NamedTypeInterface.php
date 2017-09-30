@@ -18,5 +18,9 @@ use Railt\Reflection\Contracts\Containers\HasDirectives;
  */
 interface NamedTypeInterface extends Nameable, HasDirectives, Deprecatable, TypeInterface
 {
-
+    /**
+     * @param NamedTypeInterface $type
+     * @return bool
+     */
+    public function canBeOverridenBy($type): bool;
 }
