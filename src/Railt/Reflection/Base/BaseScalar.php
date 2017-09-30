@@ -18,19 +18,6 @@ use Railt\Reflection\Contracts\Types\ScalarType;
 abstract class BaseScalar extends BaseNamedType implements ScalarType
 {
     /**
-     * Scalar can be overriden by another scalar.
-     * @todo Implementation requires resolving of #369
-     * @see https://github.com/facebook/graphql/issues/369
-     *
-     * @param NamedTypeInterface $other
-     * @return bool
-     */
-    public function canBeOverridenBy($other): bool
-    {
-        return $other instanceof ScalarType;
-    }
-
-    /**
      * @return string
      */
     public function getTypeName(): string

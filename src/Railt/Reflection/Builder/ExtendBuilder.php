@@ -19,6 +19,7 @@ use Railt\Reflection\Contracts\Containers\HasFields;
 use Railt\Reflection\Contracts\Types\ExtendType;
 use Railt\Reflection\Contracts\Types\FieldType;
 use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
  * Class ExtendBuilder
@@ -100,6 +101,8 @@ class ExtendBuilder extends BaseExtend implements Compilable
             if ($original->hasField($extendField->getName())) {
                 /** @var FieldType $originalField */
                 $originalField = $original->getField($extendField->getName());
+
+                InheritanceCoercion::checkTypeOverridable($originalField, $extendField);
 
                 $this->extendArguments($originalField, $extendField);
             }

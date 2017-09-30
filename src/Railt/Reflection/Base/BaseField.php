@@ -31,8 +31,6 @@ abstract class BaseField extends BaseNamedType implements FieldType
         return 'Field';
     }
 
-
-
     /**
      * @return array
      */

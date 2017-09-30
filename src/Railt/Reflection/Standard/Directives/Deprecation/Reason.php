@@ -13,6 +13,7 @@ use Railt\Reflection\Base\BaseArgument;
 use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\DirectiveType;
+use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Contracts\Types\TypeInterface;
 use Railt\Reflection\Standard\Directives\Deprecation;
 
@@ -44,9 +45,9 @@ class Reason extends BaseArgument
     }
 
     /**
-     * @return Inputable|TypeInterface
+     * @return NamedTypeInterface|TypeInterface
      */
-    public function getType(): Inputable
+    public function getType(): NamedTypeInterface
     {
         return $this->document->getType(self::ARGUMENT_TYPE);
     }

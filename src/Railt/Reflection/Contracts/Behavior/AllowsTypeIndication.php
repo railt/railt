@@ -11,6 +11,7 @@ namespace Railt\Reflection\Contracts\Behavior;
 
 use Railt\Reflection\Contracts\Types\EnumType;
 use Railt\Reflection\Contracts\Types\InputType;
+use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Contracts\Types\ScalarType;
 
 /**
@@ -19,9 +20,9 @@ use Railt\Reflection\Contracts\Types\ScalarType;
 interface AllowsTypeIndication
 {
     /**
-     * @return Inputable|ScalarType|EnumType|InputType
+     * @return NamedTypeInterface
      */
-    public function getType(): Inputable;
+    public function getType(): NamedTypeInterface;
 
     /**
      * @return bool
@@ -42,5 +43,5 @@ interface AllowsTypeIndication
      * @param AllowsTypeIndication $type
      * @return bool
      */
-    public function canBeOverridenBy($type): bool;
+    public function canBeOverridenBy(AllowsTypeIndication $type): bool;
 }

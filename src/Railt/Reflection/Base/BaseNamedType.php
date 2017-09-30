@@ -22,38 +22,6 @@ abstract class BaseNamedType extends BaseType implements NamedTypeInterface
     use BaseDirectivesContainer;
 
     /**
-     * @param NamedTypeInterface $other
-     * @return bool
-     */
-    public function canBeOverridenBy($other): bool
-    {
-        if ($other instanceof NamedTypeInterface) {
-            //     type === type              && type Name === type Name
-            return $this->isSameTypes($other) && $this->isSameName($other);
-        }
-
-        return false;
-    }
-
-    /**
-     * @param NamedTypeInterface $other
-     * @return bool
-     */
-    protected function isSameTypes(NamedTypeInterface $other): bool
-    {
-        return $this instanceof $other;
-    }
-
-    /**
-     * @param NamedTypeInterface $other
-     * @return bool
-     */
-    protected function isSameName(NamedTypeInterface $other): bool
-    {
-        return $this->getName() === $other->getName();
-    }
-
-    /**
      * @return array
      */
     public function __sleep(): array

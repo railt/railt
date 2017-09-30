@@ -18,19 +18,19 @@ use Railt\Reflection\Standard\StandardType;
  *
  * @see https://github.com/facebook/graphql/pull/325
  */
-final class AnyType extends BaseScalar implements StandardType
+class AnyType extends BaseScalar implements StandardType
 {
     /**
      * The Any scalar public name constant.
      * This name will be used in the future as the
      * type name available for use in our schema.
      */
-    private const TYPE_NAME = 'Any';
+    protected const TYPE_NAME = 'Any';
 
     /**
      * Short Any scalar public description.
      */
-    private const TYPE_DESCRIPTION = 'The `Any` scalar type represents any value that is supported by underlying
+    protected const TYPE_DESCRIPTION = 'The `Any` scalar type represents any value that is supported by underlying
 serialization protocol (including lists and maps). It is intended to be used
 as an opt-out type in cases when the exact type is not known in advance.';
 
@@ -40,8 +40,7 @@ as an opt-out type in cases when the exact type is not known in advance.';
     public function __construct(Document $document)
     {
         $this->document = $document;
-        $this->name = self::TYPE_NAME;
-        $this->description = self::TYPE_DESCRIPTION;
-        $this->deprecationReason = self::RFC_IMPL_DESCRIPTION;
+        $this->name = static::TYPE_NAME;
+        $this->description = static::TYPE_DESCRIPTION;
     }
 }

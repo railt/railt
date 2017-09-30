@@ -30,36 +30,6 @@ abstract class BaseInterface extends BaseNamedType implements InterfaceType
     }
 
     /**
-     * Interface type can be overriden by interface or child object.
-     *
-     * @param NamedTypeInterface $other
-     * @return bool
-     */
-    public function canBeOverridenBy($other): bool
-    {
-        if ($other instanceof InterfaceType) {
-            return $this->isSameName($other);
-        }
-
-        if ($other instanceof ObjectType) {
-            return $this->isImplementation($other);
-        }
-
-        return false;
-    }
-
-    /**
-     * Is the Object type implements this Interface?
-     *
-     * @param ObjectType $type
-     * @return bool
-     */
-    private function isImplementation(ObjectType $type): bool
-    {
-        return $type->hasInterface($this->getName());
-    }
-
-    /**
      * @return array
      */
     public function __sleep(): array

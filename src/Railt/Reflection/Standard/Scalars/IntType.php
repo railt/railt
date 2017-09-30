@@ -9,37 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Scalars;
 
-use Railt\Reflection\Base\BaseScalar;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Standard\StandardType;
-
 /**
  * The Float standard scalar implementation.
  *
  * @see http://facebook.github.io/graphql/#sec-Int
  */
-final class IntType extends BaseScalar implements StandardType
+final class IntType extends FloatType
 {
     /**
      * The Int scalar public name constant.
      * This name will be used in the future as
      * the type name available for use in our GraphQL schema.
      */
-    private const TYPE_NAME = 'Int';
+    protected const TYPE_NAME = 'Int';
 
     /**
      * Short Int scalar public description.
      */
-    private const TYPE_DESCRIPTION = 'The `Int` scalar type represents non-fractional signed whole numeric
+    protected const TYPE_DESCRIPTION = 'The `Int` scalar type represents non-fractional signed whole numeric
 values. Int can represent values between -(2^31) and 2^31 - 1.';
-
-    /**
-     * @param Document $document
-     */
-    public function __construct(Document $document)
-    {
-        $this->document = $document;
-        $this->name = self::TYPE_NAME;
-        $this->description = self::TYPE_DESCRIPTION;
-    }
 }

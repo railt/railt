@@ -28,33 +28,6 @@ use Railt\Reflection\Standard\Scalars\StringType;
 class GraphQLDocument extends BaseDocument implements StandardType
 {
     /**
-     * Adding an Any type implementation
-     */
-    public const RFC325 = AnyType::class;
-
-    /**
-     * Adding an DateTime type implementation
-     */
-    public const RFC315 = DateTimeType::class;
-
-    /**
-     * Adding an directive:
-     * <code>
-     *      @deprecated(reason: String = "No longer supported") on FIELD_DEFINITION | ENUM_VALUE
-     * </code>
-     */
-    public const RFC384 = Deprecation::class;
-
-    /**
-     * Non-standard features
-     */
-    public const EXPERIMENTAL = [
-        self::RFC315,
-        self::RFC325,
-        self::RFC384
-    ];
-
-    /**
      * The name of our document constant.
      */
     private const DOCUMENT_NAME = 'GraphQL Standard Library';
@@ -62,7 +35,7 @@ class GraphQLDocument extends BaseDocument implements StandardType
     /**
      * @var array
      */
-    private $experimentalFeatures;
+    private $additionalTypes;
 
     /**
      * @var CompilerInterface
@@ -72,12 +45,12 @@ class GraphQLDocument extends BaseDocument implements StandardType
     /**
      * GraphQLDocument constructor.
      * @param CompilerInterface $compiler
-     * @param array|null $experimental
+     * @param array $additionalTypes
      */
-    public function __construct(CompilerInterface $compiler, array $experimental = null)
+    public function __construct(CompilerInterface $compiler, array $additionalTypes = [])
     {
         $this->compiler = $compiler;
-        $this->experimentalFeatures = $experimental ?? static::EXPERIMENTAL;
+        $this->additionalTypes = $additionalTypes;
         $this->createStandardTypes();
     }
 
@@ -117,8 +90,11 @@ class GraphQLDocument extends BaseDocument implements StandardType
             IDType::class,
             IntType::class,
             StringType::class,
+            AnyType::class,
+            DateTimeType::class,
+            Deprecation::class
         ];
 
-        return \array_merge($standard, $this->experimentalFeatures);
+        return \array_merge($standard, $this->additionalTypes);
     }
 }

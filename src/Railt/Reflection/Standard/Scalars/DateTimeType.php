@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Scalars;
 
-use Railt\Reflection\Base\BaseScalar;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Standard\StandardType;
 
@@ -20,19 +19,19 @@ use Railt\Reflection\Standard\StandardType;
  * @see https://github.com/graphql/graphql-js/issues/550
  * @see https://github.com/graphql/graphql-js/pull/557
  */
-final class DateTimeType extends BaseScalar implements StandardType
+final class DateTimeType extends StringType implements StandardType
 {
     /**
      * The DateTime scalar public name constant.
      * This name will be used in the future as the
      * type name available for use in our schema.
      */
-    private const TYPE_NAME = 'DateTime';
+    protected const TYPE_NAME = 'DateTime';
 
     /**
      * Short DateTime scalar public description.
      */
-    private const TYPE_DESCRIPTION = 'The complete set of date and time formats specified in ISO8601 
+    protected const TYPE_DESCRIPTION = 'The complete set of date and time formats specified in ISO8601 
         is quite complex in an attempt to provide multiple representations and partial representations.';
 
     /**
@@ -40,9 +39,7 @@ final class DateTimeType extends BaseScalar implements StandardType
      */
     public function __construct(Document $document)
     {
-        $this->document = $document;
-        $this->name = self::TYPE_NAME;
-        $this->description = self::TYPE_DESCRIPTION;
-        $this->deprecationReason = self::RFC_IMPL_DESCRIPTION;
+        parent::__construct($document);
+        $this->deprecationReason = static::RFC_IMPL_DESCRIPTION;
     }
 }

@@ -11,6 +11,7 @@ namespace Railt\Reflection\Base\Behavior;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Behavior\Inputable;
+use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 
 /**
  * Trait BaseTypeIndicator
@@ -39,50 +40,18 @@ trait BaseTypeIndicator
     protected $isNonNullList = false;
 
     /**
-     * @return Inputable
+     * @return NamedTypeInterface
      */
-    public function getType(): Inputable
+    public function getType(): NamedTypeInterface
     {
         return $this->resolve()->type;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isList(): bool
-    {
-        return $this->resolve()->isList;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isNonNull(): bool
-    {
-        return $this->resolve()->isNonNull;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isNonNullList(): bool
-    {
-        return $this->resolve()->isList && $this->isNonNullList;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isNullable(): bool
-    {
-        return !($this->isNonNull() || $this->isNonNullList());
     }
 
     /**
      * @param AllowsTypeIndication $other
      * @return bool
      */
-    public function canBeOverridenBy($other): bool
+    public function canBeOverridenBy(AllowsTypeIndication $other): bool
     {
         if ($other instanceof AllowsTypeIndication) {
             $this->resolve();
@@ -103,8 +72,8 @@ trait BaseTypeIndicator
     private function isAllowedContainerInheritance(AllowsTypeIndication $other): bool
     {
         $same =
-            $other->isList()        === $this->isList() &&
-            $other->isNonNull()     === $this->isNonNull() &&
+            $other->isList() === $this->isList() &&
+            $other->isNonNull() === $this->isNonNull() &&
             $other->isNonNullList() === $this->isNonNullList();
 
         if ($same) {
@@ -113,16 +82,16 @@ trait BaseTypeIndicator
 
         switch (true) {
             // field: Type
-            case !$this->isNonNull && !$this->isList && !$this->isNonNullList:
-                return !$other->isList();
+            case ! $this->isNonNull && ! $this->isList && ! $this->isNonNullList:
+                return ! $other->isList();
 
             // field: [Type]
-            case !$this->isNonNull && $this->isList && !$this->isNonNullList:
+            case ! $this->isNonNull && $this->isList && ! $this->isNonNullList:
                 return $other->isList();
 
 
             // field: Type!
-            case $this->isNonNull && !$this->isList && !$this->isNonNullList:
+            case $this->isNonNull && ! $this->isList && ! $this->isNonNullList:
                 return false;
             // field: [Type!]!
             case $this->isNonNull && $this->isList && $this->isNonNullList:
@@ -130,13 +99,45 @@ trait BaseTypeIndicator
 
 
             // field: [Type!]
-            case $this->isNonNull && $this->isList && !$this->isNonNullList:
+            case $this->isNonNull && $this->isList && ! $this->isNonNullList:
                 return $other->isNonNullList() && $other->isNonNull();
             // field: [Type]!
-            case !$this->isNonNull && $this->isList && $this->isNonNullList:
+            case ! $this->isNonNull && $this->isList && $this->isNonNullList:
                 return $other->isNonNullList() && $other->isNonNull();
         }
 
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isList(): bool
+    {
+        return $this->resolve()->isList;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNullable(): bool
+    {
+        return ! ($this->isNonNull() || $this->isNonNullList());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNonNull(): bool
+    {
+        return $this->resolve()->isNonNull;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNonNullList(): bool
+    {
+        return $this->resolve()->isList && $this->isNonNullList;
     }
 }

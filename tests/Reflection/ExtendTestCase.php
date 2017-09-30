@@ -27,16 +27,20 @@ class ExtendTestCase extends AbstractReflectionTestCase
     public function provider(): array
     {
         $schema = <<<GraphQL
-type Some {
-    id: ID
+interface Interface {}
+type Object implements Interface {}
+
+union Union = Object | Test
+# union Any = String | Float | Bool
+
+# До
+type Test {
+    id: Union
 }
 
-extend type Some 
-    @deprecated(reason: "Because")
-{
-    id(value: Any): ID!
-    createdAt: DateTime!
-    updatedAt: DateTime
+# После (переопределяем)
+extend type Test {
+    id: Object
 }
 GraphQL;
 

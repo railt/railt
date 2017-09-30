@@ -114,10 +114,10 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param array|null $extensions
+     * @param array $extensions
      * @return GraphQLDocument
      */
-    private function bootStandardLibrary(array $extensions = null): GraphQLDocument
+    private function bootStandardLibrary(array $extensions = []): GraphQLDocument
     {
         $std = new GraphQLDocument($this, $extensions);
 

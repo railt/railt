@@ -44,6 +44,7 @@ trait TypeIndicationBuilder
         foreach ($ast->getChildren() as $child) {
             if ($child->getValueToken() === 'T_NON_NULL') {
                 $this->isNonNull = true;
+
             } else {
                 /** @var CompilerInterface $compiler */
                 $compiler = $this->getCompiler();
