@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Builder;
+namespace Railt\Reflection\Builder\Coercion;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication as Type;
 use Railt\Reflection\Contracts\Types\InterfaceType;
@@ -18,9 +18,9 @@ use Railt\Reflection\Contracts\Types\UnionType;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
- * Class InheritanceCoercion
+ * Class Inheritance
  */
-class InheritanceCoercion
+class Inheritance
 {
     private const SYNTAX_LIST = '[%s]';
     private const SYNTAX_NON_NULL = '%s!';
@@ -31,12 +31,11 @@ class InheritanceCoercion
      * @return bool
      * @throws TypeConflictException
      */
-    public static function checkTypeOverridable(Type $def, Type $new): bool
+    public function checkType(Type $def, Type $new): bool
     {
-        self::checkContainerOverriding($def, $new);
-
-
-        if (! self::checkTypeCompatibility($def, $new)) {
+        $this->checkContainerOverriding($def, $new);
+        
+        if (! $this->checkTypeCompatibility($def, $new)) {
             /**
              * @var NamedTypeInterface $original
              * @var NamedTypeInterface $overridden
@@ -63,10 +62,10 @@ class InheritanceCoercion
      * @return bool
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private static function checkContainerOverriding(Type $def, Type $new): bool
+    private function checkContainerOverriding(Type $def, Type $new): bool
     {
         if (! $def->canBeOverridenBy($new)) {
-            self::throwContainerRedefinitionError($def, $new);
+            $this->throwContainerRedefinitionError($def, $new);
         }
 
         return true;
@@ -78,10 +77,10 @@ class InheritanceCoercion
      * @return void
      * @throws TypeConflictException
      */
-    private static function throwContainerRedefinitionError(Type $def, Type $type): void
+    private function throwContainerRedefinitionError(Type $def, Type $type): void
     {
         $error = 'Can not override type "%s" by new signature "%s"';
-        [$defType, $newType] = [self::getDefinition($def), self::getDefinition($type)];
+        [$defType, $newType] = [$this->getDefinition($def), $this->getDefinition($type)];
 
         throw new TypeConflictException(\sprintf($error, $defType, $newType));
     }
@@ -90,7 +89,7 @@ class InheritanceCoercion
      * @param Type $type
      * @return string
      */
-    private static function getDefinition(Type $type): string
+    private function getDefinition(Type $type): string
     {
         $result = $type->getType()->getName();
 
@@ -115,7 +114,7 @@ class InheritanceCoercion
      * @return bool
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private static function checkTypeCompatibility(Type $def, Type $new): bool
+    private function checkTypeCompatibility(Type $def, Type $new): bool
     {
         /**
          * @var NamedTypeInterface $original
@@ -134,20 +133,20 @@ class InheritanceCoercion
          * Check Scalar overriding by other Scalar
          */
         if ($original instanceof ScalarType) {
-            self::checkScalarCompatibility($original, $overridden);
+            $this->checkScalarCompatibility($original, $overridden);
         }
 
         /**
          * Check Interface overriding by Object
          */
-        if (! self::checkObjectCompatibility($original, $overridden)) {
+        if (! $this->checkObjectCompatibility($original, $overridden)) {
             return false;
         }
 
         /**
          * Check Union type overriding by child
          */
-        if(self::checkUnionCompatibility($original, $overridden)) {
+        if($this->checkUnionCompatibility($original, $overridden)) {
             return true;
         }
 
@@ -159,7 +158,7 @@ class InheritanceCoercion
      * @param NamedTypeInterface $new
      * @return bool
      */
-    private static function checkUnionCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
+    private function checkUnionCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
     {
         $isUnion = $def instanceof UnionType;
 
@@ -175,12 +174,12 @@ class InheritanceCoercion
      * @return bool
      * @throws TypeConflictException
      */
-    private static function checkScalarCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
+    private function checkScalarCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
     {
         $baseType     = \get_class($def);
         $isCompatible = $new instanceof $baseType;
 
-        return $isCompatible ? true : self::throwScalarOverridingError($def, $new);
+        return $isCompatible ? true : $this->throwScalarOverridingError($def, $new);
     }
 
     /**
@@ -189,10 +188,11 @@ class InheritanceCoercion
      * @return bool
      * @throws TypeConflictException
      */
-    private static function throwScalarOverridingError(NamedTypeInterface $def, NamedTypeInterface $new): bool
+    private function throwScalarOverridingError(NamedTypeInterface $def, NamedTypeInterface $new): bool
     {
         $error = 'Type Scalar %s can not be overriding by wider or incompatible Scalar %s.';
         $error = \sprintf($error, $def->getName(), $new->getName());
+        
         throw new TypeConflictException($error);
     }
 
@@ -201,7 +201,7 @@ class InheritanceCoercion
      * @param NamedTypeInterface|ObjectType $new
      * @return bool
      */
-    private static function checkObjectCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
+    private function checkObjectCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
     {
         // Is the definition is Interface and implementation is Object
         $isImplementation = $def instanceof InterfaceType && $new instanceof ObjectType;

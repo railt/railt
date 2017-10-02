@@ -19,7 +19,6 @@ use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Compiler\Dictionary;
 use Railt\Reflection\Compiler\Loader;
 use Railt\Reflection\Compiler\Persisting\ArrayPersister;
-use Railt\Reflection\Compiler\Persisting\NullablePersister;
 use Railt\Reflection\Compiler\Persisting\Persister;
 use Railt\Reflection\Compiler\Persisting\Proxy;
 use Railt\Reflection\Contracts\Document;
@@ -55,8 +54,8 @@ class Compiler implements CompilerInterface
      */
     public function __construct(Persister $persister = null)
     {
-        $this->parser = new Parser();
-        $this->loader = new Loader($this);
+        $this->parser    = new Parser();
+        $this->loader    = new Loader($this);
         $this->persister = $this->bootPersister($persister);
 
         $this->bootStandardLibrary();
@@ -77,6 +76,21 @@ class Compiler implements CompilerInterface
         }
 
         return new Proxy(new ArrayPersister(), $persister);
+    }
+
+    /**
+     * @param array $extensions
+     * @return GraphQLDocument
+     */
+    private function bootStandardLibrary(array $extensions = []): GraphQLDocument
+    {
+        $std = new GraphQLDocument($this, $extensions);
+
+        foreach ($std->getTypes() as $type) {
+            $this->loader->register($type);
+        }
+
+        return $std;
     }
 
     /**
@@ -111,21 +125,6 @@ class Compiler implements CompilerInterface
 
             return (new DocumentBuilder($ast, $readable))->withCompiler($this);
         };
-    }
-
-    /**
-     * @param array $extensions
-     * @return GraphQLDocument
-     */
-    private function bootStandardLibrary(array $extensions = []): GraphQLDocument
-    {
-        $std = new GraphQLDocument($this, $extensions);
-
-        foreach ($std->getTypes() as $type) {
-            $this->loader->register($type);
-        }
-
-        return $std;
     }
 
     /**

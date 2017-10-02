@@ -14,6 +14,7 @@ use Railt\Reflection\Base\BaseArgument;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\TypeIndicationBuilder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
+use Railt\Reflection\Builder\Support\ValueBuilder;
 
 /**
  * Class ArgumentBuilder
@@ -44,7 +45,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
     {
         if ($ast->getId() === '#Value') {
             $this->hasDefaultValue = true;
-            $this->defaultValue = ValueCoercion::parse($ast->getChild(0));
+            $this->defaultValue = ValueBuilder::parse($ast->getChild(0));
 
             return true;
         }

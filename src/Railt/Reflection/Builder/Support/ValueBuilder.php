@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Builder;
+namespace Railt\Reflection\Builder\Support;
 
 use Hoa\Compiler\Llk\TreeNode;
 
 /**
- * Class ValueCoercion
+ * Class ValueBuilder
  */
-class ValueCoercion
+class ValueBuilder
 {
     private const AST_ID_ARRAY     = '#List';
     private const AST_ID_OBJECT    = '#Object';

@@ -11,6 +11,7 @@ namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseExtend;
+use Railt\Reflection\Builder\Coercion\Inheritance;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Containers\HasArguments;
@@ -29,6 +30,11 @@ class ExtendBuilder extends BaseExtend implements Compilable
     use Builder;
 
     /**
+     * @var Inheritance
+     */
+    private $inheritance;
+
+    /**
      * ExtendBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
@@ -37,6 +43,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
         $this->bootBuilder($ast, $document);
+        $this->inheritance = new Inheritance();
     }
 
     /**
@@ -56,24 +63,25 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
     /**
      * @param Nameable|TypeInterface|Compilable $instance
-     * @return TypeInterface
+     * @return void
+     * @throws TypeConflictException
      */
-    private function applyExtender(TypeInterface $instance): TypeInterface
+    private function applyExtender(TypeInterface $instance): void
     {
         $instance->compileIfNotCompiled();
 
         /** @var TypeInterface $original */
         $original = $this->getCompiler()->get($instance->getName());
 
-        return $this->extend($original, $instance);
+        $this->extend($original, $instance);
     }
 
     /**
      * @param TypeInterface $original
      * @param TypeInterface $extend
-     * @return TypeInterface
+     * @return void
      */
-    private function extend(TypeInterface $original, TypeInterface $extend): TypeInterface
+    private function extend(TypeInterface $original, TypeInterface $extend): void
     {
         if ($original instanceof HasFields && $extend instanceof HasFields) {
             $this->extendFields($original, $extend);
@@ -86,36 +94,49 @@ class ExtendBuilder extends BaseExtend implements Compilable
         if ($original instanceof HasArguments && $extend instanceof HasArguments) {
             $this->extendArguments($original, $extend);
         }
-
-        return $original;
     }
 
     /**
      * @param HasFields $original
      * @param HasFields $extend
-     * @return TypeInterface
+     * @return void
+     * @throws TypeConflictException
      */
-    private function extendFields(HasFields $original, HasFields $extend): TypeInterface
+    private function extendFields(HasFields $original, HasFields $extend): void
     {
         foreach ($extend->getFields() as $extendField) {
             if ($original->hasField($extendField->getName())) {
-                /** @var FieldType $originalField */
-                $originalField = $original->getField($extendField->getName());
+                /** @var FieldType $field */
+                $field = $original->getField($extendField->getName());
 
-                InheritanceCoercion::checkTypeOverridable($originalField, $extendField);
+                $this->inheritance->checkType($field, $extendField);
 
-                $this->extendArguments($originalField, $extendField);
+                $this->extendArguments($field, $extendField);
             }
         }
     }
 
-    private function extendArguments(HasArguments $original, HasArguments $extend): TypeInterface
+    /**
+     * @param HasArguments $original
+     * @param HasArguments $extend
+     * @return void
+     */
+    private function extendArguments(HasArguments $original, HasArguments $extend): void
     {
-        throw new \LogicException('TODO');
+        foreach ($extend->getArguments() as $argument) {
+            dd($argument);
+        }
     }
 
-    private function extendDirectives(HasDirectives $original, HasDirectives $extend): TypeInterface
+    /**
+     * @param HasDirectives $original
+     * @param HasDirectives $extend
+     * @return void
+     */
+    private function extendDirectives(HasDirectives $original, HasDirectives $extend): void
     {
-        throw new \LogicException('TODO');
+        foreach ($extend->getDirectives() as $directives) {
+            dd($directives);
+        }
     }
 }

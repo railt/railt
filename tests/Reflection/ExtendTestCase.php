@@ -56,7 +56,7 @@ GraphQL;
     public function testSomeType(Document $document): void
     {
         /** @var ObjectType $type */
-        $type = $document->getType('Some');
+        $type = $document->getType('Test');
         static::assertNotNull($type);
     }
 }
