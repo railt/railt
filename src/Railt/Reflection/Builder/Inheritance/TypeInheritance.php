@@ -9,204 +9,107 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Builder\Inheritance;
 
-use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication as Type;
-use Railt\Reflection\Contracts\Types\InterfaceType;
+use Railt\Reflection\Builder\Inheritance\TypeVerification\AbstractVerifier;
+use Railt\Reflection\Builder\Inheritance\TypeVerification\ContainerVerifier;
+use Railt\Reflection\Builder\Inheritance\TypeVerification\InterfaceVerifier;
+use Railt\Reflection\Builder\Inheritance\TypeVerification\ScalarVerifier;
+use Railt\Reflection\Builder\Inheritance\TypeVerification\UnionVerifier;
+use Railt\Reflection\Builder\Inheritance\TypeVerification\Verifier;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
-use Railt\Reflection\Contracts\Types\ObjectType;
-use Railt\Reflection\Contracts\Types\ScalarType;
-use Railt\Reflection\Contracts\Types\UnionType;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
  * Class Inheritance
  */
-class TypeInheritance
+class TypeInheritance extends AbstractVerifier
 {
-    private const SYNTAX_LIST = '[%s]';
-    private const SYNTAX_NON_NULL = '%s!';
+    /**
+     * @var Verifier|ContainerVerifier
+     */
+    private $container;
 
     /**
-     * @param Type $def
-     * @param Type $new
-     * @return bool
-     * @throws TypeConflictException
+     * @var array|Verifier[]
      */
-    public function checkType(Type $def, Type $new): bool
+    private $rules = [];
+
+    /**
+     * TypeInheritance constructor.
+     */
+    public function __construct()
     {
-        $this->checkContainerOverriding($def, $new);
+        $this->container = new ContainerVerifier();
 
-        if (! $this->checkTypeCompatibility($def, $new)) {
-            $this->throwIncompatibleError($def->getType(), $new->getType());
-        }
-
-        return false;
+        $this->addRule(new ScalarVerifier(), new InterfaceVerifier(), new UnionVerifier());
     }
 
     /**
-     * @param Type $def
-     * @param Type $new
-     * @return bool
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @param Verifier[] ...$verifier
+     * @return TypeInheritance
      */
-    private function checkContainerOverriding(Type $def, Type $new): bool
+    public function addRule(Verifier ...$verifier): TypeInheritance
     {
-        if (! $def->canBeOverridenBy($new)) {
-            $this->throwContainerRedefinitionError($def, $new);
+        foreach ($verifier as $item) {
+            $this->rules[] = $item;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param AllowsTypeIndication $a
+     * @param AllowsTypeIndication $b
+     * @return bool
+     * @throws TypeConflictException
+     */
+    public function verify(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
+    {
+        [$def, $new] = [$a->getType(), $b->getType()];
+
+        $this->container->verify($a, $b);
+
+        if (! $this->verifyRules($a, $b)) {
+            return $this->throwNonCompatibleTypesException($def, $new);
         }
 
         return true;
     }
 
     /**
-     * @param Type $def
-     * @param Type $type
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function throwContainerRedefinitionError(Type $def, Type $type): void
-    {
-        $error = 'Can not override type "%s" by new signature "%s"';
-        [$defType, $newType] = [$this->getDefinition($def), $this->getDefinition($type)];
-
-        throw new TypeConflictException(\sprintf($error, $defType, $newType));
-    }
-
-    /**
-     * @param Type $type
-     * @return string
-     */
-    private function getDefinition(Type $type): string
-    {
-        $result = $type->getType()->getName();
-
-        if ($type->isNonNull()) {
-            $result = \sprintf(self::SYNTAX_NON_NULL, $result);
-        }
-
-        if ($type->isList()) {
-            $result = \sprintf(self::SYNTAX_LIST, $result);
-        }
-
-        if ($type->isNonNullList()) {
-            $result = \sprintf(self::SYNTAX_NON_NULL, $result);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param Type $def
-     * @param Type $new
+     * @param AllowsTypeIndication $a
+     * @param AllowsTypeIndication $b
      * @return bool
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private function checkTypeCompatibility(Type $def, Type $new): bool
+    private function verifyRules(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        /**
-         * @var NamedTypeInterface $original
-         * @var NamedTypeInterface $overridden
-         */
-        [$original, $overridden] = [$def->getType(), $new->getType()];
+        $matched = false;
 
-        /**
-         * Check is the same type
-         */
-        if ($original->getName() === $overridden->getName()) {
-            return true;
+        foreach ($this->rules as $rule) {
+            if (! $rule->match($a, $b)) {
+                continue;
+            }
+
+            $matched = true;
+
+            if ($rule->verify($a, $b) === false) {
+                return false;
+            }
         }
 
-        /**
-         * Check Scalar overriding by other Scalar
-         */
-        if ($original instanceof ScalarType) {
-            $this->checkScalarCompatibility($original, $overridden);
-        }
-
-        /**
-         * Check Interface overriding by Object
-         */
-        if (! $this->checkObjectCompatibility($original, $overridden)) {
-            return false;
-        }
-
-        /**
-         * Check Union type overriding by child
-         */
-        if ($this->checkUnionCompatibility($original, $overridden)) {
-            return true;
-        }
-
-        return false;
+        return $matched;
     }
 
     /**
-     * Scalar overriding by other Scalar
-     * @todo https://github.com/facebook/graphql/issues/369
-     *
-     * @param NamedTypeInterface $def
-     * @param NamedTypeInterface $new
+     * @param NamedTypeInterface $a
+     * @param NamedTypeInterface $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function checkScalarCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
+    private function throwNonCompatibleTypesException(NamedTypeInterface $a, NamedTypeInterface $b): bool
     {
-        $baseType = \get_class($def);
-        $isCompatible = $new instanceof $baseType;
+        $error = '%s not compatible with %s and can not be redefined by';
 
-        return $isCompatible ? true : $this->throwScalarOverridingError($def, $new);
-    }
-
-    /**
-     * @param NamedTypeInterface $def
-     * @param NamedTypeInterface $new
-     * @return bool
-     * @throws TypeConflictException
-     */
-    private function throwScalarOverridingError(NamedTypeInterface $def, NamedTypeInterface $new): bool
-    {
-        $error = 'Type Scalar %s can not be overriding by wider or incompatible Scalar %s.';
-        $error = \sprintf($error, $def->getName(), $new->getName());
-
-        throw new TypeConflictException($error);
-    }
-
-    /**
-     * @param NamedTypeInterface $def
-     * @param NamedTypeInterface|ObjectType $new
-     * @return bool
-     */
-    private function checkObjectCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
-    {
-        // Is the definition is Interface and implementation is Object
-        $isImplementation = $def instanceof InterfaceType && $new instanceof ObjectType;
-
-        return ! ($isImplementation && ! $new->hasInterface($def->getName()));
-    }
-
-    /**
-     * @param NamedTypeInterface|UnionType $def
-     * @param NamedTypeInterface $new
-     * @return bool
-     */
-    private function checkUnionCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
-    {
-        $isUnion = $def instanceof UnionType;
-
-        return ! ($isUnion && ! $def->hasType($new->getName()));
-    }
-
-    /**
-     * @param NamedTypeInterface $def
-     * @param NamedTypeInterface $type
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function throwIncompatibleError(NamedTypeInterface $def, NamedTypeInterface $type): void
-    {
-        $original = \sprintf('%s<%s>', $def->getTypeName(), $def->getName());
-        $extended = \sprintf('%s<%s>', $type->getTypeName(), $type->getName());
-        $error = \sprintf('Type %s not compatible with %s', $original, $extended);
-
-        throw new TypeConflictException($error);
+        return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }
 }

@@ -102,14 +102,10 @@ class Compiler implements CompilerInterface
      */
     public function compile(ReadableInterface $readable): Document
     {
-        try {
-            /** @var DocumentBuilder $document */
-            $document = $this->persister->remember($readable, $this->onCompile());
+        /** @var DocumentBuilder $document */
+        $document = $this->persister->remember($readable, $this->onCompile());
 
-            return $document->withCompiler($this);
-        } catch (\Throwable $fatal) {
-            throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
-        }
+        return $document->withCompiler($this);
     }
 
     /**

@@ -12,6 +12,7 @@ namespace Railt\Reflection\Builder;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseEnum;
 use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 
 /**
  * Class EnumBuilder

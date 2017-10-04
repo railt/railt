@@ -85,7 +85,7 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
             'type',
             'isList',
             'isNonNull',
-            'isNonNullList',
+            'isListOfNonNulls',
             'parent',
             'defaultValue',
             'hasDefaultValue',

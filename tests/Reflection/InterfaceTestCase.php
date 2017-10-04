@@ -117,7 +117,7 @@ class InterfaceTestCase extends AbstractReflectionTestCase
     {
         $schema = <<<GraphQL
 type Object implements Test {
-    id: ID! 
+    id: ID!
 }
 
 """

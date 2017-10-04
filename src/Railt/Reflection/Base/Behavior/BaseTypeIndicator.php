@@ -36,7 +36,7 @@ trait BaseTypeIndicator
     /**
      * @var bool
      */
-    protected $isNonNullList = false;
+    protected $isListOfNonNulls = false;
 
     /**
      * @return NamedTypeInterface
@@ -57,68 +57,6 @@ trait BaseTypeIndicator
     }
 
     /**
-     * @param AllowsTypeIndication $other
-     * @return bool
-     */
-    public function canBeOverridenBy(AllowsTypeIndication $other): bool
-    {
-        if ($other instanceof AllowsTypeIndication) {
-            $this->resolve();
-
-            return $this->isAllowedContainerInheritance($other);
-        }
-
-        return false;
-    }
-
-    /**
-     * @todo Implementation requires resolving of #369
-     * @see https://github.com/facebook/graphql/issues/369
-     *
-     * @param AllowsTypeIndication $other
-     * @return bool
-     */
-    private function isAllowedContainerInheritance(AllowsTypeIndication $other): bool
-    {
-        $same =
-            $other->isList() === $this->isList() &&
-            $other->isNonNull() === $this->isNonNull() &&
-            $other->isNonNullList() === $this->isNonNullList();
-
-        if ($same) {
-            return true;
-        }
-
-        switch (true) {
-            // field: Type
-            case ! $this->isNonNull && ! $this->isList && ! $this->isNonNullList:
-                return ! $other->isList();
-
-            // field: [Type]
-            case ! $this->isNonNull && $this->isList && ! $this->isNonNullList:
-                return $other->isList();
-
-
-            // field: Type!
-            case $this->isNonNull && ! $this->isList && ! $this->isNonNullList:
-                return false;
-            // field: [Type!]!
-            case $this->isNonNull && $this->isList && $this->isNonNullList:
-                return false;
-
-
-            // field: [Type!]
-            case $this->isNonNull && $this->isList && ! $this->isNonNullList:
-                return $other->isNonNullList() && $other->isNonNull();
-            // field: [Type]!
-            case ! $this->isNonNull && $this->isList && $this->isNonNullList:
-                return $other->isNonNullList() && $other->isNonNull();
-        }
-
-        return false;
-    }
-
-    /**
      * @return bool
      */
     public function isList(): bool
@@ -127,6 +65,8 @@ trait BaseTypeIndicator
     }
 
     /**
+     * The non-null type
+     *
      * @return bool
      */
     public function isNonNull(): bool
@@ -135,11 +75,13 @@ trait BaseTypeIndicator
     }
 
     /**
+     * The list of non-nulls
+     *
      * @return bool
      */
-    public function isNonNullList(): bool
+    public function isListOfNonNulls(): bool
     {
-        return $this->resolve()->isList && $this->isNonNullList;
+        return $this->resolve()->isList && $this->isListOfNonNulls;
     }
 
     /**
@@ -147,6 +89,6 @@ trait BaseTypeIndicator
      */
     private function isNullable(): bool
     {
-        return ! ($this->isNonNull() || $this->isNonNullList());
+        return ! $this->isNonNull();
     }
 }

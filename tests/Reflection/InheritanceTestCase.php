@@ -1,0 +1,226 @@
+<?php
+/**
+ * This file is part of Railt package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+declare(strict_types=1);
+
+namespace Railt\Tests\Reflection;
+
+use Railt\Reflection\Exceptions\TypeConflictException;
+
+/**
+ * Class InheritanceTestCase
+ */
+class InheritanceTestCase extends AbstractReflectionTestCase
+{
+    /**
+     * @return array
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     */
+    public function positiveProvider(): array
+    {
+        $schemas = [
+            // Container
+            'type A { id: ID } extend type A { id: ID }',
+            'type A { id: ID } extend type A { id: ID! }',
+            'type A { id: ID! } extend type A { id: ID! }',
+            'type A { id: [ID] } extend type A { id: [ID] }',
+            'type A { id: [ID] } extend type A { id: [ID!] }',
+            'type A { id: [ID] } extend type A { id: [ID]! }',
+            'type A { id: [ID] } extend type A { id: [ID!]! }',
+            'type A { id: [ID!] } extend type A { id: [ID!] }',
+            'type A { id: [ID!] } extend type A { id: [ID!]! }',
+            'type A { id: [ID]! } extend type A { id: [ID]! }',
+            'type A { id: [ID]! } extend type A { id: [ID!]! }',
+            'type A { id: [ID!]! } extend type A { id: [ID!]! }',
+
+            // Scalars
+            'type A { id: Any } extend type A { id: Any }',
+            'type A { id: Any } extend type A { id: Boolean }',
+            'type A { id: Any } extend type A { id: DateTime }',
+            'type A { id: Any } extend type A { id: Float }',
+            'type A { id: Any } extend type A { id: ID }',
+            'type A { id: Any } extend type A { id: Int }',
+            'type A { id: Any } extend type A { id: String }',
+            'type A { id: Boolean } extend type A { id: Boolean }',
+            'type A { id: DateTime } extend type A { id: DateTime }',
+            'type A { id: Float } extend type A { id: Float }',
+            'type A { id: Float } extend type A { id: Int }',
+            'type A { id: ID } extend type A { id: ID }',
+            'type A { id: Int } extend type A { id: Int }',
+            'type A { id: String } extend type A { id: DateTime }',
+            'type A { id: String } extend type A { id: ID }',
+            'type A { id: String } extend type A { id: String }',
+
+            // Interfaces
+            'interface I {} type A implements I { id: I } extend type A { id: I }',
+            'interface I {} type A implements I { id: I } extend type A { id: A }',
+
+            // Unions
+            'union U = ID | String type A { id: U } extend type A { id: U }',
+            'union U = ID | String type A { id: U } extend type A { id: ID }',
+            'union U = ID | String type A { id: U } extend type A { id: String }',
+        ];
+
+        $result = [];
+
+        foreach ($schemas as $schema) {
+            $result[] = [$schema];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     */
+    public function negativeProvider(): array
+    {
+        $schemas = [
+            // Container
+            'type A { id: ID } extend type A { id: [ID] }',
+            'type A { id: ID } extend type A { id: [ID!] }',
+            'type A { id: ID } extend type A { id: [ID]! }',
+            'type A { id: ID } extend type A { id: [ID!]! }',
+            'type A { id: ID! } extend type A { id: ID }',
+            'type A { id: ID! } extend type A { id: [ID] }',
+            'type A { id: ID! } extend type A { id: [ID!] }',
+            'type A { id: ID! } extend type A { id: [ID]! }',
+            'type A { id: ID! } extend type A { id: [ID!]! }',
+            'type A { id: [ID] } extend type A { id: ID }',
+            'type A { id: [ID] } extend type A { id: ID! }',
+            'type A { id: [ID!] } extend type A { id: ID }',
+            'type A { id: [ID!] } extend type A { id: ID! }',
+            'type A { id: [ID!] } extend type A { id: [ID] }',
+            'type A { id: [ID!] } extend type A { id: [ID]! }',
+            'type A { id: [ID]! } extend type A { id: ID }',
+            'type A { id: [ID]! } extend type A { id: ID! }',
+            'type A { id: [ID]! } extend type A { id: [ID!] }',
+            'type A { id: [ID!]! } extend type A { id: ID }',
+            'type A { id: [ID!]! } extend type A { id: ID! }',
+
+            // Scalars
+            'type A { id: Boolean } extend type A { id: Any }',
+            'type A { id: Boolean } extend type A { id: DateTime }',
+            'type A { id: Boolean } extend type A { id: Float }',
+            'type A { id: Boolean } extend type A { id: ID }',
+            'type A { id: Boolean } extend type A { id: Int }',
+            'type A { id: Boolean } extend type A { id: String }',
+            'type A { id: DateTime } extend type A { id: Any }',
+            'type A { id: DateTime } extend type A { id: Boolean }',
+            'type A { id: DateTime } extend type A { id: Float }',
+            'type A { id: DateTime } extend type A { id: ID }',
+            'type A { id: DateTime } extend type A { id: Int }',
+            'type A { id: DateTime } extend type A { id: String }',
+            'type A { id: Float } extend type A { id: Any }',
+            'type A { id: Float } extend type A { id: Boolean }',
+            'type A { id: Float } extend type A { id: DateTime }',
+            'type A { id: Float } extend type A { id: ID }',
+            'type A { id: Float } extend type A { id: String }',
+            'type A { id: ID } extend type A { id: Any }',
+            'type A { id: ID } extend type A { id: Boolean }',
+            'type A { id: ID } extend type A { id: DateTime }',
+            'type A { id: ID } extend type A { id: Float }',
+            'type A { id: ID } extend type A { id: Int }',
+            'type A { id: ID } extend type A { id: String }',
+            'type A { id: Int } extend type A { id: Any }',
+            'type A { id: Int } extend type A { id: Boolean }',
+            'type A { id: Int } extend type A { id: DateTime }',
+            'type A { id: Int } extend type A { id: Float }',
+            'type A { id: Int } extend type A { id: ID }',
+            'type A { id: Int } extend type A { id: String }',
+            'type A { id: String } extend type A { id: Any }',
+            'type A { id: String } extend type A { id: Boolean }',
+            'type A { id: String } extend type A { id: Float }',
+            'type A { id: String } extend type A { id: Int }',
+
+            // Interfaces
+            'interface I {} type A { id: I } extend type A { id: A }', // Not implements
+            'interface I {} type A { id: I } extend type A { id: ID }', // Overwrite by other type
+            'interface I {} interface J {} type A { id: I } extend type A { id: J }', // Overwrite by other interface
+
+            // Unions
+            'union U = String union U2 = ID type A { id: U } extend type A { id: U2 }',
+            'union U = ID | String type A { id: U } extend type A { id: Int }',
+
+            // Incompatible types
+            'type Object {}         type A { id: Object }    extend type A { id: ID }',
+            'interface Interface {} type A { id: Interface } extend type A { id: ID }',
+            'union Union = String   type A { id: Union }     extend type A { id: ID }',
+            'enum Enum { A }        type A { id: Enum }      extend type A { id: ID }',
+            'input Input { id: ID } type A { id: Input }     extend type A { id: ID }',
+        ];
+
+        $result = [];
+
+        foreach ($schemas as $schema) {
+            $result[] = [$schema];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @dataProvider positiveProvider
+     *
+     * @param string $schema
+     * @return void
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     */
+    public function testExtendPositiveInheritance(string $schema): void
+    {
+        foreach ($this->getDocuments($schema) as $document) {
+            $type = $document->getType('A');
+            static::assertNotNull($type);
+        }
+    }
+
+    /**
+     * @dataProvider negativeProvider
+     *
+     * @param string $schema
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     */
+    public function testExtendNegativeInheritance(string $schema): void
+    {
+        /** @var \Generator $documents */
+        $documents = $this->getDocuments($schema);
+
+        while ($documents->valid()) {
+            $throws = false;
+
+            $document = $documents->current();
+
+            try {
+                $document->getType('A');
+            } catch (TypeConflictException $error) {
+                $throws = true;
+            }
+
+            try {
+                $documents->next();
+            } catch (TypeConflictException $error) {
+                echo '+Error: ' . $error->getMessage() . "\n";
+                $throws = true;
+            }
+
+            static::assertTrue($throws, 'The schema is valid:' . "\n    " . $schema);
+        }
+    }
+}

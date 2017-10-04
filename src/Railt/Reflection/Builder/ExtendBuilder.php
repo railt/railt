@@ -18,6 +18,7 @@ use Railt\Reflection\Base\Containers\BaseDirectivesContainer;
 use Railt\Reflection\Base\Containers\BaseFieldsContainer;
 use Railt\Reflection\Builder\Inheritance\TypeInheritance;
 use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Containers\HasArguments;
 use Railt\Reflection\Contracts\Containers\HasDirectives;
@@ -122,7 +123,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  */
                 $field = $original->getField($extendField->getName());
 
-                $this->inheritance->checkType($field, $extendField);
+                $this->inheritance->verify($field, $extendField);
                 $this->dataFieldExtender()->call($field, $extendField);
 
                 /**
@@ -170,7 +171,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  */
                 $argument = $original->getArgument($extendArgument->getName());
 
-                $this->inheritance->checkType($argument, $extendArgument);
+                $this->inheritance->verify($argument, $extendArgument);
                 $this->dataArgumentExtender()->call($argument, $extendArgument->getType());
 
                 continue;
