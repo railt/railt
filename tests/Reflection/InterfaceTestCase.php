@@ -115,11 +115,18 @@ class InterfaceTestCase extends AbstractReflectionTestCase
      */
     public function provider(): array
     {
-        $schema = 'type Object implements Test { id: ID! }' .
-            '"""' . "\n" .
-            '# This is a test interface' . "\n" .
-            '"""' . "\n" .
-            'interface Test @deprecated(reason: "Because") { id: ID! }';
+        $schema = <<<GraphQL
+type Object implements Test {
+    id: ID! 
+}
+
+"""
+# This is a test interface
+"""
+interface Test @deprecated(reason: "Because") { 
+    id: ID!
+}
+GraphQL;
 
         return $this->dataProviderDocuments($schema);
     }

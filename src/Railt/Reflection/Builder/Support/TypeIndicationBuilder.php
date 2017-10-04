@@ -11,6 +11,9 @@ namespace Railt\Reflection\Builder\Support;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Compiler\CompilerInterface;
+use Railt\Reflection\Contracts\Behavior\Child;
+use Railt\Reflection\Contracts\Behavior\Nameable;
+use Railt\Reflection\Exceptions\TypeNotFoundException;
 
 /**
  * Trait TypeIndicationBuilder
@@ -20,6 +23,7 @@ trait TypeIndicationBuilder
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws TypeNotFoundException
      */
     protected function compileTypeIndicationBuilder(TreeNode $ast): bool
     {
@@ -37,6 +41,7 @@ trait TypeIndicationBuilder
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws \Railt\Reflection\Exceptions\TypeNotFoundException
      */
     private function buildType(TreeNode $ast): bool
     {
@@ -44,11 +49,13 @@ trait TypeIndicationBuilder
         foreach ($ast->getChildren() as $child) {
             if ($child->getValueToken() === 'T_NON_NULL') {
                 $this->isNonNull = true;
-
             } else {
-                /** @var CompilerInterface $compiler */
-                $compiler = $this->getCompiler();
-                $this->type = $compiler->get($child->getValueValue());
+                $name = $child->getValueValue();
+                $this->type = $this->getCompiler()->get($name);
+
+                if ($this->type === null && $this instanceof Nameable) {
+                    $this->throwInvalidTypeError($name);
+                }
             }
         }
 
@@ -56,8 +63,30 @@ trait TypeIndicationBuilder
     }
 
     /**
+     * @param string $name
+     * @return void
+     * @throws TypeNotFoundException
+     */
+    private function throwInvalidTypeError(string $name): void
+    {
+        $error = '%s contains an invalid type. Type "%s" not found.';
+
+        [$field, $parent] = [$this->getName(), $this];
+
+        while ($parent instanceof Child) {
+            $parent = $parent->getParent();
+            $field = $parent->getName() . '.' . $field;
+        }
+
+        $error = \sprintf($error, $field, $name);
+
+        throw new TypeNotFoundException($error);
+    }
+
+    /**
      * @param TreeNode $ast
      * @return bool
+     * @throws TypeNotFoundException
      */
     private function buildList(TreeNode $ast): bool
     {

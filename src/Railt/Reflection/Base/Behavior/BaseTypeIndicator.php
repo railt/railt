@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Behavior;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 
 /**
@@ -20,7 +19,7 @@ use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 trait BaseTypeIndicator
 {
     /**
-     * @var Inputable
+     * @var NamedTypeInterface
      */
     protected $type;
 
@@ -41,10 +40,20 @@ trait BaseTypeIndicator
 
     /**
      * @return NamedTypeInterface
+     * @throws \Railt\Reflection\Exceptions\TypeNotFoundException
      */
     public function getType(): NamedTypeInterface
     {
         return $this->resolve()->type;
+    }
+
+    /**
+     * @param NamedTypeInterface $type
+     * @return void
+     */
+    public function setType(NamedTypeInterface $type): void
+    {
+        $this->type = $type;
     }
 
     /**
@@ -120,14 +129,6 @@ trait BaseTypeIndicator
     /**
      * @return bool
      */
-    private function isNullable(): bool
-    {
-        return ! ($this->isNonNull() || $this->isNonNullList());
-    }
-
-    /**
-     * @return bool
-     */
     public function isNonNull(): bool
     {
         return $this->resolve()->isNonNull;
@@ -139,5 +140,13 @@ trait BaseTypeIndicator
     public function isNonNullList(): bool
     {
         return $this->resolve()->isList && $this->isNonNullList;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNullable(): bool
+    {
+        return ! ($this->isNonNull() || $this->isNonNullList());
     }
 }

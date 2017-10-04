@@ -11,6 +11,7 @@ namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseField;
+use Railt\Reflection\Builder\Support\ArgumentsBuilder;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Builder\Support\TypeIndicationBuilder;
@@ -22,6 +23,7 @@ use Railt\Reflection\Contracts\Behavior\Nameable;
 class FieldBuilder extends BaseField implements Compilable
 {
     use Builder;
+    use ArgumentsBuilder;
     use TypeIndicationBuilder;
 
     /**

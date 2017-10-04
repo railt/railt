@@ -10,7 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Behavior;
 
 /**
- * Interface Invokable
+ * The interface indicates that the declaration is a call
+ * of the type specified in the schema.
  */
 interface Invokable
 {

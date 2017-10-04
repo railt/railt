@@ -12,7 +12,8 @@ namespace Railt\Reflection\Contracts\Containers;
 use Railt\Reflection\Contracts\Types\ArgumentType;
 
 /**
- * Interface HasArguments
+ * The interface indicates that the type is a container that
+ * contains a list of valid arguments in the type.
  */
 interface HasArguments
 {

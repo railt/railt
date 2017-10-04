@@ -10,16 +10,21 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Behavior;
 
 /**
- * Interface Nameable
+ * The Interface indicates that a type instance can have a
+ * unique unique name that uniquely identifies it in the system.
  */
 interface Nameable
 {
     /**
+     * Returns the name of type instance.
+     *
      * @return string
      */
     public function getName(): string;
 
     /**
+     * Returns a short description of type.
+     *
      * @return string
      */
     public function getDescription(): string;

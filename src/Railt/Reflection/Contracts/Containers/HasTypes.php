@@ -47,6 +47,8 @@ interface HasTypes
     public function getType(string $name): ?TypeInterface;
 
     /**
+     * Returns the number of types that the container contains.
+     *
      * @return int
      */
     public function getNumberOfTypes(): int;

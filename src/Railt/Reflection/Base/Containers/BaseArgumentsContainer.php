@@ -32,6 +32,15 @@ trait BaseArgumentsContainer
     }
 
     /**
+     * @param ArgumentType $argument
+     * @return void
+     */
+    public function addArgument(ArgumentType $argument): void
+    {
+        $this->arguments[$argument->getName()] = $argument;
+    }
+
+    /**
      * @param string $name
      * @return bool
      */

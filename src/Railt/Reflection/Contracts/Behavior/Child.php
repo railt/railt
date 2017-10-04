@@ -10,11 +10,14 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Behavior;
 
 /**
- * Interface Child
+ * The interface indicates that the parent
+ * type is a child of another type.
  */
 interface Child
 {
     /**
+     * Returns a reference to the parent type.
+     *
      * @return Nameable
      */
     public function getParent(): Nameable;

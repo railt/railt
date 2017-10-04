@@ -32,6 +32,15 @@ trait BaseFieldsContainer
     }
 
     /**
+     * @param FieldType $field
+     * @return void
+     */
+    public function addField(FieldType $field): void
+    {
+        $this->fields[$field->getName()] = $field;
+    }
+
+    /**
      * @param string $name
      * @return bool
      */

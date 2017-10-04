@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Compiler\Persisting\Persister;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\ObjectType;
 
@@ -27,20 +29,14 @@ class ExtendTestCase extends AbstractReflectionTestCase
     public function provider(): array
     {
         $schema = <<<GraphQL
-interface Interface {}
-type Object implements Interface {}
-
-union Union = Object | Test
-# union Any = String | Float | Bool
-
-# До
 type Test {
-    id: Union
+    id: String
+    createdAt: DateTime!
 }
 
-# После (переопределяем)
-extend type Test {
-    id: Object
+extend type Test @deprecated(reason: "Test") {
+    id(arg: String): ID
+    updatedAt: DateTime
 }
 GraphQL;
 
@@ -50,13 +46,60 @@ GraphQL;
     /**
      * @dataProvider provider
      *
-     * @param Document $document
+     * @param Document|DocumentBuilder $document
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSomeType(Document $document): void
+    public function testType(Document $document): void
+    {
+        /** @var ObjectType $type */
+        $type = $document->getType('Test');
+
+        static::assertNotNull($type);
+        static::assertNotNull($type->getField('id'));
+
+        static::assertEquals(3, $type->getNumberOfFields());
+        static::assertCount(3, $type->getFields());
+    }
+
+    /**
+     * @dataProvider provider
+     *
+     * @param Document|DocumentBuilder $document
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testTypeFields(Document $document): void
+    {
+        /** @var ObjectType $type */
+        $type = $document->getType('Test');
+
+        static::assertNotNull($type);
+
+        static::assertTrue($type->hasField('id'));
+        static::assertTrue($type->hasField('createdAt'));
+        static::assertTrue($type->hasField('updatedAt'));
+        static::assertFalse($type->hasField('deprecated'));
+    }
+
+    /**
+     * @dataProvider provider
+     *
+     * @param Document|DocumentBuilder $document
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testTypeArguments(Document $document): void
     {
         /** @var ObjectType $type */
         $type = $document->getType('Test');
         static::assertNotNull($type);
+
+        $field = $type->getField('id');
+        static::assertNotNull($field);
+
+        static::assertTrue($field->hasArgument('arg'));
+        static::assertNotNull($field->getArgument('arg'));
+        static::assertCount(1, $field->getArguments());
     }
 }

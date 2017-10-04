@@ -11,7 +11,10 @@ namespace Railt\Reflection\Base;
 
 use Railt\Reflection\Base\Behavior\BaseChild;
 use Railt\Reflection\Base\Behavior\BaseTypeIndicator;
+use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Types\ArgumentType;
+use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
  * Class BaseArgument
@@ -37,6 +40,20 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
     public function getTypeName(): string
     {
         return 'Argument';
+    }
+
+    /**
+     * @return NamedTypeInterface
+     * @throws TypeConflictException
+     */
+    public function getType(): NamedTypeInterface
+    {
+        if ($this->resolve()->type instanceof Inputable) {
+            return $this->type;
+        }
+
+        $error = 'Argument "%s" type must be inputable (Input, Union or Scalar) but "%s" given.';
+        throw new TypeConflictException(\sprintf($error, $this->getName(), $this->type->getTypeName()));
     }
 
     /**

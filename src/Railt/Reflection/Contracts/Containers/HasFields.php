@@ -12,7 +12,8 @@ namespace Railt\Reflection\Contracts\Containers;
 use Railt\Reflection\Contracts\Types\FieldType;
 
 /**
- * Interface HasFields
+ * The interface indicates that the type is a container that
+ * contains a list of fields in the type.
  */
 interface HasFields
 {

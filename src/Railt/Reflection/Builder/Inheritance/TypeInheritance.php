@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Builder\Coercion;
+namespace Railt\Reflection\Builder\Inheritance;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication as Type;
 use Railt\Reflection\Contracts\Types\InterfaceType;
@@ -20,7 +20,7 @@ use Railt\Reflection\Exceptions\TypeConflictException;
 /**
  * Class Inheritance
  */
-class Inheritance
+class TypeInheritance
 {
     private const SYNTAX_LIST = '[%s]';
     private const SYNTAX_NON_NULL = '%s!';
@@ -34,23 +34,9 @@ class Inheritance
     public function checkType(Type $def, Type $new): bool
     {
         $this->checkContainerOverriding($def, $new);
-        
-        if (! $this->checkTypeCompatibility($def, $new)) {
-            /**
-             * @var NamedTypeInterface $original
-             * @var NamedTypeInterface $overridden
-             */
-            [$original, $overridden] = [$def->getType(), $new->getType()];
 
-            $error = 'Type %s<%s> not compatible with %s<%s>';
-            $error = \sprintf(
-                $error,
-                $original->getTypeName(),
-                $original->getName(),
-                $overridden->getTypeName(),
-                $overridden->getName()
-            );
-            throw new TypeConflictException($error);
+        if (! $this->checkTypeCompatibility($def, $new)) {
+            $this->throwIncompatibleError($def->getType(), $new->getType());
         }
 
         return false;
@@ -146,23 +132,11 @@ class Inheritance
         /**
          * Check Union type overriding by child
          */
-        if($this->checkUnionCompatibility($original, $overridden)) {
+        if ($this->checkUnionCompatibility($original, $overridden)) {
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param NamedTypeInterface|UnionType $def
-     * @param NamedTypeInterface $new
-     * @return bool
-     */
-    private function checkUnionCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
-    {
-        $isUnion = $def instanceof UnionType;
-
-        return !($isUnion && !$def->hasType($new->getName()));
     }
 
     /**
@@ -176,7 +150,7 @@ class Inheritance
      */
     private function checkScalarCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
     {
-        $baseType     = \get_class($def);
+        $baseType = \get_class($def);
         $isCompatible = $new instanceof $baseType;
 
         return $isCompatible ? true : $this->throwScalarOverridingError($def, $new);
@@ -192,7 +166,7 @@ class Inheritance
     {
         $error = 'Type Scalar %s can not be overriding by wider or incompatible Scalar %s.';
         $error = \sprintf($error, $def->getName(), $new->getName());
-        
+
         throw new TypeConflictException($error);
     }
 
@@ -206,10 +180,33 @@ class Inheritance
         // Is the definition is Interface and implementation is Object
         $isImplementation = $def instanceof InterfaceType && $new instanceof ObjectType;
 
-        if ($isImplementation && ! $new->hasInterface($def->getName())) {
-            return false;
-        }
+        return ! ($isImplementation && ! $new->hasInterface($def->getName()));
+    }
 
-        return true;
+    /**
+     * @param NamedTypeInterface|UnionType $def
+     * @param NamedTypeInterface $new
+     * @return bool
+     */
+    private function checkUnionCompatibility(NamedTypeInterface $def, NamedTypeInterface $new): bool
+    {
+        $isUnion = $def instanceof UnionType;
+
+        return ! ($isUnion && ! $def->hasType($new->getName()));
+    }
+
+    /**
+     * @param NamedTypeInterface $def
+     * @param NamedTypeInterface $type
+     * @return void
+     * @throws TypeConflictException
+     */
+    private function throwIncompatibleError(NamedTypeInterface $def, NamedTypeInterface $type): void
+    {
+        $original = \sprintf('%s<%s>', $def->getTypeName(), $def->getName());
+        $extended = \sprintf('%s<%s>', $type->getTypeName(), $type->getName());
+        $error = \sprintf('Type %s not compatible with %s', $original, $extended);
+
+        throw new TypeConflictException($error);
     }
 }

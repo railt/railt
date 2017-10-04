@@ -97,6 +97,8 @@ trait Builder
     public function compileIfNotCompiled(): bool
     {
         if ($this->completed === false) {
+            $this->completed = true;
+
             if ($this instanceof TypeInterface) {
                 // Initialize identifier
                 $this->getUniqueId();
@@ -114,7 +116,7 @@ trait Builder
                 }
             }
 
-            return $this->completed = true;
+            return true;
         }
 
         return false;

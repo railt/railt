@@ -12,7 +12,8 @@ namespace Railt\Reflection\Contracts\Containers;
 use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
 
 /**
- * Interface HasDirectives
+ * The interface indicates that the type is a container that
+ * contains a list of directives in the type.
  */
 interface HasDirectives
 {

@@ -11,6 +11,7 @@ namespace Railt\Reflection\Base\Containers;
 
 use Railt\Reflection\Contracts\Containers\HasDirectives;
 use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
+use Railt\Reflection\Contracts\Types\DirectiveType;
 
 /**
  * Trait BaseDirectivesContainer
@@ -29,6 +30,15 @@ trait BaseDirectivesContainer
     public function getDirectives(): iterable
     {
         return \array_values($this->resolve()->directives);
+    }
+
+    /**
+     * @param DirectiveInvocation $directive
+     * @return void
+     */
+    public function addDirective(DirectiveInvocation $directive): void
+    {
+        $this->directives[$directive->getName()] = $directive;
     }
 
     /**
