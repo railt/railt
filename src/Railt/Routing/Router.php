@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Container\ContainerInterface;
 use Railt\Routing\Contracts\RouteInterface;
 use Railt\Routing\Contracts\RouterInterface;
 
@@ -19,32 +18,23 @@ use Railt\Routing\Contracts\RouterInterface;
 class Router implements RouterInterface
 {
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @var array
-     */
-    private $namespaces = [];
-
-    /**
      * @var array|RouteInterface[]
      */
-    private $routes = [];
+    protected $routes = [];
 
     /**
      * @var array
      */
-    private $cached = [];
+    private $storage = [];
 
     /**
-     * Router constructor.
-     * @param ContainerInterface $container
+     * @param string $route
+     * @param callable|string $then
+     * @return RouteInterface
      */
-    public function __construct(ContainerInterface $container)
+    public function query(string $route, $then): RouteInterface
     {
-        $this->container = $container;
+        return $this->any($route, $then)->method(Route::METHOD_QUERY);
     }
 
     /**
@@ -54,38 +44,7 @@ class Router implements RouterInterface
      */
     public function any(string $route, $then): RouteInterface
     {
-        return $this->add($route, $then);
-    }
-
-    /**
-     * @param string $route
-     * @param callable|string $then
-     * @return Route
-     */
-    private function add(string $route, $then): Route
-    {
-        $this->reset();
-
-        return $this->routes[] = new Route($this, $route, $then);
-    }
-
-    /**
-     * Reset cache
-     * @return void
-     */
-    private function reset(): void
-    {
-        $this->cached = [];
-    }
-
-    /**
-     * @param string $route
-     * @param callable|string $then
-     * @return RouteInterface
-     */
-    public function query(string $route, $then): RouteInterface
-    {
-        return $this->add($route, $then)->type(Route::REQUEST_TYPE_QUERY);
+        return $this->routes[] = (new Route($route))->then($then);
     }
 
     /**
@@ -95,7 +54,7 @@ class Router implements RouterInterface
      */
     public function mutation(string $route, $then): RouteInterface
     {
-        return $this->add($route, $then)->type(Route::REQUEST_TYPE_MUTATION);
+        return $this->any($route, $then)->method(Route::METHOD_MUTATION);
     }
 
     /**
@@ -105,32 +64,31 @@ class Router implements RouterInterface
      */
     public function subscription(string $route, $then): RouteInterface
     {
-        return $this->add($route, $then)->type(Route::REQUEST_TYPE_SUBSCRIPTION);
+        return $this->any($route, $then)->method(Route::METHOD_SUBSCRIPTION);
     }
 
     /**
      * @param string $route
      * @return iterable|RouteInterface[]
      */
-    public function get(string $route): iterable
+    public function find(string $route): iterable
     {
-        if (! array_key_exists($route, $this->cached)) {
-            $this->compileRouteCacheIfNotCompiled($route);
+        if (! \array_key_exists($route, $this->storage)) {
+            $this->storage[$route] = \iterator_to_array($this->matchRoutes($route));
         }
 
-        return $this->cached[$route];
+        return $this->storage[$route];
     }
 
     /**
-     * @param string $routePath
+     * @param string $route
+     * @return \Traversable|RouteInterface[]
      */
-    private function compileRouteCacheIfNotCompiled(string $routePath): void
+    private function matchRoutes(string $route): \Traversable
     {
-        $this->cached[$routePath] = [];
-
-        foreach ($this->routes as $route) {
-            if ($route->match($routePath)) {
-                $this->cached[$routePath][] = $route;
+        foreach ($this->routes as $exists) {
+            if ($exists->match($route)) {
+                yield $exists;
             }
         }
     }
@@ -141,26 +99,6 @@ class Router implements RouterInterface
      */
     public function has(string $route): bool
     {
-        if (! array_key_exists($route, $this->cached)) {
-            $this->compileRouteCacheIfNotCompiled($route);
-        }
-
-        return count($this->cached[$route]) > 0;
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
-    }
-
-    /**
-     * @return array
-     */
-    public function getNamespaces(): array
-    {
-        return $this->namespaces;
+        return \count($this->find($route)) > 0;
     }
 }

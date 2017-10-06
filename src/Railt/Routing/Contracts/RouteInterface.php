@@ -15,21 +15,16 @@ namespace Railt\Routing\Contracts;
 interface RouteInterface
 {
     /**
-     * @return RouterInterface
-     */
-    public function getRouter(): RouterInterface;
-
-    /**
      * @param string[] ...$middleware
      * @return RouteInterface
      */
     public function middleware(string ...$middleware): RouteInterface;
 
     /**
-     * @param string[] ...$queryTypes
+     * @param string[] ...$methods
      * @return RouteInterface
      */
-    public function type(string ...$queryTypes): RouteInterface;
+    public function method(string ...$methods): RouteInterface;
 
     /**
      * @param string $route
@@ -37,10 +32,9 @@ interface RouteInterface
      */
     public function match(string $route): bool;
 
-
     /**
-     * @param array $params
-     * @return mixed
+     * @param string|callable|\Closure $action
+     * @return RouteInterface
      */
-    public function call(array $params = []);
+    public function then($action): RouteInterface;
 }

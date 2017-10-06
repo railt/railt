@@ -168,9 +168,6 @@ Definitions:
 //      - ID:       http://facebook.github.io/graphql/#sec-ID
 //      - Any:      https://github.com/facebook/graphql/pull/325
 //
-Scalar:
-    <T_NAME>
-
 ValueKeyword:
     <T_BOOL_TRUE>
         |
@@ -221,29 +218,21 @@ String:
         |
     (::T_STRING_OPEN:: <T_STRING> ::T_STRING_CLOSE::)
 
-Relation:
+Word:
     <T_NAME>
+        |
+    ValueKeyword()
 
 Name:
-    (
-        Scalar()
-            |
-        ValueKeyword()
-            |
-        Relation()
-    ) #Name
+    Word() #Name
 
 Key:
     (
         String()
             |
-        Scalar()
+        Word()
             |
         Keyword()
-            |
-        ValueKeyword()
-            |
-        Relation()
     ) #Name
 
 Value:
@@ -256,15 +245,11 @@ Value:
             |
         Keyword()
             |
-        Scalar()
-            |
-        Relation()
-            |
         Object()
             |
         List()
             |
-        ValueKeyword()
+        Word()
     ) #Value
 
 ValueDefinition:
@@ -280,7 +265,7 @@ ValueListDefinition:
     ::T_BRACKET_CLOSE::
 
 ValueScalarDefinition:
-    Keyword() | Scalar() | <T_NAME>
+    Keyword() | Word()
 
 
 Object:
@@ -669,11 +654,9 @@ EnumField:
 //
 EnumValue:
     (
-        Scalar()
+        <T_NAME>
             |
         Keyword()
-            |
-        Relation()
     ) #Name
 
 

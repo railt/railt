@@ -9,33 +9,36 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Http\Request;
 use Railt\Routing\Contracts\RouteInterface;
-use Railt\Routing\Contracts\RouterInterface;
 
 /**
  * Class Route
  */
 class Route implements RouteInterface
 {
-    public const REQUEST_TYPE_QUERY = 'query';
-    public const REQUEST_TYPE_MUTATION = 'mutation';
-    public const REQUEST_TYPE_SUBSCRIPTION = 'subscription';
+    /**
+     * GraphQL Query method
+     */
+    public const METHOD_QUERY = 'query';
 
     /**
-     * Query type ("query", "mutation" or "subscription")
+     * GraphQL Mutation method
      */
-    private const METADATA_REQUEST_TYPE = 'type';
+    public const METHOD_MUTATION = 'mutation';
 
     /**
-     * Metadata middleware list
+     * GraphQL Subscription method
      */
-    private const METADATA_MIDDLEWARE = 'middleware';
+    public const METHOD_SUBSCRIPTION = 'subscription';
 
     /**
-     * @var RouterInterface|Router
+     * GraphQL ANY of already defined methods
      */
-    private $parent;
+    public const METHOD_ANY = [
+        self::METHOD_QUERY,
+        self::METHOD_MUTATION,
+        self::METHOD_SUBSCRIPTION,
+    ];
 
     /**
      * @var string
@@ -43,193 +46,88 @@ class Route implements RouteInterface
     private $route;
 
     /**
-     * @var array
+     * @var string|null
      */
-    private $metadata = [];
+    private $pattern;
 
     /**
-     * @var string|callable
+     * @var array
+     */
+    private $methods = self::METHOD_ANY;
+
+    /**
+     * @var array
+     */
+    private $middleware = [];
+
+    /**
+     * @var string|callable|\Closure
      */
     private $action;
 
     /**
-     * @var StringableAction|null
-     */
-    private $parser;
-
-    /**
      * Route constructor.
-     * @param RouterInterface $parent
      * @param string $route
-     * @param string|callable $action
+     * @param string $method
+     * @internal param callable|\Closure|string $action
      */
-    public function __construct(RouterInterface $parent, string $route, $action)
+    public function __construct(string $route, string $method = null)
     {
-        $this->parent = $parent;
         $this->route = $route;
+        $this->method(...($method === null ? self::METHOD_ANY : [$method]));
+    }
+
+    /**
+     * @param callable|\Closure|string $action
+     * @return RouteInterface
+     */
+    public function then($action): RouteInterface
+    {
         $this->action = $action;
-    }
-
-    /**
-     * @param string $key
-     * @return Route
-     */
-    private function bootMetadata(string $key): Route
-    {
-        if (!array_key_exists($key, $this->metadata)) {
-            $this->metadata[$key] = [];
-        }
 
         return $this;
-    }
-
-    /**
-     * @param string $key
-     * @param string[] ...$values
-     * @return Route
-     */
-    private function addMetadata(string $key, string ...$values): Route
-    {
-        $this->bootMetadata($key);
-
-        foreach ($values as $value) {
-            $this->metadata[$key][] = $value;
-        }
-
-        $this->metadata[$key] = array_unique($this->metadata[$key]);
-
-        return $this;
-    }
-
-    /**
-     * @param string $key
-     * @param string $value
-     * @return bool
-     */
-    private function hasMetadata(string $key, string $value): bool
-    {
-        return in_array($value, $this->getMetadata($key), true);
-    }
-
-    /**
-     * @param string $key
-     * @return array
-     */
-    private function getMetadata(string $key): array
-    {
-        $this->bootMetadata($key);
-
-        return $this->metadata[$key];
     }
 
     /**
      * @param string[] ...$middleware
      * @return RouteInterface
-     * @throws \LogicException
      */
     public function middleware(string ...$middleware): RouteInterface
     {
-        return $this->addMetadata(self::METADATA_MIDDLEWARE, ...$middleware);
+        $this->middleware = \array_unique(\array_merge($this->middleware, $middleware));
+
+        return $this;
     }
 
     /**
-     * @return array
-     */
-    public function getMiddleware(): array
-    {
-        return $this->getMetadata(self::METADATA_MIDDLEWARE);
-    }
-
-    /**
-     * @param string $middleware
-     * @return bool
-     */
-    public function hasMiddleware(string $middleware): bool
-    {
-        return $this->hasMetadata(self::METADATA_MIDDLEWARE, $middleware);
-    }
-
-    /**
-     * @param string[] ...$queryTypes
+     * @param string[] ...$methods
      * @return RouteInterface
      */
-    public function type(string ...$queryTypes): RouteInterface
+    public function method(string ...$methods): RouteInterface
     {
-        return $this->addMetadata(self::METADATA_REQUEST_TYPE, ...$queryTypes);
+        $this->methods = \array_unique($methods);
+
+        return $this;
     }
 
     /**
-     * @return array
-     */
-    public function getTypes(): array
-    {
-        return $this->getMetadata(self::METADATA_REQUEST_TYPE);
-    }
-
-    /**
-     * @param string $requestType
+     * @param string $route
      * @return bool
      */
-    public function hasType(string $requestType): bool
+    public function match(string $route): bool
     {
-        return $this->hasMetadata(self::METADATA_REQUEST_TYPE, $requestType);
+        return (int)\preg_match($this->getPattern(), $route) > 0;
     }
 
     /**
      * @return string
      */
-    public function getRoute(): string
+    private function getPattern(): string
     {
-        return $this->route;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPattern(): string
-    {
-        return sprintf('/^%s$/isu', preg_quote($this->route, '/'));
-    }
-
-    /**
-     * @param string $action
-     * @return bool
-     * @throws \LogicException
-     */
-    public function match(string $action): bool
-    {
-        return preg_match($this->getPattern(), $action) > 0;
-    }
-
-    /**
-     * @param array $params
-     * @return mixed
-     * @throws \InvalidArgumentException
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \ReflectionException
-     */
-    public function call(array $params = [])
-    {
-        $container = $this->parent->getContainer();
-        $callable  = $this->action;
-
-        if (!is_callable($callable) && is_string($callable)) {
-            if ($this->parser === null) {
-                $this->parser = new StringableAction($container);
-            }
-
-            $callable = $this->parser->toCallable($callable, $this->parent->getNamespaces());
+        if ($this->pattern === null) {
+            $this->pattern = \sprintf('/^%s$/isu', \preg_quote($this->route, '/'));
         }
 
-        return $container->call($callable, $params);
-    }
-
-    /**
-     * @return RouterInterface
-     */
-    public function getRouter(): RouterInterface
-    {
-        return $this->parent;
+        return $this->pattern;
     }
 }

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Support;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Behavior\Child;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
@@ -47,11 +48,7 @@ trait TypeIndicationBuilder
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
             if ($child->getValueToken() === 'T_NON_NULL') {
-                if ($this->isList) {
-                    $this->isListOfNonNulls = true;
-                } else {
-                    $this->isNonNull = true;
-                }
+                $this->isNonNull = true;
             } else {
                 $name = $child->getValueValue();
                 $this->type = $this->getCompiler()->get($name);
@@ -103,7 +100,7 @@ trait TypeIndicationBuilder
             }
 
             if ($child->getValueToken() === 'T_NON_NULL') {
-                $this->isNonNull = true;
+                $this->isNonNullList = true;
             }
         }
 

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Builder\Support;
+namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Compiler\CompilerInterface;
@@ -17,6 +17,11 @@ use Railt\Reflection\Compiler\CompilerInterface;
  */
 interface Compilable
 {
+    /**
+     *
+     */
+    public const ACTION_PREFIX = 'compile';
+
     /**
      * @return bool
      */

@@ -191,7 +191,7 @@ GraphQL;
         static::assertSame('Example', $some->getArgument('opt')->getDefaultValue());
         static::assertTrue($some->getArgument('opt')->isNonNull());
         static::assertFalse($some->getArgument('opt')->isList());
-        static::assertFalse($some->getArgument('opt')->isListOfNonNulls());
+        static::assertFalse($some->getArgument('opt')->isNonNullList());
         static::assertSame('String', $some->getArgument('opt')->getType()->getName());
 
 
@@ -202,7 +202,7 @@ GraphQL;
         static::assertNull($some->getArgument('opt2')->getDefaultValue());
         static::assertFalse($some->getArgument('opt2')->isNonNull());
         static::assertFalse($some->getArgument('opt2')->isList());
-        static::assertFalse($some->getArgument('opt2')->isListOfNonNulls());
+        static::assertFalse($some->getArgument('opt2')->isNonNullList());
         static::assertSame('String', $some->getArgument('opt2')->getType()->getName());
 
         // Definition of `req: ID!`
@@ -212,7 +212,7 @@ GraphQL;
         static::assertNull($some->getArgument('req')->getDefaultValue());
         static::assertTrue($some->getArgument('req')->isNonNull());
         static::assertFalse($some->getArgument('req')->isList());
-        static::assertFalse($some->getArgument('req')->isListOfNonNulls());
+        static::assertFalse($some->getArgument('req')->isNonNullList());
         static::assertSame('ID', $some->getArgument('req')->getType()->getName());
 
         // Undefined

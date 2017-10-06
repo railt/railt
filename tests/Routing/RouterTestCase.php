@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Routing;
 
-use Railt\Container\Container;
-use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Router;
 use Railt\Tests\AbstractTestCase;
+use Railt\Routing\Contracts\RouterInterface;
 
 /**
  * Class RouterTestCase
@@ -25,7 +24,7 @@ class RouterTestCase extends AbstractTestCase
      */
     private function mock(): RouterInterface
     {
-        return new Router(new Container());
+        return new Router();
     }
 
     /**
@@ -51,10 +50,10 @@ class RouterTestCase extends AbstractTestCase
         $router->any('some', 'Action');
         $router->query('some', 'Some');
 
-        $this->assertCount(2, $router->get('some'));
-        $this->assertCount(0, $router->get('before.some'));
-        $this->assertCount(0, $router->get('some.after'));
-        $this->assertCount(0, $router->get('somea'));
+        $this->assertCount(2, $router->find('some'));
+        $this->assertCount(0, $router->find('before.some'));
+        $this->assertCount(0, $router->find('some.after'));
+        $this->assertCount(0, $router->find('somea'));
         $this->assertFalse($router->has('some.after'));
     }
 }

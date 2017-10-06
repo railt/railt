@@ -12,7 +12,6 @@ namespace Railt\Reflection\Builder;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseScalar;
 use Railt\Reflection\Builder\Support\Builder;
-use Railt\Reflection\Builder\Support\Compilable;
 
 /**
  * Class ScalarBuilder

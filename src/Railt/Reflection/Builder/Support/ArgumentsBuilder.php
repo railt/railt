@@ -26,13 +26,12 @@ trait ArgumentsBuilder
     public function compileArgumentsBuilder(TreeNode $ast): bool
     {
         /** @var Nameable $this */
-        switch ($ast->getId()) {
-            case '#Argument':
-                $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
+        if ($ast->getId() === '#Argument') {
+            $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
 
-                $this->arguments[$argument->getName()] = $argument;
+            $this->arguments[$argument->getName()] = $argument;
 
-                return true;
+            return true;
         }
 
         return false;

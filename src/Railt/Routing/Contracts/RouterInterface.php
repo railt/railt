@@ -46,7 +46,7 @@ interface RouterInterface
      * @param string $route
      * @return iterable|RouteInterface[]
      */
-    public function get(string $route): iterable;
+    public function find(string $route): iterable;
 
     /**
      * @param string $route

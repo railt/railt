@@ -25,7 +25,10 @@ use Railt\Reflection\Exceptions\TypeConflictException;
  */
 class ObjectBuilder extends BaseObject implements Compilable
 {
-    use Builder;
+    use Builder {
+        compileIfNotCompiled as precompile;
+    }
+
     use FieldsBuilder;
 
     /**
@@ -68,14 +71,18 @@ class ObjectBuilder extends BaseObject implements Compilable
     }
 
     /**
-     * @return void
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @return bool
+     * @throws TypeConflictException
      */
-    public function verify(): void
+    public function compileIfNotCompiled(): bool
     {
-        foreach ($this->interfaces as $interface) {
-            $this->checkInterface($interface);
+        if (($result = $this->precompile()) === true) {
+            foreach ($this->interfaces as $interface) {
+                $this->checkInterface($interface);
+            }
         }
+
+        return $result;
     }
 
     /**
@@ -106,7 +113,7 @@ class ObjectBuilder extends BaseObject implements Compilable
 
             $objectField = $object->getField($field->getName());
 
-            $this->inheritance->verify($objectField, $field);
+            $this->inheritance->checkType($objectField, $field);
 
             $this->checkArguments($objectField, $field);
         }
@@ -140,7 +147,7 @@ class ObjectBuilder extends BaseObject implements Compilable
             }
 
             $objectArgument = $object->getArgument($argument->getName());
-            $this->inheritance->verify($objectArgument, $argument);
+            $this->inheritance->checkType($objectArgument, $argument);
         }
     }
 }

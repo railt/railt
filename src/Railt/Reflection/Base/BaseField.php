@@ -40,7 +40,7 @@ abstract class BaseField extends BaseNamedType implements FieldType
             'type',
             'isList',
             'isNonNull',
-            'isListOfNonNulls',
+            'isNonNullList',
             'parent',
             'arguments',
         ]);

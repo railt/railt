@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base;
 
+use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Contracts\Types\ScalarType;
 
 /**

@@ -11,8 +11,8 @@ namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseEnum;
+use Railt\Reflection\Builder\Enum\ValueBuilder;
 use Railt\Reflection\Builder\Support\Builder;
-use Railt\Reflection\Builder\Support\Compilable;
 
 /**
  * Class EnumBuilder
@@ -39,6 +39,13 @@ class EnumBuilder extends BaseEnum implements Compilable
      */
     public function compile(TreeNode $ast): bool
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        if ($ast->getId() === '#Value') {
+            $value =  new ValueBuilder($ast, $this->getDocument(), $this);
+            $this->values[$value->getValue()] = $value;
+
+            return true;
+        }
+
+        return false;
     }
 }
