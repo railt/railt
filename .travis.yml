@@ -9,10 +9,6 @@ env:
   global:
     - setup=basic
 
-matrix:
-  allow_failures:
-    - php: 7.2
-
 cache:
   directories:
     - $HOME/.composer/cache
