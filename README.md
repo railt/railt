@@ -36,13 +36,13 @@ thereby solving problems such as:
 
 > This documentation can contain NOT RELEVANT information and currently in progress.
 
-- [Russian](https://railt.github.io/docs/#/ru/)
-- [English](https://railt.github.io/docs)
+- [Russian](https://railt.org/ru/)
+- [English](https://railt.org/en/)
 
 ## Contributing
 
 Thank you for considering contributing to the Railt Framework! 
-The contribution guide can be found in the [documentation](http://railt.org/#/ru/contributions).
+The contribution guide can be found in the [documentation](https://railt.org/docs/contributions).
 
 ## Security Vulnerabilities
 
@@ -52,4 +52,3 @@ at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
 ## License
 
 The Railt Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
