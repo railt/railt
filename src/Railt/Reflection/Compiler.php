@@ -15,6 +15,7 @@ use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser;
 use Railt\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Compiler\Dictionary;
 use Railt\Reflection\Compiler\Loader;
@@ -22,6 +23,7 @@ use Railt\Reflection\Compiler\Persisting\ArrayPersister;
 use Railt\Reflection\Compiler\Persisting\Persister;
 use Railt\Reflection\Compiler\Persisting\Proxy;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Types\ExtendType;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Contracts\Types\TypeInterface;
 use Railt\Reflection\Standard\GraphQLDocument;
@@ -113,6 +115,25 @@ class Compiler implements CompilerInterface
     }
 
     /**
+     * Process eager loading for compile-time types, like "extend"
+     *
+     * @param Document $document
+     * @return void
+     */
+    private function bootProcessableTypes(Document $document)
+    {
+        $processable = [ExtendType::class];
+
+        foreach ($document->getTypes() as $type) {
+            foreach ($processable as $interface) {
+                if ($type instanceof $interface && $type instanceof Compilable) {
+                    $type->compileIfNotCompiled();
+                }
+            }
+        }
+    }
+
+    /**
      * @return \Closure
      * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
      * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
@@ -123,7 +144,12 @@ class Compiler implements CompilerInterface
         return function (ReadableInterface $readable): Document {
             $ast = $this->parser->parse($readable);
 
-            return (new DocumentBuilder($ast, $readable))->withCompiler($this);
+            $document = (new DocumentBuilder($ast, $readable))
+                ->withCompiler($this);
+
+            $this->bootProcessableTypes($document);
+
+            return $document;
         };
     }
 

@@ -18,6 +18,7 @@ use Railt\Reflection\Base\Containers\BaseDirectivesContainer;
 use Railt\Reflection\Base\Containers\BaseFieldsContainer;
 use Railt\Reflection\Builder\Inheritance\TypeInheritance;
 use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Containers\HasArguments;
 use Railt\Reflection\Contracts\Containers\HasDirectives;
@@ -51,9 +52,6 @@ class ExtendBuilder extends BaseExtend implements Compilable
     {
         $this->bootBuilder($ast, $document);
         $this->inheritance = new TypeInheritance();
-
-        // Force compilation
-        $this->compileIfNotCompiled();
     }
 
     /**
