@@ -11,9 +11,9 @@ namespace Railt\Reflection\Builder\Enum;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\Enum\BaseValue;
-use Railt\Reflection\Builder\Compilable;
 use Railt\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Types\EnumType;
 
 /**

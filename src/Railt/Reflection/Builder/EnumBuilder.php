@@ -13,6 +13,7 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseEnum;
 use Railt\Reflection\Builder\Enum\ValueBuilder;
 use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 
 /**
  * Class EnumBuilder

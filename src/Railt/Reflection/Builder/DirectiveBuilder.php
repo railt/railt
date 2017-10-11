@@ -13,6 +13,7 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseDirective;
 use Railt\Reflection\Builder\Support\ArgumentsBuilder;
 use Railt\Reflection\Builder\Support\Builder;
+use Railt\Reflection\Builder\Support\Compilable;
 
 /**
  * Class DirectiveBuilder
