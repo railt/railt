@@ -65,6 +65,7 @@
     },
     "suggest": {
         "railt/webonyx-adapter": "Webonyx GraphQL Adapter for Railt Framework (~self.version).",
+        "railt/youshido-adapter": "Youshido GraphQL Adapter for Railt Framework (~self.version).",
         "psr/cache-implementation": "PSR-6 Cache Implementation",
         "psr/simple-cache-implementation": "PSR-16 Cache Implementation"
     },
