@@ -25,6 +25,12 @@ interface CompilerInterface extends Dictionary
     public function compile(ReadableInterface $readable): Document;
 
     /**
+     * @param \Closure $then
+     * @return CompilerInterface
+     */
+    public function registerAutoloader(\Closure $then): CompilerInterface;
+
+    /**
      * @param TreeNode $ast
      * @return string
      */

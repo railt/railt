@@ -60,7 +60,7 @@ class ObjectBuilder extends BaseObject implements Compilable
         if ($ast->getId() === '#Implements') {
             /** @var TreeNode $child */
             foreach ($ast->getChildren() as $child) {
-                $name = $child->getChild(0)->getValueValue();
+                $name                    = $child->getChild(0)->getValueValue();
                 $this->interfaces[$name] = $this->getCompiler()->get($name);
             }
 
@@ -133,7 +133,7 @@ class ObjectBuilder extends BaseObject implements Compilable
                     'and must therefore be declared in the remaining type "%s"';
 
                 $interfaceName = $interface->getParent()->getName();
-                $remaining = $this->getName() . '.' . $object->getName();
+                $remaining     = $this->getName() . '.' . $object->getName();
 
                 $error = \sprintf(
                     $error,

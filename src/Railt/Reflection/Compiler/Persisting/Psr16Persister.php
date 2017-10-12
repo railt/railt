@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler\Persisting;
 
+use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\SimpleCache\CacheInterface;
 use Railt\Parser\Exceptions\CompilerException;
 use Railt\Reflection\Contracts\Document;
@@ -67,6 +68,7 @@ class Psr16Persister implements Persister
      * @param ReadableInterface $readable
      * @param \Closure $then
      * @return Document
+     * @throws \Exception
      * @throws CompilerException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -78,8 +80,14 @@ class Psr16Persister implements Persister
             return $document;
         }
 
-        return \tap($then($readable), function (Document $document) use ($readable): void {
-            $this->storage->set($readable->getHash(), $document, $this->timeout);
-        });
+        $callee = function (Document $document) use ($readable): void {
+            try {
+                $this->storage->set($readable->getHash(), $document, $this->timeout);
+            } catch (CachePoolException $e) {
+                throw $e->getPrevious();
+            }
+        };
+
+        return \tap($then($readable), $callee);
     }
 }

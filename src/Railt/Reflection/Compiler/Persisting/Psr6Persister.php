@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler\Persisting;
 
+use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Railt\Parser\Exceptions\CompilerException;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Exceptions\BuildingException;
 use Railt\Support\Filesystem\ReadableInterface;
 
 /**
@@ -75,6 +77,7 @@ class Psr6Persister implements Persister
      * @param ReadableInterface $readable
      * @param \Closure $then
      * @return Document
+     * @throws \Railt\Reflection\Exceptions\BuildingException
      * @throws \Railt\Parser\Exceptions\CompilerException
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \LogicException
@@ -103,6 +106,8 @@ class Psr6Persister implements Persister
      * @param ReadableInterface $readable
      * @param Document $document
      * @return Document
+     * @throws \Exception
+     * @throws BuildingException
      * @throws CompilerException
      */
     private function store(ReadableInterface $readable, Document $document): Document
@@ -112,6 +117,10 @@ class Psr6Persister implements Persister
             $item = ($this->persist)($readable, $document);
             $this->touch($item);
             $this->pool->save($item);
+        } catch (CachePoolException $e) {
+            throw $e->getPrevious();
+        } catch (BuildingException $e) {
+            throw $e;
         } catch (\Throwable $fatal) {
             throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
         }

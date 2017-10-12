@@ -61,23 +61,33 @@ abstract class AbstractReflectionTestCase extends AbstractTestCase
     {
         $readable = File::fromSources($body);
 
+        foreach ($this->getCompilers() as $compiler) {
+            yield $compiler->compile($readable);
+        }
+    }
+
+    /**
+     * @return \Generator
+     */
+    protected function getCompilers(): \Generator
+    {
         // Default
-        yield (new Compiler())->compile($readable);
+        yield new Compiler();
 
         // Nullable (Return Document "as is")
-        yield (new Compiler(new NullablePersister()))->compile($readable);
+        yield new Compiler(new NullablePersister());
 
         // Array (Return Document "as is" and store same files into php array stateless memory)
-        yield (new Compiler(new ArrayPersister()))->compile($readable);
+        yield new Compiler(new ArrayPersister());
 
         // Emulation of data saving
-        yield (new Compiler(new EmulatingPersister()))->compile($readable);
+        yield new Compiler(new EmulatingPersister());
 
         // PSR-6 + Flysystem Serialization
-        yield (new Compiler($this->getPsr6FileSystemPersister()))->compile($readable);
+        yield new Compiler($this->getPsr6FileSystemPersister());
 
         // PSR-16 + Filesystem Serialization
-        yield (new Compiler($this->getPsr16FileSystemPersister()))->compile($readable);
+        yield new Compiler($this->getPsr16FileSystemPersister());
     }
 
     /**

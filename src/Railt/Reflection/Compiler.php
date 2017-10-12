@@ -26,6 +26,8 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\ExtendType;
 use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Exceptions\TypeConflictException;
+use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Reflection\Standard\GraphQLDocument;
 use Railt\Support\Filesystem\ReadableInterface;
 
@@ -64,6 +66,17 @@ class Compiler implements CompilerInterface
     }
 
     /**
+     * @param \Closure $then
+     * @return CompilerInterface
+     */
+    public function registerAutoloader(\Closure $then): CompilerInterface
+    {
+        $this->loader->registerAutoloader($then);
+
+        return $this;
+    }
+
+    /**
      * @param null|Persister $persister
      * @return Persister
      */
@@ -98,20 +111,18 @@ class Compiler implements CompilerInterface
     /**
      * @param ReadableInterface $readable
      * @return Document
-     * @throws CompilerException
+     * @throws TypeNotFoundException
+     * @throws TypeConflictException
      * @throws UnexpectedTokenException
      * @throws UnrecognizedTokenException
+     * @throws CompilerException
      */
     public function compile(ReadableInterface $readable): Document
     {
-        try {
-            /** @var DocumentBuilder $document */
-            $document = $this->persister->remember($readable, $this->onCompile());
+        /** @var DocumentBuilder $document */
+        $document = $this->persister->remember($readable, $this->onCompile());
 
-            return $document->withCompiler($this);
-        } catch (\Throwable $fatal) {
-            throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
-        }
+        return $document->withCompiler($this);
     }
 
     /**
@@ -120,7 +131,7 @@ class Compiler implements CompilerInterface
      * @param Document $document
      * @return void
      */
-    private function bootProcessableTypes(Document $document)
+    private function bootProcessableTypes(Document $document): void
     {
         $processable = [ExtendType::class];
 
@@ -135,17 +146,16 @@ class Compiler implements CompilerInterface
 
     /**
      * @return \Closure
-     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws UnexpectedTokenException
+     * @throws UnrecognizedTokenException
+     * @throws CompilerException
      */
     private function onCompile(): \Closure
     {
         return function (ReadableInterface $readable): Document {
             $ast = $this->parser->parse($readable);
 
-            $document = (new DocumentBuilder($ast, $readable))
-                ->withCompiler($this);
+            $document = (new DocumentBuilder($ast, $readable))->withCompiler($this);
 
             $this->bootProcessableTypes($document);
 
