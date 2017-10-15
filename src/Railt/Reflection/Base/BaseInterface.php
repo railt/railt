@@ -9,10 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base;
 
-use Railt\Reflection\Contracts\Types\ObjectType;
-use Railt\Reflection\Contracts\Types\InterfaceType;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 use Railt\Reflection\Base\Containers\BaseFieldsContainer;
+use Railt\Reflection\Contracts\Types\InterfaceType;
 
 /**
  * Class BaseInterface

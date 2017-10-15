@@ -183,7 +183,7 @@ class ObjectTestCase extends AbstractReflectionTestCase
         static::assertFalse($field->isDeprecated());
         static::assertTrue($field->isNonNull());
         static::assertFalse($field->isList());
-        static::assertFalse($field->isNonNullList());
+        static::assertFalse($field->isListOfNonNulls());
         static::assertEquals('ID', $field->getType()->getName());
     }
 

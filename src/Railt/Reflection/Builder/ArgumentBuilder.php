@@ -11,11 +11,13 @@ namespace Railt\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseArgument;
+use Railt\Reflection\Builder\Inheritance\ExceptionHelper;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Builder\Support\TypeIndicationBuilder;
-use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Builder\Support\ValueBuilder;
+use Railt\Reflection\Contracts\Behavior\Nameable;
+use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
  * Class ArgumentBuilder
@@ -23,6 +25,7 @@ use Railt\Reflection\Builder\Support\ValueBuilder;
 class ArgumentBuilder extends BaseArgument implements Compilable
 {
     use Builder;
+    use ExceptionHelper;
     use TypeIndicationBuilder;
 
     /**
@@ -52,5 +55,69 @@ class ArgumentBuilder extends BaseArgument implements Compilable
         }
 
         return false;
+    }
+
+    /**
+     * @return void
+     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     */
+    public function verify(): void
+    {
+        if ($this->hasDefaultValue()) {
+            switch (true) {
+                case $this->getDefaultValue() === null:
+                    $this->verifyNullDefaultValue();
+                    break;
+
+                case \is_array($this->getDefaultValue()):
+                    $this->verifyArrayDefaultValue();
+                    break;
+            }
+        }
+    }
+
+    /**
+     * @return void
+     * @throws TypeConflictException
+     */
+    private function verifyNullDefaultValue(): void
+    {
+        /**
+         * Will throw an Exception when NonNull type like "argument: Type!"
+         * initialized by default "null" value.
+         */
+        if ($this->isNonNull()) {
+            $this->throw('Default non-null value of %s: %s can not be null',
+                $this->typeToString($this),
+                $this->relationToString($this)
+            );
+        }
+    }
+
+    /**
+     * @return void
+     * @throws TypeConflictException
+     */
+    private function verifyArrayDefaultValue(): void
+    {
+        /**
+         * Will throw an Exception when non-list type type like "argument: Type"
+         * initialized by default list value.
+         */
+        if (! $this->isList()) {
+            $this->throw('Default non-list value of %s: %s can not be list',
+                $this->typeToString($this),
+                $this->relationToString($this)
+            );
+        }
+
+        /**
+         * Will throw an Exception when list of non-nulls type like
+         * "argument: [Type!]" or "argument: [Type!]!" contain "null".
+         */
+        if ($this->isListOfNonNulls() && \in_array(null, (array)$this->getDefaultValue(), true)) {
+            $error = 'Default list value of %s: %s type can not contain nulls';
+            $this->throw($error, $this->typeToString($this), $this->relationToString($this));
+        }
     }
 }

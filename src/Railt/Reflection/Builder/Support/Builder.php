@@ -66,6 +66,14 @@ trait Builder
     }
 
     /**
+     * @return void
+     */
+    public function verify(): void
+    {
+        // Postprocess
+    }
+
+    /**
      * @param TreeNode $ast
      * @param DocumentBuilder $document
      * @return void
@@ -115,6 +123,8 @@ trait Builder
                     continue;
                 }
             }
+
+            $this->verify();
 
             return true;
         }

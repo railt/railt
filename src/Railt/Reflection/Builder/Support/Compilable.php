@@ -29,6 +29,11 @@ interface Compilable
     public function compile(TreeNode $ast): bool;
 
     /**
+     * @return void
+     */
+    public function verify(): void;
+
+    /**
      * @return TreeNode
      */
     public function getAst(): TreeNode;

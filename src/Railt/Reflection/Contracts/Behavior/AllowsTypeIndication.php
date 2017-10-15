@@ -46,14 +46,5 @@ interface AllowsTypeIndication
      *
      * @return bool
      */
-    public function isNonNullList(): bool;
-
-    /**
-     * Returns a Boolean value that indicates that the type
-     * can be overridden (in Interface or Extend) by target type.
-     *
-     * @param AllowsTypeIndication $type
-     * @return bool
-     */
-    public function canBeOverridenBy(AllowsTypeIndication $type): bool;
+    public function isListOfNonNulls(): bool;
 }

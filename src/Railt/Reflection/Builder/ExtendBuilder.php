@@ -52,6 +52,9 @@ class ExtendBuilder extends BaseExtend implements Compilable
     {
         $this->bootBuilder($ast, $document);
         $this->inheritance = new TypeInheritance();
+
+        // Force compilation
+        $this->compileIfNotCompiled();
     }
 
     /**
@@ -120,7 +123,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  */
                 $field = $original->getField($extendField->getName());
 
-                $this->inheritance->checkType($field, $extendField);
+                $this->inheritance->verify($field, $extendField);
                 $this->dataFieldExtender()->call($field, $extendField);
 
                 /**
@@ -168,7 +171,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  */
                 $argument = $original->getArgument($extendArgument->getName());
 
-                $this->inheritance->checkType($argument, $extendArgument);
+                $this->inheritance->verify($argument, $extendArgument);
                 $this->dataArgumentExtender()->call($argument, $extendArgument->getType());
 
                 continue;

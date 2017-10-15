@@ -52,7 +52,7 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
             return $this->type;
         }
 
-        $error = 'Argument "%s" type must be inputable (Input or Scalar) but "%s" given.';
+        $error = 'Argument "%s" type must be inputable (Input, Union or Scalar) but "%s" given.';
         throw new TypeConflictException(\sprintf($error, $this->getName(), $this->type->getTypeName()));
     }
 
@@ -85,7 +85,7 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
             'type',
             'isList',
             'isNonNull',
-            'isNonNullList',
+            'isListOfNonNulls',
             'parent',
             'defaultValue',
             'hasDefaultValue',

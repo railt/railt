@@ -51,12 +51,4 @@ abstract class BaseValue extends BaseNamedType implements Value
             'parent',
         ]);
     }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->getValue();
-    }
 }

@@ -13,10 +13,6 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\BaseUnion;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\Compilable;
-use Railt\Reflection\Contracts\Types\InterfaceType;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
-use Railt\Reflection\Contracts\Types\UnionType;
-use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
  * Class UnionBuilder
@@ -39,7 +35,6 @@ class UnionBuilder extends BaseUnion implements Compilable
     /**
      * @param TreeNode $ast
      * @return bool
-     * @throws TypeConflictException
      */
     public function compile(TreeNode $ast): bool
     {
@@ -48,31 +43,11 @@ class UnionBuilder extends BaseUnion implements Compilable
             foreach ($ast->getChildren() as $relation) {
                 $name = $relation->getChild(0)->getValueValue();
                 $this->types[$name] = $this->getCompiler()->get($name);
-
-                $this->checkType($this->types[$name]);
             }
 
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param NamedTypeInterface $type
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function checkType(NamedTypeInterface $type): void
-    {
-        $error = 'Child of Union type can not be';
-
-        if ($type instanceof UnionType) {
-            throw new TypeConflictException($error . ' another Union');
-        }
-
-        if ($type instanceof InterfaceType) {
-            throw new TypeConflictException($error . ' an Interface');
-        }
     }
 }
