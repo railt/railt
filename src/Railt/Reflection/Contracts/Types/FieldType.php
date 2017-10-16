@@ -16,6 +16,6 @@ use Railt\Reflection\Contracts\Containers\HasArguments;
 /**
  * Interface FieldType
  */
-interface FieldType extends HasArguments, AllowsTypeIndication, Child, NamedTypeInterface
+interface FieldType extends HasArguments, AllowsTypeIndication, Child, NamedTypeDefinition
 {
 }

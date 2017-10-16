@@ -17,7 +17,7 @@ use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\SchemaType;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\BuildingException;
 use Railt\Support\Filesystem\File;
 use Railt\Support\Filesystem\ReadableInterface;
@@ -110,7 +110,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
             $this->throwInvalidAstNodeError($ast);
         }
 
-        /** @var Compilable|TypeInterface $instance */
+        /** @var Compilable|TypeDefinition $instance */
         $instance = new $class($ast, $this);
 
         switch (true) {
@@ -126,7 +126,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
                 $this->types[] = $instance;
         }
 
-        if ($instance instanceof TypeInterface) {
+        if ($instance instanceof TypeDefinition) {
             $this->compiler->register($instance);
         }
 

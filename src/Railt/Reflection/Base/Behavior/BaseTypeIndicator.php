@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Behavior;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 
 /**
  * Trait BaseTypeIndicator
@@ -19,7 +19,7 @@ use Railt\Reflection\Contracts\Types\NamedTypeInterface;
 trait BaseTypeIndicator
 {
     /**
-     * @var NamedTypeInterface
+     * @var NamedTypeDefinition
      */
     protected $type;
 
@@ -39,19 +39,19 @@ trait BaseTypeIndicator
     protected $isListOfNonNulls = false;
 
     /**
-     * @return NamedTypeInterface
+     * @return NamedTypeDefinition
      * @throws \Railt\Reflection\Exceptions\TypeNotFoundException
      */
-    public function getType(): NamedTypeInterface
+    public function getType(): NamedTypeDefinition
     {
         return $this->resolve()->type;
     }
 
     /**
-     * @param NamedTypeInterface $type
+     * @param NamedTypeDefinition $type
      * @return void
      */
-    public function setType(NamedTypeInterface $type): void
+    public function setType(NamedTypeDefinition $type): void
     {
         $this->type = $type;
     }

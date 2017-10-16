@@ -13,7 +13,7 @@ use Railt\Reflection\Base\Behavior\BaseChild;
 use Railt\Reflection\Base\Behavior\BaseTypeIndicator;
 use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Types\ArgumentType;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -43,10 +43,10 @@ abstract class BaseArgument extends BaseNamedType implements ArgumentType
     }
 
     /**
-     * @return NamedTypeInterface
+     * @return NamedTypeDefinition
      * @throws TypeConflictException
      */
-    public function getType(): NamedTypeInterface
+    public function getType(): NamedTypeDefinition
     {
         if ($this->resolve()->type instanceof Inputable) {
             return $this->type;

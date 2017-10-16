@@ -16,7 +16,7 @@ use Railt\Reflection\Builder\Inheritance\TypeVerification\ScalarVerifier;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\UnionVerifier;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\Verifier;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -101,12 +101,12 @@ class TypeInheritance extends AbstractVerifier
     }
 
     /**
-     * @param NamedTypeInterface $a
-     * @param NamedTypeInterface $b
+     * @param NamedTypeDefinition $a
+     * @param NamedTypeDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function throwNonCompatibleTypesException(NamedTypeInterface $a, NamedTypeInterface $b): bool
+    private function throwNonCompatibleTypesException(NamedTypeDefinition $a, NamedTypeDefinition $b): bool
     {
         $error = '%s not compatible with %s and can not be redefined by';
 

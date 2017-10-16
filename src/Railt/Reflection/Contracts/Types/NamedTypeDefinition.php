@@ -14,8 +14,8 @@ use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Containers\HasDirectives;
 
 /**
- * Interface NamedTypeInterface
+ * Interface NamedTypeDefinition
  */
-interface NamedTypeInterface extends Nameable, HasDirectives, Deprecatable, TypeInterface
+interface NamedTypeDefinition extends Nameable, HasDirectives, Deprecatable, TypeDefinition
 {
 }

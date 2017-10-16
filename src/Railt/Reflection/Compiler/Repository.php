@@ -11,8 +11,8 @@ namespace Railt\Reflection\Compiler;
 
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -61,16 +61,16 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     private $l2cache = [];
 
     /**
-     * @param TypeInterface $type
+     * @param TypeDefinition $type
      * @param bool $force
      * @return Dictionary
      * @throws TypeConflictException
      */
-    public function register(TypeInterface $type, bool $force = false): Dictionary
+    public function register(TypeDefinition $type, bool $force = false): Dictionary
     {
         $id = $this->getDocumentIdentifier($type->getDocument());
 
-        if ($type instanceof NamedTypeInterface) {
+        if ($type instanceof NamedTypeDefinition) {
             $this->registerNamedType($id, $type, $force);
         } else {
             $this->registerAnonymousType($id, $type, $force);
@@ -96,12 +96,12 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
 
     /**
      * @param string $key
-     * @param NamedTypeInterface $type
+     * @param NamedTypeDefinition $type
      * @param bool $force
      * @return void
      * @throws TypeConflictException
      */
-    private function registerNamedType(string $key, NamedTypeInterface $type, bool $force): void
+    private function registerNamedType(string $key, NamedTypeDefinition $type, bool $force): void
     {
         if (! $force) {
             $this->verifyNamedTypeConsistency($type);
@@ -111,26 +111,26 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param NamedTypeInterface $type
+     * @param NamedTypeDefinition $type
      * @return void
      * @throws TypeConflictException
      */
-    private function verifyNamedTypeConsistency(NamedTypeInterface $type): void
+    private function verifyNamedTypeConsistency(NamedTypeDefinition $type): void
     {
         $registered = $this->l1cache[$type->getName()] ?? null;
 
-        if ($registered instanceof NamedTypeInterface) {
+        if ($registered instanceof NamedTypeDefinition) {
             $this->throwRedefinitionException($registered, $type);
         }
     }
 
     /**
-     * @param TypeInterface $registered
-     * @param TypeInterface $type
+     * @param TypeDefinition $registered
+     * @param TypeDefinition $type
      * @return void
      * @throws TypeConflictException
      */
-    private function throwRedefinitionException(TypeInterface $registered, TypeInterface $type): void
+    private function throwRedefinitionException(TypeDefinition $registered, TypeDefinition $type): void
     {
         $what = $type->getTypeName();
         if ($type instanceof Nameable) {
@@ -146,12 +146,12 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
 
     /**
      * @param string $key
-     * @param TypeInterface $type
+     * @param TypeDefinition $type
      * @param bool $force
      * @return void
      * @throws TypeConflictException
      */
-    private function registerAnonymousType(string $key, TypeInterface $type, bool $force): void
+    private function registerAnonymousType(string $key, TypeDefinition $type, bool $force): void
     {
         if (! $force) {
             $this->verifyAnonymousTypeConsistency($type);
@@ -161,15 +161,15 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param TypeInterface $type
+     * @param TypeDefinition $type
      * @return void
      * @throws TypeConflictException
      */
-    private function verifyAnonymousTypeConsistency(TypeInterface $type): void
+    private function verifyAnonymousTypeConsistency(TypeDefinition $type): void
     {
         $registered = $this->l1cache[\get_class($type)] ?? null;
 
-        if ($registered !== null && ! ($registered instanceof NamedTypeInterface)) {
+        if ($registered !== null && ! ($registered instanceof NamedTypeDefinition)) {
             $this->throwRedefinitionException($registered, $type);
         }
     }
@@ -194,15 +194,15 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     public function has(string $name, Document $document = null): bool
     {
-        return $this->get($name, $document) instanceof TypeInterface;
+        return $this->get($name, $document) instanceof TypeDefinition;
     }
 
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeInterface
+     * @return null|TypeDefinition
      */
-    public function get(string $name, Document $document = null): ?TypeInterface
+    public function get(string $name, Document $document = null): ?TypeDefinition
     {
         if ($document === null) {
             return $this->l1cache[$name] ?? null;
@@ -230,10 +230,10 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param TypeInterface $type
+     * @param TypeDefinition $type
      * @return string
      */
-    public function getTypeIdentifier(TypeInterface $type): string
+    public function getTypeIdentifier(TypeDefinition $type): string
     {
         if ($type instanceof Nameable) {
             return $type->getName();

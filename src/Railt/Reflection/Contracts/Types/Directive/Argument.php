@@ -12,12 +12,12 @@ namespace Railt\Reflection\Contracts\Types\Directive;
 use Railt\Reflection\Contracts\Behavior\Child;
 use Railt\Reflection\Contracts\Behavior\Invokable;
 use Railt\Reflection\Contracts\Types\ArgumentType;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 
 /**
  * Interface Argument
  */
-interface Argument extends Invokable, Child, NamedTypeInterface
+interface Argument extends Invokable, Child, NamedTypeDefinition
 {
     /**
      * @return mixed

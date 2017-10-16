@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Types;
 /**
  * Interface SchemaType
  */
-interface SchemaType extends TypeInterface
+interface SchemaType extends TypeDefinition
 {
     /**
      * @return ObjectType

@@ -16,7 +16,7 @@ use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\DirectiveType;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\BuildingException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 
@@ -59,7 +59,7 @@ class DirectiveInvocationBuilder extends BaseInvocation implements Compilable
     }
 
     /**
-     * @return DirectiveType|TypeInterface
+     * @return DirectiveType|TypeDefinition
      * @throws \Railt\Reflection\Exceptions\TypeNotFoundException
      */
     public function getDirective(): DirectiveType

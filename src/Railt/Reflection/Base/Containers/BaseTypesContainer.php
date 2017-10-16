@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Containers;
 
 use Railt\Reflection\Contracts\Containers\HasTypes;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * Trait BaseTypesContainer
@@ -24,7 +24,7 @@ trait BaseTypesContainer
     protected $types = [];
 
     /**
-     * @return iterable|TypeInterface[]
+     * @return iterable|TypeDefinition[]
      */
     public function getTypes(): iterable
     {
@@ -42,9 +42,9 @@ trait BaseTypesContainer
 
     /**
      * @param string $name
-     * @return null|TypeInterface
+     * @return null|TypeDefinition
      */
-    public function getType(string $name): ?TypeInterface
+    public function getType(string $name): ?TypeDefinition
     {
         return $this->resolve()->types[$name] ?? null;
     }

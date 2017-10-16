@@ -11,7 +11,7 @@ namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Builder\Inheritance\ExceptionHelper;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 
 /**
  * Class AbstractVerifier
@@ -43,9 +43,9 @@ abstract class AbstractVerifier implements Verifier
 
     /**
      * @param AllowsTypeIndication $container
-     * @return NamedTypeInterface
+     * @return NamedTypeDefinition
      */
-    protected function extract(AllowsTypeIndication $container): NamedTypeInterface
+    protected function extract(AllowsTypeIndication $container): NamedTypeDefinition
     {
         return $container->getType();
     }

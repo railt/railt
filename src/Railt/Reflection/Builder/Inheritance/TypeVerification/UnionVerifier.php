@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 use Railt\Reflection\Contracts\Types\UnionType;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
@@ -45,11 +45,11 @@ class UnionVerifier extends AbstractVerifier
 
     /**
      * @param UnionType $a
-     * @param NamedTypeInterface $b
+     * @param NamedTypeDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyUnionType(UnionType $a, NamedTypeInterface $b): bool
+    private function verifyUnionType(UnionType $a, NamedTypeDefinition $b): bool
     {
         if ($b instanceof UnionType) {
             return $this->verifySameType($a, $b);
@@ -76,11 +76,11 @@ class UnionVerifier extends AbstractVerifier
 
     /**
      * @param UnionType $a
-     * @param NamedTypeInterface $b
+     * @param NamedTypeDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyUnionInheritance(UnionType $a, NamedTypeInterface $b): bool
+    private function verifyUnionInheritance(UnionType $a, NamedTypeDefinition $b): bool
     {
         if ($a->hasType($b->getName())) {
             return true;

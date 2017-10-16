@@ -14,7 +14,7 @@ use Railt\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\BuildingException;
 
 /**
@@ -107,7 +107,7 @@ trait Builder
         if ($this->completed === false) {
             $this->completed = true;
 
-            if ($this instanceof TypeInterface) {
+            if ($this instanceof TypeDefinition) {
                 // Initialize identifier
                 $this->getUniqueId();
             }

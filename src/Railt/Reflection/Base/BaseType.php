@@ -12,12 +12,12 @@ namespace Railt\Reflection\Base;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Base\Support\Resolving;
 use Railt\Reflection\Base\Support\Identifier;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Base\Behavior\BaseDeprecations;
 
 /**
  * Class BaseType
- * @mixin TypeInterface
+ * @mixin TypeDefinition
  */
 abstract class BaseType
 {

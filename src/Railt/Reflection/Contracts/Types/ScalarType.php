@@ -14,6 +14,6 @@ use Railt\Reflection\Contracts\Behavior\Inputable;
 /**
  * Interface ScalarType
  */
-interface ScalarType extends Inputable, NamedTypeInterface
+interface ScalarType extends Inputable, NamedTypeDefinition
 {
 }

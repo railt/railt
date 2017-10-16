@@ -22,7 +22,7 @@ use Railt\Reflection\Contracts\Types\InterfaceType;
 use Railt\Reflection\Contracts\Types\ObjectType;
 use Railt\Reflection\Contracts\Types\ScalarType;
 use Railt\Reflection\Contracts\Types\SchemaType;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Contracts\Types\UnionType;
 
 /**
@@ -63,10 +63,10 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
     }
 
     /**
-     * @param null|TypeInterface $type
+     * @param null|TypeDefinition $type
      * @return bool
      */
-    public function isAllowedFor(?TypeInterface $type): bool
+    public function isAllowedFor(?TypeDefinition $type): bool
     {
         if ($type === null) {
             return false;

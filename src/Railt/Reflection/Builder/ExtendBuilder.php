@@ -27,7 +27,7 @@ use Railt\Reflection\Contracts\Types\ArgumentType;
 use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
 use Railt\Reflection\Contracts\Types\ExtendType;
 use Railt\Reflection\Contracts\Types\FieldType;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -74,25 +74,25 @@ class ExtendBuilder extends BaseExtend implements Compilable
     }
 
     /**
-     * @param Nameable|TypeInterface|Compilable $instance
+     * @param Nameable|TypeDefinition|Compilable $instance
      * @return void
      * @throws TypeConflictException
      */
-    private function applyExtender(TypeInterface $instance): void
+    private function applyExtender(TypeDefinition $instance): void
     {
-        /** @var TypeInterface $original */
+        /** @var TypeDefinition $original */
         $original = $this->getCompiler()->get($instance->getName());
 
         $this->extend($original, $instance);
     }
 
     /**
-     * @param TypeInterface $original
-     * @param TypeInterface $extend
+     * @param TypeDefinition $original
+     * @param TypeDefinition $extend
      * @return void
      * @throws \Railt\Reflection\Exceptions\TypeConflictException
      */
-    private function extend(TypeInterface $original, TypeInterface $extend): void
+    private function extend(TypeDefinition $original, TypeDefinition $extend): void
     {
         if ($original instanceof HasFields && $extend instanceof HasFields) {
             $this->extendFields($original, $extend);

@@ -11,7 +11,7 @@ namespace Railt\Reflection\Contracts;
 
 use Railt\Reflection\Contracts\Types\SchemaType;
 use Railt\Reflection\Contracts\Containers\HasTypes;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * The Document is an object that contains information
@@ -19,7 +19,7 @@ use Railt\Reflection\Contracts\Types\TypeInterface;
  *
  * This can be, for example, a GraphQL schema file.
  */
-interface Document extends HasTypes, TypeInterface
+interface Document extends HasTypes, TypeDefinition
 {
     /**
      * Should return the name of file if the Document is physically located on

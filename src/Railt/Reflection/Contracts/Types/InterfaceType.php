@@ -14,7 +14,7 @@ use Railt\Reflection\Contracts\Containers\HasFields;
 /**
  * Interface InterfaceType
  */
-interface InterfaceType extends HasFields, NamedTypeInterface
+interface InterfaceType extends HasFields, NamedTypeDefinition
 {
 
 }

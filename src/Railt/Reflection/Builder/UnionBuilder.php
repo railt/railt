@@ -14,7 +14,7 @@ use Railt\Reflection\Base\BaseUnion;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Types\InterfaceType;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 use Railt\Reflection\Contracts\Types\UnionType;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
@@ -59,11 +59,11 @@ class UnionBuilder extends BaseUnion implements Compilable
     }
 
     /**
-     * @param NamedTypeInterface $type
+     * @param NamedTypeDefinition $type
      * @return void
      * @throws TypeConflictException
      */
-    private function checkType(NamedTypeInterface $type): void
+    private function checkType(NamedTypeDefinition $type): void
     {
         $error = 'Child of Union type can not be';
 

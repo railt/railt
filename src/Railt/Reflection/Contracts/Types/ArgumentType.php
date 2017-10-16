@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Behavior\Child;
 /**
  * Interface ArgumentType
  */
-interface ArgumentType extends AllowsTypeIndication, Child, NamedTypeInterface
+interface ArgumentType extends AllowsTypeIndication, Child, NamedTypeDefinition
 {
     /**
      * @return mixed

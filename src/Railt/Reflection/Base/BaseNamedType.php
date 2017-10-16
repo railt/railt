@@ -11,12 +11,12 @@ namespace Railt\Reflection\Base;
 
 use Railt\Reflection\Base\Behavior\BaseName;
 use Railt\Reflection\Base\Containers\BaseDirectivesContainer;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 
 /**
  * Class BaseNamedType
  */
-abstract class BaseNamedType extends BaseType implements NamedTypeInterface
+abstract class BaseNamedType extends BaseType implements NamedTypeDefinition
 {
     use BaseName;
     use BaseDirectivesContainer;

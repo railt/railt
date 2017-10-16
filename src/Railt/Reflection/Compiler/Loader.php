@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Compiler;
 
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Support\Filesystem\File;
 use Railt\Support\Filesystem\ReadableInterface;
@@ -53,11 +53,11 @@ class Loader extends Repository
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeInterface
+     * @return null|TypeDefinition
      * @throws TypeNotFoundException
      * @throws \Railt\Support\Exceptions\NotReadableException
      */
-    public function get(string $name, Document $document = null): ?TypeInterface
+    public function get(string $name, Document $document = null): ?TypeDefinition
     {
         $result = parent::get($name, $document);
 
@@ -70,11 +70,11 @@ class Loader extends Repository
 
     /**
      * @param string $name
-     * @return TypeInterface
+     * @return TypeDefinition
      * @throws TypeNotFoundException
      * @throws \Railt\Support\Exceptions\NotReadableException
      */
-    private function load(string $name): TypeInterface
+    private function load(string $name): TypeDefinition
     {
         foreach ($this->loaders as $loader) {
             $file = $this->parseResult($loader($name));
@@ -97,9 +97,9 @@ class Loader extends Repository
     /**
      * @param string $name
      * @param ReadableInterface $readable
-     * @return null|TypeInterface
+     * @return null|TypeDefinition
      */
-    private function findType(string $name, ReadableInterface $readable): ?TypeInterface
+    private function findType(string $name, ReadableInterface $readable): ?TypeDefinition
     {
         $document = $this->compiler->compile($readable);
 

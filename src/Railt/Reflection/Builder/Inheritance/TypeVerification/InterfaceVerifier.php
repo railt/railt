@@ -11,7 +11,7 @@ namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Types\InterfaceType;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 use Railt\Reflection\Contracts\Types\ObjectType;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
@@ -46,11 +46,11 @@ class InterfaceVerifier extends AbstractVerifier
 
     /**
      * @param InterfaceType $a
-     * @param NamedTypeInterface $b
+     * @param NamedTypeDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyInterface(InterfaceType $a, NamedTypeInterface $b): bool
+    private function verifyInterface(InterfaceType $a, NamedTypeDefinition $b): bool
     {
         if ($b instanceof ObjectType) {
             return $this->verifyInheritance($a, $b);

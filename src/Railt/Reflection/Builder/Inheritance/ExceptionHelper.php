@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Inheritance;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -49,10 +49,10 @@ trait ExceptionHelper
     }
 
     /**
-     * @param NamedTypeInterface $type
+     * @param NamedTypeDefinition $type
      * @return string
      */
-    protected function typeToString(NamedTypeInterface $type): string
+    protected function typeToString(NamedTypeDefinition $type): string
     {
         return \sprintf('%s<%s>', $type->getTypeName(), $type->getName());
     }

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Compiler;
 
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * Interface Dictionary
@@ -20,22 +20,22 @@ use Railt\Reflection\Contracts\Types\TypeInterface;
 interface Dictionary
 {
     /**
-     * @param TypeInterface $type
+     * @param TypeDefinition $type
      * @param bool $force
      * @return Dictionary
      */
-    public function register(TypeInterface $type, bool $force = false): Dictionary;
+    public function register(TypeDefinition $type, bool $force = false): Dictionary;
 
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeInterface
+     * @return null|TypeDefinition
      */
-    public function get(string $name, Document $document = null): ?TypeInterface;
+    public function get(string $name, Document $document = null): ?TypeDefinition;
 
     /**
      * @param Document|null $document
-     * @return TypeInterface[]|NamedTypeInterface[]
+     * @return TypeDefinition[]|NamedTypeDefinition[]
      */
     public function all(Document $document = null): array;
 

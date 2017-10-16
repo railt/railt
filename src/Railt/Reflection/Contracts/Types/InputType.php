@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Containers\HasArguments;
 /**
  * Interface InputType
  */
-interface InputType extends HasArguments, Inputable, NamedTypeInterface
+interface InputType extends HasArguments, Inputable, NamedTypeDefinition
 {
 
 }

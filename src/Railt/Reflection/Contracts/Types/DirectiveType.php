@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
 /**
  * Interface DirectiveType
  */
-interface DirectiveType extends HasArguments, NamedTypeInterface
+interface DirectiveType extends HasArguments, NamedTypeDefinition
 {
     /**
      * @return iterable|string[]
@@ -29,10 +29,10 @@ interface DirectiveType extends HasArguments, NamedTypeInterface
     public function hasLocation(string $name): bool;
 
     /**
-     * @param null|TypeInterface $type
+     * @param null|TypeDefinition $type
      * @return bool
      */
-    public function isAllowedFor(?TypeInterface $type): bool;
+    public function isAllowedFor(?TypeDefinition $type): bool;
 
     /**
      * @return bool

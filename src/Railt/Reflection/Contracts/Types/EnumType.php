@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Types\Enum\Value;
 /**
  * Interface EnumType
  */
-interface EnumType extends NamedTypeInterface, Inputable
+interface EnumType extends NamedTypeDefinition, Inputable
 {
     /**
      * @return iterable|Value[]

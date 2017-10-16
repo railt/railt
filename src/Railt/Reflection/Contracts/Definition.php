@@ -7,24 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Contracts\Types;
-
-use Railt\Reflection\Contracts\Document;
+namespace Railt\Reflection\Contracts;
 
 /**
- * Interface TypeInterface
+ * Interface Definition
  */
-interface TypeInterface
+interface Definition
 {
     /**
      * @return Document
      */
     public function getDocument(): Document;
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string;
 
     /**
      * A unique identifier for the type is needed to identify the entity

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * Interface TypeLoaderInterface
@@ -23,9 +23,9 @@ interface TypeLoaderInterface
     public function resolve(string $type);
 
     /**
-     * @param TypeInterface $definition
+     * @param TypeDefinition $definition
      * @param string $class
      * @return mixed
      */
-    public function make(TypeInterface $definition, string $class);
+    public function make(TypeDefinition $definition, string $class);
 }

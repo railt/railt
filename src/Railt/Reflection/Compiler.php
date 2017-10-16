@@ -24,8 +24,8 @@ use Railt\Reflection\Compiler\Persisting\Persister;
 use Railt\Reflection\Compiler\Persisting\Proxy;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\ExtendType;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Reflection\Standard\GraphQLDocument;
@@ -164,11 +164,11 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param TypeInterface $type
+     * @param TypeDefinition $type
      * @param bool $force
      * @return Dictionary
      */
-    public function register(TypeInterface $type, bool $force = false): Dictionary
+    public function register(TypeDefinition $type, bool $force = false): Dictionary
     {
         return $this->loader->register($type, $force);
     }
@@ -176,9 +176,9 @@ class Compiler implements CompilerInterface
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeInterface|NamedTypeInterface
+     * @return null|TypeDefinition|NamedTypeDefinition
      */
-    public function get(string $name, Document $document = null): ?TypeInterface
+    public function get(string $name, Document $document = null): ?TypeDefinition
     {
         return $this->loader->get($name, $document);
     }

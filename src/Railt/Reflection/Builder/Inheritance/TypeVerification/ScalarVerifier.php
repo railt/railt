@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeInterface;
+use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
 use Railt\Reflection\Contracts\Types\ScalarType;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
@@ -47,11 +47,11 @@ class ScalarVerifier extends AbstractVerifier
 
     /**
      * @param ScalarType $a
-     * @param NamedTypeInterface $b
+     * @param NamedTypeDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyScalar(ScalarType $a, NamedTypeInterface $b): bool
+    private function verifyScalar(ScalarType $a, NamedTypeDefinition $b): bool
     {
         $type = \get_class($a);
         $child = \get_class($b);

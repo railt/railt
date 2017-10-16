@@ -17,7 +17,7 @@ use Railt\Reflection\Contracts\Behavior\Deprecatable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Containers\HasDirectives;
 use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Standard\Directives\Deprecation;
 
@@ -58,7 +58,7 @@ trait DirectivesBuilder
     {
         $directive = $relation->getDirective();
 
-        if ($this instanceof TypeInterface && ! $directive->isAllowedFor($this)) {
+        if ($this instanceof TypeDefinition && ! $directive->isAllowedFor($this)) {
             $error = 'The usage of the @%s directive together with type %s<%s> is not allowed by the ' .
                 'locations of this directive (%s).';
 

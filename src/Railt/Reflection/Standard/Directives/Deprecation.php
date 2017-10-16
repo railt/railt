@@ -16,7 +16,7 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\ArgumentType;
 use Railt\Reflection\Contracts\Types\Directive\Location;
 use Railt\Reflection\Contracts\Types\DirectiveType;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Standard\Directives\Deprecation\Reason;
 use Railt\Reflection\Standard\StandardType;
 

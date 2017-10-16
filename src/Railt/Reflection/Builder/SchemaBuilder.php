@@ -14,7 +14,7 @@ use Railt\Reflection\Base\BaseSchema;
 use Railt\Reflection\Builder\Support\Builder;
 use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Types\ObjectType;
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * Class SchemaBuilder
@@ -60,7 +60,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
 
     /**
      * @param TreeNode $ast
-     * @return ObjectType|TypeInterface
+     * @return ObjectType|TypeDefinition
      * @throws \Railt\Reflection\Exceptions\BuildingException
      */
     private function fetchType(TreeNode $ast): ObjectType

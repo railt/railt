@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Containers;
 
-use Railt\Reflection\Contracts\Types\TypeInterface;
+use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * If the structure is a container that contains references to other any
@@ -24,7 +24,7 @@ interface HasTypes
      * This method should return a list of all types that are contained
      * in the this object.
      *
-     * @return iterable|TypeInterface[] List of types.
+     * @return iterable|TypeDefinition[] List of types.
      */
     public function getTypes(): iterable;
 
@@ -42,9 +42,9 @@ interface HasTypes
      * in the container by type's name.
      *
      * @param string $name The name of required type.
-     * @return null|TypeInterface The type object or null if there is no such Type in the container.
+     * @return null|TypeDefinition The type object or null if there is no such Type in the container.
      */
-    public function getType(string $name): ?TypeInterface;
+    public function getType(string $name): ?TypeDefinition;
 
     /**
      * Returns the number of types that the container contains.

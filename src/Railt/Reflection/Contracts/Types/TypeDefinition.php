@@ -9,12 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Types;
 
-use Railt\Reflection\Contracts\Containers\HasTypes;
+use Railt\Reflection\Contracts\Definition;
 
 /**
- * Interface UnionType
+ * Interface TypeDefinition
  */
-interface UnionType extends HasTypes, NamedTypeDefinition
+interface TypeDefinition extends Definition
 {
-
+    /**
+     * @return string
+     */
+    public function getTypeName(): string;
 }
