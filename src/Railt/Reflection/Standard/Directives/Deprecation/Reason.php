@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Reflection\Standard\Directives\Deprecation;
 
 use Railt\Reflection\Base\BaseArgument;
-use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Types\DirectiveType;
 use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
