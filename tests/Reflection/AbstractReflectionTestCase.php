@@ -67,7 +67,7 @@ abstract class AbstractReflectionTestCase extends AbstractTestCase
     }
 
     /**
-     * @return \Generator
+     * @return \Generator|Compiler\CompilerInterface[]
      */
     protected function getCompilers(): \Generator
     {
