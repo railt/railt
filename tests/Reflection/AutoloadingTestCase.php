@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
+
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Support\Filesystem\File;

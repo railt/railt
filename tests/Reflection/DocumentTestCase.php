@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Reflection;
 
 use Railt\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Document;
 
 /**
@@ -117,5 +118,25 @@ class DocumentTestCase extends AbstractReflectionTestCase
     public function testDocumentTypeName(Document $document): void
     {
         static::assertSame('Document', $document->getTypeName());
+    }
+
+    /**
+     * @return void
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws \Railt\Parser\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
+     */
+    public function testStdlibDocument(): void
+    {
+        /** @var CompilerInterface $compiler */
+        foreach ($this->getCompilers() as $compiler) {
+
+            $string = $compiler->get('String');
+            $stdlib = $string->getDocument();
+
+            static::assertSame('GraphQL Standard Library', $stdlib->getName());
+            static::assertSame('Document', $stdlib->getTypeName());
+        }
     }
 }
