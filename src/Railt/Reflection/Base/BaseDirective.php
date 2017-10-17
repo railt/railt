@@ -55,6 +55,11 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
     protected $locations = [];
 
     /**
+     * @var array|null
+     */
+    private $allLocations;
+
+    /**
      * @return iterable|string[]
      */
     public function getLocations(): iterable
@@ -196,6 +201,21 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
 
     /**
      * @return array
+     * @throws \ReflectionException
+     */
+    protected function getAllAllowedLocations(): array
+    {
+        if ($this->allLocations === null) {
+            $locations = new \ReflectionClass(Location::class);
+
+            $this->allLocations = \array_filter(\array_values($locations->getConstants()), '\\is_string');
+        }
+
+        return $this->allLocations;
+    }
+
+    /**
+     * @return array
      */
     public function __sleep(): array
     {
@@ -204,4 +224,5 @@ abstract class BaseDirective extends BaseNamedType implements DirectiveType
             'arguments'
         ]);
     }
+
 }
