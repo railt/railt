@@ -58,7 +58,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
      * @return ArgumentType
      * @throws TypeNotFoundException
      */
-    public function getArgument(): ArgumentType
+    public function getDefinition(): ArgumentType
     {
         $argument = $this->parent->getDefinition()->getArgument($this->getName());
 

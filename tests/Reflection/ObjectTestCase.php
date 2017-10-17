@@ -74,7 +74,7 @@ class ObjectTestCase extends AbstractReflectionTestCase
             static::assertEquals('deprecated', $directive->getName());
 
             static::assertEquals('Because', $directive->getArgument('reason')->getValue());
-            static::assertNotNull($directive->getArgument('reason')->getArgument());
+            static::assertNotNull($directive->getArgument('reason')->getDefinition());
             static::assertNull($directive->getArgument('not-exists'));
 
             static::assertTrue($directive->hasArgument('reason'));

@@ -56,7 +56,7 @@ trait DirectivesBuilder
      */
     private function checkDirectiveLocation(DirectiveInvocation $relation): void
     {
-        $directive = $relation->getDirective();
+        $directive = $relation->getDefinition();
 
         if ($this instanceof TypeDefinition && ! $directive->isAllowedFor($this)) {
             $error = 'The usage of the @%s directive together with type %s<%s> is not allowed by the ' .
@@ -105,7 +105,7 @@ trait DirectivesBuilder
      */
     private function getDeprecationReasonDefaultValue(DirectiveInvocation $directive): string
     {
-        return $directive->getDirective()
+        return $directive->getDefinition()
             ->getArgument(Deprecation::REASON_ARGUMENT)
             ->getDefaultValue();
     }

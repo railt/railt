@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace Railt\Tests\Reflection;
 
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\Directive\DirectiveInvocation;
-use Railt\Reflection\Contracts\Types\DirectiveType;
 use Railt\Reflection\Contracts\Types\ObjectType;
 
 /**
@@ -112,9 +110,9 @@ GraphQL;
                 static::assertTrue($type->isDeprecated());
 
                 $invocation = $type->getDirective('deprecated');
-                $directive = $invocation->getDirective();
+                $directive = $invocation->getDefinition();
 
-                static::assertSame('Directive', $invocation->getDirective()->getTypeName());
+                static::assertSame('Directive', $invocation->getDefinition()->getTypeName());
 
                 static::assertSame('deprecated', $invocation->getName());
                 static::assertSame('', $invocation->getDescription());
@@ -127,7 +125,7 @@ GraphQL;
                         $directive->getArgument('reason')->getType()->getName());
                 } else {
                     static::assertSame($type->getDeprecationReason(),
-                        $invocation->getDirective()->getArgument('reason')->getDefaultValue());
+                        $invocation->getDefinition()->getArgument('reason')->getDefaultValue());
                 }
             } else {
                 static::assertFalse($type->isDeprecated());
