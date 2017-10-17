@@ -30,7 +30,7 @@ class Psr6Persister implements Persister
     /**
      * @var int
      */
-    private $timeout = self::DEFAULT_REMEMBER_TIME;
+    private $timeout;
 
     /**
      * @var CacheItemPoolInterface
@@ -46,41 +46,26 @@ class Psr6Persister implements Persister
      * PsrCachePersister constructor.
      * @param CacheItemPoolInterface $pool
      * @param \Closure $persist
+     * @param int $timeout
      */
-    public function __construct(CacheItemPoolInterface $pool, \Closure $persist)
-    {
+    public function __construct(
+        CacheItemPoolInterface $pool,
+        \Closure $persist,
+        int $timeout = self::DEFAULT_REMEMBER_TIME
+    ) {
         $this->pool = $pool;
         $this->persist = $persist;
-    }
-
-    /**
-     * @param int $seconds
-     * @return $this
-     */
-    public function seconds(int $seconds): self
-    {
-        $this->timeout = $seconds;
-
-        return $this;
-    }
-
-    /**
-     * @param int $minutes
-     * @return $this
-     */
-    public function minutes(int $minutes): self
-    {
-        return $this->seconds($minutes * 60);
+        $this->timeout = $timeout;
     }
 
     /**
      * @param ReadableInterface $readable
      * @param \Closure $then
      * @return Document
-     * @throws \Railt\Reflection\Exceptions\BuildingException
-     * @throws \Railt\Parser\Exceptions\CompilerException
+     * @throws BuildingException
+     * @throws CompilerException
+     * @throws \Exception
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \LogicException
      */
     public function remember(ReadableInterface $readable, \Closure $then): Document
     {
@@ -91,6 +76,21 @@ class Psr6Persister implements Persister
         }
 
         return $this->store($readable, $then($readable));
+    }
+
+    /**
+     * @param ReadableInterface $readable
+     * @return Document
+     * @throws CompilerException
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
+    private function restore(ReadableInterface $readable): Document
+    {
+        try {
+            return $this->touch($this->pool->getItem($readable->getHash()))->get();
+        } catch (\Throwable $fatal) {
+            throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
+        }
     }
 
     /**
@@ -117,29 +117,10 @@ class Psr6Persister implements Persister
             $item = ($this->persist)($readable, $document);
             $this->touch($item);
             $this->pool->save($item);
-        } catch (CachePoolException $e) {
-            throw $e->getPrevious();
-        } catch (BuildingException $e) {
-            throw $e;
-        } catch (\Throwable $fatal) {
-            throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
+        } catch (CachePoolException $error) {
+            throw $error->getPrevious();
         }
 
         return $document;
-    }
-
-    /**
-     * @param ReadableInterface $readable
-     * @return Document
-     * @throws CompilerException
-     * @throws \Psr\Cache\InvalidArgumentException
-     */
-    private function restore(ReadableInterface $readable): Document
-    {
-        try {
-            return $this->touch($this->pool->getItem($readable->getHash()))->get();
-        } catch (\Throwable $fatal) {
-            throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
-        }
     }
 }

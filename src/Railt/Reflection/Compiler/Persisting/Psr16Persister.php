@@ -28,7 +28,7 @@ class Psr16Persister implements Persister
     /**
      * @var int
      */
-    private $timeout = self::DEFAULT_REMEMBER_TIME;
+    private $timeout;
 
     /**
      * @var CacheInterface
@@ -38,30 +38,12 @@ class Psr16Persister implements Persister
     /**
      * Psr16Persister constructor.
      * @param CacheInterface $storage
+     * @param int $timeout
      */
-    public function __construct(CacheInterface $storage)
+    public function __construct(CacheInterface $storage, int $timeout = self::DEFAULT_REMEMBER_TIME)
     {
         $this->storage = $storage;
-    }
-
-    /**
-     * @param int $seconds
-     * @return $this
-     */
-    public function seconds(int $seconds): self
-    {
-        $this->timeout = $seconds;
-
-        return $this;
-    }
-
-    /**
-     * @param int $minutes
-     * @return $this
-     */
-    public function minutes(int $minutes): self
-    {
-        return $this->seconds($minutes * 60);
+        $this->timeout = $timeout;
     }
 
     /**
@@ -76,6 +58,7 @@ class Psr16Persister implements Persister
     {
         $document = $this->storage->get($readable->getHash());
 
+        // If entity exists
         if ($document instanceof Document) {
             return $document;
         }
@@ -83,8 +66,8 @@ class Psr16Persister implements Persister
         $callee = function (Document $document) use ($readable): void {
             try {
                 $this->storage->set($readable->getHash(), $document, $this->timeout);
-            } catch (CachePoolException $e) {
-                throw $e->getPrevious();
+            } catch (CachePoolException $error) {
+                throw $error->getPrevious();
             }
         };
 
