@@ -60,7 +60,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
      */
     public function getArgument(): ArgumentType
     {
-        $argument = $this->parent->getDirective()->getArgument($this->getName());
+        $argument = $this->parent->getDefinition()->getArgument($this->getName());
 
         if ($argument === null) {
             $error = 'Argument %s was specified at the @%s calling, but it absent in the directive itself.';

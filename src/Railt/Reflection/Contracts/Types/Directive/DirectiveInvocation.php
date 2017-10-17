@@ -22,7 +22,7 @@ interface DirectiveInvocation extends Invokable, Nameable, Child
     /**
      * @return DirectiveType
      */
-    public function getDirective(): DirectiveType;
+    public function getDefinition(): DirectiveType;
 
     /**
      * @return iterable|Argument[]

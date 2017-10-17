@@ -38,7 +38,7 @@ abstract class BaseInvocation implements DirectiveInvocation
     /**
      * @return DirectiveType
      */
-    public function getDirective(): DirectiveType
+    public function getDefinition(): DirectiveType
     {
         return $this->resolve()->directive;
     }

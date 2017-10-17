@@ -17,7 +17,6 @@ use Railt\Reflection\Builder\Support\Compilable;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Types\DirectiveType;
 use Railt\Reflection\Contracts\Types\TypeDefinition;
-use Railt\Reflection\Exceptions\BuildingException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 
 /**
@@ -62,17 +61,10 @@ class DirectiveInvocationBuilder extends BaseInvocation implements Compilable
      * @return DirectiveType|TypeDefinition
      * @throws \Railt\Reflection\Exceptions\TypeNotFoundException
      */
-    public function getDirective(): DirectiveType
+    public function getDefinition(): DirectiveType
     {
         $this->compileIfNotCompiled();
 
-        $directive = $this->getCompiler()->get($this->getName());
-
-        if ($directive === null) {
-            $error = 'Directive @%s is not defined.';
-            throw new TypeNotFoundException(\sprintf($error, $this->getName()));
-        }
-
-        return $directive;
+        return $this->getCompiler()->get($this->getName());
     }
 }

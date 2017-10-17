@@ -27,5 +27,5 @@ interface Argument extends Invokable, Child, NamedTypeDefinition
     /**
      * @return ArgumentType
      */
-    public function getArgument(): ArgumentType;
+    public function getDefinition(): ArgumentType;
 }

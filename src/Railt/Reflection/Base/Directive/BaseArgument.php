@@ -42,7 +42,7 @@ abstract class BaseArgument extends BaseNamedType implements Argument
     /**
      * @return ArgumentType
      */
-    public function getArgument(): ArgumentType
+    public function getDefinition(): ArgumentType
     {
         return $this->resolve()->argument;
     }
