@@ -132,7 +132,6 @@ class ArgumentDefaultsTestCase extends AbstractReflectionTestCase
             try {
                 $documents->next();
             } catch (TypeConflictException $error) {
-                echo '+Error: ' . $error->getMessage() . "\n";
                 $throws = true;
             }
 

@@ -207,7 +207,6 @@ class InheritanceTestCase extends AbstractReflectionTestCase
                 $compiler->compile(File::fromSources($schema));
                 static::assertTrue(false, 'Throws an exception required');
             } catch (\Throwable $e) {
-                echo '+Error' . ': ' . $e->getMessage() . "\n";
                 static::assertInstanceOf(TypeConflictException::class, $e);
             }
         }
