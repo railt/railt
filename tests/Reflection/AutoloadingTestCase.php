@@ -46,10 +46,9 @@ class AutoloadingTestCase extends AbstractReflectionTestCase
     {
         $this->expectException(TypeNotFoundException::class);
 
-        $document = $compiler->compile(File::fromSources('schema { query: MissingType }'));
+        $document = (clone $compiler)->compile(File::fromSources('schema { query: MissingType }'));
 
-        $query = $document->getSchema()->getQuery();
-        var_dump($query);
+        $document->getSchema()->getQuery();
     }
 
     /**
@@ -62,15 +61,15 @@ class AutoloadingTestCase extends AbstractReflectionTestCase
     public function testTypeLoading(CompilerInterface $compiler): void
     {
         $compiler->registerAutoloader(function (string $type) {
-            return File::fromSources('type MissingType {}');
+            return File::fromSources('type ExistingType {}');
         });
 
-        $document = $compiler->compile(File::fromSources('schema { query: MissingType }'));
+        $document = $compiler->compile(File::fromSources('schema { query: ExistingType }'));
 
         $query = $document->getSchema()->getQuery();
 
         static::assertNotNull($query);
-        static::assertEquals('MissingType', $query->getName());
+        static::assertEquals('ExistingType', $query->getName());
         static::assertNotEquals($document->getUniqueId(), $query->getDocument()->getUniqueId());
     }
 }
