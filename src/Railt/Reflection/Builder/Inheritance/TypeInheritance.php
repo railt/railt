@@ -12,6 +12,7 @@ namespace Railt\Reflection\Builder\Inheritance;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\AbstractVerifier;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\ContainerVerifier;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\InterfaceVerifier;
+use Railt\Reflection\Builder\Inheritance\TypeVerification\ObjectVerifier;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\ScalarVerifier;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\UnionVerifier;
 use Railt\Reflection\Builder\Inheritance\TypeVerification\Verifier;
@@ -41,7 +42,7 @@ class TypeInheritance extends AbstractVerifier
     {
         $this->container = new ContainerVerifier();
 
-        $this->addRule(new ScalarVerifier(), new InterfaceVerifier(), new UnionVerifier());
+        $this->addRule(new ScalarVerifier(), new InterfaceVerifier(), new UnionVerifier(), new ObjectVerifier());
     }
 
     /**

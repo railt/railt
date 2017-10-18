@@ -67,6 +67,9 @@ class InheritanceTestCase extends AbstractReflectionTestCase
             'union U = ID | String type A { id: U } extend type A { id: U }',
             'union U = ID | String type A { id: U } extend type A { id: ID }',
             'union U = ID | String type A { id: U } extend type A { id: String }',
+
+            // Objects
+            'type A { id: A } extend type A { id: A }',
         ];
 
         $result = [];
@@ -160,6 +163,8 @@ class InheritanceTestCase extends AbstractReflectionTestCase
             'union Union = String   type A { id: Union }     extend type A { id: ID }',
             'enum Enum { A }        type A { id: Enum }      extend type A { id: ID }',
             'input Input { id: ID } type A { id: Input }     extend type A { id: ID }',
+            'type A {} type B {}    type C { id: A }         extend type C { id: B }',
+            'interface I {} type A implements I {} type B implements I {} type C { id: A } extend type C { id: B }',
         ];
 
         $result = [];
