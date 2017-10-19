@@ -12,6 +12,7 @@ namespace Railt\Reflection\Builder\Inheritance;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Exceptions\TypeConflictException;
+use Railt\Reflection\Exceptions\TypeRedefinitionException;
 
 /**
  * Trait ExceptionHelper
@@ -42,7 +43,7 @@ trait ExceptionHelper
     protected function throw(string $message, ...$args): bool
     {
         if ($this->throws) {
-            throw new TypeConflictException(\sprintf($message, ...$args));
+            throw new TypeRedefinitionException(\sprintf($message, ...$args));
         }
 
         return false;
