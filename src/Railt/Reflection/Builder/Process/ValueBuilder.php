@@ -16,12 +16,12 @@ use Hoa\Compiler\Llk\TreeNode;
  */
 class ValueBuilder
 {
-    private const AST_ID_ARRAY     = '#List';
-    private const AST_ID_OBJECT    = '#Object';
+    private const AST_ID_ARRAY = '#List';
+    private const AST_ID_OBJECT = '#Object';
 
-    private const TOKEN_NULL       = 'T_NULL';
-    private const TOKEN_NUMBER     = 'T_NUMBER_VALUE';
-    private const TOKEN_BOOL_TRUE  = 'T_BOOL_TRUE';
+    private const TOKEN_NULL = 'T_NULL';
+    private const TOKEN_NUMBER = 'T_NUMBER_VALUE';
+    private const TOKEN_BOOL_TRUE = 'T_BOOL_TRUE';
     private const TOKEN_BOOL_FALSE = 'T_BOOL_FALSE';
 
     /**
@@ -45,14 +45,13 @@ class ValueBuilder
      * @param TreeNode $ast
      * @return array
      */
-    private static function toObject(TreeNode $ast): array
+    private static function toArray(TreeNode $ast): array
     {
         $result = [];
 
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            $key = (string)$child->getChild(0)->getChild(0)->getValueValue();
-            $result[$key] = self::parse($child->getChild(1)->getChild(0));
+            $result[] = self::parse($child->getChild(0));
         }
 
         return $result;
@@ -62,13 +61,14 @@ class ValueBuilder
      * @param TreeNode $ast
      * @return array
      */
-    private static function toArray(TreeNode $ast): array
+    private static function toObject(TreeNode $ast): array
     {
         $result = [];
 
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            $result[] = self::parse($child->getChild(0));
+            $key = (string)$child->getChild(0)->getChild(0)->getValueValue();
+            $result[$key] = self::parse($child->getChild(1)->getChild(0));
         }
 
         return $result;
@@ -125,6 +125,63 @@ class ValueBuilder
      */
     private static function toString(TreeNode $ast): string
     {
-        return (string)$ast->getValueValue();
+        $result = (string)$ast->getValueValue();
+
+        // Transform utf char \uXXXX -> X
+        $result = self::renderUtfSequences($result);
+
+        // Transform special chars
+        $result = self::renderSpecialCharacters($result);
+
+        // Unescape slashes "Some\\Any" => "Some\Any"
+        $result = \stripcslashes($result);
+
+        return $result;
+    }
+
+    /**
+     * Method for parsing special control characters.
+     *
+     * @see http://facebook.github.io/graphql/October2016/#sec-String-Value
+     *
+     * @param string $body
+     * @return string
+     */
+    private static function renderSpecialCharacters(string $body): string
+    {
+        // TODO Probably may be escaped by backslash like "\\n".
+        $source = ['\b', '\f', '\n', '\r', '\t'];
+        $out    = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u{0009}"];
+
+        return \str_replace($source, $out, $body);
+    }
+
+    /**
+     * Method for parsing and decode utf-8 character
+     * sequences like "\uXXXX" type.
+     *
+     * @see http://facebook.github.io/graphql/October2016/#sec-String-Value
+     * @param string $body
+     * @return string
+     */
+    private static function renderUtfSequences(string $body): string
+    {
+        // TODO Probably may be escaped by backslash like "\\u0000"
+        $pattern = '/\\\\u([0-9a-fA-F]{4})/';
+
+        $callee = function (array $matches): string {
+            [$char, $code] = [$matches[0], $matches[1]];
+
+            try {
+                $rendered = \pack('H*', $code);
+
+                return \mb_convert_encoding($rendered, 'UTF-8', 'UCS-2BE');
+            } catch (\Error | \ErrorException $error) {
+                // Fallback?
+                return $char;
+            }
+        };
+
+        return @\preg_replace_callback($pattern, $callee, $body) ?? $body;
     }
 }

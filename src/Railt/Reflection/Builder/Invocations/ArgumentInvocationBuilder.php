@@ -14,6 +14,7 @@ use Railt\Reflection\Base\Invocations\BaseArgumentInvocation;
 use Railt\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Builder\Process\Compiler;
+use Railt\Reflection\Builder\Process\ValueBuilder;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
@@ -45,7 +46,7 @@ class ArgumentInvocationBuilder extends BaseArgumentInvocation implements Compil
     public function compile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Value') {
-            $this->value = $ast->getChild(0)->getValueValue();
+            $this->value = ValueBuilder::parse($ast->getChild(0));
         }
 
         return false;
