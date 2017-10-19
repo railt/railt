@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Behavior;
 
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
  * An interface that says that the parent type is the type
@@ -20,9 +20,9 @@ interface AllowsTypeIndication
     /**
      * Reference to type definition.
      *
-     * @return NamedTypeDefinition
+     * @return Definition|mixed
      */
-    public function getType(): NamedTypeDefinition;
+    public function getType();
 
     /**
      * Returns a Boolean value that indicates that the type

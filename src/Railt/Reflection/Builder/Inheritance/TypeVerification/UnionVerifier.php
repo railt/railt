@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
-use Railt\Reflection\Contracts\Types\UnionType;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -27,7 +27,7 @@ class UnionVerifier extends AbstractVerifier
      */
     public function verify(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        /** @var UnionType $union */
+        /** @var UnionDefinition $union */
         $union = $this->extract($a);
 
         return $this->verifyUnionType($union, $this->extract($b));
@@ -40,18 +40,18 @@ class UnionVerifier extends AbstractVerifier
      */
     public function match(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        return $this->extract($a) instanceof UnionType;
+        return $this->extract($a) instanceof UnionDefinition;
     }
 
     /**
-     * @param UnionType $a
-     * @param NamedTypeDefinition $b
+     * @param UnionDefinition $a
+     * @param Definition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyUnionType(UnionType $a, NamedTypeDefinition $b): bool
+    private function verifyUnionType(UnionDefinition $a, Definition $b): bool
     {
-        if ($b instanceof UnionType) {
+        if ($b instanceof UnionDefinition) {
             return $this->verifySameType($a, $b);
         }
 
@@ -59,12 +59,12 @@ class UnionVerifier extends AbstractVerifier
     }
 
     /**
-     * @param UnionType $a
-     * @param UnionType $b
+     * @param UnionDefinition $a
+     * @param UnionDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifySameType(UnionType $a, UnionType $b): bool
+    private function verifySameType(UnionDefinition $a, UnionDefinition $b): bool
     {
         if ($a->getName() === $b->getName()) {
             return true;
@@ -75,12 +75,12 @@ class UnionVerifier extends AbstractVerifier
     }
 
     /**
-     * @param UnionType $a
-     * @param NamedTypeDefinition $b
+     * @param UnionDefinition $a
+     * @param Definition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyUnionInheritance(UnionType $a, NamedTypeDefinition $b): bool
+    private function verifyUnionInheritance(UnionDefinition $a, Definition $b): bool
     {
         if ($a->hasType($b->getName())) {
             return true;

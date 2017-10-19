@@ -21,7 +21,7 @@ final class IntType extends FloatType
      * This name will be used in the future as
      * the type name available for use in our GraphQL schema.
      */
-    protected const TYPE_NAME = 'Int';
+    protected const SCALAR_TYPE_NAME = 'Int';
 
     /**
      * Short Int scalar public description.

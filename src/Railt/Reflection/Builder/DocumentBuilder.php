@@ -12,12 +12,14 @@ namespace Railt\Reflection\Builder;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Parser\Exceptions\CompilerException;
 use Railt\Reflection\Base\BaseDocument;
-use Railt\Reflection\Builder\Support\Builder;
-use Railt\Reflection\Builder\Support\Compilable;
+use Railt\Reflection\Builder\Definitions;
+use Railt\Reflection\Builder\Process\Compilable;
+use Railt\Reflection\Builder\Process\Compiler;
+use Railt\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Contracts\Behavior\Nameable;
-use Railt\Reflection\Contracts\Types\SchemaType;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Exceptions\BuildingException;
 use Railt\Support\Filesystem\File;
 use Railt\Support\Filesystem\ReadableInterface;
@@ -27,7 +29,7 @@ use Railt\Support\Filesystem\ReadableInterface;
  */
 class DocumentBuilder extends BaseDocument implements Compilable
 {
-    use Builder;
+    use Compiler;
 
     /**
      *
@@ -39,16 +41,16 @@ class DocumentBuilder extends BaseDocument implements Compilable
      */
     public const AST_TYPE_MAPPING = [
         // Anonymous types
-        '#SchemaDefinition'    => SchemaBuilder::class,
+        '#SchemaDefinition'    => Definitions\SchemaBuilder::class,
 
         // Named types
-        '#ObjectDefinition'    => ObjectBuilder::class,
-        '#InterfaceDefinition' => InterfaceBuilder::class,
-        '#UnionDefinition'     => UnionBuilder::class,
-        '#ScalarDefinition'    => ScalarBuilder::class,
-        '#EnumDefinition'      => EnumBuilder::class,
-        '#InputDefinition'     => InputBuilder::class,
-        '#DirectiveDefinition' => DirectiveBuilder::class,
+        '#ObjectDefinition'    => Definitions\ObjectBuilder::class,
+        '#InterfaceDefinition' => Definitions\InterfaceBuilder::class,
+        '#UnionDefinition'     => Definitions\UnionBuilder::class,
+        '#ScalarDefinition'    => Definitions\ScalarBuilder::class,
+        '#EnumDefinition'      => Definitions\EnumBuilder::class,
+        '#InputDefinition'     => Definitions\InputBuilder::class,
+        '#DirectiveDefinition' => Definitions\DirectiveBuilder::class,
 
         // Modifiers
         '#ExtendDefinition'    => ExtendBuilder::class,
@@ -110,11 +112,11 @@ class DocumentBuilder extends BaseDocument implements Compilable
             $this->throwInvalidAstNodeError($ast);
         }
 
-        /** @var Compilable|TypeDefinition $instance */
+        /** @var Compilable|Definition $instance */
         $instance = new $class($ast, $this);
 
         switch (true) {
-            case $instance instanceof SchemaType:
+            case $instance instanceof SchemaDefinition:
                 $this->schema = $instance;
                 break;
 
@@ -126,7 +128,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
                 $this->types[] = $instance;
         }
 
-        if ($instance instanceof TypeDefinition) {
+        if ($instance instanceof Definition) {
             $this->compiler->register($instance);
         }
 

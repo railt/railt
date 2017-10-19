@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\UnionType;
 
 /**
  * Class UnionTestCase
@@ -44,8 +44,8 @@ class UnionTestCase extends AbstractReflectionTestCase
      */
     public function testUnionDefinition(Document $document): void
     {
-        /** @var UnionType $union */
-        $union = $document->getType('Person');
+        /** @var UnionDefinition $union */
+        $union = $document->getDefinition('Person');
         static::assertNotNull($union);
 
         static::assertEquals('Person', $union->getName());
@@ -70,8 +70,8 @@ class UnionTestCase extends AbstractReflectionTestCase
      */
     public function testUnionRelations(Document $document): void
     {
-        /** @var UnionType $union */
-        $union = $document->getType('Person');
+        /** @var UnionDefinition $union */
+        $union = $document->getDefinition('Person');
         static::assertNotNull($union);
 
         static::assertSame(2, $union->getNumberOfTypes());

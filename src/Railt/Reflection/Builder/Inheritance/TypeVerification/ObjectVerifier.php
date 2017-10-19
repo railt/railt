@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\ObjectType;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -27,7 +27,7 @@ class ObjectVerifier extends AbstractVerifier
      */
     public function verify(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        /** @var ObjectType $type */
+        /** @var ObjectDefinition $type */
         $type = $this->extract($a);
 
         return $this->verifyObject($type, $this->extract($b));
@@ -40,40 +40,38 @@ class ObjectVerifier extends AbstractVerifier
      */
     public function match(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        return $this->extract($a) instanceof ObjectType;
+        return $this->extract($a) instanceof ObjectDefinition;
     }
 
     /**
-     * @param ObjectType $a
-     * @param NamedTypeDefinition $b
+     * @param ObjectDefinition $a
+     * @param Definition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyObject(ObjectType $a, NamedTypeDefinition $b): bool
+    private function verifyObject(ObjectDefinition $a, Definition $b): bool
     {
-        if ($b instanceof ObjectType) {
+        if ($b instanceof ObjectDefinition) {
             return $this->verifySameType($a, $b);
         }
 
-        $error = 'Object type can\'t be redefine by Object<*>, but %s given';
-
+        $error = 'The type of an Object can be implemented (redefined) only by exactly the same Object, but %s given.';
         return $this->throw($error, $this->typeToString($b));
     }
 
     /**
-     * @param ObjectType $a
-     * @param ObjectType $b
+     * @param ObjectDefinition $a
+     * @param ObjectDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifySameType(ObjectType $a, ObjectType $b): bool
+    private function verifySameType(ObjectDefinition $a, ObjectDefinition $b): bool
     {
         if ($a->getName() === $b->getName()) {
             return true;
         }
 
         $error = '%s can not be redefine by incompatible %s';
-
         return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }
 }

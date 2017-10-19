@@ -9,9 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts;
 
-use Railt\Reflection\Contracts\Types\SchemaType;
-use Railt\Reflection\Contracts\Containers\HasTypes;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
  * The Document is an object that contains information
@@ -19,7 +18,7 @@ use Railt\Reflection\Contracts\Types\TypeDefinition;
  *
  * This can be, for example, a GraphQL schema file.
  */
-interface Document extends HasTypes, TypeDefinition
+interface Document extends Definition
 {
     /**
      * Should return the name of file if the Document is physically located on
@@ -37,7 +36,30 @@ interface Document extends HasTypes, TypeDefinition
      * (ie, part of another document), then the Schema declaration will be
      * missing and this method should return `null` value.
      *
-     * @return null|SchemaType Schema object definition or null.
+     * @return null|SchemaDefinition Schema object definition or null.
      */
-    public function getSchema(): ?SchemaType;
+    public function getSchema(): ?SchemaDefinition;
+
+    /**
+     * @param string|null $typeOf
+     * @return iterable|Definition[]
+     */
+    public function getTypes(string $typeOf = null): iterable;
+
+    /**
+     * @param string $name
+     * @return null|Definition
+     */
+    public function getDefinition(string $name): ?Definition;
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasDefinition(string $name): bool;
+
+    /**
+     * @return int
+     */
+    public function getNumberOfDefinitions(): int;
 }

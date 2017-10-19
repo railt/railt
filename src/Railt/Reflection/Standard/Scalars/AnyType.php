@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Scalars;
 
-use Railt\Reflection\Base\BaseScalar;
+use Railt\Reflection\Base\Definitions\BaseScalar;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Standard\StandardType;
 
@@ -25,7 +25,7 @@ class AnyType extends BaseScalar implements StandardType
      * This name will be used in the future as the
      * type name available for use in our schema.
      */
-    protected const TYPE_NAME = 'Any';
+    protected const SCALAR_TYPE_NAME = 'Any';
 
     /**
      * Short Any scalar public description.
@@ -40,7 +40,7 @@ as an opt-out type in cases when the exact type is not known in advance.';
     public function __construct(Document $document)
     {
         $this->document = $document;
-        $this->name = static::TYPE_NAME;
+        $this->name = static::SCALAR_TYPE_NAME;
         $this->description = static::TYPE_DESCRIPTION;
     }
 }

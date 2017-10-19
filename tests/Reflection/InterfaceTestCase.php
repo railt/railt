@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\InterfaceType;
-use Railt\Reflection\Contracts\Types\ObjectType;
 
 /**
  * Class InterfaceTestCase
@@ -28,8 +28,8 @@ class InterfaceTestCase extends AbstractReflectionTestCase
      */
     public function testObjectHasInterface(Document $document): void
     {
-        /** @var ObjectType $object */
-        $object = $document->getType('Object');
+        /** @var ObjectDefinition $object */
+        $object = $document->getDefinition('Object');
 
         static::assertNotNull($object);
         static::assertNotCount(0, $object->getInterfaces());
@@ -55,8 +55,8 @@ class InterfaceTestCase extends AbstractReflectionTestCase
      */
     public function testGetInterfaceThroughObject(Document $document): void
     {
-        /** @var ObjectType $object */
-        $object = $document->getType('Object');
+        /** @var ObjectDefinition $object */
+        $object = $document->getDefinition('Object');
 
         static::assertNotNull($object);
 
@@ -65,27 +65,12 @@ class InterfaceTestCase extends AbstractReflectionTestCase
     }
 
     /**
-     * @dataProvider provider
-     *
-     * @param Document $document
+     * @param InterfaceDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testGetInterfaceThroughDocument(Document $document): void
-    {
-        /** @var InterfaceType $interface */
-        $interface = $document->getType('Test');
-        $this->processTestInterface($interface);
-    }
-
-    /**
-     * @param InterfaceType $type
-     * @return void
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \PHPUnit\Framework\Exception
-     */
-    private function processTestInterface(?InterfaceType $type): void
+    private function processTestInterface(?InterfaceDefinition $type): void
     {
         static::assertNotNull($type);
 
@@ -104,6 +89,21 @@ class InterfaceTestCase extends AbstractReflectionTestCase
 
         static::assertNotNull($type->getField('id'));
         static::assertNull($type->getField('Id'));
+    }
+
+    /**
+     * @dataProvider provider
+     *
+     * @param Document $document
+     * @return void
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testGetInterfaceThroughDocument(Document $document): void
+    {
+        /** @var InterfaceDefinition $interface */
+        $interface = $document->getDefinition('Test');
+        $this->processTestInterface($interface);
     }
 
     /**

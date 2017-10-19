@@ -21,7 +21,7 @@ final class BooleanType extends AnyType
      * This name will be used in the future as the
      * type name available for use in our schema.
      */
-    protected const TYPE_NAME = 'Boolean';
+    protected const SCALAR_TYPE_NAME = 'Boolean';
 
     /**
      * Short Boolean scalar public description.

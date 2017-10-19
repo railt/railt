@@ -10,9 +10,8 @@ declare(strict_types=1);
 namespace Railt\Tests\Reflection;
 
 use Railt\Reflection\Builder\DocumentBuilder;
-use Railt\Reflection\Compiler\Persisting\Persister;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\ObjectType;
 
 /**
  * Class ExtendTestCase
@@ -52,8 +51,8 @@ GraphQL;
      */
     public function testType(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
 
         static::assertNotNull($type);
         static::assertNotNull($type->getField('id'));
@@ -71,8 +70,8 @@ GraphQL;
      */
     public function testTypeFields(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
 
         static::assertNotNull($type);
 
@@ -91,8 +90,8 @@ GraphQL;
      */
     public function testTypeArguments(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
         static::assertNotNull($type);
 
         $field = $type->getField('id');

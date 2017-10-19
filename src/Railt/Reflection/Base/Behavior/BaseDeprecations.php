@@ -9,11 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Behavior;
 
+use Railt\Reflection\Base\Resolving;
 use Railt\Reflection\Contracts\Behavior\Deprecatable;
 
 /**
  * Trait BaseDeprecations
  * @mixin Deprecatable
+ * @mixin Resolving
  */
 trait BaseDeprecations
 {

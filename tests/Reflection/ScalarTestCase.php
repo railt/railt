@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\ScalarType;
 
 /**
  * Class ScalarTestCase
@@ -47,8 +47,8 @@ GraphQL;
      */
     public function testScalarName(Document $document): void
     {
-        /** @var ScalarType $scalar */
-        $scalar = $document->getType('Test');
+        /** @var ScalarDefinition $scalar */
+        $scalar = $document->getDefinition('Test');
 
         static::assertNotNull($scalar);
         static::assertSame('Test', $scalar->getName());
@@ -62,8 +62,8 @@ GraphQL;
      */
     public function testScalarType(Document $document): void
     {
-        /** @var ScalarType $scalar */
-        $scalar = $document->getType('Test');
+        /** @var ScalarDefinition $scalar */
+        $scalar = $document->getDefinition('Test');
         static::assertNotNull($scalar);
 
         static::assertSame('Scalar', $scalar->getTypeName());
@@ -77,8 +77,8 @@ GraphQL;
      */
     public function testScalarDescription(Document $document): void
     {
-        /** @var ScalarType $scalar */
-        $scalar = $document->getType('Test');
+        /** @var ScalarDefinition $scalar */
+        $scalar = $document->getDefinition('Test');
         static::assertNotNull($scalar);
 
         $description =
@@ -97,8 +97,8 @@ GraphQL;
      */
     public function testScalarDeprecation(Document $document): void
     {
-        /** @var ScalarType $scalar */
-        $scalar = $document->getType('Test');
+        /** @var ScalarDefinition $scalar */
+        $scalar = $document->getDefinition('Test');
         static::assertNotNull($scalar);
 
         static::assertTrue($scalar->isDeprecated());
@@ -113,8 +113,8 @@ GraphQL;
      */
     public function testScalarDeprecationReason(Document $document): void
     {
-        /** @var ScalarType $scalar */
-        $scalar = $document->getType('Test');
+        /** @var ScalarDefinition $scalar */
+        $scalar = $document->getDefinition('Test');
         static::assertNotNull($scalar);
 
         $reason = "\n" . '    Why not?'. "\n";

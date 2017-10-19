@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\InterfaceType;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
-use Railt\Reflection\Contracts\Types\ObjectType;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -28,7 +28,7 @@ class InterfaceVerifier extends AbstractVerifier
      */
     public function verify(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        /** @var InterfaceType $type */
+        /** @var InterfaceDefinition $type */
         $type = $this->extract($a);
 
         return $this->verifyInterface($type, $this->extract($b));
@@ -41,61 +41,58 @@ class InterfaceVerifier extends AbstractVerifier
      */
     public function match(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        return $this->extract($a) instanceof InterfaceType;
+        return $this->extract($a) instanceof InterfaceDefinition;
     }
 
     /**
-     * @param InterfaceType $a
-     * @param NamedTypeDefinition $b
+     * @param InterfaceDefinition $a
+     * @param Definition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyInterface(InterfaceType $a, NamedTypeDefinition $b): bool
+    private function verifyInterface(InterfaceDefinition $a, Definition $b): bool
     {
-        if ($b instanceof ObjectType) {
+        if ($b instanceof ObjectDefinition) {
             return $this->verifyInheritance($a, $b);
         }
 
-        if ($b instanceof InterfaceType) {
+        if ($b instanceof InterfaceDefinition) {
             return $this->verifySameType($a, $b);
         }
 
-        $error = 'Interface type can be redefine only by Object<*>, but %s given';
-
+        $error = 'Interface type can be redefine only by compatible Object type, but %s given';
         return $this->throw($error, $this->typeToString($b));
     }
 
     /**
-     * @param InterfaceType $a
-     * @param ObjectType $b
+     * @param InterfaceDefinition $a
+     * @param ObjectDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyInheritance(InterfaceType $a, ObjectType $b): bool
+    private function verifyInheritance(InterfaceDefinition $a, ObjectDefinition $b): bool
     {
         if ($b->hasInterface($a->getName())) {
             return true;
         }
 
         $error = '%s must implement an %s';
-
         return $this->throw($error, $this->typeToString($b), $this->typeToString($a));
     }
 
     /**
-     * @param InterfaceType $a
-     * @param InterfaceType $b
+     * @param InterfaceDefinition $a
+     * @param InterfaceDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifySameType(InterfaceType $a, InterfaceType $b): bool
+    private function verifySameType(InterfaceDefinition $a, InterfaceDefinition $b): bool
     {
         if ($a->getName() === $b->getName()) {
             return true;
         }
 
         $error = '%s can not be redefine by incompatible %s';
-
         return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }
 }

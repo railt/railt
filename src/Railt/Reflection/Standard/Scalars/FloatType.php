@@ -21,7 +21,7 @@ class FloatType extends AnyType
      * This name will be used in the future as
      * the type name available for use in our GraphQL schema.
      */
-    protected const TYPE_NAME = 'Float';
+    protected const SCALAR_TYPE_NAME = 'Float';
 
     /**
      * Short Float scalar public description.

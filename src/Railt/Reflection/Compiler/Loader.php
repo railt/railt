@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler;
 
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Support\Filesystem\File;
 use Railt\Support\Filesystem\ReadableInterface;
@@ -53,28 +53,26 @@ class Loader extends Repository
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeDefinition
+     * @return Definition
      * @throws TypeNotFoundException
      * @throws \Railt\Support\Exceptions\NotReadableException
      */
-    public function get(string $name, Document $document = null): ?TypeDefinition
+    public function get(string $name, Document $document = null): Definition
     {
-        $result = parent::get($name, $document);
-
-        if ($result === null && $document === null) {
+        try {
+            return parent::get($name, $document);
+        } catch (TypeNotFoundException $error) {
             return $this->load($name);
         }
-
-        return $result;
     }
 
     /**
      * @param string $name
-     * @return TypeDefinition
+     * @return Definition
      * @throws TypeNotFoundException
      * @throws \Railt\Support\Exceptions\NotReadableException
      */
-    private function load(string $name): TypeDefinition
+    private function load(string $name): Definition
     {
         foreach ($this->loaders as $loader) {
             $file = $this->parseResult($loader($name));
@@ -97,13 +95,13 @@ class Loader extends Repository
     /**
      * @param string $name
      * @param ReadableInterface $readable
-     * @return null|TypeDefinition
+     * @return null|Definition
      */
-    private function findType(string $name, ReadableInterface $readable): ?TypeDefinition
+    private function findType(string $name, ReadableInterface $readable): ?Definition
     {
         $document = $this->compiler->compile($readable);
 
-        return $document->getType($name);
+        return $document->getDefinition($name);
     }
 
     /**

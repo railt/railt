@@ -26,7 +26,7 @@ final class DateTimeType extends StringType implements StandardType
      * This name will be used in the future as the
      * type name available for use in our schema.
      */
-    protected const TYPE_NAME = 'DateTime';
+    protected const SCALAR_TYPE_NAME = 'DateTime';
 
     /**
      * Short DateTime scalar public description.

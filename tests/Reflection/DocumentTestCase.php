@@ -19,7 +19,7 @@ use Railt\Reflection\Contracts\Document;
  */
 class DocumentTestCase extends AbstractReflectionTestCase
 {
-    private const DOCUMENT_ID_PATTERN = '[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}';
+    private const DOCUMENT_ID_PATTERN = '[0-9a-f]{32}';
 
     /**
      * @return array
@@ -92,8 +92,8 @@ class DocumentTestCase extends AbstractReflectionTestCase
      */
     public function testDocumentHasTypes(Document $document)
     {
-        static::assertTrue($document->getNumberOfTypes() > 0);
-        static::assertCount($document->getNumberOfTypes(), $document->getTypes());
+        static::assertTrue($document->getNumberOfDefinitions() > 0);
+        static::assertCount($document->getNumberOfDefinitions(), $document->getTypes());
     }
 
     /**
@@ -105,8 +105,8 @@ class DocumentTestCase extends AbstractReflectionTestCase
      */
     public function testDocumentHasQueryType(Document $document): void
     {
-        static::assertNotNull($document->getType('Query'));
-        static::assertTrue($document->hasType('Query'));
+        static::assertNotNull($document->getDefinition('Query'));
+        static::assertTrue($document->hasDefinition('Query'));
     }
 
     /**

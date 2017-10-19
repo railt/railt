@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
-use Railt\Reflection\Contracts\Types\ScalarType;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -29,7 +29,7 @@ class ScalarVerifier extends AbstractVerifier
      */
     public function verify(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        /** @var ScalarType $type */
+        /** @var ScalarDefinition $type */
         $type = $this->extract($a);
 
         return $this->verifyScalar($type, $this->extract($b));
@@ -42,16 +42,16 @@ class ScalarVerifier extends AbstractVerifier
      */
     public function match(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        return $this->extract($a) instanceof ScalarType;
+        return $this->extract($a) instanceof ScalarDefinition;
     }
 
     /**
-     * @param ScalarType $a
-     * @param NamedTypeDefinition $b
+     * @param ScalarDefinition $a
+     * @param Definition $b
      * @return bool
      * @throws TypeConflictException
      */
-    private function verifyScalar(ScalarType $a, NamedTypeDefinition $b): bool
+    private function verifyScalar(ScalarDefinition $a, Definition $b): bool
     {
         $type = \get_class($a);
         $child = \get_class($b);
@@ -60,7 +60,6 @@ class ScalarVerifier extends AbstractVerifier
             $behavior = $a instanceof $child ? 'wider' : 'incompatible';
 
             $error = '%s can not be redefined by %s %s';
-
             return $this->throw($error, $this->typeToString($a), $behavior, $this->typeToString($b));
         }
 

@@ -8,8 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
-
-use Railt\Reflection\Contracts\Types\ObjectType;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 
 /**
  * Class ObjectTestCase
@@ -45,11 +44,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testObjectName(ObjectType $type): void
+    public function testObjectName(ObjectDefinition $type): void
     {
         static::assertContains($type->getName(), [
             'MyQuery',
@@ -61,11 +60,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testGetDirectives(ObjectType $type): void
+    public function testGetDirectives(ObjectDefinition $type): void
     {
         static::assertArrayHasKey(0, $type->getDirectives());
         static::assertCount(1, $type->getDirectives());
@@ -73,24 +72,24 @@ class ObjectTestCase extends AbstractReflectionTestCase
         foreach ($type->getDirectives() as $directive) {
             static::assertEquals('deprecated', $directive->getName());
 
-            static::assertEquals('Because', $directive->getArgument('reason')->getValue());
-            static::assertNotNull($directive->getArgument('reason')->getDefinition());
-            static::assertNull($directive->getArgument('not-exists'));
+            static::assertEquals('Because', $directive->getPassedArgument('reason')->getPassedValue());
+            static::assertNotNull($directive->getPassedArgument('reason')->getDefinition());
+            static::assertNull($directive->getPassedArgument('not-exists'));
 
-            static::assertTrue($directive->hasArgument('reason'));
-            static::assertFalse($directive->hasArgument('not-exists'));
+            static::assertTrue($directive->hasPassedArgument('reason'));
+            static::assertFalse($directive->hasPassedArgument('not-exists'));
 
-            static::assertSame(1, $directive->getNumberOfArguments());
+            static::assertSame(1, $directive->getNumberOfPassedArguments());
         }
     }
 
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      */
-    public function testGetDirective(ObjectType $type): void
+    public function testGetDirective(ObjectDefinition $type): void
     {
         static::assertNull($type->getDirective('not-exists'));
         static::assertNotNull($type->getDirective('deprecated'));
@@ -99,11 +98,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testHasDirective(ObjectType $type): void
+    public function testHasDirective(ObjectDefinition $type): void
     {
         static::assertFalse($type->hasDirective('not-exists'));
         static::assertTrue($type->hasDirective('deprecated'));
@@ -112,10 +111,10 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      */
-    public function testDirectivesCount(ObjectType $type): void
+    public function testDirectivesCount(ObjectDefinition $type): void
     {
         static::assertSame(1, $type->getNumberOfDirectives());
     }
@@ -123,11 +122,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testGetFields(ObjectType $type): void
+    public function testGetFields(ObjectDefinition $type): void
     {
         static::assertArrayHasKey(0, $type->getFields());
         static::assertCount(1, $type->getFields());
@@ -148,11 +147,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testHasField(ObjectType $type): void
+    public function testHasField(ObjectDefinition $type): void
     {
         static::assertFalse($type->hasField('not-exist'));
         static::assertTrue($type->hasField('id'));
@@ -161,11 +160,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testGetField(ObjectType $type): void
+    public function testGetField(ObjectDefinition $type): void
     {
         $field = $type->getField('id');
 
@@ -190,10 +189,10 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      */
-    public function testFieldsCount(ObjectType $type): void
+    public function testFieldsCount(ObjectDefinition $type): void
     {
         static::assertSame(1, $type->getNumberOfFields());
     }
@@ -201,11 +200,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testInterfaces(ObjectType $type): void
+    public function testInterfaces(ObjectDefinition $type): void
     {
         static::assertCount(1, $type->getInterfaces());
         foreach ($type->getInterfaces() as $interface) {
@@ -216,11 +215,11 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testHasInterface(ObjectType $type): void
+    public function testHasInterface(ObjectDefinition $type): void
     {
         static::assertFalse($type->hasInterface('test'));
         static::assertTrue($type->hasInterface('Identifiable'));
@@ -229,10 +228,10 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      */
-    public function testGetInterface(ObjectType $type): void
+    public function testGetInterface(ObjectDefinition $type): void
     {
         static::assertNull($type->getInterface('test'));
         static::assertNotNull($type->getInterface('Identifiable'));
@@ -241,10 +240,10 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      */
-    public function testInterfacesCount(ObjectType $type): void
+    public function testInterfacesCount(ObjectDefinition $type): void
     {
         static::assertSame(1, $type->getNumberOfInterfaces());
     }
@@ -252,10 +251,10 @@ class ObjectTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param ObjectType $type
+     * @param ObjectDefinition $type
      * @return void
      */
-    public function testTypeName(ObjectType $type): void
+    public function testTypeName(ObjectDefinition $type): void
     {
         static::assertEquals('Object', $type->getTypeName());
     }

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
-use Railt\Reflection\Contracts\Types;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**
  * Class SchemaTestCase
@@ -41,10 +41,10 @@ class SchemaTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param Types\SchemaType $schema
+     * @param SchemaDefinition $schema
      * @return void
      */
-    public function testSchemaHasQuery(Types\SchemaType $schema): void
+    public function testSchemaHasQuery(SchemaDefinition $schema): void
     {
         static::assertNotNull($schema->getQuery());
     }
@@ -52,10 +52,10 @@ class SchemaTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param Types\SchemaType $schema
+     * @param SchemaDefinition $schema
      * @return void
      */
-    public function testSchemaQueryName(Types\SchemaType $schema): void
+    public function testSchemaQueryName(SchemaDefinition $schema): void
     {
         static::assertEquals('MyQuery', $schema->getQuery()->getName());
     }
@@ -63,10 +63,10 @@ class SchemaTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param Types\SchemaType $schema
+     * @param SchemaDefinition $schema
      * @return void
      */
-    public function testSchemaHasMutation(Types\SchemaType $schema): void
+    public function testSchemaHasMutation(SchemaDefinition $schema): void
     {
         static::assertNotNull($schema->getMutation());
     }
@@ -74,10 +74,10 @@ class SchemaTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param Types\SchemaType $schema
+     * @param SchemaDefinition $schema
      * @return void
      */
-    public function testSchemaMutationName(Types\SchemaType $schema): void
+    public function testSchemaMutationName(SchemaDefinition $schema): void
     {
         static::assertEquals('MyMutation', $schema->getMutation()->getName());
     }
@@ -85,10 +85,10 @@ class SchemaTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param Types\SchemaType $schema
+     * @param SchemaDefinition $schema
      * @return void
      */
-    public function testSchemaHasSubscription(Types\SchemaType $schema): void
+    public function testSchemaHasSubscription(SchemaDefinition $schema): void
     {
         static::assertNotNull($schema->getSubscription());
     }
@@ -96,20 +96,20 @@ class SchemaTestCase extends AbstractReflectionTestCase
     /**
      * @dataProvider provider
      *
-     * @param Types\SchemaType $schema
+     * @param SchemaDefinition $schema
      * @return void
      */
-    public function testSchemaSubscriptionName(Types\SchemaType $schema): void
+    public function testSchemaSubscriptionName(SchemaDefinition $schema): void
     {
         static::assertEquals('MySubscription', $schema->getSubscription()->getName());
     }
 
     /**
      * @dataProvider provider
-     * @param Types\SchemaType $schema
+     * @param SchemaDefinition $schema
      * @return void
      */
-    public function testSchemaTypeName(Types\SchemaType $schema): void
+    public function testSchemaTypeName(SchemaDefinition $schema): void
     {
         static::assertEquals('Schema', $schema->getTypeName());
     }

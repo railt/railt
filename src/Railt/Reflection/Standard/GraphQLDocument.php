@@ -11,7 +11,8 @@ namespace Railt\Reflection\Standard;
 
 use Railt\Reflection\Base\BaseDocument;
 use Railt\Reflection\Compiler\CompilerInterface;
-use Railt\Reflection\Contracts\Types\ScalarType;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Standard\Directives\Deprecation;
 use Railt\Reflection\Standard\Scalars\AnyType;
 use Railt\Reflection\Standard\Scalars\BooleanType;
@@ -70,7 +71,7 @@ class GraphQLDocument extends BaseDocument implements StandardType
     private function createStandardTypes(): void
     {
         foreach ($this->getStandardTypes() as $type) {
-            /** @var ScalarType|mixed $instance */
+            /** @var Definition|mixed $instance */
             $instance = new $type($this);
 
             $this->types[$instance->getName()] = $instance;
@@ -85,6 +86,7 @@ class GraphQLDocument extends BaseDocument implements StandardType
     private function getStandardTypes(): array
     {
         $standard = [
+            // Scalars
             BooleanType::class,
             FloatType::class,
             IDType::class,
@@ -92,6 +94,8 @@ class GraphQLDocument extends BaseDocument implements StandardType
             StringType::class,
             AnyType::class,
             DateTimeType::class,
+
+            // Directives
             Deprecation::class
         ];
 

@@ -15,17 +15,16 @@ use Railt\Parser\Exceptions\UnexpectedTokenException;
 use Railt\Parser\Exceptions\UnrecognizedTokenException;
 use Railt\Parser\Parser;
 use Railt\Reflection\Builder\DocumentBuilder;
-use Railt\Reflection\Builder\Support\Compilable;
+use Railt\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Compiler\Dictionary;
 use Railt\Reflection\Compiler\Loader;
 use Railt\Reflection\Compiler\Persisting\ArrayPersister;
 use Railt\Reflection\Compiler\Persisting\Persister;
 use Railt\Reflection\Compiler\Persisting\Proxy;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\ExtendType;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
+use Railt\Reflection\Contracts\Processable\ExtendDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
 use Railt\Reflection\Standard\GraphQLDocument;
@@ -133,7 +132,7 @@ class Compiler implements CompilerInterface
      */
     private function bootProcessableTypes(Document $document): void
     {
-        $processable = [ExtendType::class];
+        $processable = [ExtendDefinition::class];
 
         foreach ($document->getTypes() as $type) {
             foreach ($processable as $interface) {
@@ -164,11 +163,11 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param TypeDefinition $type
+     * @param Definition $type
      * @param bool $force
      * @return Dictionary
      */
-    public function register(TypeDefinition $type, bool $force = false): Dictionary
+    public function register(Definition $type, bool $force = false): Dictionary
     {
         return $this->loader->register($type, $force);
     }
@@ -176,9 +175,9 @@ class Compiler implements CompilerInterface
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeDefinition|NamedTypeDefinition
+     * @return null|Definition
      */
-    public function get(string $name, Document $document = null): ?TypeDefinition
+    public function get(string $name, Document $document = null): Definition
     {
         return $this->loader->get($name, $document);
     }

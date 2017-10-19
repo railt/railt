@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\FieldType;
-use Railt\Reflection\Contracts\Types\ObjectType;
 
 /**
  * Class TypeIndicationTestCase
@@ -50,11 +50,11 @@ GraphQL;
      */
     public function testNullableType(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
         static::assertNotNull($type);
 
-        /** @var FieldType $a "ID" */
+        /** @var FieldDefinition $a "ID" */
         $a = $type->getField('a');
         static::assertNotNull($a);
         static::assertFalse($a->isNonNull());
@@ -71,11 +71,11 @@ GraphQL;
      */
     public function testNonNull(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
         static::assertNotNull($type);
 
-        /** @var FieldType $b "ID!" */
+        /** @var FieldDefinition $b "ID!" */
         $b = $type->getField('b');
         static::assertNotNull($b);
         static::assertTrue($b->isNonNull());
@@ -92,11 +92,11 @@ GraphQL;
      */
     public function testList(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
         static::assertNotNull($type);
 
-        /** @var FieldType $c "[ID]" */
+        /** @var FieldDefinition $c "[ID]" */
         $c = $type->getField('c');
         static::assertNotNull($c);
         static::assertFalse($c->isNonNull());
@@ -113,11 +113,11 @@ GraphQL;
      */
     public function testListOfNonNulls(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
         static::assertNotNull($type);
 
-        /** @var FieldType $d "[ID!]" */
+        /** @var FieldDefinition $d "[ID!]" */
         $d = $type->getField('d');
         static::assertNotNull($d);
         static::assertFalse($d->isNonNull());
@@ -134,11 +134,11 @@ GraphQL;
      */
     public function testNonNullList(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
         static::assertNotNull($type);
 
-        /** @var FieldType $e "[ID]!" */
+        /** @var FieldDefinition $e "[ID]!" */
         $e = $type->getField('e');
         static::assertNotNull($e);
         static::assertTrue($e->isNonNull());
@@ -155,11 +155,11 @@ GraphQL;
      */
     public function testNonNullListOfNonNulls(Document $document): void
     {
-        /** @var ObjectType $type */
-        $type = $document->getType('Test');
+        /** @var ObjectDefinition $type */
+        $type = $document->getDefinition('Test');
         static::assertNotNull($type);
 
-        /** @var FieldType $f "[ID!]!" */
+        /** @var FieldDefinition $f "[ID!]!" */
         $f = $type->getField('f');
         static::assertNotNull($f);
         static::assertTrue($f->isNonNull());

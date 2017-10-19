@@ -9,17 +9,19 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Behavior;
 
+use Railt\Reflection\Base\Resolving;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
  * Trait BaseTypeIndicator
  * @mixin AllowsTypeIndication
+ * @mixin Resolving
  */
 trait BaseTypeIndicator
 {
     /**
-     * @var NamedTypeDefinition
+     * @var Definition
      */
     protected $type;
 
@@ -39,29 +41,11 @@ trait BaseTypeIndicator
     protected $isListOfNonNulls = false;
 
     /**
-     * @return NamedTypeDefinition
-     * @throws \Railt\Reflection\Exceptions\TypeNotFoundException
+     * @return Definition|mixed
      */
-    public function getType(): NamedTypeDefinition
+    public function getType()
     {
         return $this->resolve()->type;
-    }
-
-    /**
-     * @param NamedTypeDefinition $type
-     * @return void
-     */
-    public function setType(NamedTypeDefinition $type): void
-    {
-        $this->type = $type;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isList(): bool
-    {
-        return $this->resolve()->isList;
     }
 
     /**
@@ -75,6 +59,14 @@ trait BaseTypeIndicator
     }
 
     /**
+     * @return bool
+     */
+    public function isList(): bool
+    {
+        return $this->resolve()->isList;
+    }
+
+    /**
      * The list of non-nulls
      *
      * @return bool
@@ -82,13 +74,5 @@ trait BaseTypeIndicator
     public function isListOfNonNulls(): bool
     {
         return $this->resolve()->isList && $this->isListOfNonNulls;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isNullable(): bool
-    {
-        return ! $this->isNonNull();
     }
 }

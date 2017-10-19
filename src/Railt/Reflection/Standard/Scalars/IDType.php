@@ -23,7 +23,7 @@ final class IDType extends StringType implements StandardType
      * This name will be used in the future as
      * the type name available for use in our GraphQL schema.
      */
-    protected const TYPE_NAME = 'ID';
+    protected const SCALAR_TYPE_NAME = 'ID';
 
     /**
      * Short ID scalar public description.

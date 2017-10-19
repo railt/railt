@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\InputDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\ArgumentType;
-use Railt\Reflection\Contracts\Types\InputType;
 
 /**
  * Class InputTestCase
@@ -47,8 +47,8 @@ GraphQL;
      */
     public function testInputName(Document $document): void
     {
-        /** @var InputType $input */
-        $input = $document->getType('Test');
+        /** @var InputDefinition $input */
+        $input = $document->getDefinition('Test');
 
         static::assertNotNull($input);
         static::assertSame('Test', $input->getName());
@@ -62,8 +62,8 @@ GraphQL;
      */
     public function testInputType(Document $document): void
     {
-        /** @var InputType $input */
-        $input = $document->getType('Test');
+        /** @var InputDefinition $input */
+        $input = $document->getDefinition('Test');
         static::assertNotNull($input);
 
         static::assertSame('Input', $input->getTypeName());
@@ -78,8 +78,8 @@ GraphQL;
      */
     public function testInputDescription(Document $document): void
     {
-        /** @var InputType $input */
-        $input = $document->getType('Test');
+        /** @var InputDefinition $input */
+        $input = $document->getDefinition('Test');
         static::assertNotNull($input);
 
         $description = 'This an Input type example';
@@ -96,8 +96,8 @@ GraphQL;
      */
     public function testInputDeprecation(Document $document): void
     {
-        /** @var InputType $input */
-        $input = $document->getType('Test');
+        /** @var InputDefinition $input */
+        $input = $document->getDefinition('Test');
         static::assertNotNull($input);
 
         static::assertFalse($input->isDeprecated());
@@ -113,11 +113,11 @@ GraphQL;
      */
     public function testInputIdField(Document $document): void
     {
-        /** @var InputType $input */
-        $input = $document->getType('Test');
+        /** @var InputDefinition $input */
+        $input = $document->getDefinition('Test');
         static::assertNotNull($input);
 
-        /** @var ArgumentType $id */
+        /** @var ArgumentDefinition $id */
         $id = $input->getArgument('id');
         static::assertNotNull($id);
 

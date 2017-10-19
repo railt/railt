@@ -21,7 +21,7 @@ class StringType extends AnyType
      * This name will be used in the future as
      * the type name available for use in our GraphQL schema.
      */
-    protected const TYPE_NAME = 'String';
+    protected const SCALAR_TYPE_NAME = 'String';
 
     /**
      * Short String scalar public description.

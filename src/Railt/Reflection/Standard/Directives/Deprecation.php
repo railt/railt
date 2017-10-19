@@ -9,14 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Directives;
 
-use Railt\Reflection\Base\BaseArgument;
-use Railt\Reflection\Base\BaseDirective;
-use Railt\Reflection\Contracts\Behavior\Inputable;
+use Railt\Reflection\Base\Definitions\BaseDirective;
+use Railt\Reflection\Contracts\Definitions\Directive\Location;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\ArgumentType;
-use Railt\Reflection\Contracts\Types\Directive\Location;
-use Railt\Reflection\Contracts\Types\DirectiveType;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Standard\Directives\Deprecation\Reason;
 use Railt\Reflection\Standard\StandardType;
 
@@ -30,7 +26,7 @@ final class Deprecation extends BaseDirective implements StandardType
     /**
      * Deprecation directive name
      */
-    public const TYPE_NAME = 'deprecated';
+    public const DIRECTIVE_TYPE_NAME = 'deprecated';
 
     /**
      * Deprecation reason argument
@@ -44,7 +40,7 @@ final class Deprecation extends BaseDirective implements StandardType
     public function __construct(Document $document)
     {
         $this->document          = $document;
-        $this->name              = self::TYPE_NAME;
+        $this->name              = self::DIRECTIVE_TYPE_NAME;
         $this->deprecationReason = self::RFC_IMPL_DESCRIPTION;
         $this->locations         = Location::TARGET_GRAPHQL_SDL;
 
@@ -53,9 +49,9 @@ final class Deprecation extends BaseDirective implements StandardType
     }
 
     /**
-     * @return ArgumentType
+     * @return ArgumentDefinition
      */
-    private function createReasonArgument(): ArgumentType
+    private function createReasonArgument(): ArgumentDefinition
     {
         return new Reason($this->getDocument(), $this);
     }

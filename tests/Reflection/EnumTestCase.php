@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\EnumType;
 
 /**
  * Class EnumTestCase
@@ -51,8 +51,8 @@ GraphQL;
      */
     public function testEnumName(Document $document): void
     {
-        /** @var EnumType $enum */
-        $enum = $document->getType('Colour');
+        /** @var EnumDefinition $enum */
+        $enum = $document->getDefinition('Colour');
         static::assertNotNull($enum);
 
         static::assertEquals('Colour', $enum->getName());
@@ -66,8 +66,8 @@ GraphQL;
      */
     public function testEnumDescription(Document $document): void
     {
-        /** @var EnumType $enum */
-        $enum = $document->getType('Colour');
+        /** @var EnumDefinition $enum */
+        $enum = $document->getDefinition('Colour');
         static::assertNotNull($enum);
 
         static::assertEquals('This is an example ENUM', $enum->getDescription());
@@ -81,8 +81,8 @@ GraphQL;
      */
     public function testEnumValues(Document $document): void
     {
-        /** @var EnumType $enum */
-        $enum = $document->getType('Colour');
+        /** @var EnumDefinition $enum */
+        $enum = $document->getDefinition('Colour');
         static::assertNotNull($enum);
 
         static::assertNotNull($enum->getValue('Red'));
@@ -100,8 +100,8 @@ GraphQL;
      */
     public function testEnumValuesCount(Document $document): void
     {
-        /** @var EnumType $enum */
-        $enum = $document->getType('Colour');
+        /** @var EnumDefinition $enum */
+        $enum = $document->getDefinition('Colour');
         static::assertNotNull($enum);
 
         static::assertCount(3, $enum->getValues());
@@ -116,8 +116,8 @@ GraphQL;
      */
     public function testEnumValuesExists(Document $document): void
     {
-        /** @var EnumType $enum */
-        $enum = $document->getType('Colour');
+        /** @var EnumDefinition $enum */
+        $enum = $document->getDefinition('Colour');
         static::assertNotNull($enum);
 
         static::assertTrue($enum->hasValue('Red'));

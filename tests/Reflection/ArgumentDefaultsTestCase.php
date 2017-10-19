@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
-use Railt\Reflection\Contracts\Types\ArgumentType;
-use Railt\Reflection\Contracts\Types\FieldType;
-use Railt\Reflection\Contracts\Types\ObjectType;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
 /**
@@ -85,17 +86,17 @@ class ArgumentDefaultsTestCase extends AbstractReflectionTestCase
     public function testAllowedArgumentDefaultValue(string $schema): void
     {
         foreach ($this->getDocuments($schema) as $document) {
-            /** @var ObjectType $type */
-            $type = $document->getType('A');
-            static::assertNotNull($type);
+            /** @var ObjectDefinition $type */
+            $type = $document->getDefinition('A');
+            static::assertNotNull($type, 'Type "A" not found');
 
-            /** @var FieldType $field */
+            /** @var FieldDefinition $field */
             $field = $type->getField('field');
-            static::assertNotNull($field);
+            static::assertNotNull($field, 'Field "field" not found');
 
-            /** @var ArgumentType $argument */
+            /** @var ArgumentDefinition $argument */
             $argument = $field->getArgument('argument');
-            static::assertNotNull($argument);
+            static::assertNotNull($argument, 'Argument "argument" not found');
         }
     }
 
@@ -117,11 +118,12 @@ class ArgumentDefaultsTestCase extends AbstractReflectionTestCase
         while ($documents->valid()) {
             $throws = false;
 
+            /** @var Document $document */
             $document = $documents->current();
 
             try {
-                /** @var ArgumentType $arg */
-                $arg = $document->getType('A')
+                /** @var ArgumentDefinition $arg */
+                $arg = $document->getDefinition('A')
                     ->getField('field')
                     ->getArgument('argument')
                     ->getDefaultValue();

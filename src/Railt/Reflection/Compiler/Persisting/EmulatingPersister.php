@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler\Persisting;
 
+use Railt\Parser\Exceptions\CompilerException;
 use Railt\Reflection\Contracts\Document;
 use Railt\Support\Filesystem\ReadableInterface;
 
@@ -44,10 +45,16 @@ class EmulatingPersister implements Persister
     /**
      * @param Document $document
      * @return string
+     * @throws \Railt\Parser\Exceptions\CompilerException
      */
     private function encode(Document $document): string
     {
-        return \serialize($document);
+        try {
+            return @\serialize($document);
+        } catch (\Error $e) {
+            $error = \sprintf('Error while entity serializing: %s', $e->getMessage());
+            throw new CompilerException($error, $e->getCode(), $e);
+        }
     }
 
     /**

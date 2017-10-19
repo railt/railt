@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Reflection\Compiler;
 
 use Railt\Reflection\Contracts\Behavior\Nameable;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
+use Railt\Reflection\Exceptions\TypeNotFoundException;
 
 /**
  * Class Repository
@@ -61,16 +61,16 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     private $l2cache = [];
 
     /**
-     * @param TypeDefinition $type
+     * @param Definition $type
      * @param bool $force
      * @return Dictionary
      * @throws TypeConflictException
      */
-    public function register(TypeDefinition $type, bool $force = false): Dictionary
+    public function register(Definition $type, bool $force = false): Dictionary
     {
         $id = $this->getDocumentIdentifier($type->getDocument());
 
-        if ($type instanceof NamedTypeDefinition) {
+        if ($type instanceof Definition) {
             $this->registerNamedType($id, $type, $force);
         } else {
             $this->registerAnonymousType($id, $type, $force);
@@ -96,12 +96,12 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
 
     /**
      * @param string $key
-     * @param NamedTypeDefinition $type
+     * @param Definition $type
      * @param bool $force
      * @return void
      * @throws TypeConflictException
      */
-    private function registerNamedType(string $key, NamedTypeDefinition $type, bool $force): void
+    private function registerNamedType(string $key, Definition $type, bool $force): void
     {
         if (! $force) {
             $this->verifyNamedTypeConsistency($type);
@@ -111,26 +111,26 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param NamedTypeDefinition $type
+     * @param Definition $type
      * @return void
      * @throws TypeConflictException
      */
-    private function verifyNamedTypeConsistency(NamedTypeDefinition $type): void
+    private function verifyNamedTypeConsistency(Definition $type): void
     {
         $registered = $this->l1cache[$type->getName()] ?? null;
 
-        if ($registered instanceof NamedTypeDefinition) {
+        if ($registered instanceof Definition) {
             $this->throwRedefinitionException($registered, $type);
         }
     }
 
     /**
-     * @param TypeDefinition $registered
-     * @param TypeDefinition $type
+     * @param Definition $registered
+     * @param Definition $type
      * @return void
      * @throws TypeConflictException
      */
-    private function throwRedefinitionException(TypeDefinition $registered, TypeDefinition $type): void
+    private function throwRedefinitionException(Definition $registered, Definition $type): void
     {
         $what = $type->getTypeName();
         if ($type instanceof Nameable) {
@@ -145,13 +145,26 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
+     * @param Definition $type
+     * @return string
+     */
+    public function getTypeIdentifier(Definition $type): string
+    {
+        if ($type instanceof Nameable) {
+            return $type->getName();
+        }
+
+        return \get_class($type);
+    }
+
+    /**
      * @param string $key
-     * @param TypeDefinition $type
+     * @param Definition $type
      * @param bool $force
      * @return void
      * @throws TypeConflictException
      */
-    private function registerAnonymousType(string $key, TypeDefinition $type, bool $force): void
+    private function registerAnonymousType(string $key, Definition $type, bool $force): void
     {
         if (! $force) {
             $this->verifyAnonymousTypeConsistency($type);
@@ -161,15 +174,15 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param TypeDefinition $type
+     * @param Definition $type
      * @return void
      * @throws TypeConflictException
      */
-    private function verifyAnonymousTypeConsistency(TypeDefinition $type): void
+    private function verifyAnonymousTypeConsistency(Definition $type): void
     {
         $registered = $this->l1cache[\get_class($type)] ?? null;
 
-        if ($registered !== null && ! ($registered instanceof NamedTypeDefinition)) {
+        if ($registered !== null && ! ($registered instanceof Definition)) {
             $this->throwRedefinitionException($registered, $type);
         }
     }
@@ -194,18 +207,23 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     public function has(string $name, Document $document = null): bool
     {
-        return $this->get($name, $document) instanceof TypeDefinition;
+        return $this->get($name, $document) instanceof Definition;
     }
 
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeDefinition
+     * @return Definition
+     * @throws TypeNotFoundException
      */
-    public function get(string $name, Document $document = null): ?TypeDefinition
+    public function get(string $name, Document $document = null): Definition
     {
         if ($document === null) {
-            return $this->l1cache[$name] ?? null;
+            if ($this->l1cache[$name] ?? null) {
+                return $this->l1cache[$name];
+            }
+
+            throw new TypeNotFoundException(\sprintf('Type "%s" not found', $name));
         }
 
         $id = $this->getDocumentIdentifier($document);
@@ -227,18 +245,5 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->l1cache);
-    }
-
-    /**
-     * @param TypeDefinition $type
-     * @return string
-     */
-    public function getTypeIdentifier(TypeDefinition $type): string
-    {
-        if ($type instanceof Nameable) {
-            return $type->getName();
-        }
-
-        return \get_class($type);
     }
 }

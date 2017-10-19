@@ -9,9 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler;
 
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * Interface Dictionary
@@ -20,22 +19,22 @@ use Railt\Reflection\Contracts\Types\TypeDefinition;
 interface Dictionary
 {
     /**
-     * @param TypeDefinition $type
+     * @param Definition $type
      * @param bool $force
      * @return Dictionary
      */
-    public function register(TypeDefinition $type, bool $force = false): Dictionary;
+    public function register(Definition $type, bool $force = false): Dictionary;
 
     /**
      * @param string $name
      * @param Document|null $document
-     * @return null|TypeDefinition
+     * @return Definition
      */
-    public function get(string $name, Document $document = null): ?TypeDefinition;
+    public function get(string $name, Document $document = null): Definition;
 
     /**
      * @param Document|null $document
-     * @return TypeDefinition[]|NamedTypeDefinition[]
+     * @return Definition[]
      */
     public function all(Document $document = null): array;
 

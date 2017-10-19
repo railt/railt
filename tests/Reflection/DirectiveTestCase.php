@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\Directive\Location;
+use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\Directive\Location;
-use Railt\Reflection\Contracts\Types\DirectiveType;
 
 /**
  * Class DirectiveTestCase
@@ -59,12 +59,12 @@ GraphQL;
      */
     public function testDirective(Document $document): void
     {
-        static::assertNotNull($document->getType('test'));
-        static::assertNotNull($document->getType('some'));
-        static::assertNull($document->getType('@test'));
-        static::assertNull($document->getType('@some'));
-        static::assertNull($document->getType('Test'));
-        static::assertNull($document->getType('Some'));
+        static::assertNotNull($document->getDefinition('test'));
+        static::assertNotNull($document->getDefinition('some'));
+        static::assertNull($document->getDefinition('@test'));
+        static::assertNull($document->getDefinition('@some'));
+        static::assertNull($document->getDefinition('Test'));
+        static::assertNull($document->getDefinition('Some'));
     }
 
     /**
@@ -77,8 +77,8 @@ GraphQL;
      */
     public function testDirectiveTest(Document $document): void
     {
-        /** @var DirectiveType $directive */
-        $directive = $document->getType('test');
+        /** @var DirectiveDefinition $directive */
+        $directive = $document->getDefinition('test');
         static::assertNotNull($directive);
 
         static::assertSame('test', $directive->getName());
@@ -113,9 +113,9 @@ GraphQL;
         static::assertTrue($directive->isAllowedForQueries());
         static::assertTrue($directive->isAllowedForSchemaDefinitions());
 
-        static::assertTrue($directive->isAllowedFor($document->getType('ExampleInterface')));
-        static::assertFalse($directive->isAllowedFor($document->getType('ExampleObject')));
-        static::assertFalse($directive->isAllowedFor($document->getType('UndefinedType')));
+        static::assertTrue($directive->isAllowedFor($document->getDefinition('ExampleInterface')));
+        static::assertFalse($directive->isAllowedFor($document->getDefinition('ExampleObject')));
+        static::assertFalse($directive->isAllowedFor($document->getDefinition('UndefinedType')));
     }
 
     /**
@@ -128,8 +128,8 @@ GraphQL;
      */
     public function testDirectiveSome(Document $document): void
     {
-        /** @var DirectiveType $directive */
-        $directive = $document->getType('some');
+        /** @var DirectiveDefinition $directive */
+        $directive = $document->getDefinition('some');
         static::assertNotNull($directive);
 
         static::assertSame('some', $directive->getName());
@@ -159,9 +159,9 @@ GraphQL;
         static::assertFalse($directive->isAllowedForQueries());
         static::assertTrue($directive->isAllowedForSchemaDefinitions());
 
-        static::assertTrue($directive->isAllowedFor($document->getType('ExampleObject')));
-        static::assertFalse($directive->isAllowedFor($document->getType('ExampleInterface')));
-        static::assertFalse($directive->isAllowedFor($document->getType('UndefinedType')));
+        static::assertTrue($directive->isAllowedFor($document->getDefinition('ExampleObject')));
+        static::assertFalse($directive->isAllowedFor($document->getDefinition('ExampleInterface')));
+        static::assertFalse($directive->isAllowedFor($document->getDefinition('UndefinedType')));
     }
 
     /**
@@ -174,8 +174,8 @@ GraphQL;
      */
     public function testArguments(Document $document): void
     {
-        /** @var DirectiveType $some */
-        $some = $document->getType('some');
+        /** @var DirectiveDefinition $some */
+        $some = $document->getDefinition('some');
         static::assertNotNull($some);
 
         static::assertCount(3, $some->getArguments());

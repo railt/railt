@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Directives\Deprecation;
 
-use Railt\Reflection\Base\BaseArgument;
+use Railt\Reflection\Base\Dependent\BaseArgument;
+use Railt\Reflection\Contracts\Behavior\Inputable;
+use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Types\DirectiveType;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
-use Railt\Reflection\Contracts\Types\TypeDefinition;
 use Railt\Reflection\Standard\Directives\Deprecation;
 
 /**
@@ -32,22 +32,24 @@ class Reason extends BaseArgument
     /**
      * Reason constructor.
      * @param Document $document
-     * @param DirectiveType $type
+     * @param DirectiveDefinition $type
      */
-    public function __construct(Document $document, DirectiveType $type)
+    public function __construct(Document $document, DirectiveDefinition $type)
     {
         $this->parent       = $this;
         $this->document     = $document;
         $this->name         = Deprecation::REASON_ARGUMENT;
         $this->description  = self::ARGUMENT_DESCRIPTION;
+
         $this->defaultValue = self::ARGUMENT_DEFAULT_VALUE;
+        $this->hasDefaultValue = true;
     }
 
     /**
-     * @return NamedTypeDefinition|TypeDefinition
+     * @return Inputable|Definition
      */
-    public function getType(): NamedTypeDefinition
+    public function getType(): Inputable
     {
-        return $this->document->getType(self::ARGUMENT_TYPE);
+        return $this->document->getDefinition(self::ARGUMENT_TYPE);
     }
 }
