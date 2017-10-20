@@ -58,7 +58,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
         // Extender contains same name with related type
         // Is this a valid behaviour?
-        $this->name = 'Extend'; //$this->getRelatedType()->getName();
+        $this->name = \md5((string)random_int(0, PHP_INT_MAX));
     }
 
     /**
