@@ -12,12 +12,9 @@ namespace Railt\Reflection\Contracts\Processable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
- * Interface ExtendDefinition
+ * Interface ProcessableDefinition
  */
-interface ExtendDefinition extends ProcessableDefinition
+interface ProcessableDefinition extends Definition
 {
-    /**
-     * @return Definition
-     */
-    public function getRelatedType(): Definition;
+
 }

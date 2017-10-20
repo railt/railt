@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Reflection;
 use Railt\Reflection\Compiler\CompilerInterface;
 use Railt\Reflection\Exceptions\TypeConflictException;
+use Railt\Reflection\Exceptions\TypeRedefinitionException;
 use Railt\Support\Filesystem\File;
 
 /**
@@ -211,8 +212,9 @@ class InheritanceTestCase extends AbstractReflectionTestCase
             try {
                 $compiler->compile(File::fromSources($schema));
                 static::assertTrue(false, 'Throws an exception required');
-            } catch (\Throwable $e) {
-                static::assertInstanceOf(TypeConflictException::class, $e);
+            } catch (TypeConflictException $error) {
+                echo ' +' . $error->getMessage() . "\n";
+                static::assertInstanceOf(TypeRedefinitionException::class, $error);
             }
         }
     }

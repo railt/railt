@@ -60,8 +60,8 @@ class InterfaceVerifier extends AbstractVerifier
             return $this->verifySameType($a, $b);
         }
 
-        $error = 'Interface type can be redefine only by compatible Object type, but %s given';
-        return $this->throw($error, $this->typeToString($b));
+        $error = 'Type %s can be overridden only by compatible Object or Interface type, but %s given';
+        return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }
 
     /**
@@ -76,7 +76,7 @@ class InterfaceVerifier extends AbstractVerifier
             return true;
         }
 
-        $error = '%s must implement an %s';
+        $error = 'Type %s must implement an %s';
         return $this->throw($error, $this->typeToString($b), $this->typeToString($a));
     }
 
@@ -92,7 +92,7 @@ class InterfaceVerifier extends AbstractVerifier
             return true;
         }
 
-        $error = '%s can not be redefine by incompatible %s';
+        $error = '%s can not be overridden by incompatible type %s';
         return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }
 }

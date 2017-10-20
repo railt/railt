@@ -46,7 +46,8 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * ExtendBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @throws TypeConflictException
+     * @throws \Exception
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
@@ -58,7 +59,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
         // Extender contains same name with related type
         // Is this a valid behaviour?
-        $this->name = \md5((string)random_int(0, PHP_INT_MAX));
+        $this->name = $this->resolve()->getRelatedType()->getName();
     }
 
     /**

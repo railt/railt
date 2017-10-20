@@ -22,6 +22,7 @@ use Railt\Reflection\Compiler\Loader;
 use Railt\Reflection\Compiler\Persisting\ArrayPersister;
 use Railt\Reflection\Compiler\Persisting\Persister;
 use Railt\Reflection\Compiler\Persisting\Proxy;
+use Railt\Reflection\Compiler\Support;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Processable\ExtendDefinition;
@@ -35,6 +36,8 @@ use Railt\Support\Filesystem\ReadableInterface;
  */
 class Compiler implements CompilerInterface
 {
+    use Support;
+
     /**
      * @var Dictionary
      */
@@ -132,13 +135,9 @@ class Compiler implements CompilerInterface
      */
     private function bootProcessableTypes(Document $document): void
     {
-        $processable = [ExtendDefinition::class];
-
         foreach ($document->getTypes() as $type) {
-            foreach ($processable as $interface) {
-                if ($type instanceof $interface && $type instanceof Compilable) {
-                    $type->compileIfNotCompiled();
-                }
+            if (!$this->isUniqueType($type) && $type instanceof Compilable) {
+                $type->compileIfNotCompiled();
             }
         }
     }

@@ -13,11 +13,11 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\Reflection\Builder\DocumentBuilder;
-use Railt\Reflection\Builder\Inheritance\ExceptionHelper;
 use Railt\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Builder\Process\ValueBuilder;
+use Railt\Reflection\Compiler\Support;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Exceptions\TypeConflictException;
 
@@ -26,8 +26,8 @@ use Railt\Reflection\Exceptions\TypeConflictException;
  */
 class ArgumentBuilder extends BaseArgument implements Compilable
 {
+    use Support;
     use Compiler;
-    use ExceptionHelper;
     use DirectivesBuilder;
     use TypeIndicationBuilder;
 
@@ -90,10 +90,8 @@ class ArgumentBuilder extends BaseArgument implements Compilable
          * initialized by default "null" value.
          */
         if ($this->isNonNull()) {
-            $this->throw('Default non-null value of %s: %s can not be null',
-                $this->typeToString($this),
-                $this->relationToString($this)
-            );
+            $error = \sprintf('Default non-null value of %s can not be null', $this->typeToString($this));
+            throw new TypeConflictException($error);
         }
     }
 
@@ -108,10 +106,8 @@ class ArgumentBuilder extends BaseArgument implements Compilable
          * initialized by default list value.
          */
         if (! $this->isList()) {
-            $this->throw('Default non-list value of %s: %s can not be list',
-                $this->typeToString($this),
-                $this->relationToString($this)
-            );
+            $error = \sprintf('Default non-list value of %s can not be list', $this->typeToString($this));
+            throw new TypeConflictException($error);
         }
 
         /**
@@ -119,8 +115,8 @@ class ArgumentBuilder extends BaseArgument implements Compilable
          * "argument: [Type!]" or "argument: [Type!]!" contain "null".
          */
         if ($this->isListOfNonNulls() && \in_array(null, (array)$this->getDefaultValue(), true)) {
-            $error = 'Default list value of %s: %s type can not contain nulls';
-            $this->throw($error, $this->typeToString($this), $this->relationToString($this));
+            $error = \sprintf('Default list value of %s type can not contain nulls', $this->typeToString($this));
+            throw new TypeConflictException($error);
         }
     }
 }

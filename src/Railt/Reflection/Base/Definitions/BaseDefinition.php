@@ -64,7 +64,7 @@ abstract class BaseDefinition implements Definition
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return array|string
      */
     protected function formatValue($value)

@@ -75,7 +75,7 @@ trait TypeIndicationBuilder
      */
     private function throwInvalidTypeError(string $name): void
     {
-        $error = '%s contains an invalid type. Type "%s" not found.';
+        $error = '%s contains an invalid type. Type %s not found.';
 
         [$field, $parent] = [$this->getName(), $this];
 

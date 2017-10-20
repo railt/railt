@@ -114,7 +114,7 @@ class TypeInheritance extends AbstractVerifier
      */
     private function throwNonCompatibleTypesException(Definition $a, Definition $b): bool
     {
-        $error = '%s not compatible with %s and can not be redefined by';
+        $error = 'Type %s not compatible and can not be overriden by type %s';
 
         return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }

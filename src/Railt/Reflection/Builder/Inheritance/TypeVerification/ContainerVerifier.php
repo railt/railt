@@ -80,28 +80,28 @@ class ContainerVerifier extends AbstractVerifier
      * @param AllowsTypeIndication $a
      * @param AllowsTypeIndication $b
      * @return bool
-     * @throws TypeConflictException
+     * @throws \Railt\Reflection\Exceptions\TypeRedefinitionException
      */
     private function typeListVerification(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
         if (! $b->isList()) {
-            return $this->throw('List "%s" can not be redefine by type "%s"',
-                $this->relationToString($a),
-                $this->relationToString($b)
+            return $this->throw('List %s can not be overridden by non-list %s',
+                $this->typeToString($a),
+                $this->typeToString($b)
             );
         }
 
         if ($a->isNonNull() && ! $b->isNonNull()) {
-            return $this->throw('List of "%s" can not be redefine by nullable list "%s"',
-                $this->relationToString($a),
-                $this->relationToString($b)
+            return $this->throw('List %s can not be overridden by nullable list %s',
+                $this->typeToString($a),
+                $this->typeToString($b)
             );
         }
 
         if ($a->isListOfNonNulls() && ! $b->isListOfNonNulls()) {
-            return $this->throw('List of type "%s" can not be redefine by nullable type "%s"',
-                $this->relationToString($a),
-                $this->relationToString($b)
+            return $this->throw('List %s can not be overridden by nullable %s',
+                $this->typeToString($a),
+                $this->typeToString($b)
             );
         }
 
@@ -117,16 +117,16 @@ class ContainerVerifier extends AbstractVerifier
     private function typeSimpleVerification(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
         if ($b->isList()) {
-            return $this->throw('Type "%s" can not be redefine by list type "%s"',
-                $this->relationToString($a),
-                $this->relationToString($b)
+            return $this->throw('Non-list %s can not be overridden by list %s',
+                $this->typeToString($a),
+                $this->typeToString($b)
             );
         }
 
         if ($a->isNonNull() && ! $b->isNonNull()) {
-            return $this->throw('Type "%s" can not be redefine by nullable type "%s"',
-                $this->relationToString($a),
-                $this->relationToString($b)
+            return $this->throw('%s can not be overridden by nullable %s',
+                $this->typeToString($a),
+                $this->typeToString($b)
             );
         }
 

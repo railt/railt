@@ -9,17 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Builder\Inheritance\TypeVerification;
 
-use Railt\Reflection\Builder\Inheritance\ExceptionHelper;
+use Railt\Reflection\Compiler\Support;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Types\NamedTypeDefinition;
+use Railt\Reflection\Exceptions\TypeRedefinitionException;
 
 /**
  * Class AbstractVerifier
  */
 abstract class AbstractVerifier implements Verifier
 {
-    use ExceptionHelper;
+    use Support;
 
     /**
      * @param bool $throws
@@ -49,5 +49,16 @@ abstract class AbstractVerifier implements Verifier
     protected function extract(AllowsTypeIndication $container): Definition
     {
         return $container->getType();
+    }
+
+    /**
+     * @param string $message
+     * @param array ...$args
+     * @return bool
+     * @throws TypeRedefinitionException
+     */
+    protected function throw(string $message, ...$args): bool
+    {
+        throw new TypeRedefinitionException(\sprintf($message, ...$args));
     }
 }

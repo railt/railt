@@ -59,7 +59,7 @@ class ScalarVerifier extends AbstractVerifier
         if (!($b instanceof $type)) {
             $behavior = $a instanceof $child ? 'wider' : 'incompatible';
 
-            $error = '%s can not be redefined by %s %s';
+            $error = '%s can not be overridden by %s %s';
             return $this->throw($error, $this->typeToString($a), $behavior, $this->typeToString($b));
         }
 

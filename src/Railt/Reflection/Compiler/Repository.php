@@ -9,205 +9,88 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Compiler;
 
+use Railt\Reflection\Base\Definitions\BaseDefinition;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Processable\ProcessableDefinition;
 use Railt\Reflection\Exceptions\TypeConflictException;
 use Railt\Reflection\Exceptions\TypeNotFoundException;
+use Railt\Reflection\Exceptions\TypeRedefinitionException;
+use Traversable;
 
 /**
  * Class Repository
  */
 class Repository implements Dictionary, \Countable, \IteratorAggregate
 {
-    /**
-     * Pattern for type override exception messages.
-     */
-    private const REDEFINITION_ERROR = 'Cannot declare "%s", because the name is already in use in "%s"';
+    use Support;
 
     /**
-     * First level types storage.
-     * A set of types where in the format:
+     * Pattern for unique type override exception messages.
+     */
+    private const REDEFINITION_UNIQUE_TYPE_ERROR = 'Cannot declare %s, because the name already in use in %s';
+
+    /**
+     * Pattern for unique type override exception messages.
+     */
+    private const REDEFINITION_TYPE_ERROR = 'Cannot declare %s, because the definition already registered in %s';
+
+    /**
+     * A set of types where the key is the Type name in the format:
+     *
      * <code>
      *  [
      *      ...
-     *      {TypeName} =>  NamedTypeInterface::class,
-     *      {ClassName} => TypeInterface::class,
+     *      {TypeName} => Definition::class,
      *      ...
      *  ]
      * </code>
      *
-     * @var array
+     * @var array|Definition[]
      */
-    private $l1cache = [];
+    private $storage = [];
 
     /**
-     * Second level types storage.
-     * A set of types where the key is the Document in the format:
-     * <code>
-     *  [
-     *      ...
-     *      {DocumentUniqueId} => [
-     *          {TypeName} =>  NamedTypeInterface::class,
-     *          {ClassName} => TypeInterface::class,
-     *          ...
-     *      ],
-     *      ...
-     *  ]
-     * </code>
-     *
-     * @var array
+     * @return Traversable|Definition[]
      */
-    private $l2cache = [];
+    public function getIterator(): \Traversable
+    {
+        return new \ArrayIterator(\array_values($this->storage));
+    }
 
     /**
      * @param Definition $type
      * @param bool $force
      * @return Dictionary
-     * @throws TypeConflictException
+     * @throws TypeRedefinitionException
      */
     public function register(Definition $type, bool $force = false): Dictionary
     {
-        $id = $this->getDocumentIdentifier($type->getDocument());
-
-        if ($type instanceof Definition) {
-            $this->registerNamedType($id, $type, $force);
-        } else {
-            $this->registerAnonymousType($id, $type, $force);
+        if ($force === false) {
+            $this->verifyTypeIsRegistered($type);
         }
+
+        $this->storage[$type->getName()] = $type;
 
         return $this;
     }
 
     /**
-     * @param Document $document
-     * @return string
-     */
-    private function getDocumentIdentifier(Document $document): string
-    {
-        $identifier = $document->getUniqueId();
-
-        if (! \array_key_exists($identifier, $this->l2cache)) {
-            $this->l2cache[$identifier] = [];
-        }
-
-        return $identifier;
-    }
-
-    /**
-     * @param string $key
-     * @param Definition $type
-     * @param bool $force
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function registerNamedType(string $key, Definition $type, bool $force): void
-    {
-        if (! $force) {
-            $this->verifyNamedTypeConsistency($type);
-        }
-
-        $this->l1cache[$type->getName()] = $this->l2cache[$key][$this->getTypeIdentifier($type)] = $type;
-    }
-
-    /**
      * @param Definition $type
      * @return void
-     * @throws TypeConflictException
+     * @throws TypeRedefinitionException
      */
-    private function verifyNamedTypeConsistency(Definition $type): void
+    private function verifyTypeIsRegistered(Definition $type): void
     {
-        $registered = $this->l1cache[$type->getName()] ?? null;
+        if ($this->has($type->getName())) {
+            $error = \sprintf(self::REDEFINITION_UNIQUE_TYPE_ERROR,
+                $this->typeToString($type),
+                $this->typeToString($type->getDocument())
+            );
 
-        if ($registered instanceof Definition) {
-            $this->throwRedefinitionException($registered, $type);
+            throw new TypeRedefinitionException($error);
         }
-    }
-
-    /**
-     * @param Definition $registered
-     * @param Definition $type
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function throwRedefinitionException(Definition $registered, Definition $type): void
-    {
-        $what = $type->getTypeName();
-        if ($type instanceof Nameable) {
-            $what = \sprintf('%s<%s>', $type->getTypeName(), $type->getName());
-        }
-
-        $doc = $registered->getDocument();
-        $into = \sprintf('%s<%s>', $doc->getTypeName(), $doc->getName());
-
-        $error = \sprintf(self::REDEFINITION_ERROR, $what, $into);
-        throw new TypeConflictException($error);
-    }
-
-    /**
-     * @param Definition $type
-     * @return string
-     */
-    public function getTypeIdentifier(Definition $type): string
-    {
-        if ($type instanceof Nameable) {
-            return $type->getName();
-        }
-
-        return \get_class($type);
-    }
-
-    /**
-     * @param string $key
-     * @param Definition $type
-     * @param bool $force
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function registerAnonymousType(string $key, Definition $type, bool $force): void
-    {
-        if (! $force) {
-            $this->verifyAnonymousTypeConsistency($type);
-        }
-
-        $this->l1cache[$key] = $this->l2cache[$key][$this->getTypeIdentifier($type)] = $type;
-    }
-
-    /**
-     * @param Definition $type
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function verifyAnonymousTypeConsistency(Definition $type): void
-    {
-        $registered = $this->l1cache[\get_class($type)] ?? null;
-
-        if ($registered !== null && ! ($registered instanceof Definition)) {
-            $this->throwRedefinitionException($registered, $type);
-        }
-    }
-
-    /**
-     * @param Document|null $document
-     * @return array
-     */
-    public function all(Document $document = null): array
-    {
-        if ($document === null) {
-            return \array_values($this->l1cache);
-        }
-
-        return $this->l2cache[$this->getDocumentIdentifier($document)];
-    }
-
-    /**
-     * @param string $name
-     * @param Document|null $document
-     * @return bool
-     */
-    public function has(string $name, Document $document = null): bool
-    {
-        return $this->get($name, $document) instanceof Definition;
     }
 
     /**
@@ -218,17 +101,54 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     public function get(string $name, Document $document = null): Definition
     {
-        if ($document === null) {
-            if ($this->l1cache[$name] ?? null) {
-                return $this->l1cache[$name];
-            }
-
-            throw new TypeNotFoundException(\sprintf('Type "%s" not found', $name));
+        if ($this->has($name, $document)) {
+            return $this->storage[$name];
         }
 
-        $id = $this->getDocumentIdentifier($document);
+        $error = $document === null
+            ? \sprintf('Type "%s" not found', $name)
+            : \sprintf('Document "%s" does not contain the "%s" type', $this->typeToString($document), $name);
 
-        return $this->l2cache[$id][$name] ?? null;
+        throw new TypeNotFoundException($error);
+    }
+
+    /**
+     * @param Document|null $document
+     * @return array
+     */
+    public function all(Document $document = null): array
+    {
+        $result = [];
+
+        foreach ($this->storage as $name => $definition) {
+            if ($this->isContainedInDocument($definition, $document)) {
+                $result[] = $definition;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string $name
+     * @param Document|null $document
+     * @return bool
+     */
+    public function has(string $name, Document $document = null): bool
+    {
+        $definition = $this->storage[$name] ?? null;
+
+        return $definition !== null && $this->isContainedInDocument($definition, $document);
+    }
+
+    /**
+     * @param Definition $definition
+     * @param Document|null $document
+     * @return bool
+     */
+    private function isContainedInDocument(Definition $definition, Document $document = null): bool
+    {
+        return $document === null || $document->getUniqueId() === $definition->getDocument()->getUniqueId();
     }
 
     /**
@@ -236,14 +156,6 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     public function count(): int
     {
-        return \count($this->l1cache);
-    }
-
-    /**
-     * @return \Traversable
-     */
-    public function getIterator(): \Traversable
-    {
-        return new \ArrayIterator($this->l1cache);
+        return \count($this->storage);
     }
 }

@@ -55,7 +55,7 @@ class ObjectVerifier extends AbstractVerifier
             return $this->verifySameType($a, $b);
         }
 
-        $error = 'The type of an Object can be implemented (redefined) only by exactly the same Object, but %s given.';
+        $error = 'The type of an Object can be implemented only by exactly the same Object, but %s given.';
         return $this->throw($error, $this->typeToString($b));
     }
 
@@ -71,7 +71,7 @@ class ObjectVerifier extends AbstractVerifier
             return true;
         }
 
-        $error = '%s can not be redefine by incompatible %s';
+        $error = '%s can not be overridden by incompatible type %s';
         return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }
 }

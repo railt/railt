@@ -17,10 +17,12 @@ use Railt\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\Reflection\Compiler\CompilerInterface;
+use Railt\Reflection\Compiler\Support;
 use Railt\Reflection\Contracts\Behavior\Nameable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Exceptions\BuildingException;
+use Railt\Reflection\Exceptions\TypeRedefinitionException;
 use Railt\Support\Filesystem\File;
 use Railt\Support\Filesystem\ReadableInterface;
 
@@ -29,12 +31,18 @@ use Railt\Support\Filesystem\ReadableInterface;
  */
 class DocumentBuilder extends BaseDocument implements Compilable
 {
+    use Support;
     use Compiler;
 
     /**
      *
      */
-    public const VIRTUAL_FILE_NAME = 'SourceCode';
+    private const PHYSIC_FILE_NAME  = 'File(%s)';
+
+    /**
+     *
+     */
+    private const VIRTUAL_FILE_NAME = 'Source(%s)';
 
     /**
      *
@@ -94,14 +102,39 @@ class DocumentBuilder extends BaseDocument implements Compilable
      */
     private function createName(ReadableInterface $readable): string
     {
-        return $readable->getPathname() === File::VIRTUAL_FILE_NAME
-            ? static::VIRTUAL_FILE_NAME
-            : \sprintf('File(%s)', \basename($readable->getPathname()));
+        if ($readable->getPathname() !== File::VIRTUAL_FILE_NAME) {
+            return \sprintf(self::PHYSIC_FILE_NAME, \basename($readable->getPathname()));
+        }
+
+        return $this->createNameFromBacktrace();
+    }
+
+    /**
+     * @return string
+     */
+    private function createNameFromBacktrace(): string
+    {
+        $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+
+        $pointcut = self::VIRTUAL_FILE_NAME;
+
+        foreach ($trace as $data) {
+            $class = $data['class'] ?? null;
+
+            if ($class === Compiler::class) {
+                return \sprintf($pointcut, $class);
+            }
+
+            $pointcut = $class;
+        }
+
+        return \sprintf($pointcut, 'undefined');
     }
 
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws \Railt\Reflection\Exceptions\TypeRedefinitionException
      * @throws BuildingException
      */
     public function compile(TreeNode $ast): bool
@@ -117,22 +150,35 @@ class DocumentBuilder extends BaseDocument implements Compilable
 
         switch (true) {
             case $instance instanceof SchemaDefinition:
-                $this->schema = $instance;
+                $this->registerSchema($instance);
                 break;
 
-            case $instance instanceof Nameable:
+            case $this->isUniqueType($instance):
                 $this->types[$instance->getName()] = $instance;
+                $this->compiler->register($instance);
                 break;
 
             default:
                 $this->types[] = $instance;
         }
 
-        if ($instance instanceof Definition) {
-            $this->compiler->register($instance);
+        return true;
+    }
+
+    /**
+     * @param SchemaDefinition $schema
+     * @return void
+     * @throws TypeRedefinitionException
+     */
+    private function registerSchema(SchemaDefinition $schema): void
+    {
+        if ($this->schema !== null) {
+            $error = \sprintf('Can not register a new %s. Schema already was defined.',
+                $this->typeToString($schema));
+            throw new TypeRedefinitionException($error);
         }
 
-        return true;
+        $this->compiler->register($this->schema = $schema);
     }
 
     /**

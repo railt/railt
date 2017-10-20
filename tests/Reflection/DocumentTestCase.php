@@ -80,7 +80,7 @@ class DocumentTestCase extends AbstractReflectionTestCase
      */
     public function testDocumentName(Document $document)
     {
-        static::assertEquals(DocumentBuilder::VIRTUAL_FILE_NAME, $document->getName());
+        static::assertNotNull($document->getName());
     }
 
     /**
