@@ -17,7 +17,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class BaseTypeDefinition
  */
-abstract class BaseDefinition implements Definition
+abstract class BaseDefinition implements Definition, \JsonSerializable
 {
     use Resolving;
     use BaseDeprecations;
@@ -102,6 +102,14 @@ abstract class BaseDefinition implements Definition
      * @return array
      */
     public function __debugInfo(): array
+    {
+        return $this->jsonSerialize();
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         $data = $this->resolve()->__sleep();
         $result = [];
