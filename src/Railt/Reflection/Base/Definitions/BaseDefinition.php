@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
+use Illuminate\Support\Str;
 use Railt\Reflection\Base\Behavior\BaseDeprecations;
 use Railt\Reflection\Base\Resolving;
 use Railt\Reflection\Contracts\Definitions\Definition;
@@ -81,13 +82,17 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
             $result = [];
 
             foreach ($value as $key => $sub) {
-                $result[$key] = $this->formatValue($sub);
+                $result[$key] = $sub;
             }
 
             return $result;
         }
 
-        return $this->getTypeName() . '(' . $this->getName() . ')#' . $this->getUniqueId();
+        if ($value instanceof Definition) {
+            return $value->getTypeName() . '(' . $value->getName() . ')#' . $value->getUniqueId();
+        }
+
+        return Str::studly(\gettype($value));
     }
 
     /**
