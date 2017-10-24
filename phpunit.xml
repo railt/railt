@@ -13,14 +13,11 @@
         <testsuite name="Http Kernel Tests">
             <directory suffix="TestCase.php">./tests/Http</directory>
         </testsuite>
-        <testsuite name="GraphQL SDL Parser Tests">
-            <directory suffix="TestCase.php">./tests/Parser</directory>
-        </testsuite>
         <testsuite name="Routing Tests">
             <directory suffix="TestCase.php">./tests/Routing</directory>
         </testsuite>
-        <testsuite name="GraphQL SDL Reflection Tests">
-            <directory suffix="TestCase.php">./tests/Reflection</directory>
+        <testsuite name="GraphQL SDL Compiler Tests">
+            <directory suffix="TestCase.php">./tests/Compiler</directory>
         </testsuite>
     </testsuites>
     <filter>

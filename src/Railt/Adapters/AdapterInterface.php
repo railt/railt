@@ -13,7 +13,7 @@ use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;
 use Railt\Events\DispatcherInterface;
 use Railt\Container\ContainerInterface;
-use Railt\Reflection\Contracts\Document;
+use Railt\Compiler\Reflection\Contracts\Document;
 
 /**
  * Interface AdapterInterface

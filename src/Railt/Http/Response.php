@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Support\Debuggable;
-use Railt\Support\DebuggableInterface;
+use Railt\Compiler\Debuggable;
+use Railt\Compiler\DebuggableInterface;
 
 /**
  * Class Response

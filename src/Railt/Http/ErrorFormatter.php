@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Railt\Parser\Exceptions\GraphQLSchemaException;
+use Railt\Compiler\Exceptions\GraphQLSchemaException;
 
 /**
  * Class ErrorFormatter

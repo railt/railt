@@ -1,0 +1,40 @@
+{
+    "name": "railt/compiler",
+    "type": "library",
+    "description": "The Railt Compiler component provides Reflection API to read and parse GraphQL SDL",
+    "license": "MIT",
+    "keywords": [ "graphql", "idl", "otd", "ast", "reflection", "reader", "parser", "llk", "introspection" ],
+    "homepage": "http://railt.org",
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/railt"
+    },
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "psr/log": "~1.0",
+        "psr/cache": "~1.0",
+        "psr/simple-cache": "~1.0",
+        "hoa/compiler": "~3.17",
+        "illuminate/support": "~5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Compiler\\": ""
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "suggest": {
+        "psr/cache-implementation": "PSR-6 Cache Implementation",
+        "psr/simple-cache-implementation": "PSR-16 Cache Implementation"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

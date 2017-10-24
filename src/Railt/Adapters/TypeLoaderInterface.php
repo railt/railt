@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Reflection\Contracts\Types\TypeDefinition;
+use Railt\Compiler\Reflection\Contracts\Types\TypeDefinition;
 
 /**
  * Interface TypeLoaderInterface

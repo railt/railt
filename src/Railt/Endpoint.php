@@ -17,14 +17,14 @@ use Railt\Events\Dispatcher;
 use Railt\Events\DispatcherInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Parser\File;
-use Railt\Reflection\Contracts\DocumentInterface;
-use Railt\Reflection\Autoloader;
-use Railt\Reflection\Compiler;
+use Railt\Compiler\File;
+use Railt\Compiler\Reflection\Contracts\DocumentInterface;
+use Railt\Compiler\Reflection\Autoloader;
+use Railt\Compiler\Compiler;
 use Railt\Routing\Router;
-use Railt\Support\Debuggable;
-use Railt\Support\DebuggableInterface;
-use Railt\Support\Loggable;
+use Railt\Compiler\Debuggable;
+use Railt\Compiler\DebuggableInterface;
+use Railt\Compiler\Loggable;
 
 /**
  * Class Endpoint
@@ -43,8 +43,8 @@ class Endpoint implements DebuggableInterface
      * Endpoint constructor.
      * @param ContainerInterface $container
      * @param LoggerInterface|null $logger
-     * @throws \Railt\Parser\Exceptions\ParsingException
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @throws \Railt\Compiler\Exceptions\ParsingException
+     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     public function __construct(ContainerInterface $container = null, LoggerInterface $logger = null)
     {
@@ -57,8 +57,8 @@ class Endpoint implements DebuggableInterface
 
     /**
      * @param Container $container
-     * @throws \Railt\Parser\Exceptions\ParsingException
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @throws \Railt\Compiler\Exceptions\ParsingException
+     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     private function bootContainer($container): void
     {
@@ -102,11 +102,11 @@ class Endpoint implements DebuggableInterface
      * @param $schema
      * @param RequestInterface $request
      * @return ResponseInterface
-     * @throws \Railt\Support\Exceptions\NotReadableException
-     * @throws \Railt\Reflection\Exceptions\UnrecognizedNodeException
+     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedNodeException
      * @throws \LogicException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     public function request($schema, RequestInterface $request): ResponseInterface
     {
@@ -122,11 +122,11 @@ class Endpoint implements DebuggableInterface
     /**
      * @param $schema
      * @return DocumentInterface
-     * @throws \Railt\Support\Exceptions\NotReadableException
-     * @throws \Railt\Reflection\Exceptions\UnrecognizedNodeException
+     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedNodeException
      * @throws \LogicException
-     * @throws \Railt\Parser\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Reflection\Exceptions\TypeConflictException
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     private function createDocument($schema): DocumentInterface
     {
@@ -138,7 +138,7 @@ class Endpoint implements DebuggableInterface
     /**
      * @param string|File $schema
      * @return File
-     * @throws \Railt\Support\Exceptions\NotReadableException
+     * @throws \Railt\Compiler\Exceptions\NotReadableException
      */
     private function createSchemaFile($schema): File
     {
