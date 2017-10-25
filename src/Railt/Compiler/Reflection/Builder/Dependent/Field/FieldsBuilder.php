@@ -34,7 +34,7 @@ trait FieldsBuilder
         if ($this instanceof HasFields && $ast->getId() === '#Field') {
             $field = new FieldBuilder($ast, $this->getDocument(), $this);
 
-            $this->fields[$field->getName()] = $field;
+            $this->fields = $this->verifyDefinition($this->fields, $field);
 
             return true;
         }

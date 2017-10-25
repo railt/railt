@@ -9,14 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Reflection\Base\Definitions\BaseDefinition;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Reflection\Contracts\Processable\ProcessableDefinition;
-use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Exceptions\TypeRedefinitionException;
+use Railt\Compiler\Reflection\Validation\Verifiable;
 use Traversable;
 
 /**

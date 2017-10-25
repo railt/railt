@@ -16,6 +16,7 @@ use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Exceptions\BuildingException;
+use Railt\Compiler\Reflection\Validation\DefinitionValidator;
 
 /**
  * Trait Builder
@@ -23,6 +24,7 @@ use Railt\Compiler\Exceptions\BuildingException;
 trait Compiler
 {
     use NameBuilder;
+    use DefinitionValidator;
 
     /**
      * @var TreeNode

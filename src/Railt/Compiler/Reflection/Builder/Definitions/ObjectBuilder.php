@@ -56,13 +56,14 @@ class ObjectBuilder extends BaseObject implements Compilable
      */
     public function compile(TreeNode $ast): bool
     {
-        $interface = null;
-
         if ($ast->getId() === '#Implements') {
             /** @var TreeNode $child */
             foreach ($ast->getChildren() as $child) {
                 $name = $child->getChild(0)->getValueValue();
-                $this->interfaces[$name] = $this->getCompiler()->get($name);
+
+                $interface = $this->getCompiler()->get($name);
+
+                $this->interfaces = $this->verifyDefinition($this->interfaces, $interface);
             }
 
             return true;

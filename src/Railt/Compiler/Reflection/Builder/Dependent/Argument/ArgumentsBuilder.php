@@ -34,7 +34,7 @@ trait ArgumentsBuilder
             case '#Argument':
                 $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
 
-                $this->arguments[$argument->getName()] = $argument;
+                $this->arguments = $this->verifyDefinition($this->arguments, $argument);
 
                 return true;
         }

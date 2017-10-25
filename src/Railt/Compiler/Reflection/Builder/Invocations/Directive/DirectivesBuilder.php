@@ -42,7 +42,7 @@ trait DirectivesBuilder
 
             $this->checkDirectiveLocation($relation);
 
-            $this->directives[$relation->getName()] = $relation;
+            $this->directives = $this->verifyDefinition($this->directives, $relation);
 
             $this->checkTheDeprecationDirective($relation);
 

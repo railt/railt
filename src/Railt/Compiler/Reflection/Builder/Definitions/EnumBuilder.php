@@ -44,8 +44,9 @@ class EnumBuilder extends BaseEnum implements Compilable
     public function compile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Value') {
-            $value =  new ValueBuilder($ast, $this->getDocument(), $this);
-            $this->values[$value->getName()] = $value;
+            $value = new ValueBuilder($ast, $this->getDocument(), $this);
+
+            $this->values = $this->verifyDefinition($this->values, $value);
 
             return true;
         }

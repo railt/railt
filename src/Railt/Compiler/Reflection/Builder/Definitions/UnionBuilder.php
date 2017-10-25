@@ -50,9 +50,12 @@ class UnionBuilder extends BaseUnion implements Compilable
             /** @var TreeNode $relation */
             foreach ($ast->getChildren() as $relation) {
                 $name = $relation->getChild(0)->getValueValue();
-                $this->types[$name] = $this->getCompiler()->get($name);
 
-                $this->checkType($this->types[$name]);
+                $relatedType = $this->getCompiler()->get($name);
+
+                $this->checkType($relatedType);
+
+                $this->types = $this->verifyDefinition($this->types, $relatedType);
             }
 
             return true;

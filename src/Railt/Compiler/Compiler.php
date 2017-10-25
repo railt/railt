@@ -29,6 +29,7 @@ use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
 use Railt\Compiler\Reflection\Standard\GraphQLDocument;
 use Railt\Compiler\Reflection\Support;
+use Railt\Compiler\Reflection\Validation\Verifiable;
 
 /**
  * Class Compiler
@@ -148,21 +149,25 @@ class Compiler implements CompilerInterface
 
             $document = (new DocumentBuilder($ast, $readable))->withCompiler($this);
 
-            $this->bootProcessableTypes($document);
+            $this->bootTypes($document);
 
             return $document;
         };
     }
 
     /**
-     * Process eager loading for compile-time types, like "extend"
+     * Process types
      *
      * @param Document $document
      * @return void
      */
-    private function bootProcessableTypes(Document $document): void
+    private function bootTypes(Document $document): void
     {
         foreach ($document->getTypes() as $type) {
+            if ($type instanceof Verifiable) {
+                $type->verify();
+            }
+
             if ($type instanceof Compilable && ! $this->isUniqueType($type)) {
                 $type->compileIfNotCompiled();
             }
