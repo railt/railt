@@ -181,7 +181,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 $argument = $original->getArgument($extendArgument->getName());
                 $this->inheritance->verify($argument, $extendArgument);
 
-                $this->dataArgumentExtender()->call($argument, $extendArgument->getType());
+                $this->dataArgumentExtender()->call($argument, $extendArgument);
 
                 continue;
             }
