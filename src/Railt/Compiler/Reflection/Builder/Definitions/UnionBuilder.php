@@ -9,16 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Definitions;
 
-use GraphQL\Type\Definition\InterfaceType;
-use GraphQL\Type\Definition\UnionType;
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Base\Definitions\BaseUnion;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
  * Class UnionBuilder
@@ -51,36 +48,14 @@ class UnionBuilder extends BaseUnion implements Compilable
             foreach ($ast->getChildren() as $relation) {
                 $name = $relation->getChild(0)->getValueValue();
 
-                $relatedType = $this->getCompiler()->get($name);
+                $child = $this->getCompiler()->get($name);
 
-                $this->checkType($relatedType);
-
-                $this->types = $this->verifyDefinition($this->types, $relatedType);
+                $this->types = $this->getValidator()->uniqueDefinitions($this->types, $child);
             }
 
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * TODO Move verification into external class
-     *
-     * @param Definition $type
-     * @return void
-     * @throws TypeConflictException
-     */
-    private function checkType(Definition $type): void
-    {
-        $error = 'Child of Union type can not be';
-
-        if ($type instanceof UnionType) {
-            throw new TypeConflictException($error . ' another Union');
-        }
-
-        if ($type instanceof InterfaceType) {
-            throw new TypeConflictException($error . ' an Interface');
-        }
     }
 }

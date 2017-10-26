@@ -28,13 +28,12 @@ trait ArgumentsBuilder
      */
     public function compileArgumentsBuilder(TreeNode $ast): bool
     {
-
         /** @var Nameable $this */
         switch ($ast->getId()) {
             case '#Argument':
                 $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
 
-                $this->arguments = $this->verifyDefinition($this->arguments, $argument);
+                $this->arguments = $this->getValidator()->uniqueDefinitions($this->arguments, $argument);
 
                 return true;
         }

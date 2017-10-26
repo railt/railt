@@ -11,7 +11,6 @@ namespace Railt\Compiler\Reflection\Base\Definitions;
 
 use Illuminate\Support\Str;
 use Railt\Compiler\Reflection\Base\Behavior\BaseDeprecations;
-use Railt\Compiler\Reflection\Base\Resolving;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Document;
 
@@ -20,7 +19,6 @@ use Railt\Compiler\Reflection\Contracts\Document;
  */
 abstract class BaseDefinition implements Definition, \JsonSerializable
 {
-    use Resolving;
     use BaseDeprecations;
 
     /**
@@ -65,6 +63,14 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (string)$this->formatValue($this);
+    }
+
+    /**
      * @param mixed $value
      * @return array|string
      */
@@ -96,14 +102,6 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
     }
 
     /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return (string)$this->resolve()->formatValue($this);
-    }
-
-    /**
      * @return array
      */
     public function __debugInfo(): array
@@ -116,7 +114,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $data = $this->resolve()->__sleep();
+        $data = $this->__sleep();
         $result = [];
 
         foreach ($data as $fieldName) {

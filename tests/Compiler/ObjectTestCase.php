@@ -17,10 +17,8 @@ class ObjectTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function provider(): array
     {

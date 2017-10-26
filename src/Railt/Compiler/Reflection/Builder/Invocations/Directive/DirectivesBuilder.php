@@ -16,10 +16,7 @@ use Railt\Compiler\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Contracts\Behavior\Deprecatable;
 use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Standard\Directives\Deprecation;
 
 /**
@@ -36,45 +33,18 @@ trait DirectivesBuilder
      */
     protected function compileDirectivesBuilder(TreeNode $ast): bool
     {
-        if ($this instanceof HasDirectives && $ast->getId() === '#Directive') {
+        if ($ast->getId() === '#Directive') {
             /** @var BaseDirectivesContainer|Nameable $this */
-            $relation = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
+            $directive = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
 
-            $this->checkDirectiveLocation($relation);
+            $this->directives = $this->getValidator()->uniqueDefinitions($this->directives, $directive);
 
-            $this->directives = $this->verifyDefinition($this->directives, $relation);
-
-            $this->checkTheDeprecationDirective($relation);
+            $this->checkTheDeprecationDirective($directive);
 
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param DirectiveInvocation $relation
-     * @return void
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
-     */
-    private function checkDirectiveLocation(DirectiveInvocation $relation): void
-    {
-        $directive = $relation->getDefinition();
-
-        if ($this instanceof Definition && ! $directive->isAllowedFor($this)) {
-            $error = 'The usage of the @%s directive together with type %s<%s> is not allowed by the ' .
-                'locations of this directive (%s).';
-
-            $error = \sprintf(
-                $error,
-                $directive->getName(),
-                $this->getTypeName(),
-                $this->getName(),
-                \implode(', ', $directive->getLocations())
-            );
-
-            throw new TypeConflictException($error);
-        }
     }
 
     /**
@@ -84,8 +54,6 @@ trait DirectivesBuilder
     private function checkTheDeprecationDirective(DirectiveInvocation $directive): void
     {
         if ($this instanceof Deprecatable && $directive->getName() === Deprecation::DIRECTIVE_TYPE_NAME) {
-
-
             /** @var BaseDeprecations|Deprecatable $this */
             $this->deprecationReason = $directive->hasPassedArgument(Deprecation::REASON_ARGUMENT)
                 ? $this->getDeprecationReasonValue($directive)

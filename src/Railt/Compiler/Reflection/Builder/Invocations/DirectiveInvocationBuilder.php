@@ -48,7 +48,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
         if ($ast->getId() === '#Argument') {
             $argument = new ArgumentInvocationBuilder($ast, $this->getDocument(), $this);
 
-            $this->arguments[$argument->getName()] = $argument;
+            $this->arguments = $this->getValidator()->uniqueDefinitions($this->arguments, $argument);
 
             return true;
         }
@@ -61,8 +61,6 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
      */
     public function getDefinition(): DirectiveDefinition
     {
-        $this->compileIfNotCompiled();
-
         return $this->getCompiler()->get($this->getName());
     }
 }

@@ -60,35 +60,18 @@ class Profiler
      */
     public function trace(): string
     {
-        $result = '';
+        $trace = \debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
+        \array_shift($trace);
 
-        $i = 0;
+        $toString = function(array $trace) {
+            return ($trace['class'] ?? 'php') . '::' . ($trace['function'] ?? '?') . '()';
+        };
 
-        /** @var Invocation $element */
-        foreach ($this->parser->getTrace() as $element) {
-            if ($element instanceof Entry) {
-                $ruleName = $element->getRule();
-                /** @var Rule $rule */
-                $rule     = $this->parser->getRule($ruleName);
+        $reducer = function(string $sum, string $item): string {
+            return $sum . PHP_EOL . $item;
+        };
 
-                $result .= str_repeat('>  ', ++$i) . 'enter ' . $ruleName;
-
-                if (null !== $id = $rule->getNodeId()) {
-                    $result .= ' (' . $id . ')';
-                }
-
-                echo "\n";
-            } elseif ($element instanceof Token) {
-                $result .= str_repeat('   ', $i + 1) .
-                    'token ' . $element->getTokenName() .
-                    ', consumed ' . $element->getValue() . "\n";
-            } else {
-                $result .= str_repeat('<  ', $i--) .
-                    'exit ' . $element->getRule() . "\n";
-            }
-        }
-
-        return $result;
+        return \array_reduce(array_map($toString, $trace), $reducer, '');
     }
 
     /**

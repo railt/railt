@@ -45,7 +45,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
      */
     public function getParent(): HasArguments
     {
-        return $this->resolve()->parent;
+        return $this->parent;
     }
 
     /**
@@ -54,7 +54,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
      */
     public function getType(): Inputable
     {
-        if ($this->resolve()->type instanceof Inputable) {
+        if ($this->type instanceof Inputable) {
             return $this->type;
         }
 
@@ -68,7 +68,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
     public function getDefaultValue()
     {
         switch (true) {
-            case $this->resolve()->hasDefaultValue:
+            case $this->hasDefaultValue:
                 return $this->defaultValue;
 
             case ! $this->isNonNull():
@@ -86,7 +86,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
      */
     public function hasDefaultValue(): bool
     {
-        return $this->resolve()->hasDefaultValue  // Initialized by any value
+        return $this->hasDefaultValue  // Initialized by any value
             || ! $this->isNonNull()               // Can be null
             || $this->isList();                   // Can be an empty array
     }

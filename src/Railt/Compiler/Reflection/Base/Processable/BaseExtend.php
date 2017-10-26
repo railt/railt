@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Base\Processable;
 
 use Railt\Compiler\Reflection\Base\Definitions\BaseDefinition;
-use Railt\Compiler\Reflection\Base\Resolving;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Processable\ExtendDefinition;
 
@@ -19,8 +18,6 @@ use Railt\Compiler\Reflection\Contracts\Processable\ExtendDefinition;
  */
 abstract class BaseExtend extends BaseDefinition implements ExtendDefinition
 {
-    use Resolving;
-
     /**
      * Extend type name
      */
@@ -36,6 +33,6 @@ abstract class BaseExtend extends BaseDefinition implements ExtendDefinition
      */
     public function getRelatedType(): Definition
     {
-        return $this->resolve()->type;
+        return $this->type;
     }
 }

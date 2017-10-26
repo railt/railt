@@ -50,7 +50,7 @@ abstract class BaseSchema extends BaseDefinition implements SchemaDefinition
      */
     public function getQuery(): ObjectDefinition
     {
-        return $this->resolve()->query;
+        return $this->query;
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class BaseSchema extends BaseDefinition implements SchemaDefinition
      */
     public function getMutation(): ?ObjectDefinition
     {
-        return $this->resolve()->mutation;
+        return $this->mutation;
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class BaseSchema extends BaseDefinition implements SchemaDefinition
      */
     public function hasMutation(): bool
     {
-        return $this->resolve()->mutation instanceof ObjectDefinition;
+        return $this->mutation instanceof ObjectDefinition;
     }
 
     /**
@@ -74,7 +74,7 @@ abstract class BaseSchema extends BaseDefinition implements SchemaDefinition
      */
     public function getSubscription(): ?ObjectDefinition
     {
-        return $this->resolve()->subscription;
+        return $this->subscription;
     }
 
     /**
@@ -82,7 +82,7 @@ abstract class BaseSchema extends BaseDefinition implements SchemaDefinition
      */
     public function hasSubscription(): bool
     {
-        return $this->resolve()->subscription instanceof ObjectDefinition;
+        return $this->subscription instanceof ObjectDefinition;
     }
 
     /**

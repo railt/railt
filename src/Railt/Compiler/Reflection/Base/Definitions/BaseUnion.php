@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Definitions;
 
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\UnionDefinition;
 
 /**
@@ -35,7 +37,7 @@ abstract class BaseUnion extends BaseDefinition implements UnionDefinition
      */
     public function getTypes(): iterable
     {
-        return \array_values($this->resolve()->types);
+        return \array_values($this->types);
     }
 
     /**
@@ -44,7 +46,7 @@ abstract class BaseUnion extends BaseDefinition implements UnionDefinition
      */
     public function hasType(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->types);
+        return \array_key_exists($name, $this->types);
     }
 
     /**
@@ -53,7 +55,7 @@ abstract class BaseUnion extends BaseDefinition implements UnionDefinition
      */
     public function getType(string $name): ?Definition
     {
-        return $this->resolve()->types[$name] ?? null;
+        return $this->types[$name] ?? null;
     }
 
     /**
@@ -61,7 +63,7 @@ abstract class BaseUnion extends BaseDefinition implements UnionDefinition
      */
     public function getNumberOfTypes(): int
     {
-        return \count($this->resolve()->types);
+        return \count($this->types);
     }
 
     /**

@@ -9,14 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Behavior;
 
-use Railt\Compiler\Reflection\Base\Resolving;
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 
 /**
  * Trait BaseTypeIndicator
  * @mixin AllowsTypeIndication
- * @mixin Resolving
  */
 trait BaseTypeIndicator
 {
@@ -45,7 +43,7 @@ trait BaseTypeIndicator
      */
     public function getType()
     {
-        return $this->resolve()->type;
+        return $this->type;
     }
 
     /**
@@ -55,7 +53,7 @@ trait BaseTypeIndicator
      */
     public function isNonNull(): bool
     {
-        return $this->resolve()->isNonNull;
+        return $this->isNonNull;
     }
 
     /**
@@ -63,7 +61,7 @@ trait BaseTypeIndicator
      */
     public function isList(): bool
     {
-        return $this->resolve()->isList;
+        return $this->isList;
     }
 
     /**
@@ -73,6 +71,6 @@ trait BaseTypeIndicator
      */
     public function isListOfNonNulls(): bool
     {
-        return $this->resolve()->isList && $this->isListOfNonNulls;
+        return $this->isList && $this->isListOfNonNulls;
     }
 }

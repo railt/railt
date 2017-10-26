@@ -29,6 +29,11 @@ abstract class BaseDirective extends BaseDefinition implements DirectiveDefiniti
     protected const TYPE_NAME = 'Directive';
 
     /**
+     * Directive location type name
+     */
+    protected const LOCATION_TYPE_NAME = 'DirectiveLocation';
+
+    /**
      * Mappings location to allowed type
      */
     protected const LOCATION_TARGET_MAPPINGS = [
@@ -63,7 +68,7 @@ abstract class BaseDirective extends BaseDefinition implements DirectiveDefiniti
      */
     public function getLocations(): iterable
     {
-        return \array_values($this->resolve()->locations);
+        return \array_values($this->locations);
     }
 
     /**
@@ -71,7 +76,7 @@ abstract class BaseDirective extends BaseDefinition implements DirectiveDefiniti
      */
     public function getNumberOfLocations(): int
     {
-        return \count($this->resolve()->locations);
+        return \count($this->locations);
     }
 
     /**
@@ -114,7 +119,7 @@ abstract class BaseDirective extends BaseDefinition implements DirectiveDefiniti
     {
         $name = \strtoupper($name);
 
-        return \in_array($name, $this->resolve()->locations, true);
+        return \in_array($name, $this->locations, true);
     }
 
     /**
@@ -135,7 +140,7 @@ abstract class BaseDirective extends BaseDefinition implements DirectiveDefiniti
      */
     public function isAllowedForQueries(): bool
     {
-        foreach ($this->resolve()->locations as $location) {
+        foreach ($this->locations as $location) {
             if (\in_array($location, Location::TARGET_GRAPHQL_QUERY, true)) {
                 return true;
             }
@@ -149,7 +154,7 @@ abstract class BaseDirective extends BaseDefinition implements DirectiveDefiniti
      */
     public function isAllowedForSchemaDefinitions(): bool
     {
-        foreach ($this->resolve()->locations as $location) {
+        foreach ($this->locations as $location) {
             if (\in_array($location, Location::TARGET_GRAPHQL_SDL, true)) {
                 return true;
             }

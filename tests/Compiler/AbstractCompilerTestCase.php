@@ -12,8 +12,10 @@ namespace Railt\Tests\Compiler;
 use Cache\Adapter\Common\AbstractCachePool;
 use Cache\Adapter\Common\CacheItem;
 use Cache\Adapter\Filesystem\FilesystemCachePool;
+use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Plugin\ListFiles;
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\EmulatingPersister;
@@ -33,11 +35,40 @@ use Railt\Tests\AbstractTestCase;
 abstract class AbstractCompilerTestCase extends AbstractTestCase
 {
     /**
+     * @var bool
+     */
+    private static $booted = false;
+
+    /**
+     * @return void
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
+     */
+    public function setUp(): void
+    {
+        if (self::$booted === false) {
+            self::$booted = true;
+
+            $filesystem = new Filesystem(new Local(__DIR__ . '/.temp/'));
+            $filesystem->addPlugin(new ListFiles());
+
+            foreach ($filesystem->listFiles('/', true) as $file) {
+                if (Str::startsWith($file['basename'], '.')) {
+                    continue;
+                }
+                // Clear cache
+                $filesystem->delete($file['path']);
+            }
+        }
+
+        parent::setUp();
+    }
+
+    /**
      * @param string $body
      * @return array
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     protected function dataProviderDocuments(string $body): array
     {
@@ -53,9 +84,8 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param string $body
      * @return iterable|Document[]
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     protected function getDocuments(string $body): iterable
     {
@@ -67,7 +97,9 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     }
 
     /**
-     * @return \Generator|Compiler\CompilerInterface[]
+     * @return \Generator
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     protected function getCompilers(): \Generator
     {
@@ -92,6 +124,8 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @return Persister
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     private function getPsr6FileSystemPersister(): Persister
     {
@@ -105,6 +139,8 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param string $name
      * @return AbstractCachePool
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     private function createFilesystemPool(string $name): AbstractCachePool
     {
@@ -119,6 +155,8 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @return Persister
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     private function getPsr16FileSystemPersister(): Persister
     {

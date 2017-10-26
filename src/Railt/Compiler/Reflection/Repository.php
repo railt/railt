@@ -13,7 +13,6 @@ use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Exceptions\TypeRedefinitionException;
-use Railt\Compiler\Reflection\Validation\Verifiable;
 use Traversable;
 
 /**

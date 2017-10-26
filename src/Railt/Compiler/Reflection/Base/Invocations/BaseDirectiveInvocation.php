@@ -40,7 +40,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
      */
     public function getParent(): Definition
     {
-        return $this->resolve()->parent;
+        return $this->parent;
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
      */
     public function getDefinition(): DirectiveDefinition
     {
-        return $this->resolve()->directive;
+        return $this->directive;
     }
 
     /**
@@ -56,7 +56,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
      */
     public function getPassedArguments(): iterable
     {
-        return \array_values($this->resolve()->arguments);
+        return \array_values($this->arguments);
     }
 
     /**
@@ -65,7 +65,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
      */
     public function hasPassedArgument(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->arguments);
+        return \array_key_exists($name, $this->arguments);
     }
 
     /**
@@ -74,7 +74,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
      */
     public function getPassedArgument(string $name): ?ArgumentInvocation
     {
-        return $this->resolve()->arguments[$name] ?? null;
+        return $this->arguments[$name] ?? null;
     }
 
     /**
@@ -82,7 +82,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
      */
     public function getNumberOfPassedArguments(): int
     {
-        return \count($this->resolve()->arguments);
+        return \count($this->arguments);
     }
 
     /**

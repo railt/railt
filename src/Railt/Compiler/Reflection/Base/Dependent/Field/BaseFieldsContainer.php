@@ -9,14 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Dependent\Field;
 
-use Railt\Compiler\Reflection\Base\Resolving;
 use Railt\Compiler\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
  * Trait BaseFieldsContainer
  * @mixin HasFields
- * @mixin Resolving
  */
 trait BaseFieldsContainer
 {
@@ -30,7 +28,7 @@ trait BaseFieldsContainer
      */
     public function getFields(): iterable
     {
-        return \array_values($this->resolve()->fields);
+        return \array_values($this->fields);
     }
 
     /**
@@ -39,7 +37,7 @@ trait BaseFieldsContainer
      */
     public function hasField(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->fields);
+        return \array_key_exists($name, $this->fields);
     }
 
     /**
@@ -48,7 +46,7 @@ trait BaseFieldsContainer
      */
     public function getField(string $name): ?FieldDefinition
     {
-        return $this->resolve()->fields[$name] ?? null;
+        return $this->fields[$name] ?? null;
     }
 
     /**
@@ -56,6 +54,6 @@ trait BaseFieldsContainer
      */
     public function getNumberOfFields(): int
     {
-        return \count($this->resolve()->fields);
+        return \count($this->fields);
     }
 }

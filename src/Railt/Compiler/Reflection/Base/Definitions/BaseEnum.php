@@ -35,7 +35,7 @@ abstract class BaseEnum extends BaseDefinition implements EnumDefinition
      */
     public function getValues(): iterable
     {
-        return \array_values($this->resolve()->values);
+        return \array_values($this->values);
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class BaseEnum extends BaseDefinition implements EnumDefinition
      */
     public function hasValue(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->values);
+        return \array_key_exists($name, $this->values);
     }
 
     /**
@@ -53,7 +53,7 @@ abstract class BaseEnum extends BaseDefinition implements EnumDefinition
      */
     public function getValue(string $name): ?ValueDefinition
     {
-        return $this->resolve()->values[$name] ?? null;
+        return $this->values[$name] ?? null;
     }
 
     /**

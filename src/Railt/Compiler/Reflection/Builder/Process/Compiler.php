@@ -14,9 +14,10 @@ use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Exceptions\BuildingException;
-use Railt\Compiler\Reflection\Validation\DefinitionValidator;
+use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
  * Trait Builder
@@ -24,7 +25,6 @@ use Railt\Compiler\Reflection\Validation\DefinitionValidator;
 trait Compiler
 {
     use NameBuilder;
-    use DefinitionValidator;
 
     /**
      * @var TreeNode
@@ -54,6 +54,14 @@ trait Compiler
         \assert($this->getDocument()->getCompiler() instanceof CompilerInterface);
 
         return $this->getDocument()->getCompiler();
+    }
+
+    /**
+     * @return Validator
+     */
+    protected function getValidator(): Validator
+    {
+        return $this->getCompiler()->getValidator();
     }
 
     /**
@@ -97,8 +105,6 @@ trait Compiler
                 }
             }
 
-            $this->verify();
-
             return true;
         }
 
@@ -134,14 +140,6 @@ trait Compiler
     }
 
     /**
-     * @return void
-     */
-    public function verify(): void
-    {
-        // Postprocess
-    }
-
-    /**
      * @param TreeNode $ast
      * @return bool
      */
@@ -165,16 +163,10 @@ trait Compiler
             /** @var $this NameBuilder */
             $this->precompileNameableType($ast);
         }
-    }
 
-    /**
-     * @return self
-     */
-    final protected function resolve(): self
-    {
-        $this->compileIfNotCompiled();
-
-        return $this;
+        if ($this instanceof DependentDefinition) {
+            $this->compileIfNotCompiled();
+        }
     }
 
     /**

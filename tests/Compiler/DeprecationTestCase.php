@@ -128,7 +128,7 @@ GraphQL;
                         $invocation->getDefinition()->getArgument('reason')->getDefaultValue());
                 }
             } else {
-                static::assertFalse($type->isDeprecated());
+                static::assertFalse($type->isDeprecated(), $type->getName() . ' is deprecated but no');
             }
         }
     }

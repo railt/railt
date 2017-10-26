@@ -41,13 +41,4 @@ class FieldBuilder extends BaseField implements Compilable
         $this->parent = $parent;
         $this->bootBuilder($ast, $document);
     }
-
-    /**
-     * @param TreeNode $ast
-     * @return bool
-     */
-    public function compile(TreeNode $ast): bool
-    {
-        return false;
-    }
 }

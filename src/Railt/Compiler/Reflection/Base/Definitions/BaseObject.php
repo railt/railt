@@ -37,7 +37,7 @@ abstract class BaseObject extends BaseDefinition implements ObjectDefinition
      */
     public function getInterfaces(): iterable
     {
-        return \array_values($this->resolve()->interfaces);
+        return \array_values($this->interfaces);
     }
 
     /**
@@ -46,7 +46,7 @@ abstract class BaseObject extends BaseDefinition implements ObjectDefinition
      */
     public function hasInterface(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->interfaces);
+        return \array_key_exists($name, $this->interfaces);
     }
 
     /**
@@ -55,7 +55,7 @@ abstract class BaseObject extends BaseDefinition implements ObjectDefinition
      */
     public function getInterface(string $name): ?InterfaceDefinition
     {
-        return $this->resolve()->interfaces[$name] ?? null;
+        return $this->interfaces[$name] ?? null;
     }
 
     /**
@@ -63,7 +63,7 @@ abstract class BaseObject extends BaseDefinition implements ObjectDefinition
      */
     public function getNumberOfInterfaces(): int
     {
-        return \count($this->resolve()->interfaces);
+        return \count($this->interfaces);
     }
 
     /**

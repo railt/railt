@@ -39,7 +39,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
      */
     public function getSchema(): ?SchemaDefinition
     {
-        return $this->resolve()->schema;
+        return $this->schema;
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
      */
     public function getTypes(string $typeOf = null): iterable
     {
-        $types = \array_values($this->resolve()->types);
+        $types = \array_values($this->types);
 
         $filter = function (Definition $definition) use ($typeOf) {
             return $definition->getTypeName() === $typeOf || $definition instanceof $typeOf;
@@ -63,7 +63,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
      */
     public function getDefinition(string $name): ?Definition
     {
-        return $this->resolve()->types[$name] ?? null;
+        return $this->types[$name] ?? null;
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
      */
     public function hasDefinition(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->types);
+        return \array_key_exists($name, $this->types);
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
      */
     public function getNumberOfDefinitions(): int
     {
-        return \count($this->resolve()->types);
+        return \count($this->types);
     }
 
     /**

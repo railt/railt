@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification;
+namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
 use Railt\Compiler\Reflection\Support;
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;

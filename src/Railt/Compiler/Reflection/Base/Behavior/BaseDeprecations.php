@@ -9,13 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Behavior;
 
-use Railt\Compiler\Reflection\Base\Resolving;
 use Railt\Compiler\Reflection\Contracts\Behavior\Deprecatable;
 
 /**
  * Trait BaseDeprecations
  * @mixin Deprecatable
- * @mixin Resolving
  */
 trait BaseDeprecations
 {
@@ -29,7 +27,7 @@ trait BaseDeprecations
      */
     public function isDeprecated(): bool
     {
-        return $this->resolve()->deprecationReason !== null;
+        return $this->deprecationReason !== null;
     }
 
     /**
@@ -37,6 +35,6 @@ trait BaseDeprecations
      */
     public function getDeprecationReason(): string
     {
-        return (string)$this->resolve()->deprecationReason;
+        return (string)$this->deprecationReason;
     }
 }

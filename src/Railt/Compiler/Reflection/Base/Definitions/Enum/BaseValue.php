@@ -28,7 +28,7 @@ abstract class BaseValue extends BaseDependent implements ValueDefinition
      */
     public function getValue(): string
     {
-        return (string)$this->resolve()->name;
+        return (string)$this->name;
     }
 
     /**
@@ -44,7 +44,7 @@ abstract class BaseValue extends BaseDependent implements ValueDefinition
      */
     public function getParent(): EnumDefinition
     {
-        return $this->resolve()->parent;
+        return $this->parent;
     }
 
     /**

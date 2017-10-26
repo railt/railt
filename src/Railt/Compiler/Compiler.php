@@ -29,7 +29,7 @@ use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
 use Railt\Compiler\Reflection\Standard\GraphQLDocument;
 use Railt\Compiler\Reflection\Support;
-use Railt\Compiler\Reflection\Validation\Verifiable;
+use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
  * Class Compiler
@@ -59,6 +59,11 @@ class Compiler implements CompilerInterface
     private $logger;
 
     /**
+     * @var Validator
+     */
+    private $validator;
+
+    /**
      * Compiler constructor.
      * @param Persister|null $persister
      * @param LoggerInterface|null $logger
@@ -67,6 +72,7 @@ class Compiler implements CompilerInterface
     public function __construct(Persister $persister = null, LoggerInterface $logger = null)
     {
         $this->logger = $logger;
+        $this->validator = new Validator();
 
         $this->parser = new Parser($logger);
         $this->loader = new Loader($this);
@@ -147,31 +153,16 @@ class Compiler implements CompilerInterface
         return function (ReadableInterface $readable): Document {
             $ast = $this->parser->parse($readable);
 
-            $document = (new DocumentBuilder($ast, $readable))->withCompiler($this);
+            $document = new DocumentBuilder($ast, $readable, $this);
 
-            $this->bootTypes($document);
+            foreach ($document->getTypes() as $type) {
+                if ($type instanceof Compilable) {
+                    $type->compileIfNotCompiled();
+                }
+            }
 
             return $document;
         };
-    }
-
-    /**
-     * Process types
-     *
-     * @param Document $document
-     * @return void
-     */
-    private function bootTypes(Document $document): void
-    {
-        foreach ($document->getTypes() as $type) {
-            if ($type instanceof Verifiable) {
-                $type->verify();
-            }
-
-            if ($type instanceof Compilable && ! $this->isUniqueType($type)) {
-                $type->compileIfNotCompiled();
-            }
-        }
     }
 
     /**
@@ -191,7 +182,13 @@ class Compiler implements CompilerInterface
      */
     public function get(string $name, Document $document = null): Definition
     {
-        return $this->loader->get($name, $document);
+        $result = $this->loader->get($name, $document);
+
+        if ($result instanceof Compilable) {
+            $result->compileIfNotCompiled();
+        }
+
+        return $result;
     }
 
     /**
@@ -214,11 +211,18 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param TreeNode $ast
-     * @return string
+     * @return Parser
      */
-    public function dump(TreeNode $ast): string
+    public function getParser(): Parser
     {
-        return $this->parser->dump($ast);
+        return $this->parser;
+    }
+
+    /**
+     * @return Validator
+     */
+    public function getValidator(): Validator
+    {
+        return $this->validator;
     }
 }

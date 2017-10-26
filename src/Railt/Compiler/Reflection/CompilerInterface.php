@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Parser;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
  * Class CompilerInterface
@@ -31,8 +32,12 @@ interface CompilerInterface extends Dictionary
     public function registerAutoloader(\Closure $then): CompilerInterface;
 
     /**
-     * @param TreeNode $ast
-     * @return string
+     * @return Parser
      */
-    public function dump(TreeNode $ast): string;
+    public function getParser(): Parser;
+
+    /**
+     * @return Validator
+     */
+    public function getValidator(): Validator;
 }

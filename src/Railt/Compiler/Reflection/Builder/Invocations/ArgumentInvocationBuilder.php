@@ -54,17 +54,9 @@ class ArgumentInvocationBuilder extends BaseArgumentInvocation implements Compil
 
     /**
      * @return ArgumentDefinition
-     * @throws TypeNotFoundException
      */
     public function getDefinition(): ArgumentDefinition
     {
-        $argument = $this->parent->getDefinition()->getArgument($this->getName());
-
-        if ($argument === null) {
-            $error = 'Argument %s was specified at the @%s calling, but it absent in the directive itself.';
-            throw new TypeNotFoundException(\sprintf($error, $this->getName(), $this->getParent()->getName()));
-        }
-
-        return $argument;
+        return $this->parent->getDefinition()->getArgument($this->getName());
     }
 }

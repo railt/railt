@@ -38,11 +38,6 @@ class ExtendBuilder extends BaseExtend implements Compilable
     use Compiler;
 
     /**
-     * @var TypeInheritance
-     */
-    private $inheritance;
-
-    /**
      * ExtendBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
@@ -52,14 +47,11 @@ class ExtendBuilder extends BaseExtend implements Compilable
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
         $this->bootBuilder($ast, $document);
-        $this->inheritance = new TypeInheritance();
 
         // Force compilation
-        $this->compileIfNotCompiled();
+        // $this->compileIfNotCompiled();
 
-        // Extender contains same name with related type
-        // Is this a valid behaviour?
-        $this->name = $this->resolve()->getRelatedType()->getName();
+        $this->name = $this->getTypeName();
     }
 
     /**
@@ -72,7 +64,12 @@ class ExtendBuilder extends BaseExtend implements Compilable
         $type = DocumentBuilder::AST_TYPE_MAPPING[$ast->getId()] ?? null;
 
         if ($type !== null && ! ($type instanceof ExtendDefinition)) {
-            $this->applyExtender(new $type($ast, $this->getDocument()));
+            /** @var Compilable $virtualType */
+            $virtualType = new $type($ast, $this->getDocument());
+
+            $virtualType->compileIfNotCompiled();
+
+            $this->applyExtender($virtualType);
         }
 
         return false;
@@ -126,7 +123,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  * @var FieldDefinition $field
                  */
                 $field = $original->getField($extendField->getName());
-                $this->inheritance->verify($field, $extendField);
+                $this->getValidator()->verifyPostConditionInheritance($field, $extendField);
 
                 $this->dataFieldExtender()->call($field, $extendField);
 
@@ -179,7 +176,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  * @var ArgumentDefinition $argument
                  */
                 $argument = $original->getArgument($extendArgument->getName());
-                $this->inheritance->verify($argument, $extendArgument);
+                $this->getValidator()->verifyPreConditionInheritance($argument, $extendArgument);
 
                 $this->dataArgumentExtender()->call($argument, $extendArgument);
 

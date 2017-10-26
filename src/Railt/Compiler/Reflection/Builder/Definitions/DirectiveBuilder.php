@@ -15,7 +15,6 @@ use Railt\Compiler\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
  * Class DirectiveBuilder
@@ -39,8 +38,7 @@ class DirectiveBuilder extends BaseDirective implements Compilable
     /**
      * @param TreeNode $ast
      * @return bool
-     * @throws TypeConflictException
-     * @throws \ReflectionException
+     * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      */
     public function compile(TreeNode $ast): bool
     {
@@ -48,31 +46,13 @@ class DirectiveBuilder extends BaseDirective implements Compilable
             case '#Target':
                 /** @var TreeNode $child */
                 foreach ($ast->getChild(0)->getChildren() as $child) {
-                    $location          = $this->verifyLocation($child->getValueValue());
-                    $this->locations[] = $location;
+                    $location = $child->getValueValue();
+
+                    $this->locations = $this->getValidator()
+                        ->uniqueValues($this->locations, $location, static::LOCATION_TYPE_NAME);
                 }
         }
 
         return false;
-    }
-
-    /**
-     * TODO Move verification into external class
-     *
-     * @param string $location
-     * @return string
-     * @throws TypeConflictException
-     * @throws \ReflectionException
-     */
-    private function verifyLocation(string $location): string
-    {
-        $location = \strtoupper($location);
-
-        if (! \in_array($location, $this->getAllAllowedLocations(), true)) {
-            $error = 'Invalid directive location "%s"';
-            throw new TypeConflictException(\sprintf($error, $location));
-        }
-
-        return $location;
     }
 }

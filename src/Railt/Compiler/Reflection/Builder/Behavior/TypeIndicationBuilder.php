@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Behavior;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
-use Railt\Compiler\Exceptions\TypeNotFoundException;
 
 /**
  * Trait TypeIndicationBuilder
@@ -58,35 +58,10 @@ trait TypeIndicationBuilder
             } else {
                 $name = $child->getValueValue();
                 $this->type = $this->getCompiler()->get($name);
-
-                if ($this->type === null && $this instanceof Nameable) {
-                    $this->throwInvalidTypeError($name);
-                }
             }
         }
 
         return true;
-    }
-
-    /**
-     * @param string $name
-     * @return void
-     * @throws TypeNotFoundException
-     */
-    private function throwInvalidTypeError(string $name): void
-    {
-        $error = '%s contains an invalid type. Type %s not found.';
-
-        [$field, $parent] = [$this->getName(), $this];
-
-        while ($parent instanceof DependentDefinition) {
-            $parent = $parent->getParent();
-            $field = $parent->getName() . '.' . $field;
-        }
-
-        $error = \sprintf($error, $field, $name);
-
-        throw new TypeNotFoundException($error);
     }
 
     /**

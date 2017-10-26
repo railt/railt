@@ -79,9 +79,8 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function testAllowedArgumentDefaultValue(string $schema): void
     {
@@ -105,10 +104,9 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testInvalidArgumentDefaultValue(string $schema): void
     {

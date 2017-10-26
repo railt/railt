@@ -7,23 +7,23 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Reflection\Builder\Inheritance;
+namespace Railt\Compiler\Reflection\Validation;
 
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification\AbstractVerifier;
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification\ContainerVerifier;
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification\InterfaceVerifier;
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification\ObjectVerifier;
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification\ScalarVerifier;
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification\UnionVerifier;
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification\Verifier;
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Reflection\Validation\Inheritance\AbstractVerifier;
+use Railt\Compiler\Reflection\Validation\Inheritance\ContainerVerifier;
+use Railt\Compiler\Reflection\Validation\Inheritance\InterfaceVerifier;
+use Railt\Compiler\Reflection\Validation\Inheritance\ObjectVerifier;
+use Railt\Compiler\Reflection\Validation\Inheritance\ScalarVerifier;
+use Railt\Compiler\Reflection\Validation\Inheritance\UnionVerifier;
+use Railt\Compiler\Reflection\Validation\Inheritance\Verifier;
 
 /**
  * Class Inheritance
  */
-class TypeInheritance extends AbstractVerifier
+class Inheritance extends AbstractVerifier
 {
     /**
      * @var Verifier|ContainerVerifier
@@ -52,9 +52,9 @@ class TypeInheritance extends AbstractVerifier
 
     /**
      * @param Verifier[] ...$verifier
-     * @return TypeInheritance
+     * @return Inheritance
      */
-    public function addRule(Verifier ...$verifier): TypeInheritance
+    public function addRule(Verifier ...$verifier): Inheritance
     {
         foreach ($verifier as $item) {
             $this->rules[] = $item;
@@ -114,7 +114,7 @@ class TypeInheritance extends AbstractVerifier
      */
     private function throwNonCompatibleTypesException(Definition $a, Definition $b): bool
     {
-        $error = 'Type %s not compatible and can not be overriden by type %s';
+        $error = '%s not compatible and can not be overriden by type %s';
 
         return $this->throw($error, $this->typeToString($a), $this->typeToString($b));
     }

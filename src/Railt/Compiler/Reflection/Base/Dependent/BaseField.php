@@ -35,7 +35,7 @@ abstract class BaseField extends BaseDependent implements FieldDefinition
      */
     public function getParent(): HasFields
     {
-        return $this->resolve()->parent;
+        return $this->parent;
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class BaseField extends BaseDependent implements FieldDefinition
      */
     public function getType(): Definition
     {
-        return $this->resolve()->type;
+        return $this->type;
     }
 
     /**

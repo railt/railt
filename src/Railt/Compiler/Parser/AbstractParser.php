@@ -82,7 +82,6 @@ abstract class AbstractParser implements ParserInterface
         return $this->profiler->trace();
     }
 
-
     /**
      * @param ReadableInterface $file
      * @return TreeNode

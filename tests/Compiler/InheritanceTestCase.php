@@ -29,6 +29,69 @@ class InheritanceTestCase extends AbstractCompilerTestCase
     {
         $schemas = [
             // Container
+            'type A { id: ID }              extend type A { id: ID }',
+            'type A { id: ID }              extend type A { id: ID! }',
+            'type A { id: ID! }             extend type A { id: ID! }',
+            'type A { id: [ID] }            extend type A { id: [ID] }',
+            'type A { id: [ID] }            extend type A { id: [ID!] }',
+            'type A { id: [ID] }            extend type A { id: [ID]! }',
+            'type A { id: [ID] }            extend type A { id: [ID!]! }',
+            'type A { id: [ID!] }           extend type A { id: [ID!] }',
+            'type A { id: [ID!] }           extend type A { id: [ID!]! }',
+            'type A { id: [ID]! }           extend type A { id: [ID]! }',
+            'type A { id: [ID]! }           extend type A { id: [ID!]! }',
+            'type A { id: [ID!]! }          extend type A { id: [ID!]! }',
+
+            'interface A { id: ID }         type B implements A { id: ID }',
+            'interface A { id: ID }         type B implements A { id: ID! }',
+            'interface A { id: ID! }        type B implements A { id: ID! }',
+            'interface A { id: [ID] }       type B implements A { id: [ID] }',
+            'interface A { id: [ID] }       type B implements A { id: [ID!] }',
+            'interface A { id: [ID] }       type B implements A { id: [ID]! }',
+            'interface A { id: [ID] }       type B implements A { id: [ID!]! }',
+            'interface A { id: [ID!] }      type B implements A { id: [ID!] }',
+            'interface A { id: [ID!] }      type B implements A { id: [ID!]! }',
+            'interface A { id: [ID]! }      type B implements A { id: [ID]! }',
+            'interface A { id: [ID]! }      type B implements A { id: [ID!]! }',
+            'interface A { id: [ID!]! }     type B implements A { id: [ID!]! }',
+
+            // Scalars
+            'type A { id: Any }             extend type A { id: Any }',
+            'type A { id: Any }             extend type A { id: Boolean }',
+            'type A { id: Any }             extend type A { id: DateTime }',
+            'type A { id: Any }             extend type A { id: Float }',
+            'type A { id: Any }             extend type A { id: ID }',
+            'type A { id: Any }             extend type A { id: Int }',
+            'type A { id: Any }             extend type A { id: String }',
+            'type A { id: Boolean }         extend type A { id: Boolean }',
+            'type A { id: DateTime }        extend type A { id: DateTime }',
+            'type A { id: Float }           extend type A { id: Float }',
+            'type A { id: Float }           extend type A { id: Int }',
+            'type A { id: ID }              extend type A { id: ID }',
+            'type A { id: Int }             extend type A { id: Int }',
+            'type A { id: String }          extend type A { id: DateTime }',
+            'type A { id: String }          extend type A { id: ID }',
+            'type A { id: String }          extend type A { id: String }',
+
+            'interface A { id: Any }        type B implements A { id: Any }',
+            'interface A { id: Any }        type B implements A { id: Boolean }',
+            'interface A { id: Any }        type B implements A { id: DateTime }',
+            'interface A { id: Any }        type B implements A { id: Float }',
+            'interface A { id: Any }        type B implements A { id: ID }',
+            'interface A { id: Any }        type B implements A { id: Int }',
+            'interface A { id: Any }        type B implements A { id: String }',
+            'interface A { id: Boolean }    type B implements A { id: Boolean }',
+            'interface A { id: DateTime }   type B implements A { id: DateTime }',
+            'interface A { id: Float }      type B implements A { id: Float }',
+            'interface A { id: Float }      type B implements A { id: Int }',
+            'interface A { id: ID }         type B implements A { id: ID }',
+            'interface A { id: Int }        type B implements A { id: Int }',
+            'interface A { id: String }     type B implements A { id: DateTime }',
+            'interface A { id: String }     type B implements A { id: ID }',
+            'interface A { id: String }     type B implements A { id: String }',
+
+
+            // Container + Arguments
             'type A { id(f: ID): ID }                    extend type A { id(f: ID): ID }',
             'type A { id(f: ID!): ID }                   extend type A { id(f: ID): ID! }',
             'type A { id(f: ID!): ID! }                  extend type A { id(f: ID!): ID! }',
@@ -55,7 +118,7 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'interface A { id(f: [ID!]!): [ID]! }        type B implements A { id(f: [ID]!): [ID!]! }',
             'interface A { id(f: [ID!]!): [ID!]! }       type B implements A { id(f: [ID!]!): [ID!]! }',
 
-            // Scalars
+            // Scalars + Arguments
             'type A { id(f: Any): Any }                  extend type A { id(f: Any): Any }',
             'type A { id(f: Boolean): Any }              extend type A { id(f: Any): Boolean }',
             'type A { id(f: DateTime): Any }             extend type A { id(f: Any): DateTime }',
@@ -202,9 +265,9 @@ class InheritanceTestCase extends AbstractCompilerTestCase
                 type A { id: I } 
                 extend type A { id: ID }', // Overwrite by other type
             'interface I {} 
-            interface J {} 
-            type A { id: I } 
-            extend type A { id: J }', // Overwrite by other interface
+                interface J {} 
+                type A { id: I } 
+                extend type A { id: J }', // Overwrite by other interface
 
             // Unions
             'union U = String 
@@ -216,17 +279,29 @@ class InheritanceTestCase extends AbstractCompilerTestCase
                 extend type A { id: Int }',
 
             // Incompatible types
-            'type Object {}         type A { id: Object }    extend type A { id: ID }',
-            'interface Interface {} type A { id: Interface } extend type A { id: ID }',
-            'union Union = String   type A { id: Union }     extend type A { id: ID }',
-            'enum Enum { A }        type A { id: Enum }      extend type A { id: ID }',
-            'input Input { id: ID } type A { id: Input }     extend type A { id: ID }',
-            'type A {} type B {}    type C { id: A }         extend type C { id: B }',
+            'type Object {}         
+                type A { id: Object }    
+                extend type A { id: ID }',
+            'interface Interface {} 
+                type A { id: Interface } 
+                extend type A { id: ID }',
+            'union Union = String   
+                type A { id: Union }     
+                extend type A { id: ID }',
+            'enum Enum { A }        
+                type A { id: Enum }      
+                extend type A { id: ID }',
+            'input Input { id: ID } 
+                type A { id: Input }     
+                extend type A { id: ID }',
+            'type A {} type B {}    
+                type C { id: A }         
+                extend type C { id: B }',
             'interface I {}         
                 type A implements I {}  
                 type B implements I {} 
-                 type C { id: A } extend 
-                 type C { id: B }',
+                type C { id: A } 
+                extend type C { id: B }',
         ];
 
         $result = [];
@@ -243,9 +318,8 @@ class InheritanceTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function testExtendPositiveInheritance(string $schema): void
     {
@@ -261,10 +335,10 @@ class InheritanceTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
      */
     public function testExtendNegativeInheritance(string $schema): void
     {

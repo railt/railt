@@ -38,11 +38,10 @@ trait Support
         $name = $type->getName();
 
         if ($type instanceof AllowsTypeIndication) {
-            $parent = \sprintf('%s(%s)', $type->getTypeName(), $this->typeIndicatorToString($type));
-            $name = $type->getName();
+            $name = \sprintf('%s: %s', $type->getName(), $this->typeIndicatorToString($type));
         }
 
-        return \sprintf('%s<%s>', $parent, $name);
+        return \sprintf('%s "%s"', $parent, $name);
     }
 
     /**

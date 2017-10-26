@@ -7,10 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Reflection\Builder\Inheritance\TypeVerification;
+namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
  * Class ContainerInheritance
@@ -77,30 +78,35 @@ class ContainerVerifier extends AbstractVerifier
     }
 
     /**
-     * @param AllowsTypeIndication $a
-     * @param AllowsTypeIndication $b
+     * @param AllowsTypeIndication|DependentDefinition $a
+     * @param AllowsTypeIndication|DependentDefinition $b
      * @return bool
      * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      */
     private function typeListVerification(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
+        $parent = $a->getParent();
+
         if (! $b->isList()) {
-            return $this->throw('List %s can not be overridden by non-list %s',
+            return $this->throw('List %s of %s can not be overridden by non-list %s',
                 $this->typeToString($a),
+                $this->typeToString($parent),
                 $this->typeToString($b)
             );
         }
 
         if ($a->isNonNull() && ! $b->isNonNull()) {
-            return $this->throw('List %s can not be overridden by nullable list %s',
+            return $this->throw('List %s of %s can not be overridden by nullable list %s',
                 $this->typeToString($a),
+                $this->typeToString($parent),
                 $this->typeToString($b)
             );
         }
 
         if ($a->isListOfNonNulls() && ! $b->isListOfNonNulls()) {
-            return $this->throw('List %s can not be overridden by nullable %s',
+            return $this->throw('List %s of %s can not be overridden by nullable %s',
                 $this->typeToString($a),
+                $this->typeToString($parent),
                 $this->typeToString($b)
             );
         }
@@ -109,23 +115,27 @@ class ContainerVerifier extends AbstractVerifier
     }
 
     /**
-     * @param AllowsTypeIndication $a
-     * @param AllowsTypeIndication $b
+     * @param AllowsTypeIndication|DependentDefinition $a
+     * @param AllowsTypeIndication|DependentDefinition $b
      * @return bool
      * @throws TypeConflictException
      */
     private function typeSimpleVerification(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
+        $parent = $a->getParent();
+
         if ($b->isList()) {
-            return $this->throw('Non-list %s can not be overridden by list %s',
+            return $this->throw('Non-list %s of %s can not be overridden by list %s',
                 $this->typeToString($a),
+                $this->typeToString($parent),
                 $this->typeToString($b)
             );
         }
 
         if ($a->isNonNull() && ! $b->isNonNull()) {
-            return $this->throw('%s can not be overridden by nullable %s',
+            return $this->throw('%s of %s can not be overridden by nullable %s',
                 $this->typeToString($a),
+                $this->typeToString($parent),
                 $this->typeToString($b)
             );
         }

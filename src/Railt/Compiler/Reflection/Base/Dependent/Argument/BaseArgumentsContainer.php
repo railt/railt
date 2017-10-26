@@ -9,14 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Dependent\Argument;
 
-use Railt\Compiler\Reflection\Base\Resolving;
 use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
 
 /**
  * Trait BaseArgumentsContainer
  * @mixin HasArguments
- * @mixin Resolving
  */
 trait BaseArgumentsContainer
 {
@@ -30,7 +28,7 @@ trait BaseArgumentsContainer
      */
     public function getArguments(): iterable
     {
-        return \array_values($this->resolve()->arguments);
+        return \array_values($this->arguments);
     }
 
     /**
@@ -48,7 +46,7 @@ trait BaseArgumentsContainer
      */
     public function hasArgument(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->arguments);
+        return \array_key_exists($name, $this->arguments);
     }
 
     /**
@@ -57,7 +55,7 @@ trait BaseArgumentsContainer
      */
     public function getArgument(string $name): ?ArgumentDefinition
     {
-        return $this->resolve()->arguments[$name] ?? null;
+        return $this->arguments[$name] ?? null;
     }
 
     /**
@@ -65,7 +63,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfArguments(): int
     {
-        return \count($this->resolve()->arguments);
+        return \count($this->arguments);
     }
 
     /**
@@ -73,7 +71,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfRequiredArguments(): int
     {
-        return (int)\array_reduce($this->resolve()->arguments, [$this, 'requiredArgumentsCounter'], 0);
+        return (int)\array_reduce($this->arguments, [$this, 'requiredArgumentsCounter'], 0);
     }
 
     /**
@@ -81,7 +79,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfOptionalArguments(): int
     {
-        return (int)\array_reduce($this->resolve()->arguments, [$this, 'optionalArgumentsCounter'], 0);
+        return (int)\array_reduce($this->arguments, [$this, 'optionalArgumentsCounter'], 0);
     }
 
     /**

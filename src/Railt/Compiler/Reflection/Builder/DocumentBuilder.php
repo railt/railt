@@ -10,21 +10,20 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
+use Railt\Compiler\Exceptions\TypeRedefinitionException;
+use Railt\Compiler\Filesystem\File;
+use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Base\BaseDocument;
 use Railt\Compiler\Reflection\Builder\Definitions;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Compiler\Reflection\Support;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
-use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Exceptions\BuildingException;
-use Railt\Compiler\Exceptions\TypeRedefinitionException;
-use Railt\Compiler\Filesystem\File;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Compiler\Reflection\Support;
 
 /**
  * Class DocumentBuilder
@@ -33,16 +32,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
 {
     use Support;
     use Compiler;
-
-    /**
-     *
-     */
-    private const PHYSIC_FILE_NAME  = 'File(%s)';
-
-    /**
-     *
-     */
-    private const VIRTUAL_FILE_NAME = 'Source(%s)';
 
     /**
      *
@@ -65,6 +54,16 @@ class DocumentBuilder extends BaseDocument implements Compilable
     ];
 
     /**
+     *
+     */
+    private const PHYSIC_FILE_NAME = 'File(%s)';
+
+    /**
+     *
+     */
+    private const VIRTUAL_FILE_NAME = 'Source(%s)';
+
+    /**
      * @var CompilerInterface
      */
     private $compiler;
@@ -73,27 +72,21 @@ class DocumentBuilder extends BaseDocument implements Compilable
      * DocumentBuilder constructor.
      * @param TreeNode $ast
      * @param ReadableInterface $readable
+     * @param CompilerInterface $compiler
      * @throws CompilerException
      */
-    public function __construct(TreeNode $ast, ReadableInterface $readable)
+    public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
     {
+        $this->compiler = $compiler;
+
         try {
             $this->name = $this->createName($readable);
             $this->bootBuilder($ast, $this);
         } catch (\Exception $exception) {
             throw new CompilerException($exception->getMessage(), $exception->getCode(), $exception);
         }
-    }
 
-    /**
-     * @param CompilerInterface $compiler
-     * @return DocumentBuilder
-     */
-    public function withCompiler(CompilerInterface $compiler): DocumentBuilder
-    {
-        $this->compiler = $compiler;
-
-        return $this;
+        $this->compileIfNotCompiled();
     }
 
     /**
@@ -132,6 +125,17 @@ class DocumentBuilder extends BaseDocument implements Compilable
     }
 
     /**
+     * @param CompilerInterface $compiler
+     * @return DocumentBuilder
+     */
+    public function withCompiler(CompilerInterface $compiler): DocumentBuilder
+    {
+        $this->compiler = $compiler;
+
+        return $this;
+    }
+
+    /**
      * @param TreeNode $ast
      * @return bool
      * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
@@ -150,12 +154,13 @@ class DocumentBuilder extends BaseDocument implements Compilable
 
         switch (true) {
             case $instance instanceof SchemaDefinition:
-                $this->registerSchema($instance);
+                $this->schema = $this->types[] = $this->getValidator()->uniqueDefinition($this->schema, $instance);
+                $this->getCompiler()->register($instance);
                 break;
 
             case $this->isUniqueType($instance):
-                $this->types[$instance->getName()] = $instance;
-                $this->compiler->register($instance);
+                $this->types = $this->getValidator()->uniqueDefinitions($this->types, $instance);
+                $this->getCompiler()->register($instance);
                 break;
 
             default:
@@ -163,22 +168,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
         }
 
         return true;
-    }
-
-    /**
-     * @param SchemaDefinition $schema
-     * @return void
-     * @throws TypeRedefinitionException
-     */
-    private function registerSchema(SchemaDefinition $schema): void
-    {
-        if ($this->schema !== null) {
-            $error = \sprintf('Can not register a new %s. Schema already was defined.',
-                $this->typeToString($schema));
-            throw new TypeRedefinitionException($error);
-        }
-
-        $this->compiler->register($this->schema = $schema);
     }
 
     /**

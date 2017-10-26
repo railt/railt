@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Invocations\Directive;
 
-use Railt\Compiler\Reflection\Base\Resolving;
 use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
 
@@ -17,7 +16,6 @@ use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
  * Trait BaseDirectivesContainer
  *
  * @mixin HasDirectives
- * @mixin Resolving
  */
 trait BaseDirectivesContainer
 {
@@ -31,7 +29,7 @@ trait BaseDirectivesContainer
      */
     public function getDirectives(): iterable
     {
-        return \array_values($this->resolve()->directives);
+        return \array_values($this->directives);
     }
 
     /**
@@ -40,7 +38,7 @@ trait BaseDirectivesContainer
      */
     public function hasDirective(string $name): bool
     {
-        return \array_key_exists($name, $this->resolve()->directives);
+        return \array_key_exists($name, $this->directives);
     }
 
     /**
@@ -49,7 +47,7 @@ trait BaseDirectivesContainer
      */
     public function getDirective(string $name): ?DirectiveInvocation
     {
-        return $this->resolve()->directives[$name] ?? null;
+        return $this->directives[$name] ?? null;
     }
 
     /**
@@ -57,6 +55,6 @@ trait BaseDirectivesContainer
      */
     public function getNumberOfDirectives(): int
     {
-        return \count($this->resolve()->directives);
+        return \count($this->directives);
     }
 }

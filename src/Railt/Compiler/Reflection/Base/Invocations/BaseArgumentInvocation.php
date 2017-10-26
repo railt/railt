@@ -40,7 +40,7 @@ abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentI
      */
     public function getDefinition(): ArgumentDefinition
     {
-        return $this->resolve()->argument;
+        return $this->argument;
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentI
      */
     public function getPassedValue()
     {
-        return $this->resolve()->value;
+        return $this->value;
     }
 
     /**
@@ -56,7 +56,7 @@ abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentI
      */
     public function getParent()
     {
-        return $this->resolve()->parent;
+        return $this->parent;
     }
 
     /**
