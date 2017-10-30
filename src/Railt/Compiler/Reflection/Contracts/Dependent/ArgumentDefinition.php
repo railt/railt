@@ -10,10 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Contracts\Dependent;
 
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Compiler\Reflection\Contracts\Behavior\Inputable;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\InputDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
@@ -23,14 +20,9 @@ use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 interface ArgumentDefinition extends DependentDefinition, AllowsTypeIndication, HasDirectives
 {
     /**
-     * @return HasArguments|InputDefinition|DirectiveDefinition|FieldDefinition
+     * @return HasArguments|TypeDefinition
      */
-    public function getParent(): HasArguments;
-
-    /**
-     * @return Inputable|Definition
-     */
-    public function getType(): Inputable;
+    public function getParent(): TypeDefinition;
 
     /**
      * @return mixed

@@ -9,8 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Contracts;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * The Document is an object that contains information
@@ -31,6 +33,11 @@ interface Document extends Definition
     public function getName(): string;
 
     /**
+     * @return ReadableInterface
+     */
+    public function getFile(): ReadableInterface;
+
+    /**
      * A Document can contain a root api element, which is represented as a
      * Schema object. In the event that the Document is not the main document
      * (ie, part of another document), then the Schema declaration will be
@@ -41,25 +48,29 @@ interface Document extends Definition
     public function getSchema(): ?SchemaDefinition;
 
     /**
-     * @param string|null $typeOf
-     * @return iterable|Definition[]
+     * @return iterable|TypeDefinition[]
      */
-    public function getTypes(string $typeOf = null): iterable;
+    public function getTypeDefinitions(): iterable;
 
     /**
      * @param string $name
-     * @return null|Definition
+     * @return null|TypeDefinition
      */
-    public function getDefinition(string $name): ?Definition;
+    public function getTypeDefinition(string $name): ?TypeDefinition;
 
     /**
      * @param string $name
      * @return bool
      */
-    public function hasDefinition(string $name): bool;
+    public function hasTypeDefinition(string $name): bool;
 
     /**
      * @return int
      */
-    public function getNumberOfDefinitions(): int;
+    public function getNumberOfTypeDefinitions(): int;
+
+    /**
+     * @return iterable|Definition[]
+     */
+    public function getDefinitions(): iterable;
 }

@@ -9,13 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Contracts\Invocations;
 
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+
 /**
  * Interface Invocable
  */
 interface Invocable
 {
     /**
-     * @return mixed
+     * @return null|TypeDefinition
      */
-    public function getDefinition();
+    public function getTypeDefinition(): ?TypeDefinition;
 }

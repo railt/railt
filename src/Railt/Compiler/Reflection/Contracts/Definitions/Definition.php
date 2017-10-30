@@ -9,20 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Contracts\Definitions;
 
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
-use Railt\Compiler\Reflection\Contracts\Behavior\Deprecatable;
 use Railt\Compiler\Reflection\Contracts\Document;
 
 /**
  * Interface TypeDefinition
  */
-interface Definition extends Nameable, Deprecatable
+interface Definition
 {
-    /**
-     * @return string
-     */
-    public function getTypeName(): string;
-
     /**
      * @return Document
      */

@@ -10,14 +10,15 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Contracts\Processable;
 
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface ExtendDefinition
  */
-interface ExtendDefinition extends ProcessableDefinition
+interface ExtendDefinition extends Definition
 {
     /**
-     * @return Definition
+     * @return TypeDefinition
      */
-    public function getRelatedType(): Definition;
+    public function getRelatedType(): TypeDefinition;
 }

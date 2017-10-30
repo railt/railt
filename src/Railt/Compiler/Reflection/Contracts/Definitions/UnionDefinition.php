@@ -14,7 +14,7 @@ use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 /**
  * Interface UnionDefinition
  */
-interface UnionDefinition extends Definition, HasDirectives
+interface UnionDefinition extends TypeDefinition, HasDirectives
 {
     /**
      * @return iterable|Definition[]

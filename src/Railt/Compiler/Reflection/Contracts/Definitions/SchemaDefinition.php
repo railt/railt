@@ -12,7 +12,7 @@ namespace Railt\Compiler\Reflection\Contracts\Definitions;
 /**
  * Interface SchemaDefinition
  */
-interface SchemaDefinition extends Definition
+interface SchemaDefinition extends TypeDefinition
 {
     /**
      * @return ObjectDefinition

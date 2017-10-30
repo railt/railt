@@ -9,14 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Contracts\Definitions;
 
-use Railt\Compiler\Reflection\Contracts\Behavior\Inputable;
 use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
  * Interface InputDefinition
  */
-interface InputDefinition extends Definition, HasArguments, HasDirectives, Inputable
+interface InputDefinition extends TypeDefinition, HasArguments, HasDirectives
 {
 
 }

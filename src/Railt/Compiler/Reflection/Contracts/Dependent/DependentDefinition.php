@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Contracts\Dependent;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface DependentTypeDefinition
  */
-interface DependentDefinition extends Definition
+interface DependentDefinition extends TypeDefinition
 {
     /**
-     * @return Definition|mixed
+     * @return TypeDefinition
      */
-    public function getParent();
+    public function getParent(): TypeDefinition;
 }

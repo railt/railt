@@ -14,7 +14,7 @@ use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 /**
  * Interface DirectiveDefinition
  */
-interface DirectiveDefinition extends Definition, HasArguments
+interface DirectiveDefinition extends TypeDefinition, HasArguments
 {
     /**
      * @return iterable|string[]

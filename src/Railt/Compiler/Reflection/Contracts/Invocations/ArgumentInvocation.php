@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Contracts\Invocations;
 
-use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
@@ -17,11 +16,6 @@ use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
  */
 interface ArgumentInvocation extends DependentDefinition, Invocable
 {
-    /**
-     * @return ArgumentDefinition
-     */
-    public function getDefinition(): ArgumentDefinition;
-
     /**
      * @return mixed
      */

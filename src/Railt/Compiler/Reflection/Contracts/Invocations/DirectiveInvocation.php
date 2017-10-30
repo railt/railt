@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Contracts\Invocations;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
@@ -17,11 +16,6 @@ use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
  */
 interface DirectiveInvocation extends DependentDefinition, Invocable
 {
-    /**
-     * @return DirectiveDefinition
-     */
-    public function getDefinition(): DirectiveDefinition;
-
     /**
      * @return iterable|ArgumentInvocation[]
      */

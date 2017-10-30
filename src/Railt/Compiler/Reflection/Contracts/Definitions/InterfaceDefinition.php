@@ -15,7 +15,7 @@ use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 /**
  * Interface InterfaceDefinition
  */
-interface InterfaceDefinition extends Definition, HasFields, HasDirectives
+interface InterfaceDefinition extends TypeDefinition, HasFields, HasDirectives
 {
 
 }

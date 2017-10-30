@@ -10,9 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Contracts\Dependent;
 
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Compiler\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Compiler\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
@@ -23,12 +21,7 @@ use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 interface FieldDefinition extends DependentDefinition, HasArguments, AllowsTypeIndication, HasDirectives
 {
     /**
-     * @return HasFields|ObjectDefinition|InterfaceDefinition
+     * @return HasFields|TypeDefinition
      */
-    public function getParent(): HasFields;
-
-    /**
-     * @return Definition
-     */
-    public function getType(): Definition;
+    public function getParent(): TypeDefinition;
 }
