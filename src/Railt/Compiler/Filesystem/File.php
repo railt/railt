@@ -15,12 +15,17 @@ use Railt\Compiler\Exceptions\NotReadableException;
 /**
  * Class File
  */
-class File extends \SplFileInfo implements ReadableInterface
+class File implements ReadableInterface
 {
     /**
      * @var string
      */
     private $sources;
+
+    /**
+     * @var string
+     */
+    private $path;
 
     /**
      * @var bool
@@ -40,9 +45,25 @@ class File extends \SplFileInfo implements ReadableInterface
      */
     public function __construct(string $sources, ?string $path, bool $virtual = true)
     {
+        $this->path    = $path ?? static::VIRTUAL_FILE_NAME;
         $this->sources = $sources;
         $this->virtual = $virtual;
-        parent::__construct($path ?? static::VIRTUAL_FILE_NAME);
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathname(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFile(): bool
+    {
+        return !$this->virtual;
     }
 
     /**
@@ -142,10 +163,10 @@ class File extends \SplFileInfo implements ReadableInterface
      */
     private function createHash(): string
     {
-        if ( $this->virtual) {
+        if ($this->virtual) {
             return \md5($this->sources);
         }
 
-        return \md5($this->getPathname() . ':' . \filemtime($this->getPathname()));
+        return \md5_file($this->getPathname());
     }
 }

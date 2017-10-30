@@ -20,9 +20,9 @@ interface ReadableInterface
     public const VIRTUAL_FILE_NAME = 'php://input';
 
     /**
-     * @return string|mixed
+     * @return string
      */
-    public function getPathname();
+    public function getPathname(): string;
 
     /**
      * @return string
@@ -33,4 +33,9 @@ interface ReadableInterface
      * @return string
      */
     public function read(): string;
+
+    /**
+     * @return bool
+     */
+    public function isFile(): bool;
 }
