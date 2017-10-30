@@ -21,8 +21,7 @@
         "psr/cache": "~1.0",
         "psr/simple-cache": "~1.0",
         "hoa/compiler": "~3.17",
-        "railt/events": "self.version",
-        "illuminate/support": "~5.5",
+        "illuminate/support": "~5.5"
     },
     "autoload": {
         "psr-4": {
