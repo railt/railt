@@ -9,24 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Hoa\Compiler\Llk\TreeNode;
 use Psr\Log\LoggerInterface;
-use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Exceptions\UnexpectedTokenException;
-use Railt\Compiler\Exceptions\UnrecognizedTokenException;
-use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
-use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Reflection\Dictionary;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Reflection\Loader;
+use Railt\Compiler\Exceptions\UnexpectedTokenException;
+use Railt\Compiler\Exceptions\UnrecognizedTokenException;
+use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
+use Railt\Compiler\Reflection\Builder\DocumentBuilder;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
+use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Compiler\Reflection\Dictionary;
+use Railt\Compiler\Reflection\Loader;
 use Railt\Compiler\Reflection\Standard\GraphQLDocument;
 use Railt\Compiler\Reflection\Support;
 use Railt\Compiler\Reflection\Validation\Validator;
@@ -36,7 +35,16 @@ use Railt\Compiler\Reflection\Validation\Validator;
  */
 class Compiler implements CompilerInterface
 {
+    private const LOG_BEGIN = '┌ ';
+    private const LOG_POINT = '├╶ ';
+    private const LOG_END   = '└ ';
+
     use Support;
+
+    /**
+     * @var int
+     */
+    private $depth = 0;
 
     /**
      * @var Dictionary
@@ -79,7 +87,61 @@ class Compiler implements CompilerInterface
 
         $this->persister = $this->bootPersister($persister);
 
+        $this->log('Create Compiler with %s storage', $persister
+            ? \class_basename($persister)
+            : 'default ' . \class_basename($this->persister)
+        );
+
         $this->bootStandardLibrary();
+    }
+
+    /**
+     * @param string|\Throwable $message
+     * @param string[] ...$params
+     * @return void
+     */
+    public function log($message, string ...$params): void
+    {
+        if ($this->logger !== null) {
+            $prefix = \str_repeat('  ', \max($this->depth - 1, 0));
+
+            if ($message instanceof \Throwable) {
+                [$error, $msg] = [\class_basename($message),  $message->getMessage()];
+                $message = \sprintf(self::LOG_END . '%s: %s', $error, $msg);
+                $this->logger->error($prefix . \sprintf($message, ...$params));
+                return;
+            }
+
+            $this->logger->debug($prefix . \sprintf($message, ...$params));
+        }
+    }
+
+    /**
+     * @param Document $document
+     * @return Document
+     */
+    private function complete(Document $document): Document
+    {
+        $this->log(self::LOG_BEGIN . 'Beginning compilation of %s', $document->getName());
+
+        foreach ($document->getTypeDefinitions() as $type) {
+            $this->log(self::LOG_POINT . 'Loading of %s', (string)$type);
+            $this->register($type);
+        }
+
+        foreach ($document->getDefinitions() as $definition) {
+            if ($definition instanceof Compilable) {
+                $this->log(self::LOG_POINT . 'Building of %s', (string)$definition);
+                $definition->compileIfNotCompiled();
+            }
+
+            $this->log(self::LOG_POINT . 'Verification of %s', (string)$definition);
+            $this->validator->verifyDefinition($definition);
+        }
+
+        $this->log(self::LOG_END . 'Complete compilation of %s', $document->getName());
+
+        return $document;
     }
 
     /**
@@ -101,26 +163,20 @@ class Compiler implements CompilerInterface
 
     /**
      * @param array $extensions
-     * @return GraphQLDocument
+     * @return GraphQLDocument|Document
      */
     private function bootStandardLibrary(array $extensions = []): GraphQLDocument
     {
-        $std = new GraphQLDocument($this, $extensions);
-
-        foreach ($std->getTypes() as $type) {
-            $this->loader->register($type);
-        }
-
-        return $std;
+        return $this->complete(new GraphQLDocument($this, $extensions));
     }
 
     /**
      * @param \Closure $then
      * @return CompilerInterface
      */
-    public function registerAutoloader(\Closure $then): CompilerInterface
+    public function autoload(\Closure $then): CompilerInterface
     {
-        $this->loader->registerAutoloader($then);
+        $this->loader->autoload($then);
 
         return $this;
     }
@@ -136,10 +192,16 @@ class Compiler implements CompilerInterface
      */
     public function compile(ReadableInterface $readable): Document
     {
+        ++$this->depth;
+
         /** @var DocumentBuilder $document */
         $document = $this->persister->remember($readable, $this->onCompile());
 
-        return $document->withCompiler($this);
+        $result = $document->withCompiler($this);
+
+        --$this->depth;
+
+        return $result;
     }
 
     /**
@@ -151,63 +213,23 @@ class Compiler implements CompilerInterface
     private function onCompile(): \Closure
     {
         return function (ReadableInterface $readable): Document {
-            $ast = $this->parser->parse($readable);
+            try {
+                $ast = $this->parser->parse($readable);
 
-            $document = new DocumentBuilder($ast, $readable, $this);
-
-            foreach ($document->getTypes() as $type) {
-                if ($type instanceof Compilable) {
-                    $type->compileIfNotCompiled();
-                }
+                return $this->complete(new DocumentBuilder($ast, $readable, $this));
+            } catch (\Throwable $e) {
+                $this->log($e);
+                throw $e;
             }
-
-            return $document;
         };
     }
 
     /**
-     * @param Definition $type
-     * @param bool $force
-     * @return Dictionary
+     * @return Validator
      */
-    public function register(Definition $type, bool $force = false): Dictionary
+    public function getValidator(): Validator
     {
-        return $this->loader->register($type, $force);
-    }
-
-    /**
-     * @param string $name
-     * @param Document|null $document
-     * @return null|Definition
-     */
-    public function get(string $name, Document $document = null): Definition
-    {
-        $result = $this->loader->get($name, $document);
-
-        if ($result instanceof Compilable) {
-            $result->compileIfNotCompiled();
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param Document|null $document
-     * @return array
-     */
-    public function all(Document $document = null): array
-    {
-        return $this->loader->all($document);
-    }
-
-    /**
-     * @param string $name
-     * @param Document|null $document
-     * @return bool
-     */
-    public function has(string $name, Document $document = null): bool
-    {
-        return $this->loader->has($name, $document);
+        return $this->validator;
     }
 
     /**
@@ -219,10 +241,46 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @return Validator
+     * @return Dictionary
      */
-    public function getValidator(): Validator
+    public function getDictionary(): Dictionary
     {
-        return $this->validator;
+        return $this->loader;
+    }
+
+    /**
+     * @param TypeDefinition $type
+     * @param bool $force
+     * @return Dictionary
+     */
+    public function register(TypeDefinition $type, bool $force = false): Dictionary
+    {
+        return $this->loader->register($type, $force);
+    }
+
+    /**
+     * @param string $name
+     * @return TypeDefinition
+     */
+    public function get(string $name): TypeDefinition
+    {
+        return $this->loader->get($name);
+    }
+
+    /**
+     * @return iterable
+     */
+    public function all(): iterable
+    {
+        yield from $this->loader->all();
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function has(string $name): bool
+    {
+        return $this->loader->has($name);
     }
 }

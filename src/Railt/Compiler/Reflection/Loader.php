@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Compiler\Exceptions\NotReadableException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class Loader
@@ -43,7 +43,7 @@ class Loader extends Repository
      * @param \Closure $resolver
      * @return $this
      */
-    public function registerAutoloader(\Closure $resolver)
+    public function autoload(\Closure $resolver)
     {
         $this->loaders[] = $resolver;
 
@@ -52,15 +52,14 @@ class Loader extends Repository
 
     /**
      * @param string $name
-     * @param Document|null $document
-     * @return Definition
+     * @return TypeDefinition
      * @throws TypeNotFoundException
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     * @throws NotReadableException
      */
-    public function get(string $name, Document $document = null): Definition
+    public function get(string $name): TypeDefinition
     {
         try {
-            return parent::get($name, $document);
+            return parent::get($name);
         } catch (TypeNotFoundException $error) {
             return $this->load($name);
         }
@@ -68,46 +67,39 @@ class Loader extends Repository
 
     /**
      * @param string $name
-     * @return Definition
+     * @return TypeDefinition
      * @throws TypeNotFoundException
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     * @throws NotReadableException
      */
-    private function load(string $name): Definition
+    private function load(string $name): TypeDefinition
     {
         foreach ($this->loaders as $loader) {
-            $file = $this->parseResult($loader($name));
+            $result = $this->parseResult($loader($name));
 
-            // The File exists
-            if ($file) {
-                $type = $this->findType($name, $file);
+            /**
+             * Checks that the autoloader returns a valid file type.
+             */
+            if ($result !== null) {
+                $type = $this->findType($name, $result);
 
-                // Target File contains required type
-                if ($type !== null) {
+                /**
+                 * We check that this file contains the type definition
+                 * we need, otherwise we ignore it.
+                 */
+                if ($type instanceof TypeDefinition) {
                     return $type;
                 }
             }
         }
 
-        $error = 'GraphQL type "%s" not found and can not be loaded';
-        throw new TypeNotFoundException(\sprintf($error, $name));
-    }
-
-    /**
-     * @param string $name
-     * @param ReadableInterface $readable
-     * @return null|Definition
-     */
-    private function findType(string $name, ReadableInterface $readable): ?Definition
-    {
-        $document = $this->compiler->compile($readable);
-
-        return $document->getDefinition($name);
+        $error = \sprintf('Type "%s" not found and could not be loaded', $name);
+        throw new TypeNotFoundException($error);
     }
 
     /**
      * @param string|ReadableInterface|mixed $result
      * @return null|ReadableInterface
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     * @throws NotReadableException
      */
     private function parseResult($result): ?ReadableInterface
     {
@@ -120,5 +112,17 @@ class Loader extends Repository
         }
 
         return null;
+    }
+
+    /**
+     * @param string $name
+     * @param ReadableInterface $readable
+     * @return null|TypeDefinition
+     */
+    private function findType(string $name, ReadableInterface $readable): ?TypeDefinition
+    {
+        $document = $this->compiler->compile($readable);
+
+        return $document->getTypeDefinition($name);
     }
 }

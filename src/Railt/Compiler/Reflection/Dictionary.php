@@ -9,8 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface Dictionary
@@ -19,29 +18,26 @@ use Railt\Compiler\Reflection\Contracts\Document;
 interface Dictionary
 {
     /**
-     * @param Definition $type
+     * @param TypeDefinition $type
      * @param bool $force
      * @return Dictionary
      */
-    public function register(Definition $type, bool $force = false): Dictionary;
+    public function register(TypeDefinition $type, bool $force = false): Dictionary;
 
     /**
      * @param string $name
-     * @param Document|null $document
-     * @return Definition
+     * @return TypeDefinition
      */
-    public function get(string $name, Document $document = null): Definition;
+    public function get(string $name): TypeDefinition;
 
     /**
-     * @param Document|null $document
-     * @return Definition[]
+     * @return iterable|TypeDefinition[]
      */
-    public function all(Document $document = null): array;
+    public function all(): iterable;
 
     /**
      * @param string $name
-     * @param Document|null $document
      * @return bool
      */
-    public function has(string $name, Document $document = null): bool;
+    public function has(string $name): bool;
 }

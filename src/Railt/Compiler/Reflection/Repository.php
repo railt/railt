@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Exceptions\TypeRedefinitionException;
-use Traversable;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class Repository
@@ -23,128 +21,68 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     use Support;
 
     /**
-     * Pattern for unique type override exception messages.
+     * @var array|TypeDefinition[]
      */
-    private const REDEFINITION_UNIQUE_TYPE_ERROR = 'Cannot declare %s, because the name already in use in %s';
+    private $definitions = [];
 
     /**
-     * Pattern for unique type override exception messages.
-     */
-    private const REDEFINITION_TYPE_ERROR = 'Cannot declare %s, because the definition already registered in %s';
-
-    /**
-     * A set of types where the key is the Type name in the format:
-     *
-     * <code>
-     *  [
-     *      ...
-     *      {TypeName} => Definition::class,
-     *      ...
-     *  ]
-     * </code>
-     *
-     * @var array|Definition[]
-     */
-    private $storage = [];
-
-    /**
-     * @return Traversable|Definition[]
-     */
-    public function getIterator(): \Traversable
-    {
-        return new \ArrayIterator(\array_values($this->storage));
-    }
-
-    /**
-     * @param Definition $type
+     * @param TypeDefinition $type
      * @param bool $force
      * @return Dictionary
      * @throws TypeRedefinitionException
      */
-    public function register(Definition $type, bool $force = false): Dictionary
+    public function register(TypeDefinition $type, bool $force = false): Dictionary
     {
-        if ($force === false) {
-            $this->verifyTypeIsRegistered($type);
+        if (! $force && $this->has($type->getName())) {
+            $error = \sprintf('Can not declare %s, because the name %s already in use',
+                $this->typeToString($type), $type->getName());
+
+            throw new TypeRedefinitionException($error);
         }
 
-        $this->storage[$type->getName()] = $type;
+        $this->definitions[$type->getName()] = $type;
 
         return $this;
     }
 
     /**
-     * @param Definition $type
-     * @return void
-     * @throws TypeRedefinitionException
-     */
-    private function verifyTypeIsRegistered(Definition $type): void
-    {
-        if ($this->has($type->getName())) {
-            $error = \sprintf(self::REDEFINITION_UNIQUE_TYPE_ERROR,
-                $this->typeToString($type),
-                $this->typeToString($type->getDocument())
-            );
-
-            throw new TypeRedefinitionException($error);
-        }
-    }
-
-    /**
      * @param string $name
-     * @param Document|null $document
-     * @return Definition
+     * @return TypeDefinition
      * @throws TypeNotFoundException
      */
-    public function get(string $name, Document $document = null): Definition
+    public function get(string $name): TypeDefinition
     {
-        if ($this->has($name, $document)) {
-            return $this->storage[$name];
+        if ($this->has($name)) {
+            return $this->definitions[$name];
         }
 
-        $error = $document === null
-            ? \sprintf('Type "%s" not found', $name)
-            : \sprintf('Document "%s" does not contain the "%s" type', $this->typeToString($document), $name);
-
+        $error = \sprintf('Type "%s" not found', $name);
         throw new TypeNotFoundException($error);
     }
 
     /**
-     * @param Document|null $document
-     * @return array
+     * @return iterable|TypeDefinition[]
      */
-    public function all(Document $document = null): array
+    public function all(): iterable
     {
-        $result = [];
-
-        foreach ($this->storage as $name => $definition) {
-            if ($this->isContainedInDocument($definition, $document)) {
-                $result[] = $definition;
-            }
-        }
-
-        return $result;
+        yield from $this->getIterator();
     }
 
     /**
      * @param string $name
-     * @param Document|null $document
      * @return bool
      */
-    public function has(string $name, Document $document = null): bool
+    public function has(string $name): bool
     {
-        $definition = $this->storage[$name] ?? null;
-
-        return $definition !== null && $this->isContainedInDocument($definition, $document);
+        return \array_key_exists($name, $this->definitions);
     }
 
     /**
-     * @param Definition $definition
-     * @param Document|null $document
-     * @return bool
+     * @return \Traversable|TypeDefinition[]
      */
-    private function isContainedInDocument(Definition $definition, Document $document = null): bool
+    public function getIterator(): \Traversable
     {
-        return $document === null || $document->getUniqueId() === $definition->getDocument()->getUniqueId();
+        return new \ArrayIterator(\array_values($this->definitions));
     }
 
     /**
@@ -152,6 +90,6 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     public function count(): int
     {
-        return \count($this->storage);
+        return \count($this->definitions);
     }
 }
