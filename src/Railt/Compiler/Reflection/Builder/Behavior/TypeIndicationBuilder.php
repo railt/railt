@@ -12,8 +12,6 @@ namespace Railt\Compiler\Reflection\Builder\Behavior;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
-use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
  * Trait TypeIndicationBuilder
