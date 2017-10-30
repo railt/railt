@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Standard;
 
+use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Reflection\Base\BaseDocument;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Standard\Directives\Deprecation;
 use Railt\Compiler\Reflection\Standard\Scalars\AnyType;
 use Railt\Compiler\Reflection\Standard\Scalars\BooleanType;
@@ -39,19 +41,14 @@ class GraphQLDocument extends BaseDocument implements StandardType
     private $additionalTypes;
 
     /**
-     * @var CompilerInterface
-     */
-    private $compiler;
-
-    /**
      * GraphQLDocument constructor.
      * @param CompilerInterface $compiler
-     * @param array $additionalTypes
+     * @param array|string[] $additionalTypes
      */
     public function __construct(CompilerInterface $compiler, array $additionalTypes = [])
     {
-        $this->compiler = $compiler;
         $this->additionalTypes = $additionalTypes;
+        $this->file = File::fromSources('# Generated');
         $this->createStandardTypes();
     }
 
@@ -74,7 +71,11 @@ class GraphQLDocument extends BaseDocument implements StandardType
             /** @var Definition|mixed $instance */
             $instance = new $type($this);
 
-            $this->types[$instance->getName()] = $instance;
+            if ($instance instanceof TypeDefinition) {
+                $this->types[$instance->getName()] = $instance;
+            } else {
+                $this->definitions[] = $instance;
+            }
         }
     }
 

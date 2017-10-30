@@ -10,9 +10,8 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Standard\Directives\Deprecation;
 
 use Railt\Compiler\Reflection\Base\Dependent\BaseArgument;
-use Railt\Compiler\Reflection\Contracts\Behavior\Inputable;
 use Railt\Compiler\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Standard\Directives\Deprecation;
 
@@ -36,20 +35,20 @@ class Reason extends BaseArgument
      */
     public function __construct(Document $document, DirectiveDefinition $type)
     {
-        $this->parent       = $this;
-        $this->document     = $document;
-        $this->name         = Deprecation::REASON_ARGUMENT;
-        $this->description  = self::ARGUMENT_DESCRIPTION;
+        $this->parent = $this;
+        $this->document = $document;
+        $this->name = Deprecation::REASON_ARGUMENT;
+        $this->description = self::ARGUMENT_DESCRIPTION;
 
         $this->defaultValue = self::ARGUMENT_DEFAULT_VALUE;
         $this->hasDefaultValue = true;
     }
 
     /**
-     * @return Inputable|Definition
+     * @return TypeDefinition
      */
-    public function getType(): Inputable
+    public function getTypeDefinition(): TypeDefinition
     {
-        return $this->document->getDefinition(self::ARGUMENT_TYPE);
+        return $this->document->getTypeDefinition(self::ARGUMENT_TYPE);
     }
 }
