@@ -79,11 +79,16 @@ trait Compiler
         if ($this->completed === false) {
             $this->completed = true;
 
+            /**
+             * Initialize definition Unique Identifier.
+             */
             if ($this instanceof Definition) {
-                // Initialize identifier
                 $this->getUniqueId();
             }
 
+            /**
+             * Boot compile-step traits.
+             */
             $siblings = \class_uses_recursive(static::class);
 
             foreach ($this->getAst()->getChildren() as $child) {
@@ -158,13 +163,27 @@ trait Compiler
         $this->ast = $ast;
         $this->document = $document;
 
+        /**
+         * Initialize the name of the type, if it is an independent
+         * unique definition of the type of GraphQL.
+         */
         if ($this instanceof TypeDefinition) {
             /** @var $this NameBuilder */
             $this->precompileNameableType($ast);
         }
 
+        /**
+         * If the type is not initialized by the Document, but
+         * is a child of the root, then the lazy assembly is not needed.
+         *
+         * In this case we run it forcibly, and then we check its state.
+         */
         if ($this instanceof DependentDefinition) {
+            // Compile
             $this->compileIfNotCompiled();
+
+            // Verify
+            $this->getValidator()->verifyDefinition($this);
         }
     }
 }
