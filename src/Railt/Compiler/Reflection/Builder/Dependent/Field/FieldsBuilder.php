@@ -12,7 +12,7 @@ namespace Railt\Compiler\Reflection\Builder\Dependent\Field;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Dependent\FieldBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Compiler\Exceptions\TypeConflictException;
 
@@ -30,7 +30,7 @@ trait FieldsBuilder
      */
     protected function compileFieldsBuilder(TreeNode $ast): bool
     {
-        /** @var Nameable|HasFields $this */
+        /** @var TypeDefinition|HasFields $this */
         if ($this instanceof HasFields && $ast->getId() === '#Field') {
             $field = new FieldBuilder($ast, $this->getDocument(), $this);
 

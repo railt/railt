@@ -10,13 +10,12 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\Base\Invocations\BaseDirectiveInvocation;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\DirectiveDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class DirectiveInvocationBuilder
@@ -29,10 +28,10 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
      * DirectiveInvocationBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @param Nameable $parent
+     * @param TypeDefinition $parent
      * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
+    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
         $this->parent = $parent;
         $this->bootBuilder($ast, $document);
@@ -57,10 +56,14 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
     }
 
     /**
-     * @return DirectiveDefinition|Definition
+     * @return null|TypeDefinition
      */
-    public function getDefinition(): DirectiveDefinition
+    public function getTypeDefinition(): ?TypeDefinition
     {
-        return $this->getCompiler()->get($this->getName());
+        try {
+            return $this->getCompiler()->get($this->getName());
+        } catch (TypeNotFoundException $error) {
+            return null;
+        }
     }
 }

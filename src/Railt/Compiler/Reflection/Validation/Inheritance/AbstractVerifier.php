@@ -48,7 +48,7 @@ abstract class AbstractVerifier implements Verifier
      */
     protected function extract(AllowsTypeIndication $container): Definition
     {
-        return $container->getType();
+        return $container->getTypeDefinition();
     }
 
     /**

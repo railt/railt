@@ -29,7 +29,7 @@ interface CompilerInterface extends Dictionary
      * @param \Closure $then
      * @return CompilerInterface
      */
-    public function registerAutoloader(\Closure $then): CompilerInterface;
+    public function autoload(\Closure $then): CompilerInterface;
 
     /**
      * @return Parser
@@ -40,4 +40,9 @@ interface CompilerInterface extends Dictionary
      * @return Validator
      */
     public function getValidator(): Validator;
+
+    /**
+     * @return Dictionary
+     */
+    public function getDictionary(): Dictionary;
 }

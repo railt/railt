@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Processable\ProcessableDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
 
 /**
  * Trait Support
@@ -34,23 +34,17 @@ trait Support
      */
     protected function typeToString(Definition $type): string
     {
-        $parent = $type->getTypeName();
-        $name = $type->getName();
+        if ($type instanceof TypeDefinition) {
+            [$parent, $name] = [$type->getTypeName(), $type->getName()];
 
-        if ($type instanceof AllowsTypeIndication) {
-            $name = \sprintf('%s: %s', $type->getName(), $this->typeIndicatorToString($type));
+            if ($type instanceof AllowsTypeIndication) {
+                $name = \sprintf('%s: %s', $type->getName(), $this->typeIndicatorToString($type));
+            }
+
+            return \sprintf('%s "%s"', $parent, $name);
         }
 
-        return \sprintf('%s "%s"', $parent, $name);
-    }
-
-    /**
-     * @param Definition $type
-     * @return bool
-     */
-    protected function isUniqueType(Definition $type): bool
-    {
-        return !($type instanceof ProcessableDefinition);
+        return \class_basename($type);
     }
 
     /**
@@ -59,7 +53,7 @@ trait Support
      */
     protected function typeIndicatorToString(AllowsTypeIndication $type): string
     {
-        $result = $type->getType()->getName();
+        $result = $type->getTypeDefinition()->getName();
 
         if ($type->isList()) {
             if ($type->isListOfNonNulls()) {

@@ -12,17 +12,16 @@ namespace Railt\Compiler\Reflection\Builder;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Exceptions\TypeRedefinitionException;
-use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Base\BaseDocument;
 use Railt\Compiler\Reflection\Builder\Definitions;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
+use Railt\Compiler\Compiler as CompilerEndpoint;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Support;
 
 /**
@@ -78,6 +77,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
     public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
     {
         $this->compiler = $compiler;
+        $this->file = $readable;
 
         try {
             $this->name = $this->createName($readable);
@@ -95,11 +95,11 @@ class DocumentBuilder extends BaseDocument implements Compilable
      */
     private function createName(ReadableInterface $readable): string
     {
-        if ($readable->getPathname() !== File::VIRTUAL_FILE_NAME) {
+        if ($readable->isFile()) {
             return \sprintf(self::PHYSIC_FILE_NAME, \basename($readable->getPathname()));
         }
 
-        return $this->createNameFromBacktrace();
+        return \sprintf(self::VIRTUAL_FILE_NAME, $this->createNameFromBacktrace());
     }
 
     /**
@@ -109,19 +109,18 @@ class DocumentBuilder extends BaseDocument implements Compilable
     {
         $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
 
-        $pointcut = self::VIRTUAL_FILE_NAME;
+        $previous = [];
 
         foreach ($trace as $data) {
-            $class = $data['class'] ?? null;
-
-            if ($class === Compiler::class) {
-                return \sprintf($pointcut, $class);
+            if (($data['class'] ?? null) === CompilerEndpoint::class) {
+                return ($previous['class'] ?? $previous['file'] ?? 'undefined')
+                    . ':' . ($previous['line'] ?? $data['line'] ?? 0);
             }
 
-            $pointcut = $class;
+            $previous = $data;
         }
 
-        return \sprintf($pointcut, 'undefined');
+        return 'undefined';
     }
 
     /**
@@ -138,6 +137,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      * @throws BuildingException
      */
@@ -145,29 +145,44 @@ class DocumentBuilder extends BaseDocument implements Compilable
     {
         $class = self::AST_TYPE_MAPPING[$ast->getId()] ?? null;
 
-        if ($class === null) {
-            $this->throwInvalidAstNodeError($ast);
-        }
+        $this->verifyAst($class, $ast);
 
-        /** @var Compilable|Definition $instance */
+        /** @var Compilable|TypeDefinition $instance */
         $instance = new $class($ast, $this);
 
-        switch (true) {
-            case $instance instanceof SchemaDefinition:
-                $this->schema = $this->types[] = $this->getValidator()->uniqueDefinition($this->schema, $instance);
-                $this->getCompiler()->register($instance);
-                break;
-
-            case $this->isUniqueType($instance):
-                $this->types = $this->getValidator()->uniqueDefinitions($this->types, $instance);
-                $this->getCompiler()->register($instance);
-                break;
-
-            default:
-                $this->types[] = $instance;
-        }
+        $this->registerDefinition($instance);
 
         return true;
+    }
+
+    /**
+     * @param Definition $definition
+     * @return Definition|Definition[]
+     * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
+     */
+    private function registerDefinition(Definition $definition)
+    {
+        if ($definition instanceof TypeDefinition) {
+            return $this->types = $this->getValidator()->uniqueDefinitions($this->types, $definition);
+        }
+
+        return $this->definitions[] = $definition;
+    }
+
+    /**
+     * @param null|string $class
+     * @param TreeNode $ast
+     * @return void
+     * @throws BuildingException
+     */
+    private function verifyAst(?string $class, TreeNode $ast): void
+    {
+        if ($class === null) {
+            $error = 'Broken abstract syntax tree, because a file %s can not contain an undefined Node %s';
+            $error = \sprintf($error, $this->getName(), $ast->getId());
+
+            throw new BuildingException($error);
+        }
     }
 
     /**

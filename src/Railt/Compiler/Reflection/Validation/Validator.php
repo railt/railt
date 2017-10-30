@@ -12,6 +12,7 @@ namespace Railt\Compiler\Reflection\Validation;
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Compiler\Reflection\Support;
 use Railt\Compiler\Exceptions\TypeRedefinitionException;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Validation\Definitions\DefinitionValidator;
 
@@ -86,6 +87,7 @@ class Validator
     {
         if (!\array_key_exists($value, $container)) {
             $container[$value] = $value;
+
             return $container;
         }
 
@@ -95,14 +97,15 @@ class Validator
 
     /**
      * @param array $container
-     * @param Definition $definition
+     * @param TypeDefinition $definition
      * @return array
      * @throws TypeRedefinitionException
      */
-    public function uniqueDefinitions(array $container, Definition $definition): array
+    public function uniqueDefinitions(array $container, TypeDefinition $definition): array
     {
         if (!\array_key_exists($definition->getName(), $container)) {
             $container[$definition->getName()] = $definition;
+
             return $container;
         }
 
@@ -112,11 +115,11 @@ class Validator
 
     /**
      * @param mixed $container
-     * @param Definition $definition
+     * @param TypeDefinition $definition
      * @return Definition
      * @throws TypeRedefinitionException
      */
-    public function uniqueDefinition($container, Definition $definition): Definition
+    public function uniqueDefinition($container, TypeDefinition $definition): Definition
     {
         // Verify container is empty
         if ($container === null) {
@@ -124,7 +127,7 @@ class Validator
         }
 
         // Verify container type is same with new type
-        if ($container instanceof Definition && $container->getUniqueId() === $definition->getUniqueId()) {
+        if ($container instanceof TypeDefinition && $container->getUniqueId() === $definition->getUniqueId()) {
             return $definition;
         }
 

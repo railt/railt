@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Base\Dependent;
 
 use Railt\Compiler\Reflection\Base\Definitions\BaseDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
@@ -19,9 +19,17 @@ use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 abstract class BaseDependent extends BaseDefinition implements DependentDefinition
 {
     /**
-     * @var Definition|mixed
+     * @var TypeDefinition|mixed
      */
     protected $parent;
+
+    /**
+     * @return TypeDefinition
+     */
+    public function getParent(): TypeDefinition
+    {
+        return $this->parent;
+    }
 
     /**
      * @return array

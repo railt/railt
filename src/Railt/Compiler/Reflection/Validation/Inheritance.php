@@ -71,7 +71,7 @@ class Inheritance extends AbstractVerifier
      */
     public function verify(AllowsTypeIndication $a, AllowsTypeIndication $b): bool
     {
-        [$def, $new] = [$a->getType(), $b->getType()];
+        [$def, $new] = [$a->getTypeDefinition(), $b->getTypeDefinition()];
 
         $this->container->verify($a, $b);
 

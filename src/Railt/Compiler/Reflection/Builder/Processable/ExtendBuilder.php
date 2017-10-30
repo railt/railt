@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Processable;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Compiler\Reflection\Base\Dependent\BaseArgument;
 use Railt\Compiler\Reflection\Base\Dependent\BaseField;
@@ -17,7 +18,6 @@ use Railt\Compiler\Reflection\Base\Dependent\Field\BaseFieldsContainer;
 use Railt\Compiler\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Compiler\Reflection\Base\Processable\BaseExtend;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Inheritance\TypeInheritance;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
@@ -28,7 +28,6 @@ use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Compiler\Reflection\Contracts\Processable\ExtendDefinition;
-use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
  * Class ExtendBuilder
@@ -47,11 +46,6 @@ class ExtendBuilder extends BaseExtend implements Compilable
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
         $this->bootBuilder($ast, $document);
-
-        // Force compilation
-        // $this->compileIfNotCompiled();
-
-        $this->name = $this->getTypeName();
     }
 
     /**
@@ -134,7 +128,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 continue;
             }
 
-            $callee = function() use ($extendField) {
+            $callee = function () use ($extendField) {
                 /** @var BaseFieldsContainer $this */
                 $this->fields[$extendField->getName()] = $extendField;
             };
@@ -149,7 +143,9 @@ class ExtendBuilder extends BaseExtend implements Compilable
     private function dataFieldExtender(): \Closure
     {
         /** @var FieldDefinition|BaseField $field */
-        return function(FieldDefinition $field): void {
+        return function (FieldDefinition $field): void {
+            /** @var BaseField $this */
+
             // Extend type
             $this->type = $field->type;
 
@@ -183,7 +179,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 continue;
             }
 
-            $callee = function() use ($extendArgument) {
+            $callee = function () use ($extendArgument) {
                 /** @var BaseArgumentsContainer $this */
                 $this->arguments[$extendArgument->getName()] = $extendArgument;
             };
@@ -198,7 +194,9 @@ class ExtendBuilder extends BaseExtend implements Compilable
     private function dataArgumentExtender(): \Closure
     {
         /** @var ArgumentDefinition|BaseArgument $argument */
-        return function(ArgumentDefinition $argument): void {
+        return function (ArgumentDefinition $argument): void {
+            /** @var BaseArgument $this */
+
             // Extend type
             $this->type = $argument->type;
 
@@ -226,7 +224,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 continue;
             }
 
-            $callee = function() use ($extendDirective) {
+            $callee = function () use ($extendDirective) {
                 /** @var BaseArgumentsContainer $this */
                 $this->arguments[$extendDirective->getName()] = $extendDirective;
             };

@@ -13,12 +13,14 @@ use Illuminate\Support\Str;
 use Railt\Compiler\Reflection\Base\Behavior\BaseDeprecations;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Compiler\Reflection\Support;
 
 /**
  * Class BaseTypeDefinition
  */
 abstract class BaseDefinition implements Definition, \JsonSerializable
 {
+    use Support;
     use BaseDeprecations;
 
     /**
@@ -67,11 +69,11 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
      */
     public function __toString(): string
     {
-        return (string)$this->formatValue($this);
+        return $this->typeToString($this);
     }
 
     /**
-     * @param mixed $value
+     * @param mixed|iterable|null $value
      * @return array|string
      */
     protected function formatValue($value)
@@ -87,6 +89,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
         if (\is_iterable($value)) {
             $result = [];
 
+            /** @var iterable $value */
             foreach ($value as $key => $sub) {
                 $result[$key] = $sub;
             }
@@ -95,7 +98,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
         }
 
         if ($value instanceof Definition) {
-            return $value->getTypeName() . '(' . $value->getName() . ')#' . $value->getUniqueId();
+            return $this->typeToString($value);
         }
 
         return Str::studly(\gettype($value));

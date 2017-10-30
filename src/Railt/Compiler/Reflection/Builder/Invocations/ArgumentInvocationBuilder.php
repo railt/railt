@@ -15,9 +15,9 @@ use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Process\ValueBuilder;
-use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Compiler\Exceptions\TypeNotFoundException;
 
 /**
  * Class ArgumentInvocationBuilder
@@ -53,10 +53,15 @@ class ArgumentInvocationBuilder extends BaseArgumentInvocation implements Compil
     }
 
     /**
-     * @return ArgumentDefinition
+     * @return null|TypeDefinition
      */
-    public function getDefinition(): ArgumentDefinition
+    public function getTypeDefinition(): ?TypeDefinition
     {
-        return $this->parent->getDefinition()->getArgument($this->getName());
+        /** @var HasArguments $parent */
+        $parent = $this->parent->getTypeDefinition();
+
+        return $parent instanceof HasArguments
+            ? $parent->getArgument($this->getName())
+            : null;
     }
 }

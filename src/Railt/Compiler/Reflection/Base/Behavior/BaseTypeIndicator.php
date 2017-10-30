@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Base\Behavior;
 
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Trait BaseTypeIndicator
@@ -19,7 +19,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 trait BaseTypeIndicator
 {
     /**
-     * @var Definition
+     * @var TypeDefinition
      */
     protected $type;
 
@@ -39,9 +39,9 @@ trait BaseTypeIndicator
     protected $isListOfNonNulls = false;
 
     /**
-     * @return Definition|mixed
+     * @return TypeDefinition
      */
-    public function getType()
+    public function getTypeDefinition(): TypeDefinition
     {
         return $this->type;
     }

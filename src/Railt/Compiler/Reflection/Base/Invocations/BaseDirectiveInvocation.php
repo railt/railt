@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Base\Invocations;
 
 use Railt\Compiler\Reflection\Base\Dependent\BaseDependent;
-use Railt\Compiler\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Invocations\ArgumentInvocation;
 use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
 
@@ -26,33 +24,12 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
     protected const TYPE_NAME = 'Directive';
 
     /**
-     * @var DirectiveDefinition
-     */
-    protected $directive;
-
-    /**
      * @var array|ArgumentInvocation[]
      */
     protected $arguments = [];
 
     /**
-     * @return Definition
-     */
-    public function getParent(): Definition
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return DirectiveDefinition
-     */
-    public function getDefinition(): DirectiveDefinition
-    {
-        return $this->directive;
-    }
-
-    /**
-     * @return iterable
+     * @return iterable|ArgumentInvocation[]
      */
     public function getPassedArguments(): iterable
     {
@@ -91,9 +68,6 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
-            // Definition
-            'directive',
-
             // Arguments
             'arguments'
         ]);

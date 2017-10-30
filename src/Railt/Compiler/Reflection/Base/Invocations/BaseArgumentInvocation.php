@@ -10,10 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Base\Invocations;
 
 use Railt\Compiler\Reflection\Base\Dependent\BaseDependent;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Compiler\Reflection\Contracts\Invocations\ArgumentInvocation;
-use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
 
 /**
  * Class BaseArgumentInvocation
@@ -31,19 +28,6 @@ abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentI
     protected $value;
 
     /**
-     * @var ArgumentDefinition
-     */
-    protected $argument;
-
-    /**
-     * @return ArgumentDefinition
-     */
-    public function getDefinition(): ArgumentDefinition
-    {
-        return $this->argument;
-    }
-
-    /**
      * @return mixed
      */
     public function getPassedValue()
@@ -52,22 +36,11 @@ abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentI
     }
 
     /**
-     * @return mixed|Definition|DirectiveInvocation
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
      * @return array
      */
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
-            // Definition
-            'argument',
-
             // Value
             'value'
         ]);

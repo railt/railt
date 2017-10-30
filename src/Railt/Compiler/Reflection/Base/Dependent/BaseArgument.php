@@ -11,11 +11,7 @@ namespace Railt\Compiler\Reflection\Base\Dependent;
 
 use Railt\Compiler\Reflection\Base\Behavior\BaseTypeIndicator;
 use Railt\Compiler\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
-use Railt\Compiler\Reflection\Contracts\Behavior\Inputable;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
  * Class BaseArgument
@@ -39,28 +35,6 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
      * @var bool
      */
     protected $hasDefaultValue = false;
-
-    /**
-     * @return HasArguments
-     */
-    public function getParent(): HasArguments
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @return Inputable|Definition
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
-     */
-    public function getType(): Inputable
-    {
-        if ($this->type instanceof Inputable) {
-            return $this->type;
-        }
-
-        $error = 'Argument "%s" type must be inputable (Input or Scalar) but "%s" given.';
-        throw new TypeConflictException(\sprintf($error, $this->getName(), $this->type->getTypeName()));
-    }
 
     /**
      * @return string|float|int|array|bool|null

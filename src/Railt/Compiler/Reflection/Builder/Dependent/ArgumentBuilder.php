@@ -18,6 +18,7 @@ use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Process\ValueBuilder;
 use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Support;
 
 /**
@@ -34,10 +35,10 @@ class ArgumentBuilder extends BaseArgument implements Compilable
      * ArgumentBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @param Nameable $parent
+     * @param TypeDefinition $parent
      * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, Nameable $parent)
+    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
         $this->parent = $parent;
         $this->bootBuilder($ast, $document);

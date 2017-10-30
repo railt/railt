@@ -11,8 +11,8 @@ namespace Railt\Compiler\Reflection\Builder\Dependent\Argument;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
 use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Trait ArgumentsBuilder
@@ -28,7 +28,7 @@ trait ArgumentsBuilder
      */
     public function compileArgumentsBuilder(TreeNode $ast): bool
     {
-        /** @var Nameable $this */
+        /** @var TypeDefinition $this */
         switch ($ast->getId()) {
             case '#Argument':
                 $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);

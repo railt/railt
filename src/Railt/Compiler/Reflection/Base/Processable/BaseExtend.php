@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Base\Processable;
 
 use Railt\Compiler\Reflection\Base\Definitions\BaseDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Processable\ExtendDefinition;
 
 /**
@@ -24,14 +24,14 @@ abstract class BaseExtend extends BaseDefinition implements ExtendDefinition
     protected const TYPE_NAME = 'Extend';
 
     /**
-     * @var Definition
+     * @var TypeDefinition
      */
     protected $type;
 
     /**
-     * @return Definition
+     * @return TypeDefinition
      */
-    public function getRelatedType(): Definition
+    public function getRelatedType(): TypeDefinition
     {
         return $this->type;
     }

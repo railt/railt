@@ -13,8 +13,8 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Railt\Adapters\Factory;
 use Railt\Container\Container;
+use Railt\Events\Events;
 use Railt\Events\Dispatcher;
-use Railt\Events\DispatcherInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Compiler\File;
@@ -69,9 +69,9 @@ class Endpoint implements DebuggableInterface
         $container->singleton(Router::class, new Router($container));
 
         // Dispatcher
-        $dispatcher = new Dispatcher();
+        $dispatcher = new Events();
+        $container->singleton(Events::class, $dispatcher);
         $container->singleton(Dispatcher::class, $dispatcher);
-        $container->singleton(DispatcherInterface::class, $dispatcher);
     }
 
     /**
@@ -150,11 +150,11 @@ class Endpoint implements DebuggableInterface
     }
 
     /**
-     * @return DispatcherInterface
+     * @return Dispatcher
      */
-    public function getEvents(): DispatcherInterface
+    public function getEvents(): Dispatcher
     {
-        return $this->container->get(DispatcherInterface::class);
+        return $this->container->get(Dispatcher::class);
     }
 
     /**

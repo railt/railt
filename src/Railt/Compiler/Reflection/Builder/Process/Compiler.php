@@ -12,11 +12,10 @@ namespace Railt\Compiler\Reflection\Builder\Process;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
@@ -54,14 +53,6 @@ trait Compiler
         \assert($this->getDocument()->getCompiler() instanceof CompilerInterface);
 
         return $this->getDocument()->getCompiler();
-    }
-
-    /**
-     * @return Validator
-     */
-    protected function getValidator(): Validator
-    {
-        return $this->getCompiler()->getValidator();
     }
 
     /**
@@ -112,16 +103,6 @@ trait Compiler
     }
 
     /**
-     * @return TreeNode
-     */
-    public function getAst(): TreeNode
-    {
-        \assert($this->ast instanceof TreeNode);
-
-        return $this->ast;
-    }
-
-    /**
      * @param array $siblings
      * @param TreeNode $child
      * @return bool
@@ -140,12 +121,30 @@ trait Compiler
     }
 
     /**
+     * @return TreeNode
+     */
+    public function getAst(): TreeNode
+    {
+        \assert($this->ast instanceof TreeNode);
+
+        return $this->ast;
+    }
+
+    /**
      * @param TreeNode $ast
      * @return bool
      */
     public function compile(TreeNode $ast): bool
     {
         return false;
+    }
+
+    /**
+     * @return Validator
+     */
+    protected function getValidator(): Validator
+    {
+        return $this->getCompiler()->getValidator();
     }
 
     /**
@@ -159,7 +158,7 @@ trait Compiler
         $this->ast = $ast;
         $this->document = $document;
 
-        if ($this instanceof Nameable) {
+        if ($this instanceof TypeDefinition) {
             /** @var $this NameBuilder */
             $this->precompileNameableType($ast);
         }
@@ -167,15 +166,5 @@ trait Compiler
         if ($this instanceof DependentDefinition) {
             $this->compileIfNotCompiled();
         }
-    }
-
-    /**
-     * @param TreeNode $ast
-     * @return void
-     * @throws BuildingException
-     */
-    protected function throwInvalidAstNodeError(TreeNode $ast): void
-    {
-        throw new BuildingException(\sprintf('Invalid %s AST Node.', $ast->getId()));
     }
 }

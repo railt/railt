@@ -40,19 +40,12 @@ abstract class BaseValue extends BaseDependent implements ValueDefinition
     }
 
     /**
-     * @return EnumDefinition
-     */
-    public function getParent(): EnumDefinition
-    {
-        return $this->parent;
-    }
-
-    /**
      * @return array
      */
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
+            //
         ]);
     }
 }

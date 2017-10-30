@@ -15,7 +15,8 @@ use Railt\Compiler\Reflection\Base\Invocations\Directive\BaseDirectivesContainer
 use Railt\Compiler\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Contracts\Behavior\Deprecatable;
-use Railt\Compiler\Reflection\Contracts\Behavior\Nameable;
+use Railt\Compiler\Reflection\Contracts\Definitions\DirectiveDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Compiler\Reflection\Standard\Directives\Deprecation;
 
@@ -34,7 +35,7 @@ trait DirectivesBuilder
     protected function compileDirectivesBuilder(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Directive') {
-            /** @var BaseDirectivesContainer|Nameable $this */
+            /** @var BaseDirectivesContainer|TypeDefinition $this */
             $directive = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
 
             $this->directives = $this->getValidator()->uniqueDefinitions($this->directives, $directive);
@@ -78,7 +79,10 @@ trait DirectivesBuilder
      */
     private function getDeprecationReasonDefaultValue(DirectiveInvocation $directive): string
     {
-        return $directive->getDefinition()
+        /** @var DirectiveDefinition $definition */
+        $definition = $directive->getTypeDefinition();
+
+        return $definition
             ->getArgument(Deprecation::REASON_ARGUMENT)
             ->getDefaultValue();
     }

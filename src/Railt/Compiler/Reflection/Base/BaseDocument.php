@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base;
 
+use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Base\Definitions\BaseDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Compiler\Reflection\Contracts\Document;
 
 /**
@@ -25,43 +27,54 @@ abstract class BaseDocument extends BaseDefinition implements Document
     protected const TYPE_NAME = 'Document';
 
     /**
-     * @var SchemaDefinition
+     * @var SchemaDefinition|null
      */
-    protected $schema;
+    private $schema;
+
+    /**
+     * @var array|TypeDefinition[]
+     */
+    protected $types = [];
 
     /**
      * @var array|Definition[]
      */
-    protected $types = [];
+    protected $definitions = [];
+
+    /**
+     * @var ReadableInterface
+     */
+    protected $file;
 
     /**
      * @return null|SchemaDefinition
      */
     public function getSchema(): ?SchemaDefinition
     {
+        if ($this->schema === null) {
+            foreach ($this->types as $type) {
+                if ($type instanceof SchemaDefinition) {
+                    return $this->schema = $type;
+                }
+            }
+        }
+
         return $this->schema;
     }
 
     /**
-     * @param string|null $typeOf
      * @return iterable
      */
-    public function getTypes(string $typeOf = null): iterable
+    public function getTypeDefinitions(): iterable
     {
-        $types = \array_values($this->types);
-
-        $filter = function (Definition $definition) use ($typeOf) {
-            return $definition->getTypeName() === $typeOf || $definition instanceof $typeOf;
-        };
-
-        return $typeOf === null ? $types : \array_filter($types, $filter);
+        return \array_values($this->types);
     }
 
     /**
      * @param string $name
-     * @return null|Definition
+     * @return null|TypeDefinition
      */
-    public function getDefinition(string $name): ?Definition
+    public function getTypeDefinition(string $name): ?TypeDefinition
     {
         return $this->types[$name] ?? null;
     }
@@ -70,7 +83,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
      * @param string $name
      * @return bool
      */
-    public function hasDefinition(string $name): bool
+    public function hasTypeDefinition(string $name): bool
     {
         return \array_key_exists($name, $this->types);
     }
@@ -78,9 +91,25 @@ abstract class BaseDocument extends BaseDefinition implements Document
     /**
      * @return int
      */
-    public function getNumberOfDefinitions(): int
+    public function getNumberOfTypeDefinitions(): int
     {
         return \count($this->types);
+    }
+
+    /**
+     * @return iterable
+     */
+    public function getDefinitions(): iterable
+    {
+        return \array_values(\array_merge($this->types, $this->definitions));
+    }
+
+    /**
+     * @return ReadableInterface
+     */
+    public function getFile(): ReadableInterface
+    {
+        return $this->file;
     }
 
     /**
@@ -89,8 +118,14 @@ abstract class BaseDocument extends BaseDefinition implements Document
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
+            // File
+            'file',
+
+            // instanceof TypeDefinition
             'types',
-            'schema',
+
+            // instanceof Definition
+            'definitions'
         ]);
     }
 }
