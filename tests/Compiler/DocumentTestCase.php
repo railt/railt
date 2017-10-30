@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Document;
 
@@ -23,10 +22,8 @@ class DocumentTestCase extends AbstractCompilerTestCase
 
     /**
      * @return array
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function provider(): array
     {
@@ -77,10 +74,12 @@ class DocumentTestCase extends AbstractCompilerTestCase
      * @dataProvider provider
      *
      * @param Document $document
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testDocumentName(Document $document)
     {
         static::assertNotNull($document->getName());
+        static::assertTrue((bool)\preg_match('/^Source\(.*?:\d+\)$/isu', $document->getName()));
     }
 
     /**
@@ -92,8 +91,8 @@ class DocumentTestCase extends AbstractCompilerTestCase
      */
     public function testDocumentHasTypes(Document $document)
     {
-        static::assertTrue($document->getNumberOfDefinitions() > 0);
-        static::assertCount($document->getNumberOfDefinitions(), $document->getTypes());
+        static::assertTrue($document->getNumberOfTypeDefinitions() > 0);
+        static::assertCount($document->getNumberOfTypeDefinitions(), $document->getTypeDefinitions());
     }
 
     /**
@@ -105,27 +104,14 @@ class DocumentTestCase extends AbstractCompilerTestCase
      */
     public function testDocumentHasQueryType(Document $document): void
     {
-        static::assertNotNull($document->getDefinition('Query'));
-        static::assertTrue($document->hasDefinition('Query'));
-    }
-
-    /**
-     * @dataProvider provider
-     *
-     * @param Document $document
-     * @return void
-     */
-    public function testDocumentTypeName(Document $document): void
-    {
-        static::assertSame('Document', $document->getTypeName());
+        static::assertNotNull($document->getTypeDefinition('Query'));
+        static::assertTrue($document->hasTypeDefinition('Query'));
     }
 
     /**
      * @return void
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function testStdlibDocument(): void
     {
@@ -136,7 +122,6 @@ class DocumentTestCase extends AbstractCompilerTestCase
             $stdlib = $string->getDocument();
 
             static::assertSame('GraphQL Standard Library', $stdlib->getName());
-            static::assertSame('Document', $stdlib->getTypeName());
         }
     }
 }

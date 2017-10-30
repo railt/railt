@@ -20,16 +20,15 @@ class AutoloadingTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function provider(): array
     {
         $result = [];
 
         foreach ($this->getCompilers() as $compiler) {
-            $result[] = [clone $compiler];
+            $result[] = [$compiler];
         }
 
         return $result;
@@ -46,7 +45,7 @@ class AutoloadingTestCase extends AbstractCompilerTestCase
     {
         $this->expectException(TypeNotFoundException::class);
 
-        $document = (clone $compiler)->compile(File::fromSources('schema { query: MissingType }'));
+        $document = $compiler->compile(File::fromSources('schema { query: MissingType }'));
 
         $document->getSchema()->getQuery();
     }
@@ -60,7 +59,7 @@ class AutoloadingTestCase extends AbstractCompilerTestCase
      */
     public function testTypeLoading(CompilerInterface $compiler): void
     {
-        $compiler->registerAutoloader(function (string $type) {
+        $compiler->autoload(function (string $type) {
             return File::fromSources('type ExistingType {}');
         });
 

@@ -20,10 +20,8 @@ class ExtendTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function provider(): array
     {
@@ -52,7 +50,7 @@ GraphQL;
     public function testType(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
 
         static::assertNotNull($type);
         static::assertNotNull($type->getField('id'));
@@ -71,7 +69,7 @@ GraphQL;
     public function testTypeFields(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
 
         static::assertNotNull($type);
 
@@ -91,7 +89,7 @@ GraphQL;
     public function testTypeArguments(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
         static::assertNotNull($type);
 
         $field = $type->getField('id');

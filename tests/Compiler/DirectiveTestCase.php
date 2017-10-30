@@ -59,12 +59,12 @@ GraphQL;
      */
     public function testDirective(Document $document): void
     {
-        static::assertNotNull($document->getDefinition('test'));
-        static::assertNotNull($document->getDefinition('some'));
-        static::assertNull($document->getDefinition('@test'));
-        static::assertNull($document->getDefinition('@some'));
-        static::assertNull($document->getDefinition('Test'));
-        static::assertNull($document->getDefinition('Some'));
+        static::assertNotNull($document->getTypeDefinition('test'));
+        static::assertNotNull($document->getTypeDefinition('some'));
+        static::assertNull($document->getTypeDefinition('@test'));
+        static::assertNull($document->getTypeDefinition('@some'));
+        static::assertNull($document->getTypeDefinition('Test'));
+        static::assertNull($document->getTypeDefinition('Some'));
     }
 
     /**
@@ -78,7 +78,7 @@ GraphQL;
     public function testDirectiveTest(Document $document): void
     {
         /** @var DirectiveDefinition $directive */
-        $directive = $document->getDefinition('test');
+        $directive = $document->getTypeDefinition('test');
         static::assertNotNull($directive);
 
         static::assertSame('test', $directive->getName());
@@ -113,9 +113,9 @@ GraphQL;
         static::assertTrue($directive->isAllowedForQueries());
         static::assertTrue($directive->isAllowedForSchemaDefinitions());
 
-        static::assertTrue($directive->isAllowedFor($document->getDefinition('ExampleInterface')));
-        static::assertFalse($directive->isAllowedFor($document->getDefinition('ExampleObject')));
-        static::assertFalse($directive->isAllowedFor($document->getDefinition('UndefinedType')));
+        static::assertTrue($directive->isAllowedFor($document->getTypeDefinition('ExampleInterface')));
+        static::assertFalse($directive->isAllowedFor($document->getTypeDefinition('ExampleObject')));
+        static::assertFalse($directive->isAllowedFor($document->getTypeDefinition('UndefinedType')));
     }
 
     /**
@@ -129,7 +129,7 @@ GraphQL;
     public function testDirectiveSome(Document $document): void
     {
         /** @var DirectiveDefinition $directive */
-        $directive = $document->getDefinition('some');
+        $directive = $document->getTypeDefinition('some');
         static::assertNotNull($directive);
 
         static::assertSame('some', $directive->getName());
@@ -159,9 +159,9 @@ GraphQL;
         static::assertFalse($directive->isAllowedForQueries());
         static::assertTrue($directive->isAllowedForSchemaDefinitions());
 
-        static::assertTrue($directive->isAllowedFor($document->getDefinition('ExampleObject')));
-        static::assertFalse($directive->isAllowedFor($document->getDefinition('ExampleInterface')));
-        static::assertFalse($directive->isAllowedFor($document->getDefinition('UndefinedType')));
+        static::assertTrue($directive->isAllowedFor($document->getTypeDefinition('ExampleObject')));
+        static::assertFalse($directive->isAllowedFor($document->getTypeDefinition('ExampleInterface')));
+        static::assertFalse($directive->isAllowedFor($document->getTypeDefinition('UndefinedType')));
     }
 
     /**
@@ -175,7 +175,7 @@ GraphQL;
     public function testArguments(Document $document): void
     {
         /** @var DirectiveDefinition $some */
-        $some = $document->getDefinition('some');
+        $some = $document->getTypeDefinition('some');
         static::assertNotNull($some);
 
         static::assertCount(3, $some->getArguments());
@@ -192,7 +192,7 @@ GraphQL;
         static::assertTrue($some->getArgument('opt')->isNonNull());
         static::assertFalse($some->getArgument('opt')->isList());
         static::assertFalse($some->getArgument('opt')->isListOfNonNulls());
-        static::assertSame('String', $some->getArgument('opt')->getType()->getName());
+        static::assertSame('String', $some->getArgument('opt')->getTypeDefinition()->getName());
 
 
         // Definition of `opt2: String`
@@ -203,7 +203,7 @@ GraphQL;
         static::assertFalse($some->getArgument('opt2')->isNonNull());
         static::assertFalse($some->getArgument('opt2')->isList());
         static::assertFalse($some->getArgument('opt2')->isListOfNonNulls());
-        static::assertSame('String', $some->getArgument('opt2')->getType()->getName());
+        static::assertSame('String', $some->getArgument('opt2')->getTypeDefinition()->getName());
 
         // Definition of `req: ID!`
         static::assertNotNull($some->getArgument('req'));
@@ -213,7 +213,7 @@ GraphQL;
         static::assertTrue($some->getArgument('req')->isNonNull());
         static::assertFalse($some->getArgument('req')->isList());
         static::assertFalse($some->getArgument('req')->isListOfNonNulls());
-        static::assertSame('ID', $some->getArgument('req')->getType()->getName());
+        static::assertSame('ID', $some->getArgument('req')->getTypeDefinition()->getName());
 
         // Undefined
         static::assertNull($some->getArgument('Opt'));

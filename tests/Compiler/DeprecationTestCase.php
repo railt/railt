@@ -19,9 +19,8 @@ class DeprecationTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function provider(): array
     {
@@ -45,9 +44,9 @@ GraphQL;
      */
     public function testDeprecationExists(Document $document): void
     {
-        static::assertTrue($document->getDefinition('DeprecatedWithMessage')->isDeprecated());
-        static::assertTrue($document->getDefinition('DeprecatedWithoutMessage')->isDeprecated());
-        static::assertFalse($document->getDefinition('WithoutDeprecation')->isDeprecated());
+        static::assertTrue($document->getTypeDefinition('DeprecatedWithMessage')->isDeprecated());
+        static::assertTrue($document->getTypeDefinition('DeprecatedWithoutMessage')->isDeprecated());
+        static::assertFalse($document->getTypeDefinition('WithoutDeprecation')->isDeprecated());
     }
 
     /**
@@ -60,7 +59,7 @@ GraphQL;
     public function testEmptyMessageExists(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('WithoutDeprecation');
+        $type = $document->getTypeDefinition('WithoutDeprecation');
 
         static::assertSame('', $type->getDeprecationReason());
     }
@@ -75,7 +74,7 @@ GraphQL;
     public function testDefinedMessageExists(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('DeprecatedWithMessage');
+        $type = $document->getTypeDefinition('DeprecatedWithMessage');
 
         static::assertSame('Message', $type->getDeprecationReason());
     }
@@ -90,7 +89,7 @@ GraphQL;
     public function testWithoutReasonDefinition(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('DeprecatedWithoutMessage');
+        $type = $document->getTypeDefinition('DeprecatedWithoutMessage');
 
         static::assertSame('No longer supported', $type->getDeprecationReason());
     }
@@ -105,14 +104,14 @@ GraphQL;
     public function testReasonSameWithDirective(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        foreach ($document->getTypes() as $type) {
+        foreach ($document->getTypeDefinitions() as $type) {
             if ($type->hasDirective('deprecated')) {
                 static::assertTrue($type->isDeprecated());
 
                 $invocation = $type->getDirective('deprecated');
-                $directive = $invocation->getDefinition();
+                $directive = $invocation->getTypeDefinition();
 
-                static::assertSame('Directive', $invocation->getDefinition()->getTypeName());
+                static::assertSame('Directive', $invocation->getTypeDefinition()->getTypeName());
 
                 static::assertSame('deprecated', $invocation->getName());
                 static::assertSame('', $invocation->getDescription());
@@ -122,10 +121,10 @@ GraphQL;
                     static::assertSame($type->getDeprecationReason(),
                         $invocation->getPassedArgument('reason')->getPassedValue());
                     static::assertSame('String',
-                        $directive->getArgument('reason')->getType()->getName());
+                        $directive->getArgument('reason')->getTypeDefinition()->getName());
                 } else {
                     static::assertSame($type->getDeprecationReason(),
-                        $invocation->getDefinition()->getArgument('reason')->getDefaultValue());
+                        $invocation->getTypeDefinition()->getArgument('reason')->getDefaultValue());
                 }
             } else {
                 static::assertFalse($type->isDeprecated(), $type->getName() . ' is deprecated but no');

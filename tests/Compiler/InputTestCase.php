@@ -20,10 +20,8 @@ class InputTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function provider(): array
     {
@@ -48,7 +46,7 @@ GraphQL;
     public function testInputName(Document $document): void
     {
         /** @var InputDefinition $input */
-        $input = $document->getDefinition('Test');
+        $input = $document->getTypeDefinition('Test');
 
         static::assertNotNull($input);
         static::assertSame('Test', $input->getName());
@@ -63,7 +61,7 @@ GraphQL;
     public function testInputType(Document $document): void
     {
         /** @var InputDefinition $input */
-        $input = $document->getDefinition('Test');
+        $input = $document->getTypeDefinition('Test');
         static::assertNotNull($input);
 
         static::assertSame('Input', $input->getTypeName());
@@ -79,7 +77,7 @@ GraphQL;
     public function testInputDescription(Document $document): void
     {
         /** @var InputDefinition $input */
-        $input = $document->getDefinition('Test');
+        $input = $document->getTypeDefinition('Test');
         static::assertNotNull($input);
 
         $description = 'This an Input type example';
@@ -97,7 +95,7 @@ GraphQL;
     public function testInputDeprecation(Document $document): void
     {
         /** @var InputDefinition $input */
-        $input = $document->getDefinition('Test');
+        $input = $document->getTypeDefinition('Test');
         static::assertNotNull($input);
 
         static::assertFalse($input->isDeprecated());
@@ -114,7 +112,7 @@ GraphQL;
     public function testInputIdField(Document $document): void
     {
         /** @var InputDefinition $input */
-        $input = $document->getDefinition('Test');
+        $input = $document->getTypeDefinition('Test');
         static::assertNotNull($input);
 
         /** @var ArgumentDefinition $id */
@@ -122,7 +120,7 @@ GraphQL;
         static::assertNotNull($id);
 
         static::assertSame('id', $id->getName());
-        static::assertSame('ID', $id->getType()->getName());
+        static::assertSame('ID', $id->getTypeDefinition()->getName());
         static::assertTrue($id->isNonNull());
         static::assertSame('Hell OR World', $id->getDefaultValue());
     }

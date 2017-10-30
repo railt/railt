@@ -71,7 +71,7 @@ class ObjectTestCase extends AbstractCompilerTestCase
             static::assertEquals('deprecated', $directive->getName());
 
             static::assertEquals('Because', $directive->getPassedArgument('reason')->getPassedValue());
-            static::assertNotNull($directive->getPassedArgument('reason')->getDefinition());
+            static::assertNotNull($directive->getPassedArgument('reason')->getTypeDefinition());
             static::assertNull($directive->getPassedArgument('not-exists'));
 
             static::assertTrue($directive->hasPassedArgument('reason'));
@@ -181,7 +181,7 @@ class ObjectTestCase extends AbstractCompilerTestCase
         static::assertTrue($field->isNonNull());
         static::assertFalse($field->isList());
         static::assertFalse($field->isListOfNonNulls());
-        static::assertEquals('ID', $field->getType()->getName());
+        static::assertEquals('ID', $field->getTypeDefinition()->getName());
     }
 
     /**

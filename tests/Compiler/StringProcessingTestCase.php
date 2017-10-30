@@ -49,7 +49,7 @@ GraphQL;
     public function testDirectiveArgumentDefault(Document $document): void
     {
         /** @var DirectiveDefinition $directive */
-        $directive = $document->getDefinition('test');
+        $directive = $document->getTypeDefinition('test');
         /** @var string $text */
         $text = $directive->getArgument('text')->getDefaultValue();
 
@@ -68,7 +68,7 @@ GraphQL;
     public function testDirectiveArgumentValue(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('A');
+        $type = $document->getTypeDefinition('A');
         /** @var DirectiveInvocation $directive */
         $directive = $type->getDirective('test');
         /** @var string $text */
@@ -88,7 +88,7 @@ GraphQL;
     public function testFieldArgumentValue(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('A');
+        $type = $document->getTypeDefinition('A');
         /** @var FieldDefinition $field */
         $field = $type->getField('field');
         /** @var string $text */

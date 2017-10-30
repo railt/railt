@@ -45,7 +45,7 @@ class UnionTestCase extends AbstractCompilerTestCase
     public function testUnionDefinition(Document $document): void
     {
         /** @var UnionDefinition $union */
-        $union = $document->getDefinition('Person');
+        $union = $document->getTypeDefinition('Person');
         static::assertNotNull($union);
 
         static::assertEquals('Person', $union->getName());
@@ -71,7 +71,7 @@ class UnionTestCase extends AbstractCompilerTestCase
     public function testUnionRelations(Document $document): void
     {
         /** @var UnionDefinition $union */
-        $union = $document->getDefinition('Person');
+        $union = $document->getTypeDefinition('Person');
         static::assertNotNull($union);
 
         static::assertSame(2, $union->getNumberOfTypes());

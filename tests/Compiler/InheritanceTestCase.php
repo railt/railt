@@ -8,16 +8,30 @@
 declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
-use Railt\Compiler\Reflection\CompilerInterface;
+
+use Railt\Compiler\Compiler;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeRedefinitionException;
 use Railt\Compiler\Filesystem\File;
+use Railt\Compiler\Reflection\CompilerInterface;
 
 /**
  * Class InheritanceTestCase
  */
 class InheritanceTestCase extends AbstractCompilerTestCase
 {
+    /**
+     * @return array
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Railt\Compiler\Exceptions\CompilerException
+     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     */
+    public function provider(): array
+    {
+        return \array_merge($this->positiveProvider(), $this->negativeProvider());
+    }
+
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
@@ -342,13 +356,13 @@ class InheritanceTestCase extends AbstractCompilerTestCase
      */
     public function testExtendNegativeInheritance(string $schema): void
     {
-        /** @var CompilerInterface $compiler */
+        /** @var CompilerInterface|Compiler $compiler */
         foreach ($this->getCompilers() as $compiler) {
             try {
                 $compiler->compile(File::fromSources($schema));
                 static::assertTrue(false, 'Throws an exception required');
             } catch (TypeConflictException $error) {
-                echo ' +' . $error->getMessage() . "\n";
+                $compiler->log($error);
                 static::assertInstanceOf(TypeRedefinitionException::class, $error);
             }
         }

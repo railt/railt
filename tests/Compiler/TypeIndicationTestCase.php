@@ -51,7 +51,7 @@ GraphQL;
     public function testNullableType(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
         static::assertNotNull($type);
 
         /** @var FieldDefinition $a "ID" */
@@ -72,7 +72,7 @@ GraphQL;
     public function testNonNull(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
         static::assertNotNull($type);
 
         /** @var FieldDefinition $b "ID!" */
@@ -93,7 +93,7 @@ GraphQL;
     public function testList(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
         static::assertNotNull($type);
 
         /** @var FieldDefinition $c "[ID]" */
@@ -114,7 +114,7 @@ GraphQL;
     public function testListOfNonNulls(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
         static::assertNotNull($type);
 
         /** @var FieldDefinition $d "[ID!]" */
@@ -135,7 +135,7 @@ GraphQL;
     public function testNonNullList(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
         static::assertNotNull($type);
 
         /** @var FieldDefinition $e "[ID]!" */
@@ -156,7 +156,7 @@ GraphQL;
     public function testNonNullListOfNonNulls(Document $document): void
     {
         /** @var ObjectDefinition $type */
-        $type = $document->getDefinition('Test');
+        $type = $document->getTypeDefinition('Test');
         static::assertNotNull($type);
 
         /** @var FieldDefinition $f "[ID!]!" */

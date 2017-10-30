@@ -16,6 +16,9 @@ use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Plugin\ListFiles;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\EmulatingPersister;
@@ -65,6 +68,24 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     }
 
     /**
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \PHPUnit\Framework\SkippedTestError
+     */
+    public function testProviderIsLoadable(): void
+    {
+        if (!\method_exists($this, 'provider')) {
+            static::markTestSkipped(__CLASS__ . ' does not provide a data provider');
+            return;
+        }
+
+        static::assertInternalType('array', $this->provider());
+        foreach ($this->provider() ?? [] as $item) {
+            static::assertInternalType('array', $item);
+        }
+    }
+
+    /**
      * @param string $body
      * @return array
      * @throws \League\Flysystem\FileNotFoundException
@@ -97,6 +118,16 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     }
 
     /**
+     * @return LoggerInterface
+     */
+    private function getLogger(): LoggerInterface
+    {
+        return new Logger(\class_basename(static::class), [
+            new StreamHandler(@\fopen('php://output', 'wb+'))
+        ]);
+    }
+
+    /**
      * @return \Generator
      * @throws \League\Flysystem\FileNotFoundException
      * @throws \LogicException
@@ -104,22 +135,22 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     protected function getCompilers(): \Generator
     {
         // Default
-        yield new Compiler();
+        yield new Compiler(null, $this->getLogger());
 
         // Nullable (Return Document "as is")
-        yield new Compiler(new NullablePersister());
+        yield new Compiler(new NullablePersister(), $this->getLogger());
 
         // Array (Return Document "as is" and store same files into php array stateless memory)
-        yield new Compiler(new ArrayPersister());
+        yield new Compiler(new ArrayPersister(), $this->getLogger());
 
         // Emulation of data saving
-        yield new Compiler(new EmulatingPersister());
+        yield new Compiler(new EmulatingPersister(), $this->getLogger());
 
         // PSR-6 + Flysystem Serialization
-        yield new Compiler($this->getPsr6FileSystemPersister());
+        yield new Compiler($this->getPsr6FileSystemPersister(), $this->getLogger());
 
         // PSR-16 + Filesystem Serialization
-        yield new Compiler($this->getPsr16FileSystemPersister());
+        yield new Compiler($this->getPsr16FileSystemPersister(), $this->getLogger());
     }
 
     /**

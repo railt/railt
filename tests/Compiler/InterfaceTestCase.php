@@ -29,7 +29,7 @@ class InterfaceTestCase extends AbstractCompilerTestCase
     public function testObjectHasInterface(Document $document): void
     {
         /** @var ObjectDefinition $object */
-        $object = $document->getDefinition('Object');
+        $object = $document->getTypeDefinition('Object');
 
         static::assertNotNull($object);
         static::assertNotCount(0, $object->getInterfaces());
@@ -56,7 +56,7 @@ class InterfaceTestCase extends AbstractCompilerTestCase
     public function testGetInterfaceThroughObject(Document $document): void
     {
         /** @var ObjectDefinition $object */
-        $object = $document->getDefinition('Object');
+        $object = $document->getTypeDefinition('Object');
 
         static::assertNotNull($object);
 
@@ -102,7 +102,7 @@ class InterfaceTestCase extends AbstractCompilerTestCase
     public function testGetInterfaceThroughDocument(Document $document): void
     {
         /** @var InterfaceDefinition $interface */
-        $interface = $document->getDefinition('Test');
+        $interface = $document->getTypeDefinition('Test');
         $this->processTestInterface($interface);
     }
 

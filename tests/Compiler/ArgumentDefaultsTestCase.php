@@ -86,7 +86,7 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
     {
         foreach ($this->getDocuments($schema) as $document) {
             /** @var ObjectDefinition $type */
-            $type = $document->getDefinition('A');
+            $type = $document->getTypeDefinition('A');
             static::assertNotNull($type, 'Type "A" not found');
 
             /** @var FieldDefinition $field */
@@ -121,7 +121,7 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
 
             try {
                 /** @var ArgumentDefinition $arg */
-                $arg = $document->getDefinition('A')
+                $arg = $document->getTypeDefinition('A')
                     ->getField('field')
                     ->getArgument('argument')
                     ->getDefaultValue();
