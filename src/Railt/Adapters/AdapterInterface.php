@@ -11,7 +11,7 @@ namespace Railt\Adapters;
 
 use Railt\Routing\Router;
 use Railt\Http\ResponderInterface;
-use Railt\Events\DispatcherInterface;
+use Railt\Events\Dispatcher;
 use Railt\Container\ContainerInterface;
 use Railt\Compiler\Reflection\Contracts\Document;
 
@@ -23,15 +23,15 @@ interface AdapterInterface extends ResponderInterface
     /**
      * AdapterInterface constructor.
      * @param Document $document
-     * @param DispatcherInterface $events
+     * @param Dispatcher $events
      * @param Router $router
      */
-    public function __construct(Document $document, DispatcherInterface $events, Router $router);
+    public function __construct(Document $document, Dispatcher $events, Router $router);
 
     /**
-     * @return DispatcherInterface
+     * @return Dispatcher
      */
-    public function getEvents(): DispatcherInterface;
+    public function getEvents(): Dispatcher;
 
     /**
      * @return Router

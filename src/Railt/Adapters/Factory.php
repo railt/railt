@@ -11,7 +11,7 @@ namespace Railt\Adapters;
 
 use Railt\Routing\Router;
 use Railt\Adapters\Webonyx\Adapter;
-use Railt\Events\DispatcherInterface;
+use Railt\Events\Dispatcher;
 use Railt\Compiler\Reflection\Contracts\DocumentInterface as Document;
 
 /**
@@ -36,11 +36,11 @@ class Factory
 
     /**
      * @param Document $document
-     * @param DispatcherInterface $events
+     * @param Dispatcher $events
      * @param Router $router
      * @return AdapterInterface
      */
-    public static function create(Document $document, DispatcherInterface $events, Router $router): AdapterInterface
+    public static function create(Document $document, Dispatcher $events, Router $router): AdapterInterface
     {
         foreach (self::$adapters as $class) {
             if (class_exists($class) && $class::isSupported()) {
