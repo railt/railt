@@ -14,7 +14,7 @@ namespace Railt\Compiler\Reflection\Standard\Scalars;
  *
  * @see http://facebook.github.io/graphql/#sec-Int
  */
-final class IntType extends StringType
+final class IntType extends FloatType
 {
     /**
      * The Int scalar public name constant.
