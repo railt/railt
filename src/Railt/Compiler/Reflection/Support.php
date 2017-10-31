@@ -72,6 +72,15 @@ trait Support
     }
 
     /**
+     * @param $value
+     * @return string
+     */
+    protected function valueWithType($value): string
+    {
+        return '(' . Str::lower(\gettype($value)) . ')' . $this->valueToString($value);
+    }
+
+    /**
      * @param mixed|iterable|null $value
      * @return string
      */
@@ -97,7 +106,7 @@ trait Support
                 }
             }
 
-            return \implode(', ', $result);
+            return '[' . \implode(', ', $result) . ']';
         }
 
         if ($value instanceof Definition) {

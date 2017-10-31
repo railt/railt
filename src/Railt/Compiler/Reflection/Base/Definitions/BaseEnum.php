@@ -31,6 +31,15 @@ abstract class BaseEnum extends BaseDefinition implements EnumDefinition
     protected $values = [];
 
     /**
+     * @param mixed|string $value
+     * @return bool
+     */
+    public function isCompatible($value): bool
+    {
+        return \is_string($value) && $this->hasValue($value);
+    }
+
+    /**
      * @return iterable|ValueDefinition[]
      */
     public function getValues(): iterable

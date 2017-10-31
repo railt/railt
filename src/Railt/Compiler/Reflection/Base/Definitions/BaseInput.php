@@ -27,6 +27,17 @@ abstract class BaseInput extends BaseDefinition implements InputDefinition
     protected const TYPE_NAME = 'Input';
 
     /**
+     * TODO Verify input
+     *
+     * @param mixed $value
+     * @return bool
+     */
+    public function isCompatible($value): bool
+    {
+        return true;
+    }
+
+    /**
      * @return array
      */
     public function __sleep(): array

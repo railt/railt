@@ -49,8 +49,8 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
             '[String] = null',
             '[String!] = null',
             '[String]! = [null]',
-            '[String!]! = [1,2,3]',
-            '[String!] = [1,2,3]',
+            '[Int!]! = [1,2,3]',
+            '[String!] = ["1","2","3"]',
         ];
 
         $result = [];
@@ -72,9 +72,13 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
     public function negativeProvider(): array
     {
         $schemas = [
+            // NonNull init by NULL
             'String! = null',
+            // NonList init by List
             'String = []',
+            // NonNullList init by NULL
             '[String]! = null',
+            // ListOfNonNull init by List with NULL
             '[String!] = [1,null,3]',
         ];
 
@@ -92,23 +96,31 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Throwable
      */
     public function testAllowedArgumentDefaultValue(string $schema): void
     {
-        foreach ($this->getDocuments($schema) as $document) {
-            /** @var ObjectDefinition $type */
-            $type = $document->getTypeDefinition('A');
-            static::assertNotNull($type, 'Type "A" not found');
+        try {
+            foreach ($this->getDocuments($schema) as $document) {
+                /** @var ObjectDefinition $type */
+                $type = $document->getTypeDefinition('A');
+                static::assertNotNull($type, 'Type "A" not found');
 
-            /** @var FieldDefinition $field */
-            $field = $type->getField('field');
-            static::assertNotNull($field, 'Field "field" not found');
+                /** @var FieldDefinition $field */
+                $field = $type->getField('field');
+                static::assertNotNull($field, 'Field "field" not found');
 
-            /** @var ArgumentDefinition $argument */
-            $argument = $field->getArgument('argument');
-            static::assertNotNull($argument, 'Argument "argument" not found');
+                /** @var ArgumentDefinition $argument */
+                $argument = $field->getArgument('argument');
+                static::assertNotNull($argument, 'Argument "argument" not found');
+            }
+        } catch (\Throwable $e) {
+            static::assertFalse(true,
+                'This code is valid: ' . "\n> " . $schema . "\n" .
+                'But exception thrown:' . "\n> " . $e->getMessage()
+            );
+            throw $e;
         }
     }
 

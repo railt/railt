@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Standard\Scalars;
 
+use Carbon\Carbon;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Standard\StandardType;
 
@@ -41,5 +42,32 @@ final class DateTimeType extends StringType implements StandardType
     {
         parent::__construct($document);
         $this->deprecationReason = static::RFC_IMPL_DESCRIPTION;
+    }
+
+    /**
+     * @param mixed|string $value
+     * @return bool
+     */
+    public function isCompatible($value): bool
+    {
+        if (\is_string($value))  {
+            return $this->verifyDate($value);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    private function verifyDate($value): bool
+    {
+        try {
+            new \DateTime($value);
+            return true;
+        } catch (\Throwable $error) {
+            return false;
+        }
     }
 }

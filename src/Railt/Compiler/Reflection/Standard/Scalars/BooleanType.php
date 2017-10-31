@@ -14,7 +14,7 @@ namespace Railt\Compiler\Reflection\Standard\Scalars;
  *
  * @see http://facebook.github.io/graphql/#sec-Boolean
  */
-final class BooleanType extends AnyType
+final class BooleanType extends StringType
 {
     /**
      * The Boolean scalar public name constant.
@@ -27,4 +27,13 @@ final class BooleanType extends AnyType
      * Short Boolean scalar public description.
      */
     protected const TYPE_DESCRIPTION = 'The `Boolean` scalar type represents `true` or `false`.';
+
+    /**
+     * @param mixed|bool $value
+     * @return bool
+     */
+    public function isCompatible($value): bool
+    {
+        return \is_bool($value);
+    }
 }

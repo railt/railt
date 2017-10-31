@@ -14,7 +14,7 @@ namespace Railt\Compiler\Reflection\Standard\Scalars;
  *
  * @see http://facebook.github.io/graphql/#sec-Int
  */
-final class IntType extends FloatType
+final class IntType extends StringType
 {
     /**
      * The Int scalar public name constant.
@@ -26,6 +26,15 @@ final class IntType extends FloatType
     /**
      * Short Int scalar public description.
      */
-    protected const TYPE_DESCRIPTION = 'The `Int` scalar type represents non-fractional signed whole numeric
-values. Int can represent values between -(2^31) and 2^31 - 1.';
+    protected const TYPE_DESCRIPTION = 'The `Int` scalar type represents non-fractional signed whole numeric ' .
+        'values. Int can represent values between -(2^31) and 2^31 - 1.';
+
+    /**
+     * @param mixed|int $value
+     * @return bool
+     */
+    public function isCompatible($value): bool
+    {
+        return \is_int($value);
+    }
 }

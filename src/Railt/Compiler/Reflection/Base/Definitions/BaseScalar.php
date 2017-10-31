@@ -28,6 +28,15 @@ abstract class BaseScalar extends BaseDefinition implements ScalarDefinition
     }
 
     /**
+     * @param mixed $value
+     * @return bool
+     */
+    public function isCompatible($value): bool
+    {
+        return true;
+    }
+
+    /**
      * @return array
      */
     public function __sleep(): array

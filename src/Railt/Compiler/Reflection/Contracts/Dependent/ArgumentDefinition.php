@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Contracts\Dependent;
 
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Compiler\Reflection\Contracts\Behavior\Inputable;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
