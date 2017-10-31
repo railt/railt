@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
+use Illuminate\Support\Str;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
@@ -68,5 +69,41 @@ trait Support
         }
 
         return $result;
+    }
+
+    /**
+     * @param mixed|iterable|null $value
+     * @return string
+     */
+    protected function valueToString($value): string
+    {
+        if ($value === null) {
+            return 'NULL';
+        }
+
+        if (\is_scalar($value)) {
+            return (string)$value;
+        }
+
+        if (\is_iterable($value)) {
+            $result = [];
+
+            /** @var iterable $value */
+            foreach ($value as $key => $sub) {
+                if (\is_int($key)) {
+                    $result[] = $this->valueToString($sub);
+                } else {
+                    $result[] = $key . '=' . $this->valueToString($sub);
+                }
+            }
+
+            return \implode(', ', $result);
+        }
+
+        if ($value instanceof Definition) {
+            return $this->typeToString($value);
+        }
+
+        return Str::studly(\gettype($value));
     }
 }

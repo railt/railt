@@ -160,7 +160,7 @@ trait Compiler
      */
     protected function bootBuilder(TreeNode $ast, DocumentBuilder $document): void
     {
-        $this->ast = $ast;
+        $this->ast      = $ast;
         $this->document = $document;
 
         /**

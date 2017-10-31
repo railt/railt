@@ -9,11 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Compiler\Compiler;
+use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
  * Class ArgumentDefaultsTestCase
@@ -21,6 +22,18 @@ use Railt\Compiler\Exceptions\TypeConflictException;
 class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
 {
     private const ARGUMENT_BODY = 'type A { field(argument: %s): String }';
+
+    /**
+     * @return array
+     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Railt\Compiler\Exceptions\CompilerException
+     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     */
+    public function provider(): array
+    {
+        return \array_merge($this->positiveProvider(), $this->negativeProvider());
+    }
 
     /**
      * @return array
@@ -107,35 +120,24 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
      * @throws \League\Flysystem\FileNotFoundException
      * @throws \LogicException
      * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \Railt\Compiler\Exceptions\CompilerException
+     * @throws \Railt\Compiler\Exceptions\TypeNotFoundException
+     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
      */
     public function testInvalidArgumentDefaultValue(string $schema): void
     {
-        /** @var \Generator $documents */
-        $documents = $this->getDocuments($schema);
+        $compilers = $this->getCompilers();
 
-        while ($documents->valid()) {
-            $throws = false;
-
-            /** @var Document $document */
-            $document = $documents->current();
-
+        /** @var Compiler $compiler */
+        foreach ($compilers as $compiler) {
             try {
-                /** @var ArgumentDefinition $arg */
-                $arg = $document->getTypeDefinition('A')
-                    ->getField('field')
-                    ->getArgument('argument')
-                    ->getDefaultValue();
+                $compiler->compile(File::fromSources($schema));
+                static::assertFalse(true,
+                    'Default value must throw an exception: ' . "\n" . $schema);
             } catch (TypeConflictException $error) {
-                $throws = true;
+                static::assertTrue(true);
             }
-
-            try {
-                $documents->next();
-            } catch (TypeConflictException $error) {
-                $throws = true;
-            }
-
-            static::assertTrue($throws,'The schema is valid but Exception required:' . "\n    " . $schema);
         }
     }
 }

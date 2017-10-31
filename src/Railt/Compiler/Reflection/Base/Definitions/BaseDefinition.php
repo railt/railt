@@ -73,38 +73,6 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
     }
 
     /**
-     * @param mixed|iterable|null $value
-     * @return array|string
-     */
-    protected function formatValue($value)
-    {
-        if ($value === null) {
-            return null;
-        }
-
-        if (\is_scalar($value)) {
-            return $value;
-        }
-
-        if (\is_iterable($value)) {
-            $result = [];
-
-            /** @var iterable $value */
-            foreach ($value as $key => $sub) {
-                $result[$key] = $sub;
-            }
-
-            return $result;
-        }
-
-        if ($value instanceof Definition) {
-            return $this->typeToString($value);
-        }
-
-        return Str::studly(\gettype($value));
-    }
-
-    /**
      * @return array
      */
     public function __debugInfo(): array
@@ -121,7 +89,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
         $result = [];
 
         foreach ($data as $fieldName) {
-            $result[$fieldName] = $this->formatValue($this->$fieldName);
+            $result[$fieldName] = $this->valueToString($this->$fieldName);
         }
 
         return $result;
