@@ -86,6 +86,9 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'type A { id: String }          extend type A { id: DateTime }',
             'type A { id: String }          extend type A { id: ID }',
             'type A { id: String }          extend type A { id: String }',
+            'type A { id: String }          extend type A { id: Boolean }',
+            'type A { id: String }          extend type A { id: Float }',
+            'type A { id: String }          extend type A { id: Int }',
 
             'interface A { id: Any }        type B implements A { id: Any }',
             'interface A { id: Any }        type B implements A { id: Boolean }',
@@ -267,9 +270,6 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'type A { id: Int }         extend type A { id: ID }',
             'type A { id: Int }         extend type A { id: String }',
             'type A { id: String }      extend type A { id: Any }',
-            'type A { id: String }      extend type A { id: Boolean }',
-            'type A { id: String }      extend type A { id: Float }',
-            'type A { id: String }      extend type A { id: Int }',
 
             // Interfaces
             'interface I {} 
@@ -360,7 +360,7 @@ class InheritanceTestCase extends AbstractCompilerTestCase
         foreach ($this->getCompilers() as $compiler) {
             try {
                 $compiler->compile(File::fromSources($schema));
-                static::assertTrue(false, 'Throws an exception required');
+                static::assertTrue(false, 'Exception required in: ' . "\n" . $schema);
             } catch (TypeConflictException $error) {
                 $compiler->log($error);
                 static::assertInstanceOf(TypeRedefinitionException::class, $error);
