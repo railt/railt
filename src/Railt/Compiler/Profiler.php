@@ -10,13 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler;
 
 use Hoa\Compiler\Llk\Lexer;
-use Hoa\Compiler\Llk\Rule\Entry;
-use Hoa\Compiler\Llk\Rule\Invocation;
-use Hoa\Compiler\Llk\Rule\Rule;
-use Hoa\Compiler\Llk\Rule\Token;
+use Hoa\Compiler\Llk\Parser as LlkParser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\Compiler\Visitor\Dump;
-use Hoa\Compiler\Llk\Parser as LlkParser;
 
 /**
  * Class Profiler
@@ -63,11 +59,11 @@ class Profiler
         $trace = \debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT);
         \array_shift($trace);
 
-        $toString = function(array $trace) {
+        $toString = function (array $trace) {
             return ($trace['class'] ?? 'php') . '::' . ($trace['function'] ?? '?') . '()';
         };
 
-        $reducer = function(string $sum, string $item): string {
+        $reducer = function (string $sum, string $item): string {
             return $sum . PHP_EOL . $item;
         };
 
@@ -85,11 +81,11 @@ class Profiler
 
         $sequence = (new Lexer())->lexMe($content, $this->parser->getTokens());
 
-        $template   = '| %4s | %-50s | %-50s |' . "\n";
-        $header     = sprintf($template, 'ID', 'Token', 'Value');
-        $delimiter  = '|' . str_repeat('-', strlen($header) - 3) . "|\n";
+        $template = '| %4s | %-50s | %-50s |' . "\n";
+        $header = sprintf($template, 'ID', 'Token', 'Value');
+        $delimiter = '|' . str_repeat('-', strlen($header) - 3) . "|\n";
 
-        $result  .= $delimiter . $header . $delimiter;
+        $result .= $delimiter . $header . $delimiter;
 
         foreach ($sequence as $data) {
             $value = str_replace("\n", ' ', '(' . $data['length'] . ') ' . $data['value']);

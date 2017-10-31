@@ -24,7 +24,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
     /**
      * @var string
      */
-    protected $specDirectory = __DIR__ . '/.resources/ast-ab-spec-tests';
+    protected $specDirectory = __DIR__ . '/.resources/ast-spec-tests';
 
     /**
      * @dataProvider positiveTests
@@ -76,7 +76,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
         $finder = (new Finder())
             ->files()
             ->in($this->specDirectory)
-            ->name('+*');
+            ->name('\+.*?\.graphqls');
 
         return $this->formatProvider($finder->getIterator());
     }
@@ -106,7 +106,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
         $finder = (new Finder())
             ->files()
             ->in($this->specDirectory)
-            ->name('-*');
+            ->name('\-.*?\.graphqls');
 
         return $this->formatProvider($finder->getIterator());
     }
