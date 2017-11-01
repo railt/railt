@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use PHPUnit\Framework\AssertionFailedError;
 use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Parser;
 
@@ -32,11 +33,17 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \Throwable
      */
-    public function testPositiveCompilation($file): void
+    public function testPositiveCompilation(ReadableInterface $file): void
     {
-        $compiler = new Parser();
+        $error = $file->getPathname() . ' must not throws an exception: ' . "\n" . $file->read();
 
-        $compiler->parse($file);
+        try {
+            $compiler = new Parser();
+            $compiler->parse($file);
+        } catch (\Throwable $e) {
+            static::throwException(new AssertionFailedError($error));
+        }
+
         static::assertTrue(true);
     }
 
@@ -62,15 +69,16 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
      */
     public function testNegativeCompilation(ReadableInterface $file): void
     {
-        $this->expectException(\Throwable::class);
+        $error = $file->getPathname() . ' must throw an error but compiled successfully: ' . "\n" . $file->read();
 
-        $compiler = new Parser();
+        try {
+            $compiler = new Parser();
+            $ast = $compiler->parse($file);
+        } catch (\Throwable $e) {
+            static::assertTrue(true);
+            return;
+        }
 
-        $ast = $compiler->parse($file);
-
-        static::assertFalse(true,
-            $file->getPathname() . ' must throw an error but complete successfully: ' . "\n" .
-            $compiler->dump($ast)
-        );
+        static::throwException(new AssertionFailedError($error . "\n" . $compiler->dump($ast)));
     }
 }

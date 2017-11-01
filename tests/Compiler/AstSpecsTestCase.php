@@ -32,6 +32,7 @@ class AstSpecsTestCase extends AbstractCompilerTestCase
 
     /**
      * @dataProvider specProvider
+     *
      * @param SpecTest $spec
      * @throws ExpectationFailedException
      * @throws \Railt\Compiler\Exceptions\CompilerException
@@ -55,5 +56,15 @@ class AstSpecsTestCase extends AbstractCompilerTestCase
             flush();
             throw $e;
         }
+    }
+
+    /**
+     * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     */
+    public function provider(): array
+    {
+        return $this->specProvider();
     }
 }
