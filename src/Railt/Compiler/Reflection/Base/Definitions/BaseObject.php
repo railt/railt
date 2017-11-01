@@ -17,7 +17,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
 /**
  * Class BaseObject
  */
-abstract class BaseObject extends BaseDefinition implements ObjectDefinition
+abstract class BaseObject extends BaseTypeDefinition implements ObjectDefinition
 {
     use BaseDirectivesContainer;
     use BaseFieldsContainer;

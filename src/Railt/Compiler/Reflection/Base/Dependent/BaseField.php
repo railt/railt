@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Base\Dependent;
 
 use Railt\Compiler\Reflection\Base\Behavior\BaseTypeIndicator;
-use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Compiler\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Compiler\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
+use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class BaseField

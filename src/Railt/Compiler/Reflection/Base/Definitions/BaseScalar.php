@@ -15,7 +15,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\ScalarDefinition;
 /**
  * Class BaseScalar
  */
-abstract class BaseScalar extends BaseDefinition implements ScalarDefinition
+abstract class BaseScalar extends BaseTypeDefinition implements ScalarDefinition
 {
     use BaseDirectivesContainer;
 

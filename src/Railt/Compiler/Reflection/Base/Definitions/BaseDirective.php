@@ -19,7 +19,7 @@ use Railt\Compiler\Reflection\Contracts\Dependent;
 /**
  * Class BaseDirectiveDefinition
  */
-abstract class BaseDirective extends BaseDefinition implements DirectiveDefinition
+abstract class BaseDirective extends BaseTypeDefinition implements DirectiveDefinition
 {
     use BaseArgumentsContainer;
 

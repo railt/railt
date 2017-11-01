@@ -16,7 +16,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\EnumDefinition;
 /**
  * Class BaseEnum
  */
-abstract class BaseEnum extends BaseDefinition implements EnumDefinition
+abstract class BaseEnum extends BaseTypeDefinition implements EnumDefinition
 {
     use BaseDirectivesContainer;
 

@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Dependent;
 
-use Railt\Compiler\Reflection\Base\Definitions\BaseDefinition;
+use Railt\Compiler\Reflection\Base\Definitions\BaseTypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
  * Class BaseDependentType
  */
-abstract class BaseDependent extends BaseDefinition implements DependentDefinition
+abstract class BaseDependent extends BaseTypeDefinition implements DependentDefinition
 {
     /**
      * @var TypeDefinition|mixed
@@ -37,7 +37,7 @@ abstract class BaseDependent extends BaseDefinition implements DependentDefiniti
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
-            'parent'
+            'parent',
         ]);
     }
 }

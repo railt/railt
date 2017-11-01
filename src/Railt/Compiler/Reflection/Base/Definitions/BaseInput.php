@@ -16,7 +16,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\InputDefinition;
 /**
  * Class BaseInput
  */
-abstract class BaseInput extends BaseDefinition implements InputDefinition
+abstract class BaseInput extends BaseTypeDefinition implements InputDefinition
 {
     use BaseArgumentsContainer;
     use BaseDirectivesContainer;

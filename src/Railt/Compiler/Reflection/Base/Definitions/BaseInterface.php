@@ -16,7 +16,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\InterfaceDefinition;
 /**
  * Class BaseInterface
  */
-abstract class BaseInterface extends BaseDefinition implements InterfaceDefinition
+abstract class BaseInterface extends BaseTypeDefinition implements InterfaceDefinition
 {
     use BaseFieldsContainer;
     use BaseDirectivesContainer;

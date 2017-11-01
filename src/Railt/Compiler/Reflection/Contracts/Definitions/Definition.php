@@ -22,6 +22,13 @@ interface Definition
     public function getDocument(): Document;
 
     /**
+     * Returns the name of definition instance.
+     *
+     * @return string
+     */
+    public function getName(): string;
+
+    /**
      * A unique identifier for the type is needed to identify the entity
      * in cases of type names conflicts.
      *

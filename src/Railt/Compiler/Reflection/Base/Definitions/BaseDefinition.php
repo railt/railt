@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Definitions;
 
-use Illuminate\Support\Str;
 use Railt\Compiler\Reflection\Base\Behavior\BaseDeprecations;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Document;
@@ -24,19 +23,9 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
     use BaseDeprecations;
 
     /**
-     * Type definition name
-     */
-    protected const TYPE_NAME = '';
-
-    /**
      * @var string
      */
     protected $name;
-
-    /**
-     * @var string
-     */
-    protected $description = '';
 
     /**
      * @var string|null
@@ -47,14 +36,6 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
      * @var Document
      */
     protected $document;
-
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return (string)$this->description;
-    }
 
     /**
      * @return Document
@@ -85,7 +66,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $data = $this->__sleep();
+        $data   = $this->__sleep();
         $result = [];
 
         foreach ($data as $fieldName) {
@@ -107,21 +88,10 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
 
             // interface Nameable
             'name',
-            'description',
 
             // trait BaseDeprecations
             'deprecationReason',
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName(): string
-    {
-        \assert(static::TYPE_NAME !== '', 'Type name must be initialized');
-
-        return static::TYPE_NAME;
     }
 
     /**

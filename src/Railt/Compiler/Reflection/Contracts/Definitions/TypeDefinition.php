@@ -17,13 +17,6 @@ use Railt\Compiler\Reflection\Contracts\Behavior\Deprecatable;
 interface TypeDefinition extends Definition, Deprecatable
 {
     /**
-     * Returns the name of definition instance.
-     *
-     * @return string
-     */
-    public function getName(): string;
-
-    /**
      * Returns the name of type.
      *
      * @return string

@@ -11,7 +11,6 @@ namespace Railt\Compiler\Reflection\Base\Definitions\Enum;
 
 use Railt\Compiler\Reflection\Base\Dependent\BaseDependent;
 use Railt\Compiler\Reflection\Contracts\Definitions\Enum\ValueDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\EnumDefinition;
 
 /**
  * Class BaseValue

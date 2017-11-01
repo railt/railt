@@ -9,16 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Base\Definitions;
 
-use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\UnionDefinition;
 
 /**
  * Class BaseUnion
  */
-abstract class BaseUnion extends BaseDefinition implements UnionDefinition
+abstract class BaseUnion extends BaseTypeDefinition implements UnionDefinition
 {
     use BaseDirectivesContainer;
 

@@ -16,7 +16,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
 /**
  * Class BaseSchema
  */
-abstract class BaseSchema extends BaseDefinition implements SchemaDefinition
+abstract class BaseSchema extends BaseTypeDefinition implements SchemaDefinition
 {
     use BaseDirectivesContainer;
 
