@@ -1,25 +1,33 @@
 language: php
 
-php:
-  - 7.1
-  - 7.2
-  - nightly
-
 env:
   global:
-    - setup=basic
+    - setup=stable
 
 matrix:
+  fast_finish: true
+    include:
+    - 7.1
+    - 7.1
+      env: setup=lowest
+    - 7.2
+    - 7.2
+      env: setup=lowest
+    - nightly
+    - nightly
+      env: setup=lowest
   allow_failures:
     - php: nightly
+
+sudo: false
 
 cache:
   directories:
     - $HOME/.composer/cache
 
 install:
-  - if [[ $setup = 'basic' ]]; then travis_retry composer install --no-interaction --prefer-dist --no-suggest; fi
-  - if [[ $setup = 'stable' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
+  - if [[ $setup = 'stable' ]]; then travis_retry composer install --prefer-dist --no-interaction --prefer-stable --no-suggest; fi
   - if [[ $setup = 'lowest' ]]; then travis_retry composer update --prefer-dist --no-interaction --prefer-lowest --prefer-stable --no-suggest; fi
+
 
 script: vendor/bin/phpunit --coverage-text
