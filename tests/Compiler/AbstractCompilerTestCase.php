@@ -225,7 +225,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
         $finder = (new Finder())
             ->files()
             ->in($this->specDirectory)
-            ->name('\+.*?\.graphqls');
+            ->name('+*.graphqls');
 
         return $this->formatProvider($finder->getIterator());
     }
@@ -240,7 +240,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
         $finder = (new Finder())
             ->files()
             ->in($this->specDirectory)
-            ->name('\-.*?\.graphqls');
+            ->name('-*.graphqls');
 
         return $this->formatProvider($finder->getIterator());
     }
