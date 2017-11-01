@@ -73,7 +73,9 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
     {
         $error = $file->getPathname() . ' must throw an error but compiled successfully: ' . "\n" . $file->read();
 
+        $compilersCount = 0;
         foreach ($this->getCompilers() as $compiler) {
+            $compilersCount++;
             try {
                 $compiler->compile($file);
             } catch (\Throwable $e) {
@@ -81,7 +83,9 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
                 continue;
             }
 
-            static::throwException(new AssertionFailedError($error));
+            static::assertTrue(true, $error);
         }
+
+        static::assertEquals(6, $compilersCount);
     }
 }

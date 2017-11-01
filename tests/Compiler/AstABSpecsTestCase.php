@@ -79,6 +79,6 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
             return;
         }
 
-        static::throwException(new AssertionFailedError($error . "\n" . $compiler->dump($ast)));
+        static::assertFalse(true, $error . "\n" . $compiler->dump($ast));
     }
 }
