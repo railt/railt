@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa3a47deee00c2d14d8e37a78078aade",
+    "content-hash": "2bcbb70546f63726935ce2ce216b99ef",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -75,16 +75,16 @@
         },
         {
             "name": "hoa/compiler",
-            "version": "3.17.08.08",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hoaproject/Compiler.git",
-                "reference": "aa09caf0bf28adae6654ca6ee415ee2f522672de"
+                "reference": "6cbc1ea6081b5966183312117677882af5734c27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hoaproject/Compiler/zipball/aa09caf0bf28adae6654ca6ee415ee2f522672de",
-                "reference": "aa09caf0bf28adae6654ca6ee415ee2f522672de",
+                "url": "https://api.github.com/repos/hoaproject/Compiler/zipball/6cbc1ea6081b5966183312117677882af5734c27",
+                "reference": "6cbc1ea6081b5966183312117677882af5734c27",
                 "shasum": ""
             },
             "require": {
@@ -95,7 +95,8 @@
                 "hoa/math": "~1.0",
                 "hoa/protocol": "~1.0",
                 "hoa/regex": "~1.0",
-                "hoa/visitor": "~2.0"
+                "hoa/visitor": "~2.0",
+                "php": ">=5.5.0"
             },
             "require-dev": {
                 "hoa/json": "~2.0",
@@ -153,7 +154,7 @@
                 "trace",
                 "uniform"
             ],
-            "time": "2017-08-08T07:44:07+00:00"
+            "time": "2017-10-27T09:40:05+00:00"
         },
         {
             "name": "hoa/consistency",
@@ -3365,6 +3366,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "hoa/compiler": 20,
         "railt/webonyx-adapter": 20,
         "railt/youshido-adapter": 20
     },
