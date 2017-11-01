@@ -1,0 +1,7 @@
+type TInt implements IInt {
+    field: Int
+}
+
+interface IInt {
+  field: Int
+}

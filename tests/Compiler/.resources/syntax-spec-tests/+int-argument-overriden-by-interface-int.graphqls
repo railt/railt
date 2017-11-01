@@ -1,0 +1,7 @@
+type TInt implements IInt {
+    field(arg: Int): Int
+}
+
+interface IInt {
+    field(arg: Int): Int
+}

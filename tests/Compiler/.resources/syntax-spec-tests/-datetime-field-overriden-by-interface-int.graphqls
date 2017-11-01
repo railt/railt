@@ -1,0 +1,7 @@
+type TDateTime implements IInt {
+    field: DateTime
+}
+
+interface IInt {
+  field: Int
+}

@@ -1,0 +1,7 @@
+type TAny implements IID {
+    field: Any
+}
+
+interface IID {
+  field: ID
+}

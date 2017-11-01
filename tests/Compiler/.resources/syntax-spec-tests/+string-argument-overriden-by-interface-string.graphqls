@@ -1,0 +1,7 @@
+type TString implements IString {
+    field(arg: String): String
+}
+
+interface IString {
+    field(arg: String): String
+}

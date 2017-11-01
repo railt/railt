@@ -1,0 +1,7 @@
+type TBoolean implements IFloat {
+    field(arg: Float): Boolean
+}
+
+interface IFloat {
+    field(arg: Boolean): Boolean
+}

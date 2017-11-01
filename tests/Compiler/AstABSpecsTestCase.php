@@ -9,10 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Parser;
-use Railt\Compiler\Filesystem\File;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class AstABSpecsTestCase
@@ -27,9 +25,9 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
     protected $specDirectory = __DIR__ . '/.resources/ast-spec-tests';
 
     /**
-     * @dataProvider positiveTests
+     * @dataProvider loadPositiveABTests
      *
-     * @param $file
+     * @param ReadableInterface $file
      * @throws \Hoa\Compiler\Exception\UnrecognizedToken
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \Throwable
@@ -38,76 +36,41 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
     {
         $compiler = new Parser();
 
-        $compiler->parse(File::fromPathname($file));
-        $this->assertTrue(true);
+        $compiler->parse($file);
+        static::assertTrue(true);
     }
 
     /**
-     * @dataProvider negativeTests
+     * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     */
+    public function provider(): array
+    {
+        return \array_merge($this->loadNegativeABTests(), $this->loadPositiveABTests());
+    }
+
+    /**
+     * @dataProvider loadNegativeABTests
      *
-     * @param $file
+     * @param ReadableInterface $file
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
      * @throws \Railt\Compiler\Exceptions\CompilerException
      * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
      * @throws \Railt\Compiler\Exceptions\NotReadableException
      */
-    public function testNegativeCompilation($file): void
+    public function testNegativeCompilation(ReadableInterface $file): void
     {
         $this->expectException(\Throwable::class);
 
         $compiler = new Parser();
 
-        $ast = $compiler->parse(File::fromPathname($file));
+        $ast = $compiler->parse($file);
 
-        $this->assertFalse(true,
-            $file . ' must throw an error but complete successfully: ' . "\n" .
+        static::assertFalse(true,
+            $file->getPathname() . ' must throw an error but complete successfully: ' . "\n" .
             $compiler->dump($ast)
         );
-    }
-
-    /**
-     * @return array
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
-     */
-    public function positiveTests(): array
-    {
-        $finder = (new Finder())
-            ->files()
-            ->in($this->specDirectory)
-            ->name('\+.*?\.graphqls');
-
-        return $this->formatProvider($finder->getIterator());
-    }
-
-    /**
-     * @param \Traversable|SplFileInfo[] $files
-     * @return array
-     */
-    private function formatProvider(\Traversable $files): array
-    {
-        $tests = [];
-
-        foreach ($files as $test) {
-            $tests[] = [$test->getRealPath()];
-        }
-
-        return $tests;
-    }
-
-    /**
-     * @return array
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
-     */
-    public function negativeTests(): array
-    {
-        $finder = (new Finder())
-            ->files()
-            ->in($this->specDirectory)
-            ->name('\-.*?\.graphqls');
-
-        return $this->formatProvider($finder->getIterator());
     }
 }

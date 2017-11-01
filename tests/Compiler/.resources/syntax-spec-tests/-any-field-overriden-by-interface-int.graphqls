@@ -1,0 +1,7 @@
+type TAny implements IInt {
+    field: Any
+}
+
+interface IInt {
+  field: Int
+}

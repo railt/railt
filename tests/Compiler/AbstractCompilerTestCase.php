@@ -30,6 +30,8 @@ use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Tests\AbstractTestCase;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class AbstractReflectionTestCase
@@ -37,6 +39,16 @@ use Railt\Tests\AbstractTestCase;
  */
 abstract class AbstractCompilerTestCase extends AbstractTestCase
 {
+    /**
+     * @var string
+     */
+    protected $resourcesPath = '';
+
+    /**
+     * @var string
+     */
+    protected $specDirectory = __DIR__ . '/.resources';
+
     /**
      * @var bool
      */
@@ -128,29 +140,29 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     }
 
     /**
-     * @return \Generator
+     * @return \Generator|Compiler[]
      * @throws \League\Flysystem\FileNotFoundException
      * @throws \LogicException
      */
     protected function getCompilers(): \Generator
     {
         // Default
-        yield new Compiler(null, $this->getLogger());
+        yield new Compiler(null);
 
         // Nullable (Return Document "as is")
-        yield new Compiler(new NullablePersister(), $this->getLogger());
+        yield new Compiler(new NullablePersister());
 
         // Array (Return Document "as is" and store same files into php array stateless memory)
-        yield new Compiler(new ArrayPersister(), $this->getLogger());
+        yield new Compiler(new ArrayPersister());
 
         // Emulation of data saving
-        yield new Compiler(new EmulatingPersister(), $this->getLogger());
+        yield new Compiler(new EmulatingPersister());
 
         // PSR-6 + Flysystem Serialization
-        yield new Compiler($this->getPsr6FileSystemPersister(), $this->getLogger());
+        yield new Compiler($this->getPsr6FileSystemPersister());
 
         // PSR-16 + Filesystem Serialization
-        yield new Compiler($this->getPsr16FileSystemPersister(), $this->getLogger());
+        yield new Compiler($this->getPsr16FileSystemPersister());
     }
 
     /**
@@ -195,17 +207,58 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     }
 
     /**
-     * @var string
-     */
-    protected $resourcesPath = '';
-
-    /**
      * @param string $file
      * @return string
      */
     public function resource(string $file): string
     {
         return __DIR__ . '/.resources/' . $this->resourcesPath . $file;
+    }
+
+    /**
+     * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     */
+    public function loadPositiveABTests(): array
+    {
+        $finder = (new Finder())
+            ->files()
+            ->in($this->specDirectory)
+            ->name('\+.*?\.graphqls');
+
+        return $this->formatProvider($finder->getIterator());
+    }
+
+    /**
+     * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     */
+    public function loadNegativeABTests(): array
+    {
+        $finder = (new Finder())
+            ->files()
+            ->in($this->specDirectory)
+            ->name('\-.*?\.graphqls');
+
+        return $this->formatProvider($finder->getIterator());
+    }
+
+    /**
+     * @param \Traversable $files
+     * @return array
+     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     */
+    private function formatProvider(\Traversable $files): array
+    {
+        $tests = [];
+
+        foreach ($files as $test) {
+            $tests[] = [File::fromSplFileInfo($test)];
+        }
+
+        return $tests;
     }
 
     /**

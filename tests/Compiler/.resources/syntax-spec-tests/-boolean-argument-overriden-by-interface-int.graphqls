@@ -1,0 +1,7 @@
+type TBoolean implements IInt {
+    field(arg: Int): Boolean
+}
+
+interface IInt {
+    field(arg: Boolean): Boolean
+}

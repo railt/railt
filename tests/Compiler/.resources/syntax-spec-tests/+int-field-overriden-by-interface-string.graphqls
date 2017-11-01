@@ -1,0 +1,7 @@
+type TInt implements IString {
+    field: Int
+}
+
+interface IString {
+  field: String
+}

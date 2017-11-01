@@ -1,0 +1,7 @@
+type TID implements IBoolean {
+    field(arg: Boolean): ID
+}
+
+interface IBoolean {
+    field(arg: ID): ID
+}
