@@ -10,32 +10,45 @@ declare(strict_types=1);
 namespace Railt\Compiler\Filesystem;
 
 /**
- * Interface ReadableInterface
+ * The interface that defines the source of the code.
  */
 interface ReadableInterface
 {
     /**
-     * Name of file when file name not defined
-     */
-    public const VIRTUAL_FILE_NAME = 'php://input';
-
-    /**
+     * Returns the path to the file.
+     *
      * @return string
      */
     public function getPathname(): string;
 
     /**
+     * Returns the hash of the file. Required for
+     * disability cache.
+     *
      * @return string
      */
     public function getHash(): string;
 
     /**
+     * Returns the full contents of the source.
+     *
      * @return string
      */
-    public function read(): string;
+    public function getContents(): string;
 
     /**
-     * @return bool
+     * Returns the line where this implementation
+     * was defined. Required for errors debugging.
+     *
+     * @return int
      */
-    public function isFile(): bool;
+    public function getDefinitionLine(): int;
+
+    /**
+     * Returns the path and file where this implementation
+     * was defined. Required for errors debugging.
+     *
+     * @return string
+     */
+    public function getDefinitionFileName(): string;
 }

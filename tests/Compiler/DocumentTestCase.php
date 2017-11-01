@@ -79,7 +79,11 @@ class DocumentTestCase extends AbstractCompilerTestCase
     public function testDocumentName(Document $document)
     {
         static::assertNotNull($document->getName());
-        static::assertTrue((bool)\preg_match('/^Source\(.*?:\d+\)$/isu', $document->getName()));
+
+        $reflection = new \ReflectionClass(parent::class);
+        $reflection->getFileName();
+
+        static::assertSame($reflection->getFileName(), $document->getName());
     }
 
     /**

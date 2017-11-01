@@ -38,16 +38,49 @@ class File implements ReadableInterface
     private $hash;
 
     /**
+     * @var string
+     */
+    private $definitionFile;
+
+    /**
+     * @var int
+     */
+    private $definitionLine;
+
+    /**
      * File constructor.
      * @param string $sources
-     * @param string $path
+     * @param string $name
      * @param bool $virtual
      */
-    public function __construct(string $sources, ?string $path, bool $virtual = true)
+    public function __construct(string $sources, ?string $name, bool $virtual = true)
     {
-        $this->path    = $path ?? static::VIRTUAL_FILE_NAME;
+        [$this->definitionFile, $this->definitionLine] = $this->getBacktrace();
+
+        $this->path    = $name ?? $this->definitionFile;
         $this->sources = $sources;
         $this->virtual = $virtual;
+    }
+
+    /**
+     * @return array
+     */
+    private function getBacktrace(): array
+    {
+        $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+
+        foreach ($trace as $data) {
+            $found = \is_subclass_of($data['class'] ?? \stdClass::class, ReadableInterface::class);
+
+            if ($found) {
+                return [
+                    $data['file'],
+                    $data['line']
+                ];
+            }
+        }
+
+        return ['undefined', 0];
     }
 
     /**
@@ -91,10 +124,10 @@ class File implements ReadableInterface
 
     /**
      * @param \SplFileInfo $file
-     * @return File
+     * @return File|ReadableInterface
      * @throws NotReadableException
      */
-    public static function fromSplFileInfo(\SplFileInfo $file): File
+    public static function fromSplFileInfo(\SplFileInfo $file): ReadableInterface
     {
         if (! \is_file($file->getPathname())) {
             throw new NotFoundException($file->getPathname());
@@ -111,10 +144,10 @@ class File implements ReadableInterface
 
     /**
      * @param string $path
-     * @return File
+     * @return File|ReadableInterface
      * @throws NotReadableException
      */
-    public static function fromPathname(string $path): File
+    public static function fromPathname(string $path): ReadableInterface
     {
         return static::fromSplFileInfo(new \SplFileInfo($path));
     }
@@ -122,9 +155,9 @@ class File implements ReadableInterface
     /**
      * @param string $sources
      * @param null|string $path
-     * @return File
+     * @return File|ReadableInterface
      */
-    public static function fromSources(string $sources, string $path = null): File
+    public static function fromSources(string $sources, string $path = null): ReadableInterface
     {
         return new static($sources, $path, true);
     }
@@ -132,7 +165,7 @@ class File implements ReadableInterface
     /**
      * @return string
      */
-    public function read(): string
+    public function getContents(): string
     {
         return $this->sources;
     }
@@ -147,6 +180,22 @@ class File implements ReadableInterface
         }
 
         return $this->hash;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDefinitionLine(): int
+    {
+        return $this->definitionLine;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefinitionFileName(): string
+    {
+        return $this->definitionFile;
     }
 
     /**

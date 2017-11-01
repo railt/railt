@@ -90,7 +90,7 @@ abstract class AbstractParser implements ParserInterface
     public function parse(ReadableInterface $file): TreeNode
     {
         try {
-            return $this->parser->parse($file->read());
+            return $this->parser->parse($file->getContents());
         } catch (UnexpectedToken $e) {
             throw new UnexpectedTokenException($e->getMessage(), $e->getCode(), $e, $file);
         } catch (UnrecognizedToken $e) {

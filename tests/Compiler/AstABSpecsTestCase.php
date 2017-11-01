@@ -35,7 +35,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
      */
     public function testPositiveCompilation(ReadableInterface $file): void
     {
-        $error = $file->getPathname() . ' must not throws an exception: ' . "\n" . $file->read();
+        $error = $file->getPathname() . ' must not throws an exception: ' . "\n" . $file->getContents();
 
         try {
             $compiler = new Parser();
@@ -69,7 +69,8 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
      */
     public function testNegativeCompilation(ReadableInterface $file): void
     {
-        $error = $file->getPathname() . ' must throw an error but compiled successfully: ' . "\n" . $file->read();
+        $error = $file->getPathname() . ' must throw an error but compiled successfully: ' . "\n" .
+            $file->getContents();
 
         try {
             $compiler = new Parser();

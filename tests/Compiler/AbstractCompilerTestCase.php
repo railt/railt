@@ -31,7 +31,6 @@ use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Tests\AbstractTestCase;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Class AbstractReflectionTestCase

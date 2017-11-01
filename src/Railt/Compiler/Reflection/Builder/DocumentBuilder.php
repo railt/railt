@@ -53,16 +53,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
     ];
 
     /**
-     *
-     */
-    private const PHYSIC_FILE_NAME = 'File(%s)';
-
-    /**
-     *
-     */
-    private const VIRTUAL_FILE_NAME = 'Source(%s)';
-
-    /**
      * @var CompilerInterface
      */
     private $compiler;
@@ -80,47 +70,13 @@ class DocumentBuilder extends BaseDocument implements Compilable
         $this->file = $readable;
 
         try {
-            $this->name = $this->createName($readable);
+            $this->name = $readable->getPathname();
             $this->bootBuilder($ast, $this);
         } catch (\Exception $exception) {
             throw new CompilerException($exception->getMessage(), $exception->getCode(), $exception);
         }
 
         $this->compileIfNotCompiled();
-    }
-
-    /**
-     * @param ReadableInterface $readable
-     * @return string
-     */
-    private function createName(ReadableInterface $readable): string
-    {
-        if ($readable->isFile()) {
-            return \sprintf(self::PHYSIC_FILE_NAME, \basename($readable->getPathname()));
-        }
-
-        return \sprintf(self::VIRTUAL_FILE_NAME, $this->createNameFromBacktrace());
-    }
-
-    /**
-     * @return string
-     */
-    private function createNameFromBacktrace(): string
-    {
-        $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
-
-        $previous = [];
-
-        foreach ($trace as $data) {
-            if (($data['class'] ?? null) === CompilerEndpoint::class) {
-                return ($previous['class'] ?? $previous['file'] ?? 'undefined')
-                    . ':' . ($previous['line'] ?? $data['line'] ?? 0);
-            }
-
-            $previous = $data;
-        }
-
-        return 'undefined';
     }
 
     /**

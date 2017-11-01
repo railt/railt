@@ -44,7 +44,7 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
      */
     public function testPositiveCompilation($file): void
     {
-        $error = $file->getPathname() . ' must not throws an exception: ' . "\n" . $file->read();
+        $error = $file->getPathname() . ' must not throws an exception: ' . "\n" . $file->getContents();
 
         foreach ($this->getCompilers() as $compiler) {
             try {
@@ -71,7 +71,7 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
      */
     public function testNegativeCompilation(ReadableInterface $file): void
     {
-        $error = $file->getPathname() . ' must throw an error but compiled successfully: ' . "\n" . $file->read();
+        $error = $file->getPathname() . ' must throw an error but compiled successfully: ' . "\n" . $file->getContents();
 
         $compilersCount = 0;
         foreach ($this->getCompilers() as $compiler) {
