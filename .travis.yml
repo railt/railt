@@ -9,6 +9,10 @@ env:
   global:
     - setup=basic
 
+matrix:
+  allow_failures:
+    - php: nightly
+
 cache:
   directories:
     - $HOME/.composer/cache
