@@ -6,15 +6,15 @@ env:
 
 matrix:
   fast_finish: true
-    include:
-    - 7.1
-    - 7.1
+  include:
+    - php: 7.1
+    - php: 7.1
       env: setup=lowest
-    - 7.2
-    - 7.2
+    - php: 7.2
+    - php: 7.2
       env: setup=lowest
-    - nightly
-    - nightly
+    - php: nightly
+    - php: nightly
       env: setup=lowest
   allow_failures:
     - php: nightly
