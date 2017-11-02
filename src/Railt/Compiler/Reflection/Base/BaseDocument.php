@@ -113,6 +113,14 @@ abstract class BaseDocument extends BaseDefinition implements Document
     }
 
     /**
+     * @return string
+     */
+    final public function getFileName(): string
+    {
+        return $this->file->getPathname();
+    }
+
+    /**
      * @return array
      */
     public function __sleep(): array

@@ -75,7 +75,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
         $result = [];
 
         foreach ($data as $fieldName) {
-            $result[$fieldName] = $this->valueToString($this->$fieldName);
+            $result[$fieldName] = $this->valueToScalar($this->$fieldName);
         }
 
         return $result;
@@ -129,5 +129,13 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
         }
 
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFileName(): string
+    {
+        return $this->getDocument()->getFileName();
     }
 }

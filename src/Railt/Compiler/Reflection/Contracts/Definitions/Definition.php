@@ -42,5 +42,10 @@ interface Definition
      * @return string
      */
     public function getDescription(): string;
+
+    /**
+     * @return string
+     */
+    public function getFileName(): string;
 }
 

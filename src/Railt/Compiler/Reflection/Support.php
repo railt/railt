@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
@@ -42,10 +43,10 @@ trait Support
                 $name = \sprintf('%s: %s', $type->getName(), $this->typeIndicatorToString($type));
             }
 
-            return \sprintf('%s "%s"', $parent, $name);
+            return \sprintf('%s %s', $parent, $name);
         }
 
-        return \class_basename($type);
+        return $type->getName();
     }
 
     /**
@@ -81,13 +82,13 @@ trait Support
     }
 
     /**
-     * @param mixed|iterable|null $value
-     * @return string
+     * @param mixed $value
+     * @return mixed
      */
-    protected function valueToString($value): string
+    protected function valueToScalar($value)
     {
         if ($value === null) {
-            return 'NULL';
+            return null;
         }
 
         if (\is_scalar($value)) {
@@ -99,20 +100,35 @@ trait Support
 
             /** @var iterable $value */
             foreach ($value as $key => $sub) {
-                if (\is_int($key)) {
-                    $result[] = $this->valueToString($sub);
-                } else {
-                    $result[] = $key . '=' . $this->valueToString($sub);
-                }
+                $result[$key] = $this->valueToScalar($sub);
             }
 
-            return '[' . \implode(', ', $result) . ']';
+            return $result;
         }
 
         if ($value instanceof Definition) {
             return $this->typeToString($value);
         }
 
+        if ($value instanceof Arrayable) {
+            return $this->valueToScalar($value->toArray());
+        }
+
+        if ($value instanceof \JsonSerializable) {
+            return $this->valueToScalar(\json_encode($value->jsonSerialize(), true));
+        }
+
         return Str::studly(\gettype($value));
+    }
+
+    /**
+     * @param mixed|iterable|null $value
+     * @return string
+     */
+    protected function valueToString($value): string
+    {
+        $result = $this->valueToScalar($value);
+
+        return \json_encode($result);
     }
 }

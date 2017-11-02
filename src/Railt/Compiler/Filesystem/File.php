@@ -9,43 +9,44 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Filesystem;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Railt\Compiler\Exceptions\NotFoundException;
 use Railt\Compiler\Exceptions\NotReadableException;
 
 /**
  * Class File
  */
-class File implements ReadableInterface
+class File implements ReadableInterface, Arrayable
 {
     /**
      * @var string
      */
-    private $sources;
+    protected $sources;
 
     /**
      * @var string
      */
-    private $path;
+    protected $path;
 
     /**
      * @var bool
      */
-    private $virtual;
+    protected $virtual;
 
     /**
      * @var null|string
      */
-    private $hash;
+    protected $hash;
 
     /**
      * @var string
      */
-    private $definitionFile;
+    protected $definitionFile;
 
     /**
      * @var int
      */
-    private $definitionLine;
+    protected $definitionLine;
 
     /**
      * File constructor.
@@ -75,28 +76,12 @@ class File implements ReadableInterface
             if ($found) {
                 return [
                     $data['file'],
-                    $data['line']
+                    $data['line'],
                 ];
             }
         }
 
         return ['undefined', 0];
-    }
-
-    /**
-     * @return string
-     */
-    public function getPathname(): string
-    {
-        return $this->path;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFile(): bool
-    {
-        return !$this->virtual;
     }
 
     /**
@@ -163,23 +148,19 @@ class File implements ReadableInterface
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getContents(): string
+    public function isFile(): bool
     {
-        return $this->sources;
+        return ! $this->virtual;
     }
 
     /**
      * @return string
      */
-    public function getHash(): string
+    public function getContents(): string
     {
-        if ($this->hash === null) {
-            $this->hash = $this->createHash();
-        }
-
-        return $this->hash;
+        return $this->sources;
     }
 
     /**
@@ -204,7 +185,20 @@ class File implements ReadableInterface
     public function rehash(): string
     {
         $this->hash = null;
+
         return $this->getHash();
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash(): string
+    {
+        if ($this->hash === null) {
+            $this->hash = $this->createHash();
+        }
+
+        return $this->hash;
     }
 
     /**
@@ -217,5 +211,40 @@ class File implements ReadableInterface
         }
 
         return \md5_file($this->getPathname());
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathname(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return [
+            'hash',
+            'path',
+            'virtual',
+            'sources',
+            'definitionFile',
+            'definitionLine',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'path'           => $this->path,
+            'definitionFile' => $this->definitionFile,
+            'definitionLine' => $this->definitionLine,
+        ];
     }
 }
