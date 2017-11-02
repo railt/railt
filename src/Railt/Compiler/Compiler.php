@@ -165,6 +165,11 @@ class Compiler implements CompilerInterface
      */
     private function complete(Document $document): Document
     {
+        if (! ($document instanceof StandardType)) {
+            $prefix = $this->depth > 1 ? self::LOG_SUB_BEGIN : self::LOG_BEGIN;
+            $this->log($prefix . 'Beginning compilation of %s', $document->getName());
+        }
+
         // Register
         $this->completeRegistration($document);
 
