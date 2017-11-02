@@ -35,6 +35,6 @@ class ValueBuilder extends BaseValue implements Compilable
     public function __construct(TreeNode $ast, DocumentBuilder $document, EnumDefinition $parent)
     {
         $this->parent = $parent;
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 }

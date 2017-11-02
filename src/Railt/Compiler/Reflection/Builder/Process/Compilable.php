@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Process;
 
-use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\CompilerInterface;
 
 /**
@@ -18,20 +17,9 @@ use Railt\Compiler\Reflection\CompilerInterface;
 interface Compilable
 {
     /**
-     * @return bool
+     * @return void
      */
-    public function compileIfNotCompiled(): bool;
-
-    /**
-     * @param TreeNode $ast
-     * @return bool
-     */
-    public function compile(TreeNode $ast): bool;
-
-    /**
-     * @return TreeNode
-     */
-    public function getAst(): TreeNode;
+    public function compile(): void;
 
     /**
      * @return CompilerInterface

@@ -40,18 +40,18 @@ class ArgumentBuilder extends BaseArgument implements Compilable
     public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
         $this->parent = $parent;
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
      * @param TreeNode $ast
      * @return bool
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Value') {
             $this->hasDefaultValue = true;
-            $this->defaultValue = ValueBuilder::parse($ast->getChild(0));
+            $this->defaultValue    = ValueBuilder::parse($ast->getChild(0));
 
             return true;
         }

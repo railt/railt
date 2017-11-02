@@ -22,11 +22,4 @@ interface TypeDefinition extends Definition, Deprecatable
      * @return string
      */
     public function getTypeName(): string;
-
-    /**
-     * Returns a short description of definition.
-     *
-     * @return string
-     */
-    public function getDescription(): string;
 }

@@ -35,7 +35,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
         $this->name = static::DEFAULT_SCHEMA_NAME;
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
@@ -44,22 +44,25 @@ class SchemaBuilder extends BaseSchema implements Compilable
      * @throws \Railt\Compiler\Exceptions\BuildingException
      * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         switch ($ast->getId()) {
             case '#Query':
                 $this->query = $this->getValidator()
                     ->uniqueDefinition($this->query, $this->fetchType($ast));
+
                 return true;
 
             case '#Mutation':
                 $this->mutation = $this->getValidator()
                     ->uniqueDefinition($this->mutation, $this->fetchType($ast));
+
                 return true;
 
             case '#Subscription':
                 $this->subscription = $this->getValidator()
                     ->uniqueDefinition($this->subscription, $this->fetchType($ast));
+
                 return true;
         }
 

@@ -45,7 +45,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
@@ -53,7 +53,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * @return bool
      * @throws TypeConflictException
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         $type = DocumentBuilder::AST_TYPE_MAPPING[$ast->getId()] ?? null;
 
@@ -61,7 +61,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
             /** @var Compilable $virtualType */
             $virtualType = new $type($ast, $this->getDocument());
 
-            $virtualType->compileIfNotCompiled();
+            $virtualType->compile();
 
             $this->applyExtender($virtualType);
         }

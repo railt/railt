@@ -34,7 +34,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
     public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
         $this->parent = $parent;
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
@@ -42,7 +42,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
      * @return bool
      * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Argument') {
             $argument = new ArgumentInvocationBuilder($ast, $this->getDocument(), $this);

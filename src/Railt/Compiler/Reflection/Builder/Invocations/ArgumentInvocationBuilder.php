@@ -36,14 +36,14 @@ class ArgumentInvocationBuilder extends BaseArgumentInvocation implements Compil
     public function __construct(TreeNode $ast, DocumentBuilder $document, DirectiveInvocation $parent)
     {
         $this->parent = $parent;
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
      * @param TreeNode $ast
      * @return bool
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Value') {
             $this->value = ValueBuilder::parse($ast->getChild(0));

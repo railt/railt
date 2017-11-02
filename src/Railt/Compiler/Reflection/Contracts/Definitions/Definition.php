@@ -22,6 +22,14 @@ interface Definition
     public function getDocument(): Document;
 
     /**
+     * A unique identifier for the type is needed to identify the entity
+     * in cases of type names conflicts.
+     *
+     * @return string Type identifier
+     */
+    public function getUniqueId(): string;
+
+    /**
      * Returns the name of definition instance.
      *
      * @return string
@@ -29,11 +37,10 @@ interface Definition
     public function getName(): string;
 
     /**
-     * A unique identifier for the type is needed to identify the entity
-     * in cases of type names conflicts.
+     * Returns a short description of definition.
      *
-     * @return string Type identifier
+     * @return string
      */
-    public function getUniqueId(): string;
+    public function getDescription(): string;
 }
 

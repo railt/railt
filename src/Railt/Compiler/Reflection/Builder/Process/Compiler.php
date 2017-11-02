@@ -13,111 +13,67 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
- * Trait Builder
+ * Trait Compiler
+ * @mixin Compilable
  */
 trait Compiler
 {
-    use NameBuilder;
-
     /**
      * @var TreeNode
      */
-    protected $ast;
+    private $ast;
+
+    /**
+     * @var array|string[]
+     */
+    private $siblingActions = [];
 
     /**
      * @var bool
      */
-    protected $completed = false;
+    private $completed = false;
 
     /**
-     * @return Document|DocumentBuilder
+     * @return void
      */
-    public function getDocument(): Document
-    {
-        \assert($this->document instanceof Document);
-
-        return $this->document;
-    }
-
-    /**
-     * @return CompilerInterface
-     */
-    public function getCompiler(): CompilerInterface
-    {
-        \assert($this->getDocument()->getCompiler() instanceof CompilerInterface);
-
-        return $this->getDocument()->getCompiler();
-    }
-
-    /**
-     * @return array
-     */
-    public function __sleep(): array
-    {
-        $this->compileIfNotCompiled();
-
-        $data = ['completed'];
-
-        if (\method_exists(parent::class, '__sleep')) {
-            return \array_merge(parent::__sleep(), $data);
-        }
-
-        return $data;
-    }
-
-    /**
-     * @return bool
-     */
-    public function compileIfNotCompiled(): bool
+    public function compile(): void
     {
         if ($this->completed === false) {
             $this->completed = true;
 
-            /**
-             * Initialize definition Unique Identifier.
-             */
-            if ($this instanceof Definition) {
-                $this->getUniqueId();
-            }
-
-            /**
-             * Boot compile-step traits.
-             */
-            $siblings = \class_uses_recursive(static::class);
-
             foreach ($this->getAst()->getChildren() as $child) {
-                if ($this->compileSiblings($siblings, $child)) {
+                if ($this->compileSiblings($child)) {
                     continue;
                 }
 
-                if ($this->compile($child)) {
+                if ($this->onCompile($child)) {
                     continue;
                 }
             }
-
-            return true;
         }
-
-        return false;
     }
 
     /**
-     * @param array $siblings
+     * @return TreeNode
+     */
+    protected function getAst(): TreeNode
+    {
+        return $this->ast;
+    }
+
+    /**
      * @param TreeNode $child
      * @return bool
      */
-    private function compileSiblings(array $siblings, TreeNode $child): bool
+    protected function compileSiblings(TreeNode $child): bool
     {
-        foreach ($siblings as $sibling) {
-            $method = 'compile' . \class_basename($sibling);
-
-            if (\method_exists($sibling, $method) && $this->$method($child)) {
+        foreach ($this->siblingActions as $action) {
+            if ($this->$action($child)) {
                 return true;
             }
         }
@@ -126,50 +82,57 @@ trait Compiler
     }
 
     /**
-     * @return TreeNode
+     * @return Document|DocumentBuilder
      */
-    public function getAst(): TreeNode
+    public function getDocument(): Document
     {
-        \assert($this->ast instanceof TreeNode);
-
-        return $this->ast;
+        return $this->document;
     }
 
     /**
-     * @param TreeNode $ast
-     * @return bool
+     * @return CompilerInterface
      */
-    public function compile(TreeNode $ast): bool
+    public function getCompiler(): CompilerInterface
     {
-        return false;
+        return $this->getDocument()->getCompiler();
     }
 
     /**
      * @return Validator
      */
-    protected function getValidator(): Validator
+    public function getValidator(): Validator
     {
         return $this->getCompiler()->getValidator();
     }
 
     /**
      * @param TreeNode $ast
-     * @param DocumentBuilder $document
+     * @param Document $document
      * @return void
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    protected function bootBuilder(TreeNode $ast, DocumentBuilder $document): void
+    protected function boot(TreeNode $ast, Document $document): void
     {
-        $this->ast      = $ast;
-        $this->document = $document;
+        $this->ast       = $ast;
+        $this->document  = $document;
+
+        // Generate identifier if id does not initialized
+        $this->getUniqueId();
+
+        // Collect sibling methods
+        foreach (\class_uses_recursive(static::class) as $sibling) {
+            $method = 'compile' . \class_basename($sibling);
+
+            if (\method_exists($sibling, $method)) {
+                $this->siblingActions[] = $method;
+            }
+        }
 
         /**
          * Initialize the name of the type, if it is an independent
          * unique definition of the type of GraphQL.
          */
-        if ($this instanceof TypeDefinition) {
-            /** @var $this NameBuilder */
-            $this->precompileNameableType($ast);
+        if ($this instanceof Definition) {
+            $this->resolveTypeName();
         }
 
         /**
@@ -179,11 +142,71 @@ trait Compiler
          * In this case we run it forcibly, and then we check its state.
          */
         if ($this instanceof DependentDefinition) {
-            // Compile
-            $this->compileIfNotCompiled();
+            // Force compile dependent definition
+            $this->compile();
 
-            // Verify
+            // Verify type
             $this->getValidator()->verifyDefinition($this);
         }
+    }
+
+    /**
+     * @param string $name
+     * @param string $desc
+     * @return void
+     */
+    private function resolveTypeName(string $name = '#Name', string $desc = '#Description'): void
+    {
+        /** @var TreeNode $child */
+        foreach ($this->getAst()->getChildren() as $child) {
+            switch ($child->getId()) {
+                case $name:
+                    $this->name = $child->getChild(0)->getValueValue();
+                    break;
+
+                case $desc:
+                    $this->description = $this->parseDescription($child);
+                    break;
+            }
+        }
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return string
+     */
+    private function parseDescription(TreeNode $ast): string
+    {
+        $description = \trim($ast->getChild(0)->getValueValue());
+
+        return $description
+            ? \preg_replace('/^\h*#?\h+(.*?)\h*$/imsu', '$1', $description)
+            : $description;
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return bool
+     */
+    protected function onCompile(TreeNode $ast): bool
+    {
+        return false;
+    }
+
+    /**
+     * @return void
+     */
+    public function __wakeup()
+    {
+        $this->completed = true;
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return string
+     */
+    protected function dump(TreeNode $ast): string
+    {
+        return $this->getCompiler()->getParser()->dump($ast);
     }
 }

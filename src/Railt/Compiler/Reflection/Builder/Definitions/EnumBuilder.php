@@ -33,7 +33,7 @@ class EnumBuilder extends BaseEnum implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
@@ -41,7 +41,7 @@ class EnumBuilder extends BaseEnum implements Compilable
      * @return bool
      * @throws \LogicException
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Value') {
             $value = new ValueBuilder($ast, $this->getDocument(), $this);

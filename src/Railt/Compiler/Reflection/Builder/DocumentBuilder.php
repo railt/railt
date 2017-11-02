@@ -18,7 +18,6 @@ use Railt\Compiler\Reflection\Builder\Definitions;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
-use Railt\Compiler\Compiler as CompilerEndpoint;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
@@ -67,16 +66,16 @@ class DocumentBuilder extends BaseDocument implements Compilable
     public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
     {
         $this->compiler = $compiler;
-        $this->file = $readable;
+        $this->file     = $readable;
 
         try {
+            $this->boot($ast, $this);
             $this->name = $readable->getPathname();
-            $this->bootBuilder($ast, $this);
         } catch (\Exception $exception) {
             throw new CompilerException($exception->getMessage(), $exception->getCode(), $exception);
         }
 
-        $this->compileIfNotCompiled();
+        $this->compile();
     }
 
     /**
@@ -91,13 +90,21 @@ class DocumentBuilder extends BaseDocument implements Compilable
     }
 
     /**
+     * @return CompilerInterface
+     */
+    final public function getCompiler(): CompilerInterface
+    {
+        return $this->compiler;
+    }
+
+    /**
      * @param TreeNode $ast
      * @return bool
      * @throws \Railt\Compiler\Exceptions\TypeConflictException
      * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      * @throws BuildingException
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         $class = self::AST_TYPE_MAPPING[$ast->getId()] ?? null;
 
@@ -109,20 +116,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
         $this->registerDefinition($instance);
 
         return true;
-    }
-
-    /**
-     * @param Definition $definition
-     * @return Definition|Definition[]
-     * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
-     */
-    private function registerDefinition(Definition $definition)
-    {
-        if ($definition instanceof TypeDefinition) {
-            return $this->types = $this->getValidator()->uniqueDefinitions($this->types, $definition);
-        }
-
-        return $this->definitions[] = $definition;
     }
 
     /**
@@ -142,10 +135,16 @@ class DocumentBuilder extends BaseDocument implements Compilable
     }
 
     /**
-     * @return CompilerInterface
+     * @param Definition $definition
+     * @return Definition|Definition[]
+     * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      */
-    public function getCompiler(): CompilerInterface
+    private function registerDefinition(Definition $definition)
     {
-        return $this->compiler;
+        if ($definition instanceof TypeDefinition) {
+            return $this->types = $this->getValidator()->uniqueDefinitions($this->types, $definition);
+        }
+
+        return $this->definitions[] = $definition;
     }
 }

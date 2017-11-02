@@ -165,11 +165,6 @@ class Compiler implements CompilerInterface
      */
     private function complete(Document $document): Document
     {
-        if (! ($document instanceof StandardType)) {
-            $prefix = $this->depth > 1 ? self::LOG_SUB_BEGIN : self::LOG_BEGIN;
-            $this->log($prefix . 'Beginning compilation of %s', $document->getName());
-        }
-
         // Register
         $this->completeRegistration($document);
 
@@ -226,7 +221,7 @@ class Compiler implements CompilerInterface
                 $this->log(self::LOG_POINT . 'Building the %s', $this->typeToString($definition));
             }
 
-            $definition->compileIfNotCompiled();
+            $definition->compile();
         }
     }
 
@@ -258,9 +253,7 @@ class Compiler implements CompilerInterface
     /**
      * @param ReadableInterface $readable
      * @return Document
-     * @throws UnexpectedTokenException
-     * @throws UnrecognizedTokenException
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function compile(ReadableInterface $readable): Document
     {
@@ -271,7 +264,7 @@ class Compiler implements CompilerInterface
             $document = $this->persister->remember($readable, $this->onCompile());
 
             return $document->withCompiler($this);
-        } catch (\Exception $error) {
+        } catch (\Throwable $error) {
             $this->log($error);
             throw $error;
         } finally {

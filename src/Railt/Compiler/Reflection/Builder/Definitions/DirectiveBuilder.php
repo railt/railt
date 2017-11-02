@@ -32,7 +32,7 @@ class DirectiveBuilder extends BaseDirective implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
@@ -40,7 +40,7 @@ class DirectiveBuilder extends BaseDirective implements Compilable
      * @return bool
      * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         switch ($ast->getId()) {
             case '#Target':

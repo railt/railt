@@ -22,19 +22,6 @@ abstract class BaseTypeDefinition extends BaseDefinition implements TypeDefiniti
     protected const TYPE_NAME = '';
 
     /**
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return (string)$this->description;
-    }
-
-    /**
      * @return string
      */
     public function getTypeName(): string
@@ -42,15 +29,5 @@ abstract class BaseTypeDefinition extends BaseDefinition implements TypeDefiniti
         \assert(static::TYPE_NAME !== '', 'Type name must be initialized');
 
         return static::TYPE_NAME;
-    }
-
-    /**
-     * @return array
-     */
-    public function __sleep(): array
-    {
-        return \array_merge(parent::__sleep(), [
-            'description'
-        ]);
     }
 }

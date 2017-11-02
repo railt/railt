@@ -34,6 +34,6 @@ class InputBuilder extends BaseInput implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 }

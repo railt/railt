@@ -28,6 +28,11 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $description = '';
+
+    /**
      * @var string|null
      */
     protected $id;
@@ -88,6 +93,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
 
             // interface Nameable
             'name',
+            'description',
 
             // trait BaseDeprecations
             'deprecationReason',
@@ -103,6 +109,14 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
             \sprintf('Name of %s must be initialized.', \get_class($this)));
 
         return (string)$this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return (string)$this->description;
     }
 
     /**

@@ -33,7 +33,7 @@ class UnionBuilder extends BaseUnion implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
-        $this->bootBuilder($ast, $document);
+        $this->boot($ast, $document);
     }
 
     /**
@@ -41,7 +41,7 @@ class UnionBuilder extends BaseUnion implements Compilable
      * @return bool
      * @throws TypeConflictException
      */
-    public function compile(TreeNode $ast): bool
+    protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Relations') {
             /** @var TreeNode $relation */
