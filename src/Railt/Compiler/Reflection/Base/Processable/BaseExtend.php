@@ -29,6 +29,11 @@ abstract class BaseExtend extends BaseDefinition implements ExtendDefinition
     protected $type;
 
     /**
+     * @var string
+     */
+    protected $name = self::TYPE_NAME;
+
+    /**
      * @return TypeDefinition
      */
     public function getRelatedType(): TypeDefinition
