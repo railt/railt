@@ -73,4 +73,9 @@ interface Document extends Definition
      * @return iterable|Definition[]
      */
     public function getDefinitions(): iterable;
+
+    /**
+     * @return string
+     */
+    public function getContents(): string;
 }

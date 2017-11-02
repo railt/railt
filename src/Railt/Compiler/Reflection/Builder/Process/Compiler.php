@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Process;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
@@ -37,6 +38,11 @@ trait Compiler
      * @var bool
      */
     private $completed = false;
+
+    /**
+     * @var int
+     */
+    protected $offset = 0;
 
     /**
      * @return void
@@ -151,6 +157,15 @@ trait Compiler
     }
 
     /**
+     * @param string $keyword
+     * @return int
+     */
+    private function offsetPrefixedBy(string $keyword): int
+    {
+        return $this->offset - \strlen($keyword) - 1;
+    }
+
+    /**
      * @param string $name
      * @param string $desc
      * @return void
@@ -161,7 +176,8 @@ trait Compiler
         foreach ($this->getAst()->getChildren() as $child) {
             switch ($child->getId()) {
                 case $name:
-                    $this->name = $child->getChild(0)->getValueValue();
+                    $node = $child->getChild(0);
+                    [$this->name, $this->offset] = [$node->getValueValue(), $node->getOffset()];
                     break;
 
                 case $desc:
@@ -194,6 +210,20 @@ trait Compiler
     }
 
     /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        $result = ['offset'];
+
+        if (\method_exists(parent::class, '__sleep')) {
+            return \array_merge(parent::__sleep(), $result);
+        }
+
+        return $result;
+    }
+
+    /**
      * @return void
      */
     public function __wakeup()
@@ -208,5 +238,29 @@ trait Compiler
     protected function dump(TreeNode $ast): string
     {
         return $this->getCompiler()->getParser()->dump($ast);
+    }
+
+    /**
+     * @return array
+     */
+    private function getDeclarationInfo(): array
+    {
+        return File::getErrorInfo($this->getDocument()->getContents(), $this->offset);
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeclarationLine(): int
+    {
+        return $this->getDeclarationInfo()['line'] ?? 1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeclarationColumn(): int
+    {
+        return $this->getDeclarationInfo()['column'] ?? 0;
     }
 }

@@ -34,6 +34,7 @@ class EnumBuilder extends BaseEnum implements Compilable
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
         $this->boot($ast, $document);
+        $this->offset = $this->offsetPrefixedBy('enum');
     }
 
     /**

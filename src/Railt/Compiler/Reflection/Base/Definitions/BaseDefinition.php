@@ -138,4 +138,20 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
     {
         return $this->getDocument()->getFileName();
     }
+
+    /**
+     * @return int
+     */
+    public function getDeclarationLine(): int
+    {
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeclarationColumn(): int
+    {
+        return 0;
+    }
 }

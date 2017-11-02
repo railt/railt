@@ -18,6 +18,8 @@ use Railt\Compiler\Exceptions\NotReadableException;
  */
 class File implements ReadableInterface, Arrayable
 {
+    use FileHelpers;
+
     /**
      * @var string
      */

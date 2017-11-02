@@ -47,5 +47,15 @@ interface Definition
      * @return string
      */
     public function getFileName(): string;
+
+    /**
+     * @return int
+     */
+    public function getDeclarationLine(): int;
+
+    /**
+     * @return int
+     */
+    public function getDeclarationColumn(): int;
 }
 

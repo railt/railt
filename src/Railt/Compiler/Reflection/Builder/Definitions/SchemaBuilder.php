@@ -28,6 +28,8 @@ class SchemaBuilder extends BaseSchema implements Compilable
 
     /**
      * SchemaBuilder constructor.
+     * TODO Offset doesn't works correctly =\
+     *
      * @param TreeNode $ast
      * @param DocumentBuilder $document
      * @throws \Railt\Compiler\Exceptions\TypeConflictException

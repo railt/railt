@@ -121,6 +121,14 @@ abstract class BaseDocument extends BaseDefinition implements Document
     }
 
     /**
+     * @return string
+     */
+    public function getContents(): string
+    {
+        return $this->file->getContents();
+    }
+
+    /**
      * @return array
      */
     public function __sleep(): array
