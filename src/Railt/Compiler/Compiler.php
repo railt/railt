@@ -11,11 +11,14 @@ namespace Railt\Compiler;
 
 use Psr\Log\LoggerInterface;
 use Railt\Compiler\Exceptions\CompilerException;
+use Railt\Compiler\Exceptions\SchemaException;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
 use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Kernel\LogWriter;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
@@ -37,18 +40,7 @@ use Railt\Compiler\Reflection\Validation\Validator;
  */
 class Compiler implements CompilerInterface
 {
-    private const LOG_BEGIN = '  ╭● ';
-    private const LOG_SUB_BEGIN = '╰▷╭─○ ';
-    private const LOG_POINT = '  ├┄ ';
-    private const LOG_SUB_END = '╭╶┴─▷ ';
-    private const LOG_END = '  ╰──▶ ';
-
     use Support;
-
-    /**
-     * @var int
-     */
-    private $depth = 0;
 
     /**
      * @var Dictionary
@@ -66,32 +58,30 @@ class Compiler implements CompilerInterface
     private $persister;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * @var Validator
      */
     private $validator;
 
     /**
+     * @var CallStack
+     */
+    private $stack;
+
+    /**
      * Compiler constructor.
      * @param Persister|null $persister
-     * @param LoggerInterface|null $logger
      * @throws \Railt\Compiler\Exceptions\InitializationException
      */
-    public function __construct(Persister $persister = null, LoggerInterface $logger = null)
+    public function __construct(Persister $persister = null)
     {
-        $this->logger = $logger;
-        $this->validator = new Validator();
+        $this->stack  = new CallStack();
+        $this->parser = new Parser();
 
-        $this->parser = new Parser($logger);
         $this->loader = new Loader($this);
 
-        $this->persister = $this->bootPersister($persister);
+        $this->validator = new Validator();
 
-        $this->logCompilerBootstrap();
+        $this->persister = $this->bootPersister($persister);
 
         $this->bootStandardLibrary();
     }
@@ -114,43 +104,6 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param Persister|null $persister
-     * @return void
-     */
-    private function logCompilerBootstrap(Persister $persister = null): void
-    {
-        $storage = $persister
-            ? \class_basename($persister)
-            : 'default ' . \class_basename($this->persister);
-
-        $this->log('Create Compiler with %s storage', $storage);
-    }
-
-    /**
-     * @param string|\Throwable $message
-     * @param string[] ...$params
-     * @return void
-     */
-    public function log($message, string ...$params): void
-    {
-        if ($this->logger !== null) {
-            $depth = \str_repeat('  ', \max($this->depth - 1, 0));
-
-            if ($message instanceof \Throwable) {
-                [$error, $msg] = [\class_basename($message), $message->getMessage()];
-                $prefix = $this->depth > 1 ? self::LOG_SUB_END : self::LOG_END;
-                $message = \sprintf($prefix . '[✗] %s: %s', $error, $msg);
-
-                $this->logger->error($depth . \sprintf($message, ...$params));
-
-                return;
-            }
-
-            $this->logger->debug($depth . \sprintf($message, ...$params));
-        }
-    }
-
-    /**
      * @param array $extensions
      * @return GraphQLDocument|Document
      */
@@ -165,25 +118,19 @@ class Compiler implements CompilerInterface
      */
     private function complete(Document $document): Document
     {
-        if (! ($document instanceof StandardType)) {
-            $prefix = $this->depth > 1 ? self::LOG_SUB_BEGIN : self::LOG_BEGIN;
-            $this->log($prefix . 'Beginning compilation of %s', $document->getName());
-        }
-
         // Register
         $this->completeRegistration($document);
 
         foreach ($document->getDefinitions() as $definition) {
+            $this->stack->push($definition);
+
             // Compile
-            $this->completeCompilation($document, $definition);
+            $this->completeCompilation($definition);
 
             // Validate
-            $this->completeValidation($document, $definition);
-        }
+            $this->completeValidation($definition);
 
-        if (! ($document instanceof StandardType)) {
-            $prefix = $this->depth > 1 ? self::LOG_SUB_END : self::LOG_END;
-            $this->log($prefix . '[✓] Complete compilation of %s', $document->getName());
+            $this->stack->pop();
         }
 
         return $document;
@@ -196,11 +143,9 @@ class Compiler implements CompilerInterface
     private function completeRegistration(Document $document): void
     {
         foreach ($document->getTypeDefinitions() as $type) {
-            if (! ($document instanceof StandardType)) {
-                $this->log(self::LOG_POINT . 'Load %s', $this->typeToString($type));
-            }
-
+            $this->stack->push($type);
             $this->register($type);
+            $this->stack->pop();
         }
     }
 
@@ -215,31 +160,23 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param Document $document
      * @param Definition $definition
      * @return void
      */
-    private function completeCompilation(Document $document, Definition $definition): void
+    private function completeCompilation(Definition $definition): void
     {
         if ($definition instanceof Compilable) {
-            if (! ($document instanceof StandardType)) {
-                $this->log(self::LOG_POINT . 'Building the %s', $this->typeToString($definition));
-            }
-
             $definition->compile();
         }
     }
 
     /**
-     * @param Document $document
      * @param Definition $definition
      * @return void
      */
-    private function completeValidation(Document $document, Definition $definition): void
+    private function completeValidation(Definition $definition): void
     {
-        if (! ($document instanceof StandardType)) {
-            $this->log(self::LOG_POINT . 'Verification of the correctness of the construction of %s',
-                $this->typeToString($definition));
+        if (! ($definition instanceof StandardType)) {
             $this->validator->verifyDefinition($definition);
         }
     }
@@ -258,22 +195,20 @@ class Compiler implements CompilerInterface
     /**
      * @param ReadableInterface $readable
      * @return Document
-     * @throws \Throwable
+     * @throws \Throwable|\Error|CompilerException|SchemaException
      */
     public function compile(ReadableInterface $readable): Document
     {
-        ++$this->depth;
-
         try {
             /** @var DocumentBuilder $document */
             $document = $this->persister->remember($readable, $this->onCompile());
 
             return $document->withCompiler($this);
-        } catch (\Throwable $error) {
-            $this->log($error);
+        } catch (\Throwable | \Error $error) {
+            if ($error instanceof SchemaException) {
+                $error->withStack($this->stack);
+            }
             throw $error;
-        } finally {
-            --$this->depth;
         }
     }
 
@@ -340,5 +275,13 @@ class Compiler implements CompilerInterface
     public function has(string $name): bool
     {
         return $this->loader->has($name);
+    }
+
+    /**
+     * @return CallStack
+     */
+    public function getStack(): CallStack
+    {
+        return $this->stack;
     }
 }

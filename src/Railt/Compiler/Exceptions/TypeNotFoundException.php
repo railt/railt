@@ -12,7 +12,7 @@ namespace Railt\Compiler\Exceptions;
 /**
  * Class TypeNotFoundException
  */
-class TypeNotFoundException extends \OutOfBoundsException
+class TypeNotFoundException extends SchemaException
 {
 
 }

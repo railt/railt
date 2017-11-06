@@ -14,6 +14,7 @@ use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Validation\Validator;
@@ -24,6 +25,11 @@ use Railt\Compiler\Reflection\Validation\Validator;
  */
 trait Compiler
 {
+    /**
+     * @var int
+     */
+    protected $offset = 0;
+
     /**
      * @var TreeNode
      */
@@ -40,11 +46,6 @@ trait Compiler
     private $completed = false;
 
     /**
-     * @var int
-     */
-    protected $offset = 0;
-
-    /**
      * @return void
      */
     public function compile(): void
@@ -52,6 +53,7 @@ trait Compiler
         if ($this->completed === false) {
             $this->completed = true;
 
+            /** @var TreeNode $child */
             foreach ($this->getAst()->getChildren() as $child) {
                 if ($this->compileSiblings($child)) {
                     continue;
@@ -112,14 +114,60 @@ trait Compiler
     }
 
     /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        $result = ['offset'];
+
+        if (\method_exists(parent::class, '__sleep')) {
+            return \array_merge(parent::__sleep(), $result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return void
+     */
+    public function __wakeup()
+    {
+        $this->completed = true;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeclarationLine(): int
+    {
+        return $this->getDeclarationInfo()['line'] ?? 1;
+    }
+
+    /**
+     * @return array
+     */
+    private function getDeclarationInfo(): array
+    {
+        return File::getErrorInfo($this->getDocument()->getContents(), $this->offset);
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeclarationColumn(): int
+    {
+        return $this->getDeclarationInfo()['column'] ?? 0;
+    }
+
+    /**
      * @param TreeNode $ast
      * @param Document $document
      * @return void
      */
     protected function boot(TreeNode $ast, Document $document): void
     {
-        $this->ast       = $ast;
-        $this->document  = $document;
+        $this->ast = $ast;
+        $this->document = $document;
 
         // Generate identifier if id does not initialized
         $this->getUniqueId();
@@ -148,21 +196,16 @@ trait Compiler
          * In this case we run it forcibly, and then we check its state.
          */
         if ($this instanceof DependentDefinition) {
+            $this->getCompiler()->getStack()->push($this);
+
             // Force compile dependent definition
             $this->compile();
 
             // Verify type
             $this->getValidator()->verifyDefinition($this);
-        }
-    }
 
-    /**
-     * @param string $keyword
-     * @return int
-     */
-    private function offsetPrefixedBy(string $keyword): int
-    {
-        return $this->offset - \strlen($keyword) - 1;
+            $this->getCompiler()->getStack()->pop();
+        }
     }
 
     /**
@@ -210,25 +253,13 @@ trait Compiler
     }
 
     /**
-     * @return array
+     * @param string $type
+     * @param Definition $from
+     * @return TypeDefinition
      */
-    public function __sleep(): array
+    public function load(string $type, Definition $from): TypeDefinition
     {
-        $result = ['offset'];
-
-        if (\method_exists(parent::class, '__sleep')) {
-            return \array_merge(parent::__sleep(), $result);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return void
-     */
-    public function __wakeup()
-    {
-        $this->completed = true;
+        return $this->getCompiler()->get($type);
     }
 
     /**
@@ -241,26 +272,11 @@ trait Compiler
     }
 
     /**
-     * @return array
-     */
-    private function getDeclarationInfo(): array
-    {
-        return File::getErrorInfo($this->getDocument()->getContents(), $this->offset);
-    }
-
-    /**
+     * @param string $keyword
      * @return int
      */
-    public function getDeclarationLine(): int
+    private function offsetPrefixedBy(string $keyword): int
     {
-        return $this->getDeclarationInfo()['line'] ?? 1;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDeclarationColumn(): int
-    {
-        return $this->getDeclarationInfo()['column'] ?? 0;
+        return $this->offset - \strlen($keyword) - 1;
     }
 }

@@ -7,22 +7,22 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Exceptions;
+namespace Railt\Compiler\Filesystem;
 
 /**
- * Class NotReadableException
+ * Class NotFoundException
  */
-class NotReadableException extends \LogicException
+class NotFoundException extends NotReadableException
 {
     /**
-     * NotReadableException constructor.
+     * NotFoundException constructor.
      * @param string $file
      * @param int $code
      * @param \Throwable|null $previous
      */
     public function __construct(string $file = '', int $code = 0, \Throwable $previous = null)
     {
-        $message = sprintf('File "%s" not readable.', $file);
+        $message = sprintf('File "%s" not found.', $file);
 
         parent::__construct($message, $code, $previous);
     }

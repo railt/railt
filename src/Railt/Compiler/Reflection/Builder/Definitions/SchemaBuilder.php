@@ -87,6 +87,6 @@ class SchemaBuilder extends BaseSchema implements Compilable
          */
         $name = $ast->getChild(0)->getChild(0)->getValueValue();
 
-        return $this->getCompiler()->get($name);
+        return $this->load($name, $this);
     }
 }

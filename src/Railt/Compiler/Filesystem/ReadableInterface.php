@@ -51,4 +51,9 @@ interface ReadableInterface
      * @return string
      */
     public function getDefinitionFileName(): string;
+
+    /**
+     * @return bool
+     */
+    public function isFile(): bool;
 }

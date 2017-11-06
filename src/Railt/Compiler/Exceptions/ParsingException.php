@@ -14,6 +14,7 @@ use Railt\Compiler\Filesystem\ReadableInterface;
 
 /**
  * Class ParsingException
+ * @deprecated Will be replaced by an internal compiler exception
  */
 class ParsingException extends \ParseError implements ParsingExceptionInterface
 {

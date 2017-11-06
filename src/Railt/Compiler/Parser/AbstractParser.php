@@ -35,17 +35,10 @@ abstract class AbstractParser implements ParserInterface
     private $profiler;
 
     /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
      * Parser constructor.
-     * @param LoggerInterface|null $logger
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger;
         $this->parser = $this->createParser();
         $this->profiler = new Profiler($this->parser);
     }

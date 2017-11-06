@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Filesystem;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Railt\Compiler\Exceptions\NotFoundException;
-use Railt\Compiler\Exceptions\NotReadableException;
 
 /**
  * Class File
@@ -141,12 +139,12 @@ class File implements ReadableInterface, Arrayable
 
     /**
      * @param string $sources
-     * @param null|string $path
+     * @param null|string $name
      * @return File|ReadableInterface
      */
-    public static function fromSources(string $sources, string $path = null): ReadableInterface
+    public static function fromSources(string $sources, string $name = null): ReadableInterface
     {
-        return new static($sources, $path, true);
+        return new static($sources, $name, true);
     }
 
     /**

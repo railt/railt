@@ -37,13 +37,7 @@ trait Support
     protected function typeToString(Definition $type): string
     {
         if ($type instanceof TypeDefinition) {
-            [$parent, $name] = [$type->getTypeName(), $type->getName()];
-
-            if ($type instanceof AllowsTypeIndication) {
-                $name = \sprintf('%s: %s', $type->getName(), $this->typeIndicatorToString($type));
-            }
-
-            return \sprintf('%s %s', $parent, $name);
+            return \sprintf('%s("%s")', $type->getTypeName(), $type->getName());
         }
 
         return $type->getName();
@@ -78,7 +72,7 @@ trait Support
      */
     protected function valueWithType($value): string
     {
-        return '(' . Str::lower(\gettype($value)) . ')' . $this->valueToString($value);
+        return Str::lower(\gettype($value)) . ' ' . $this->valueToString($value);
     }
 
     /**
@@ -87,12 +81,8 @@ trait Support
      */
     protected function valueToScalar($value)
     {
-        if ($value === null) {
-            return null;
-        }
-
         if (\is_scalar($value)) {
-            return (string)$value;
+            return $value;
         }
 
         if (\is_iterable($value)) {
@@ -129,6 +119,10 @@ trait Support
     {
         $result = $this->valueToScalar($value);
 
-        return \json_encode($result);
+        if (\is_array($result)) {
+            return \json_encode($result);
+        }
+
+        return (string)$result;
     }
 }

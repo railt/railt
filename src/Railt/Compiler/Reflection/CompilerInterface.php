@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
+use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Kernel\LogWriter;
 use Railt\Compiler\Parser;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Filesystem\ReadableInterface;
@@ -45,4 +47,9 @@ interface CompilerInterface extends Dictionary
      * @return Dictionary
      */
     public function getDictionary(): Dictionary;
+
+    /**
+     * @return CallStack
+     */
+    public function getStack(): CallStack;
 }

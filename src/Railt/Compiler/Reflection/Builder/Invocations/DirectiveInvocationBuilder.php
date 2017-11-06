@@ -61,7 +61,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
     public function getTypeDefinition(): ?TypeDefinition
     {
         try {
-            return $this->getCompiler()->get($this->getName());
+            return $this->load($this->getName(), $this);
         } catch (TypeNotFoundException $error) {
             return null;
         }

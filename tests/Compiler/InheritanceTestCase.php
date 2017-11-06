@@ -362,7 +362,6 @@ class InheritanceTestCase extends AbstractCompilerTestCase
                 $compiler->compile(File::fromSources($schema));
                 static::assertTrue(false, 'Exception required in: ' . "\n" . $schema);
             } catch (TypeConflictException $error) {
-                $compiler->log($error);
                 static::assertInstanceOf(TypeRedefinitionException::class, $error);
             }
         }

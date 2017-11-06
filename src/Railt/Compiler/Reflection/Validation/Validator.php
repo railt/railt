@@ -14,6 +14,7 @@ use Railt\Compiler\Reflection\Support;
 use Railt\Compiler\Exceptions\TypeRedefinitionException;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Validation\Definitions\EnumValidator;
 use Railt\Compiler\Reflection\Validation\Definitions\TypeIndication;
 use Railt\Compiler\Reflection\Validation\Definitions\DefinitionValidator;
 
@@ -43,6 +44,7 @@ class Validator
 
         $this->definitions = [
             new TypeIndication($this),
+            new EnumValidator($this)
         ];
     }
 

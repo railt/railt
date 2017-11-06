@@ -11,6 +11,7 @@ namespace Railt\Compiler\Exceptions;
 
 /**
  * Class InitializationException
+ * @deprecated Will be replaced by an internal compiler exception
  */
 class InitializationException extends CompilerException
 {

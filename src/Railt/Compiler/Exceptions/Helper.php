@@ -11,6 +11,7 @@ namespace Railt\Compiler\Exceptions;
 
 /**
  * Trait Helper
+ * @deprecated Will be replaced by an internal compiler exception
  */
 trait Helper
 {

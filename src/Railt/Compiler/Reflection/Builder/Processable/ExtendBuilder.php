@@ -76,7 +76,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      */
     private function applyExtender(Definition $instance): void
     {
-        $this->type = $this->getCompiler()->get($instance->getName());
+        $this->type = $this->load($instance->getName(), $this);
 
         $this->extend($this->type, $instance);
     }

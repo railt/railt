@@ -13,7 +13,6 @@ use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Reflection\Base\BaseDocument;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Standard\Directives\Deprecation;
 use Railt\Compiler\Reflection\Standard\Scalars\AnyType;
@@ -53,14 +52,6 @@ class GraphQLDocument extends BaseDocument implements StandardType
     }
 
     /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return self::DOCUMENT_NAME;
-    }
-
-    /**
      * Creation and registration of types.
      *
      * @return void
@@ -97,9 +88,17 @@ class GraphQLDocument extends BaseDocument implements StandardType
             DateTimeType::class,
 
             // Directives
-            Deprecation::class
+            Deprecation::class,
         ];
 
         return \array_merge($standard, $this->additionalTypes);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return self::DOCUMENT_NAME;
     }
 }

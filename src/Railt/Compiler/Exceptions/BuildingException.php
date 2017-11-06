@@ -11,7 +11,7 @@ namespace Railt\Compiler\Exceptions;
 
 /**
  * Class BuildingException
- * @package Railt\Compiler\Exceptions
+ * @deprecated Will be replaced by an internal compiler exception
  */
 class BuildingException extends \LogicException
 {

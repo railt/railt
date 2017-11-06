@@ -49,7 +49,7 @@ class UnionBuilder extends BaseUnion implements Compilable
             foreach ($ast->getChildren() as $relation) {
                 $name = $relation->getChild(0)->getValueValue();
 
-                $child = $this->getCompiler()->get($name);
+                $child = $this->load($name, $this);
 
                 $this->types = $this->getValidator()->uniqueDefinitions($this->types, $child);
             }

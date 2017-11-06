@@ -87,9 +87,11 @@ class TypeIndication extends AbstractValidator
             $isNull = $isNullable && $value === null;
 
             if (! $isNull && ! $definition->isCompatible($value)) {
-                $error = \sprintf('%s can not be initialized with "%s" default value ' .
-                    'because item "%s" is incompatible with the type definition',
-                    $this->typeToString($type), $this->valueToString($values), $this->valueWithType($value));
+                $error = \sprintf('%s defined by %s can not be initialized by %s',
+                    $this->typeToString($type),
+                    $this->typeIndicatorToString($type),
+                    $this->valueToString($values)
+                );
                 throw new TypeConflictException($error);
             }
         }
