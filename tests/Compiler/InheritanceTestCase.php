@@ -368,7 +368,7 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             } catch (TypeConflictException $error) {
                 static::assertInstanceOf(TypeRedefinitionException::class, $error);
                 echo 'OK: ' . $schema . "\n" .
-                    (string)$error->getMessage() . ' in ' . "\n" .
+                    $error->getInfo() . "\n" .
                     \str_repeat('-', 80) . "\n";
             }
         }
