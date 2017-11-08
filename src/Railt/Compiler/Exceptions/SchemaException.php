@@ -37,4 +37,9 @@ interface SchemaException extends \Throwable
      * @return array Returns the stack trace as an array.
      */
     public function getCompilerTrace(): array;
+
+    /**
+     * @return string
+     */
+    public function getInfo(): string;
 }

@@ -54,21 +54,32 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     /**
      * @return string
      */
-    public function __toString(): string
+    public function getInfo(): string
     {
-        $eol = PHP_EOL;
-
-        $result = \vsprintf("%s: %s in %s:%d:%d{$eol}", [
+        return \vsprintf('%s: %s in %s:%d:%d', [
             \get_class($this),
             $this->getMessage(),
             $this->getFile(),
             $this->getLine(),
             $this->getColumn()
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $result = $this->getInfo() . PHP_EOL;
 
         [$graphQLStack, $phpStack] = [
-            "GraphQL Stack Trace:{$eol}%sPHP Stack Trace:{$eol}%s",
-            "Stack Trace:{$eol}%s"
+            'GraphQL Stack Trace:' . PHP_EOL .
+                '%s' . PHP_EOL .
+            'PHP Stack Trace:' . PHP_EOL .
+                '%s',
+
+            'Stack Trace:' . PHP_EOL .
+                '%s',
         ];
 
         return $result . (
