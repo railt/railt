@@ -52,10 +52,11 @@ class ListWrapperValidator extends BaseValidator implements WrapperValidator
     private function validateOverridenByList(Wrapping $a, Wrapping $b, bool $direct = true): void
     {
         if (! $b->isList()) {
-            $error = \sprintf('List %s of %s can not be overridden by non-list %s',
+            $error = \sprintf('%s defined by %s of %s can not be overridden by non-list %s',
                 $this->typeToString($a),
+                $this->typeIndicatorToString($a),
                 $this->typeToString($a->getParent()),
-                $this->typeToString($b)
+                $this->typeIndicatorToString($b)
             );
 
             throw new TypeRedefinitionException($error, $this->getCallStack());
@@ -72,10 +73,11 @@ class ListWrapperValidator extends BaseValidator implements WrapperValidator
     private function validateOverridenByNullableList(Wrapping $a, Wrapping $b, bool $direct = true): void
     {
         if ($a->isNonNull() && ! $b->isNonNull()) {
-            $error = \sprintf('List %s of %s can not be overridden by nullable list %s',
+            $error = \sprintf('%s defined by %s of %s can not be overridden by nullable list %s',
                 $this->typeToString($a),
+                $this->typeIndicatorToString($a),
                 $this->typeToString($a->getParent()),
-                $this->typeToString($b)
+                $this->typeIndicatorToString($b)
             );
 
             throw new TypeRedefinitionException($error, $this->getCallStack());
@@ -92,10 +94,11 @@ class ListWrapperValidator extends BaseValidator implements WrapperValidator
     private function validateOverridenByListOFNulls(Wrapping $a, Wrapping $b, bool $direct = true): void
     {
         if ($a->isListOfNonNulls() && ! $b->isListOfNonNulls()) {
-            $error = \sprintf('List %s of %s can not be overridden by nullable %s',
+            $error = \sprintf('%s defined by %s of %s can not be overridden by nullable %s',
                 $this->typeToString($a),
+                $this->typeIndicatorToString($a),
                 $this->typeToString($a->getParent()),
-                $this->typeToString($b)
+                $this->typeIndicatorToString($b)
             );
 
             throw new TypeRedefinitionException($error, $this->getCallStack());
