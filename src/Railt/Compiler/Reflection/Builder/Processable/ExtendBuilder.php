@@ -28,6 +28,7 @@ use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Compiler\Reflection\Contracts\Processable\ExtendDefinition;
+use Railt\Compiler\Reflection\Validation\Inheritance;
 
 /**
  * Class ExtendBuilder
@@ -76,7 +77,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      */
     private function applyExtender(Definition $instance): void
     {
-        $this->type = $this->load($instance->getName(), $this);
+        $this->type = $this->load($instance->getName());
 
         $this->extend($this->type, $instance);
     }
@@ -85,7 +86,8 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * @param Definition $original
      * @param Definition $extend
      * @return void
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
+     * @throws TypeConflictException
+     * @throws \OutOfBoundsException
      */
     private function extend(Definition $original, Definition $extend): void
     {
@@ -106,6 +108,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * @param HasFields $original
      * @param HasFields $extend
      * @return void
+     * @throws \OutOfBoundsException
      * @throws TypeConflictException
      */
     private function extendFields(HasFields $original, HasFields $extend): void
@@ -117,7 +120,8 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  * @var FieldDefinition $field
                  */
                 $field = $original->getField($extendField->getName());
-                $this->getValidator()->verifyPostConditionInheritance($field, $extendField);
+
+                $this->getValidator(Inheritance::class)->validate($field, $extendField);
 
                 $this->dataFieldExtender()->call($field, $extendField);
 
@@ -161,6 +165,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * @param HasArguments|BaseArgumentsContainer|DirectiveInvocation $original
      * @param HasArguments|DirectiveInvocation $extend
      * @return void
+     * @throws \OutOfBoundsException
      * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     private function extendArguments($original, $extend): void
@@ -172,7 +177,8 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  * @var ArgumentDefinition $argument
                  */
                 $argument = $original->getArgument($extendArgument->getName());
-                $this->getValidator()->verifyPreConditionInheritance($argument, $extendArgument);
+
+                $this->getValidator(Inheritance::class)->validate($extendArgument, $argument, false);
 
                 $this->dataArgumentExtender()->call($argument, $extendArgument);
 
@@ -212,6 +218,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * @param HasDirectives|BaseDirectivesContainer $original
      * @param HasDirectives $extend
      * @return void
+     * @throws \OutOfBoundsException
      * @throws TypeConflictException
      */
     private function extendDirectives(HasDirectives $original, HasDirectives $extend): void

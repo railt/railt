@@ -50,10 +50,9 @@ class ObjectBuilder extends BaseObject implements Compilable
             foreach ($ast->getChildren() as $child) {
                 $name = $child->getChild(0)->getValueValue();
 
-                $interface = $this->load($name, $this);
+                $interface = $this->load($name);
 
-                $this->interfaces = $this->getValidator()
-                    ->uniqueDefinitions($this->interfaces, $interface);
+                $this->interfaces = $this->unique($this->interfaces, $interface);
             }
 
             return true;

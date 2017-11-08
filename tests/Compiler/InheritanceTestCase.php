@@ -282,6 +282,8 @@ class InheritanceTestCase extends AbstractCompilerTestCase
                 interface J {} 
                 type A { id: I } 
                 extend type A { id: J }', // Overwrite by other interface
+            'interface I { id: ID }
+                type A implements I {}', // Missing implementation
 
             // Unions
             'union U = String 
@@ -342,6 +344,8 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             $result = $compiler->compile(File::fromSources($schema));
             static::assertNotNull($result);
         }
+
+        echo 'OK: ' . $schema . "\n";
     }
 
     /**
@@ -363,6 +367,9 @@ class InheritanceTestCase extends AbstractCompilerTestCase
                 static::assertTrue(false, 'Exception required in: ' . "\n" . $schema);
             } catch (TypeConflictException $error) {
                 static::assertInstanceOf(TypeRedefinitionException::class, $error);
+                echo 'OK: ' . $schema . "\n" .
+                    (string)$error . "\n" .
+                    \str_repeat('-', 80) . "\n";
             }
         }
     }

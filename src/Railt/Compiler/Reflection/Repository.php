@@ -11,6 +11,7 @@ namespace Railt\Compiler\Reflection;
 
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Exceptions\TypeRedefinitionException;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -26,6 +27,20 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     private $definitions = [];
 
     /**
+     * @var CallStack
+     */
+    protected $stack;
+
+    /**
+     * Repository constructor.
+     * @param CallStack $stack
+     */
+    public function __construct(CallStack $stack)
+    {
+        $this->stack = $stack;
+    }
+
+    /**
      * @param TypeDefinition $type
      * @param bool $force
      * @return Dictionary
@@ -37,7 +52,7 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
             $error = \sprintf('Can not declare %s, because the name %s already in use',
                 $this->typeToString($type), $type->getName());
 
-            throw new TypeRedefinitionException($error);
+            throw new TypeRedefinitionException($error, $this->stack);
         }
 
         $this->definitions[$type->getName()] = $type;
@@ -57,7 +72,7 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
         }
 
         $error = \sprintf('Type "%s" not found', $name);
-        throw new TypeNotFoundException($error);
+        throw new TypeNotFoundException($error, $this->stack);
     }
 
     /**

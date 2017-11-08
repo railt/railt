@@ -13,6 +13,7 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
  * Trait ArgumentsBuilder
@@ -33,7 +34,7 @@ trait ArgumentsBuilder
             case '#Argument':
                 $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
 
-                $this->arguments = $this->getValidator()->uniqueDefinitions($this->arguments, $argument);
+                $this->arguments = $this->unique($this->arguments, $argument);
 
                 return true;
         }

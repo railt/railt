@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Exceptions\NotReadableException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Filesystem\File;
+use Railt\Compiler\Filesystem\NotReadableException;
 use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -34,8 +35,9 @@ class Loader extends Repository
      * Loader constructor.
      * @param CompilerInterface $compiler
      */
-    public function __construct(CompilerInterface $compiler)
+    public function __construct(CompilerInterface $compiler, CallStack $stack)
     {
+        parent::__construct($stack);
         $this->compiler = $compiler;
     }
 
@@ -53,8 +55,8 @@ class Loader extends Repository
     /**
      * @param string $name
      * @return TypeDefinition
-     * @throws TypeNotFoundException
      * @throws NotReadableException
+     * @throws TypeNotFoundException
      */
     public function get(string $name): TypeDefinition
     {
@@ -93,7 +95,7 @@ class Loader extends Repository
         }
 
         $error = \sprintf('Type "%s" not found and could not be loaded', $name);
-        throw new TypeNotFoundException($error);
+        throw new TypeNotFoundException($error, $this->stack);
     }
 
     /**

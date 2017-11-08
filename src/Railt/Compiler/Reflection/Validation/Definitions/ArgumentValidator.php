@@ -15,9 +15,9 @@ use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
 
 /**
- * Class ArgumentInvocationValidator
+ * Class ArgumentValidator
  */
-class TypeIndication extends AbstractValidator
+class ArgumentValidator extends BaseDefinitionValidator
 {
     /**
      * @param Definition $definition
@@ -33,13 +33,13 @@ class TypeIndication extends AbstractValidator
      * @return void
      * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    public function verify(Definition $type): void
+    public function validate(Definition $type): void
     {
         $definition = $type->getTypeDefinition();
 
         if (! ($definition instanceof Inputable)) {
             $error = \sprintf('%s must be type of Scalar, Enum or Input', $this->typeToString($type));
-            throw new TypeConflictException($error);
+            throw new TypeConflictException($error, $this->getCallStack());
         }
 
         if ($type->hasDefaultValue()) {
@@ -92,7 +92,8 @@ class TypeIndication extends AbstractValidator
                     $this->typeIndicatorToString($type),
                     $this->valueToString($values)
                 );
-                throw new TypeConflictException($error);
+
+                throw new TypeConflictException($error, $this->getCallStack());
             }
         }
     }
@@ -109,7 +110,8 @@ class TypeIndication extends AbstractValidator
         if (! $definition->isCompatible($value)) {
             $error = \sprintf('%s contain non compatible default value %s',
                 $this->typeToString($type), $this->valueToString($value));
-            throw new TypeConflictException($error);
+
+            throw new TypeConflictException($error, $this->getCallStack());
         }
     }
 
@@ -122,7 +124,8 @@ class TypeIndication extends AbstractValidator
     {
         if ($type->isNonNull()) {
             $error = \sprintf('%s can not be initialized by default value NULL', $this->typeToString($type));
-            throw new TypeConflictException($error);
+
+            throw new TypeConflictException($error, $this->getCallStack());
         }
     }
 
@@ -137,7 +140,8 @@ class TypeIndication extends AbstractValidator
         if (! $type->isList()) {
             $error = \sprintf('%s can not be initialized by List "%s"',
                 $this->typeToString($type), $this->valueToString($defaults));
-            throw new TypeConflictException($error);
+
+            throw new TypeConflictException($error, $this->getCallStack());
         }
 
 
@@ -147,7 +151,7 @@ class TypeIndication extends AbstractValidator
                     $error = \sprintf('%s can not be initialized by list "%s" with NULL value',
                         $this->typeToString($type), $this->valueToString($defaults));
 
-                    throw new TypeConflictException($error);
+                    throw new TypeConflictException($error, $this->getCallStack());
                 }
             }
         }

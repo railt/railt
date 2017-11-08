@@ -17,6 +17,8 @@ use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
  * Class SchemaBuilder
@@ -43,27 +45,24 @@ class SchemaBuilder extends BaseSchema implements Compilable
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws \OutOfBoundsException
      * @throws \Railt\Compiler\Exceptions\BuildingException
-     * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      */
     protected function onCompile(TreeNode $ast): bool
     {
         switch ($ast->getId()) {
             case '#Query':
-                $this->query = $this->getValidator()
-                    ->uniqueDefinition($this->query, $this->fetchType($ast));
+                $this->query = $this->unique($this->query, $this->fetchType($ast));
 
                 return true;
 
             case '#Mutation':
-                $this->mutation = $this->getValidator()
-                    ->uniqueDefinition($this->mutation, $this->fetchType($ast));
+                $this->mutation = $this->unique($this->mutation, $this->fetchType($ast));
 
                 return true;
 
             case '#Subscription':
-                $this->subscription = $this->getValidator()
-                    ->uniqueDefinition($this->subscription, $this->fetchType($ast));
+                $this->subscription = $this->unique($this->subscription, $this->fetchType($ast));
 
                 return true;
         }
@@ -87,6 +86,6 @@ class SchemaBuilder extends BaseSchema implements Compilable
          */
         $name = $ast->getChild(0)->getChild(0)->getValueValue();
 
-        return $this->load($name, $this);
+        return $this->load($name);
     }
 }

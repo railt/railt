@@ -19,7 +19,7 @@ use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 /**
  * Class CallStack
  */
-class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable
+class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \Countable
 {
     /**
      * @var array|Definition[]
@@ -124,12 +124,11 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable
         $result = [];
 
         foreach ($this->toArray() as $i => $stack) {
-            $result[] = \sprintf('#%d %s in %s:%s:%s',
+            $result[] = \sprintf('#%d %s(%s): %s',
                 $i,
-                $stack['type'],
                 $stack['file'],
                 $stack['line'],
-                $stack['column']
+                $stack['type']
             );
         }
 
@@ -152,5 +151,13 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable
     public function toJson($options = 0): string
     {
         return \json_encode($this->toArray(), $options);
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return \count($this->stack);
     }
 }

@@ -15,6 +15,7 @@ use Railt\Compiler\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
  * Class DirectiveBuilder
@@ -39,18 +40,22 @@ class DirectiveBuilder extends BaseDirective implements Compilable
     /**
      * @param TreeNode $ast
      * @return bool
+     * @throws \OutOfBoundsException
      * @throws \Railt\Compiler\Exceptions\TypeRedefinitionException
      */
     protected function onCompile(TreeNode $ast): bool
     {
         switch ($ast->getId()) {
             case '#Target':
+                $validator = $this->getValidator(Uniqueness::class);
+
                 /** @var TreeNode $child */
                 foreach ($ast->getChild(0)->getChildren() as $child) {
                     $location = $child->getValueValue();
 
-                    $this->locations = $this->getValidator()
-                        ->uniqueValues($this->locations, $location, static::LOCATION_TYPE_NAME);
+                    $validator->validate($this->locations, $location, static::LOCATION_TYPE_NAME);
+
+                    $this->locations[] = $location;
                 }
         }
 

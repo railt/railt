@@ -17,7 +17,9 @@ use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Reflection\Validation\Validator;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Compiler\Reflection\Validation\Definitions;
+use Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
  * Trait Compiler
@@ -106,11 +108,13 @@ trait Compiler
     }
 
     /**
-     * @return Validator
+     * @param string $group
+     * @return ValidatorInterface
+     * @throws \OutOfBoundsException
      */
-    public function getValidator(): Validator
+    public function getValidator(string $group = null): ValidatorInterface
     {
-        return $this->getCompiler()->getValidator();
+        return $this->getCompiler()->getValidator($group);
     }
 
     /**
@@ -166,7 +170,7 @@ trait Compiler
      */
     protected function boot(TreeNode $ast, Document $document): void
     {
-        $this->ast = $ast;
+        $this->ast      = $ast;
         $this->document = $document;
 
         // Generate identifier if id does not initialized
@@ -202,7 +206,7 @@ trait Compiler
             $this->compile();
 
             // Verify type
-            $this->getValidator()->verifyDefinition($this);
+            $this->getValidator(Definitions::class)->validate($this);
 
             $this->getCompiler()->getStack()->pop();
         }
@@ -254,12 +258,29 @@ trait Compiler
 
     /**
      * @param string $type
-     * @param Definition $from
      * @return TypeDefinition
      */
-    public function load(string $type, Definition $from): TypeDefinition
+    protected function load(string $type): TypeDefinition
     {
         return $this->getCompiler()->get($type);
+    }
+
+    /**
+     * @param array|TypeDefinition|null $field
+     * @param TypeDefinition $definition
+     * @return TypeDefinition|array
+     */
+    protected function unique($field, TypeDefinition $definition)
+    {
+        $this->getValidator(Uniqueness::class)->validate($field, $definition);
+
+        if (\is_array($field)) {
+            $field[$definition->getName()] = $definition;
+
+            return $field;
+        }
+
+        return $definition;
     }
 
     /**

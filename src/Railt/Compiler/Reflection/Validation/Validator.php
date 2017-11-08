@@ -9,136 +9,103 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation;
 
-use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Compiler\Reflection\Support;
-use Railt\Compiler\Exceptions\TypeRedefinitionException;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Validation\Definitions\EnumValidator;
-use Railt\Compiler\Reflection\Validation\Definitions\TypeIndication;
-use Railt\Compiler\Reflection\Validation\Definitions\DefinitionValidator;
+use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Reflection\Validation\Base\Factory;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**
  * Class Validator
+ *
+ * TODO Add lazy initializing
  */
 class Validator
 {
-    use Support;
+    /**
+     * A constant list of validator groups
+     */
+    private const VALIDATOR_GROUPS = [
+        /**
+         * Type consistency checks
+         */
+        Definitions::class,
+
+        /**
+         * Type Inheritance checks
+         */
+        Inheritance::class,
+
+        /**
+         * Checking the children uniqueness
+         */
+        Uniqueness::class,
+    ];
 
     /**
-     * @var array|DefinitionValidator[]
+     * @var array|Factory[]
      */
-    private $definitions = [];
+    private $groups = [];
 
     /**
-     * @var Inheritance
+     * @var CallStack
      */
-    private $inheritance;
+    private $stack;
 
     /**
      * Validator constructor.
+     * @param CallStack $stack
+     * @throws \InvalidArgumentException
      */
-    public function __construct()
+    public function __construct(CallStack $stack)
     {
-        $this->inheritance = new Inheritance();
+        $this->stack = $stack;
 
-        $this->definitions = [
-            new TypeIndication($this),
-            new EnumValidator($this)
-        ];
+        $this->bootDefaults();
     }
 
     /**
-     * @param Definition $definition
      * @return void
+     * @throws \InvalidArgumentException
      */
-    public function verifyDefinition(Definition $definition): void
+    private function bootDefaults(): void
     {
-        foreach ($this->definitions as $validator) {
-            if ($validator->match($definition)) {
-                $validator->verify($definition);
-            }
+        foreach (self::VALIDATOR_GROUPS as $factory) {
+            $this->add($factory);
         }
     }
 
     /**
-     * @param AllowsTypeIndication $parent
-     * @param AllowsTypeIndication $child
-     * @return void
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
+     * @param string $group
+     * @return Factory
+     * @throws \OutOfBoundsException
      */
-    public function verifyPostConditionInheritance(AllowsTypeIndication $parent, AllowsTypeIndication $child): void
+    public function group(string $group): Factory
     {
-        $this->inheritance->verify($parent, $child);
+        if (\array_key_exists($group, $this->groups)) {
+            return $this->groups[$group];
+        }
+
+        $error = 'Validator group %s not exists';
+        throw new \OutOfBoundsException(\sprintf($error, $group));
     }
 
     /**
-     * @param AllowsTypeIndication $parent
-     * @param AllowsTypeIndication $child
-     * @return void
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
+     * @param string|ValidatorInterface|Factory $factory
+     * @param string|null $group
+     * @return Factory
+     * @throws \InvalidArgumentException
      */
-    public function verifyPreConditionInheritance(AllowsTypeIndication $parent, AllowsTypeIndication $child): void
+    public function add(string $factory, string $group = null): Factory
     {
-        $this->inheritance->verify($child, $parent);
-    }
-
-    /**
-     * @param array $container
-     * @param string $value
-     * @param string $type
-     * @return array
-     * @throws TypeRedefinitionException
-     */
-    public function uniqueValues(array $container, string $value, string $type): array
-    {
-        if (!\array_key_exists($value, $container)) {
-            $container[$value] = $value;
-
-            return $container;
+        if (! \is_subclass_of($factory, Factory::class)) {
+            $error = \sprintf('%s must be instance of %s', $factory, Factory::class);
+            throw new \InvalidArgumentException($error);
         }
 
-        $error = \sprintf('Can not redefine already defined %s %s', $type, $value);
-        throw new TypeRedefinitionException($error);
-    }
+        /** @var Factory $instance */
+        $instance = new $factory($this, $this->stack, $group);
 
-    /**
-     * @param array $container
-     * @param TypeDefinition $definition
-     * @return array
-     * @throws TypeRedefinitionException
-     */
-    public function uniqueDefinitions(array $container, TypeDefinition $definition): array
-    {
-        if (!\array_key_exists($definition->getName(), $container)) {
-            $container[$definition->getName()] = $definition;
+        $this->groups[$instance->getGroupName()] = $instance;
 
-            return $container;
-        }
-
-        $error = \sprintf('Can not redefine already defined %s', $this->typeToString($definition));
-        throw new TypeRedefinitionException($error);
-    }
-
-    /**
-     * @param mixed $container
-     * @param TypeDefinition $definition
-     * @return Definition
-     * @throws TypeRedefinitionException
-     */
-    public function uniqueDefinition($container, TypeDefinition $definition): Definition
-    {
-        // Verify container is empty
-        if ($container === null) {
-            return $definition;
-        }
-
-        // Verify container type is same with new type
-        if ($container instanceof TypeDefinition && $container->getUniqueId() === $definition->getUniqueId()) {
-            return $definition;
-        }
-
-        $error = \sprintf('Can not redefine already defined %s', $this->typeToString($definition));
-        throw new TypeRedefinitionException($error);
+        return $instance;
     }
 }

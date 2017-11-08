@@ -12,7 +12,7 @@ namespace Railt\Compiler\Exceptions;
 /**
  * Class TypeConflictException
  */
-class TypeConflictException extends SchemaException
+class TypeConflictException extends BaseSchemaException
 {
 
 }

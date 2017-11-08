@@ -38,7 +38,7 @@ trait DirectivesBuilder
             /** @var BaseDirectivesContainer|TypeDefinition $this */
             $directive = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
 
-            $this->directives = $this->getValidator()->uniqueDefinitions($this->directives, $directive);
+            $this->directives = $this->unique($this->directives, $directive);
 
             $this->checkTheDeprecationDirective($directive);
 

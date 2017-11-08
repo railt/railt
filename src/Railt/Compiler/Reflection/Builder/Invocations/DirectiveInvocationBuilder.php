@@ -47,7 +47,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
         if ($ast->getId() === '#Argument') {
             $argument = new ArgumentInvocationBuilder($ast, $this->getDocument(), $this);
 
-            $this->arguments = $this->getValidator()->uniqueDefinitions($this->arguments, $argument);
+            $this->arguments = $this->unique($this->arguments, $argument);
 
             return true;
         }
@@ -61,7 +61,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
     public function getTypeDefinition(): ?TypeDefinition
     {
         try {
-            return $this->load($this->getName(), $this);
+            return $this->load($this->getName());
         } catch (TypeNotFoundException $error) {
             return null;
         }

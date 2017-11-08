@@ -11,6 +11,7 @@ namespace Railt\Compiler;
 
 use Psr\Log\LoggerInterface;
 use Railt\Compiler\Exceptions\CompilerException;
+use Railt\Compiler\Exceptions\InitializationException;
 use Railt\Compiler\Exceptions\SchemaException;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
@@ -33,6 +34,8 @@ use Railt\Compiler\Reflection\Loader;
 use Railt\Compiler\Reflection\Standard\GraphQLDocument;
 use Railt\Compiler\Reflection\Standard\StandardType;
 use Railt\Compiler\Reflection\Support;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Compiler\Reflection\Validation\Definitions;
 use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
@@ -70,16 +73,17 @@ class Compiler implements CompilerInterface
     /**
      * Compiler constructor.
      * @param Persister|null $persister
-     * @throws \Railt\Compiler\Exceptions\InitializationException
+     * @throws InitializationException
+     * @throws \InvalidArgumentException
      */
     public function __construct(Persister $persister = null)
     {
         $this->stack  = new CallStack();
         $this->parser = new Parser();
 
-        $this->loader = new Loader($this);
+        $this->loader = new Loader($this, $this->stack);
 
-        $this->validator = new Validator();
+        $this->validator = new Validator($this->stack);
 
         $this->persister = $this->bootPersister($persister);
 
@@ -173,11 +177,12 @@ class Compiler implements CompilerInterface
     /**
      * @param Definition $definition
      * @return void
+     * @throws \OutOfBoundsException
      */
     private function completeValidation(Definition $definition): void
     {
         if (! ($definition instanceof StandardType)) {
-            $this->validator->verifyDefinition($definition);
+            $this->validator->group(Definitions::class)->validate($definition);
         }
     }
 
@@ -205,9 +210,6 @@ class Compiler implements CompilerInterface
 
             return $document->withCompiler($this);
         } catch (\Throwable | \Error $error) {
-            if ($error instanceof SchemaException) {
-                $error->withStack($this->stack);
-            }
             throw $error;
         }
     }
@@ -228,11 +230,13 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @return Validator
+     * @param string $group
+     * @return ValidatorInterface
+     * @throws \OutOfBoundsException
      */
-    public function getValidator(): Validator
+    public function getValidator(string $group): ValidatorInterface
     {
-        return $this->validator;
+        return $this->validator->group($group);
     }
 
     /**

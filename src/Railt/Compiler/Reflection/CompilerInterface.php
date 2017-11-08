@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection;
 
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Kernel\LogWriter;
 use Railt\Compiler\Parser;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
@@ -39,9 +39,10 @@ interface CompilerInterface extends Dictionary
     public function getParser(): Parser;
 
     /**
-     * @return Validator
+     * @param string $group
+     * @return ValidatorInterface
      */
-    public function getValidator(): Validator;
+    public function getValidator(string $group): ValidatorInterface;
 
     /**
      * @return Dictionary

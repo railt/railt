@@ -7,21 +7,23 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Reflection\Validation;
+namespace Railt\Compiler\Reflection\Validation\Base;
 
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Reflection\Validation\Base\Factory;
-use Railt\Compiler\Reflection\Validation\Inheritance\InheritanceValidator;
-use Railt\Compiler\Reflection\Validation\Inheritance\Types;
-use Railt\Compiler\Reflection\Validation\Inheritance\Wrappers;
+use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
- * Class Inheritance
+ * Class Definitions
  */
-final class Inheritance extends Factory
+abstract class ValidatorsFactory extends Factory
 {
     /**
-     * Inheritance constructor.
+     * Definition validators
+     */
+    protected const VALIDATOR_CLASSES = [];
+
+    /**
+     * Definitions constructor.
      * @param Validator $factory
      * @param CallStack $stack
      * @param null|string $name
@@ -32,8 +34,8 @@ final class Inheritance extends Factory
     {
         parent::__construct($factory, $stack, $name ?? static::class);
 
-        $this->bootChildrenValidators();
-        $this->bootMatcher();
+        $this->bootDefaultMatcher();
+        $this->bootDefaultValidators();
     }
 
     /**
@@ -41,19 +43,25 @@ final class Inheritance extends Factory
      * @throws \InvalidArgumentException
      * @throws \OutOfBoundsException
      */
-    private function bootChildrenValidators(): void
+    private function bootDefaultValidators(): void
     {
-        $this->addValidator(Types::class);
-        $this->addValidator(Wrappers::class);
+        foreach (static::VALIDATOR_CLASSES as $validator) {
+            $this->addValidator($validator);
+        }
     }
 
     /**
      * @return void
      */
-    private function bootMatcher(): void
+    private function bootDefaultMatcher(): void
     {
-        $this->setMatcher(function (InheritanceValidator $validator, $type): bool {
-            return $validator->match($type);
-        });
+        $matcher = $this->getDefaultMatcher();
+
+        $this->setMatcher($matcher);
     }
+
+    /**
+     * @return \Closure
+     */
+    abstract protected function getDefaultMatcher(): \Closure;
 }

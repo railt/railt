@@ -16,7 +16,7 @@ use Railt\Compiler\Reflection\Contracts\Definitions\EnumDefinition;
 /**
  * Class EnumValidator
  */
-class EnumValidator extends AbstractValidator
+class EnumValidator extends BaseDefinitionValidator
 {
     /**
      * @param Definition $definition
@@ -30,9 +30,9 @@ class EnumValidator extends AbstractValidator
     /**
      * @param Definition $definition
      * @return void
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
+     * @throws TypeConflictException
      */
-    public function verify(Definition $definition): void
+    final public function validate(Definition $definition): void
     {
         $this->verifyThatEnumNotEmpty($definition);
     }
@@ -46,7 +46,7 @@ class EnumValidator extends AbstractValidator
     {
         if (\count($definition->getValues()) === 0) {
             $error = \sprintf('%s can not be empty', $this->typeToString($definition));
-            throw new TypeConflictException($error);
+            throw new TypeConflictException($error, $this->getCallStack());
         }
     }
 }

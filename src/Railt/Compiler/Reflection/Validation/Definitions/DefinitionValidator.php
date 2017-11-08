@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Definitions;
 
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Validation\Validator;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**
  * Interface DefinitionValidator
  */
-interface DefinitionValidator
+interface DefinitionValidator extends ValidatorInterface
 {
     /**
      * @param Definition $definition
@@ -24,14 +24,8 @@ interface DefinitionValidator
     public function match(Definition $definition): bool;
 
     /**
-     * DefinitionValidator constructor.
-     * @param Validator $validator
-     */
-    public function __construct(Validator $validator);
-
-    /**
      * @param Definition $definition
      * @return void
      */
-    public function verify(Definition $definition): void;
+    public function validate(Definition $definition): void;
 }

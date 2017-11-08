@@ -12,55 +12,29 @@ namespace Railt\Compiler\Exceptions;
 use Railt\Compiler\Kernel\CallStack;
 
 /**
- * Class SchemaException
+ * Interface SchemaException
  */
-abstract class SchemaException extends \RuntimeException
+interface SchemaException extends \Throwable
 {
     /**
-     * @var int
+     * SchemaException constructor.
+     * @param string $message
+     * @param CallStack $stack
+     * @param \Throwable|null $previous
      */
-    private $column = 0;
+    public function __construct(string $message, CallStack $stack, \Throwable $previous = null);
 
     /**
-     * @var CallStack
+     * Should return a source code column on which the error occurred.
+     *
+     * @return int Returns the column offset where the error occurred.
      */
-    private $stack;
+    public function getColumn(): int;
 
     /**
-     * @param CallStack $trace
-     * @return void
+     * Returns the GraphQL Compiler stack trace.
+     *
+     * @return array Returns the stack trace as an array.
      */
-    public function withStack(CallStack $trace): void
-    {
-        $this->stack = $trace;
-
-        $info = $trace->getLastDefinitionInfo();
-
-        $this->column = $info['column'];
-        $this->file = $info['file'];
-        $this->line = $info['line'];
-        $this->trace = $this->stack->toArray();
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        if ($this->stack !== null) {
-            return \get_class($this) . ': ' . $this->getMessage() .
-                ' in ' . $this->file . ':' . $this->line . ':' . $this->column . PHP_EOL .
-                'Stack trace:' . PHP_EOL . $this->stack->render();
-        }
-
-        return parent::__toString();
-    }
-
-    /**
-     * @return int
-     */
-    public function getColumn(): int
-    {
-        return $this->column;
-    }
+    public function getCompilerTrace(): array;
 }

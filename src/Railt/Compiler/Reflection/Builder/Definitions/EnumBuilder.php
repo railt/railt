@@ -47,7 +47,7 @@ class EnumBuilder extends BaseEnum implements Compilable
         if ($ast->getId() === '#Value') {
             $value = new ValueBuilder($ast, $this->getDocument(), $this);
 
-            $this->values = $this->getValidator()->uniqueDefinitions($this->values, $value);
+            $this->values = $this->unique($this->values, $value);
 
             return true;
         }
