@@ -52,7 +52,7 @@ class ListWrapperValidator extends BaseValidator implements WrapperValidator
     private function validateOverridenByList(Wrapping $a, Wrapping $b, bool $direct = true): void
     {
         if (! $b->isList()) {
-            $error = \sprintf('%s defined by %s of %s can not be overridden by non-list %s',
+            $error = \sprintf('%s defined by %s of %s cannot be overridden by non-list %s',
                 $this->typeToString($a),
                 $this->typeIndicatorToString($a),
                 $this->typeToString($a->getParent()),
@@ -73,7 +73,7 @@ class ListWrapperValidator extends BaseValidator implements WrapperValidator
     private function validateOverridenByNullableList(Wrapping $a, Wrapping $b, bool $direct = true): void
     {
         if ($a->isNonNull() && ! $b->isNonNull()) {
-            $error = \sprintf('%s defined by %s of %s can not be overridden by nullable list %s',
+            $error = \sprintf('%s defined by %s of %s cannot be overridden by nullable list %s',
                 $this->typeToString($a),
                 $this->typeIndicatorToString($a),
                 $this->typeToString($a->getParent()),
@@ -94,7 +94,7 @@ class ListWrapperValidator extends BaseValidator implements WrapperValidator
     private function validateOverridenByListOFNulls(Wrapping $a, Wrapping $b, bool $direct = true): void
     {
         if ($a->isListOfNonNulls() && ! $b->isListOfNonNulls()) {
-            $error = \sprintf('%s defined by %s of %s can not be overridden by nullable %s',
+            $error = \sprintf('%s defined by %s of %s cannot be overridden by nullable %s',
                 $this->typeToString($a),
                 $this->typeIndicatorToString($a),
                 $this->typeToString($a->getParent()),
