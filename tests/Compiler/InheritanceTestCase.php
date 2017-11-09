@@ -11,7 +11,6 @@ namespace Railt\Tests\Compiler;
 
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Exceptions\TypeRedefinitionException;
 use Railt\Compiler\Filesystem\File;
 use Railt\Compiler\Reflection\CompilerInterface;
 
@@ -20,6 +19,11 @@ use Railt\Compiler\Reflection\CompilerInterface;
  */
 class InheritanceTestCase extends AbstractCompilerTestCase
 {
+    /**
+     * @var array
+     */
+    private $messages = [];
+
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
@@ -192,6 +196,10 @@ class InheritanceTestCase extends AbstractCompilerTestCase
                 type A { id: U } 
                 extend type A { id: String }',
 
+            'union X = ID | String | A 
+                interface A { id: X }   
+                type B implements A { id: A }',
+
             // Objects
             'type A { id: A }   extend type A { id: A }',
 
@@ -239,7 +247,39 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'type A { id: [ID!]! }  extend type A { id: ID }',
             'type A { id: [ID!]! }  extend type A { id: ID! }',
 
-            // Scalars
+            // Scalars + Interface
+            'interface B { id: Boolean }     type A implements B { id: Any }',
+            'interface B { id: Boolean }     type A implements B { id: DateTime }',
+            'interface B { id: Boolean }     type A implements B { id: Float }',
+            'interface B { id: Boolean }     type A implements B { id: ID }',
+            'interface B { id: Boolean }     type A implements B { id: Int }',
+            'interface B { id: Boolean }     type A implements B { id: String }',
+            'interface B { id: DateTime }    type A implements B { id: Any }',
+            'interface B { id: DateTime }    type A implements B { id: Boolean }',
+            'interface B { id: DateTime }    type A implements B { id: Float }',
+            'interface B { id: DateTime }    type A implements B { id: ID }',
+            'interface B { id: DateTime }    type A implements B { id: Int }',
+            'interface B { id: DateTime }    type A implements B { id: String }',
+            'interface B { id: Float }       type A implements B { id: Any }',
+            'interface B { id: Float }       type A implements B { id: Boolean }',
+            'interface B { id: Float }       type A implements B { id: DateTime }',
+            'interface B { id: Float }       type A implements B { id: ID }',
+            'interface B { id: Float }       type A implements B { id: String }',
+            'interface B { id: ID }          type A implements B { id: Any }',
+            'interface B { id: ID }          type A implements B { id: Boolean }',
+            'interface B { id: ID }          type A implements B { id: DateTime }',
+            'interface B { id: ID }          type A implements B { id: Float }',
+            'interface B { id: ID }          type A implements B { id: Int }',
+            'interface B { id: ID }          type A implements B { id: String }',
+            'interface B { id: Int }         type A implements B { id: Any }',
+            'interface B { id: Int }         type A implements B { id: Boolean }',
+            'interface B { id: Int }         type A implements B { id: DateTime }',
+            'interface B { id: Int }         type A implements B { id: Float }',
+            'interface B { id: Int }         type A implements B { id: ID }',
+            'interface B { id: Int }         type A implements B { id: String }',
+            'interface B { id: String }      type A implements B { id: Any }',
+
+            // Scalars + Extend
             'type A { id: Boolean }     extend type A { id: Any }',
             'type A { id: Boolean }     extend type A { id: DateTime }',
             'type A { id: Boolean }     extend type A { id: Float }',
@@ -271,7 +311,18 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'type A { id: Int }         extend type A { id: String }',
             'type A { id: String }      extend type A { id: Any }',
 
+            // Scalar to Object
+            'interface A { id: ID }               type B implements A { id: B }',
+            'interface A { id: B }                type B implements A { id: A }',
+            'union X = ID | String interface A { id: X }    type B implements A { id: A }',
+            'scalar Test interface A { id: Test } type B implements A { id: A }',
+            'enum X {} interface A { id: X }      type B implements A { id: A }',
+            'input X {} interface A { id: X }     type B implements A { id: A }',
+
             // Interfaces
+            'interface A { field: A }
+                interface B {}
+                type X implements A { field: B }',
             'interface I {} 
                 type A { id: I } 
                 extend type A { id: A }', // Not implements
@@ -334,18 +385,19 @@ class InheritanceTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testExtendPositiveInheritance(string $schema): void
     {
-        /** @var CompilerInterface $compiler */
-        foreach ($this->getCompilers() as $compiler) {
-            $result = $compiler->compile(File::fromSources($schema));
-            static::assertNotNull($result);
+        try {
+            /** @var CompilerInterface $compiler */
+            foreach ($this->getCompilers() as $compiler) {
+                $result = $compiler->compile(File::fromSources($schema));
+                static::assertNotNull($result);
+            }
+        } catch (\Throwable $e) {
+            static::assertFalse(true, $e->getMessage() . "\n    " . $schema);
         }
-
-        echo 'OK: ' . $schema . "\n";
     }
 
     /**
@@ -364,12 +416,12 @@ class InheritanceTestCase extends AbstractCompilerTestCase
         foreach ($this->getCompilers() as $compiler) {
             try {
                 $compiler->compile(File::fromSources($schema));
-                static::assertTrue(false, 'Exception required in: ' . "\n" . $schema);
+                static::assertFalse(true, 'Exception required in:' . "\n    " . $schema);
             } catch (TypeConflictException $error) {
-                static::assertInstanceOf(TypeRedefinitionException::class, $error);
-                echo 'OK: ' . $schema . "\n" .
-                    $error->getInfo() . "\n" .
-                    \str_repeat('-', 80) . "\n";
+                // No assertions hotfix
+                static::assertInstanceOf(TypeConflictException::class, $error);
+
+                $this->messages[] = 'OK (Throws an error): ' . $schema;
             }
         }
     }

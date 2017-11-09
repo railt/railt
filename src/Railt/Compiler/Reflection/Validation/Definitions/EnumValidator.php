@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of railt package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -45,7 +45,7 @@ class EnumValidator extends BaseDefinitionValidator
     private function verifyThatEnumNotEmpty(Definition $definition): void
     {
         if (\count($definition->getValues()) === 0) {
-            $error = \sprintf('%s can not be empty', $this->typeToString($definition));
+            $error = \sprintf('%s can not be empty', $definition);
             throw new TypeConflictException($error, $this->getCallStack());
         }
     }

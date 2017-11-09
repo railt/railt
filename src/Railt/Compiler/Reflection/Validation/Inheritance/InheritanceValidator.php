@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
-use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
@@ -19,8 +18,16 @@ use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 interface InheritanceValidator extends ValidatorInterface
 {
     /**
-     * @param AllowsTypeIndication|TypeDefinition $type
+     * @param TypeDefinition $child
+     * @param TypeDefinition $parent
      * @return bool
      */
-    public function match($type): bool;
+    public function match(TypeDefinition $child, TypeDefinition $parent): bool;
+
+    /**
+     * @param TypeDefinition $child
+     * @param TypeDefinition $parent
+     * @return void
+     */
+    public function validate(TypeDefinition $child, TypeDefinition $parent): void;
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of railt package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Exceptions;
 
+use Illuminate\Support\Str;
 use Railt\Compiler\Kernel\CallStack;
 
 /**
@@ -39,7 +40,7 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
      */
     public function __construct(string $message, CallStack $stack, \Throwable $previous = null)
     {
-        parent::__construct($message, 0, $previous);
+        parent::__construct(Str::ucfirst($message), 0, $previous);
 
         $this->stack = $stack;
 

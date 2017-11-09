@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of railt package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,51 +9,44 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation;
 
-use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Reflection\Validation\Base\Factory;
-use Railt\Compiler\Reflection\Validation\Inheritance\InheritanceValidator;
-use Railt\Compiler\Reflection\Validation\Inheritance\Types;
-use Railt\Compiler\Reflection\Validation\Inheritance\Wrappers;
+use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorsFactory;
 
 /**
  * Class Inheritance
+ *
+ * @method validate(TypeDefinition $child, TypeDefinition $parent)
  */
-final class Inheritance extends Factory
+final class Inheritance extends ValidatorsFactory
 {
     /**
-     * Inheritance constructor.
-     * @param Validator $factory
-     * @param CallStack $stack
-     * @param null|string $name
-     * @throws \InvalidArgumentException
-     * @throws \OutOfBoundsException
+     * {@inheritdoc}
      */
-    public function __construct(Validator $factory, CallStack $stack, ?string $name)
-    {
-        parent::__construct($factory, $stack, $name ?? static::class);
-
-        $this->bootChildrenValidators();
-        $this->bootMatcher();
-    }
-
-    /**
-     * @return void
-     * @throws \InvalidArgumentException
-     * @throws \OutOfBoundsException
-     */
-    private function bootChildrenValidators(): void
-    {
-        $this->addValidator(Types::class);
-        $this->addValidator(Wrappers::class);
-    }
+    protected const VALIDATOR_CLASSES = [
+        // X < Field Type
+        // X < Argument Type
+        Inheritance\WrapperValidator::class,
+        // X < Interface Type
+        Inheritance\InterfaceValidator::class,
+        // X < Scalar Type
+        Inheritance\ScalarValidator::class,
+        // X < Object Type
+        Inheritance\ObjectValidator::class,
+        // X < Enum Type
+        Inheritance\EnumValidator::class,
+        // X < Union Type
+        Inheritance\UnionValidator::class,
+        // X < Input Type
+        Inheritance\InputValidator::class,
+    ];
 
     /**
-     * @return void
+     * @return \Closure
      */
-    private function bootMatcher(): void
+    protected function getDefaultMatcher(): \Closure
     {
-        $this->setMatcher(function (InheritanceValidator $validator, $type): bool {
-            return $validator->match($type);
-        });
+        return function (Inheritance\InheritanceValidator $validator, TypeDefinition $a, TypeDefinition $b): bool {
+            return $validator->match($a, $b);
+        };
     }
 }

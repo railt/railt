@@ -13,7 +13,6 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Exceptions\TypeRedefinitionException;
 use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Base\BaseDocument;
 use Railt\Compiler\Reflection\Builder\Definitions;
@@ -24,7 +23,6 @@ use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Support;
-use Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
  * Class DocumentBuilder
@@ -105,7 +103,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
      * @return bool
      * @throws \OutOfBoundsException
      * @throws TypeConflictException
-     * @throws TypeRedefinitionException
      * @throws BuildingException
      */
     protected function onCompile(TreeNode $ast): bool
@@ -142,7 +139,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
      * @param Definition $definition
      * @return Definition|Definition[]
      * @throws \OutOfBoundsException
-     * @throws TypeRedefinitionException
      */
     private function registerDefinition(Definition $definition)
     {

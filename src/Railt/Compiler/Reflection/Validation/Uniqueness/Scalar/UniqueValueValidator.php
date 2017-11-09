@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Uniqueness\Scalar;
 
-use Railt\Compiler\Exceptions\TypeRedefinitionException;
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Validation\Base\BaseValidator;
 use Railt\Compiler\Reflection\Validation\Uniqueness\ScalarUniquenessValidator;
 
@@ -33,13 +33,13 @@ class UniqueValueValidator extends BaseValidator implements ScalarUniquenessVali
      * @param string $item
      * @param string $typeName
      * @return void
-     * @throws TypeRedefinitionException
+     * @throws TypeConflictException
      */
     public function validate(array $container, string $item, string $typeName): void
     {
         if (\array_key_exists($item, $container)) {
             $error = \sprintf(static::REDEFINITION_ERROR, $typeName . ' ' . $item);
-            throw new TypeRedefinitionException($error, $this->getCallStack());
+            throw new TypeConflictException($error, $this->getCallStack());
         }
     }
 }

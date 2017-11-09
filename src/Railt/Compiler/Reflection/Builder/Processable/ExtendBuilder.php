@@ -53,6 +53,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * @param TreeNode $ast
      * @return bool
      * @throws TypeConflictException
+     * @throws \OutOfBoundsException
      */
     protected function onCompile(TreeNode $ast): bool
     {
@@ -74,6 +75,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
      * @param Definition|Compilable $instance
      * @return void
      * @throws TypeConflictException
+     * @throws \OutOfBoundsException
      */
     private function applyExtender(Definition $instance): void
     {
@@ -121,7 +123,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  */
                 $field = $original->getField($extendField->getName());
 
-                $this->getValidator(Inheritance::class)->validate($field, $extendField);
+                $this->getValidator(Inheritance::class)->validate($extendField, $field);
 
                 $this->dataFieldExtender()->call($field, $extendField);
 
@@ -178,7 +180,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                  */
                 $argument = $original->getArgument($extendArgument->getName());
 
-                $this->getValidator(Inheritance::class)->validate($extendArgument, $argument, false);
+                $this->getValidator(Inheritance::class)->validate($extendArgument, $argument);
 
                 $this->dataArgumentExtender()->call($argument, $extendArgument);
 

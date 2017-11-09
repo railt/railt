@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of railt package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,35 +14,56 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
+use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Compiler\Reflection\Support;
 
 /**
  * Class CallStack
  */
 class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \Countable
 {
+    use Support;
+
     /**
      * @var array|Definition[]
      */
     private $stack = [];
 
     /**
-     * @param Definition $definition
+     * @param Definition[] ...$definitions
      * @return CallStack
      */
-    public function push(Definition $definition): CallStack
+    public function push(Definition ...$definitions): CallStack
     {
-        $this->stack[] = $definition;
+        foreach ($definitions as $definition) {
+            $this->stack[] = $definition;
+        }
 
         return $this;
     }
 
     /**
-     * @return mixed|Definition
+     * @param Definition[] ...$definitions
+     * @return Transaction
      */
-    public function pop(): Definition
+    public function transaction(Definition ...$definitions): Transaction
     {
-        return \array_pop($this->stack);
+        return (new Transaction($this))->push(...$definitions);
+    }
+
+    /**
+     * @param int $size
+     * @return CallStack
+     */
+    public function pop(int $size = 1): CallStack
+    {
+        for ($i = 0; $i < $size; ++$i) {
+            \array_pop($this->stack);
+        }
+
+        return $this;
     }
 
     /**
@@ -69,11 +90,7 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
     {
         $file = $definition->getDocument()->getFile();
 
-        $name = $this->definitionToString($definition);
-
-        if ($definition instanceof DependentDefinition) {
-            $name = $this->definitionToString($definition->getParent()) . '::' . $name;
-        }
+        $name = $this->typeToString($definition);
 
         return [
             'type'   => $name,
@@ -83,21 +100,6 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
             ),
             'column' => $definition->getDeclarationColumn(),
         ];
-    }
-
-    /**
-     * @param Definition $definition
-     * @return string
-     */
-    private function definitionToString(Definition $definition): string
-    {
-        $result = '"' . $definition->getName() . '"';
-
-        if ($definition instanceof TypeDefinition) {
-            return $definition->getTypeName() . '(' . $result . ')';
-        }
-
-        return \class_basename($definition) . '(' . $result . ')';
     }
 
     /**

@@ -14,12 +14,29 @@ use Illuminate\Support\Str;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
  * Trait Support
  */
 trait Support
 {
+    /**
+     * @var string
+     */
+    private static $typeDefinition = '%s<%s>';
+
+    /**
+     * @var string
+     */
+    private static $fieldDefinition = '{%s: %s}';
+
+    /**
+     * @var string
+     */
+    private static $argumentDefinition = '(%s: %s)';
+
     /**
      * @var string
      */
@@ -36,8 +53,25 @@ trait Support
      */
     protected function typeToString(Definition $type): string
     {
+        if ($type instanceof ArgumentDefinition) {
+            return \vsprintf(self::$argumentDefinition, [
+                $type->getName(),
+                $this->typeIndicatorToString($type)
+            ]);
+        }
+
+        if ($type instanceof FieldDefinition) {
+            return \vsprintf(self::$fieldDefinition, [
+                $type->getName(),
+                $this->typeIndicatorToString($type)
+            ]);
+        }
+
         if ($type instanceof TypeDefinition) {
-            return \sprintf('%s("%s")', $type->getTypeName(), $type->getName());
+            return \vsprintf(self::$typeDefinition, [
+                $type->getTypeName(),
+                $type->getName()
+            ]);
         }
 
         return $type->getName();
@@ -49,21 +83,25 @@ trait Support
      */
     protected function typeIndicatorToString(AllowsTypeIndication $type): string
     {
-        $result = $type->getTypeDefinition()->getName();
+        try {
+            $result = $type->getTypeDefinition()->getName();
 
-        if ($type->isList()) {
-            if ($type->isListOfNonNulls()) {
+            if ($type->isList()) {
+                if ($type->isListOfNonNulls()) {
+                    $result = \sprintf(self::$syntaxNonNull, $result);
+                }
+
+                $result = \sprintf(self::$syntaxList, $result);
+            }
+
+            if ($type->isNonNull()) {
                 $result = \sprintf(self::$syntaxNonNull, $result);
             }
 
-            $result = \sprintf(self::$syntaxList, $result);
+            return $result;
+        } catch (\Throwable $e) {
+            return '?';
         }
-
-        if ($type->isNonNull()) {
-            $result = \sprintf(self::$syntaxNonNull, $result);
-        }
-
-        return $result;
     }
 
     /**
