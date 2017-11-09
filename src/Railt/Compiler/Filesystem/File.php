@@ -48,6 +48,7 @@ class File implements ReadableInterface, Arrayable
      */
     protected $definitionLine;
 
+
     /**
      * File constructor.
      * @param string $sources
@@ -218,7 +219,9 @@ class File implements ReadableInterface, Arrayable
      */
     public function getPathname(): string
     {
-        return $this->path;
+        return \is_file($this->path) && \is_readable($this->path)
+            ? \realpath($this->path)
+            : $this->path;
     }
 
     /**
