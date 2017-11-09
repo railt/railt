@@ -58,7 +58,7 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     public function getInfo(): string
     {
         return \vsprintf('%s: %s in %s:%d:%d', [
-            \get_class($this),
+            \class_basename($this),
             $this->getMessage(),
             $this->getFile(),
             $this->getLine(),
