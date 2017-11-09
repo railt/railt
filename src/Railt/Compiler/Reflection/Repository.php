@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Exceptions\TypeRedefinitionException;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
 
@@ -44,15 +44,18 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      * @param TypeDefinition $type
      * @param bool $force
      * @return Dictionary
-     * @throws TypeRedefinitionException
+     * @throws TypeConflictException
      */
     public function register(TypeDefinition $type, bool $force = false): Dictionary
     {
         if (! $force && $this->has($type->getName())) {
-            $error = \sprintf('Can not declare %s, because the name %s already in use',
-                $this->typeToString($type), $type->getName());
+            $error = \sprintf(
+                'Can not declare %s, because the name %s already in use',
+                $this->typeToString($type),
+                $type->getName()
+            );
 
-            throw new TypeRedefinitionException($error, $this->stack);
+            throw new TypeConflictException($error, $this->stack);
         }
 
         $this->definitions[$type->getName()] = $type;
