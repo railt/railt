@@ -12,6 +12,7 @@ namespace Railt\Tests\Compiler;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Compiler\Filesystem\File;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
 use Railt\Tests\Support\SpecSupport;
 use Railt\Tests\Support\SpecTest;
@@ -40,7 +41,7 @@ class AstSpecsTestCase extends AbstractCompilerTestCase
      */
     public function testLanguageAstParsing(SpecTest $spec): void
     {
-        $compiler = new Parser();
+        $compiler = new Parser(new CallStack());
 
         $ast = $compiler->parse(File::fromSources($spec->getIn(), $spec->getPath()));
 

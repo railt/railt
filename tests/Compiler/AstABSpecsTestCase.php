@@ -11,6 +11,7 @@ namespace Railt\Tests\Compiler;
 
 use PHPUnit\Framework\AssertionFailedError;
 use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
 
 /**
@@ -38,7 +39,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
         $error = $file->getPathname() . ' must not throws an exception: ' . "\n" . $file->getContents();
 
         try {
-            $compiler = new Parser();
+            $compiler = new Parser(new CallStack());
             $compiler->parse($file);
         } catch (\Throwable $e) {
             static::throwException(new AssertionFailedError($error));
