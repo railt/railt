@@ -10,14 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Exceptions;
 
 /**
- * An error occurred if the source code semantics are not correct.
- *  - Type conversion errors.
- *  - Type inheritance errors.
- *  - Lack of required data.
- *  - Duplicating of definitions
- *  - etc.
+ * A basic exception for all errors associated
+ * with source code semantics.
  */
-class TypeConflictException extends TypeException
+class TypeException extends BaseSchemaException
 {
 
 }

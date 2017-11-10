@@ -10,7 +10,8 @@ declare(strict_types=1);
 namespace Railt\Compiler\Exceptions;
 
 /**
- * Class UnrecognizedTokenException
+ * An exception that occurs when the source code contains
+ * an unknown and invalid character.
  */
 class UnrecognizedTokenException extends BaseSchemaException
 {

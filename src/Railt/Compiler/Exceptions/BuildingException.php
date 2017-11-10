@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Exceptions;
 
 /**
- * Class BuildingException
- * @deprecated Will be replaced by an internal compiler exception
+ * An exception that occurs when internal mechanisms
+ * are damaged during the construction of an abstract syntax tree.
  */
-class BuildingException extends \LogicException
+class BuildingException extends BaseSchemaException
 {
 
 }

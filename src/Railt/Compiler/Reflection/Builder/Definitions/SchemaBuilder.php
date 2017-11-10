@@ -17,8 +17,6 @@ use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
  * Class SchemaBuilder
@@ -34,7 +32,6 @@ class SchemaBuilder extends BaseSchema implements Compilable
      *
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document)
     {
@@ -45,8 +42,6 @@ class SchemaBuilder extends BaseSchema implements Compilable
     /**
      * @param TreeNode $ast
      * @return bool
-     * @throws \OutOfBoundsException
-     * @throws \Railt\Compiler\Exceptions\BuildingException
      */
     protected function onCompile(TreeNode $ast): bool
     {
@@ -73,7 +68,6 @@ class SchemaBuilder extends BaseSchema implements Compilable
     /**
      * @param TreeNode $ast
      * @return ObjectDefinition|Definition
-     * @throws \Railt\Compiler\Exceptions\BuildingException
      */
     private function fetchType(TreeNode $ast): ObjectDefinition
     {

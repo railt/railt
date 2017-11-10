@@ -17,6 +17,7 @@ use Psr\Log\LoggerInterface;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
 use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Profiler;
 
 /**
@@ -35,10 +36,17 @@ abstract class AbstractParser implements ParserInterface
     private $profiler;
 
     /**
-     * Parser constructor.
+     * @var CallStack
      */
-    public function __construct()
+    private $stack;
+
+    /**
+     * Parser constructor.
+     * @param CallStack $stack
+     */
+    public function __construct(CallStack $stack)
     {
+        $this->stack = $stack;
         $this->parser = $this->createParser();
         $this->profiler = new Profiler($this->parser);
     }
@@ -85,9 +93,9 @@ abstract class AbstractParser implements ParserInterface
         try {
             return $this->parser->parse($file->getContents());
         } catch (UnexpectedToken $e) {
-            throw new UnexpectedTokenException($e->getMessage(), $e->getCode(), $e, $file);
+            throw new UnexpectedTokenException($e->getMessage(), $this->stack);
         } catch (UnrecognizedToken $e) {
-            throw new UnrecognizedTokenException($e->getMessage(), $e->getCode(), $e, $file);
+            throw new UnrecognizedTokenException($e->getMessage(), $this->stack);
         }
     }
 }

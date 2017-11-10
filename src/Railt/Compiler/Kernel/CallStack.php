@@ -13,10 +13,6 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
 use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Compiler\Reflection\Support;
 
 /**
@@ -107,7 +103,13 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
      */
     public function getLastDefinitionInfo(): array
     {
-        return $this->getDefinitionInfo(\array_last($this->stack));
+        $last = \array_last($this->stack);
+
+        if ($last !== null) {
+            return $this->getDefinitionInfo($last);
+        }
+
+        return [];
     }
 
     /**

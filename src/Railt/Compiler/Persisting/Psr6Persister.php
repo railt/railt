@@ -15,7 +15,6 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\InvalidArgumentException;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Filesystem\ReadableInterface;
 
 /**
@@ -63,7 +62,6 @@ class Psr6Persister implements Persister
      * @param ReadableInterface $readable
      * @param \Closure $then
      * @return Document
-     * @throws BuildingException
      * @throws CompilerException
      * @throws \Exception
      * @throws \Psr\Cache\InvalidArgumentException

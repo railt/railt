@@ -10,9 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Exceptions;
 
 /**
- * Class TypeNotFoundException
+ * An exception that occurs when errors are found for
+ * valid types when documents linking.
  */
-class TypeNotFoundException extends BaseSchemaException
+class TypeNotFoundException extends TypeException
 {
 
 }

@@ -14,7 +14,6 @@ use Railt\Compiler\Parser;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
-use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
  * Class CompilerInterface

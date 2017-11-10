@@ -69,6 +69,8 @@ class DocumentBuilder extends BaseDocument implements Compilable
         $this->compiler = $compiler;
         $this->file     = $readable;
 
+        $this->compiler->getStack()->push($this);
+        
         try {
             $this->boot($ast, $this);
             $this->name = $readable->getPathname();
@@ -131,7 +133,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
             $error = 'Broken abstract syntax tree, because a file %s can not contain an undefined Node %s';
             $error = \sprintf($error, $this->getName(), $ast->getId());
 
-            throw new BuildingException($error);
+            throw new BuildingException($error, $this->getCompiler()->getStack());
         }
     }
 

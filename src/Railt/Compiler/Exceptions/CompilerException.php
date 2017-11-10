@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Exceptions;
 
 /**
- * Class CompilerException
+ * An error occurred during the initialization of the compiler.
  */
 class CompilerException extends \LogicException
 {

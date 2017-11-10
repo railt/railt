@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler\Exceptions;
 
 /**
- * Class UnexpectedTokenException
+ * The exception that occurs when a known token is in
+ * an undefined place and the result does not correspond
+ * to any of the admissible structures.
  */
 class UnexpectedTokenException extends UnrecognizedTokenException
 {
