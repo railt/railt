@@ -12,6 +12,7 @@ namespace Railt\Compiler\Persisting;
 use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\InvalidArgumentException;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Reflection\Contracts\Document;
 use Railt\Compiler\Exceptions\BuildingException;
@@ -82,14 +83,14 @@ class Psr6Persister implements Persister
      * @param ReadableInterface $readable
      * @return Document
      * @throws CompilerException
-     * @throws \Psr\Cache\InvalidArgumentException
      */
     private function restore(ReadableInterface $readable): Document
     {
         try {
-            return $this->touch($this->pool->getItem($readable->getHash()))->get();
-        } catch (\Throwable $fatal) {
-            throw new CompilerException($fatal->getMessage(), $fatal->getCode(), $fatal);
+            $result = $this->pool->getItem($readable->getHash());
+            return $this->touch($result)->get();
+        } catch (InvalidArgumentException | \Throwable $fatal) {
+            throw CompilerException::wrap($fatal);
         }
     }
 
@@ -107,8 +108,6 @@ class Psr6Persister implements Persister
      * @param Document $document
      * @return Document
      * @throws \Exception
-     * @throws BuildingException
-     * @throws CompilerException
      */
     private function store(ReadableInterface $readable, Document $document): Document
     {

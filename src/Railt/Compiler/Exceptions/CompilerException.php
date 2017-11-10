@@ -11,9 +11,15 @@ namespace Railt\Compiler\Exceptions;
 
 /**
  * Class CompilerException
- * @deprecated Will be replaced by an internal compiler exception
  */
 class CompilerException extends \LogicException
 {
-
+    /**
+     * @param \Throwable $e
+     * @return CompilerException
+     */
+    public static function wrap(\Throwable $e): self
+    {
+        return new static($e->getMessage(), $e->getCode(), $e);
+    }
 }

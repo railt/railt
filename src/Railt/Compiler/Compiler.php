@@ -9,17 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Psr\Log\LoggerInterface;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Exceptions\InitializationException;
 use Railt\Compiler\Exceptions\SchemaException;
-use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
 use Railt\Compiler\Filesystem\ReadableInterface;
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Kernel\LogWriter;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
@@ -73,8 +68,7 @@ class Compiler implements CompilerInterface
     /**
      * Compiler constructor.
      * @param Persister|null $persister
-     * @throws InitializationException
-     * @throws \InvalidArgumentException
+     * @throws CompilerException
      */
     public function __construct(Persister $persister = null)
     {
@@ -87,7 +81,11 @@ class Compiler implements CompilerInterface
 
         $this->persister = $this->bootPersister($persister);
 
-        $this->bootStandardLibrary();
+        try {
+            $this->bootStandardLibrary();
+        } catch (\OutOfBoundsException $fatal) {
+            throw CompilerException::wrap($fatal);
+        }
     }
 
     /**
@@ -110,6 +108,7 @@ class Compiler implements CompilerInterface
     /**
      * @param array $extensions
      * @return GraphQLDocument|Document
+     * @throws \OutOfBoundsException
      */
     private function bootStandardLibrary(array $extensions = []): GraphQLDocument
     {
@@ -177,7 +176,6 @@ class Compiler implements CompilerInterface
     /**
      * @param Definition $definition
      * @return void
-     * @throws \OutOfBoundsException
      */
     private function completeValidation(Definition $definition): void
     {

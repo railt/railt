@@ -72,8 +72,8 @@ class DocumentBuilder extends BaseDocument implements Compilable
         try {
             $this->boot($ast, $this);
             $this->name = $readable->getPathname();
-        } catch (\Exception $exception) {
-            throw new CompilerException($exception->getMessage(), $exception->getCode(), $exception);
+        } catch (\Exception $fatal) {
+            throw CompilerException::wrap($fatal);
         }
 
         $this->compile();

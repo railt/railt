@@ -13,7 +13,7 @@ use Hoa\Compiler\Exception;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser as LlkParser;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Exceptions\InitializationException;
+use Railt\Compiler\Filesystem\NotFoundException;
 use Railt\Compiler\Parser\CompiledSDLParser;
 use Railt\Compiler\Parser\SDLParser;
 
@@ -38,6 +38,11 @@ class Parser extends SDLParser
     private const COMPILED_FILE = __DIR__ . '/Parser/CompiledSDLParser.php';
 
     /**
+     * Optimised template
+     */
+    private const COMPILED_TEMPLATE = __DIR__ . '/resources/templates/optimised-parser.php';
+
+    /**
      * @return bool
      */
     private function hasOptimizedLayer(): bool
@@ -46,8 +51,30 @@ class Parser extends SDLParser
     }
 
     /**
+     * Return all tokens
+     * @return iterable|string[]
+     */
+    public function getTokens(): iterable
+    {
+        foreach ($this->parser->getTokens() as $namespace => $tokens) {
+            foreach ((array)$tokens as $token => $pattern) {
+                yield $namespace => \array_first(\explode(':', $token));
+            }
+        }
+    }
+
+    /**
+     * @return iterable|\Hoa\Compiler\Llk\Rule\Rule[]
+     */
+    public function getRules(): iterable
+    {
+        return $this->parser->getRules();
+    }
+
+    /**
      * @return void
      * @throws CompilerException
+     * @throws NotFoundException
      */
     public function compile(): void
     {
@@ -60,31 +87,33 @@ class Parser extends SDLParser
      * @param string $namespace
      * @param string $class
      * @return string
+     * @throws NotFoundException
      * @throws CompilerException
      */
     private function compileSources(string $namespace, string $class): string
     {
-        $doc = '/** ' . PHP_EOL .
-            ' * This is generated file. ' . PHP_EOL .
-            ' * For update sources from grammar use %s::%s() method.' . PHP_EOL .
-            ' */';
-
-        $header = '<?php' . PHP_EOL .
-            sprintf($doc, __CLASS__, __FUNCTION__) . PHP_EOL .
-            'namespace ' . $namespace . ';' . PHP_EOL . PHP_EOL;
+        [$selfClass, $selfFunction] = [__CLASS__, __FUNCTION__];
 
         try {
             $sources = Llk::save(parent::createParser(), $class);
-        } catch (Exception $e) {
-            throw new CompilerException($e->getMessage(), $e->getCode(), $e);
+        } catch (Exception $fatal) {
+            throw CompilerException::wrap($fatal);
         }
 
-        return $header . $sources;
+        try {
+            \ob_start();
+            require self::COMPILED_TEMPLATE;
+            $result = \ob_get_contents();
+            \ob_end_clean();
+            return $result;
+        } catch (\Throwable $e) {
+            throw new NotFoundException('Can not build optimized parser because template not resolvable');
+        }
     }
 
     /**
      * @return LlkParser
-     * @throws InitializationException
+     * @throws CompilerException
      */
     protected function createParser(): LlkParser
     {
@@ -97,6 +126,7 @@ class Parser extends SDLParser
 
     /**
      * @throws CompilerException
+     * @throws NotFoundException
      */
     public function __destruct()
     {

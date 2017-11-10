@@ -14,7 +14,7 @@ use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser as LlkParser;
 use Hoa\File\Read;
 use Hoa\Stream\IStream\In;
-use Railt\Compiler\Exceptions\InitializationException;
+use Railt\Compiler\Exceptions\CompilerException;
 
 /**
  * Class SDLParser
@@ -28,14 +28,14 @@ class SDLParser extends AbstractParser
 
     /**
      * @return LlkParser
-     * @throws InitializationException
+     * @throws CompilerException
      */
     protected function createParser(): LlkParser
     {
         try {
             return Llk::load($this->getStream());
         } catch (Exception $e) {
-            throw new InitializationException($e->getMessage(), $e->getCode(), $e);
+            throw new CompilerException($e->getMessage(), $e->getCode(), $e);
         }
     }
 

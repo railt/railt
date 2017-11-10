@@ -27,6 +27,7 @@ class EmulatingPersister implements Persister
      * @param ReadableInterface $readable
      * @param \Closure $then
      * @return Document
+     * @throws CompilerException
      */
     public function remember(ReadableInterface $readable, \Closure $then): Document
     {

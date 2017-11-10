@@ -11,7 +11,6 @@ namespace Railt\Compiler\Exceptions;
 
 /**
  * Class UnexpectedTokenException
- * @deprecated Will be replaced by an internal compiler exception
  */
 class UnexpectedTokenException extends UnrecognizedTokenException
 {

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation;
 
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Validation\Base\Factory;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
@@ -53,7 +54,7 @@ class Validator
     /**
      * Validator constructor.
      * @param CallStack $stack
-     * @throws \InvalidArgumentException
+     * @throws CompilerException
      */
     public function __construct(CallStack $stack)
     {
@@ -64,12 +65,16 @@ class Validator
 
     /**
      * @return void
-     * @throws \InvalidArgumentException
+     * @throws CompilerException
      */
     private function bootDefaults(): void
     {
-        foreach (self::VALIDATOR_GROUPS as $factory) {
-            $this->add($factory);
+        try {
+            foreach (self::VALIDATOR_GROUPS as $factory) {
+                $this->add($factory);
+            }
+        } catch (\InvalidArgumentException $fatal) {
+            throw CompilerException::wrap($fatal);
         }
     }
 
