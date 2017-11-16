@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Definitions;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Compiler\Reflection\Validation\Inheritance;
 
 /**

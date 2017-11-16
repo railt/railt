@@ -12,8 +12,8 @@ namespace Railt\Compiler\Reflection\Builder\Dependent\Field;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Dependent\FieldBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\Field\HasFields;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**

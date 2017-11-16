@@ -12,7 +12,8 @@ namespace Railt\Compiler\Reflection;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Support;
 
 /**
  * Class Repository

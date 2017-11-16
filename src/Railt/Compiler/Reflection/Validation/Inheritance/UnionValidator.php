@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\UnionDefinition;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 
 /**
  * Class UnionValidator

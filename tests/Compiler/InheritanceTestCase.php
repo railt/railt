@@ -11,7 +11,7 @@ namespace Railt\Tests\Compiler;
 
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Filesystem\File;
+use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Reflection\CompilerInterface;
 
 /**

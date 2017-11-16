@@ -12,7 +12,7 @@ namespace Railt\Compiler\Reflection\Builder\Dependent\Argument;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Trait ArgumentsBuilder

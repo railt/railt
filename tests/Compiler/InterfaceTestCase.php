@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Compiler\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Document;
 
 /**
  * Class InterfaceTestCase

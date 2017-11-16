@@ -11,11 +11,11 @@ namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Reflection\Base\Invocations\BaseDirectiveInvocation;
+use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class DirectiveInvocationBuilder

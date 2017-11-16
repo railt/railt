@@ -13,7 +13,7 @@ use Hoa\Compiler\Exception;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser as LlkParser;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Filesystem\NotFoundException;
+use Railt\Reflection\Filesystem\NotFoundException;
 use Railt\Compiler\Parser\CompiledSDLParser;
 use Railt\Compiler\Parser\SDLParser;
 

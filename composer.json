@@ -48,6 +48,7 @@
         "railt/routing": "self.version",
         "railt/container": "self.version",
         "railt/parser": "self.version",
+        "railt/reflection": "self.version",
         "hoa/compiler": "*"
     },
     "autoload": {

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**
  * Class SchemaTestCase

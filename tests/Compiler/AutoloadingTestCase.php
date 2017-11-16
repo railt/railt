@@ -11,7 +11,7 @@ namespace Railt\Tests\Compiler;
 
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Filesystem\File;
+use Railt\Reflection\Filesystem\File;
 
 /**
  * Class AutoloadingTestCase

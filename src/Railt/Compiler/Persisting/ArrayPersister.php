@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Persisting;
 
-use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class ArrayPersister

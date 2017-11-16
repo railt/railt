@@ -11,7 +11,7 @@ namespace Railt\Tests\Compiler;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Compiler\Filesystem\File;
+use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
 use Railt\Tests\Support\SpecSupport;

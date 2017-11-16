@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Definitions;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Reflection\Base\Definitions\BaseObject;
+use Railt\Reflection\Base\Definitions\BaseObject;
 use Railt\Compiler\Reflection\Builder\Dependent\Field\FieldsBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;

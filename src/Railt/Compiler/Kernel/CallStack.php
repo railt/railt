@@ -12,8 +12,8 @@ namespace Railt\Compiler\Kernel;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Renderable;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Support;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Support;
 
 /**
  * Class CallStack

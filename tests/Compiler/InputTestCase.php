@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\InputDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\InputDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Document;
 
 /**
  * Class InputTestCase

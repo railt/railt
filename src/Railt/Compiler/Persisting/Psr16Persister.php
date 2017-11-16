@@ -12,8 +12,8 @@ namespace Railt\Compiler\Persisting;
 use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\SimpleCache\CacheInterface;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class Psr16Persister

@@ -11,8 +11,8 @@ namespace Railt\Compiler\Reflection;
 
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
-use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**

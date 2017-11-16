@@ -16,7 +16,7 @@ use Hoa\Compiler\Llk\TreeNode;
 use Psr\Log\LoggerInterface;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Profiler;
 

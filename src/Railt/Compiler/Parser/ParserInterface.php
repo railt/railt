@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Parser;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Interface ParserInterface

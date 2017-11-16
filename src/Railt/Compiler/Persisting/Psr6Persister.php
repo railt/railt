@@ -14,8 +14,8 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\InvalidArgumentException;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class Psr6Persister

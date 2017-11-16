@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Compiler;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Filesystem\File;
+use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Reflection\CompilerInterface;
 
 /**

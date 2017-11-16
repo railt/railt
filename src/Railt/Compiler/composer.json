@@ -1,7 +1,7 @@
 {
     "name": "railt/compiler",
     "type": "library",
-    "description": "The Railt Compiler component provides Reflection API to read and parse GraphQL SDL",
+    "description": "The Railt Compiler is designed to build Reflection API classes from AST.",
     "license": "MIT",
     "keywords": [ "graphql", "idl", "otd", "ast", "reflection", "reader", "parser", "llk", "introspection" ],
     "homepage": "http://railt.org",
@@ -21,7 +21,8 @@
         "psr/cache": "~1.0",
         "psr/simple-cache": "~1.0",
         "illuminate/support": "~5.5",
-        "railt/parser": "self.version"
+        "railt/parser": "self.version",
+        "railt/reflection": "self.version"
     },
     "autoload": {
         "psr-4": {

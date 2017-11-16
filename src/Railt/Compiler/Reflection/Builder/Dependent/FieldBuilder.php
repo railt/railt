@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Dependent;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Reflection\Base\Dependent\BaseField;
+use Railt\Reflection\Base\Dependent\BaseField;
 use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\Compiler\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class FieldBuilder

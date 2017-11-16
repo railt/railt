@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Definitions;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Reflection\Base\Definitions\BaseEnum;
+use Railt\Reflection\Base\Definitions\BaseEnum;
 use Railt\Compiler\Reflection\Builder\Definitions\Enum\ValueBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;

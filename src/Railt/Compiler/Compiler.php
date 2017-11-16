@@ -13,7 +13,7 @@ use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\SchemaException;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\Persister;
@@ -21,14 +21,14 @@ use Railt\Compiler\Persisting\Proxy;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Dictionary;
 use Railt\Compiler\Reflection\Loader;
-use Railt\Compiler\Reflection\Standard\GraphQLDocument;
-use Railt\Compiler\Reflection\Standard\StandardType;
-use Railt\Compiler\Reflection\Support;
+use Railt\Reflection\Standard\GraphQLDocument;
+use Railt\Reflection\Standard\StandardType;
+use Railt\Reflection\Support;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 use Railt\Compiler\Reflection\Validation\Definitions;
 use Railt\Compiler\Reflection\Validation\Validator;
@@ -110,7 +110,7 @@ class Compiler implements CompilerInterface
      */
     private function bootStandardLibrary(array $extensions = []): GraphQLDocument
     {
-        return $this->complete(new GraphQLDocument($this, $extensions));
+        return $this->complete(new GraphQLDocument($extensions));
     }
 
     /**

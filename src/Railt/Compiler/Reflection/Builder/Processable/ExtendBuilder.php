@@ -11,23 +11,23 @@ namespace Railt\Compiler\Reflection\Builder\Processable;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
-use Railt\Compiler\Reflection\Base\Dependent\BaseArgument;
-use Railt\Compiler\Reflection\Base\Dependent\BaseField;
-use Railt\Compiler\Reflection\Base\Dependent\Field\BaseFieldsContainer;
-use Railt\Compiler\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
-use Railt\Compiler\Reflection\Base\Processable\BaseExtend;
+use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
+use Railt\Reflection\Base\Dependent\BaseArgument;
+use Railt\Reflection\Base\Dependent\BaseField;
+use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
+use Railt\Reflection\Base\Processable\BaseExtend;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Dependent\Argument\HasArguments;
-use Railt\Compiler\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\Field\HasFields;
-use Railt\Compiler\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Compiler\Reflection\Contracts\Invocations\Directive\HasDirectives;
-use Railt\Compiler\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Compiler\Reflection\Contracts\Processable\ExtendDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Dependent\Field\HasFields;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
+use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\Reflection\Contracts\Processable\ExtendDefinition;
 use Railt\Compiler\Reflection\Validation\Inheritance;
 
 /**

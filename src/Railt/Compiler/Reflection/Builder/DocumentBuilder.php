@@ -13,16 +13,16 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Filesystem\ReadableInterface;
-use Railt\Compiler\Reflection\Base\BaseDocument;
+use Railt\Reflection\Filesystem\ReadableInterface;
+use Railt\Reflection\Base\BaseDocument;
 use Railt\Compiler\Reflection\Builder\Definitions;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Support;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Support;
 
 /**
  * Class DocumentBuilder

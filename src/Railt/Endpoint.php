@@ -18,7 +18,7 @@ use Railt\Events\Dispatcher;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Compiler\File;
-use Railt\Compiler\Reflection\Contracts\DocumentInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
 use Railt\Compiler\Reflection\Autoloader;
 use Railt\Compiler\Compiler;
 use Railt\Routing\Router;

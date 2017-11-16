@@ -12,7 +12,7 @@ namespace Railt\Adapters;
 use Railt\Routing\Router;
 use Railt\Adapters\Webonyx\Adapter;
 use Railt\Events\Dispatcher;
-use Railt\Compiler\Reflection\Contracts\DocumentInterface as Document;
+use Railt\Reflection\Contracts\DocumentInterface as Document;
 
 /**
  * Class Factory

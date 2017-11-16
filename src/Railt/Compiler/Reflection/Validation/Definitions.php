@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorsFactory;
 
 /**

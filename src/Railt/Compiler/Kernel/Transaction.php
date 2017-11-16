@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Kernel;
 
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
  * Class Transaction

@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection;
 
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Filesystem\File;
-use Railt\Compiler\Filesystem\NotReadableException;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Filesystem\File;
+use Railt\Reflection\Filesystem\NotReadableException;
+use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class Loader

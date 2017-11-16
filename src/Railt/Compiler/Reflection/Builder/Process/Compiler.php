@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Process;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Filesystem\File;
+use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Compiler\Reflection\Contracts\Definitions\Definition;
-use Railt\Compiler\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Compiler\Reflection\Contracts\Dependent\DependentDefinition;
-use Railt\Compiler\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\DependentDefinition;
+use Railt\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 use Railt\Compiler\Reflection\Validation\Definitions;
 use Railt\Compiler\Reflection\Validation\Uniqueness;

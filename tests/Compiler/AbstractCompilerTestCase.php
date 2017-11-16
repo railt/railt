@@ -26,9 +26,9 @@ use Railt\Compiler\Persisting\NullablePersister;
 use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Psr16Persister;
 use Railt\Compiler\Persisting\Psr6Persister;
-use Railt\Compiler\Reflection\Contracts\Document;
-use Railt\Compiler\Filesystem\File;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\File;
+use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Tests\AbstractTestCase;
 use Symfony\Component\Finder\Finder;
 

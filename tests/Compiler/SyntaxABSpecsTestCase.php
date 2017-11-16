@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Compiler;
 
 use PHPUnit\Framework\AssertionFailedError;
-use Railt\Compiler\Filesystem\ReadableInterface;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class SyntaxABSpecsTestCase
