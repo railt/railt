@@ -44,7 +44,7 @@
     "autoload": {
         "psr-4": {
             "Railt\\": "src/Railt/",
-            "Hoa\\": "src/Hoa/"
+            "Hoa\\Compiler\\": "src/Hoa/Parser/"
         }
     },
     "require-dev": {
