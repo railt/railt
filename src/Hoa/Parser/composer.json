@@ -59,7 +59,7 @@
         "hoa/visitor": "~2.0"
     },
     "replace": {
-        "hoa/compiler": "~3.17"
+        "hoa/compiler": "*"
     },
     "autoload": {
         "psr-4": {
