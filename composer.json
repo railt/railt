@@ -31,7 +31,6 @@
         "psr/log": "~1.0",
         "psr/cache": "~1.0",
         "psr/simple-cache": "~1.0",
-        "hoa/compiler": "dev-master@dev",
         "illuminate/support": "~5.5"
     },
     "replace": {
@@ -39,11 +38,13 @@
         "railt/events": "self.version",
         "railt/compiler": "self.version",
         "railt/routing": "self.version",
-        "railt/container": "self.version"
+        "railt/container": "self.version",
+        "hoa/compiler": "~3.17"
     },
     "autoload": {
         "psr-4": {
-            "Railt\\": "src/Railt/"
+            "Railt\\": "src/Railt/",
+            "Hoa\\": "src/Hoa/"
         }
     },
     "require-dev": {
