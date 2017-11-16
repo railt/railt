@@ -1,6 +1,6 @@
 {
-    "name": "railt/compiler",
-    "description": "The Railt LL(k) based on Hoa\\Compiler library.",
+    "name": "railt/parser",
+    "description": "The Railt LL(k) parser based on Hoa\\Compiler library.",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [

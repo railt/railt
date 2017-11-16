@@ -39,7 +39,8 @@
         "railt/compiler": "self.version",
         "railt/routing": "self.version",
         "railt/container": "self.version",
-        "hoa/compiler": "~3.17"
+        "railt/parser": "self.version",
+        "hoa/compiler": "*"
     },
     "autoload": {
         "psr-4": {
