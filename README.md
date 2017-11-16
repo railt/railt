@@ -51,4 +51,8 @@ at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
 
 ## License
 
-The Railt Framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The Railt Framework is open-sourced software licensed under 
+the [MIT license](https://opensource.org/licenses/MIT).
+
+The Hoa\Compiler, which is part of the Railt Framework re-distribute 
+under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
