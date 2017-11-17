@@ -35,6 +35,8 @@ class ArgumentValidator extends BaseDefinitionValidator
      */
     public function validate(Definition $type): void
     {
+        $this->getCallStack()->push($type);
+
         $definition = $type->getTypeDefinition();
 
         if (! ($definition instanceof Inputable)) {
@@ -45,6 +47,8 @@ class ArgumentValidator extends BaseDefinitionValidator
         if ($type->hasDefaultValue()) {
             $this->validateDefaultValue($type, $definition);
         }
+
+        $this->getCallStack()->pop();
     }
 
     /**

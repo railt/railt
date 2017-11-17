@@ -70,9 +70,7 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
         $result = [];
 
         foreach ($this->stack as $i => $definition) {
-            if ($i + 1 === \count($this->stack)) { continue; }
-
-            array_unshift($result, $this->getDefinitionInfo($definition));
+            \array_unshift($result, $this->getDefinitionInfo($definition));
         }
 
         return $result;

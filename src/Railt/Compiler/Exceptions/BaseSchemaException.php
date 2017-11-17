@@ -85,7 +85,7 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
         ];
 
         return $result . (
-            \count($this->stack) > 1
+            \count($this->stack) > 0
                 ? \sprintf($graphQLStack, $this->stack->render(), $this->getTraceAsString())
                 : \sprintf($phpStack, $this->getTraceAsString())
         );

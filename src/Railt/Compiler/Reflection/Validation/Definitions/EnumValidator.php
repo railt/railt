@@ -34,7 +34,11 @@ class EnumValidator extends BaseDefinitionValidator
      */
     final public function validate(Definition $definition): void
     {
+        $this->getCallStack()->push($definition);
+
         $this->verifyThatEnumNotEmpty($definition);
+
+        $this->getCallStack()->pop();
     }
 
     /**
