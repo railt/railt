@@ -101,7 +101,7 @@ class ScalarValidator extends BaseInheritanceValidator
 
         $error = \vsprintf('Scalar %s of %s does not compatible with %s of %s', [
             $childType, $child,
-            $parentType, $parent
+            $parentType, $parent,
         ]);
 
         throw new TypeConflictException($error, $this->getCallStack());

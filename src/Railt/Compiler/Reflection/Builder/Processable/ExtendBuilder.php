@@ -11,15 +11,16 @@ namespace Railt\Compiler\Reflection\Builder\Processable;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Reflection\Builder\DocumentBuilder;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
+use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Validation\Inheritance;
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Base\Dependent\BaseField;
 use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Base\Processable\BaseExtend;
-use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
-use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
@@ -28,7 +29,6 @@ use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Processable\ExtendDefinition;
-use Railt\Compiler\Reflection\Validation\Inheritance;
 
 /**
  * Class ExtendBuilder
@@ -134,7 +134,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 continue;
             }
 
-            $callee = function () use ($extendField) {
+            $callee = function () use ($extendField): void {
                 /** @var BaseFieldsContainer $this */
                 $this->fields[$extendField->getName()] = $extendField;
             };
@@ -187,7 +187,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 continue;
             }
 
-            $callee = function () use ($extendArgument) {
+            $callee = function () use ($extendArgument): void {
                 /** @var BaseArgumentsContainer $this */
                 $this->arguments[$extendArgument->getName()] = $extendArgument;
             };
@@ -233,7 +233,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 continue;
             }
 
-            $callee = function () use ($extendDirective) {
+            $callee = function () use ($extendDirective): void {
                 /** @var BaseArgumentsContainer $this */
                 $this->arguments[$extendDirective->getName()] = $extendDirective;
             };

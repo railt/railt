@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
+
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 
 /**
@@ -51,7 +52,7 @@ class ObjectTestCase extends AbstractCompilerTestCase
         static::assertContains($type->getName(), [
             'MyQuery',
             'MyMutation',
-            'MySubscription'
+            'MySubscription',
         ]);
     }
 

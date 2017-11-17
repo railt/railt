@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http;
 
-use Railt\Http\Request;
 use PHPUnit\Framework\Assert;
+use Railt\Http\Request;
 use Railt\Http\RequestInterface;
 
 /**
  * Class NativeRequestTestCase
- * @package Railt\Tests\Http
  */
 class NativeRequestTestCase extends AbstractHttpRequestTestCase
 {

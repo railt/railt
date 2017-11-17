@@ -25,9 +25,7 @@ abstract class BaseSchema extends BaseTypeDefinition implements SchemaDefinition
      */
     protected const TYPE_NAME = 'Schema';
 
-    /**
-     *
-     */
+
     protected const DEFAULT_SCHEMA_NAME = 'DefaultSchema';
 
     /**

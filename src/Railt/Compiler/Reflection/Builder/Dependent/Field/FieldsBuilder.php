@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Dependent\Field;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Builder\Dependent\FieldBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
-use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
  * Trait FieldsBuilder

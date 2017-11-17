@@ -28,11 +28,11 @@ class StringProcessingTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
-directive @test(text: String = "Lol\\\\Troll\\nexample\\u00B6") on OBJECT
+        $schema = <<<'GraphQL'
+directive @test(text: String = "Lol\\Troll\nexample\u00B6") on OBJECT
         
-type A @test(text: "Lol\\\\Troll\\nexample\\u00B6"){
-    field(arg: String = "Lol\\\\Troll\\nexample\\u00B6"): String
+type A @test(text: "Lol\\Troll\nexample\u00B6"){
+    field(arg: String = "Lol\\Troll\nexample\u00B6"): String
 }
 GraphQL;
 

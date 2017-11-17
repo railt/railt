@@ -16,5 +16,4 @@ use Railt\Reflection\Contracts\Definitions\Definition;
  */
 interface ProcessableDefinition extends Definition
 {
-
 }

@@ -46,13 +46,11 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
                 return $this->defaultValue;
 
             case ! $this->isNonNull():
-                return null;
+                return;
 
             case $this->isList():
                 return [];
         }
-
-        return null;
     }
 
     /**

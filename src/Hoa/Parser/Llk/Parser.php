@@ -35,14 +35,14 @@ class Parser
      *
      * @var array
      */
-    protected $_pragmas = null;
+    protected $_pragmas;
 
     /**
      * List of skipped tokens.
      *
      * @var array
      */
-    protected $_skip = null;
+    protected $_skip;
 
     /**
      * Associative array (token name => token regex), to be defined in
@@ -50,28 +50,28 @@ class Parser
      *
      * @var array
      */
-    protected $_tokens = null;
+    protected $_tokens;
 
     /**
      * Rules, to be defined as associative array, name => Rule object.
      *
      * @var array
      */
-    protected $_rules = null;
+    protected $_rules;
 
     /**
      * Lexer iterator.
      *
      * @var \Hoa\Iterator\Lookahead
      */
-    protected $_tokenSequence = null;
+    protected $_tokenSequence;
 
     /**
      * Possible token causing an error.
      *
      * @var array
      */
-    protected $_errorToken = null;
+    protected $_errorToken;
 
     /**
      * Trace of activated rules.
@@ -85,14 +85,14 @@ class Parser
      *
      * @var array
      */
-    protected $_todo = null;
+    protected $_todo;
 
     /**
      * AST.
      *
      * @var \Hoa\Compiler\Llk\TreeNode
      */
-    protected $_tree = null;
+    protected $_tree;
 
     /**
      * Current depth while building the trace.
@@ -112,13 +112,10 @@ class Parser
         array $tokens = [],
         array $rules = [],
         array $pragmas = []
-    )
-    {
+    ) {
         $this->_tokens  = $tokens;
         $this->_rules   = $rules;
         $this->_pragmas = $pragmas;
-
-        return;
     }
 
     /**
@@ -135,7 +132,7 @@ class Parser
         $k = 1024;
 
         if (isset($this->_pragmas['parser.lookahead'])) {
-            $k = max(0, (int)$this->_pragmas['parser.lookahead']);
+            $k = \max(0, (int)$this->_pragmas['parser.lookahead']);
         }
 
         $lexer                = new Lexer($this->_pragmas);
@@ -149,7 +146,7 @@ class Parser
         $this->_trace      = [];
         $this->_todo       = [];
 
-        if (array_key_exists($rule, $this->_rules) === false) {
+        if (\array_key_exists($rule, $this->_rules) === false) {
             $rule = $this->getRootRule();
         }
 
@@ -202,7 +199,7 @@ class Parser
     public function getRootRule()
     {
         foreach ($this->_rules as $rule => $_) {
-            if (! is_int($rule)) {
+            if (! \is_int($rule)) {
                 break;
             }
         }
@@ -234,7 +231,7 @@ class Parser
                 $out      = $this->_parse($zeRule, $next);
 
                 if ($out === false && $this->backtrack() === false) {
-                    return null;
+                    return;
                 }
             }
         }
@@ -317,13 +314,14 @@ class Parser
                 $zzeRule->setRepresentation($regex);
             }
 
-            array_pop($this->_todo);
+            \array_pop($this->_todo);
             $this->_trace[] = $zzeRule;
             $this->_tokenSequence->next();
             $this->_errorToken = $this->_tokenSequence->current();
 
             return true;
-        } elseif ($zeRule instanceof Concatenation) {
+        }
+        if ($zeRule instanceof Concatenation) {
             if ($zeRule->isTransitional() === false) {
                 ++$this->_depth;
             }
@@ -336,17 +334,18 @@ class Parser
             );
             $children       = $zeRule->getChildren();
 
-            for ($i = count($children) - 1; $i >= 0; --$i) {
+            for ($i = \count($children) - 1; $i >= 0; --$i) {
                 $nextRule      = $children[$i];
                 $this->_todo[] = new Ekzit($nextRule, 0);
                 $this->_todo[] = new Entry($nextRule, 0);
             }
 
             return true;
-        } elseif ($zeRule instanceof Choice) {
+        }
+        if ($zeRule instanceof Choice) {
             $children = $zeRule->getChildren();
 
-            if ($next >= count($children)) {
+            if ($next >= \count($children)) {
                 return false;
             }
 
@@ -365,7 +364,8 @@ class Parser
             $this->_todo[]  = new Entry($nextRule, 0);
 
             return true;
-        } elseif ($zeRule instanceof Repetition) {
+        }
+        if ($zeRule instanceof Repetition) {
             $nextRule = $zeRule->getChildren();
 
             if ($next === 0) {
@@ -382,7 +382,7 @@ class Parser
                     null,
                     $this->_depth
                 );
-                array_pop($this->_todo);
+                \array_pop($this->_todo);
                 $this->_todo[] = new Ekzit(
                     $name,
                     $min,
@@ -395,23 +395,22 @@ class Parser
                 }
 
                 return true;
-            } else {
-                $max = $zeRule->getMax();
+            }
+            $max = $zeRule->getMax();
 
-                if ($max != -1 && $next > $max) {
-                    return false;
-                }
+            if ($max != -1 && $next > $max) {
+                return false;
+            }
 
-                $this->_todo[] = new Ekzit(
+            $this->_todo[] = new Ekzit(
                     $zeRule->getName(),
                     $next,
                     $this->_todo
                 );
-                $this->_todo[] = new Ekzit($nextRule, 0);
-                $this->_todo[] = new Entry($nextRule, 0);
+            $this->_todo[] = new Ekzit($nextRule, 0);
+            $this->_todo[] = new Entry($nextRule, 0);
 
-                return true;
-            }
+            return true;
         }
 
         return false;
@@ -427,7 +426,7 @@ class Parser
         $found = false;
 
         do {
-            $last = array_pop($this->_trace);
+            $last = \array_pop($this->_trace);
 
             if ($last instanceof Entry) {
                 $zeRule = $this->_rules[$last->getRule()];
@@ -595,8 +594,7 @@ class Parser
         &$handle,
         $cId,
         $recursive = false
-    )
-    {
+    ) {
         \end($children);
         $last = \current($children);
 

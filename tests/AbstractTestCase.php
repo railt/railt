@@ -13,9 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class AbstractTestCase
- * @package Railt\Tests
  */
 abstract class AbstractTestCase extends TestCase
 {
-
 }

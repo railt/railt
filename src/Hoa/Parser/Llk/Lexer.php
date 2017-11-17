@@ -26,14 +26,14 @@ class Lexer
      *
      * @var array
      */
-    protected $_lexerState  = null;
+    protected $_lexerState;
 
     /**
      * Text.
      *
      * @var string
      */
-    protected $_text        = null;
+    protected $_text;
 
     /**
      * Tokens.
@@ -47,14 +47,14 @@ class Lexer
      *
      * @var \SplStack
      */
-    protected $_nsStack     = null;
+    protected $_nsStack;
 
     /**
      * PCRE options.
      *
      * @var string
      */
-    protected $_pcreOptions = null;
+    protected $_pcreOptions;
 
     /**
      * Constructor.
@@ -63,11 +63,9 @@ class Lexer
      */
     public function __construct(array $pragmas = [])
     {
-        if (!isset($pragmas['lexer.unicode']) || true === $pragmas['lexer.unicode']) {
+        if (! isset($pragmas['lexer.unicode']) || true === $pragmas['lexer.unicode']) {
             $this->_pcreOptions .= 'u';
         }
-
-        return;
     }
 
     /**
@@ -85,7 +83,7 @@ class Lexer
         $this->_tokens     = $tokens;
         $this->_nsStack    = null;
         $offset            = 0;
-        $maxOffset         = strlen($this->_text);
+        $maxOffset         = \strlen($this->_text);
         $this->_lexerState = 'default';
         $stack             = false;
 
@@ -93,15 +91,15 @@ class Lexer
             $_tokens = [];
 
             foreach ($tokens as $fullLexeme => $regex) {
-                if (false === strpos($fullLexeme, ':')) {
+                if (false === \strpos($fullLexeme, ':')) {
                     $_tokens[$fullLexeme] = [$regex, null];
 
                     continue;
                 }
 
-                list($lexeme, $namespace) = explode(':', $fullLexeme, 2);
+                [$lexeme, $namespace] = \explode(':', $fullLexeme, 2);
 
-                $stack |= ('__shift__' === substr($namespace, 0, 9));
+                $stack |= ('__shift__' === \substr($namespace, 0, 9));
 
                 unset($tokens[$fullLexeme]);
                 $_tokens[$lexeme] = [$regex, $namespace];
@@ -128,7 +126,7 @@ class Lexer
                 yield $nextToken;
             }
 
-            $offset += strlen($nextToken['value']);
+            $offset += \strlen($nextToken['value']);
         }
 
         yield [
@@ -137,7 +135,7 @@ class Lexer
             'length'    => 0,
             'namespace' => 'default',
             'keep'      => true,
-            'offset'    => $offset
+            'offset'    => $offset,
         ];
     }
 
@@ -153,7 +151,7 @@ class Lexer
         $tokenArray = &$this->_tokens[$this->_lexerState];
 
         foreach ($tokenArray as $lexeme => $bucket) {
-            list($regex, $nextState) = $bucket;
+            [$regex, $nextState] = $bucket;
 
             if (null === $nextState) {
                 $nextState = $this->_lexerState;
@@ -169,10 +167,10 @@ class Lexer
                     $shift = false;
 
                     if (null !== $this->_nsStack &&
-                        0 !== preg_match('#^__shift__(?:\s*\*\s*(\d+))?$#', $nextState, $matches)) {
-                        $i = isset($matches[1]) ? intval($matches[1]) : 1;
+                        0 !== \preg_match('#^__shift__(?:\s*\*\s*(\d+))?$#', $nextState, $matches)) {
+                        $i = isset($matches[1]) ? (int) ($matches[1]) : 1;
 
-                        if ($i > ($c = count($this->_nsStack))) {
+                        if ($i > ($c = \count($this->_nsStack))) {
                             throw new Compiler\Exception\Lexer(
                                 'Cannot shift namespace %d-times, from token ' .
                                 '%s in namespace %s, because the stack ' .
@@ -182,12 +180,12 @@ class Lexer
                                     $i,
                                     $lexeme,
                                     $this->_lexerState,
-                                    $c
+                                    $c,
                                 ]
                             );
                         }
 
-                        while (1 <=  $i--) {
+                        while (1 <= $i--) {
                             $previousNamespace = $this->_nsStack->pop();
                         }
 
@@ -195,7 +193,7 @@ class Lexer
                         $shift     = true;
                     }
 
-                    if (!isset($this->_tokens[$nextState])) {
+                    if (! isset($this->_tokens[$nextState])) {
                         throw new Compiler\Exception\Lexer(
                             'Namespace %s does not exist, called by token %s ' .
                             'in namespace %s.',
@@ -203,7 +201,7 @@ class Lexer
                             [
                                 $nextState,
                                 $lexeme,
-                                $this->_lexerState
+                                $this->_lexerState,
                             ]
                         );
                     }
@@ -218,8 +216,6 @@ class Lexer
                 return $out;
             }
         }
-
-        return null;
     }
 
     /**
@@ -233,8 +229,8 @@ class Lexer
      */
     protected function matchLexeme($lexeme, $regex, $offset)
     {
-        $_regex = str_replace('#', '\#', $regex);
-        $preg   = preg_match(
+        $_regex = \str_replace('#', '\#', $regex);
+        $preg   = \preg_match(
             '#\G(?|' . $_regex . ')#' . $this->_pcreOptions,
             $this->_text,
             $matches,
@@ -243,7 +239,7 @@ class Lexer
         );
 
         if (0 === $preg) {
-            return null;
+            return;
         }
 
         if ('' === $matches[0]) {
@@ -258,7 +254,7 @@ class Lexer
         return [
             'token'  => $lexeme,
             'value'  => $matches[0],
-            'length' => mb_strlen($matches[0])
+            'length' => \mb_strlen($matches[0]),
         ];
     }
 }

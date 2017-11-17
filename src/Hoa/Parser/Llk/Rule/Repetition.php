@@ -48,8 +48,8 @@ class Repetition extends Rule
     {
         parent::__construct($name, $children, $nodeId);
 
-        $min = max(0, (int) $min);
-        $max = max(-1, (int) $max);
+        $min = \max(0, (int) $min);
+        $max = \max(-1, (int) $max);
 
         if (-1 !== $max && $min > $max) {
             throw new Compiler\Exception\Rule(
@@ -61,8 +61,6 @@ class Repetition extends Rule
 
         $this->_min = $min;
         $this->_max = $max;
-
-        return;
     }
 
     /**

@@ -22,7 +22,7 @@ class NotFoundException extends NotReadableException
      */
     public function __construct(string $file = '', int $code = 0, \Throwable $previous = null)
     {
-        $message = sprintf('File "%s" not found.', $file);
+        $message = \sprintf('File "%s" not found.', $file);
 
         parent::__construct($message, $code, $previous);
     }

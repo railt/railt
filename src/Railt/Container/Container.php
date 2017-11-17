@@ -46,7 +46,7 @@ class Container implements ContainerInterface
      */
     public function __construct(ContainerInterface $parent = null)
     {
-        $this->parent = $parent;
+        $this->parent        = $parent;
         $this->paramResolver = new ParamResolver($this);
     }
 
@@ -75,13 +75,13 @@ class Container implements ContainerInterface
         $error = 'Trying to resolve unregistered entity "%s"';
 
         if ($this->parent === null) {
-            throw new ContainerResolutionException(sprintf($error, $id));
+            throw new ContainerResolutionException(\sprintf($error, $id));
         }
 
         try {
             return $this->parent->get($id);
         } catch (\Throwable $e) {
-            throw new ContainerResolutionException(sprintf($error, $id), $e->getCode(), $e);
+            throw new ContainerResolutionException(\sprintf($error, $id), $e->getCode(), $e);
         }
     }
 
@@ -103,7 +103,7 @@ class Container implements ContainerInterface
 
         $args = $this->paramResolver->resolve($reflection, $params);
 
-        return call_user_func_array($callable, iterator_to_array($args));
+        return \call_user_func_array($callable, \iterator_to_array($args));
     }
 
     /**
@@ -114,15 +114,15 @@ class Container implements ContainerInterface
     private function getReflectionFunction(callable $callable): \ReflectionFunction
     {
         switch (true) {
-            case is_string($callable):
-                if (!array_key_exists($callable, $this->closures)) {
+            case \is_string($callable):
+                if (! \array_key_exists($callable, $this->closures)) {
                     $this->closures[$callable] = new \ReflectionFunction($callable);
                 }
 
                 return $this->closures[$callable];
             case $callable instanceof \Closure:
-                $key = spl_object_hash($callable);
-                if (!array_key_exists($key, $this->closures)) {
+                $key = \spl_object_hash($callable);
+                if (! \array_key_exists($key, $this->closures)) {
                     $this->closures[$key] = new \ReflectionFunction($callable);
                 }
 
@@ -141,7 +141,7 @@ class Container implements ContainerInterface
      */
     public function get($id)
     {
-        if (array_key_exists($id, $this->definitions)) {
+        if (\array_key_exists($id, $this->definitions)) {
             return $this->definitions[$id]->resolve();
         }
 
@@ -149,7 +149,7 @@ class Container implements ContainerInterface
             return $this->getParent($id);
         }
 
-        if (is_string($id) && class_exists($id)) {
+        if (\is_string($id) && \class_exists($id)) {
             $this->factory($id, $id);
 
             return $this->get($id);
@@ -164,7 +164,7 @@ class Container implements ContainerInterface
      */
     public function has($id): bool
     {
-        return array_key_exists($id, $this->definitions) || $this->hasParent($id);
+        return \array_key_exists($id, $this->definitions) || $this->hasParent($id);
     }
 
     /**

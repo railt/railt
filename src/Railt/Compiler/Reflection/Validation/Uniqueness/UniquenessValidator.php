@@ -9,17 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Uniqueness;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface UniquenessValidator
  */
 interface UniquenessValidator extends ValidatorInterface
 {
-    /**
-     *
-     */
     public const REDEFINITION_ERROR = 'Can not redefine already defined %s';
 
     /**

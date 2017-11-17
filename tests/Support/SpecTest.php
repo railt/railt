@@ -11,7 +11,6 @@ namespace Railt\Tests\Support;
 
 /**
  * Class SpecTest
- * @package Railt\Tests\Support
  */
 class SpecTest
 {
@@ -42,14 +41,14 @@ class SpecTest
      */
     public function __construct(string $path)
     {
-        $sources = @file_get_contents($this->path = $path);
-        if (is_bool($sources)) {
+        $sources = @\file_get_contents($this->path = $path);
+        if (\is_bool($sources)) {
             throw new \InvalidArgumentException('Could not open a Spec file "' . $path . '".');
         }
 
         $sections = $this->parse($sources);
 
-        if (count($sections) !== 3) {
+        if (\count($sections) !== 3) {
             throw new \InvalidArgumentException('Could not parse spec file "' . $path . '".');
         }
 
@@ -62,9 +61,9 @@ class SpecTest
      */
     private function parse(string $sources): array
     {
-        $bodies = array_map('trim', preg_split('/^\-\-(TEST|FILE|EXPECTF)\-\-$/m', $sources));
+        $bodies = \array_map('trim', \preg_split('/^\-\-(TEST|FILE|EXPECTF)\-\-$/m', $sources));
 
-        return array_values(array_filter($bodies));
+        return \array_values(\array_filter($bodies));
     }
 
     /**

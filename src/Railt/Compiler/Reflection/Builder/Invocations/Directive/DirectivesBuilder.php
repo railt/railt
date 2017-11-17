@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Invocations\Directive;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Base\Behavior\BaseDeprecations;
-use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Compiler\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Reflection\Base\Behavior\BaseDeprecations;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Behavior\Deprecatable;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

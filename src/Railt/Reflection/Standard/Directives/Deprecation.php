@@ -44,7 +44,7 @@ final class Deprecation extends BaseDirective implements StandardType
         $this->deprecationReason = self::RFC_IMPL_DESCRIPTION;
         $this->locations         = Location::TARGET_GRAPHQL_SDL;
 
-        $argument = $this->createReasonArgument();
+        $argument                              = $this->createReasonArgument();
         $this->arguments[$argument->getName()] = $argument;
     }
 

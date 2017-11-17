@@ -48,7 +48,6 @@ class File implements ReadableInterface, Arrayable
      */
     protected $definitionLine;
 
-
     /**
      * File constructor.
      * @param string $sources
@@ -91,7 +90,7 @@ class File implements ReadableInterface, Arrayable
      * @throws \InvalidArgumentException
      * @throws NotReadableException
      */
-    public static function new($file): File
+    public static function new($file): self
     {
         if ($file instanceof \SplFileInfo) {
             return static::fromSplFileInfo($file);

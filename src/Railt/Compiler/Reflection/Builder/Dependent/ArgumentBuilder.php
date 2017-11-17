@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Dependent;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Process\ValueBuilder;
+use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Support;
 
@@ -59,4 +59,3 @@ class ArgumentBuilder extends BaseArgument implements Compilable
         return false;
     }
 }
-

@@ -41,7 +41,7 @@ class ParamResolver
      */
     public function resolve(\ReflectionFunctionAbstract $action, array $parameters = []): \Traversable
     {
-        $params = count($parameters)
+        $params = \count($parameters)
             ? new Proxy(new Parameters($parameters), $this->container)
             : $this->container;
 
@@ -101,7 +101,7 @@ class ParamResolver
         }
 
         if ($parameter->allowsNull() || $parameter->isVariadic()) {
-            return null;
+            return;
         }
 
         throw new ParameterResolutionException($parameter);

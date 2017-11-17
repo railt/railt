@@ -14,7 +14,6 @@ use Railt\Reflection\Contracts\Document;
 
 /**
  * Class DocumentTestCase
- * @package Railt\Tests\Compiler
  */
 class DocumentTestCase extends AbstractCompilerTestCase
 {
@@ -51,7 +50,7 @@ class DocumentTestCase extends AbstractCompilerTestCase
      * @param Document $document
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testIsSuccessfullyCompiled(Document $document)
+    public function testIsSuccessfullyCompiled(Document $document): void
     {
         static::assertInstanceOf(Document::class, $document);
     }
@@ -62,7 +61,7 @@ class DocumentTestCase extends AbstractCompilerTestCase
      * @param Document $document
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testUniqueIdentifier(Document $document)
+    public function testUniqueIdentifier(Document $document): void
     {
         $pattern = '/^' . self::DOCUMENT_ID_PATTERN . '$/u';
 
@@ -76,7 +75,7 @@ class DocumentTestCase extends AbstractCompilerTestCase
      * @param Document $document
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testDocumentName(Document $document)
+    public function testDocumentName(Document $document): void
     {
         static::assertNotNull($document->getName());
 
@@ -93,7 +92,7 @@ class DocumentTestCase extends AbstractCompilerTestCase
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testDocumentHasTypes(Document $document)
+    public function testDocumentHasTypes(Document $document): void
     {
         static::assertTrue($document->getNumberOfTypeDefinitions() > 0);
         static::assertCount($document->getNumberOfTypeDefinitions(), $document->getTypeDefinitions());
@@ -121,7 +120,6 @@ class DocumentTestCase extends AbstractCompilerTestCase
     {
         /** @var CompilerInterface $compiler */
         foreach ($this->getCompilers() as $compiler) {
-
             $string = $compiler->get('String');
             $stdlib = $string->getDocument();
 

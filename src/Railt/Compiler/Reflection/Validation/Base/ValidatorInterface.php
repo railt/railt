@@ -34,7 +34,7 @@ interface ValidatorInterface
      * @param string $group
      * @return ValidatorInterface
      */
-    public function getValidator(string $group): ValidatorInterface;
+    public function getValidator(string $group): self;
 
     /**
      * @return CallStack

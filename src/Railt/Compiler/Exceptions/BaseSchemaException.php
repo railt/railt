@@ -47,8 +47,8 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
         $info = $stack->getLastDefinitionInfo();
 
         $this->column = $info['column'] ?? 0;
-        $this->file = $info['file'] ?? $this->file;
-        $this->line = $info['line'] ?? $this->line;
+        $this->file   = $info['file'] ?? $this->file;
+        $this->line   = $info['line'] ?? $this->line;
 
         $this->trace = $this->stack->toArray();
     }
@@ -63,7 +63,7 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
             $this->getMessage(),
             $this->getFile(),
             $this->getLine(),
-            $this->getColumn()
+            $this->getColumn(),
         ]);
     }
 

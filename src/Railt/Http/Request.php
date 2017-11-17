@@ -38,7 +38,7 @@ class Request implements RequestInterface, ConfigurableRequestInterface
      */
     private function readJsonRequest(): array
     {
-        return (array)json_decode($this->getInputStream(), true);
+        return (array)\json_decode($this->getInputStream(), true);
     }
 
     /**
@@ -46,7 +46,7 @@ class Request implements RequestInterface, ConfigurableRequestInterface
      */
     protected function getInputStream(): string
     {
-        return @file_get_contents('php://input') ?: '';
+        return @\file_get_contents('php://input') ?: '';
     }
 
     /**
@@ -54,6 +54,6 @@ class Request implements RequestInterface, ConfigurableRequestInterface
      */
     private function readRawRequest(): array
     {
-        return array_merge($_GET, $_POST, $_REQUEST);
+        return \array_merge($_GET, $_POST, $_REQUEST);
     }
 }

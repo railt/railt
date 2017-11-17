@@ -21,8 +21,6 @@ class IllegalToken extends Exception
      */
     protected $column = 0;
 
-
-
     /**
      * Override line and add column support.
      *
@@ -38,8 +36,6 @@ class IllegalToken extends Exception
 
         $this->line   = $line;
         $this->column = $column;
-
-        return;
     }
 
     /**

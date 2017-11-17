@@ -24,7 +24,7 @@ class EnumTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 """
 # This is an example ENUM
 """

@@ -11,15 +11,14 @@ namespace Railt\Tests\Compiler;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
+use Railt\Reflection\Filesystem\File;
 use Railt\Tests\Support\SpecSupport;
 use Railt\Tests\Support\SpecTest;
 
 /**
  * Class CompilerTestCase
- * @package Railt\Tests\Compiler\Compiler
  * @group large
  */
 class AstSpecsTestCase extends AbstractCompilerTestCase
@@ -48,13 +47,13 @@ class AstSpecsTestCase extends AbstractCompilerTestCase
         $dump = $compiler->dump($ast);
 
         try {
-            $otherwise = 'Error in test "' . str_replace('"', "'", $spec->getName())
+            $otherwise = 'Error in test "' . \str_replace('"', "'", $spec->getName())
                 . '" defined in ' . $spec->getPath();
 
             Assert::assertEquals($spec->getOut(), $dump, $otherwise);
         } catch (ExpectationFailedException $e) {
             echo $this->specDiff($spec, $dump);
-            flush();
+            \flush();
             throw $e;
         }
     }

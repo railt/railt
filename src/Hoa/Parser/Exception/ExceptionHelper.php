@@ -48,7 +48,7 @@ trait ExceptionHelper
     private static function getAffectedCodeAsString(array $textLines)
     {
         $result = '';
-        $i = 0;
+        $i      = 0;
 
         while (\count($textLines) && ++$i) {
             $textLine = \array_pop($textLines);
@@ -119,7 +119,7 @@ trait ExceptionHelper
                 return [
                     'line'   => $line + 1,
                     'column' => $bytesOffset - $previous,
-                    'trace'  => $result['trace']
+                    'trace'  => $result['trace'],
                 ];
             }
         }

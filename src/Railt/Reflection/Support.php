@@ -11,9 +11,9 @@ namespace Railt\Reflection;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
@@ -56,21 +56,21 @@ trait Support
         if ($type instanceof ArgumentDefinition) {
             return \vsprintf(self::$argumentDefinition, [
                 $type->getName(),
-                $this->typeIndicatorToString($type)
+                $this->typeIndicatorToString($type),
             ]);
         }
 
         if ($type instanceof FieldDefinition) {
             return \vsprintf(self::$fieldDefinition, [
                 $type->getName(),
-                $this->typeIndicatorToString($type)
+                $this->typeIndicatorToString($type),
             ]);
         }
 
         if ($type instanceof TypeDefinition) {
             return \vsprintf(self::$typeDefinition, [
                 $type->getTypeName(),
-                $type->getName()
+                $type->getName(),
             ]);
         }
 

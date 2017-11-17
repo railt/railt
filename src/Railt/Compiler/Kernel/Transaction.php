@@ -44,7 +44,7 @@ class Transaction
      * @param Definition[] ...$definitions
      * @return Transaction
      */
-    public function push(Definition ...$definitions): Transaction
+    public function push(Definition ...$definitions): self
     {
         $this->size += \count($definitions);
         $this->stack->push(...$definitions);
@@ -56,7 +56,7 @@ class Transaction
      * @param \Closure $then
      * @return Transaction
      */
-    public function then(\Closure $then): Transaction
+    public function then(\Closure $then): self
     {
         $this->invocations[] = $then;
 
@@ -66,7 +66,7 @@ class Transaction
     /**
      * @return Transaction
      */
-    public function commit(): Transaction
+    public function commit(): self
     {
         if ($this->size > 0) {
             $this->stack->pop($this->size);
@@ -81,7 +81,7 @@ class Transaction
      * @return Transaction
      * @throws \Throwable
      */
-    public function invoke(\Closure $what = null): Transaction
+    public function invoke(\Closure $what = null): self
     {
         if ($what !== null) {
             $this->then($what);

@@ -42,7 +42,7 @@ class Pipeline
     public function __construct(ContainerInterface $container, RouterInterface $router)
     {
         $this->container = $container;
-        $this->router = $router;
+        $this->router    = $router;
     }
 
     /**
@@ -66,7 +66,5 @@ class Pipeline
             // Exec middleware
             // Process output
         }
-
-
     }
 }

@@ -44,10 +44,10 @@ class Parameters implements ContainerInterface
      * @throws \ReflectionException
      * @throws \BadMethodCallException
      */
-    public function with(array $parameters = []): Parameters
+    public function with(array $parameters = []): self
     {
         foreach ($parameters as $key => $value) {
-            if (is_int($key)) {
+            if (\is_int($key)) {
                 $this->registerAnonymousParameter($value);
             } else {
                 $this->registerNamedParameter($key, $value);
@@ -65,14 +65,14 @@ class Parameters implements ContainerInterface
     private function registerAnonymousParameter($value)
     {
         switch (true) {
-            case is_object($value):
-                return $this->registerNamedParameter(get_class($value), $value);
-            case is_string($value):
+            case \is_object($value):
+                return $this->registerNamedParameter(\get_class($value), $value);
+            case \is_string($value):
                 return $this->registerNamedParameter($value, $value);
         }
 
         $error = 'Can not register dynamic parameter %s without key.';
-        throw new \BadMethodCallException(sprintf($error, gettype($value)));
+        throw new \BadMethodCallException(\sprintf($error, \gettype($value)));
     }
 
     /**
@@ -80,19 +80,19 @@ class Parameters implements ContainerInterface
      * @param mixed $value
      * @throws \ReflectionException
      */
-    private function registerNamedParameter($key, $value)
+    private function registerNamedParameter($key, $value): void
     {
         $this->container->singleton($key, $value);
 
         switch (true) {
-            case is_object($value):
+            case \is_object($value):
                 foreach ($this->getObjectAliases($value) as $alias) {
                     if (! $this->container->has($alias)) {
                         $this->container->singleton($alias, $value);
                     }
                 }
                 break;
-            case is_string($value) && class_exists($value):
+            case \is_string($value) && \class_exists($value):
                 foreach ($this->getClassAliases($value) as $alias) {
                     if (! $this->container->has($alias)) {
                         $this->container->singleton($alias, $value);
@@ -109,7 +109,7 @@ class Parameters implements ContainerInterface
      */
     private function getObjectAliases($object): \Traversable
     {
-        yield from $this->getClassAliases(get_class($object));
+        yield from $this->getClassAliases(\get_class($object));
     }
 
     /**

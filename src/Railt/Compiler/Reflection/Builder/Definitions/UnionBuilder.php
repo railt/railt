@@ -11,11 +11,11 @@ namespace Railt\Compiler\Reflection\Builder\Definitions;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Reflection\Base\Definitions\BaseUnion;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Reflection\Base\Definitions\BaseUnion;
 
 /**
  * Class UnionBuilder

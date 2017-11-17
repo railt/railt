@@ -19,5 +19,4 @@ namespace Railt\Compiler\Exceptions;
  */
 class TypeConflictException extends TypeException
 {
-
 }

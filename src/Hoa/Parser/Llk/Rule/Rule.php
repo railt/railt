@@ -24,21 +24,21 @@ abstract class Rule
      *
      * @var string
      */
-    protected $_name = null;
+    protected $_name;
 
     /**
      * Rule's children. Can be an array of names or a single name.
      *
      * @var mixed
      */
-    protected $_children = null;
+    protected $_children;
 
     /**
      * Node ID.
      *
      * @var string
      */
-    protected $_nodeId = null;
+    protected $_nodeId;
 
     /**
      * Node options.
@@ -52,7 +52,7 @@ abstract class Rule
      *
      * @var string
      */
-    protected $_defaultId = null;
+    protected $_defaultId;
 
     /**
      * Default options.
@@ -66,7 +66,7 @@ abstract class Rule
      *
      * @var string
      */
-    protected $_pp = null;
+    protected $_pp;
 
     /**
      * Whether the rule is transitional or not (i.e. not declared in the grammar
@@ -75,7 +75,6 @@ abstract class Rule
      * @var bool
      */
     protected $_transitional = true;
-
 
     /**
      * Constructor.
@@ -159,9 +158,9 @@ abstract class Rule
     {
         $old = $this->_nodeId;
 
-        if (false !== $pos = strpos((string)$nodeId, ':')) {
-            $this->_nodeId      = substr((string)$nodeId, 0, $pos);
-            $this->_nodeOptions = str_split(substr((string)$nodeId, $pos + 1));
+        if (false !== $pos = \strpos((string)$nodeId, ':')) {
+            $this->_nodeId      = \substr((string)$nodeId, 0, $pos);
+            $this->_nodeOptions = \str_split(\substr((string)$nodeId, $pos + 1));
         } else {
             $this->_nodeId      = $nodeId;
             $this->_nodeOptions = [];
@@ -200,9 +199,9 @@ abstract class Rule
     {
         $old = $this->_defaultId;
 
-        if (false !== $pos = strpos($defaultId, ':')) {
-            $this->_defaultId      = substr($defaultId, 0, $pos);
-            $this->_defaultOptions = str_split(substr($defaultId, $pos + 1));
+        if (false !== $pos = \strpos($defaultId, ':')) {
+            $this->_defaultId      = \substr($defaultId, 0, $pos);
+            $this->_defaultOptions = \str_split(\substr($defaultId, $pos + 1));
         } else {
             $this->_defaultId      = $defaultId;
             $this->_defaultOptions = [];

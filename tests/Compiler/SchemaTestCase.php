@@ -13,7 +13,6 @@ use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**
  * Class SchemaTestCase
- * @package Railt\Compiler\Reflection
  */
 class SchemaTestCase extends AbstractCompilerTestCase
 {

@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Process;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Compiler\Reflection\Validation\Definitions;
+use Railt\Compiler\Reflection\Validation\Uniqueness;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
-use Railt\Compiler\Reflection\Validation\Definitions;
-use Railt\Compiler\Reflection\Validation\Uniqueness;
+use Railt\Reflection\Filesystem\File;
 
 /**
  * Trait Compiler
@@ -134,7 +134,7 @@ trait Compiler
     /**
      * @return void
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->completed = true;
     }
@@ -223,7 +223,7 @@ trait Compiler
         foreach ($this->getAst()->getChildren() as $child) {
             switch ($child->getId()) {
                 case $name:
-                    $node = $child->getChild(0);
+                    $node                        = $child->getChild(0);
                     [$this->name, $this->offset] = [$node->getValueValue(), $node->getOffset()];
                     break;
 

@@ -31,7 +31,7 @@ class SingletonDefinition extends FactoryDefinition
     public function resolve()
     {
         if ($this->resolved === false) {
-            $this->value = parent::resolve();
+            $this->value    = parent::resolve();
             $this->resolved = true;
         }
 

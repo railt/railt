@@ -54,7 +54,7 @@ trait TypeIndicationBuilder
                     $this->isNonNull = true;
                 }
             } else {
-                $name = $child->getValueValue();
+                $name       = $child->getValueValue();
                 $this->type = $this->load($name);
             }
         }

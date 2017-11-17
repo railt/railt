@@ -113,7 +113,7 @@ class InterfaceTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type Object implements Test {
     id: ID!
 }
