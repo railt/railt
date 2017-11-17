@@ -9,19 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser;
 
+use Railt\Compiler\Profiler;
+use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Kernel\CallStack;
+use Hoa\Compiler\Llk\Parser as LlkParser;
 use Hoa\Compiler\Exception\UnexpectedToken;
 use Hoa\Compiler\Exception\UnrecognizedToken;
-use Hoa\Compiler\Llk\Parser as LlkParser;
-use Hoa\Compiler\Llk\TreeNode;
-use Psr\Log\LoggerInterface;
+use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
-use Railt\Reflection\Filesystem\ReadableInterface;
-use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Profiler;
 
 /**
- * Class AbstractParser
+ * Class AbstractParser.
  */
 abstract class AbstractParser implements ParserInterface
 {

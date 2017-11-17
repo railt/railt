@@ -10,28 +10,28 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Processable;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
-use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Base\Dependent\BaseField;
-use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
-use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
+use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Base\Processable\BaseExtend;
+use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Reflection\Validation\Inheritance;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
-use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
-use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Processable\ExtendDefinition;
-use Railt\Compiler\Reflection\Validation\Inheritance;
+use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
+use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
+use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
+use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 
 /**
- * Class ExtendBuilder
+ * Class ExtendBuilder.
  */
 class ExtendBuilder extends BaseExtend implements Compilable
 {
@@ -119,7 +119,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
             if ($original->hasField($extendField->getName())) {
                 /**
                  * Check field type.
-                 * @var FieldDefinition $field
+                 * @var FieldDefinition
                  */
                 $field = $original->getField($extendField->getName());
 
@@ -128,7 +128,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
                 $this->dataFieldExtender()->call($field, $extendField);
 
                 /**
-                 * Check field arguments
+                 * Check field arguments.
                  */
                 $this->extendArguments($field, $extendField);
                 continue;
@@ -176,7 +176,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
             if ($original->hasArgument($extendArgument->getName())) {
                 /**
                  * Check field type.
-                 * @var ArgumentDefinition $argument
+                 * @var ArgumentDefinition
                  */
                 $argument = $original->getArgument($extendArgument->getName());
 

@@ -49,7 +49,7 @@ final class DateTimeType extends StringType implements StandardType
      */
     public function isCompatible($value): bool
     {
-        if (\is_string($value))  {
+        if (\is_string($value)) {
             return $this->verifyDate($value);
         }
 
@@ -64,6 +64,7 @@ final class DateTimeType extends StringType implements StandardType
     {
         try {
             new \DateTime($value);
+
             return true;
         } catch (\Throwable $error) {
             return false;

@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
- * Interface ExtendDefinition
+ * Interface ExtendDefinition.
  */
 interface ExtendDefinition extends Definition
 {

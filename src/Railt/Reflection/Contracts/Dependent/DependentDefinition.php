@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Dependent;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
- * Interface DependentTypeDefinition
+ * Interface DependentTypeDefinition.
  */
 interface DependentDefinition extends TypeDefinition
 {

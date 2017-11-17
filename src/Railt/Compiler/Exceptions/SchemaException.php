@@ -12,7 +12,7 @@ namespace Railt\Compiler\Exceptions;
 use Railt\Compiler\Kernel\CallStack;
 
 /**
- * Interface SchemaException
+ * Interface SchemaException.
  */
 interface SchemaException extends \Throwable
 {

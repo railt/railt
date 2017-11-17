@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 
 /**
- * Class EnumTestCase
+ * Class EnumTestCase.
  */
 class EnumTestCase extends AbstractCompilerTestCase
 {
@@ -24,7 +24,7 @@ class EnumTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 """
 # This is an example ENUM
 """

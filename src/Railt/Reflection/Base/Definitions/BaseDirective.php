@@ -9,32 +9,32 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
-use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
+use Railt\Reflection\Contracts\Dependent;
 use Railt\Reflection\Contracts\Definitions;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Dependent;
+use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 
 /**
- * Class BaseDirectiveDefinition
+ * Class BaseDirectiveDefinition.
  */
 abstract class BaseDirective extends BaseTypeDefinition implements DirectiveDefinition
 {
     use BaseArgumentsContainer;
 
     /**
-     * Type name
+     * Type name.
      */
     protected const TYPE_NAME = 'Directive';
 
     /**
-     * Directive location type name
+     * Directive location type name.
      */
     protected const LOCATION_TYPE_NAME = 'DirectiveLocation';
 
     /**
-     * Mappings location to allowed type
+     * Mappings location to allowed type.
      */
     protected const LOCATION_TARGET_MAPPINGS = [
         Location::TARGET_SCHEMA       => Definitions\SchemaDefinition::class,

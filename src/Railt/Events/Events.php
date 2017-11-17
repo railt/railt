@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Events;
 
 /**
- * Class Events
+ * Class Events.
  */
 class Events implements Dispatcher
 {
@@ -38,7 +38,7 @@ class Events implements Dispatcher
     }
 
     /**
-     * Format key
+     * Format key.
      *
      * @param string $name
      * @return string
@@ -82,7 +82,7 @@ class Events implements Dispatcher
     }
 
     /**
-     * Fire
+     * Fire.
      *
      * @param string $name
      * @param mixed $payload
@@ -111,7 +111,7 @@ class Events implements Dispatcher
     {
         foreach ($this->listeners as $key => $listeners) {
             if (\preg_match($key, $event)) {
-                foreach ((array)$listeners as $listener) {
+                foreach ((array) $listeners as $listener) {
                     yield $event => $listener;
                 }
             }

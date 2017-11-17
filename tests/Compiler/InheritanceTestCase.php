@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Tests\Compiler;
 
 use Railt\Compiler\Compiler;
-use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
- * Class InheritanceTestCase
+ * Class InheritanceTestCase.
  */
 class InheritanceTestCase extends AbstractCompilerTestCase
 {
@@ -111,7 +111,6 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'interface A { id: String }     type B implements A { id: ID }',
             'interface A { id: String }     type B implements A { id: String }',
 
-
             // Container + Arguments
             'type A { id(f: ID): ID }                    extend type A { id(f: ID): ID }',
             'type A { id(f: ID!): ID }                   extend type A { id(f: ID): ID! }',
@@ -173,7 +172,6 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'interface A { id(f: DateTime): String }     type B implements A { id(f: String): DateTime }',
             'interface A { id(f: ID): String }           type B implements A { id(f: String): ID }',
             'interface A { id(f: String): String }       type B implements A { id(f: String): String }',
-
 
             // Interfaces
             'interface I {} 

@@ -10,8 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Support;
 
 /**
- * Class SpecTest
- * @package Railt\Tests\Support
+ * Class SpecTest.
  */
 class SpecTest
 {

@@ -11,14 +11,14 @@ namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
 
 /**
- * Class DirectiveInvocationBuilder
+ * Class DirectiveInvocationBuilder.
  */
 class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Compilable
 {
@@ -63,7 +63,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
         try {
             return $this->load($this->getName());
         } catch (TypeNotFoundException $error) {
-            return null;
+            return;
         }
     }
 }

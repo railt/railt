@@ -9,25 +9,25 @@ declare(strict_types=1);
 
 namespace Railt;
 
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
-use Railt\Adapters\Factory;
-use Railt\Container\Container;
+use Railt\Compiler\File;
 use Railt\Events\Events;
+use Railt\Routing\Router;
+use Railt\Adapters\Factory;
+use Psr\Log\LoggerInterface;
+use Railt\Compiler\Compiler;
+use Railt\Compiler\Loggable;
 use Railt\Events\Dispatcher;
+use Railt\Compiler\Debuggable;
+use Railt\Container\Container;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Compiler\File;
-use Railt\Reflection\Contracts\DocumentInterface;
-use Railt\Compiler\Reflection\Autoloader;
-use Railt\Compiler\Compiler;
-use Railt\Routing\Router;
-use Railt\Compiler\Debuggable;
+use Psr\Container\ContainerInterface;
 use Railt\Compiler\DebuggableInterface;
-use Railt\Compiler\Loggable;
+use Railt\Compiler\Reflection\Autoloader;
+use Railt\Reflection\Contracts\DocumentInterface;
 
 /**
- * Class Endpoint
+ * Class Endpoint.
  */
 class Endpoint implements DebuggableInterface
 {

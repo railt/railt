@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Compiler;
 
 use Hoa\Compiler\Llk\Lexer;
-use Hoa\Compiler\Llk\Parser as LlkParser;
 use Hoa\Compiler\Llk\TreeNode;
 use Hoa\Compiler\Visitor\Dump;
+use Hoa\Compiler\Llk\Parser as LlkParser;
 
 /**
- * Class Profiler
+ * Class Profiler.
  */
 class Profiler
 {
@@ -39,7 +39,7 @@ class Profiler
      */
     public function dump(TreeNode $ast): string
     {
-        $result = (string)(new Dump())->visit($ast);
+        $result = (string) (new Dump())->visit($ast);
 
         $result = str_replace('>  ', '    ', $result);
         $result = preg_replace('/^\s{4}/ium', '', $result);

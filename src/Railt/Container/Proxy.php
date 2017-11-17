@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
 
 /**
- * Class Proxy
+ * Class Proxy.
  */
 class Proxy implements ContainerInterface
 {

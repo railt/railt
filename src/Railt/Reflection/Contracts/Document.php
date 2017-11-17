@@ -11,8 +11,8 @@ namespace Railt\Reflection\Contracts;
 
 use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**
  * The Document is an object that contains information

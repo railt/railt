@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 
 /**
- * Interface DirectiveDefinition
+ * Interface DirectiveDefinition.
  */
 interface DirectiveDefinition extends TypeDefinition, HasArguments
 {

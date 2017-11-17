@@ -14,7 +14,7 @@ use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
- * Interface EnumDefinition
+ * Interface EnumDefinition.
  */
 interface EnumDefinition extends TypeDefinition, HasDirectives, Inputable
 {

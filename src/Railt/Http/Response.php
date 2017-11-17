@@ -13,19 +13,19 @@ use Railt\Compiler\Debuggable;
 use Railt\Compiler\DebuggableInterface;
 
 /**
- * Class Response
+ * Class Response.
  */
 class Response implements ResponseInterface, DebuggableInterface
 {
     use Debuggable;
 
     /**
-     * Data field name
+     * Data field name.
      */
     public const FIELD_DATA = 'data';
 
     /**
-     * Errors field name
+     * Errors field name.
      */
     public const FIELD_ERRORS = 'errors';
 
@@ -46,7 +46,7 @@ class Response implements ResponseInterface, DebuggableInterface
      */
     public function __construct(array $data = [], array $errors = [])
     {
-        $this->data   = $data;
+        $this->data = $data;
         $this->errors = $errors;
     }
 
@@ -54,7 +54,7 @@ class Response implements ResponseInterface, DebuggableInterface
      * @param \Throwable[] ...$errors
      * @return Response|static
      */
-    public static function error(\Throwable ...$errors): Response
+    public static function error(\Throwable ...$errors): self
     {
         return new static([], $errors);
     }
@@ -63,7 +63,7 @@ class Response implements ResponseInterface, DebuggableInterface
      * @param \Throwable $error
      * @return Response
      */
-    public function withError(\Throwable $error): Response
+    public function withError(\Throwable $error): self
     {
         $this->errors[] = $error;
 
@@ -74,7 +74,7 @@ class Response implements ResponseInterface, DebuggableInterface
      * @param array $data
      * @return Response
      */
-    public function with(array $data): Response
+    public function with(array $data): self
     {
         $this->data = array_merge($this->data, $data);
 

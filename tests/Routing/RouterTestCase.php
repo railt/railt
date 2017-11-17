@@ -14,8 +14,7 @@ use Railt\Tests\AbstractTestCase;
 use Railt\Routing\Contracts\RouterInterface;
 
 /**
- * Class RouterTestCase
- * @package Railt\Tests\Routing
+ * Class RouterTestCase.
  */
 class RouterTestCase extends AbstractTestCase
 {

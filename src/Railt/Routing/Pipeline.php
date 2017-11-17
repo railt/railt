@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
-use Railt\Routing\Contracts\InputInterface;
 use Railt\Routing\Contracts\Middleware;
+use Railt\Routing\Contracts\InputInterface;
 use Railt\Routing\Contracts\OutputInterface;
 use Railt\Routing\Contracts\RouterInterface;
 
 /**
- * Class Pipeline
+ * Class Pipeline.
  */
 class Pipeline
 {
@@ -66,7 +66,5 @@ class Pipeline
             // Exec middleware
             // Process output
         }
-
-
     }
 }

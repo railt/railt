@@ -14,12 +14,12 @@ use Railt\Reflection\Contracts\Invocations\ArgumentInvocation;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 
 /**
- * Class BaseDirectiveInvocation
+ * Class BaseDirectiveInvocation.
  */
 abstract class BaseDirectiveInvocation extends BaseDependent implements DirectiveInvocation
 {
     /**
-     * Directive type name
+     * Directive type name.
      */
     protected const TYPE_NAME = 'Directive';
 
@@ -69,7 +69,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
     {
         return \array_merge(parent::__sleep(), [
             // Arguments
-            'arguments'
+            'arguments',
         ]);
     }
 }

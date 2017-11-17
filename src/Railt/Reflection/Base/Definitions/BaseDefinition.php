@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
+use Railt\Reflection\Support;
+use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Base\Behavior\BaseDeprecations;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Support;
 
 /**
- * Class BaseTypeDefinition
+ * Class BaseTypeDefinition.
  */
 abstract class BaseDefinition implements Definition, \JsonSerializable
 {
@@ -71,7 +71,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $data   = $this->__sleep();
+        $data = $this->__sleep();
         $result = [];
 
         foreach ($data as $fieldName) {
@@ -108,7 +108,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
         \assert($this->name !== null,
             \sprintf('Name of %s must be initialized.', \get_class($this)));
 
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     /**
@@ -116,7 +116,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
      */
     public function getDescription(): string
     {
-        return (string)$this->description;
+        return (string) $this->description;
     }
 
     /**

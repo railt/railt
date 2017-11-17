@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Exception;
 
 /**
- * Class FinalStateHasNotBeenReached
+ * Class FinalStateHasNotBeenReached.
  */
 class FinalStateHasNotBeenReached extends Exception
 {

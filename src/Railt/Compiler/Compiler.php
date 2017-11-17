@@ -9,32 +9,32 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Exceptions\SchemaException;
-use Railt\Compiler\Exceptions\UnexpectedTokenException;
-use Railt\Compiler\Exceptions\UnrecognizedTokenException;
-use Railt\Reflection\Filesystem\ReadableInterface;
+use Railt\Reflection\Support;
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Persisting\ArrayPersister;
-use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
-use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
-use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Loader;
+use Railt\Compiler\Persisting\Persister;
 use Railt\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Dictionary;
-use Railt\Compiler\Reflection\Loader;
-use Railt\Reflection\Standard\GraphQLDocument;
 use Railt\Reflection\Standard\StandardType;
-use Railt\Reflection\Support;
-use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
-use Railt\Compiler\Reflection\Validation\Definitions;
+use Railt\Compiler\Persisting\ArrayPersister;
+use Railt\Compiler\Exceptions\SchemaException;
+use Railt\Reflection\Standard\GraphQLDocument;
+use Railt\Compiler\Exceptions\CompilerException;
+use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Validation\Validator;
+use Railt\Compiler\Reflection\Validation\Definitions;
+use Railt\Compiler\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Exceptions\UnexpectedTokenException;
+use Railt\Compiler\Exceptions\UnrecognizedTokenException;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**
- * Class Compiler
+ * Class Compiler.
  */
 class Compiler implements CompilerInterface
 {
@@ -72,9 +72,9 @@ class Compiler implements CompilerInterface
      */
     public function __construct(Persister $persister = null)
     {
-        $this->stack     = new CallStack();
-        $this->parser    = new Parser($this->stack);
-        $this->loader    = new Loader($this, $this->stack);
+        $this->stack = new CallStack();
+        $this->parser = new Parser($this->stack);
+        $this->loader = new Loader($this, $this->stack);
         $this->validator = new Validator($this->stack);
 
         $this->persister = $this->bootPersister($persister);

@@ -8,10 +8,11 @@
 declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
+
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 
 /**
- * Class ObjectTestCase
+ * Class ObjectTestCase.
  */
 class ObjectTestCase extends AbstractCompilerTestCase
 {
@@ -27,7 +28,6 @@ class ObjectTestCase extends AbstractCompilerTestCase
             'type MyQuery implements Identifiable @deprecated(reason: "Because") { id: ID! }' .
             'type MyMutation implements Identifiable @deprecated(reason: "Because") { id: ID! }' .
             'type MySubscription implements Identifiable @deprecated(reason: "Because") { id: ID! }';
-
 
         $result = [];
         foreach ($this->getDocuments($schema) as $document) {
@@ -51,7 +51,7 @@ class ObjectTestCase extends AbstractCompilerTestCase
         static::assertContains($type->getName(), [
             'MyQuery',
             'MyMutation',
-            'MySubscription'
+            'MySubscription',
         ]);
     }
 

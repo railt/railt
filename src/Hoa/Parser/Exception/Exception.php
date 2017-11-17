@@ -12,7 +12,7 @@ namespace Hoa\Compiler\Exception;
 use Hoa\Exception\Exception as HoaException;
 
 /**
- * Class Exception
+ * Class Exception.
  */
 class Exception extends HoaException
 {

@@ -9,47 +9,47 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Hoa\Compiler\Exception;
 use Hoa\Compiler\Llk\Llk;
-use Hoa\Compiler\Llk\Parser as LlkParser;
-use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Parser\CompiledSDLParser;
+use Hoa\Compiler\Exception;
 use Railt\Compiler\Parser\SDLParser;
+use Hoa\Compiler\Llk\Parser as LlkParser;
+use Railt\Compiler\Parser\CompiledSDLParser;
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Filesystem\NotFoundException;
 
 /**
- * Class Parser
+ * Class Parser.
  */
 class Parser extends SDLParser
 {
     /**
-     * Compiled parser namespace
+     * Compiled parser namespace.
      */
     private const COMPILED_NAMESPACE = __NAMESPACE__ . '\\Parser';
 
     /**
-     * Compiled parser class
+     * Compiled parser class.
      */
     private const COMPILED_CLASS = 'CompiledSDLParser';
 
     /**
-     * Compiled file path
+     * Compiled file path.
      */
     private const COMPILED_FILE = __DIR__ . '/Parser/CompiledSDLParser.php';
 
     /**
-     * Optimised template
+     * Optimised template.
      */
     private const COMPILED_TEMPLATE = __DIR__ . '/resources/templates/optimised-parser.php';
 
     /**
-     * Return all tokens
+     * Return all tokens.
      * @return iterable|string[]
      */
     public function getTokens(): iterable
     {
         foreach ($this->parser->getTokens() as $namespace => $tokens) {
-            foreach ((array)$tokens as $token => $pattern) {
+            foreach ((array) $tokens as $token => $pattern) {
                 yield $namespace => \array_first(\explode(':', $token));
             }
         }

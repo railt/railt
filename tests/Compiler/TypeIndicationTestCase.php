@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 
 /**
- * Class TypeIndicationTestCase
+ * Class TypeIndicationTestCase.
  */
 class TypeIndicationTestCase extends AbstractCompilerTestCase
 {
@@ -27,7 +27,7 @@ class TypeIndicationTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type Test {
     a: ID
     b: ID!

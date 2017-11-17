@@ -12,8 +12,8 @@ namespace Hoa\Compiler;
 /**
  * Define the __ constant, so useful in compiler :-).
  */
-!defined('GO') and define('GO', 'GO');
-!defined('__') and define('__', '__');
+! defined('GO') and define('GO', 'GO');
+! defined('__') and define('__', '__');
 
 /**
  * Class Ll1 provide an abstract LL(1) compiler, based
@@ -28,7 +28,7 @@ abstract class Ll1
      *
      * @var int
      */
-    protected $_initialLine         = 0;
+    protected $_initialLine = 0;
 
     /**
      * Tokens to skip (will be totally skip, no way to get it).
@@ -39,11 +39,11 @@ abstract class Ll1
      *         '#\s+',           // white spaces
      *         '#//.*',          // inline comment
      *         '#/\*(.|\n)*\*\/' // block comment
-     *     ]
+     *     ].
      *
      * @var array
      */
-    protected $_skip                = [];
+    protected $_skip = [];
 
     /**
      * Tokens.
@@ -71,11 +71,11 @@ abstract class Ll1
      *             '#[a-z_\ \n]+", // id/string
      *             '"'             // quote
      *         ]
-     *     ]
+     *     ].
      *
      * @var array
      */
-    protected $_tokens              = [];
+    protected $_tokens = [];
 
     /**
      * States.
@@ -103,7 +103,7 @@ abstract class Ll1
      *             'ST', // string
      *             'OK'  // terminal
      *         ]
-     *     ]
+     *     ].
      *
      * Note: the constant GO or the string 'GO' must be used to represent the
      *       initial state.
@@ -112,7 +112,7 @@ abstract class Ll1
      *
      * @var array
      */
-    protected $_states              = [];
+    protected $_states = [];
 
     /**
      * Terminal states (defined in the states set).
@@ -123,11 +123,11 @@ abstract class Ll1
      *         ['OK'],
      *         ['OK'],
      *         ['OK']
-     *     ]
+     *     ].
      *
      * @var array
      */
-    protected $_terminal            = [];
+    protected $_terminal = [];
 
     /**
      * Transitions table.
@@ -159,14 +159,14 @@ abstract class Ll1
      *             ST  [ __ , 'OK'],
      *             OK  [ __ ,  __ ]
      *         ]
-     *     )
+     *     ).
      *
      * Note: tokens and states should be declared in the strict same order as
      *       defined previously.
      *
      * @var array
      */
-    protected $_transitions         = [];
+    protected $_transitions = [];
 
     /**
      * Actions table.
@@ -198,7 +198,7 @@ abstract class Ll1
      *             ST  [ 0, 0 ],
      *             OK  [ 0, 0 ]
      *         ]
-     *     ]
+     *     ].
      *
      * AT is filled with integer or char n.
      * If n is a char, it means an action.
@@ -233,52 +233,52 @@ abstract class Ll1
      * care of this :-).
      *
      * Finally, it is possible to combine positive and char action, separated by
-     a comma. Thus: 7,f is equivalent to make an epsilon-transition to the
+     * a comma. Thus: 7,f is equivalent to make an epsilon-transition to the
      * automata 7, then consume the action f.
      *
      * @var array
      */
-    protected $_actions             = [];
+    protected $_actions = [];
 
     /**
      * Names of automata.
      */
-    protected $_names               = [];
+    protected $_names = [];
 
     /**
      * Recursive stack.
      *
      * @var array
      */
-    private $_stack                 = [];
+    private $_stack = [];
 
     /**
      * Buffers.
      *
      * @var array
      */
-    protected $buffers              = [];
+    protected $buffers = [];
 
     /**
      * Current token's line.
      *
      * @var int
      */
-    protected $line                 = 0;
+    protected $line = 0;
 
     /**
      * Current token's column.
      *
      * @var int
      */
-    protected $column               = 0;
+    protected $column = 0;
 
     /**
      * Cache compiling result.
      *
      * @var array
      */
-    protected static $_cache        = [];
+    protected static $_cache = [];
 
     /**
      * Whether cache is enabled or not.
@@ -286,8 +286,6 @@ abstract class Ll1
      * @var bool
      */
     protected static $_cacheEnabled = true;
-
-
 
     /**
      * Singleton, and set parameters.
@@ -316,8 +314,6 @@ abstract class Ll1
         $this->setTransitions($transitions);
         $this->setActions($actions);
         $this->setNames($names);
-
-        return;
     }
 
     /**
@@ -337,25 +333,25 @@ abstract class Ll1
             return self::$_cache[$cacheId];
         }
 
-        $d             = 0;
-        $c             = 0; // current automata.
-        $_skip         = array_flip($this->_skip);
-        $_tokens       = array_flip($this->_tokens[$c]);
-        $_states       = array_flip($this->_states[$c]);
-        $_actions      = [$c => 0];
+        $d = 0;
+        $c = 0; // current automata.
+        $_skip = array_flip($this->_skip);
+        $_tokens = array_flip($this->_tokens[$c]);
+        $_states = array_flip($this->_states[$c]);
+        $_actions = [$c => 0];
 
-        $nextChar      = null;
-        $nextToken     = 0;
-        $nextState     = $_states['GO'];
-        $nextAction    = $_states['GO'];
+        $nextChar = null;
+        $nextToken = 0;
+        $nextState = $_states['GO'];
+        $nextAction = $_states['GO'];
 
-        $this->line    = $this->getInitialLine();
-        $this->column  = 0;
+        $this->line = $this->getInitialLine();
+        $this->column = 0;
 
         $this->buffers = [];
 
-        $line          = $this->line;
-        $column        = $this->column;
+        $line = $this->line;
+        $column = $this->column;
 
         $this->pre($in);
 
@@ -367,11 +363,11 @@ abstract class Ll1
             if ($i == $max) {
                 while ($c > 0 &&
                        in_array($this->_states[$c][$nextState], $this->_terminal[$c])) {
-                    list($c, $nextState, ) = array_pop($this->_stack);
+                    list($c, $nextState) = array_pop($this->_stack);
                 }
 
                 if (in_array($this->_states[$c][$nextState], $this->_terminal[$c]) &&
-                    0    === $c &&
+                    0 === $c &&
                     true === $this->end()) {
 
                     //echo '*********** END REACHED **********' . "\n";
@@ -404,7 +400,7 @@ abstract class Ll1
                 continue;
             } else {
                 $continue = false;
-                $handle   = substr($in, $i);
+                $handle = substr($in, $i);
 
                 foreach ($_skip as $sk => $e) {
                     if ($sk[0] != '#') {
@@ -418,14 +414,14 @@ abstract class Ll1
 
                         if ($strlen > 0) {
                             if (false !== $offset = strrpos($match[1], "\n")) {
-                                $column  = $strlen - $offset - 1;
+                                $column = $strlen - $offset - 1;
                             } else {
                                 $column += $strlen;
                             }
 
-                            $line     += substr_count($match[1], "\n");
-                            $i        += $strlen - 1;
-                            $continue  = true;
+                            $line += substr_count($match[1], "\n");
+                            $i += $strlen - 1;
+                            $continue = true;
 
                             break;
                         }
@@ -460,13 +456,13 @@ abstract class Ll1
                     $this->_stack[$d] = [$c, $nextState, $nextToken];
                     end($this->_stack);
 
-                    $c            = $foo - 1;
-                    $_tokens      = array_flip($this->_tokens[$c]);
-                    $_states      = array_flip($this->_states[$c]);
+                    $c = $foo - 1;
+                    $_tokens = array_flip($this->_tokens[$c]);
+                    $_states = array_flip($this->_states[$c]);
 
-                    $nextState    = $_states['GO'];
-                    $nextAction   = $_states['GO'];
-                    $nextToken    = 0;
+                    $nextState = $_states['GO'];
+                    $nextAction = $_states['GO'];
+                    $nextToken = 0;
 
                     $_actions[$c] = 0;
 
@@ -479,14 +475,14 @@ abstract class Ll1
             }
 
             if (true === $epsilon) {
-                $epsilon   = false;
+                $epsilon = false;
                 $nextToken = false;
             }
 
             // Token.
             if (isset($_tokens[$nextChar])) {
-                $token      = $nextChar;
-                $nextToken  = $_tokens[$token];
+                $token = $nextChar;
+                $nextToken = $_tokens[$token];
 
                 if ("\n" === $nextChar) {
                     $line++;
@@ -496,7 +492,7 @@ abstract class Ll1
                 }
             } else {
                 $nextToken = false;
-                $handle    = substr($in, $i);
+                $handle = substr($in, $i);
 
                 foreach ($_tokens as $token => $e) {
                     if ('#' !== $token[0]) {
@@ -510,15 +506,15 @@ abstract class Ll1
 
                         if ($strlen > 0) {
                             if (false !== $offset = strrpos($match[1], "\n")) {
-                                $column  = $strlen - $offset - 1;
+                                $column = $strlen - $offset - 1;
                             } else {
                                 $column += $strlen;
                             }
 
-                            $nextChar   = $match[1];
-                            $nextToken  = $e;
-                            $i         += $strlen - 1;
-                            $line      += substr_count($match[1], "\n");
+                            $nextChar = $match[1];
+                            $nextToken = $e;
+                            $i += $strlen - 1;
+                            $line += substr_count($match[1], "\n");
 
                             break;
                         }
@@ -540,7 +536,7 @@ abstract class Ll1
                 } else {
                     $nextAction = $this->_actions[$c][$nextState][$nextToken];
                 }
-                $nextState      = $_states[$this->_transitions[$c][$nextState][$nextToken]];
+                $nextState = $_states[$this->_transitions[$c][$nextState][$nextToken]];
             }
 
             // Oh :-(.
@@ -558,11 +554,11 @@ abstract class Ll1
 
                     list($c, $nextState, $nextToken) = $pop;
 
-                    $_actions[$c]  = 2;
+                    $_actions[$c] = 2;
 
-                    $i            -= strlen($nextChar);
-                    $_tokens       = array_flip($this->_tokens[$c]);
-                    $_states       = array_flip($this->_states[$c]);
+                    $i -= strlen($nextChar);
+                    $_tokens = array_flip($this->_tokens[$c]);
+                    $_states = array_flip($this->_states[$c]);
 
                     /*
                     echo '!!! Automata   ' . $c . "\n" .
@@ -585,7 +581,7 @@ abstract class Ll1
                 );
             }
 
-            $this->line   = $line;
+            $this->line = $line;
             $this->column = $column;
 
             //echo '<<< Next state ' . $nextState . "\n";
@@ -601,7 +597,7 @@ abstract class Ll1
                 } else {
                     $buffer = ($buffer - 1) / 2;
 
-                    if (!(isset($this->buffers[$buffer]))) {
+                    if (! (isset($this->buffers[$buffer]))) {
                         $this->buffers[$buffer] = null;
                     }
 
@@ -615,8 +611,6 @@ abstract class Ll1
                 $this->consume($nextAction);
             }
         }
-
-        return;
     }
 
     /**
@@ -636,7 +630,6 @@ abstract class Ll1
      */
     protected function pre(&$in)
     {
-        return;
     }
 
     /**
@@ -664,7 +657,7 @@ abstract class Ll1
      */
     public function setInitialLine($line)
     {
-        $old                = $this->_initialLine;
+        $old = $this->_initialLine;
         $this->_initialLine = $line;
 
         return $old;
@@ -678,12 +671,11 @@ abstract class Ll1
      */
     public function setSkip(array $skip)
     {
-        $old         = $this->_skip;
+        $old = $this->_skip;
         $this->_skip = $skip;
 
         return $old;
     }
-
 
     /**
      * Set tokens.
@@ -693,7 +685,7 @@ abstract class Ll1
      */
     public function setTokens(array $tokens)
     {
-        $old           = $this->_tokens;
+        $old = $this->_tokens;
         $this->_tokens = $tokens;
 
         return $old;
@@ -707,7 +699,7 @@ abstract class Ll1
      */
     public function setStates(array $states)
     {
-        $old           = $this->_states;
+        $old = $this->_states;
         $this->_states = $states;
 
         return $old;
@@ -721,7 +713,7 @@ abstract class Ll1
      */
     public function setTerminal(array $terminal)
     {
-        $old             = $this->_terminal;
+        $old = $this->_terminal;
         $this->_terminal = $terminal;
 
         return $old;
@@ -735,7 +727,7 @@ abstract class Ll1
      */
     public function setTransitions(array $transitions)
     {
-        $old                = $this->_transitions;
+        $old = $this->_transitions;
         $this->_transitions = $transitions;
 
         return $old;
@@ -759,7 +751,7 @@ abstract class Ll1
             }
         }
 
-        $old            = $this->_actions;
+        $old = $this->_actions;
         $this->_actions = $actions;
 
         return $old;
@@ -773,7 +765,7 @@ abstract class Ll1
      */
     public function setNames(array $names)
     {
-        $old          = $this->_names;
+        $old = $this->_names;
         $this->_names = $names;
 
         return $old;
@@ -860,26 +852,26 @@ abstract class Ll1
     }
 
     /**
-     * Enable cache
+     * Enable cache.
      *
      * @return  bool
      */
     public static function enableCache()
     {
-        $old                 = self::$_cacheEnabled;
+        $old = self::$_cacheEnabled;
         self::$_cacheEnabled = true;
 
         return $old;
     }
 
     /**
-     * Disable cache
+     * Disable cache.
      *
      * @return  bool
      */
     public static function disableCache()
     {
-        $old                 = self::$_cacheEnabled;
+        $old = self::$_cacheEnabled;
         self::$_cacheEnabled = false;
 
         return $old;
@@ -910,7 +902,7 @@ abstract class Ll1
                     : '') .
                 '";' . "\n";
 
-            if (!empty($this->_terminal[$e])) {
+            if (! empty($this->_terminal[$e])) {
                 $out .=
                     '        node[shape=doublecircle] "' . $e . '_' .
                     implode('" "' . $e . '_', $this->_terminal[$e]) . '";' . "\n";
@@ -919,7 +911,7 @@ abstract class Ll1
             $out .= '        node[shape=circle];' . "\n";
 
             foreach ($this->_states[$e] as $i => $state) {
-                $name  = [];
+                $name = [];
                 $label = $state;
 
                 if (__ != $state) {
@@ -933,13 +925,13 @@ abstract class Ll1
                         if (is_int($ep)) {
                             $ep--;
 
-                            if (0 < $ep && !isset($name[$ep])) {
+                            if (0 < $ep && ! isset($name[$ep])) {
                                 $name[$ep] = $ep;
                             }
                         }
                     }
 
-                    if (!empty($name)) {
+                    if (! empty($name)) {
                         $label .= ' (' . implode(', ', $name) . ')';
                     }
 

@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
- * Class ArrayPersister
+ * Class ArrayPersister.
  */
 class ArrayPersister implements Persister
 {
@@ -31,7 +31,7 @@ class ArrayPersister implements Persister
     {
         $key = $readable->getHash();
 
-        if (!\array_key_exists($key, $this->storage)) {
+        if (! \array_key_exists($key, $this->storage)) {
             /** @var Document $document */
             $document = $then($readable);
 

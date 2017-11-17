@@ -9,16 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Container\Definitions;
 
-use Railt\Container\ContainerInterface;
 use Railt\Container\ParamResolver;
+use Railt\Container\ContainerInterface;
 
 /**
- * Class FactoryDefinition
+ * Class FactoryDefinition.
  */
 class FactoryDefinition implements DefinitionInterface
 {
     /**
-     * Class constructor
+     * Class constructor.
      */
     private const CONSTRUCTOR_NAME = '__construct';
 
@@ -101,8 +101,6 @@ class FactoryDefinition implements DefinitionInterface
         if ($parent) {
             return $this->getConstructor($parent);
         }
-
-        return null;
     }
 
     /**
@@ -120,7 +118,7 @@ class FactoryDefinition implements DefinitionInterface
                 return $this->container->call($this->target);
 
             case is_object($this->target):
-                if (!$this->resolved) {
+                if (! $this->resolved) {
                     return $this->resolved = $this->target;
                 }
 

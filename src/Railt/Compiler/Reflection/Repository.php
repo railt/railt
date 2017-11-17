@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
+use Railt\Reflection\Support;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Support;
 
 /**
- * Class Repository
+ * Class Repository.
  */
 class Repository implements Dictionary, \Countable, \IteratorAggregate
 {

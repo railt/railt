@@ -11,11 +11,11 @@ namespace Railt\Compiler\Reflection\Builder\Dependent\Argument;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
 
 /**
- * Trait ArgumentsBuilder
+ * Trait ArgumentsBuilder.
  *
  * @mixin Compiler
  */

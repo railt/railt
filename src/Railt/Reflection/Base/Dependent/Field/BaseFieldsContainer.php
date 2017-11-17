@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
- * Trait BaseFieldsContainer
+ * Trait BaseFieldsContainer.
  * @mixin HasFields
  */
 trait BaseFieldsContainer

@@ -12,12 +12,12 @@ namespace Railt\Reflection\Base\Definitions;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
- * Class BaseTypeDefinition
+ * Class BaseTypeDefinition.
  */
 abstract class BaseTypeDefinition extends BaseDefinition implements TypeDefinition
 {
     /**
-     * Type definition name
+     * Type definition name.
      */
     protected const TYPE_NAME = '';
 

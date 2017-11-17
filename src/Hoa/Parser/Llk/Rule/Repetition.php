@@ -61,8 +61,6 @@ class Repetition extends Rule
 
         $this->_min = $min;
         $this->_max = $max;
-
-        return;
     }
 
     /**

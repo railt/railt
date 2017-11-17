@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Filesystem;
 
 /**
- * Class NotReadableException
+ * Class NotReadableException.
  */
 class NotReadableException extends \LogicException
 {

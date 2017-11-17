@@ -14,7 +14,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
- * Class BaseDependentType
+ * Class BaseDependentType.
  */
 abstract class BaseDependent extends BaseTypeDefinition implements DependentDefinition
 {

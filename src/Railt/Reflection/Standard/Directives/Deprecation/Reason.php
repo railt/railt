@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Directives\Deprecation;
 
-use Railt\Reflection\Base\Dependent\BaseArgument;
-use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Standard\Directives\Deprecation;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 
 /**
- * Class Reason
+ * Class Reason.
  */
 class Reason extends BaseArgument
 {

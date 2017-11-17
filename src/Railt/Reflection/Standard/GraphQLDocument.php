@@ -11,16 +11,16 @@ namespace Railt\Reflection\Standard;
 
 use Railt\Reflection\Filesystem\File;
 use Railt\Reflection\Base\BaseDocument;
-use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Standard\Directives\Deprecation;
+use Railt\Reflection\Standard\Scalars\IDType;
 use Railt\Reflection\Standard\Scalars\AnyType;
+use Railt\Reflection\Standard\Scalars\IntType;
+use Railt\Reflection\Standard\Scalars\FloatType;
+use Railt\Reflection\Standard\Scalars\StringType;
 use Railt\Reflection\Standard\Scalars\BooleanType;
 use Railt\Reflection\Standard\Scalars\DateTimeType;
-use Railt\Reflection\Standard\Scalars\FloatType;
-use Railt\Reflection\Standard\Scalars\IDType;
-use Railt\Reflection\Standard\Scalars\IntType;
-use Railt\Reflection\Standard\Scalars\StringType;
+use Railt\Reflection\Standard\Directives\Deprecation;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * This class contains a Document implementation for

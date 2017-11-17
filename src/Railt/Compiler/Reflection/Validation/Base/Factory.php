@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Base;
 
 /**
- * Class Factory
+ * Class Factory.
  */
 class Factory extends BaseValidator
 {
@@ -28,7 +28,7 @@ class Factory extends BaseValidator
      * @param \Closure $matcher
      * @return Factory
      */
-    public function setMatcher(\Closure $matcher): Factory
+    public function setMatcher(\Closure $matcher): self
     {
         $this->matcher = $matcher;
 
@@ -41,7 +41,7 @@ class Factory extends BaseValidator
      * @throws \InvalidArgumentException
      * @throws \OutOfBoundsException
      */
-    public function addValidator(string $item): Factory
+    public function addValidator(string $item): self
     {
         if (! \is_subclass_of($item, ValidatorInterface::class)) {
             $error = \sprintf('%s must be instance of %s', $item, ValidatorInterface::class);
@@ -81,4 +81,3 @@ class Factory extends BaseValidator
         return true;
     }
 }
-

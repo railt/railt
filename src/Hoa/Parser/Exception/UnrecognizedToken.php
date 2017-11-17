@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Exception;
 
 /**
- * Class UnrecognizedToken
+ * Class UnrecognizedToken.
  */
 class UnrecognizedToken extends Exception
 {
@@ -36,10 +36,8 @@ class UnrecognizedToken extends Exception
     {
         parent::__construct($message, $code, $arg);
 
-        $this->line   = $line;
+        $this->line = $line;
         $this->column = $column;
-
-        return;
     }
 
     /**
@@ -51,7 +49,7 @@ class UnrecognizedToken extends Exception
      */
     public static function fromOffset($message, $text, $offsetInBytes, $code = 0)
     {
-        $info     = self::getErrorPositionByOffset($text, $offsetInBytes);
+        $info = self::getErrorPositionByOffset($text, $offsetInBytes);
 
         // Formatted message
         $message .= ' at line %s and column %s' . \PHP_EOL .

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Routing\Contracts;
 
 /**
- * Interface InputInterface
+ * Interface InputInterface.
  */
 interface InputInterface
 {

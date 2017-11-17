@@ -12,8 +12,7 @@ namespace Railt\Tests\Compiler;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**
- * Class SchemaTestCase
- * @package Railt\Compiler\Reflection
+ * Class SchemaTestCase.
  */
 class SchemaTestCase extends AbstractCompilerTestCase
 {
@@ -35,6 +34,7 @@ class SchemaTestCase extends AbstractCompilerTestCase
         foreach ($this->getDocuments($schema) as $document) {
             $result[] = [$document->getSchema()];
         }
+
         return $result;
     }
 

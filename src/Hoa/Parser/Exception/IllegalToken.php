@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Exception;
 
 /**
- * Class IllegalToken
+ * Class IllegalToken.
  */
 class IllegalToken extends Exception
 {
@@ -20,8 +20,6 @@ class IllegalToken extends Exception
      * @var int
      */
     protected $column = 0;
-
-
 
     /**
      * Override line and add column support.
@@ -36,10 +34,8 @@ class IllegalToken extends Exception
     {
         parent::__construct($message, $code, $arg);
 
-        $this->line   = $line;
+        $this->line = $line;
         $this->column = $column;
-
-        return;
     }
 
     /**

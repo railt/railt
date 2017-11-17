@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Container;
 
 /**
- * Class Parameters
+ * Class Parameters.
  */
 class Parameters implements ContainerInterface
 {
@@ -33,7 +33,7 @@ class Parameters implements ContainerInterface
     public function __construct(array $parameters = [])
     {
         $this->parameters = $parameters;
-        $this->container  = new Container();
+        $this->container = new Container();
 
         $this->with($parameters);
     }
@@ -44,7 +44,7 @@ class Parameters implements ContainerInterface
      * @throws \ReflectionException
      * @throws \BadMethodCallException
      */
-    public function with(array $parameters = []): Parameters
+    public function with(array $parameters = []): self
     {
         foreach ($parameters as $key => $value) {
             if (is_int($key)) {

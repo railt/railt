@@ -13,8 +13,7 @@ use PHPUnit\Framework\AssertionFailedError;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
- * Class SyntaxABSpecsTestCase
- * @package Railt\Tests\Compiler\Compiler
+ * Class SyntaxABSpecsTestCase.
  * @group large
  */
 class SyntaxABSpecsTestCase extends AbstractCompilerTestCase

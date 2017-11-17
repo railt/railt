@@ -9,32 +9,28 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder;
 
+use Railt\Reflection\Support;
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Reflection\Base\BaseDocument;
 use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Reflection\Filesystem\ReadableInterface;
-use Railt\Reflection\Base\BaseDocument;
-use Railt\Compiler\Reflection\Builder\Definitions;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
-use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Reflection\Filesystem\ReadableInterface;
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Support;
+use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
 
 /**
- * Class DocumentBuilder
+ * Class DocumentBuilder.
  */
 class DocumentBuilder extends BaseDocument implements Compilable
 {
     use Support;
     use Compiler;
 
-    /**
-     *
-     */
     public const AST_TYPE_MAPPING = [
         // Anonymous types
         '#SchemaDefinition'    => Definitions\SchemaBuilder::class,
@@ -67,10 +63,10 @@ class DocumentBuilder extends BaseDocument implements Compilable
     public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
     {
         $this->compiler = $compiler;
-        $this->file     = $readable;
+        $this->file = $readable;
 
         $this->compiler->getStack()->push($this);
-        
+
         try {
             $this->boot($ast, $this);
             $this->name = $readable->getPathname();
@@ -85,7 +81,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
      * @param CompilerInterface $compiler
      * @return DocumentBuilder
      */
-    public function withCompiler(CompilerInterface $compiler): DocumentBuilder
+    public function withCompiler(CompilerInterface $compiler): self
     {
         $this->compiler = $compiler;
 

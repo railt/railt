@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Exception;
 
 /**
- * Trait ExceptionHelper
+ * Trait ExceptionHelper.
  */
 trait ExceptionHelper
 {
@@ -25,7 +25,7 @@ trait ExceptionHelper
     protected static function getErrorPositionByOffset($text, $bytesOffset)
     {
         $result = self::getErrorInfo($text, $bytesOffset);
-        $code   = self::getAffectedCodeAsString($result['trace']);
+        $code = self::getAffectedCodeAsString($result['trace']);
 
         $column = self::getMbColumnPosition($code, $result['column']);
 
@@ -52,7 +52,7 @@ trait ExceptionHelper
 
         while (\count($textLines) && ++$i) {
             $textLine = \array_pop($textLines);
-            $result   = $textLine . ($i > 1 ? "\n" . $result : '');
+            $result = $textLine . ($i > 1 ? "\n" . $result : '');
 
             if (\trim($textLine)) {
                 break;
@@ -119,7 +119,7 @@ trait ExceptionHelper
                 return [
                     'line'   => $line + 1,
                     'column' => $bytesOffset - $previous,
-                    'trace'  => $result['trace']
+                    'trace'  => $result['trace'],
                 ];
             }
         }

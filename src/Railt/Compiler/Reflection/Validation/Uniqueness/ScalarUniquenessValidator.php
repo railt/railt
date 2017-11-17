@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
- * Interface ScalarUniquenessValidator
+ * Interface ScalarUniquenessValidator.
  */
 interface ScalarUniquenessValidator extends UniquenessValidator
 {

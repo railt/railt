@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Exceptions;
 
 /**
- * Class InitializationException
+ * Class InitializationException.
  * @deprecated Will be replaced by an internal compiler exception
  */
 class InitializationException extends CompilerException

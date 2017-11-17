@@ -13,12 +13,12 @@ use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
- * Class Definitions
+ * Class Definitions.
  */
 abstract class ValidatorsFactory extends Factory
 {
     /**
-     * Definition validators
+     * Definition validators.
      */
     protected const VALIDATOR_CLASSES = [];
 

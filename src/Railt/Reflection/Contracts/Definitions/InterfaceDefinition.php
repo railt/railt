@@ -13,9 +13,8 @@ use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
- * Interface InterfaceDefinition
+ * Interface InterfaceDefinition.
  */
 interface InterfaceDefinition extends TypeDefinition, HasFields, HasDirectives
 {
-
 }

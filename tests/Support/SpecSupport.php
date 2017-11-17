@@ -10,8 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Support;
 
 /**
- * Trait SpecSupport
- * @package Railt\Tests\Support
+ * Trait SpecSupport.
  *
  * @property string $specDirectory
  */
@@ -97,7 +96,7 @@ trait SpecSupport
 
         exec($cmd, $out);
 
-        $result = implode(PHP_EOL, (array)$out);
+        $result = implode(PHP_EOL, (array) $out);
 
         @file_put_contents($fileDiff, $result);
 

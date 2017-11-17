@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Container;
 
 /**
- * Interface RegistrableInterface
+ * Interface RegistrableInterface.
  */
 interface RegistrableInterface
 {
@@ -19,12 +19,12 @@ interface RegistrableInterface
      * @param mixed $value
      * @return RegistrableInterface
      */
-    public function factory(string $key, $value): RegistrableInterface;
+    public function factory(string $key, $value): self;
 
     /**
      * @param string $key
      * @param mixed $value
      * @return RegistrableInterface
      */
-    public function singleton(string $key, $value): RegistrableInterface;
+    public function singleton(string $key, $value): self;
 }

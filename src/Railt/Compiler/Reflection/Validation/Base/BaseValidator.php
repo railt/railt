@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Base;
 
-use Railt\Compiler\Exceptions\SchemaException;
-use Railt\Compiler\Kernel\CallStack;
 use Railt\Reflection\Support;
+use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Exceptions\SchemaException;
 use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
- * Class BaseValidator
+ * Class BaseValidator.
  */
 abstract class BaseValidator implements ValidatorInterface
 {

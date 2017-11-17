@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Behavior;
 
 /**
- * Interface Inputable
+ * Interface Inputable.
  */
 interface Inputable
 {

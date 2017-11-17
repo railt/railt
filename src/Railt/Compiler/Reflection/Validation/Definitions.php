@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorsFactory;
 
 /**
- * Class Definitions
+ * Class Definitions.
  */
 final class Definitions extends ValidatorsFactory
 {

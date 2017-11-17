@@ -12,27 +12,27 @@ namespace Railt\Routing;
 use Railt\Routing\Contracts\RouteInterface;
 
 /**
- * Class Route
+ * Class Route.
  */
 class Route implements RouteInterface
 {
     /**
-     * GraphQL Query method
+     * GraphQL Query method.
      */
     public const METHOD_QUERY = 'query';
 
     /**
-     * GraphQL Mutation method
+     * GraphQL Mutation method.
      */
     public const METHOD_MUTATION = 'mutation';
 
     /**
-     * GraphQL Subscription method
+     * GraphQL Subscription method.
      */
     public const METHOD_SUBSCRIPTION = 'subscription';
 
     /**
-     * GraphQL ANY of already defined methods
+     * GraphQL ANY of already defined methods.
      */
     public const METHOD_ANY = [
         self::METHOD_QUERY,
@@ -116,7 +116,7 @@ class Route implements RouteInterface
      */
     public function match(string $route): bool
     {
-        return (int)\preg_match($this->getPattern(), $route) > 0;
+        return (int) \preg_match($this->getPattern(), $route) > 0;
     }
 
     /**

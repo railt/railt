@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Container\Exceptions;
 
 /**
- * Class ParameterResolutionException
+ * Class ParameterResolutionException.
  */
 class ParameterResolutionException extends ContainerResolutionException
 {

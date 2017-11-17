@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**
- * Interface InheritanceValidator
+ * Interface InheritanceValidator.
  */
 interface InheritanceValidator extends ValidatorInterface
 {

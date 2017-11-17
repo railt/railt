@@ -11,14 +11,14 @@ namespace Railt\Compiler\Reflection\Builder\Definitions;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\Definitions\BaseEnum;
-use Railt\Compiler\Reflection\Builder\Definitions\Enum\ValueBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
+use Railt\Compiler\Reflection\Builder\Definitions\Enum\ValueBuilder;
+use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 
 /**
- * Class EnumBuilder
+ * Class EnumBuilder.
  */
 class EnumBuilder extends BaseEnum implements Compilable
 {

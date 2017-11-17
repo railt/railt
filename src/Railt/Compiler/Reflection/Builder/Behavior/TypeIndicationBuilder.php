@@ -14,7 +14,7 @@ use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 
 /**
- * Trait TypeIndicationBuilder
+ * Trait TypeIndicationBuilder.
  *
  * @mixin Compilable
  */

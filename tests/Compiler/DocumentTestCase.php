@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Reflection\Contracts\Document;
+use Railt\Compiler\Reflection\CompilerInterface;
 
 /**
- * Class DocumentTestCase
- * @package Railt\Tests\Compiler
+ * Class DocumentTestCase.
  */
 class DocumentTestCase extends AbstractCompilerTestCase
 {
@@ -66,7 +65,7 @@ class DocumentTestCase extends AbstractCompilerTestCase
     {
         $pattern = '/^' . self::DOCUMENT_ID_PATTERN . '$/u';
 
-        static::assertTrue((bool)\preg_match($pattern, $document->getUniqueId()));
+        static::assertTrue((bool) \preg_match($pattern, $document->getUniqueId()));
         static::assertEquals($document->getUniqueId(), $document->getUniqueId());
     }
 
@@ -121,7 +120,6 @@ class DocumentTestCase extends AbstractCompilerTestCase
     {
         /** @var CompilerInterface $compiler */
         foreach ($this->getCompilers() as $compiler) {
-
             $string = $compiler->get('String');
             $stdlib = $string->getDocument();
 

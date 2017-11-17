@@ -12,7 +12,7 @@ namespace Railt\Compiler\Reflection\Builder\Process;
 use Hoa\Compiler\Llk\TreeNode;
 
 /**
- * Class ValueBuilder
+ * Class ValueBuilder.
  */
 class ValueBuilder
 {
@@ -67,7 +67,7 @@ class ValueBuilder
 
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            $key = (string)$child->getChild(0)->getChild(0)->getValueValue();
+            $key = (string) $child->getChild(0)->getChild(0)->getValueValue();
             $result[$key] = self::parse($child->getChild(1)->getChild(0));
         }
 
@@ -82,14 +82,14 @@ class ValueBuilder
     {
         switch ($ast->getValueToken()) {
             case self::TOKEN_NUMBER:
-                if (\strpos((string)$ast->getValueValue(), '.') !== false) {
+                if (\strpos((string) $ast->getValueValue(), '.') !== false) {
                     return self::toFloat($ast);
                 }
 
                 return self::toInt($ast);
 
             case self::TOKEN_NULL:
-                return null;
+                return;
 
             case self::TOKEN_BOOL_TRUE:
                 return true;
@@ -107,7 +107,7 @@ class ValueBuilder
      */
     private static function toFloat(TreeNode $ast): float
     {
-        return (float)$ast->getValueValue();
+        return (float) $ast->getValueValue();
     }
 
     /**
@@ -116,7 +116,7 @@ class ValueBuilder
      */
     private static function toInt(TreeNode $ast): int
     {
-        return (int)$ast->getValueValue();
+        return (int) $ast->getValueValue();
     }
 
     /**
@@ -125,7 +125,7 @@ class ValueBuilder
      */
     private static function toString(TreeNode $ast): string
     {
-        $result = (string)$ast->getValueValue();
+        $result = (string) $ast->getValueValue();
 
         // Transform utf char \uXXXX -> X
         $result = self::renderUtfSequences($result);
@@ -151,7 +151,7 @@ class ValueBuilder
     {
         // TODO Probably may be escaped by backslash like "\\n".
         $source = ['\b', '\f', '\n', '\r', '\t'];
-        $out    = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u{0009}"];
+        $out = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u{0009}"];
 
         return \str_replace($source, $out, $body);
     }

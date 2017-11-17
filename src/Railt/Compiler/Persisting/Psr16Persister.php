@@ -9,20 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Persisting;
 
-use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\SimpleCache\CacheInterface;
-use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Contracts\Document;
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Filesystem\ReadableInterface;
+use Cache\Adapter\Common\Exception\CachePoolException;
 
 /**
- * Class Psr16Persister
+ * Class Psr16Persister.
  */
 class Psr16Persister implements Persister
 {
-    /**
-     *
-     */
     private const DEFAULT_REMEMBER_TIME = 60 * 5;
 
     /**

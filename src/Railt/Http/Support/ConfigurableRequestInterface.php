@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http\Support;
 
 /**
- * Interface ConfigurableRequestInterface
+ * Interface ConfigurableRequestInterface.
  */
 interface ConfigurableRequestInterface
 {
@@ -23,7 +23,7 @@ interface ConfigurableRequestInterface
      * @param string $name
      * @return ConfigurableRequestInterface
      */
-    public function setQueryArgument(string $name): ConfigurableRequestInterface;
+    public function setQueryArgument(string $name): self;
 
     /**
      * @return string
@@ -34,7 +34,7 @@ interface ConfigurableRequestInterface
      * @param string $name
      * @return ConfigurableRequestInterface
      */
-    public function setVariablesArgument(string $name): ConfigurableRequestInterface;
+    public function setVariablesArgument(string $name): self;
 
     /**
      * @return string
@@ -45,5 +45,5 @@ interface ConfigurableRequestInterface
      * @param string $name
      * @return ConfigurableRequestInterface
      */
-    public function setOperationArgument(string $name): ConfigurableRequestInterface;
+    public function setOperationArgument(string $name): self;
 }

@@ -13,12 +13,12 @@ use Railt\Reflection\Base\Dependent\BaseDependent;
 use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
 
 /**
- * Class BaseValue
+ * Class BaseValue.
  */
 abstract class BaseValue extends BaseDependent implements ValueDefinition
 {
     /**
-     * Enum value type name
+     * Enum value type name.
      */
     protected const TYPE_NAME = 'EnumValue';
 
@@ -27,7 +27,7 @@ abstract class BaseValue extends BaseDependent implements ValueDefinition
      */
     public function getValue(): string
     {
-        return (string)$this->name;
+        return (string) $this->name;
     }
 
     /**

@@ -12,7 +12,7 @@ namespace Railt\Container;
 use Railt\Container\Exceptions\ParameterResolutionException;
 
 /**
- * Class ParamResolver
+ * Class ParamResolver.
  */
 class ParamResolver
 {
@@ -60,7 +60,7 @@ class ParamResolver
     private function getValueForParameter(\ReflectionParameter $parameter, ContainerInterface $container)
     {
         /**
-         * Resolve parameter by class or interface type-hint
+         * Resolve parameter by class or interface type-hint.
          */
         $classDefinition = $parameter->getClass() ? $parameter->getClass()->getName() : null;
 
@@ -69,7 +69,7 @@ class ParamResolver
         }
 
         /**
-         * Resolve parameter by parameter type-hint
+         * Resolve parameter by parameter type-hint.
          */
         $typeDefinition = $parameter->hasType() ? $parameter->getType()->getName() : null;
 
@@ -78,7 +78,7 @@ class ParamResolver
         }
 
         /**
-         * Resolve parameter by parameter name
+         * Resolve parameter by parameter name.
          */
         $parameterName = $parameter->getName();
 
@@ -101,7 +101,7 @@ class ParamResolver
         }
 
         if ($parameter->allowsNull() || $parameter->isVariadic()) {
-            return null;
+            return;
         }
 
         throw new ParameterResolutionException($parameter);

@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 
 /**
- * Class StringProcessingTestCase
+ * Class StringProcessingTestCase.
  */
 class StringProcessingTestCase extends AbstractCompilerTestCase
 {
@@ -28,11 +28,11 @@ class StringProcessingTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
-directive @test(text: String = "Lol\\\\Troll\\nexample\\u00B6") on OBJECT
+        $schema = <<<'GraphQL'
+directive @test(text: String = "Lol\\Troll\nexample\u00B6") on OBJECT
         
-type A @test(text: "Lol\\\\Troll\\nexample\\u00B6"){
-    field(arg: String = "Lol\\\\Troll\\nexample\\u00B6"): String
+type A @test(text: "Lol\\Troll\nexample\u00B6"){
+    field(arg: String = "Lol\\Troll\nexample\u00B6"): String
 }
 GraphQL;
 
@@ -52,7 +52,6 @@ GraphQL;
         $directive = $document->getTypeDefinition('test');
         /** @var string $text */
         $text = $directive->getArgument('text')->getDefaultValue();
-
 
         static::assertInternalType('string', $text);
         static::assertSame('Lol\\Troll' . "\n" . 'example¶', $text);
@@ -93,7 +92,6 @@ GraphQL;
         $field = $type->getField('field');
         /** @var string $text */
         $text = $field->getArgument('arg')->getDefaultValue();
-
 
         static::assertInternalType('string', $text);
         static::assertSame('Lol\\Troll' . "\n" . 'example¶', $text);

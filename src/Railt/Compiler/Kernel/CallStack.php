@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Kernel;
 
-use Illuminate\Contracts\Support\Arrayable;
+use Railt\Reflection\Support;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Support;
 
 /**
- * Class CallStack
+ * Class CallStack.
  */
 class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \Countable
 {
@@ -31,7 +31,7 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
      * @param Definition[] ...$definitions
      * @return CallStack
      */
-    public function push(Definition ...$definitions): CallStack
+    public function push(Definition ...$definitions): self
     {
         foreach ($definitions as $definition) {
             $this->stack[] = $definition;
@@ -53,9 +53,9 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
      * @param int $size
      * @return CallStack
      */
-    public function pop(int $size = 1): CallStack
+    public function pop(int $size = 1): self
     {
-        for ($i = 0; $i < $size; ++$i) {
+        for ($i = 0; $i < $size; $i++) {
             \array_pop($this->stack);
         }
 

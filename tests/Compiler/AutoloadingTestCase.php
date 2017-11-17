@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Reflection\Filesystem\File;
 
 /**
- * Class AutoloadingTestCase
+ * Class AutoloadingTestCase.
  */
 class AutoloadingTestCase extends AbstractCompilerTestCase
 {

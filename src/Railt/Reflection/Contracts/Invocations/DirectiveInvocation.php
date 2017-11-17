@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Invocations;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
- * Interface DirectiveInvocation
+ * Interface DirectiveInvocation.
  */
 interface DirectiveInvocation extends DependentDefinition, Invocable
 {

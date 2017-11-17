@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
- * Interface Persister
+ * Interface Persister.
  */
 interface Persister
 {

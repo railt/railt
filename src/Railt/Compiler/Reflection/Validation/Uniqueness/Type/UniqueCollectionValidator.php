@@ -15,7 +15,7 @@ use Railt\Compiler\Reflection\Validation\Base\BaseValidator;
 use Railt\Compiler\Reflection\Validation\Uniqueness\TypeUniquenessValidator;
 
 /**
- * Class UniqueCollectionValidator
+ * Class UniqueCollectionValidator.
  */
 class UniqueCollectionValidator extends BaseValidator implements TypeUniquenessValidator
 {

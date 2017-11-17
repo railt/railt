@@ -9,34 +9,34 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation;
 
-use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Reflection\Validation\Base\Factory;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**
- * Class Validator
+ * Class Validator.
  *
  * TODO Add lazy initializing
  */
 class Validator
 {
     /**
-     * A constant list of validator groups
+     * A constant list of validator groups.
      */
     private const VALIDATOR_GROUPS = [
         /**
-         * Type consistency checks
+         * Type consistency checks.
          */
         Definitions::class,
 
         /**
-         * Type Inheritance checks
+         * Type Inheritance checks.
          */
         Inheritance::class,
 
         /**
-         * Checking the children uniqueness
+         * Checking the children uniqueness.
          */
         Uniqueness::class,
     ];

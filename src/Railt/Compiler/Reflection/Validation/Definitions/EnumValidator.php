@@ -14,7 +14,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 
 /**
- * Class EnumValidator
+ * Class EnumValidator.
  */
 class EnumValidator extends BaseDefinitionValidator
 {

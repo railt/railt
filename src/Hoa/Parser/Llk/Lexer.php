@@ -26,28 +26,28 @@ class Lexer
      *
      * @var array
      */
-    protected $_lexerState  = null;
+    protected $_lexerState = null;
 
     /**
      * Text.
      *
      * @var string
      */
-    protected $_text        = null;
+    protected $_text = null;
 
     /**
      * Tokens.
      *
      * @var array
      */
-    protected $_tokens      = [];
+    protected $_tokens = [];
 
     /**
      * Namespace stacks.
      *
      * @var \SplStack
      */
-    protected $_nsStack     = null;
+    protected $_nsStack = null;
 
     /**
      * PCRE options.
@@ -63,11 +63,9 @@ class Lexer
      */
     public function __construct(array $pragmas = [])
     {
-        if (!isset($pragmas['lexer.unicode']) || true === $pragmas['lexer.unicode']) {
+        if (! isset($pragmas['lexer.unicode']) || true === $pragmas['lexer.unicode']) {
             $this->_pcreOptions .= 'u';
         }
-
-        return;
     }
 
     /**
@@ -81,13 +79,13 @@ class Lexer
      */
     public function lexMe($text, array $tokens)
     {
-        $this->_text       = $text;
-        $this->_tokens     = $tokens;
-        $this->_nsStack    = null;
-        $offset            = 0;
-        $maxOffset         = strlen($this->_text);
+        $this->_text = $text;
+        $this->_tokens = $tokens;
+        $this->_nsStack = null;
+        $offset = 0;
+        $maxOffset = strlen($this->_text);
         $this->_lexerState = 'default';
-        $stack             = false;
+        $stack = false;
 
         foreach ($this->_tokens as &$tokens) {
             $_tokens = [];
@@ -137,7 +135,7 @@ class Lexer
             'length'    => 0,
             'namespace' => 'default',
             'keep'      => true,
-            'offset'    => $offset
+            'offset'    => $offset,
         ];
     }
 
@@ -163,7 +161,7 @@ class Lexer
 
             if (null !== $out) {
                 $out['namespace'] = $this->_lexerState;
-                $out['keep']      = 'skip' !== $lexeme;
+                $out['keep'] = 'skip' !== $lexeme;
 
                 if ($nextState !== $this->_lexerState) {
                     $shift = false;
@@ -182,20 +180,20 @@ class Lexer
                                     $i,
                                     $lexeme,
                                     $this->_lexerState,
-                                    $c
+                                    $c,
                                 ]
                             );
                         }
 
-                        while (1 <=  $i--) {
+                        while (1 <= $i--) {
                             $previousNamespace = $this->_nsStack->pop();
                         }
 
                         $nextState = $previousNamespace;
-                        $shift     = true;
+                        $shift = true;
                     }
 
-                    if (!isset($this->_tokens[$nextState])) {
+                    if (! isset($this->_tokens[$nextState])) {
                         throw new Compiler\Exception\Lexer(
                             'Namespace %s does not exist, called by token %s ' .
                             'in namespace %s.',
@@ -203,7 +201,7 @@ class Lexer
                             [
                                 $nextState,
                                 $lexeme,
-                                $this->_lexerState
+                                $this->_lexerState,
                             ]
                         );
                     }
@@ -218,8 +216,6 @@ class Lexer
                 return $out;
             }
         }
-
-        return null;
     }
 
     /**
@@ -234,7 +230,7 @@ class Lexer
     protected function matchLexeme($lexeme, $regex, $offset)
     {
         $_regex = str_replace('#', '\#', $regex);
-        $preg   = preg_match(
+        $preg = preg_match(
             '#\G(?|' . $_regex . ')#' . $this->_pcreOptions,
             $this->_text,
             $matches,
@@ -243,7 +239,7 @@ class Lexer
         );
 
         if (0 === $preg) {
-            return null;
+            return;
         }
 
         if ('' === $matches[0]) {
@@ -258,7 +254,7 @@ class Lexer
         return [
             'token'  => $lexeme,
             'value'  => $matches[0],
-            'length' => mb_strlen($matches[0])
+            'length' => mb_strlen($matches[0]),
         ];
     }
 }

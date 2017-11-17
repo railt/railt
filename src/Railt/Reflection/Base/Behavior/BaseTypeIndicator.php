@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Behavior;
 
-use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 
 /**
- * Trait BaseTypeIndicator
+ * Trait BaseTypeIndicator.
  * @mixin AllowsTypeIndication
  */
 trait BaseTypeIndicator
@@ -47,7 +47,7 @@ trait BaseTypeIndicator
     }
 
     /**
-     * The non-null type
+     * The non-null type.
      *
      * @return bool
      */
@@ -65,7 +65,7 @@ trait BaseTypeIndicator
     }
 
     /**
-     * The list of non-nulls
+     * The list of non-nulls.
      *
      * @return bool
      */

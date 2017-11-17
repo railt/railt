@@ -12,7 +12,7 @@ namespace Railt\Reflection\Base\Behavior;
 use Railt\Reflection\Contracts\Behavior\Deprecatable;
 
 /**
- * Trait BaseDeprecations
+ * Trait BaseDeprecations.
  * @mixin Deprecatable
  */
 trait BaseDeprecations
@@ -35,6 +35,6 @@ trait BaseDeprecations
      */
     public function getDeprecationReason(): string
     {
-        return (string)$this->deprecationReason;
+        return (string) $this->deprecationReason;
     }
 }

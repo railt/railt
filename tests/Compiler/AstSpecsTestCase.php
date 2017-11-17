@@ -9,17 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use PHPUnit\Framework\Assert;
-use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Reflection\Filesystem\File;
-use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
-use Railt\Tests\Support\SpecSupport;
+use PHPUnit\Framework\Assert;
 use Railt\Tests\Support\SpecTest;
+use Railt\Compiler\Kernel\CallStack;
+use Railt\Tests\Support\SpecSupport;
+use Railt\Reflection\Filesystem\File;
+use PHPUnit\Framework\ExpectationFailedException;
 
 /**
- * Class CompilerTestCase
- * @package Railt\Tests\Compiler\Compiler
+ * Class CompilerTestCase.
  * @group large
  */
 class AstSpecsTestCase extends AbstractCompilerTestCase
