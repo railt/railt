@@ -22,7 +22,7 @@ class ParameterResolutionException extends ContainerResolutionException
     {
         $error = 'Can not resolve parameter %s([#%s => %s])';
 
-        $error = sprintf(
+        $error = \sprintf(
             $error,
             $this->context($parameter),
             $parameter->getPosition(),

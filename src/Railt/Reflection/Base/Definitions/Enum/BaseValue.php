@@ -44,7 +44,7 @@ abstract class BaseValue extends BaseDependent implements ValueDefinition
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
-            //
+
         ]);
     }
 }

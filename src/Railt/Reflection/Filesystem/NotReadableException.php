@@ -22,7 +22,7 @@ class NotReadableException extends \LogicException
      */
     public function __construct(string $file = '', int $code = 0, \Throwable $previous = null)
     {
-        $message = sprintf('File "%s" not readable.', $file);
+        $message = \sprintf('File "%s" not readable.', $file);
 
         parent::__construct($message, $code, $previous);
     }

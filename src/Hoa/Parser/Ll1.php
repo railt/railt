@@ -12,8 +12,8 @@ namespace Hoa\Compiler;
 /**
  * Define the __ constant, so useful in compiler :-).
  */
-!defined('GO') and define('GO', 'GO');
-!defined('__') and define('__', '__');
+! \defined('GO') and \define('GO', 'GO');
+! \defined('__') and \define('__', '__');
 
 /**
  * Class Ll1 provide an abstract LL(1) compiler, based
@@ -287,8 +287,6 @@ abstract class Ll1
      */
     protected static $_cacheEnabled = true;
 
-
-
     /**
      * Singleton, and set parameters.
      *
@@ -316,8 +314,6 @@ abstract class Ll1
         $this->setTransitions($transitions);
         $this->setActions($actions);
         $this->setNames($names);
-
-        return;
     }
 
     /**
@@ -330,18 +326,18 @@ abstract class Ll1
      */
     public function compile($in)
     {
-        $cacheId = md5($in);
+        $cacheId = \md5($in);
 
         if (true === self::$_cacheEnabled &&
-            true === array_key_exists($cacheId, self::$_cache)) {
+            true === \array_key_exists($cacheId, self::$_cache)) {
             return self::$_cache[$cacheId];
         }
 
         $d             = 0;
         $c             = 0; // current automata.
-        $_skip         = array_flip($this->_skip);
-        $_tokens       = array_flip($this->_tokens[$c]);
-        $_states       = array_flip($this->_states[$c]);
+        $_skip         = \array_flip($this->_skip);
+        $_tokens       = \array_flip($this->_tokens[$c]);
+        $_states       = \array_flip($this->_states[$c]);
         $_actions      = [$c => 0];
 
         $nextChar      = null;
@@ -359,19 +355,19 @@ abstract class Ll1
 
         $this->pre($in);
 
-        for ($i = 0, $max = strlen($in); $i <= $max; $i++) {
+        for ($i = 0, $max = \strlen($in); $i <= $max; ++$i) {
 
             //echo "\n---\n\n";
 
             // End of parsing (not automata).
             if ($i == $max) {
                 while ($c > 0 &&
-                       in_array($this->_states[$c][$nextState], $this->_terminal[$c])) {
-                    list($c, $nextState, ) = array_pop($this->_stack);
+                       \in_array($this->_states[$c][$nextState], $this->_terminal[$c])) {
+                    [$c, $nextState, ] = \array_pop($this->_stack);
                 }
 
-                if (in_array($this->_states[$c][$nextState], $this->_terminal[$c]) &&
-                    0    === $c &&
+                if (\in_array($this->_states[$c][$nextState], $this->_terminal[$c]) &&
+                    0 === $c &&
                     true === $this->end()) {
 
                     //echo '*********** END REACHED **********' . "\n";
@@ -395,58 +391,58 @@ abstract class Ll1
             // Skip.
             if (isset($_skip[$nextChar])) {
                 if ("\n" === $nextChar) {
-                    $line++;
+                    ++$line;
                     $column = 0;
                 } else {
-                    $column++;
+                    ++$column;
                 }
 
                 continue;
-            } else {
-                $continue = false;
-                $handle   = substr($in, $i);
+            }
+            $continue = false;
+            $handle   = \substr($in, $i);
 
-                foreach ($_skip as $sk => $e) {
-                    if ($sk[0] != '#') {
-                        continue;
-                    }
-
-                    $sk = str_replace('#', '\#', substr($sk, 1));
-
-                    if (0 != preg_match('#^(' . $sk . ')#u', $handle, $match)) {
-                        $strlen = strlen($match[1]);
-
-                        if ($strlen > 0) {
-                            if (false !== $offset = strrpos($match[1], "\n")) {
-                                $column  = $strlen - $offset - 1;
-                            } else {
-                                $column += $strlen;
-                            }
-
-                            $line     += substr_count($match[1], "\n");
-                            $i        += $strlen - 1;
-                            $continue  = true;
-
-                            break;
-                        }
-                    }
+            foreach ($_skip as $sk => $e) {
+                if ($sk[0] != '#') {
+                    continue;
                 }
 
-                if (true === $continue) {
-                    continue;
+                $sk = \str_replace('#', '\#', \substr($sk, 1));
+
+                if (0 != \preg_match('#^(' . $sk . ')#u', $handle, $match)) {
+                    $strlen = \strlen($match[1]);
+
+                    if ($strlen > 0) {
+                        if (false !== $offset = \strrpos($match[1], "\n")) {
+                            $column  = $strlen - $offset - 1;
+                        } else {
+                            $column += $strlen;
+                        }
+
+                        $line += \substr_count($match[1], "\n");
+                        $i += $strlen - 1;
+                        $continue  = true;
+
+                        break;
+                    }
                 }
             }
 
+            if (true === $continue) {
+                continue;
+            }
+
+
             // Epsilon-transition.
             $epsilon = false;
-            while (array_key_exists($nextToken, $this->_actions[$c][$nextState]) &&
+            while (\array_key_exists($nextToken, $this->_actions[$c][$nextState]) &&
                      (
                         (
-                            is_array($this->_actions[$c][$nextState][$nextToken]) &&
+                            \is_array($this->_actions[$c][$nextState][$nextToken]) &&
                             0 < $foo = $this->_actions[$c][$nextState][$nextToken][0]
                         ) ||
                         (
-                            is_int($this->_actions[$c][$nextState][$nextToken]) &&
+                            \is_int($this->_actions[$c][$nextState][$nextToken]) &&
                             0 < $foo = $this->_actions[$c][$nextState][$nextToken]
                         )
                      )
@@ -458,11 +454,11 @@ abstract class Ll1
                     //echo '*** Change automata (up to ' . ($foo - 1) . ')' . "\n";
 
                     $this->_stack[$d] = [$c, $nextState, $nextToken];
-                    end($this->_stack);
+                    \end($this->_stack);
 
                     $c            = $foo - 1;
-                    $_tokens      = array_flip($this->_tokens[$c]);
-                    $_states      = array_flip($this->_states[$c]);
+                    $_tokens      = \array_flip($this->_tokens[$c]);
+                    $_states      = \array_flip($this->_states[$c]);
 
                     $nextState    = $_states['GO'];
                     $nextAction   = $_states['GO'];
@@ -470,7 +466,7 @@ abstract class Ll1
 
                     $_actions[$c] = 0;
 
-                    $d++;
+                    ++$d;
                 } elseif ($_actions[$c] == 2) {
                     $_actions[$c] = 0;
 
@@ -489,27 +485,27 @@ abstract class Ll1
                 $nextToken  = $_tokens[$token];
 
                 if ("\n" === $nextChar) {
-                    $line++;
+                    ++$line;
                     $column = 0;
                 } else {
-                    $column++;
+                    ++$column;
                 }
             } else {
                 $nextToken = false;
-                $handle    = substr($in, $i);
+                $handle    = \substr($in, $i);
 
                 foreach ($_tokens as $token => $e) {
                     if ('#' !== $token[0]) {
                         continue;
                     }
 
-                    $ntoken = str_replace('#', '\#', substr($token, 1));
+                    $ntoken = \str_replace('#', '\#', \substr($token, 1));
 
-                    if (0 != preg_match('#^(' . $ntoken . ')#u', $handle, $match)) {
-                        $strlen = strlen($match[1]);
+                    if (0 != \preg_match('#^(' . $ntoken . ')#u', $handle, $match)) {
+                        $strlen = \strlen($match[1]);
 
                         if ($strlen > 0) {
-                            if (false !== $offset = strrpos($match[1], "\n")) {
+                            if (false !== $offset = \strrpos($match[1], "\n")) {
                                 $column  = $strlen - $offset - 1;
                             } else {
                                 $column += $strlen;
@@ -517,8 +513,8 @@ abstract class Ll1
 
                             $nextChar   = $match[1];
                             $nextToken  = $e;
-                            $i         += $strlen - 1;
-                            $line      += substr_count($match[1], "\n");
+                            $i += $strlen - 1;
+                            $line += \substr_count($match[1], "\n");
 
                             break;
                         }
@@ -535,7 +531,7 @@ abstract class Ll1
 
             // Got it!
             if (false !== $nextToken) {
-                if (is_array($this->_actions[$c][$nextState][$nextToken])) {
+                if (\is_array($this->_actions[$c][$nextState][$nextToken])) {
                     $nextAction = $this->_actions[$c][$nextState][$nextToken][1];
                 } else {
                     $nextAction = $this->_actions[$c][$nextState][$nextToken];
@@ -545,24 +541,24 @@ abstract class Ll1
 
             // Oh :-(.
             if (false === $nextToken || $nextState === $_states['__']) {
-                $pop = array_pop($this->_stack);
-                $d--;
+                $pop = \array_pop($this->_stack);
+                --$d;
 
                 // Go back to a parent automata.
-                if ((in_array($this->_states[$c][$nextState], $this->_terminal[$c]) &&
+                if ((\in_array($this->_states[$c][$nextState], $this->_terminal[$c]) &&
                      null !== $pop) ||
                     ($nextState === $_states['__'] &&
                      null !== $pop)) {
 
                     //echo '!!! Change automata (down)' . "\n";
 
-                    list($c, $nextState, $nextToken) = $pop;
+                    [$c, $nextState, $nextToken] = $pop;
 
                     $_actions[$c]  = 2;
 
-                    $i            -= strlen($nextChar);
-                    $_tokens       = array_flip($this->_tokens[$c]);
-                    $_states       = array_flip($this->_states[$c]);
+                    $i -= \strlen($nextChar);
+                    $_tokens       = \array_flip($this->_tokens[$c]);
+                    $_states       = \array_flip($this->_states[$c]);
 
                     /*
                     echo '!!! Automata   ' . $c . "\n" .
@@ -572,13 +568,13 @@ abstract class Ll1
                     continue;
                 }
 
-                $error = explode("\n", $in);
+                $error = \explode("\n", $in);
                 $error = $error[$this->line];
 
                 throw new Exception\IllegalToken(
                     'Illegal token at line ' . ($this->line + 1) . ' and column ' .
                     ($this->column + 1) . "\n" . $error . "\n" .
-                    str_repeat(' ', $this->column) . '↑',
+                    \str_repeat(' ', $this->column) . '↑',
                     1,
                     [],
                     $this->line + 1, $this->column + 1
@@ -594,14 +590,14 @@ abstract class Ll1
 
             // Special actions.
             if ($nextAction < 0) {
-                $buffer = abs($nextAction);
+                $buffer = \abs($nextAction);
 
                 if (($buffer & 1) == 0) {
                     $this->buffers[($buffer - 2) / 2] = null;
                 } else {
                     $buffer = ($buffer - 1) / 2;
 
-                    if (!(isset($this->buffers[$buffer]))) {
+                    if (! (isset($this->buffers[$buffer]))) {
                         $this->buffers[$buffer] = null;
                     }
 
@@ -615,8 +611,6 @@ abstract class Ll1
                 $this->consume($nextAction);
             }
         }
-
-        return;
     }
 
     /**
@@ -626,7 +620,7 @@ abstract class Ll1
      * @param   int  $action    Action.
      * @return  void
      */
-    abstract protected function consume($action);
+    abstract protected function consume($action): void;
 
     /**
      * Compute source code before compiling it.
@@ -634,9 +628,8 @@ abstract class Ll1
      * @param   string  &$in    Source code.
      * @return  void
      */
-    protected function pre(&$in)
+    protected function pre(&$in): void
     {
-        return;
     }
 
     /**
@@ -683,7 +676,6 @@ abstract class Ll1
 
         return $old;
     }
-
 
     /**
      * Set tokens.
@@ -752,7 +744,7 @@ abstract class Ll1
         foreach ($actions as $e => $automata) {
             foreach ($automata as $i => $state) {
                 foreach ($state as $j => $token) {
-                    if (0 != preg_match('#^(\d+),(.*)$#', $token, $matches)) {
+                    if (0 != \preg_match('#^(\d+),(.*)$#', $token, $matches)) {
                         $actions[$e][$i][$j] = [(int) $matches[1], $matches[2]];
                     }
                 }
@@ -893,27 +885,27 @@ abstract class Ll1
     public function __toString()
     {
         $out =
-            'digraph ' . str_replace('\\', '', get_class($this)) . ' {' .
+            'digraph ' . \str_replace('\\', '', \get_class($this)) . ' {' .
             "\n" .
             '    rankdir=LR;' . "\n" .
             '    label="Automata of ' .
-            str_replace('\\', '\\\\', get_class($this)) . '";';
+            \str_replace('\\', '\\\\', \get_class($this)) . '";';
 
-        $transitions = array_reverse($this->_transitions, true);
+        $transitions = \array_reverse($this->_transitions, true);
 
         foreach ($transitions as $e => $automata) {
             $out .=
                 "\n\n" . '    subgraph cluster_' . $e . ' {' . "\n" .
                 '        label="Automata #' . $e .
                 (isset($this->_names[$e])
-                    ? ' (' . str_replace('"', '\\"', $this->_names[$e]) . ')'
+                    ? ' (' . \str_replace('"', '\\"', $this->_names[$e]) . ')'
                     : '') .
                 '";' . "\n";
 
-            if (!empty($this->_terminal[$e])) {
+            if (! empty($this->_terminal[$e])) {
                 $out .=
                     '        node[shape=doublecircle] "' . $e . '_' .
-                    implode('" "' . $e . '_', $this->_terminal[$e]) . '";' . "\n";
+                    \implode('" "' . $e . '_', $this->_terminal[$e]) . '";' . "\n";
             }
 
             $out .= '        node[shape=circle];' . "\n";
@@ -926,21 +918,21 @@ abstract class Ll1
                     foreach ($this->_transitions[$e][$i] as $j => $foo) {
                         $ep = $this->_actions[$e][$i][$j];
 
-                        if (is_array($ep)) {
+                        if (\is_array($ep)) {
                             $ep = $ep[0];
                         }
 
-                        if (is_int($ep)) {
-                            $ep--;
+                        if (\is_int($ep)) {
+                            --$ep;
 
-                            if (0 < $ep && !isset($name[$ep])) {
+                            if (0 < $ep && ! isset($name[$ep])) {
                                 $name[$ep] = $ep;
                             }
                         }
                     }
 
-                    if (!empty($name)) {
-                        $label .= ' (' . implode(', ', $name) . ')';
+                    if (! empty($name)) {
+                        $label .= ' (' . \implode(', ', $name) . ')';
                     }
 
                     $out .=
@@ -950,16 +942,16 @@ abstract class Ll1
             }
 
             foreach ($automata as $i => $transition) {
-                $transition = array_reverse($transition, true);
+                $transition = \array_reverse($transition, true);
 
                 foreach ($transition as $j => $state) {
                     if (__ != $this->_states[$e][$i]
                        && __ != $state) {
-                        $label = str_replace('\\', '\\\\', $this->_tokens[$e][$j]);
-                        $label = str_replace('"', '\\"', $label);
+                        $label = \str_replace('\\', '\\\\', $this->_tokens[$e][$j]);
+                        $label = \str_replace('"', '\\"', $label);
 
                         if ('#' === $label[0]) {
-                            $label = substr($label, 1);
+                            $label = \substr($label, 1);
                         }
 
                         $out .=

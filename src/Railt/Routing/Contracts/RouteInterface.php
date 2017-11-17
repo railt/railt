@@ -18,13 +18,13 @@ interface RouteInterface
      * @param string[] ...$middleware
      * @return RouteInterface
      */
-    public function middleware(string ...$middleware): RouteInterface;
+    public function middleware(string ...$middleware): self;
 
     /**
      * @param string[] ...$methods
      * @return RouteInterface
      */
-    public function method(string ...$methods): RouteInterface;
+    public function method(string ...$methods): self;
 
     /**
      * @param string $route
@@ -36,5 +36,5 @@ interface RouteInterface
      * @param string|callable|\Closure $action
      * @return RouteInterface
      */
-    public function then($action): RouteInterface;
+    public function then($action): self;
 }

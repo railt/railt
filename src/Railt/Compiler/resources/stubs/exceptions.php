@@ -20,7 +20,6 @@ namespace Hoa\Compiler {
      */
     class Exception extends BaseException
     {
-
     }
 }
 
@@ -36,6 +35,5 @@ namespace Hoa\Compiler\Exception {
      */
     class Exception extends BaseException
     {
-
     }
 }

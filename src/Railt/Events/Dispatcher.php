@@ -29,7 +29,7 @@ interface Dispatcher
      * @param \Closure $then
      * @return Dispatcher
      */
-    public function listen(string $event, \Closure $then): Dispatcher;
+    public function listen(string $event, \Closure $then): self;
 
     /**
      * Calling a specific event (subscribers to an event)

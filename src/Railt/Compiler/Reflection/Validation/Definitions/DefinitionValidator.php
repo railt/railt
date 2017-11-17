@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Definitions;
 
-use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
  * Interface DefinitionValidator

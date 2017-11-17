@@ -27,35 +27,35 @@ abstract class Sampler
      *
      * @var \Hoa\Compiler\Llk\Parser
      */
-    protected $_compiler         = null;
+    protected $_compiler;
 
     /**
      * Tokens.
      *
      * @var array
      */
-    protected $_tokens           = null;
+    protected $_tokens;
 
     /**
      * All rules (from the compiler).
      *
      * @var array
      */
-    protected $_rules            = null;
+    protected $_rules;
 
     /**
      * Token sampler.
      *
      * @var \Hoa\Visitor\Visit
      */
-    protected $_tokenSampler     = null;
+    protected $_tokenSampler;
 
     /**
      * Root rule name.
      *
      * @var string
      */
-    protected $_rootRuleName     = null;
+    protected $_rootRuleName;
 
     /**
      * Current token namespace.
@@ -70,7 +70,6 @@ abstract class Sampler
      * @var array
      */
     protected $_skipTokenAST     = [];
-
 
     /**
      * Construct a generator.
@@ -87,8 +86,6 @@ abstract class Sampler
         $this->_rules        = $compiler->getRules();
         $this->_tokenSampler = $tokenSampler;
         $this->_rootRuleName = $compiler->getRootRule();
-
-        return;
     }
 
     /**
@@ -108,7 +105,7 @@ abstract class Sampler
      */
     protected function getSkipTokenAST()
     {
-        if (!isset($this->_skipTokenAST[$this->_currentNamespace])) {
+        if (! isset($this->_skipTokenAST[$this->_currentNamespace])) {
             $token = new Compiler\Llk\Rule\Token(
                 -1,
                 'skip',
@@ -149,11 +146,11 @@ abstract class Sampler
             );
         } else {
             foreach ($this->_tokens[$this->_currentNamespace] as $_name => $regex) {
-                if (false === strpos($_name, ':')) {
+                if (false === \strpos($_name, ':')) {
                     continue;
                 }
 
-                list($_name, $toNamespace) = explode(':', $_name, 2);
+                [$_name, $toNamespace] = \explode(':', $_name, 2);
 
                 if ($_name === $name) {
                     break;

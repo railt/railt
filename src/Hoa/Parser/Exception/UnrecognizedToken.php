@@ -38,8 +38,6 @@ class UnrecognizedToken extends Exception
 
         $this->line   = $line;
         $this->column = $column;
-
-        return;
     }
 
     /**

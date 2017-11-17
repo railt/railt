@@ -35,7 +35,7 @@ class Proxy implements ContainerInterface
     public function __construct(ContainerInterface $master, ContainerInterface $slave)
     {
         $this->master = $master;
-        $this->slave = $slave;
+        $this->slave  = $slave;
     }
 
     /**

@@ -27,7 +27,7 @@ class TypeIndicationTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type Test {
     a: ID
     b: ID!

@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Definitions;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Base\Definitions\BaseSchema;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Reflection\Base\Definitions\BaseSchema;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 

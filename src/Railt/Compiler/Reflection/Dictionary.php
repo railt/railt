@@ -13,7 +13,6 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface Dictionary
- * @package Railt\Compiler\Compiler
  */
 interface Dictionary
 {
@@ -22,7 +21,7 @@ interface Dictionary
      * @param bool $force
      * @return Dictionary
      */
-    public function register(TypeDefinition $type, bool $force = false): Dictionary;
+    public function register(TypeDefinition $type, bool $force = false): self;
 
     /**
      * @param string $name

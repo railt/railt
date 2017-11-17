@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Routing\Router;
-use Railt\Http\ResponderInterface;
-use Railt\Events\Dispatcher;
 use Railt\Container\ContainerInterface;
+use Railt\Events\Dispatcher;
+use Railt\Http\ResponderInterface;
 use Railt\Reflection\Contracts\Document;
+use Railt\Routing\Router;
 
 /**
  * Interface AdapterInterface

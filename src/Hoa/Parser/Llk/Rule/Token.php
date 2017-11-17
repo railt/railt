@@ -34,35 +34,35 @@ class Token extends Rule
      *
      * @var string
      */
-    protected $_tokenName            = null;
+    protected $_tokenName;
 
     /**
      * Namespace.
      *
      * @var string
      */
-    protected $_namespace            = null;
+    protected $_namespace;
 
     /**
      * Token representation.
      *
      * @var string
      */
-    protected $_regex                = null;
+    protected $_regex;
 
     /**
      * AST of the regex.
      *
      * @var \Hoa\Compiler\Llk\TreeNode
      */
-    protected $_ast                  = null;
+    protected $_ast;
 
     /**
      * Token value.
      *
      * @var string
      */
-    protected $_value                = null;
+    protected $_value;
 
     /**
      * Whether the token is kept or not in the AST.
@@ -106,8 +106,6 @@ class Token extends Rule
         $this->_tokenName   = $tokenName;
         $this->_unification = $unification;
         $this->setKept($kept);
-
-        return;
     }
 
     /**

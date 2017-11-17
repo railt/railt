@@ -11,9 +11,9 @@ namespace Railt\Reflection\Base\Definitions;
 
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Contracts\Definitions;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Dependent;
 
 /**

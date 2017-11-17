@@ -11,8 +11,8 @@ namespace Railt\Compiler\Reflection\Validation\Base;
 
 use Railt\Compiler\Exceptions\SchemaException;
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Reflection\Support;
 use Railt\Compiler\Reflection\Validation\Validator;
+use Railt\Reflection\Support;
 
 /**
  * Class BaseValidator
@@ -45,8 +45,8 @@ abstract class BaseValidator implements ValidatorInterface
     public function __construct(Validator $factory, CallStack $stack, ?string $name)
     {
         $this->validator = $factory;
-        $this->stack = $stack;
-        $this->name = $name ?? static::class;
+        $this->stack     = $stack;
+        $this->name      = $name ?? static::class;
     }
 
     /**

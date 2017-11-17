@@ -41,14 +41,14 @@ class Profiler
     {
         $result = (string)(new Dump())->visit($ast);
 
-        $result = str_replace('>  ', '    ', $result);
-        $result = preg_replace('/^\s{4}/ium', '', $result);
+        $result = \str_replace('>  ', '    ', $result);
+        $result = \preg_replace('/^\s{4}/ium', '', $result);
 
-        $result = preg_replace_callback('/token\((\w+),(.*?)\)/isu', function ($args) {
-            return 'token(' . $args[1] . ',' . str_replace(["\n"], ['\n'], $args[2]) . ')';
+        $result = \preg_replace_callback('/token\((\w+),(.*?)\)/isu', function ($args) {
+            return 'token(' . $args[1] . ',' . \str_replace(["\n"], ['\n'], $args[2]) . ')';
         }, $result);
 
-        return trim($result);
+        return \trim($result);
     }
 
     /**
@@ -67,7 +67,7 @@ class Profiler
             return $sum . PHP_EOL . $item;
         };
 
-        return \array_reduce(array_map($toString, $trace), $reducer, '');
+        return \array_reduce(\array_map($toString, $trace), $reducer, '');
     }
 
     /**
@@ -81,20 +81,20 @@ class Profiler
 
         $sequence = (new Lexer())->lexMe($content, $this->parser->getTokens());
 
-        $template = '| %4s | %-50s | %-50s |' . "\n";
-        $header = sprintf($template, 'ID', 'Token', 'Value');
-        $delimiter = '|' . str_repeat('-', strlen($header) - 3) . "|\n";
+        $template  = '| %4s | %-50s | %-50s |' . "\n";
+        $header    = \sprintf($template, 'ID', 'Token', 'Value');
+        $delimiter = '|' . \str_repeat('-', \strlen($header) - 3) . "|\n";
 
         $result .= $delimiter . $header . $delimiter;
 
         foreach ($sequence as $data) {
-            $value = str_replace("\n", ' ', '(' . $data['length'] . ') ' . $data['value']);
-            $value = mb_strlen($value) > 48 ? mb_substr($value, 0, 48) : $value;
+            $value = \str_replace("\n", ' ', '(' . $data['length'] . ') ' . $data['value']);
+            $value = \mb_strlen($value) > 48 ? \mb_substr($value, 0, 48) : $value;
 
             $token = ($data['namespace'] === 'default' ? '' : ' -> ' . $data['namespace'] . ':') . $data['token'];
-            $token = mb_strlen($token) > 48 ? mb_substr($token, 0, 48) : $token;
+            $token = \mb_strlen($token) > 48 ? \mb_substr($token, 0, 48) : $token;
 
-            $result .= sprintf($template, $data['offset'], $token, $value);
+            $result .= \sprintf($template, $data['offset'], $token, $value);
         }
 
         return $result . $delimiter;

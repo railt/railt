@@ -27,8 +27,7 @@ class DirectiveTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 """
  # This is a test directive allowed for GraphQL SDL (an Interface definition) 
  # and GraphQL Queries (The mutation action).

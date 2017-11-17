@@ -11,7 +11,6 @@ namespace Railt\Tests\Support;
 
 /**
  * Trait SpecSupport
- * @package Railt\Tests\Support
  *
  * @property string $specDirectory
  */
@@ -22,7 +21,7 @@ trait SpecSupport
      */
     private function getSpecDirectory(): string
     {
-        if (property_exists($this, 'specDirectory')) {
+        if (\property_exists($this, 'specDirectory')) {
             return $this->specDirectory;
         }
 
@@ -34,8 +33,8 @@ trait SpecSupport
      */
     public function specProvider(): array
     {
-        $files = iterator_to_array($this->findFiles());
-        sort($files, SORT_STRING);
+        $files = \iterator_to_array($this->findFiles());
+        \sort($files, SORT_STRING);
 
         $tests = [];
 
@@ -43,8 +42,8 @@ trait SpecSupport
             $spec = new SpecTest($test->getRealPath());
 
             foreach ($this->diffFiles($spec) as $diff) {
-                if (is_file($diff)) {
-                    @unlink($diff);
+                if (\is_file($diff)) {
+                    @\unlink($diff);
                 }
             }
 
@@ -81,7 +80,7 @@ trait SpecSupport
      */
     private function specDiff(SpecTest $spec, string $actual): string
     {
-        if (0 === stripos(PHP_OS, 'WIN')) {
+        if (0 === \stripos(PHP_OS, 'WIN')) {
             //$this->markTestIncomplete('Windows OS probably does not support "diff" command');
 
             return '';
@@ -90,16 +89,16 @@ trait SpecSupport
         [$fileExpected, $fileActual, $fileDiff] = $this->diffFiles($spec);
 
         $cmd = 'diff --strip-trailing-cr --label "%s" --label "%s" --unified "%s" "%s"';
-        $cmd = sprintf($cmd, 'expect', 'out', $fileExpected, $fileActual);
+        $cmd = \sprintf($cmd, 'expect', 'out', $fileExpected, $fileActual);
 
-        @file_put_contents($fileExpected, $spec->getOut() . PHP_EOL);
-        @file_put_contents($fileActual, $actual . PHP_EOL);
+        @\file_put_contents($fileExpected, $spec->getOut() . PHP_EOL);
+        @\file_put_contents($fileActual, $actual . PHP_EOL);
 
-        exec($cmd, $out);
+        \exec($cmd, $out);
 
-        $result = implode(PHP_EOL, (array)$out);
+        $result = \implode(PHP_EOL, (array)$out);
 
-        @file_put_contents($fileDiff, $result);
+        @\file_put_contents($fileDiff, $result);
 
         return $result;
     }

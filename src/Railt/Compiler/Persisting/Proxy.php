@@ -34,7 +34,7 @@ class Proxy implements Persister
      */
     public function __construct(Persister $front, Persister $fallback)
     {
-        $this->front = $front;
+        $this->front    = $front;
         $this->fallback = $fallback;
     }
 

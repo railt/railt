@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Routing;
 
+use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Router;
 use Railt\Tests\AbstractTestCase;
-use Railt\Routing\Contracts\RouterInterface;
 
 /**
  * Class RouterTestCase
- * @package Railt\Tests\Routing
  */
 class RouterTestCase extends AbstractTestCase
 {

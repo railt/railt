@@ -31,7 +31,7 @@ class ArrayPersister implements Persister
     {
         $key = $readable->getHash();
 
-        if (!\array_key_exists($key, $this->storage)) {
+        if (! \array_key_exists($key, $this->storage)) {
             /** @var Document $document */
             $document = $then($readable);
 

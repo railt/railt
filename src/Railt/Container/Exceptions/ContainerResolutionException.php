@@ -16,5 +16,4 @@ use Psr\Container\NotFoundExceptionInterface;
  */
 class ContainerResolutionException extends \LogicException implements NotFoundExceptionInterface
 {
-
 }

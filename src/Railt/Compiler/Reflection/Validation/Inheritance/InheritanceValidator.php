@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface InheritanceValidator

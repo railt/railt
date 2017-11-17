@@ -35,7 +35,7 @@ class ErrorFormatter implements Arrayable
     public function __construct(\Throwable $e, bool $debug = false)
     {
         $this->exception = $e;
-        $this->debug = $debug;
+        $this->debug     = $debug;
     }
 
     /**
@@ -60,7 +60,7 @@ class ErrorFormatter implements Arrayable
         ];
 
         while ($exception->getPrevious()) {
-            $result[] = $this->renderItem($exception);
+            $result[]  = $this->renderItem($exception);
             $exception = $exception->getPrevious();
         }
 
@@ -90,7 +90,7 @@ class ErrorFormatter implements Arrayable
         }
 
         if ($this->debug) {
-            $result['in'] = $e->getFile() . ':' . $e->getLine();
+            $result['in']    = $e->getFile() . ':' . $e->getLine();
             $result['trace'] = $this->renderTrace($e);
         }
 
@@ -103,16 +103,16 @@ class ErrorFormatter implements Arrayable
      */
     private function renderTrace(\Throwable $e): array
     {
-        $trace = explode("\n", $e->getTraceAsString());
+        $trace = \explode("\n", $e->getTraceAsString());
 
-        $trace = array_map(function (string $trace): string {
-            $trace = preg_replace('/#\d+\s+/iu', '', $trace);
+        $trace = \array_map(function (string $trace): string {
+            $trace = \preg_replace('/#\d+\s+/iu', '', $trace);
 
             return $trace;
         }, $trace);
 
 
-        $trace = array_filter($trace, function (string $item): bool {
+        $trace = \array_filter($trace, function (string $item): bool {
             return $item !== '{main}';
         });
 

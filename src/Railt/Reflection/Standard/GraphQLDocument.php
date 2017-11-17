@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard;
 
-use Railt\Reflection\Filesystem\File;
 use Railt\Reflection\Base\BaseDocument;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Filesystem\File;
 use Railt\Reflection\Standard\Directives\Deprecation;
 use Railt\Reflection\Standard\Scalars\AnyType;
 use Railt\Reflection\Standard\Scalars\BooleanType;
@@ -45,7 +45,7 @@ class GraphQLDocument extends BaseDocument implements StandardType
     public function __construct(array $additionalTypes = [])
     {
         $this->additionalTypes = $additionalTypes;
-        $this->file = File::fromSources('# Generated');
+        $this->file            = File::fromSources('# Generated');
 
         $this->createStandardTypes();
     }
