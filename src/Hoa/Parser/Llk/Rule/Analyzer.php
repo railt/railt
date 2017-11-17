@@ -395,8 +395,10 @@ class Analyzer
 
             foreach ($this->_tokens as $namespace => $tokens) {
                 foreach ($tokens as $token => $value) {
-                    if ($token === $tokenName ||
-                        substr($token, 0, strpos($token, ':')) === $tokenName) {
+                    if (
+                        $token === $tokenName ||
+                        substr($token, 0, (int)strpos($token, ':')) === $tokenName
+                    ) {
                         $exists = true;
 
                         break 2;
@@ -438,8 +440,10 @@ class Analyzer
 
             foreach ($this->_tokens as $namespace => $tokens) {
                 foreach ($tokens as $token => $value) {
-                    if ($token === $tokenName
-                        || substr($token, 0, strpos($token, ':')) === $tokenName) {
+                    if (
+                        $token === $tokenName ||
+                        substr($token, 0, (int)strpos($token, ':')) === $tokenName
+                    ) {
                         $exists = true;
 
                         break 2;
