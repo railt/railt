@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Railt\Tests\Compiler;
 
 use Railt\Compiler\Compiler;
-use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Reflection\Filesystem\File;
+use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
- * Class ArgumentDefaultsTestCase
+ * Class ArgumentDefaultsTestCase.
  */
 class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
 {

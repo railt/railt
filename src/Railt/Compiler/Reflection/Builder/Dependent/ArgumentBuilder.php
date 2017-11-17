@@ -9,19 +9,19 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Dependent;
 
+use Railt\Reflection\Support;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\Dependent\BaseArgument;
-use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Builder\Process\ValueBuilder;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Support;
+use Railt\Compiler\Reflection\Builder\Process\ValueBuilder;
+use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
+use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 
 /**
- * Class ArgumentBuilder
+ * Class ArgumentBuilder.
  */
 class ArgumentBuilder extends BaseArgument implements Compilable
 {
@@ -51,7 +51,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
     {
         if ($ast->getId() === '#Value') {
             $this->hasDefaultValue = true;
-            $this->defaultValue    = ValueBuilder::parse($ast->getChild(0));
+            $this->defaultValue = ValueBuilder::parse($ast->getChild(0));
 
             return true;
         }
@@ -59,4 +59,3 @@ class ArgumentBuilder extends BaseArgument implements Compilable
         return false;
     }
 }
-

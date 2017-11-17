@@ -12,7 +12,7 @@ namespace Railt\Adapters;
 use Railt\Reflection\Contracts\Types\TypeDefinition;
 
 /**
- * Interface TypeLoaderInterface
+ * Interface TypeLoaderInterface.
  */
 interface TypeLoaderInterface
 {

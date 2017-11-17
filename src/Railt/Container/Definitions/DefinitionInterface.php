@@ -12,7 +12,7 @@ namespace Railt\Container\Definitions;
 use Railt\Container\ContainerInterface;
 
 /**
- * Interface DefinitionInterface
+ * Interface DefinitionInterface.
  */
 interface DefinitionInterface
 {

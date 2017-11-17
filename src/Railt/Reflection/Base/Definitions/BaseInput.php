@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
+use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
-use Railt\Reflection\Contracts\Definitions\InputDefinition;
 
 /**
- * Class BaseInput
+ * Class BaseInput.
  */
 abstract class BaseInput extends BaseTypeDefinition implements InputDefinition
 {
@@ -22,12 +22,12 @@ abstract class BaseInput extends BaseTypeDefinition implements InputDefinition
     use BaseDirectivesContainer;
 
     /**
-     * Input type name
+     * Input type name.
      */
     protected const TYPE_NAME = 'Input';
 
     /**
-     * TODO Verify input
+     * TODO Verify input.
      *
      * @param mixed $value
      * @return bool

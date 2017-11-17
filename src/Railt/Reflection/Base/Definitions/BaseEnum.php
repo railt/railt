@@ -9,19 +9,19 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
-use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
-use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
 use Railt\Reflection\Contracts\Definitions\EnumDefinition;
+use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 
 /**
- * Class BaseEnum
+ * Class BaseEnum.
  */
 abstract class BaseEnum extends BaseTypeDefinition implements EnumDefinition
 {
     use BaseDirectivesContainer;
 
     /**
-     * Enum type name
+     * Enum type name.
      */
     protected const TYPE_NAME = 'Enum';
 

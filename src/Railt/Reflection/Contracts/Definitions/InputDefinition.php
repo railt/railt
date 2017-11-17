@@ -14,9 +14,8 @@ use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
- * Interface InputDefinition
+ * Interface InputDefinition.
  */
 interface InputDefinition extends TypeDefinition, HasArguments, HasDirectives, Inputable
 {
-
 }

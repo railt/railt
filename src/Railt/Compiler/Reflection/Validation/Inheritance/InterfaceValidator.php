@@ -10,14 +10,13 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
- * Class InterfaceValidator
+ * Class InterfaceValidator.
  */
 class InterfaceValidator extends BaseInheritanceValidator
 {
@@ -67,7 +66,7 @@ class InterfaceValidator extends BaseInheritanceValidator
         if (! $object->hasInterface($parent->getTypeDefinition()->getName())) {
             $error = \vsprintf('%s in %s definition must be instance of %s', [
                 $object, $child,
-                $parent->getTypeDefinition()
+                $parent->getTypeDefinition(),
             ]);
 
             throw new TypeConflictException($error, $this->getCallStack());

@@ -11,18 +11,18 @@ namespace Railt\Compiler\Reflection\Builder\Process;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Filesystem\File;
-use Railt\Compiler\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Compiler\Reflection\Validation\Uniqueness;
+use Railt\Compiler\Reflection\Validation\Definitions;
+use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
-use Railt\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
-use Railt\Compiler\Reflection\Validation\Definitions;
-use Railt\Compiler\Reflection\Validation\Uniqueness;
 
 /**
- * Trait Compiler
+ * Trait Compiler.
  * @mixin Compilable
  */
 trait Compiler
@@ -170,7 +170,7 @@ trait Compiler
      */
     protected function boot(TreeNode $ast, Document $document): void
     {
-        $this->ast      = $ast;
+        $this->ast = $ast;
         $this->document = $document;
 
         // Generate identifier if id does not initialized

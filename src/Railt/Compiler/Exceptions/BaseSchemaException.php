@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Railt\Compiler\Kernel\CallStack;
 
 /**
- * Class BaseSchemaException
+ * Class BaseSchemaException.
  */
 abstract class BaseSchemaException extends \LogicException implements SchemaException
 {
@@ -63,7 +63,7 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
             $this->getMessage(),
             $this->getFile(),
             $this->getLine(),
-            $this->getColumn()
+            $this->getColumn(),
         ]);
     }
 

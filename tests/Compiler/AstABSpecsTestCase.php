@@ -9,14 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Compiler\Parser;
+use Railt\Compiler\Kernel\CallStack;
 use PHPUnit\Framework\AssertionFailedError;
 use Railt\Reflection\Filesystem\ReadableInterface;
-use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Parser;
 
 /**
- * Class AstABSpecsTestCase
- * @package Railt\Tests\Compiler\Compiler
+ * Class AstABSpecsTestCase.
  * @group large
  */
 class AstABSpecsTestCase extends AbstractCompilerTestCase
@@ -78,6 +77,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
             $ast = $compiler->parse($file);
         } catch (\Throwable $e) {
             static::assertTrue(true);
+
             return;
         }
 

@@ -14,12 +14,12 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Processable\ExtendDefinition;
 
 /**
- * Class BaseExtend
+ * Class BaseExtend.
  */
 abstract class BaseExtend extends BaseDefinition implements ExtendDefinition
 {
     /**
-     * Extend type name
+     * Extend type name.
      */
     protected const TYPE_NAME = 'Extend';
 

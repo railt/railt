@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Document;
 
 /**
- * Class DirectiveTestCase
+ * Class DirectiveTestCase.
  */
 class DirectiveTestCase extends AbstractCompilerTestCase
 {
@@ -27,8 +27,7 @@ class DirectiveTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 """
  # This is a test directive allowed for GraphQL SDL (an Interface definition) 
  # and GraphQL Queries (The mutation action).
@@ -90,7 +89,7 @@ GraphQL;
         static::assertSame('', $directive->getDeprecationReason());
 
         /**
-         * LOCATIONS
+         * LOCATIONS.
          */
         foreach (Location::TARGET_GRAPHQL_SDL as $location) {
             if ($location === Location::TARGET_INTERFACE) {
@@ -140,7 +139,7 @@ GraphQL;
         static::assertSame('', $directive->getDeprecationReason());
 
         /**
-         * LOCATIONS
+         * LOCATIONS.
          */
         foreach (Location::TARGET_GRAPHQL_SDL as $location) {
             if ($location === Location::TARGET_OBJECT) {
@@ -193,7 +192,6 @@ GraphQL;
         static::assertFalse($some->getArgument('opt')->isList());
         static::assertFalse($some->getArgument('opt')->isListOfNonNulls());
         static::assertSame('String', $some->getArgument('opt')->getTypeDefinition()->getName());
-
 
         // Definition of `opt2: String`
         static::assertNotNull($some->getArgument('opt2'));

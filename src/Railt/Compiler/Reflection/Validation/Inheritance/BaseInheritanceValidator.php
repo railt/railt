@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Validation\Base\BaseValidator;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 
 /**
- * Class BaseInheritanceValidator
+ * Class BaseInheritanceValidator.
  */
 abstract class BaseInheritanceValidator extends BaseValidator implements InheritanceValidator
 {

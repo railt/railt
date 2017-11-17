@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Definitions;
 
 /**
- * Interface SchemaDefinition
+ * Interface SchemaDefinition.
  */
 interface SchemaDefinition extends TypeDefinition
 {

@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Invocations;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
- * Interface ArgumentInvocation
+ * Interface ArgumentInvocation.
  */
 interface ArgumentInvocation extends DependentDefinition, Invocable
 {

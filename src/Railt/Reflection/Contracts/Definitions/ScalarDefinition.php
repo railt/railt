@@ -13,9 +13,8 @@ use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
- * Interface ScalarDefinition
+ * Interface ScalarDefinition.
  */
 interface ScalarDefinition extends TypeDefinition, HasDirectives, Inputable
 {
-
 }

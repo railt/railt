@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Psr\Container\ContainerExceptionInterface;
 use Railt\Container\Definitions\FactoryDefinition;
 use Railt\Container\Definitions\SingletonDefinition;
 use Railt\Container\Exceptions\ContainerResolutionException;
 
 /**
- * Class Container
+ * Class Container.
  */
 class Container implements ContainerInterface
 {
@@ -115,14 +115,14 @@ class Container implements ContainerInterface
     {
         switch (true) {
             case is_string($callable):
-                if (!array_key_exists($callable, $this->closures)) {
+                if (! array_key_exists($callable, $this->closures)) {
                     $this->closures[$callable] = new \ReflectionFunction($callable);
                 }
 
                 return $this->closures[$callable];
             case $callable instanceof \Closure:
                 $key = spl_object_hash($callable);
-                if (!array_key_exists($key, $this->closures)) {
+                if (! array_key_exists($key, $this->closures)) {
                     $this->closures[$key] = new \ReflectionFunction($callable);
                 }
 

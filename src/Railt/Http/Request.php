@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Support\ConfigurableRequest;
-use Railt\Http\Support\ConfigurableRequestInterface;
 use Railt\Http\Support\InteractWithData;
+use Railt\Http\Support\ConfigurableRequest;
 use Railt\Http\Support\JsonContentTypeHelper;
+use Railt\Http\Support\ConfigurableRequestInterface;
 
 /**
- * Class Request
+ * Class Request.
  */
 class Request implements RequestInterface, ConfigurableRequestInterface
 {
@@ -38,7 +38,7 @@ class Request implements RequestInterface, ConfigurableRequestInterface
      */
     private function readJsonRequest(): array
     {
-        return (array)json_decode($this->getInputStream(), true);
+        return (array) json_decode($this->getInputStream(), true);
     }
 
     /**

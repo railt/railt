@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Dependent\Argument;
 
-use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 
 /**
- * Trait BaseArgumentsContainer
+ * Trait BaseArgumentsContainer.
  * @mixin HasArguments
  */
 trait BaseArgumentsContainer
@@ -71,7 +71,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfRequiredArguments(): int
     {
-        return (int)\array_reduce($this->arguments, [$this, 'requiredArgumentsCounter'], 0);
+        return (int) \array_reduce($this->arguments, [$this, 'requiredArgumentsCounter'], 0);
     }
 
     /**
@@ -79,7 +79,7 @@ trait BaseArgumentsContainer
      */
     public function getNumberOfOptionalArguments(): int
     {
-        return (int)\array_reduce($this->arguments, [$this, 'optionalArgumentsCounter'], 0);
+        return (int) \array_reduce($this->arguments, [$this, 'optionalArgumentsCounter'], 0);
     }
 
     /**
@@ -89,7 +89,7 @@ trait BaseArgumentsContainer
      */
     private function optionalArgumentsCounter(int $carry, ArgumentDefinition $argument): int
     {
-        return $carry + (int)$argument->hasDefaultValue();
+        return $carry + (int) $argument->hasDefaultValue();
     }
 
     /**
@@ -99,6 +99,6 @@ trait BaseArgumentsContainer
      */
     private function requiredArgumentsCounter(int $carry, ArgumentDefinition $argument): int
     {
-        return $carry + (int)! $argument->hasDefaultValue();
+        return $carry + (int) ! $argument->hasDefaultValue();
     }
 }

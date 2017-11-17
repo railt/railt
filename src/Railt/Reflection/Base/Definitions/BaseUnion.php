@@ -9,19 +9,19 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
-use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\UnionDefinition;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 
 /**
- * Class BaseUnion
+ * Class BaseUnion.
  */
 abstract class BaseUnion extends BaseTypeDefinition implements UnionDefinition
 {
     use BaseDirectivesContainer;
 
     /**
-     * Type definition
+     * Type definition.
      */
     protected const TYPE_NAME = 'Union';
 

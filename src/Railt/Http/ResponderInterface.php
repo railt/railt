@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 /**
- * Interface ResponderInterface
+ * Interface ResponderInterface.
  */
 interface ResponderInterface
 {

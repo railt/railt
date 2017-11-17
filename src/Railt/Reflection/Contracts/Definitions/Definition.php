@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Document;
 
 /**
- * Interface TypeDefinition
+ * Interface TypeDefinition.
  */
 interface Definition
 {
@@ -58,4 +58,3 @@ interface Definition
      */
     public function getDeclarationColumn(): int;
 }
-

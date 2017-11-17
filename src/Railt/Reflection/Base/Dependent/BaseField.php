@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Dependent;
 
 use Railt\Reflection\Base\Behavior\BaseTypeIndicator;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
- * Class BaseField
+ * Class BaseField.
  */
 abstract class BaseField extends BaseDependent implements FieldDefinition
 {
@@ -24,7 +24,7 @@ abstract class BaseField extends BaseDependent implements FieldDefinition
     use BaseDirectivesContainer;
 
     /**
-     * Field type name
+     * Field type name.
      */
     protected const TYPE_NAME = 'Field';
 

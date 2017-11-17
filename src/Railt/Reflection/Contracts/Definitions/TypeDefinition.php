@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Behavior\Deprecatable;
 
 /**
- * Interface TypeDefinition
+ * Interface TypeDefinition.
  */
 interface TypeDefinition extends Definition, Deprecatable
 {

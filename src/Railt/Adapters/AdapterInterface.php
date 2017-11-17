@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Adapters;
 
 use Railt\Routing\Router;
-use Railt\Http\ResponderInterface;
 use Railt\Events\Dispatcher;
+use Railt\Http\ResponderInterface;
 use Railt\Container\ContainerInterface;
 use Railt\Reflection\Contracts\Document;
 
 /**
- * Interface AdapterInterface
+ * Interface AdapterInterface.
  */
 interface AdapterInterface extends ResponderInterface
 {

@@ -13,7 +13,7 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
- * Interface ParserInterface
+ * Interface ParserInterface.
  */
 interface ParserInterface
 {

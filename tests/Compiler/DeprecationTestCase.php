@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 
 /**
- * Class DeprecationTestCase
+ * Class DeprecationTestCase.
  */
 class DeprecationTestCase extends AbstractCompilerTestCase
 {
@@ -24,7 +24,7 @@ class DeprecationTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type DeprecatedWithMessage @deprecated(reason: "Message") {}
 
 type DeprecatedWithoutMessage @deprecated() {}

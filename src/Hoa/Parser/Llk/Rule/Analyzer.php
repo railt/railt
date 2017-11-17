@@ -92,8 +92,6 @@ class Analyzer
     public function __construct(array $tokens)
     {
         $this->_tokens = $tokens;
-
-        return;
     }
 
     /**
@@ -110,23 +108,23 @@ class Analyzer
         }
 
         $this->_parsedRules = [];
-        $this->_rules       = $rules;
-        $lexer              = new Compiler\Llk\Lexer();
+        $this->_rules = $rules;
+        $lexer = new Compiler\Llk\Lexer();
 
         foreach ($rules as $key => $value) {
             $this->_lexer = new Iterator\Lookahead($lexer->lexMe($value, static::$_ppLexemes));
             $this->_lexer->rewind();
 
             $this->_ruleName = $key;
-            $nodeId          = null;
+            $nodeId = null;
 
             if ('#' === $key[0]) {
                 $nodeId = $key;
-                $key    = substr($key, 1);
+                $key = substr($key, 1);
             }
 
             $pNodeId = $nodeId;
-            $rule    = $this->rule($pNodeId);
+            $rule = $this->rule($pNodeId);
 
             if (null === $rule) {
                 throw new Compiler\Exception(
@@ -172,10 +170,10 @@ class Analyzer
 
         // concatenation() …
         $nNodeId = $pNodeId;
-        $rule    = $this->concatenation($nNodeId);
+        $rule = $this->concatenation($nNodeId);
 
         if (null === $rule) {
-            return null;
+            return;
         }
 
         if (null !== $nNodeId) {
@@ -183,17 +181,17 @@ class Analyzer
         }
 
         $children[] = $rule;
-        $others     = false;
+        $others = false;
 
         // … ( ::or:: concatenation() )*
         while ('or' === $this->_lexer->current()['token']) {
             $this->_lexer->next();
-            $others  = true;
+            $others = true;
             $nNodeId = $pNodeId;
-            $rule    = $this->concatenation($nNodeId);
+            $rule = $this->concatenation($nNodeId);
 
             if (null === $rule) {
-                return null;
+                return;
             }
 
             if (null !== $nNodeId) {
@@ -209,7 +207,7 @@ class Analyzer
             return $rule;
         }
 
-        $name                      = $this->_transitionalRuleCounter++;
+        $name = $this->_transitionalRuleCounter++;
         $this->_parsedRules[$name] = new Choice($name, $children);
 
         return $name;
@@ -228,23 +226,23 @@ class Analyzer
         $rule = $this->repetition($pNodeId);
 
         if (null === $rule) {
-            return null;
+            return;
         }
 
         $children[] = $rule;
-        $others     = false;
+        $others = false;
 
         // … repetition()*
         while (null !== $r1 = $this->repetition($pNodeId)) {
             $children[] = $r1;
-            $others     = true;
+            $others = true;
         }
 
         if (false === $others && null === $pNodeId) {
             return $rule;
         }
 
-        $name                      = $this->_transitionalRuleCounter++;
+        $name = $this->_transitionalRuleCounter++;
         $this->_parsedRules[$name] = new Concatenation(
             $name,
             $children,
@@ -266,7 +264,7 @@ class Analyzer
         $children = $this->simple($pNodeId);
 
         if (null === $children) {
-            return null;
+            return;
         }
 
         // … quantifier()?
@@ -294,22 +292,22 @@ class Analyzer
 
             case 'n_to_m':
                 $handle = trim($this->_lexer->current()['value'], '{}');
-                $nm     = explode(',', $handle);
-                $min    = (int)trim($nm[0]);
-                $max    = (int)trim($nm[1]);
+                $nm = explode(',', $handle);
+                $min = (int) trim($nm[0]);
+                $max = (int) trim($nm[1]);
                 $this->_lexer->next();
 
                 break;
 
             case 'zero_to_m':
                 $min = 0;
-                $max = (int)trim($this->_lexer->current()['value'], '{,}');
+                $max = (int) trim($this->_lexer->current()['value'], '{,}');
                 $this->_lexer->next();
 
                 break;
 
             case 'n_or_more':
-                $min = (int)trim($this->_lexer->current()['value'], '{,}');
+                $min = (int) trim($this->_lexer->current()['value'], '{,}');
                 $max = -1;
                 $this->_lexer->next();
 
@@ -317,8 +315,8 @@ class Analyzer
 
             case 'exactly_n':
                 $handle = trim($this->_lexer->current()['value'], '{}');
-                $min    = (int)$handle;
-                $max    = $min;
+                $min = (int) $handle;
+                $max = $min;
                 $this->_lexer->next();
 
                 break;
@@ -343,7 +341,7 @@ class Analyzer
             );
         }
 
-        $name                      = $this->_transitionalRuleCounter++;
+        $name = $this->_transitionalRuleCounter++;
         $this->_parsedRules[$name] = new Repetition(
             $name,
             $min,
@@ -369,11 +367,11 @@ class Analyzer
             $rule = $this->choice($pNodeId);
 
             if ($rule === null) {
-                return null;
+                return;
             }
 
             if ($this->_lexer->current()['token'] !== '_capturing') {
-                return null;
+                return;
             }
 
             $this->_lexer->next();
@@ -385,7 +383,7 @@ class Analyzer
             $tokenName = \trim($this->_lexer->current()['value'], ':');
 
             if (\substr($tokenName, -1) === ']') {
-                $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
+                $uId = (int) \substr($tokenName, \strpos($tokenName, '[') + 1, -1);
                 $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
             } else {
                 $uId = -1;
@@ -414,7 +412,7 @@ class Analyzer
                 );
             }
 
-            $name                      = $this->_transitionalRuleCounter++;
+            $name = $this->_transitionalRuleCounter++;
             $this->_parsedRules[$name] = new Token(
                 $name,
                 $tokenName,
@@ -430,7 +428,7 @@ class Analyzer
             $tokenName = \trim($this->_lexer->current()['value'], '<>');
 
             if (\substr($tokenName, -1) === ']') {
-                $uId       = (int)\substr($tokenName, strpos($tokenName, '[') + 1, -1);
+                $uId = (int) \substr($tokenName, strpos($tokenName, '[') + 1, -1);
                 $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
             } else {
                 $uId = -1;
@@ -442,7 +440,7 @@ class Analyzer
                 foreach ($tokens as $token => $value) {
                     if (
                         $token === $tokenName ||
-                        substr($token, 0, (int)strpos($token, ':')) === $tokenName
+                        substr($token, 0, (int) strpos($token, ':')) === $tokenName
                     ) {
                         $exists = true;
 
@@ -459,8 +457,8 @@ class Analyzer
                 );
             }
 
-            $name                      = $this->_transitionalRuleCounter++;
-            $token                     = new Token(
+            $name = $this->_transitionalRuleCounter++;
+            $token = new Token(
                 $name,
                 $tokenName,
                 null,
@@ -487,7 +485,7 @@ class Analyzer
 
             if (0 === $this->_lexer->key() &&
                 'EOF' === $this->_lexer->getNext()['token']) {
-                $name                      = $this->_transitionalRuleCounter++;
+                $name = $this->_transitionalRuleCounter++;
                 $this->_parsedRules[$name] = new Concatenation(
                     $name,
                     [$tokenName],
@@ -501,7 +499,5 @@ class Analyzer
 
             return $name;
         }
-
-        return null;
     }
 }

@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Definitions\Enum;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
- * Interface ValueDefinition
+ * Interface ValueDefinition.
  */
 interface ValueDefinition extends DependentDefinition
 {

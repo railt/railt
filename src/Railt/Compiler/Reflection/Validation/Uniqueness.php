@@ -12,7 +12,7 @@ namespace Railt\Compiler\Reflection\Validation;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorsFactory;
 
 /**
- * Class Uniqueness
+ * Class Uniqueness.
  */
 final class Uniqueness extends ValidatorsFactory
 {

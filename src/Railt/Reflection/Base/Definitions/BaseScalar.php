@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
-use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 
 /**
- * Class BaseScalar
+ * Class BaseScalar.
  */
 abstract class BaseScalar extends BaseTypeDefinition implements ScalarDefinition
 {

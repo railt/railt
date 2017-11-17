@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Reflection\Filesystem\File;
 use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Compiler\Exceptions\TypeConflictException;
 
 /**
- * Class EnumValidationTestCase
+ * Class EnumValidationTestCase.
  */
 class EnumValidationTestCase extends AbstractCompilerTestCase
 {

@@ -13,7 +13,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Renderable;
 
 /**
- * Interface ResponseInterface
+ * Interface ResponseInterface.
  */
 interface ResponseInterface extends Arrayable, Renderable
 {

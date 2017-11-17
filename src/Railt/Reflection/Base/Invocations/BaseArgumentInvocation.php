@@ -13,12 +13,12 @@ use Railt\Reflection\Base\Dependent\BaseDependent;
 use Railt\Reflection\Contracts\Invocations\ArgumentInvocation;
 
 /**
- * Class BaseArgumentInvocation
+ * Class BaseArgumentInvocation.
  */
 abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentInvocation
 {
     /**
-     * Argument type name
+     * Argument type name.
      */
     protected const TYPE_NAME = 'Argument';
 
@@ -42,7 +42,7 @@ abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentI
     {
         return \array_merge(parent::__sleep(), [
             // Value
-            'value'
+            'value',
         ]);
     }
 }

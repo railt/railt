@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Adapters;
 
 use Railt\Routing\Router;
-use Railt\Adapters\Webonyx\Adapter;
 use Railt\Events\Dispatcher;
+use Railt\Adapters\Webonyx\Adapter;
 use Railt\Reflection\Contracts\DocumentInterface as Document;
 
 /**
- * Class Factory
+ * Class Factory.
  */
 class Factory
 {
@@ -23,7 +23,7 @@ class Factory
      * @var array|AdapterInterface[]
      */
     private static $adapters = [
-        Adapter::class
+        Adapter::class,
     ];
 
     /**

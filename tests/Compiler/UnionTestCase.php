@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 
 /**
- * Class UnionTestCase
+ * Class UnionTestCase.
  */
 class UnionTestCase extends AbstractCompilerTestCase
 {

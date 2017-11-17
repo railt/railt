@@ -12,9 +12,8 @@ namespace Railt\Compiler\Reflection\Validation\Definitions;
 use Railt\Compiler\Reflection\Validation\Base\BaseValidator;
 
 /**
- * Class DefinitionsValidator
+ * Class DefinitionsValidator.
  */
 abstract class BaseDefinitionValidator extends BaseValidator implements DefinitionValidator
 {
-
 }

@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Invocations\Directive;
 
-use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
- * Trait BaseDirectivesContainer
+ * Trait BaseDirectivesContainer.
  *
  * @mixin HasDirectives
  */

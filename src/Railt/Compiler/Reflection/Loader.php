@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Reflection\Filesystem\File;
-use Railt\Reflection\Filesystem\NotReadableException;
-use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Kernel\CallStack;
+use Railt\Reflection\Filesystem\File;
+use Railt\Reflection\Filesystem\ReadableInterface;
+use Railt\Compiler\Exceptions\TypeNotFoundException;
+use Railt\Reflection\Filesystem\NotReadableException;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
- * Class Loader
+ * Class Loader.
  */
 class Loader extends Repository
 {
@@ -112,8 +112,6 @@ class Loader extends Repository
         if ($result instanceof ReadableInterface) {
             return $result;
         }
-
-        return null;
     }
 
     /**

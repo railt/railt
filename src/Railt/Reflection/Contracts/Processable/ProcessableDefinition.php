@@ -12,9 +12,8 @@ namespace Railt\Reflection\Contracts\Processable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
- * Interface ProcessableDefinition
+ * Interface ProcessableDefinition.
  */
 interface ProcessableDefinition extends Definition
 {
-
 }

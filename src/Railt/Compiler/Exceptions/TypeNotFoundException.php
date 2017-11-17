@@ -15,5 +15,4 @@ namespace Railt\Compiler\Exceptions;
  */
 class TypeNotFoundException extends TypeException
 {
-
 }

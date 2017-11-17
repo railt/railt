@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Exception;
 
 /**
- * Class Lexer
+ * Class Lexer.
  */
 class Lexer extends Exception
 {

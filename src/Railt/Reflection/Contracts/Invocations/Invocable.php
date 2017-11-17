@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Invocations;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
- * Interface Invocable
+ * Interface Invocable.
  */
 interface Invocable
 {

@@ -14,7 +14,7 @@ use Railt\Compiler\Reflection\Validation\Base\BaseValidator;
 use Railt\Compiler\Reflection\Validation\Uniqueness\ScalarUniquenessValidator;
 
 /**
- * Class UniqueValueValidator
+ * Class UniqueValueValidator.
  */
 class UniqueValueValidator extends BaseValidator implements ScalarUniquenessValidator
 {

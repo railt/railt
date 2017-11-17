@@ -13,7 +13,7 @@ use Railt\Routing\Contracts\RouteInterface;
 use Railt\Routing\Contracts\RouterInterface;
 
 /**
- * Class Router
+ * Class Router.
  */
 class Router implements RouterInterface
 {

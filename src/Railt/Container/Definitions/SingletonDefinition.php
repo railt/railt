@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Container\Definitions;
 
 /**
- * Class SingletonDefinition
+ * Class SingletonDefinition.
  */
 class SingletonDefinition extends FactoryDefinition
 {

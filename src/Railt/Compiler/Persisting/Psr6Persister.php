@@ -9,22 +9,19 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Persisting;
 
-use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\InvalidArgumentException;
-use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Contracts\Document;
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Filesystem\ReadableInterface;
+use Cache\Adapter\Common\Exception\CachePoolException;
 
 /**
- * Class Psr6Persister
+ * Class Psr6Persister.
  */
 class Psr6Persister implements Persister
 {
-    /**
-     *
-     */
     private const DEFAULT_REMEMBER_TIME = 60 * 5;
 
     /**
@@ -86,6 +83,7 @@ class Psr6Persister implements Persister
     {
         try {
             $result = $this->pool->getItem($readable->getHash());
+
             return $this->touch($result)->get();
         } catch (InvalidArgumentException | \Throwable $fatal) {
             throw CompilerException::wrap($fatal);

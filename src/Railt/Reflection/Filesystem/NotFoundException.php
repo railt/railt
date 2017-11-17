@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Filesystem;
 
 /**
- * Class NotFoundException
+ * Class NotFoundException.
  */
 class NotFoundException extends NotReadableException
 {

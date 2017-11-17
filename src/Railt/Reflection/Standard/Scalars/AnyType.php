@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Scalars;
 
-use Railt\Reflection\Base\Definitions\BaseScalar;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Standard\StandardType;
+use Railt\Reflection\Base\Definitions\BaseScalar;
 
 /**
  * RFC325 Implementation.

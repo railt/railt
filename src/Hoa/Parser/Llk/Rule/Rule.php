@@ -76,7 +76,6 @@ abstract class Rule
      */
     protected $_transitional = true;
 
-
     /**
      * Constructor.
      *
@@ -109,7 +108,7 @@ abstract class Rule
      */
     public function setName($name)
     {
-        $old         = $this->_name;
+        $old = $this->_name;
         $this->_name = $name;
 
         return $old;
@@ -133,7 +132,7 @@ abstract class Rule
      */
     protected function setChildren($children)
     {
-        $old             = $this->_children;
+        $old = $this->_children;
         $this->_children = $children;
 
         return $old;
@@ -159,11 +158,11 @@ abstract class Rule
     {
         $old = $this->_nodeId;
 
-        if (false !== $pos = strpos((string)$nodeId, ':')) {
-            $this->_nodeId      = substr((string)$nodeId, 0, $pos);
-            $this->_nodeOptions = str_split(substr((string)$nodeId, $pos + 1));
+        if (false !== $pos = strpos((string) $nodeId, ':')) {
+            $this->_nodeId = substr((string) $nodeId, 0, $pos);
+            $this->_nodeOptions = str_split(substr((string) $nodeId, $pos + 1));
         } else {
-            $this->_nodeId      = $nodeId;
+            $this->_nodeId = $nodeId;
             $this->_nodeOptions = [];
         }
 
@@ -201,10 +200,10 @@ abstract class Rule
         $old = $this->_defaultId;
 
         if (false !== $pos = strpos($defaultId, ':')) {
-            $this->_defaultId      = substr($defaultId, 0, $pos);
+            $this->_defaultId = substr($defaultId, 0, $pos);
             $this->_defaultOptions = str_split(substr($defaultId, $pos + 1));
         } else {
-            $this->_defaultId      = $defaultId;
+            $this->_defaultId = $defaultId;
             $this->_defaultOptions = [];
         }
 
@@ -229,8 +228,8 @@ abstract class Rule
      */
     public function setPPRepresentation($pp)
     {
-        $old                 = $this->_pp;
-        $this->_pp           = $pp;
+        $old = $this->_pp;
+        $this->_pp = $pp;
         $this->_transitional = false;
 
         return $old;

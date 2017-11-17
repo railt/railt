@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Definitions\Directive;
 
 /**
- * Interface Location
+ * Interface Location.
  */
 interface Location
 {
@@ -105,7 +105,7 @@ interface Location
     public const TARGET_INPUT_FIELD_DEFINITION = 'INPUT_FIELD_DEFINITION';
 
     /**
-     * Locations using in graphql queries
+     * Locations using in graphql queries.
      */
     public const TARGET_GRAPHQL_QUERY = [
         self::TARGET_FIELD,
@@ -118,7 +118,7 @@ interface Location
     ];
 
     /**
-     * Locations using in graphql schema definitions
+     * Locations using in graphql schema definitions.
      */
     public const TARGET_GRAPHQL_SDL = [
         self::TARGET_SCHEMA,

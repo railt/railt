@@ -9,32 +9,31 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Cache\Adapter\Common\AbstractCachePool;
-use Cache\Adapter\Common\CacheItem;
-use Cache\Adapter\Filesystem\FilesystemCachePool;
-use Illuminate\Support\Str;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Plugin\ListFiles;
-use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Illuminate\Support\Str;
 use Psr\Log\LoggerInterface;
 use Railt\Compiler\Compiler;
-use Railt\Compiler\Persisting\ArrayPersister;
-use Railt\Compiler\Persisting\EmulatingPersister;
-use Railt\Compiler\Persisting\NullablePersister;
-use Railt\Compiler\Persisting\Persister;
-use Railt\Compiler\Persisting\Psr16Persister;
-use Railt\Compiler\Persisting\Psr6Persister;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\File;
-use Railt\Reflection\Filesystem\ReadableInterface;
+use League\Flysystem\Filesystem;
 use Railt\Tests\AbstractTestCase;
+use Monolog\Handler\StreamHandler;
+use Cache\Adapter\Common\CacheItem;
+use League\Flysystem\Adapter\Local;
 use Symfony\Component\Finder\Finder;
+use Railt\Reflection\Filesystem\File;
+use League\Flysystem\Plugin\ListFiles;
+use Railt\Compiler\Persisting\Persister;
+use Railt\Reflection\Contracts\Document;
+use Cache\Adapter\Common\AbstractCachePool;
+use Railt\Compiler\Persisting\Psr6Persister;
+use Railt\Compiler\Persisting\ArrayPersister;
+use Railt\Compiler\Persisting\Psr16Persister;
+use Railt\Compiler\Persisting\NullablePersister;
+use Cache\Adapter\Filesystem\FilesystemCachePool;
+use Railt\Compiler\Persisting\EmulatingPersister;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
- * Class AbstractReflectionTestCase
- * @package Railt\Tests
+ * Class AbstractReflectionTestCase.
  */
 abstract class AbstractCompilerTestCase extends AbstractTestCase
 {
@@ -85,8 +84,9 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
      */
     public function testProviderIsLoadable(): void
     {
-        if (!\method_exists($this, 'provider')) {
+        if (! \method_exists($this, 'provider')) {
             static::markTestSkipped(__CLASS__ . ' does not provide a data provider');
+
             return;
         }
 
@@ -134,7 +134,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     private function getLogger(): LoggerInterface
     {
         return new Logger(\class_basename(static::class), [
-            new StreamHandler(@\fopen('php://output', 'wb+'))
+            new StreamHandler(@\fopen('php://output', 'wb+')),
         ]);
     }
 

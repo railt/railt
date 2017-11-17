@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Filesystem;
 
 /**
- * Trait FileHelpers
+ * Trait FileHelpers.
  */
 trait FileHelpers
 {
@@ -23,7 +23,7 @@ trait FileHelpers
      */
     public static function getErrorInfo(string $sources, int $bytesOffset): array
     {
-        $trace  = [];
+        $trace = [];
         $result = [
             'line'   => 1,
             'column' => 0,
@@ -34,8 +34,8 @@ trait FileHelpers
 
         foreach (\explode("\n", $sources) as $line => $code) {
             $previous = $current;
-            $current  += \strlen($code) + 1;
-            $trace[]  = $code;
+            $current += \strlen($code) + 1;
+            $trace[] = $code;
 
             if ($current > $bytesOffset) {
                 return [
@@ -60,11 +60,11 @@ trait FileHelpers
     public static function getAffectedCodeAsString(array $textLines): string
     {
         $result = '';
-        $i      = 0;
+        $i = 0;
 
         while (\count($textLines) && ++$i) {
             $textLine = \array_pop($textLines);
-            $result   = $textLine . ($i > 1 ? "\n" . $result : '');
+            $result = $textLine . ($i > 1 ? "\n" . $result : '');
 
             if (\trim($textLine)) {
                 break;

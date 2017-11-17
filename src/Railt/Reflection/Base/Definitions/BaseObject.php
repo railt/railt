@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
-use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
-use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
-use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 
 /**
- * Class BaseObject
+ * Class BaseObject.
  */
 abstract class BaseObject extends BaseTypeDefinition implements ObjectDefinition
 {
@@ -23,7 +23,7 @@ abstract class BaseObject extends BaseTypeDefinition implements ObjectDefinition
     use BaseFieldsContainer;
 
     /**
-     * Object type name
+     * Object type name.
      */
     protected const TYPE_NAME = 'Object';
 

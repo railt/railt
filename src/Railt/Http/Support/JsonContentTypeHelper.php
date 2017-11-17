@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http\Support;
 
 /**
- * Trait JsonContentTypeHelper
+ * Trait JsonContentTypeHelper.
  */
 trait JsonContentTypeHelper
 {
@@ -30,7 +30,7 @@ trait JsonContentTypeHelper
      */
     private function contains(string $haystack, string ...$needles): bool
     {
-        foreach ((array)$needles as $needle) {
+        foreach ((array) $needles as $needle) {
             if ($needle !== '' && mb_strpos($haystack, $needle) !== false) {
                 return true;
             }

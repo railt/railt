@@ -9,27 +9,27 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Standard\Directives;
 
-use Railt\Reflection\Base\Definitions\BaseDirective;
-use Railt\Reflection\Contracts\Definitions\Directive\Location;
-use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Standard\Directives\Deprecation\Reason;
 use Railt\Reflection\Standard\StandardType;
+use Railt\Reflection\Base\Definitions\BaseDirective;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Standard\Directives\Deprecation\Reason;
+use Railt\Reflection\Contracts\Definitions\Directive\Location;
 
 /**
- * Class Deprecation
+ * Class Deprecation.
  *
  * @see https://github.com/graphql/graphql-js/pull/384
  */
 final class Deprecation extends BaseDirective implements StandardType
 {
     /**
-     * Deprecation directive name
+     * Deprecation directive name.
      */
     public const DIRECTIVE_TYPE_NAME = 'deprecated';
 
     /**
-     * Deprecation reason argument
+     * Deprecation reason argument.
      */
     public const REASON_ARGUMENT = 'reason';
 
@@ -39,10 +39,10 @@ final class Deprecation extends BaseDirective implements StandardType
      */
     public function __construct(Document $document)
     {
-        $this->document          = $document;
-        $this->name              = self::DIRECTIVE_TYPE_NAME;
+        $this->document = $document;
+        $this->name = self::DIRECTIVE_TYPE_NAME;
         $this->deprecationReason = self::RFC_IMPL_DESCRIPTION;
-        $this->locations         = Location::TARGET_GRAPHQL_SDL;
+        $this->locations = Location::TARGET_GRAPHQL_SDL;
 
         $argument = $this->createReasonArgument();
         $this->arguments[$argument->getName()] = $argument;

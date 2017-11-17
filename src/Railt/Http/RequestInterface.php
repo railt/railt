@@ -10,22 +10,22 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 /**
- * Interface RequestInterface
+ * Interface RequestInterface.
  */
 interface RequestInterface
 {
     /**
-     * Query http (GET/POST) argument name passed by default
+     * Query http (GET/POST) argument name passed by default.
      */
     public const DEFAULT_QUERY_ARGUMENT = 'query';
 
     /**
-     * Variables http (GET/POST) argument name passed by default
+     * Variables http (GET/POST) argument name passed by default.
      */
     public const DEFAULT_VARIABLES_ARGUMENT = 'variables';
 
     /**
-     * Operation http (GET/POST) argument name passed by default
+     * Operation http (GET/POST) argument name passed by default.
      */
     public const DEFAULT_OPERATION_ARGUMENT = 'operation';
 

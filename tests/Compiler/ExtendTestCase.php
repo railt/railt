@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Reflection\Contracts\Document;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Document;
 
 /**
- * Class ExtendTestCase
+ * Class ExtendTestCase.
  */
 class ExtendTestCase extends AbstractCompilerTestCase
 {
@@ -25,7 +25,7 @@ class ExtendTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type Test {
     id: String
     createdAt: DateTime!

@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection;
 
-use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**
- * Class CompilerInterface
+ * Class CompilerInterface.
  */
 interface CompilerInterface extends Dictionary
 {
@@ -30,7 +30,7 @@ interface CompilerInterface extends Dictionary
      * @param \Closure $then
      * @return CompilerInterface
      */
-    public function autoload(\Closure $then): CompilerInterface;
+    public function autoload(\Closure $then): self;
 
     /**
      * @return Parser

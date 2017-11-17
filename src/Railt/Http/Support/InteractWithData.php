@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http\Support;
 
 /**
- * Trait InteractWithData
+ * Trait InteractWithData.
  */
 trait InteractWithData
 {
@@ -35,7 +35,7 @@ trait InteractWithData
         $key = $this->getVariablesArgument();
 
         if (array_key_exists($this->getVariablesArgument(), $this->data)) {
-            return (array)$this->data[$key];
+            return (array) $this->data[$key];
         }
 
         return [];

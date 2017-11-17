@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Hoa\Compiler\Llk\Sampler;
 
-use Hoa\Compiler;
 use Hoa\Visitor;
+use Hoa\Compiler;
 
 /**
  * Class \Hoa\Compiler\Llk\Sampler.
@@ -27,35 +27,35 @@ abstract class Sampler
      *
      * @var \Hoa\Compiler\Llk\Parser
      */
-    protected $_compiler         = null;
+    protected $_compiler = null;
 
     /**
      * Tokens.
      *
      * @var array
      */
-    protected $_tokens           = null;
+    protected $_tokens = null;
 
     /**
      * All rules (from the compiler).
      *
      * @var array
      */
-    protected $_rules            = null;
+    protected $_rules = null;
 
     /**
      * Token sampler.
      *
      * @var \Hoa\Visitor\Visit
      */
-    protected $_tokenSampler     = null;
+    protected $_tokenSampler = null;
 
     /**
      * Root rule name.
      *
      * @var string
      */
-    protected $_rootRuleName     = null;
+    protected $_rootRuleName = null;
 
     /**
      * Current token namespace.
@@ -69,8 +69,7 @@ abstract class Sampler
      *
      * @var array
      */
-    protected $_skipTokenAST     = [];
-
+    protected $_skipTokenAST = [];
 
     /**
      * Construct a generator.
@@ -82,13 +81,11 @@ abstract class Sampler
         Compiler\Llk\Parser $compiler,
         Visitor\Visit       $tokenSampler
     ) {
-        $this->_compiler     = $compiler;
-        $this->_tokens       = $compiler->getTokens();
-        $this->_rules        = $compiler->getRules();
+        $this->_compiler = $compiler;
+        $this->_tokens = $compiler->getTokens();
+        $this->_rules = $compiler->getRules();
         $this->_tokenSampler = $tokenSampler;
         $this->_rootRuleName = $compiler->getRootRule();
-
-        return;
     }
 
     /**
@@ -108,7 +105,7 @@ abstract class Sampler
      */
     protected function getSkipTokenAST()
     {
-        if (!isset($this->_skipTokenAST[$this->_currentNamespace])) {
+        if (! isset($this->_skipTokenAST[$this->_currentNamespace])) {
             $token = new Compiler\Llk\Rule\Token(
                 -1,
                 'skip',
@@ -174,7 +171,7 @@ abstract class Sampler
      */
     protected function setCurrentNamespace($namespace)
     {
-        $old                     = $this->_currentNamespace;
+        $old = $this->_currentNamespace;
         $this->_currentNamespace = $namespace;
 
         return $old;

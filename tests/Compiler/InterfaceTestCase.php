@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 
 /**
- * Class InterfaceTestCase
+ * Class InterfaceTestCase.
  */
 class InterfaceTestCase extends AbstractCompilerTestCase
 {
@@ -113,7 +113,7 @@ class InterfaceTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type Object implements Test {
     id: ID!
 }

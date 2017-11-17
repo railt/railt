@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
- * Class NullablePersister
+ * Class NullablePersister.
  */
 class NullablePersister implements Persister
 {

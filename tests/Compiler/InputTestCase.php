@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Reflection\Contracts\Document;
 
 /**
- * Class InputTestCase
+ * Class InputTestCase.
  */
 class InputTestCase extends AbstractCompilerTestCase
 {
@@ -25,7 +25,7 @@ class InputTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 """
  # This an Input type example
 """
@@ -66,7 +66,6 @@ GraphQL;
 
         static::assertSame('Input', $input->getTypeName());
     }
-
 
     /**
      * @dataProvider provider

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Exception;
 
 /**
- * Class UnexpectedToken
+ * Class UnexpectedToken.
  */
 class UnexpectedToken extends UnrecognizedToken
 {

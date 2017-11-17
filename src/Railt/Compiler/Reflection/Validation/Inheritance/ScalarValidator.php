@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 
 /**
- * Class ScalarValidator
+ * Class ScalarValidator.
  */
 class ScalarValidator extends BaseInheritanceValidator
 {
@@ -55,8 +55,7 @@ class ScalarValidator extends BaseInheritanceValidator
     {
         $this->isPostCondition($parent)
             ? $this->validateDirectScalarCompatibility($child, $parent)
-            : $this->validateInverseScalarCompatibility($child, $parent)
-        ;
+            : $this->validateInverseScalarCompatibility($child, $parent);
     }
 
     /**
@@ -101,7 +100,7 @@ class ScalarValidator extends BaseInheritanceValidator
 
         $error = \vsprintf('Scalar %s of %s does not compatible with %s of %s', [
             $childType, $child,
-            $parentType, $parent
+            $parentType, $parent,
         ]);
 
         throw new TypeConflictException($error, $this->getCallStack());

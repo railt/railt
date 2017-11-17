@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Hoa\Compiler\Llk\Rule;
 
-use Hoa\Compiler;
 use Hoa\File;
+use Hoa\Compiler;
 
 /**
  * Class \Hoa\Compiler\Llk\Rule\Token.
@@ -34,56 +34,56 @@ class Token extends Rule
      *
      * @var string
      */
-    protected $_tokenName            = null;
+    protected $_tokenName = null;
 
     /**
      * Namespace.
      *
      * @var string
      */
-    protected $_namespace            = null;
+    protected $_namespace = null;
 
     /**
      * Token representation.
      *
      * @var string
      */
-    protected $_regex                = null;
+    protected $_regex = null;
 
     /**
      * AST of the regex.
      *
      * @var \Hoa\Compiler\Llk\TreeNode
      */
-    protected $_ast                  = null;
+    protected $_ast = null;
 
     /**
      * Token value.
      *
      * @var string
      */
-    protected $_value                = null;
+    protected $_value = null;
 
     /**
      * Whether the token is kept or not in the AST.
      *
      * @var bool
      */
-    protected $_kept                 = false;
+    protected $_kept = false;
 
     /**
      * Unification index.
      *
      * @var int
      */
-    protected $_unification          = -1;
+    protected $_unification = -1;
 
     /**
      * Token offset.
      *
      * @var int
      */
-    protected $_offset               = 0;
+    protected $_offset = 0;
 
     /**
      * Constructor.
@@ -103,11 +103,9 @@ class Token extends Rule
     ) {
         parent::__construct($name, null, $nodeId);
 
-        $this->_tokenName   = $tokenName;
+        $this->_tokenName = $tokenName;
         $this->_unification = $unification;
         $this->setKept($kept);
-
-        return;
     }
 
     /**
@@ -128,7 +126,7 @@ class Token extends Rule
      */
     public function setNamespace($namespace)
     {
-        $old              = $this->_namespace;
+        $old = $this->_namespace;
         $this->_namespace = $namespace;
 
         return $old;
@@ -152,7 +150,7 @@ class Token extends Rule
      */
     public function setRepresentation($regex)
     {
-        $old          = $this->_regex;
+        $old = $this->_regex;
         $this->_regex = $regex;
 
         return $old;
@@ -199,7 +197,7 @@ class Token extends Rule
      */
     public function setValue($value)
     {
-        $old          = $this->_value;
+        $old = $this->_value;
         $this->_value = $value;
 
         return $old;
@@ -223,7 +221,7 @@ class Token extends Rule
      */
     public function setOffset($offset)
     {
-        $old           = $this->_offset;
+        $old = $this->_offset;
         $this->_offset = $offset;
 
         return $old;
@@ -247,7 +245,7 @@ class Token extends Rule
      */
     public function setKept($kept)
     {
-        $old         = $this->_kept;
+        $old = $this->_kept;
         $this->_kept = $kept;
 
         return $old;

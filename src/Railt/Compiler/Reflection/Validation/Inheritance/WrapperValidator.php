@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Inheritance;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
@@ -40,7 +40,7 @@ class WrapperValidator extends BaseInheritanceValidator
     public function validate(TypeDefinition $child, TypeDefinition $parent): void
     {
         /**
-         * We check that the List type is redefined by the List type
+         * We check that the List type is redefined by the List type.
          */
         $this->validateListType($child, $parent);
 
@@ -78,7 +78,7 @@ class WrapperValidator extends BaseInheritanceValidator
      *  - [Type!]  overriden by Type!
      *  - [Type!]! overriden by Type
      *  - [Type!]! overriden by Type!
-     * </code>
+     * </code>.
      *
      * @param AllowsTypeIndication $child
      * @param AllowsTypeIndication $parent
@@ -106,7 +106,7 @@ class WrapperValidator extends BaseInheritanceValidator
      *  - Type! overriden by [Type!]
      *  - Type  overriden by [Type!]!
      *  - Type! overriden by [Type!]!
-     * </code>
+     * </code>.
      *
      * @param AllowsTypeIndication $child
      * @param AllowsTypeIndication $parent

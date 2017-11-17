@@ -12,7 +12,7 @@ namespace Railt\Compiler\Reflection\Validation\Uniqueness;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
- * Interface TypeUniquenessValidator
+ * Interface TypeUniquenessValidator.
  */
 interface TypeUniquenessValidator extends UniquenessValidator
 {

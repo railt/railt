@@ -12,7 +12,7 @@ namespace Railt\Compiler\Reflection\Builder\Process;
 use Railt\Compiler\Reflection\CompilerInterface;
 
 /**
- * Interface Compilable
+ * Interface Compilable.
  */
 interface Compilable
 {

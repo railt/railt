@@ -24,28 +24,28 @@ abstract class Invocation
      *
      * @var string
      */
-    protected $_rule         = null;
+    protected $_rule = null;
 
     /**
      * Data.
      *
      * @var mixed
      */
-    protected $_data         = null;
+    protected $_data = null;
 
     /**
      * Piece of todo sequence.
      *
      * @var array
      */
-    protected $_todo         = null;
+    protected $_todo = null;
 
     /**
      * Depth in the trace.
      *
      * @var int
      */
-    protected $_depth        = -1;
+    protected $_depth = -1;
 
     /**
      * Whether the rule is transitional or not (i.e. not declared in the grammar
@@ -54,8 +54,6 @@ abstract class Invocation
      * @var bool
      */
     protected $_transitional = false;
-
-
 
     /**
      * Constructor.
@@ -69,15 +67,13 @@ abstract class Invocation
         $rule,
         $data,
         array $todo = null,
-        $depth      = -1
+        $depth = -1
     ) {
-        $this->_rule         = $rule;
-        $this->_data         = $data;
-        $this->_todo         = $todo;
-        $this->_depth        = $depth;
+        $this->_rule = $rule;
+        $this->_data = $data;
+        $this->_todo = $todo;
+        $this->_depth = $depth;
         $this->_transitional = is_int($rule);
-
-        return;
     }
 
     /**
@@ -118,7 +114,7 @@ abstract class Invocation
      */
     public function setDepth($depth)
     {
-        $old          = $this->_depth;
+        $old = $this->_depth;
         $this->_depth = $depth;
 
         return $old;

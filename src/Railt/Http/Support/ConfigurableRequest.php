@@ -12,7 +12,7 @@ namespace Railt\Http\Support;
 use Railt\Http\RequestInterface;
 
 /**
- * Trait ConfigurableRequest
+ * Trait ConfigurableRequest.
  */
 trait ConfigurableRequest
 {

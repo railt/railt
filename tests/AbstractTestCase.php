@@ -12,10 +12,8 @@ namespace Railt\Tests;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class AbstractTestCase
- * @package Railt\Tests
+ * Class AbstractTestCase.
  */
 abstract class AbstractTestCase extends TestCase
 {
-
 }

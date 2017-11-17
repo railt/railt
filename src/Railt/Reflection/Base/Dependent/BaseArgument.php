@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Dependent;
 
 use Railt\Reflection\Base\Behavior\BaseTypeIndicator;
-use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 
 /**
- * Class BaseArgument
+ * Class BaseArgument.
  */
 abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
 {
@@ -22,7 +22,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
     use BaseDirectivesContainer;
 
     /**
-     * Argument type name
+     * Argument type name.
      */
     protected const TYPE_NAME = 'Argument';
 
@@ -46,13 +46,11 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
                 return $this->defaultValue;
 
             case ! $this->isNonNull():
-                return null;
+                return;
 
             case $this->isList():
                 return [];
         }
-
-        return null;
     }
 
     /**

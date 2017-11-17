@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Persisting;
 
-use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Contracts\Document;
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
- * Class EmulatingPersister
+ * Class EmulatingPersister.
  */
 class EmulatingPersister implements Persister
 {

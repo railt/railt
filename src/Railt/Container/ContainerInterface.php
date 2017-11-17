@@ -12,7 +12,7 @@ namespace Railt\Container;
 use Psr\Container\ContainerInterface as PsrContainer;
 
 /**
- * Interface ContainerInterface
+ * Interface ContainerInterface.
  */
 interface ContainerInterface extends PsrContainer, RegistrableInterface
 {

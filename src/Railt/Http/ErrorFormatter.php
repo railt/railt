@@ -13,7 +13,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Railt\Compiler\Exceptions\GraphQLSchemaException;
 
 /**
- * Class ErrorFormatter
+ * Class ErrorFormatter.
  */
 class ErrorFormatter implements Arrayable
 {
@@ -110,7 +110,6 @@ class ErrorFormatter implements Arrayable
 
             return $trace;
         }, $trace);
-
 
         $trace = array_filter($trace, function (string $item): bool {
             return $item !== '{main}';

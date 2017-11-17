@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Definitions;
 
-use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Behavior\Inputable;
+use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 
 /**
- * Class ArgumentValidator
+ * Class ArgumentValidator.
  */
 class ArgumentValidator extends BaseDefinitionValidator
 {
@@ -107,7 +107,6 @@ class ArgumentValidator extends BaseDefinitionValidator
             );
             throw new TypeConflictException($error, $this->getCallStack());
         }
-
 
         if ($type->isList() && $type->isListOfNonNulls()) {
             foreach ($defaults as $value) {

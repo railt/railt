@@ -26,14 +26,14 @@ class TreeNode implements Visitor\Element
      *
      * @var string
      */
-    protected $_id       = null;
+    protected $_id = null;
 
     /**
      * Value of the node (non-null for token nodes).
      *
      * @var array
      */
-    protected $_value    = null;
+    protected $_value = null;
 
     /**
      * Children.
@@ -47,16 +47,14 @@ class TreeNode implements Visitor\Element
      *
      * @var \Hoa\Compiler\Llk\TreeNode
      */
-    protected $_parent   = null;
+    protected $_parent = null;
 
     /**
      * Attached data.
      *
      * @var array
      */
-    protected $_data     = [];
-
-
+    protected $_data = [];
 
     /**
      * Constructor.
@@ -68,13 +66,13 @@ class TreeNode implements Visitor\Element
      */
     public function __construct(
         $id,
-        array $value    = null,
+        array $value = null,
         array $children = [],
-        self  $parent   = null
+        self  $parent = null
     ) {
         $this->setId($id);
 
-        if (!empty($value)) {
+        if (! empty($value)) {
             $this->setValue($value);
         }
 
@@ -83,8 +81,6 @@ class TreeNode implements Visitor\Element
         if (null !== $parent) {
             $this->setParent($parent);
         }
-
-        return;
     }
 
     /**
@@ -95,7 +91,7 @@ class TreeNode implements Visitor\Element
      */
     public function setId($id)
     {
-        $old       = $this->_id;
+        $old = $this->_id;
         $this->_id = $id;
 
         return $old;
@@ -119,7 +115,7 @@ class TreeNode implements Visitor\Element
      */
     public function setValue(array $value)
     {
-        $old          = $this->_value;
+        $old = $this->_value;
         $this->_value = $value;
 
         return $old;
@@ -181,7 +177,7 @@ class TreeNode implements Visitor\Element
      */
     public function isToken()
     {
-        return !empty($this->_value);
+        return ! empty($this->_value);
     }
 
     /**
@@ -190,7 +186,7 @@ class TreeNode implements Visitor\Element
      * @param   \Hoa\Compiler\Llk\TreeNode  $child    Child.
      * @return  \Hoa\Compiler\Llk\TreeNode
      */
-    public function prependChild(TreeNode $child)
+    public function prependChild(self $child)
     {
         array_unshift($this->_children, $child);
 
@@ -203,7 +199,7 @@ class TreeNode implements Visitor\Element
      * @param   \Hoa\Compiler\Llk\TreeNode  $child    Child.
      * @return  \Hoa\Compiler\Llk\TreeNode
      */
-    public function appendChild(TreeNode $child)
+    public function appendChild(self $child)
     {
         $this->_children[] = $child;
 
@@ -218,7 +214,7 @@ class TreeNode implements Visitor\Element
      */
     public function setChildren(array $children)
     {
-        $old             = $this->_children;
+        $old = $this->_children;
         $this->_children = $children;
 
         return $old;
@@ -275,9 +271,9 @@ class TreeNode implements Visitor\Element
      * @param   \Hoa\Compiler\Llk\TreeNode  $parent    Parent.
      * @return  \Hoa\Compiler\Llk\TreeNode
      */
-    public function setParent(TreeNode $parent)
+    public function setParent(self $parent)
     {
-        $old           = $this->_parent;
+        $old = $this->_parent;
         $this->_parent = $parent;
 
         return $old;
@@ -314,7 +310,7 @@ class TreeNode implements Visitor\Element
     public function accept(
         Visitor\Visit $visitor,
         &$handle = null,
-        $eldnah  = null
+        $eldnah = null
     ) {
         return $visitor->visit($this, $handle, $eldnah);
     }
@@ -327,7 +323,5 @@ class TreeNode implements Visitor\Element
     public function __destruct()
     {
         unset($this->_parent);
-
-        return;
     }
 }

@@ -13,7 +13,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorsFactory;
 
 /**
- * Class Inheritance
+ * Class Inheritance.
  *
  * @method validate(TypeDefinition $child, TypeDefinition $parent)
  */

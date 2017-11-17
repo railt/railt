@@ -7,20 +7,17 @@
  */
 declare(strict_types=1);
 
-
 namespace Hoa\Compiler {
 
     use Hoa\Exception\Exception as BaseException;
     use Railt\Exceptions\IndeterminateBehaviorException;
 
     throw new IndeterminateBehaviorException('This is stub file not for usage.');
-
     /**
-     * Class Exception
+     * Class Exception.
      */
     class Exception extends BaseException
     {
-
     }
 }
 
@@ -30,12 +27,10 @@ namespace Hoa\Compiler\Exception {
     use Railt\Exceptions\IndeterminateBehaviorException;
 
     throw new IndeterminateBehaviorException('This is stub file not for usage.');
-
     /**
-     * Class Exception
+     * Class Exception.
      */
     class Exception extends BaseException
     {
-
     }
 }

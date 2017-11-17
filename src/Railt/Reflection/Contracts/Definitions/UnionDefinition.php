@@ -12,7 +12,7 @@ namespace Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
- * Interface UnionDefinition
+ * Interface UnionDefinition.
  */
 interface UnionDefinition extends TypeDefinition, HasDirectives
 {

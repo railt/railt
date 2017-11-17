@@ -12,14 +12,14 @@ namespace Railt\Compiler\Reflection\Builder\Definitions;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\Definitions\BaseSchema;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
-use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 
 /**
- * Class SchemaBuilder
+ * Class SchemaBuilder.
  */
 class SchemaBuilder extends BaseSchema implements Compilable
 {
@@ -28,7 +28,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
 
     /**
      * SchemaBuilder constructor.
-     * TODO Offset doesn't works correctly =\
+     * TODO Offset doesn't works correctly =\.
      *
      * @param TreeNode $ast
      * @param DocumentBuilder $document
@@ -76,7 +76,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
          * #Query|#Mutation|#Subscription   *->getChild(0)
          *     #Type                        *->getChild(0)
          *         token(T_NAME, TypeName)  *->getValueValue()
-         * </code>
+         * </code>.
          */
         $name = $ast->getChild(0)->getChild(0)->getValueValue();
 

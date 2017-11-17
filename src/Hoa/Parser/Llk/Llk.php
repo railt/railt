@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Hoa\Compiler\Llk;
 
-use Hoa\Compiler;
 use Hoa\Stream;
+use Hoa\Compiler;
 
 /**
  * Class \Hoa\Compiler\Llk.
@@ -58,7 +58,7 @@ abstract class Llk
         static::parsePP($pp, $tokens, $rawRules, $pragmas, $stream->getStreamName());
 
         $ruleAnalyzer = new Rule\Analyzer($tokens);
-        $rules        = $ruleAnalyzer->analyzeRules($rawRules);
+        $rules = $ruleAnalyzer->analyzeRules($rawRules);
 
         return new Parser($tokens, $rules, $pragmas);
     }
@@ -75,11 +75,11 @@ abstract class Llk
      */
     public static function save(Parser $parser, $className)
     {
-        $out        = null;
-        $outTokens  = null;
-        $outRules   = null;
+        $out = null;
+        $outTokens = null;
+        $outRules = null;
         $outPragmas = null;
-        $outExtra   = null;
+        $outExtra = null;
 
         $escapeRuleName = function ($ruleName) use ($parser) {
             if (true == $parser->getRule($ruleName)->isTransitional()) {
@@ -159,7 +159,7 @@ abstract class Llk
             if (null !== $defaultNodeId = $rule->getDefaultId()) {
                 $defaultNodeOptions = $rule->getDefaultOptions();
 
-                if (!empty($defaultNodeOptions)) {
+                if (! empty($defaultNodeOptions)) {
                     $defaultNodeId .= ':' . implode('', $defaultNodeOptions);
                 }
 
@@ -234,12 +234,12 @@ abstract class Llk
      */
     public static function parsePP($pp, &$tokens, &$rules, &$pragmas, $streamName)
     {
-        $lines   = explode("\n", $pp);
+        $lines = explode("\n", $pp);
         $pragmas = [];
-        $tokens  = ['default' => []];
-        $rules   = [];
+        $tokens = ['default' => []];
+        $rules = [];
 
-        for ($i = 0, $m = count($lines); $i < $m; ++$i) {
+        for ($i = 0, $m = count($lines); $i < $m; $i++) {
             $line = rtrim($lines[$i]);
 
             if (0 === strlen($line) || '//' == substr($line, 0, 2)) {
@@ -273,11 +273,11 @@ abstract class Llk
                         $matches[1] = 'default';
                     }
 
-                    if (!isset($tokens[$matches[1]])) {
+                    if (! isset($tokens[$matches[1]])) {
                         $tokens[$matches[1]] = [];
                     }
 
-                    if (!isset($tokens[$matches[1]]['skip'])) {
+                    if (! isset($tokens[$matches[1]]['skip'])) {
                         $tokens[$matches[1]]['skip'] = $matches[3];
                     } else {
                         $tokens[$matches[1]]['skip'] =
@@ -291,11 +291,11 @@ abstract class Llk
                         $matches[1] = 'default';
                     }
 
-                    if (isset($matches[4]) && !empty($matches[4])) {
+                    if (isset($matches[4]) && ! empty($matches[4])) {
                         $matches[2] = $matches[2] . ':' . $matches[4];
                     }
 
-                    if (!isset($tokens[$matches[1]])) {
+                    if (! isset($tokens[$matches[1]])) {
                         $tokens[$matches[1]] = [];
                     }
 
@@ -308,7 +308,7 @@ abstract class Llk
                         [
                             $line,
                             $streamName,
-                            $i + 1
+                            $i + 1,
                         ]
                     );
                 }
@@ -317,16 +317,16 @@ abstract class Llk
             }
 
             $ruleName = substr($line, 0, -1);
-            $rule     = null;
-            ++$i;
+            $rule = null;
+            $i++;
 
             while ($i < $m &&
                    isset($lines[$i][0]) &&
-                   (' '  === $lines[$i][0] ||
+                   (' ' === $lines[$i][0] ||
                     "\t" === $lines[$i][0] ||
                     '//' === substr($lines[$i], 0, 2))) {
                 if ('//' === substr($lines[$i], 0, 2)) {
-                    ++$i;
+                    $i++;
 
                     continue;
                 }
@@ -335,12 +335,10 @@ abstract class Llk
             }
 
             if (isset($lines[$i][0])) {
-                --$i;
+                $i--;
             }
 
             $rules[$ruleName] = $rule;
         }
-
-        return;
     }
 }

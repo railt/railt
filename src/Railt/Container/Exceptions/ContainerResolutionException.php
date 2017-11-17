@@ -12,9 +12,8 @@ namespace Railt\Container\Exceptions;
 use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * Class ContainerResolutionException
+ * Class ContainerResolutionException.
  */
 class ContainerResolutionException extends \LogicException implements NotFoundExceptionInterface
 {
-
 }

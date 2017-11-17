@@ -12,12 +12,12 @@ namespace Railt\Compiler\Reflection\Builder\Definitions;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Reflection\Base\Definitions\BaseScalar;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
-use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
+use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 
 /**
- * Class ScalarBuilder
+ * Class ScalarBuilder.
  */
 class ScalarBuilder extends BaseScalar implements Compilable
 {

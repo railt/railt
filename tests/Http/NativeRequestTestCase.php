@@ -14,8 +14,7 @@ use PHPUnit\Framework\Assert;
 use Railt\Http\RequestInterface;
 
 /**
- * Class NativeRequestTestCase
- * @package Railt\Tests\Http
+ * Class NativeRequestTestCase.
  */
 class NativeRequestTestCase extends AbstractHttpRequestTestCase
 {

@@ -13,7 +13,7 @@ use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Validation\Validator;
 
 /**
- * Interface ValidatorInterface
+ * Interface ValidatorInterface.
  */
 interface ValidatorInterface
 {
@@ -34,7 +34,7 @@ interface ValidatorInterface
      * @param string $group
      * @return ValidatorInterface
      */
-    public function getValidator(string $group): ValidatorInterface;
+    public function getValidator(string $group): self;
 
     /**
      * @return CallStack
