@@ -1,38 +1,11 @@
 <?php
-
 /**
- * Hoa
+ * This file is part of Railt package.
  *
- *
- * @license
- *
- * New BSD License
- *
- * Copyright © 2007-2017, Hoa community. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *     * Redistributions of source code must retain the above copyright
- *       notice, this list of conditions and the following disclaimer.
- *     * Redistributions in binary form must reproduce the above copyright
- *       notice, this list of conditions and the following disclaimer in the
- *       documentation and/or other materials provided with the distribution.
- *     * Neither the name of the Hoa nor the names of its contributors may be
- *       used to endorse or promote products derived from this software without
- *       specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS AND CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+declare(strict_types=1);
 
 namespace Hoa\Compiler\Llk\Rule;
 
@@ -54,22 +27,22 @@ class Analyzer
      */
     protected static $_ppLexemes = [
         'default' => [
-            'skip'          => '\s',
-            'or'            => '\|',
-            'zero_or_one'   => '\?',
-            'one_or_more'   => '\+',
-            'zero_or_more'  => '\*',
-            'n_to_m'        => '\{[0-9]+,[0-9]+\}',
-            'zero_to_m'     => '\{,[0-9]+\}',
-            'n_or_more'     => '\{[0-9]+,\}',
-            'exactly_n'     => '\{[0-9]+\}',
-            'skipped'       => '::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::',
-            'kept'          => '<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>',
-            'named'         => '[a-zA-Z_][a-zA-Z0-9_]*\(\)',
-            'node'          => '#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?',
-            'capturing_'    => '\(',
-            '_capturing'    => '\)'
-        ]
+            'skip'         => '\s',
+            'or'           => '\|',
+            'zero_or_one'  => '\?',
+            'one_or_more'  => '\+',
+            'zero_or_more' => '\*',
+            'n_to_m'       => '\{[0-9]+,[0-9]+\}',
+            'zero_to_m'    => '\{,[0-9]+\}',
+            'n_or_more'    => '\{[0-9]+,\}',
+            'exactly_n'    => '\{[0-9]+\}',
+            'skipped'      => '::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::',
+            'kept'         => '<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>',
+            'named'        => '[a-zA-Z_][a-zA-Z0-9_]*\(\)',
+            'node'         => '#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?',
+            'capturing_'   => '\(',
+            '_capturing'   => '\)',
+        ],
     ];
 
     /**
@@ -77,49 +50,44 @@ class Analyzer
      *
      * @var \Hoa\Iterator\Lookahead
      */
-    protected $_lexer                   = null;
+    protected $_lexer = null;
 
     /**
      * Tokens representing rules.
      *
      * @var array
      */
-    protected $_tokens                  = null;
+    protected $_tokens = null;
 
     /**
      * Rules.
      *
      * @var array
      */
-    protected $_rules                   = null;
-
-    /**
-     * Rule name being analyzed.
-     *
-     * @var string
-     */
-    private $_ruleName                  = null;
-
+    protected $_rules = null;
     /**
      * Parsed rules.
      *
      * @var array
      */
-    protected $_parsedRules             = null;
-
+    protected $_parsedRules = null;
     /**
      * Counter to auto-name transitional rules.
      *
      * @var int
      */
     protected $_transitionalRuleCounter = 0;
-
-
+    /**
+     * Rule name being analyzed.
+     *
+     * @var string
+     */
+    private $_ruleName = null;
 
     /**
      * Constructor.
      *
-     * @param   array  $tokens    Tokens.
+     * @param   array $tokens Tokens.
      */
     public function __construct(array $tokens)
     {
@@ -128,10 +96,10 @@ class Analyzer
         return;
     }
 
-   /**
+    /**
      * Build the analyzer of the rules (does not analyze the rules).
      *
-     * @param   array  $rules    Rule to be analyzed.
+     * @param   array $rules Rule to be analyzed.
      * @return  void
      * @throws  \Hoa\Compiler\Exception
      */
@@ -220,9 +188,9 @@ class Analyzer
         // … ( ::or:: concatenation() )*
         while ('or' === $this->_lexer->current()['token']) {
             $this->_lexer->next();
-            $others   = true;
-            $nNodeId  = $pNodeId;
-            $rule     = $this->concatenation($nNodeId);
+            $others  = true;
+            $nNodeId = $pNodeId;
+            $rule    = $this->concatenation($nNodeId);
 
             if (null === $rule) {
                 return null;
@@ -311,14 +279,14 @@ class Analyzer
                 break;
 
             case 'one_or_more':
-                $min =  1;
+                $min = 1;
                 $max = -1;
                 $this->_lexer->next();
 
-               break;
+                break;
 
             case 'zero_or_more':
-                $min =  0;
+                $min = 0;
                 $max = -1;
                 $this->_lexer->next();
 
@@ -327,21 +295,21 @@ class Analyzer
             case 'n_to_m':
                 $handle = trim($this->_lexer->current()['value'], '{}');
                 $nm     = explode(',', $handle);
-                $min    = (int) trim($nm[0]);
-                $max    = (int) trim($nm[1]);
+                $min    = (int)trim($nm[0]);
+                $max    = (int)trim($nm[1]);
                 $this->_lexer->next();
 
                 break;
 
             case 'zero_to_m':
                 $min = 0;
-                $max = (int) trim($this->_lexer->current()['value'], '{,}');
+                $max = (int)trim($this->_lexer->current()['value'], '{,}');
                 $this->_lexer->next();
 
                 break;
 
             case 'n_or_more':
-                $min = (int) trim($this->_lexer->current()['value'], '{,}');
+                $min = (int)trim($this->_lexer->current()['value'], '{,}');
                 $max = -1;
                 $this->_lexer->next();
 
@@ -349,7 +317,7 @@ class Analyzer
 
             case 'exactly_n':
                 $handle = trim($this->_lexer->current()['value'], '{}');
-                $min    = (int) $handle;
+                $min    = (int)$handle;
                 $max    = $min;
                 $this->_lexer->next();
 
@@ -362,7 +330,7 @@ class Analyzer
             $this->_lexer->next();
         }
 
-        if (!isset($min)) {
+        if (! isset($min)) {
             return $children;
         }
 
@@ -417,7 +385,7 @@ class Analyzer
             $tokenName = trim($this->_lexer->current()['value'], ':');
 
             if (']' === substr($tokenName, -1)) {
-                $uId       = (int) substr($tokenName, strpos($tokenName, '[') + 1, -1);
+                $uId       = (int)substr($tokenName, strpos($tokenName, '[') + 1, -1);
                 $tokenName = substr($tokenName, 0, strpos($tokenName, '['));
             } else {
                 $uId = -1;
@@ -460,7 +428,7 @@ class Analyzer
             $tokenName = trim($this->_lexer->current()['value'], '<>');
 
             if (']' === substr($tokenName, -1)) {
-                $uId       = (int) substr($tokenName, strpos($tokenName, '[') + 1, -1);
+                $uId       = (int)substr($tokenName, strpos($tokenName, '[') + 1, -1);
                 $tokenName = substr($tokenName, 0, strpos($tokenName, '['));
             } else {
                 $uId = -1;
@@ -471,7 +439,7 @@ class Analyzer
             foreach ($this->_tokens as $namespace => $tokens) {
                 foreach ($tokens as $token => $value) {
                     if ($token === $tokenName
-                       || substr($token, 0, strpos($token, ':')) === $tokenName) {
+                        || substr($token, 0, strpos($token, ':')) === $tokenName) {
                         $exists = true;
 
                         break 2;
@@ -487,8 +455,8 @@ class Analyzer
                 );
             }
 
-            $name  = $this->_transitionalRuleCounter++;
-            $token = new Token(
+            $name                      = $this->_transitionalRuleCounter++;
+            $token                     = new Token(
                 $name,
                 $tokenName,
                 null,
@@ -513,7 +481,7 @@ class Analyzer
                 );
             }
 
-            if (0     === $this->_lexer->key() &&
+            if (0 === $this->_lexer->key() &&
                 'EOF' === $this->_lexer->getNext()['token']) {
                 $name                      = $this->_transitionalRuleCounter++;
                 $this->_parsedRules[$name] = new Concatenation(
