@@ -12,6 +12,7 @@ namespace Railt\Compiler\Reflection;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Support;
 
@@ -72,7 +73,13 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     public function get(string $name): TypeDefinition
     {
         if ($this->has($name)) {
-            return $this->definitions[$name];
+            $result = $this->definitions[$name];
+
+            if ($result instanceof Compilable) {
+                $result->compile();
+            }
+
+            return $result;
         }
 
         $error = \sprintf('Type "%s" not found', $name);
