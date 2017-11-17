@@ -364,15 +364,15 @@ class Analyzer
      */
     protected function simple(&$pNodeId)
     {
-        if ('capturing_' === $this->_lexer->current()['token']) {
+        if ($this->_lexer->current()['token'] === 'capturing_') {
             $this->_lexer->next();
             $rule = $this->choice($pNodeId);
 
-            if (null === $rule) {
+            if ($rule === null) {
                 return null;
             }
 
-            if ('_capturing' != $this->_lexer->current()['token']) {
+            if ($this->_lexer->current()['token'] !== '_capturing') {
                 return null;
             }
 
@@ -381,12 +381,12 @@ class Analyzer
             return $rule;
         }
 
-        if ('skipped' === $this->_lexer->current()['token']) {
-            $tokenName = trim($this->_lexer->current()['value'], ':');
+        if ($this->_lexer->current()['token'] === 'skipped') {
+            $tokenName = \trim($this->_lexer->current()['value'], ':');
 
-            if (']' === substr($tokenName, -1)) {
-                $uId       = (int)substr($tokenName, strpos($tokenName, '[') + 1, -1);
-                $tokenName = substr($tokenName, 0, strpos($tokenName, '['));
+            if (\substr($tokenName, -1) === ']') {
+                $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
+                $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
             } else {
                 $uId = -1;
             }
@@ -397,7 +397,7 @@ class Analyzer
                 foreach ($tokens as $token => $value) {
                     if (
                         $token === $tokenName ||
-                        substr($token, 0, (int)strpos($token, ':')) === $tokenName
+                        strpos($token, $tokenName) === 0
                     ) {
                         $exists = true;
 
@@ -426,12 +426,12 @@ class Analyzer
             return $name;
         }
 
-        if ('kept' === $this->_lexer->current()['token']) {
-            $tokenName = trim($this->_lexer->current()['value'], '<>');
+        if ($this->_lexer->current()['token'] === 'kept') {
+            $tokenName = \trim($this->_lexer->current()['value'], '<>');
 
-            if (']' === substr($tokenName, -1)) {
-                $uId       = (int)substr($tokenName, strpos($tokenName, '[') + 1, -1);
-                $tokenName = substr($tokenName, 0, strpos($tokenName, '['));
+            if (\substr($tokenName, -1) === ']') {
+                $uId       = (int)\substr($tokenName, strpos($tokenName, '[') + 1, -1);
+                $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
             } else {
                 $uId = -1;
             }

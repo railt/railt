@@ -13,9 +13,9 @@ use Hoa\Compiler\Exception;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser as LlkParser;
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Reflection\Filesystem\NotFoundException;
 use Railt\Compiler\Parser\CompiledSDLParser;
 use Railt\Compiler\Parser\SDLParser;
+use Railt\Reflection\Filesystem\NotFoundException;
 
 /**
  * Class Parser
@@ -43,14 +43,6 @@ class Parser extends SDLParser
     private const COMPILED_TEMPLATE = __DIR__ . '/resources/templates/optimised-parser.php';
 
     /**
-     * @return bool
-     */
-    private function hasOptimizedLayer(): bool
-    {
-        return \class_exists(CompiledSDLParser::class);
-    }
-
-    /**
      * Return all tokens
      * @return iterable|string[]
      */
@@ -69,6 +61,17 @@ class Parser extends SDLParser
     public function getRules(): iterable
     {
         return $this->parser->getRules();
+    }
+
+    /**
+     * @throws CompilerException
+     * @throws NotFoundException
+     */
+    public function __destruct()
+    {
+        if (! $this->hasOptimizedLayer()) {
+            $this->compile();
+        }
     }
 
     /**
@@ -105,6 +108,7 @@ class Parser extends SDLParser
             require self::COMPILED_TEMPLATE;
             $result = \ob_get_contents();
             \ob_end_clean();
+
             return $result;
         } catch (\Throwable $e) {
             throw new NotFoundException('Can not build optimized parser because template not resolvable');
@@ -125,13 +129,10 @@ class Parser extends SDLParser
     }
 
     /**
-     * @throws CompilerException
-     * @throws NotFoundException
+     * @return bool
      */
-    public function __destruct()
+    private function hasOptimizedLayer(): bool
     {
-        if (!$this->hasOptimizedLayer()) {
-            $this->compile();
-        }
+        return \class_exists(CompiledSDLParser::class);
     }
 }

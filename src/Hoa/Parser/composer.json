@@ -49,7 +49,6 @@
     ],
     "require": {
         "php": ">=7.1",
-        "hoa/consistency": "~1.0",
         "hoa/exception": "~1.0",
         "hoa/file": "~1.0",
         "hoa/iterator": "~2.0",

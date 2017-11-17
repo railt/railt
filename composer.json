@@ -32,7 +32,6 @@
         "psr/cache": "~1.0",
         "psr/simple-cache": "~1.0",
         "illuminate/support": "~5.5",
-        "hoa/consistency": "~1.0",
         "hoa/exception": "~1.0",
         "hoa/file": "~1.0",
         "hoa/iterator": "~2.0",
