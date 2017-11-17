@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Hoa\Compiler\Llk\Rule;
 
-use Hoa\Consistency;
-
 /**
  * Class \Hoa\Compiler\Llk\Rule.
  *
@@ -26,35 +24,35 @@ abstract class Rule
      *
      * @var string
      */
-    protected $_name           = null;
+    protected $_name = null;
 
     /**
      * Rule's children. Can be an array of names or a single name.
      *
      * @var mixed
      */
-    protected $_children       = null;
+    protected $_children = null;
 
     /**
      * Node ID.
      *
      * @var string
      */
-    protected $_nodeId         = null;
+    protected $_nodeId = null;
 
     /**
      * Node options.
      *
      * @var array
      */
-    protected $_nodeOptions    = [];
+    protected $_nodeOptions = [];
 
     /**
      * Default ID.
      *
      * @var string
      */
-    protected $_defaultId      = null;
+    protected $_defaultId = null;
 
     /**
      * Default options.
@@ -68,7 +66,7 @@ abstract class Rule
      *
      * @var string
      */
-    protected $_pp             = null;
+    protected $_pp = null;
 
     /**
      * Whether the rule is transitional or not (i.e. not declared in the grammar
@@ -76,36 +74,21 @@ abstract class Rule
      *
      * @var bool
      */
-    protected $_transitional   = true;
-
+    protected $_transitional = true;
 
 
     /**
      * Constructor.
      *
-     * @param   string  $name        Rule name.
-     * @param   mixed   $children    Children.
-     * @param   string  $nodeId      Node ID.
+     * @param   string $name Rule name.
+     * @param   mixed $children Children.
+     * @param   string $nodeId Node ID.
      */
     public function __construct($name, $children, $nodeId = null)
     {
         $this->setName($name);
         $this->setChildren($children);
         $this->setNodeId($nodeId);
-    }
-
-    /**
-     * Set rule name.
-     *
-     * @param   string  $name    Rule name.
-     * @return  string
-     */
-    public function setName($name)
-    {
-        $old         = $this->_name;
-        $this->_name = $name;
-
-        return $old;
     }
 
     /**
@@ -119,15 +102,15 @@ abstract class Rule
     }
 
     /**
-     * Set rule's children.
+     * Set rule name.
      *
-     * @param   mixed  $children    Children.
-     * @return  mixed
+     * @param   string $name Rule name.
+     * @return  string
      */
-    protected function setChildren($children)
+    public function setName($name)
     {
-        $old             = $this->_children;
-        $this->_children = $children;
+        $old         = $this->_name;
+        $this->_name = $name;
 
         return $old;
     }
@@ -143,9 +126,33 @@ abstract class Rule
     }
 
     /**
+     * Set rule's children.
+     *
+     * @param   mixed $children Children.
+     * @return  mixed
+     */
+    protected function setChildren($children)
+    {
+        $old             = $this->_children;
+        $this->_children = $children;
+
+        return $old;
+    }
+
+    /**
+     * Get node ID.
+     *
+     * @return  string
+     */
+    public function getNodeId()
+    {
+        return $this->_nodeId;
+    }
+
+    /**
      * Set node ID.
      *
-     * @param   string  $nodeId    Node ID.
+     * @param   string $nodeId Node ID.
      * @return  string
      */
     public function setNodeId($nodeId)
@@ -164,16 +171,6 @@ abstract class Rule
     }
 
     /**
-     * Get node ID.
-     *
-     * @return  string
-     */
-    public function getNodeId()
-    {
-        return $this->_nodeId;
-    }
-
-    /**
      * Get node options.
      *
      * @retrun  array
@@ -184,9 +181,19 @@ abstract class Rule
     }
 
     /**
+     * Get default ID.
+     *
+     * @return  string
+     */
+    public function getDefaultId()
+    {
+        return $this->_defaultId;
+    }
+
+    /**
      * Set default ID.
      *
-     * @param   string  $defaultId    Default ID.
+     * @param   string $defaultId Default ID.
      * @return  string
      */
     public function setDefaultId($defaultId)
@@ -205,16 +212,6 @@ abstract class Rule
     }
 
     /**
-     * Get default ID.
-     *
-     * @return  string
-     */
-    public function getDefaultId()
-    {
-        return $this->_defaultId;
-    }
-
-    /**
      * Get default options.
      *
      * @return  array
@@ -227,7 +224,7 @@ abstract class Rule
     /**
      * Set PP representation of the rule.
      *
-     * @param   string  $pp    PP representation.
+     * @param   string $pp PP representation.
      * @return  string
      */
     public function setPPRepresentation($pp)
@@ -259,8 +256,3 @@ abstract class Rule
         return $this->_transitional;
     }
 }
-
-/**
- * Flex entity.
- */
-Consistency::flexEntity('Hoa\Compiler\Llk\Rule\Rule');
