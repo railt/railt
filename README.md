@@ -11,8 +11,6 @@
     <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
 </p>
 
-> Not ready for real world usage yet :bomb: :scream:   
-
 ## Introduction
 
 This is a pure PHP realization of the **GraphQL** protocol based on the 
@@ -56,3 +54,25 @@ the [MIT license](https://opensource.org/licenses/MIT).
 
 The Hoa\Compiler, which is part of the Railt Framework re-distribute 
 under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
+
+## Production ready
+
+> Not ready for real world usage yet :bomb: :scream:
+
+| Package                   | Release                                                                          |
+|---------------------------|----------------------------------------------------------------------------------|
+| `railt/railt`             | ![Latest Stable Version](https://poser.pugx.org/railt/railt/version)             |
+| `railt/webonyx-adapter`   | ![Latest Stable Version](https://poser.pugx.org/railt/webonyx-adapter/version)   |
+| `railt/youshido-adapter`  | ![Latest Stable Version](https://poser.pugx.org/railt/youshido-adapter/version)  |
+| `railt/laravel-provider`  | ![Latest Stable Version](https://poser.pugx.org/railt/laravel-provider/version)  |
+| `railt/symfony-bundle`    | ![Latest Stable Version](https://poser.pugx.org/railt/symfony-bundle/version)    |
+
+| Component                 | Release                                                                          |
+|---------------------------|----------------------------------------------------------------------------------|
+| `railt/parser`            | ![Latest Stable Version](https://poser.pugx.org/railt/parser/version)            |
+| `railt/compiler`          | ![Latest Stable Version](https://poser.pugx.org/railt/compiler/version)          |
+| `railt/reflection`        | ![Latest Stable Version](https://poser.pugx.org/railt/reflection/version)        |
+| `railt/container`         | ![Latest Stable Version](https://poser.pugx.org/railt/container/version)         |
+| `railt/events`            | ![Latest Stable Version](https://poser.pugx.org/railt/events/version)            |
+| `railt/http`              | ![Latest Stable Version](https://poser.pugx.org/railt/http/version)              |
+| `railt/routing`           | ![Latest Stable Version](https://poser.pugx.org/railt/routing/version)           |
