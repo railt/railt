@@ -26,7 +26,7 @@ class ScalarTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 """
     This a test scalar using inside only this test case.
     Defined by "scalar Test" declaration.
@@ -117,7 +117,7 @@ GraphQL;
         $scalar = $document->getTypeDefinition('Test');
         static::assertNotNull($scalar);
 
-        $reason = "\n" . '    Why not?'. "\n";
+        $reason = "\n" . '    Why not?' . "\n";
 
         static::assertSame($reason, $scalar->getDeprecationReason());
     }

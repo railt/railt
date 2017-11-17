@@ -15,5 +15,4 @@ namespace Railt\Compiler\Exceptions;
  */
 class BuildingException extends BaseSchemaException
 {
-
 }

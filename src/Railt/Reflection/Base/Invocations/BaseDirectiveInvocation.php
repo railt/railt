@@ -69,7 +69,7 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
     {
         return \array_merge(parent::__sleep(), [
             // Arguments
-            'arguments'
+            'arguments',
         ]);
     }
 }

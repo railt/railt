@@ -34,7 +34,6 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * Class AbstractReflectionTestCase
- * @package Railt\Tests
  */
 abstract class AbstractCompilerTestCase extends AbstractTestCase
 {
@@ -85,7 +84,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
      */
     public function testProviderIsLoadable(): void
     {
-        if (!\method_exists($this, 'provider')) {
+        if (! \method_exists($this, 'provider')) {
             static::markTestSkipped(__CLASS__ . ' does not provide a data provider');
             return;
         }
@@ -134,7 +133,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     private function getLogger(): LoggerInterface
     {
         return new Logger(\class_basename(static::class), [
-            new StreamHandler(@\fopen('php://output', 'wb+'))
+            new StreamHandler(@\fopen('php://output', 'wb+')),
         ]);
     }
 
@@ -187,7 +186,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     private function createFilesystemPool(string $name): AbstractCachePool
     {
         $filesystem = new Filesystem(new Local(__DIR__ . '/.temp/'));
-        $folder = \snake_case(\class_basename($this)) .
+        $folder     = \snake_case(\class_basename($this)) .
             '/' . $name .
             '/' . \date('m') .
             '/' . \date('s');

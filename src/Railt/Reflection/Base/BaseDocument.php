@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base;
 
-use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Reflection\Base\Definitions\BaseDefinition;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class BaseDocument
@@ -141,7 +141,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
             'types',
 
             // instanceof Definition
-            'definitions'
+            'definitions',
         ]);
     }
 }

@@ -14,7 +14,6 @@ use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class SyntaxABSpecsTestCase
- * @package Railt\Tests\Compiler\Compiler
  * @group large
  */
 class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
@@ -75,7 +74,7 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
 
         $compilersCount = 0;
         foreach ($this->getCompilers() as $compiler) {
-            $compilersCount++;
+            ++$compilersCount;
             try {
                 $compiler->compile($file);
             } catch (\Throwable $e) {

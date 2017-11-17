@@ -18,5 +18,4 @@ use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
  */
 interface InputDefinition extends TypeDefinition, HasArguments, HasDirectives, Inputable
 {
-
 }

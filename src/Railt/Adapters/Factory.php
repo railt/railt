@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Routing\Router;
 use Railt\Adapters\Webonyx\Adapter;
 use Railt\Events\Dispatcher;
 use Railt\Reflection\Contracts\DocumentInterface as Document;
+use Railt\Routing\Router;
 
 /**
  * Class Factory
@@ -23,13 +23,13 @@ class Factory
      * @var array|AdapterInterface[]
      */
     private static $adapters = [
-        Adapter::class
+        Adapter::class,
     ];
 
     /**
      * @param string $class
      */
-    public static function register(string $class)
+    public static function register(string $class): void
     {
         self::$adapters[] = $class;
     }
@@ -43,7 +43,7 @@ class Factory
     public static function create(Document $document, Dispatcher $events, Router $router): AdapterInterface
     {
         foreach (self::$adapters as $class) {
-            if (class_exists($class) && $class::isSupported()) {
+            if (\class_exists($class) && $class::isSupported()) {
                 return new $class($document, $events, $router);
             }
         }

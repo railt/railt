@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Validation\Uniqueness\Type;
 
 use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Compiler\Reflection\Validation\Base\BaseValidator;
 use Railt\Compiler\Reflection\Validation\Uniqueness\TypeUniquenessValidator;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class UniqueCollectionValidator

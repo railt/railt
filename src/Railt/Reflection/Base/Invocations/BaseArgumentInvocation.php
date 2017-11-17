@@ -42,7 +42,7 @@ abstract class BaseArgumentInvocation extends BaseDependent implements ArgumentI
     {
         return \array_merge(parent::__sleep(), [
             // Value
-            'value'
+            'value',
         ]);
     }
 }

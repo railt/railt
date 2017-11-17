@@ -50,27 +50,27 @@ class Analyzer
      *
      * @var \Hoa\Iterator\Lookahead
      */
-    protected $_lexer = null;
+    protected $_lexer;
 
     /**
      * Tokens representing rules.
      *
      * @var array
      */
-    protected $_tokens = null;
+    protected $_tokens;
 
     /**
      * Rules.
      *
      * @var array
      */
-    protected $_rules = null;
+    protected $_rules;
     /**
      * Parsed rules.
      *
      * @var array
      */
-    protected $_parsedRules = null;
+    protected $_parsedRules;
     /**
      * Counter to auto-name transitional rules.
      *
@@ -82,7 +82,7 @@ class Analyzer
      *
      * @var string
      */
-    private $_ruleName = null;
+    private $_ruleName;
 
     /**
      * Constructor.
@@ -92,8 +92,6 @@ class Analyzer
     public function __construct(array $tokens)
     {
         $this->_tokens = $tokens;
-
-        return;
     }
 
     /**
@@ -122,7 +120,7 @@ class Analyzer
 
             if ('#' === $key[0]) {
                 $nodeId = $key;
-                $key    = substr($key, 1);
+                $key    = \substr($key, 1);
             }
 
             $pNodeId = $nodeId;
@@ -175,7 +173,7 @@ class Analyzer
         $rule    = $this->concatenation($nNodeId);
 
         if (null === $rule) {
-            return null;
+            return;
         }
 
         if (null !== $nNodeId) {
@@ -193,7 +191,7 @@ class Analyzer
             $rule    = $this->concatenation($nNodeId);
 
             if (null === $rule) {
-                return null;
+                return;
             }
 
             if (null !== $nNodeId) {
@@ -228,7 +226,7 @@ class Analyzer
         $rule = $this->repetition($pNodeId);
 
         if (null === $rule) {
-            return null;
+            return;
         }
 
         $children[] = $rule;
@@ -266,7 +264,7 @@ class Analyzer
         $children = $this->simple($pNodeId);
 
         if (null === $children) {
-            return null;
+            return;
         }
 
         // … quantifier()?
@@ -293,30 +291,30 @@ class Analyzer
                 break;
 
             case 'n_to_m':
-                $handle = trim($this->_lexer->current()['value'], '{}');
-                $nm     = explode(',', $handle);
-                $min    = (int)trim($nm[0]);
-                $max    = (int)trim($nm[1]);
+                $handle = \trim($this->_lexer->current()['value'], '{}');
+                $nm     = \explode(',', $handle);
+                $min    = (int)\trim($nm[0]);
+                $max    = (int)\trim($nm[1]);
                 $this->_lexer->next();
 
                 break;
 
             case 'zero_to_m':
                 $min = 0;
-                $max = (int)trim($this->_lexer->current()['value'], '{,}');
+                $max = (int)\trim($this->_lexer->current()['value'], '{,}');
                 $this->_lexer->next();
 
                 break;
 
             case 'n_or_more':
-                $min = (int)trim($this->_lexer->current()['value'], '{,}');
+                $min = (int)\trim($this->_lexer->current()['value'], '{,}');
                 $max = -1;
                 $this->_lexer->next();
 
                 break;
 
             case 'exactly_n':
-                $handle = trim($this->_lexer->current()['value'], '{}');
+                $handle = \trim($this->_lexer->current()['value'], '{}');
                 $min    = (int)$handle;
                 $max    = $min;
                 $this->_lexer->next();
@@ -369,11 +367,11 @@ class Analyzer
             $rule = $this->choice($pNodeId);
 
             if ($rule === null) {
-                return null;
+                return;
             }
 
             if ($this->_lexer->current()['token'] !== '_capturing') {
-                return null;
+                return;
             }
 
             $this->_lexer->next();
@@ -397,7 +395,7 @@ class Analyzer
                 foreach ($tokens as $token => $value) {
                     if (
                         $token === $tokenName ||
-                        strpos($token, $tokenName) === 0
+                        \strpos($token, $tokenName) === 0
                     ) {
                         $exists = true;
 
@@ -430,7 +428,7 @@ class Analyzer
             $tokenName = \trim($this->_lexer->current()['value'], '<>');
 
             if (\substr($tokenName, -1) === ']') {
-                $uId       = (int)\substr($tokenName, strpos($tokenName, '[') + 1, -1);
+                $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
                 $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
             } else {
                 $uId = -1;
@@ -442,7 +440,7 @@ class Analyzer
                 foreach ($tokens as $token => $value) {
                     if (
                         $token === $tokenName ||
-                        substr($token, 0, (int)strpos($token, ':')) === $tokenName
+                        \substr($token, 0, (int)\strpos($token, ':')) === $tokenName
                     ) {
                         $exists = true;
 
@@ -474,10 +472,10 @@ class Analyzer
         }
 
         if ('named' === $this->_lexer->current()['token']) {
-            $tokenName = rtrim($this->_lexer->current()['value'], '()');
+            $tokenName = \rtrim($this->_lexer->current()['value'], '()');
 
-            if (false === array_key_exists($tokenName, $this->_rules) &&
-                false === array_key_exists('#' . $tokenName, $this->_rules)) {
+            if (false === \array_key_exists($tokenName, $this->_rules) &&
+                false === \array_key_exists('#' . $tokenName, $this->_rules)) {
                 throw new Compiler\Exception\Rule(
                     'Cannot call rule %s() in rule %s because it does not exist.',
                     5,
@@ -501,7 +499,5 @@ class Analyzer
 
             return $name;
         }
-
-        return null;
     }
 }

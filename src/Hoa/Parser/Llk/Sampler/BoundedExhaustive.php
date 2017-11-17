@@ -31,14 +31,14 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @var array
      */
-    protected $_todo    = null;
+    protected $_todo;
 
     /**
      * Stack of rules that have already been covered.
      *
      * @var array
      */
-    protected $_trace   = null;
+    protected $_trace;
 
     /**
      * Current iterator key.
@@ -52,7 +52,7 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @var string
      */
-    protected $_current = null;
+    protected $_current;
 
     /**
      * Bound.
@@ -60,8 +60,6 @@ class BoundedExhaustive extends Sampler implements Iterator
      * @var int
      */
     protected $_length  = 5;
-
-
 
     /**
      * Construct a generator.
@@ -77,8 +75,6 @@ class BoundedExhaustive extends Sampler implements Iterator
     ) {
         parent::__construct($compiler, $tokenSampler);
         $this->setLength($length);
-
-        return;
     }
 
     /**
@@ -106,9 +102,8 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @return  void
      */
-    public function next()
+    public function next(): void
     {
-        return;
     }
 
     /**
@@ -116,7 +111,7 @@ class BoundedExhaustive extends Sampler implements Iterator
      *
      * @return  void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $ruleName       = $this->_rootRuleName;
         $this->_current = null;
@@ -125,10 +120,8 @@ class BoundedExhaustive extends Sampler implements Iterator
         $handle         = new Compiler\Llk\Rule\Ekzit($ruleName, 0);
         $this->_todo    = [
             $handle,
-            new Compiler\Llk\Rule\Entry($ruleName, 0, [$handle])
+            new Compiler\Llk\Rule\Entry($ruleName, 0, [$handle]),
         ];
-
-        return;
     }
 
     /**
@@ -163,8 +156,8 @@ class BoundedExhaustive extends Sampler implements Iterator
      */
     protected function unfold()
     {
-        while (0 < count($this->_todo)) {
-            $pop = array_pop($this->_todo);
+        while (0 < \count($this->_todo)) {
+            $pop = \array_pop($this->_todo);
 
             if ($pop instanceof Compiler\Llk\Rule\Ekzit) {
                 $this->_trace[] = $pop;
@@ -201,7 +194,7 @@ class BoundedExhaustive extends Sampler implements Iterator
                     $rule->getMin()
                 );
 
-                array_pop($this->_todo);
+                \array_pop($this->_todo);
                 $this->_todo[]  = new Compiler\Llk\Rule\Ekzit(
                     $rule->getName(),
                     $rule->getMin(),
@@ -243,8 +236,9 @@ class BoundedExhaustive extends Sampler implements Iterator
             }
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Choice) {
-            if (count($children) <= $next) {
+        }
+        if ($rule instanceof Compiler\Llk\Rule\Choice) {
+            if (\count($children) <= $next) {
                 return false;
             }
 
@@ -258,20 +252,22 @@ class BoundedExhaustive extends Sampler implements Iterator
             $this->_todo[] = new Compiler\Llk\Rule\Entry($nextRule, 0);
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
+        }
+        if ($rule instanceof Compiler\Llk\Rule\Concatenation) {
             $this->_trace[] = new Compiler\Llk\Rule\Entry(
                 $rule->getName(),
                 $next
             );
 
-            for ($i = count($children) - 1; $i >= 0; --$i) {
+            for ($i = \count($children) - 1; $i >= 0; --$i) {
                 $nextRule      = $children[$i];
                 $this->_todo[] = new Compiler\Llk\Rule\Ekzit($nextRule, 0);
                 $this->_todo[] = new Compiler\Llk\Rule\Entry($nextRule, 0);
             }
 
             return true;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Token) {
+        }
+        if ($rule instanceof Compiler\Llk\Rule\Token) {
             $nbToken = 0;
 
             foreach ($this->_trace as $trace) {
@@ -285,7 +281,7 @@ class BoundedExhaustive extends Sampler implements Iterator
             }
 
             $this->_trace[] = $rule;
-            array_pop($this->_todo);
+            \array_pop($this->_todo);
 
             return true;
         }
@@ -303,7 +299,7 @@ class BoundedExhaustive extends Sampler implements Iterator
         $found = false;
 
         do {
-            $last = array_pop($this->_trace);
+            $last = \array_pop($this->_trace);
 
             if ($last instanceof Compiler\Llk\Rule\Entry) {
                 $rule  = $this->_rules[$last->getRule()];
@@ -312,7 +308,7 @@ class BoundedExhaustive extends Sampler implements Iterator
                 $rule  = $this->_rules[$last->getRule()];
                 $found = $rule instanceof Compiler\Llk\Rule\Repetition;
             }
-        } while (0 < count($this->_trace) && false === $found);
+        } while (0 < \count($this->_trace) && false === $found);
 
         if (false === $found) {
             return false;

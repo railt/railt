@@ -54,7 +54,7 @@ class Response implements ResponseInterface, DebuggableInterface
      * @param \Throwable[] ...$errors
      * @return Response|static
      */
-    public static function error(\Throwable ...$errors): Response
+    public static function error(\Throwable ...$errors): self
     {
         return new static([], $errors);
     }
@@ -63,7 +63,7 @@ class Response implements ResponseInterface, DebuggableInterface
      * @param \Throwable $error
      * @return Response
      */
-    public function withError(\Throwable $error): Response
+    public function withError(\Throwable $error): self
     {
         $this->errors[] = $error;
 
@@ -74,9 +74,9 @@ class Response implements ResponseInterface, DebuggableInterface
      * @param array $data
      * @return Response
      */
-    public function with(array $data): Response
+    public function with(array $data): self
     {
-        $this->data = array_merge($this->data, $data);
+        $this->data = \array_merge($this->data, $data);
 
         return $this;
     }
@@ -87,11 +87,11 @@ class Response implements ResponseInterface, DebuggableInterface
      */
     public function send(): void
     {
-        if (headers_sent()) {
+        if (\headers_sent()) {
             throw new \RuntimeException('Method send() are not allowed. Headers already sent');
         }
 
-        header('Content-Type: application/json');
+        \header('Content-Type: application/json');
         echo $this->render();
     }
 
@@ -107,7 +107,7 @@ class Response implements ResponseInterface, DebuggableInterface
             $options |= JSON_PRETTY_PRINT;
         }
 
-        return json_encode($this->toArray(), $options);
+        return \json_encode($this->toArray(), $options);
     }
 
     /**
@@ -120,7 +120,7 @@ class Response implements ResponseInterface, DebuggableInterface
 
         return [
             static::FIELD_DATA   => $this->getData(),
-            static::FIELD_ERRORS => $errors instanceof \Traversable ? iterator_to_array($errors) : $errors,
+            static::FIELD_ERRORS => $errors instanceof \Traversable ? \iterator_to_array($errors) : $errors,
         ];
     }
 

@@ -24,21 +24,21 @@ abstract class Invocation
      *
      * @var string
      */
-    protected $_rule         = null;
+    protected $_rule;
 
     /**
      * Data.
      *
      * @var mixed
      */
-    protected $_data         = null;
+    protected $_data;
 
     /**
      * Piece of todo sequence.
      *
      * @var array
      */
-    protected $_todo         = null;
+    protected $_todo;
 
     /**
      * Depth in the trace.
@@ -54,8 +54,6 @@ abstract class Invocation
      * @var bool
      */
     protected $_transitional = false;
-
-
 
     /**
      * Constructor.
@@ -75,9 +73,7 @@ abstract class Invocation
         $this->_data         = $data;
         $this->_todo         = $todo;
         $this->_depth        = $depth;
-        $this->_transitional = is_int($rule);
-
-        return;
+        $this->_transitional = \is_int($rule);
     }
 
     /**

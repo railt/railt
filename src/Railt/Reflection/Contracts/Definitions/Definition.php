@@ -58,4 +58,3 @@ interface Definition
      */
     public function getDeclarationColumn(): int;
 }
-

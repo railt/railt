@@ -16,12 +16,12 @@ use Hoa\Compiler\Llk\TreeNode;
  */
 class ValueBuilder
 {
-    private const AST_ID_ARRAY = '#List';
+    private const AST_ID_ARRAY  = '#List';
     private const AST_ID_OBJECT = '#Object';
 
-    private const TOKEN_NULL = 'T_NULL';
-    private const TOKEN_NUMBER = 'T_NUMBER_VALUE';
-    private const TOKEN_BOOL_TRUE = 'T_BOOL_TRUE';
+    private const TOKEN_NULL       = 'T_NULL';
+    private const TOKEN_NUMBER     = 'T_NUMBER_VALUE';
+    private const TOKEN_BOOL_TRUE  = 'T_BOOL_TRUE';
     private const TOKEN_BOOL_FALSE = 'T_BOOL_FALSE';
 
     /**
@@ -67,7 +67,7 @@ class ValueBuilder
 
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            $key = (string)$child->getChild(0)->getChild(0)->getValueValue();
+            $key          = (string)$child->getChild(0)->getChild(0)->getValueValue();
             $result[$key] = self::parse($child->getChild(1)->getChild(0));
         }
 
@@ -89,7 +89,7 @@ class ValueBuilder
                 return self::toInt($ast);
 
             case self::TOKEN_NULL:
-                return null;
+                return;
 
             case self::TOKEN_BOOL_TRUE:
                 return true;

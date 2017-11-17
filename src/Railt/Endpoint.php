@@ -12,19 +12,19 @@ namespace Railt;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Railt\Adapters\Factory;
-use Railt\Container\Container;
-use Railt\Events\Events;
-use Railt\Events\Dispatcher;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\Compiler\File;
-use Railt\Reflection\Contracts\DocumentInterface;
-use Railt\Compiler\Reflection\Autoloader;
 use Railt\Compiler\Compiler;
-use Railt\Routing\Router;
 use Railt\Compiler\Debuggable;
 use Railt\Compiler\DebuggableInterface;
+use Railt\Compiler\File;
 use Railt\Compiler\Loggable;
+use Railt\Compiler\Reflection\Autoloader;
+use Railt\Container\Container;
+use Railt\Events\Dispatcher;
+use Railt\Events\Events;
+use Railt\Http\RequestInterface;
+use Railt\Http\ResponseInterface;
+use Railt\Reflection\Contracts\DocumentInterface;
+use Railt\Routing\Router;
 
 /**
  * Class Endpoint
@@ -142,7 +142,7 @@ class Endpoint implements DebuggableInterface
      */
     private function createSchemaFile($schema): File
     {
-        if (is_string($schema)) {
+        if (\is_string($schema)) {
             return File::make($schema);
         }
 

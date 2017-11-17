@@ -28,8 +28,6 @@ class Dump implements Visitor\Visit
      */
     protected static $_i = 0;
 
-
-
     /**
      * Visit an element.
      *
@@ -45,7 +43,7 @@ class Dump implements Visitor\Visit
     ) {
         ++self::$_i;
 
-        $out  = str_repeat('>  ', self::$_i) . $element->getId();
+        $out  = \str_repeat('>  ', self::$_i) . $element->getId();
 
         if (null !== $value = $element->getValue()) {
             $out .=
@@ -59,7 +57,7 @@ class Dump implements Visitor\Visit
 
         $data = $element->getData();
 
-        if (!empty($data)) {
+        if (! empty($data)) {
             $out .= ' ' . $this->dumpData($data);
         }
 
@@ -84,7 +82,7 @@ class Dump implements Visitor\Visit
     {
         $out = null;
 
-        if (!is_array($data)) {
+        if (! \is_array($data)) {
             return $data;
         }
 

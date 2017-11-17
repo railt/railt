@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Definitions;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Reflection\Base\Definitions\BaseDirective;
 use Railt\Compiler\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Validation\Uniqueness;
+use Railt\Reflection\Base\Definitions\BaseDirective;
 
 /**
  * Class DirectiveBuilder

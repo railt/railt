@@ -25,7 +25,7 @@ class ExtendTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type Test {
     id: String
     createdAt: DateTime!

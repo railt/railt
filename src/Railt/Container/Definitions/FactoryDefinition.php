@@ -55,7 +55,7 @@ class FactoryDefinition implements DefinitionInterface
     public function __construct(ContainerInterface $container, $target)
     {
         $this->container = $container;
-        $this->target = $target;
+        $this->target    = $target;
     }
 
     /**
@@ -76,8 +76,8 @@ class FactoryDefinition implements DefinitionInterface
             $constructor = $this->getConstructor($this->reflection);
 
             if ($constructor) {
-                $resolver = new ParamResolver($this->container);
-                $this->params = iterator_to_array($resolver->resolve($constructor));
+                $resolver     = new ParamResolver($this->container);
+                $this->params = \iterator_to_array($resolver->resolve($constructor));
             } else {
                 $this->params = [];
             }
@@ -101,8 +101,6 @@ class FactoryDefinition implements DefinitionInterface
         if ($parent) {
             return $this->getConstructor($parent);
         }
-
-        return null;
     }
 
     /**
@@ -116,17 +114,17 @@ class FactoryDefinition implements DefinitionInterface
     public function resolve()
     {
         switch (true) {
-            case is_callable($this->target):
+            case \is_callable($this->target):
                 return $this->container->call($this->target);
 
-            case is_object($this->target):
-                if (!$this->resolved) {
+            case \is_object($this->target):
+                if (! $this->resolved) {
                     return $this->resolved = $this->target;
                 }
 
-                $this->target = get_class($this->target);
+                $this->target = \get_class($this->target);
 
-            case is_string($this->target) && class_exists($this->target):
+            case \is_string($this->target) && \class_exists($this->target):
                 return $this->createInstance($this->target);
         }
 

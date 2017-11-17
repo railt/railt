@@ -34,7 +34,7 @@ trait InteractWithData
     {
         $key = $this->getVariablesArgument();
 
-        if (array_key_exists($this->getVariablesArgument(), $this->data)) {
+        if (\array_key_exists($this->getVariablesArgument(), $this->data)) {
             return (array)$this->data[$key];
         }
 
@@ -65,6 +65,6 @@ trait InteractWithData
      */
     public function has(string $field): bool
     {
-        return array_key_exists($field, $this->data);
+        return \array_key_exists($field, $this->data);
     }
 }

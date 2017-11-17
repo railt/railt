@@ -22,9 +22,6 @@ use Railt\Reflection\Filesystem\ReadableInterface;
  */
 class Psr6Persister implements Persister
 {
-    /**
-     *
-     */
     private const DEFAULT_REMEMBER_TIME = 60 * 5;
 
     /**
@@ -53,7 +50,7 @@ class Psr6Persister implements Persister
         \Closure $persist,
         int $timeout = self::DEFAULT_REMEMBER_TIME
     ) {
-        $this->pool = $pool;
+        $this->pool    = $pool;
         $this->persist = $persist;
         $this->timeout = $timeout;
     }

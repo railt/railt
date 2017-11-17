@@ -41,13 +41,12 @@ class Uniform extends Sampler
      */
     protected $_length = 5;
 
-
-
     /**
      * Construct a generator.
      *
      * @param   \Hoa\Compiler\Llk\Parser  $compiler        Compiler/parser.
      * @param   \Hoa\Visitor\Visit        $tokenSampler    Token sampler.
+     * @param mixed $length
      */
     public function __construct(
         Compiler\Llk\Parser $compiler,
@@ -62,8 +61,6 @@ class Uniform extends Sampler
 
         $this->setLength($length);
         $this->_sampler = new Math\Sampler\Random();
-
-        return;
     }
 
     /**
@@ -84,7 +81,7 @@ class Uniform extends Sampler
         $computed = $data['n'];
 
         if (0 === $n || 0 === $computed) {
-            return null;
+            return;
         }
 
         if ($rule instanceof Compiler\Llk\Rule\Choice) {
@@ -97,23 +94,25 @@ class Uniform extends Sampler
 
             $i = $this->_sampler->getInteger(1, $computed);
 
-            for ($e = 0, $b = $stat[$e], $max = count($stat) - 1;
+            for ($e = 0, $b = $stat[$e], $max = \count($stat) - 1;
                 $e < $max && $i > $b;
                 $b += $stat[++$e]);
 
             return $this->uniform($this->_rules[$children[$e]], $n);
-        } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
+        }
+        if ($rule instanceof Compiler\Llk\Rule\Concatenation) {
             $children  = $rule->getChildren();
             $out       = null;
             $Γ         = $data['Γ'];
-            $γ         = $Γ[$this->_sampler->getInteger(0, count($Γ) - 1)];
+            $γ         = $Γ[$this->_sampler->getInteger(0, \count($Γ) - 1)];
 
             foreach ($children as $i => $child) {
                 $out .= $this->uniform($this->_rules[$child], $γ[$i]);
             }
 
             return $out;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Repetition) {
+        }
+        if ($rule instanceof Compiler\Llk\Rule\Repetition) {
             $out   =  null;
             $stat  = &$data['xy'];
             $child =  $this->_rules[$rule->getChildren()];
@@ -127,18 +126,17 @@ class Uniform extends Sampler
             }
 
             $Γ = &$st['Γ'];
-            $γ = &$Γ[$this->_sampler->getInteger(0, count($Γ) - 1)];
+            $γ = &$Γ[$this->_sampler->getInteger(0, \count($Γ) - 1)];
 
             for ($j = 0; $j < $α; ++$j) {
                 $out .= $this->uniform($child, $γ[$j]);
             }
 
             return $out;
-        } elseif ($rule instanceof Compiler\Llk\Rule\Token) {
+        }
+        if ($rule instanceof Compiler\Llk\Rule\Token) {
             return $this->generateToken($rule);
         }
-
-        return null;
     }
 
     /**
@@ -171,7 +169,7 @@ class Uniform extends Sampler
         } elseif ($rule instanceof Compiler\Llk\Rule\Concatenation) {
             $children = $rule->getChildren();
             $Γ        = new Math\Combinatorics\Combination\Gamma(
-                count($children),
+                \count($children),
                 $n
             );
             $this->_data[$ruleName][$n]['Γ'] = [];
@@ -200,7 +198,7 @@ class Uniform extends Sampler
             if (-1 === $y) {
                 $y = $n;
             } else {
-                $y = min($n, $y);
+                $y = \min($n, $y);
             }
 
             if (0 === $x && $x === $y) {
@@ -226,7 +224,7 @@ class Uniform extends Sampler
                     }
 
                     $handle[$α]['n']  = $ut;
-                    $out             += $ut;
+                    $out += $ut;
                 }
             }
         } elseif ($rule instanceof Compiler\Llk\Rule\Token) {

@@ -16,5 +16,4 @@ use Railt\Compiler\Reflection\Validation\Base\BaseValidator;
  */
 abstract class BaseDefinitionValidator extends BaseValidator implements DefinitionValidator
 {
-
 }

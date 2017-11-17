@@ -20,9 +20,6 @@ use Railt\Reflection\Filesystem\ReadableInterface;
  */
 class Psr16Persister implements Persister
 {
-    /**
-     *
-     */
     private const DEFAULT_REMEMBER_TIME = 60 * 5;
 
     /**

@@ -25,7 +25,7 @@ class InputTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 """
  # This an Input type example
 """
@@ -66,7 +66,6 @@ GraphQL;
 
         static::assertSame('Input', $input->getTypeName());
     }
-
 
     /**
      * @dataProvider provider

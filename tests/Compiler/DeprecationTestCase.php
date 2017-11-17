@@ -24,7 +24,7 @@ class DeprecationTestCase extends AbstractCompilerTestCase
      */
     public function provider(): array
     {
-        $schema = <<<GraphQL
+        $schema = <<<'GraphQL'
 type DeprecatedWithMessage @deprecated(reason: "Message") {}
 
 type DeprecatedWithoutMessage @deprecated() {}
@@ -109,7 +109,7 @@ GraphQL;
                 static::assertTrue($type->isDeprecated());
 
                 $invocation = $type->getDirective('deprecated');
-                $directive = $invocation->getTypeDefinition();
+                $directive  = $invocation->getTypeDefinition();
 
                 static::assertSame('Directive', $invocation->getTypeDefinition()->getTypeName());
 
