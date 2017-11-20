@@ -19,7 +19,7 @@ class NotReadableException extends \LogicException
      * @param \Throwable|null $previous
      * @return NotReadableException
      */
-    public static function fromFilePath(string $file = '', \Throwable $previous = null): self
+    public static function fromFilePath(string $file = '', \Throwable $previous = null): NotReadableException
     {
         $message = \sprintf('File "%s" not readable.', $file);
 
