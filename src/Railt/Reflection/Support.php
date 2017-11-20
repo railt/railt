@@ -158,7 +158,11 @@ trait Support
         $result = $this->valueToScalar($value);
 
         if (\is_array($result)) {
-            return \json_encode($result);
+            $result = \json_encode($result);
+            $result = \preg_replace('/"([_A-Za-z][_0-9A-Za-z]*)":/u', '$1: ', $result);
+            $result = \preg_replace('/:\s+(.*?),/u', ': $1, ', $result);
+
+            return $result;
         }
 
         return (string)$result;

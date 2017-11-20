@@ -63,7 +63,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
         try {
             return $this->load($this->getName());
         } catch (TypeNotFoundException $error) {
-            return;
+            return null;
         }
     }
 }

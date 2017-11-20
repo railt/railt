@@ -101,9 +101,8 @@ class ArgumentValidator extends BaseDefinitionValidator
     private function validateArrayDefaultValue(ArgumentDefinition $type, array $defaults): void
     {
         if (! $type->isList()) {
-            $error = \sprintf('%s can not be initialized by List "%s"',
-                $type,
-                $this->valueToString($defaults)
+            $error = \sprintf('%s can not be initialized by List %s',
+                $type, $this->valueToString($defaults)
             );
             throw new TypeConflictException($error, $this->getCallStack());
         }
@@ -112,9 +111,8 @@ class ArgumentValidator extends BaseDefinitionValidator
         if ($type->isList() && $type->isListOfNonNulls()) {
             foreach ($defaults as $value) {
                 if ($value === null) {
-                    $error = \sprintf('%s can not be initialized by list "%s" with NULL value',
-                        $type,
-                        $this->valueToString($defaults)
+                    $error = \sprintf('%s can not be initialized by list %s with NULL value',
+                        $type, $this->valueToString($defaults)
                     );
 
                     throw new TypeConflictException($error, $this->getCallStack());

@@ -11,6 +11,8 @@ namespace Railt\Tests\Compiler;
 
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
@@ -33,6 +35,22 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
     public function provider(): array
     {
         return \array_merge($this->positiveProvider(), $this->negativeProvider());
+    }
+
+    /**
+     * @return array|CompilerInterface[]
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
+     */
+    public function compilersProvider(): array
+    {
+        $result = [];
+
+        foreach ($this->getCompilers() as $compiler) {
+            $result[] = [$compiler];
+        }
+
+        return $result;
     }
 
     /**
@@ -151,5 +169,151 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
                 static::assertTrue(true);
             }
         }
+    }
+
+    /**
+     * @dataProvider compilersProvider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testValidInputArgumentType(CompilerInterface $compiler): void
+    {
+        $document = $compiler->compile(File::fromSources(<<<GraphQL
+type User {}
+input Where { field: String!, eq: Any, op: String! = "=" }
+
+
+type UsersRepository {
+    # Test input compatibility 
+    find(where: Where! = {field: "id", eq: 42}): User
+}
+GraphQL
+));
+        /** @var ArgumentDefinition $arg */
+        $arg = $document->getTypeDefinition('UsersRepository')
+            ->getField('find')
+            ->getArgument('where');
+
+        $default = $arg->getDefaultValue();
+
+        // TODO Object?
+        static::assertInternalType('array', $default);
+
+        static::assertArrayHasKey('field', $default);
+        static::assertArrayHasKey('op', $default);
+        static::assertArrayHasKey('eq', $default); // Resolved from Input
+
+        static::assertEquals('id', $default['field'] ?? null);
+        static::assertEquals('=', $default['op'] ?? null);
+        static::assertEquals(42, $default['eq'] ?? null);
+    }
+
+    /**
+     * @dataProvider compilersProvider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testValidInputArgumentListType(CompilerInterface $compiler): void
+    {
+        $document = $compiler->compile(File::fromSources(<<<GraphQL
+type User {}
+input Where { field: String!, eq: Any, op: String! = "=" }
+
+
+type UsersRepository {
+    # List allow defained by compatible list
+    findAll(where: [Where!] = [{field: "id", eq: 42}]): [User!] 
+}
+GraphQL
+        ));
+        /** @var ArgumentDefinition $arg */
+        $arg = $document->getTypeDefinition('UsersRepository')
+            ->getField('find')
+            ->getArgument('where');
+
+        $default = $arg->getDefaultValue();
+
+        static::assertInternalType('array', $default);
+
+        foreach ((array)$default as $item) {
+            // TODO Object?
+            static::assertInternalType('array', $item);
+
+            static::assertArrayHasKey('field', $item);
+            static::assertArrayHasKey('op', $item);
+            static::assertArrayHasKey('eq', $item); // Resolved from Input
+
+            static::assertEquals('id', $item['field'] ?? null);
+            static::assertEquals('=', $item['op'] ?? null);
+            static::assertEquals(42, $item['eq'] ?? null);
+        }
+    }
+
+
+    /**
+     * @dataProvider compilersProvider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testValidInputArgumentListTypeWithLazyCasting(CompilerInterface $compiler): void
+    {
+        $document = $compiler->compile(File::fromSources(<<<GraphQL
+type User {}
+input Where { field: String!, eq: Any, op: String! = "=" }
+
+
+type UsersRepository {
+    # {field: ...} shoud auto transform to [{field: ...}] 
+    findAll(where: [Where!] = {field: "id", op: "<>", eq: 42}): [User!]
+}
+GraphQL
+        ));
+        /** @var ArgumentDefinition $arg */
+        $arg = $document->getTypeDefinition('UsersRepository')
+            ->getField('find')
+            ->getArgument('where');
+
+        $default = $arg->getDefaultValue();
+
+        static::assertInternalType('array', $default);
+
+        foreach ((array)$default as $item) {
+            // TODO Object?
+            static::assertInternalType('array', $item);
+
+            static::assertArrayHasKey('field', $item);
+            static::assertArrayHasKey('op', $item);
+            static::assertArrayHasKey('eq', $item); // Resolved from Input
+
+            static::assertEquals('id', $item['field'] ?? null);
+            static::assertEquals('<>', $item['op'] ?? null);
+            static::assertEquals(42, $item['eq'] ?? null);
+        }
+    }
+
+
+    /**
+     * @dataProvider compilersProvider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testInputArgumentWithIncompatibleDefaultValue(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources(<<<GraphQL
+type User {}
+input Where { field: String!, eq: Any, op: String! = "=" }
+
+
+type UsersRepository {
+    find(where: Where! = {some: "id"}): User # Field "some" does not exists in input "Where"
+}
+GraphQL
+        ));
     }
 }

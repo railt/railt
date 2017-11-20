@@ -13,4 +13,4 @@ declare(strict_types=1);
 
 namespace <?=$namespace; ?>;
 
-<?=$sources;?>
+<?=$sources; ?>

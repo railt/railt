@@ -9,107 +9,222 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\File;
 
 /**
  * Class SchemaTestCase
  */
 class SchemaTestCase extends AbstractCompilerTestCase
 {
+    private const VALID_SCHEMA = <<<GraphQL
+schema {
+    query: MyQuery,
+    mutation: MyMutation, 
+    subscription: MySubscription 
+}
+
+type MyQuery {}
+
+type MyMutation {}
+
+type MySubscription {}
+GraphQL;
+
+    
     /**
      * @return array
-     * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \LogicException
      */
     public function provider(): array
     {
-        $schema = 'schema { query:MyQuery, mutation:MyMutation, subscription:MySubscription }' .
-            'type MyQuery {}' .
-            'type MyMutation {}' .
-            'type MySubscription {}';
-
         $result = [];
-        foreach ($this->getDocuments($schema) as $document) {
-            $result[] = [$document->getSchema()];
+
+        foreach ($this->getCompilers() as $compiler) {
+            $result[] = [$compiler];
         }
+
         return $result;
     }
 
     /**
      * @dataProvider provider
      *
-     * @param SchemaDefinition $schema
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSchemaHasQuery(SchemaDefinition $schema): void
+    public function testSchemaHasQuery(CompilerInterface $compiler): void
     {
+        $document = $compiler->compile(File::fromSources(self::VALID_SCHEMA));
+        static::assertInstanceOf(Document::class, $document);
+
+        $schema = $document->getSchema();
+        static::assertInstanceOf(SchemaDefinition::class, $schema);
+
         static::assertNotNull($schema->getQuery());
     }
 
     /**
      * @dataProvider provider
      *
-     * @param SchemaDefinition $schema
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSchemaQueryName(SchemaDefinition $schema): void
+    public function testSchemaQueryName(CompilerInterface $compiler): void
     {
+        $document = $compiler->compile(File::fromSources(self::VALID_SCHEMA));
+        static::assertInstanceOf(Document::class, $document);
+
+        $schema = $document->getSchema();
+        static::assertInstanceOf(SchemaDefinition::class, $schema);
+        
         static::assertEquals('MyQuery', $schema->getQuery()->getName());
     }
 
     /**
      * @dataProvider provider
      *
-     * @param SchemaDefinition $schema
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSchemaHasMutation(SchemaDefinition $schema): void
+    public function testSchemaHasMutation(CompilerInterface $compiler): void
     {
+        $document = $compiler->compile(File::fromSources(self::VALID_SCHEMA));
+        static::assertInstanceOf(Document::class, $document);
+
+        $schema = $document->getSchema();
+        static::assertInstanceOf(SchemaDefinition::class, $schema);
+        
         static::assertNotNull($schema->getMutation());
     }
 
     /**
      * @dataProvider provider
      *
-     * @param SchemaDefinition $schema
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSchemaMutationName(SchemaDefinition $schema): void
+    public function testSchemaMutationName(CompilerInterface $compiler): void
     {
+        $document = $compiler->compile(File::fromSources(self::VALID_SCHEMA));
+        static::assertInstanceOf(Document::class, $document);
+
+        $schema = $document->getSchema();
+        static::assertInstanceOf(SchemaDefinition::class, $schema);
+        
         static::assertEquals('MyMutation', $schema->getMutation()->getName());
     }
 
     /**
      * @dataProvider provider
      *
-     * @param SchemaDefinition $schema
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSchemaHasSubscription(SchemaDefinition $schema): void
+    public function testSchemaHasSubscription(CompilerInterface $compiler): void
     {
+        $document = $compiler->compile(File::fromSources(self::VALID_SCHEMA));
+        static::assertInstanceOf(Document::class, $document);
+
+        $schema = $document->getSchema();
+        static::assertInstanceOf(SchemaDefinition::class, $schema);
+        
         static::assertNotNull($schema->getSubscription());
     }
 
     /**
      * @dataProvider provider
      *
-     * @param SchemaDefinition $schema
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSchemaSubscriptionName(SchemaDefinition $schema): void
+    public function testSchemaSubscriptionName(CompilerInterface $compiler): void
     {
+        $document = $compiler->compile(File::fromSources(self::VALID_SCHEMA));
+        static::assertInstanceOf(Document::class, $document);
+
+        $schema = $document->getSchema();
+        static::assertInstanceOf(SchemaDefinition::class, $schema);
+        
         static::assertEquals('MySubscription', $schema->getSubscription()->getName());
     }
 
     /**
      * @dataProvider provider
-     * @param SchemaDefinition $schema
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
-    public function testSchemaTypeName(SchemaDefinition $schema): void
+    public function testSchemaTypeName(CompilerInterface $compiler): void
     {
+        $document = $compiler->compile(File::fromSources(self::VALID_SCHEMA));
+        static::assertInstanceOf(Document::class, $document);
+
+        $schema = $document->getSchema();
+        static::assertInstanceOf(SchemaDefinition::class, $schema);
+        
         static::assertEquals('Schema', $schema->getTypeName());
+    }
+
+    /**
+     * @dataProvider provider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testSchemaWithEmptyQuery(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources('schema {}'));
+    }
+
+    /**
+     * @dataProvider provider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testSchemaWithInvalidQueryType(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources('schema { query: String }'));
+    }
+
+    /**
+     * @dataProvider provider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testSchemaWithInvalidMutationType(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources('type A{} schema { query: A, mutation: String }'));
+    }
+
+    /**
+     * @dataProvider provider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testSchemaWithInvalidSubscriptionType(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources('type A{} schema { query: A, subscription: String }'));
     }
 }

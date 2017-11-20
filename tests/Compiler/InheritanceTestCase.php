@@ -225,7 +225,7 @@ class InheritanceTestCase extends AbstractCompilerTestCase
     public function negativeProvider(): array
     {
         $schemas = [
-            // Container
+            // Type + Extend
             'type A { id: ID }      extend type A { id: [ID] }',
             'type A { id: ID }      extend type A { id: [ID!] }',
             'type A { id: ID }      extend type A { id: [ID]! }',
@@ -247,7 +247,29 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'type A { id: [ID!]! }  extend type A { id: ID }',
             'type A { id: [ID!]! }  extend type A { id: ID! }',
 
-            // Scalars + Interface
+            // Extend + Type (Inverse definition)
+            'extend type A { id: [ID] }     type A { id: ID }',
+            'extend type A { id: [ID!] }    type A { id: ID }',
+            'extend type A { id: [ID]! }    type A { id: ID }',
+            'extend type A { id: [ID!]! }   type A { id: ID }',
+            'extend type A { id: ID }       type A { id: ID! }',
+            'extend type A { id: [ID] }     type A { id: ID! }',
+            'extend type A { id: [ID!] }    type A { id: ID! }',
+            'extend type A { id: [ID]! }    type A { id: ID! }',
+            'extend type A { id: [ID!]! }   type A { id: ID! }',
+            'extend type A { id: ID }       type A { id: [ID] }',
+            'extend type A { id: ID! }      type A { id: [ID] }',
+            'extend type A { id: ID }       type A { id: [ID!] }',
+            'extend type A { id: ID! }      type A { id: [ID!] }',
+            'extend type A { id: [ID] }     type A { id: [ID!] }',
+            'extend type A { id: [ID]! }    type A { id: [ID!] }',
+            'extend type A { id: ID }       type A { id: [ID]! }',
+            'extend type A { id: ID! }      type A { id: [ID]! }',
+            'extend type A { id: [ID!] }    type A { id: [ID]! }',
+            'extend type A { id: ID }       type A { id: [ID!]! }',
+            'extend type A { id: ID! }      type A { id: [ID!]! }',
+
+            // Interface + Type
             'interface B { id: Boolean }     type A implements B { id: Any }',
             'interface B { id: Boolean }     type A implements B { id: DateTime }',
             'interface B { id: Boolean }     type A implements B { id: Float }',
@@ -278,6 +300,38 @@ class InheritanceTestCase extends AbstractCompilerTestCase
             'interface B { id: Int }         type A implements B { id: ID }',
             'interface B { id: Int }         type A implements B { id: String }',
             'interface B { id: String }      type A implements B { id: Any }',
+
+            // Type + Interface (Inverse definition)
+            'type A implements B { id: Any }        interface B { id: Boolean }',
+            'type A implements B { id: DateTime }   interface B { id: Boolean }',
+            'type A implements B { id: Float }      interface B { id: Boolean }',
+            'type A implements B { id: ID }         interface B { id: Boolean }',
+            'type A implements B { id: Int }        interface B { id: Boolean }',
+            'type A implements B { id: String }     interface B { id: Boolean }',
+            'type A implements B { id: Any }        interface B { id: DateTime }',
+            'type A implements B { id: Boolean }    interface B { id: DateTime }',
+            'type A implements B { id: Float }      interface B { id: DateTime }',
+            'type A implements B { id: ID }         interface B { id: DateTime }',
+            'type A implements B { id: Int }        interface B { id: DateTime }',
+            'type A implements B { id: String }     interface B { id: DateTime }',
+            'type A implements B { id: Any }        interface B { id: Float }',
+            'type A implements B { id: Boolean }    interface B { id: Float }',
+            'type A implements B { id: DateTime }   interface B { id: Float }',
+            'type A implements B { id: ID }         interface B { id: Float }',
+            'type A implements B { id: String }     interface B { id: Float }',
+            'type A implements B { id: Any }        interface B { id: ID }',
+            'type A implements B { id: Boolean }    interface B { id: ID }',
+            'type A implements B { id: DateTime }   interface B { id: ID }',
+            'type A implements B { id: Float }      interface B { id: ID }',
+            'type A implements B { id: Int }        interface B { id: ID }',
+            'type A implements B { id: String }     interface B { id: ID }',
+            'type A implements B { id: Any }        interface B { id: Int }',
+            'type A implements B { id: Boolean }    interface B { id: Int }',
+            'type A implements B { id: DateTime }   interface B { id: Int }',
+            'type A implements B { id: Float }      interface B { id: Int }',
+            'type A implements B { id: ID }         interface B { id: Int }',
+            'type A implements B { id: String }     interface B { id: Int }',
+            'type A implements B { id: Any }        interface B { id: String }',
 
             // Scalars + Extend
             'type A { id: Boolean }     extend type A { id: Any }',
