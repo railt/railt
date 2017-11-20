@@ -19,7 +19,6 @@ use Whoops\Handler\JsonResponseHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run as Whoops;
 
-
 require __DIR__ . '/../vendor/autoload.php';
 
 /**

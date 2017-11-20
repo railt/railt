@@ -36,6 +36,6 @@ class ScalarBuilder extends AbstractScalarType
     public function __construct(AdapterInterface $adapter, ScalarDefinition $type)
     {
         $this->adapter = $adapter;
-        $this->type = $type;
+        $this->type    = $type;
     }
 }

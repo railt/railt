@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Youshido;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Youshido\GraphQL\Schema\Schema;
 use Railt\Adapters\AdapterInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Youshido\GraphQL\Schema\Schema;
 use Youshido\GraphQL\Type\TypeInterface;
 
 /**
@@ -20,7 +20,7 @@ use Youshido\GraphQL\Type\TypeInterface;
  */
 class SchemaBuilder
 {
-    private const FIELD_NAME_QUERY = 'query';
+    private const FIELD_NAME_QUERY    = 'query';
     private const FIELD_NAME_MUTATION = 'mutation';
 
     /**
@@ -41,7 +41,7 @@ class SchemaBuilder
     public function __construct(AdapterInterface $adapter, SchemaDefinition $schema)
     {
         $this->adapter = $adapter;
-        $this->schema = $schema;
+        $this->schema  = $schema;
     }
 
     /**
@@ -65,7 +65,7 @@ class SchemaBuilder
     private function mutation(array $data = []): array
     {
         return \array_merge($data, [
-            self::FIELD_NAME_MUTATION => $this->resolve($this->schema->getMutation())
+            self::FIELD_NAME_MUTATION => $this->resolve($this->schema->getMutation()),
         ]);
     }
 
@@ -76,7 +76,7 @@ class SchemaBuilder
     private function query(array $data = []): array
     {
         return \array_merge($data, [
-            self::FIELD_NAME_QUERY => $this->resolve($this->schema->getQuery())
+            self::FIELD_NAME_QUERY => $this->resolve($this->schema->getQuery()),
         ]);
     }
 
