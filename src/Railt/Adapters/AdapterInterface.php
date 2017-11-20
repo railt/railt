@@ -9,47 +9,31 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Container\ContainerInterface;
-use Railt\Events\Dispatcher;
-use Railt\Http\ResponderInterface;
-use Railt\Reflection\Contracts\Document;
-use Railt\Routing\Router;
+use Railt\Http\RequestInterface;
+use Railt\Http\ResponseInterface;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface AdapterInterface
  */
-interface AdapterInterface extends ResponderInterface
+interface AdapterInterface
 {
     /**
      * AdapterInterface constructor.
-     * @param Document $document
-     * @param Dispatcher $events
-     * @param Router $router
+     * @param SchemaDefinition $schema
      */
-    public function __construct(Document $document, Dispatcher $events, Router $router);
+    public function __construct(SchemaDefinition $schema);
 
     /**
-     * @return Dispatcher
+     * @param RequestInterface $request
+     * @return ResponseInterface
      */
-    public function getEvents(): Dispatcher;
+    public function request(RequestInterface $request): ResponseInterface;
 
     /**
-     * @return Router
+     * @param TypeDefinition $definition
+     * @return mixed
      */
-    public function getRouter(): Router;
-
-    /**
-     * @return TypeLoaderInterface
-     */
-    public function getLoader(): TypeLoaderInterface;
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer(): ContainerInterface;
-
-    /**
-     * @return bool
-     */
-    public static function isSupportedBy(): bool;
+    public function get(TypeDefinition $definition);
 }

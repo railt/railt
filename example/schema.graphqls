@@ -1,0 +1,13 @@
+schema {
+    query: Query
+}
+
+"""
+# "Query" object
+"""
+type Query {
+    """
+    # "user" field of User object
+    """
+    user: User!
+}

@@ -1,0 +1,30 @@
+
+"""
+# "User" object
+"""
+type User {
+    """
+    # "id" field of ID scalar
+    """
+    id: ID!
+
+    """
+    # "friends" field of Users object
+    """
+    login: String!
+
+    """
+    # "createdAt" field of String scalar
+    """
+    createdAt(format: String! = "RFC3339"): String
+
+    """
+    # "updatedAt" field of String scalar
+    """
+    updatedAt(format: String! = "RFC3339"): String
+
+    """
+    # "friends" field of Users object
+    """
+    friends(count: Int = 10): [User]
+}

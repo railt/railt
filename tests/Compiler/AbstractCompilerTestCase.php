@@ -28,6 +28,7 @@ use Railt\Compiler\Persisting\Psr16Persister;
 use Railt\Compiler\Persisting\Psr6Persister;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\File;
+use Railt\Reflection\Filesystem\NotReadableException;
 use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Tests\AbstractTestCase;
 use Symfony\Component\Finder\Finder;
@@ -246,7 +247,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param \Traversable $files
      * @return array
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     * @throws NotReadableException
      */
     private function formatProvider(\Traversable $files): array
     {
@@ -262,7 +263,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param string $file
      * @return File
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
+     * @throws NotReadableException
      */
     public function file(string $file): File
     {
