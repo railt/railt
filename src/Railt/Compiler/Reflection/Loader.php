@@ -112,6 +112,8 @@ class Loader extends Repository
         if ($result instanceof ReadableInterface) {
             return $result;
         }
+
+        return null;
     }
 
     /**
