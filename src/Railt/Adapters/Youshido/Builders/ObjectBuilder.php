@@ -36,7 +36,7 @@ class ObjectBuilder extends AbstractObjectType
     public function __construct(AdapterInterface $adapter, ObjectDefinition $type)
     {
         $this->adapter = $adapter;
-        $this->type = $type;
+        $this->type    = $type;
 
         parent::__construct();
     }

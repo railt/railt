@@ -71,7 +71,7 @@ trait TypeIndicationBuilder
         $definition = $type->getTypeDefinition();
 
         if ($this->predefined[\get_class($definition)] ?? null) {
-            return new $this->predefined[\get_class($definition)];
+            return new $this->predefined[\get_class($definition)]();
         }
 
         return $adapter->get($definition);
