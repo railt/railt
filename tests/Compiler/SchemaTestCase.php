@@ -20,7 +20,7 @@ use Railt\Reflection\Filesystem\File;
  */
 class SchemaTestCase extends AbstractCompilerTestCase
 {
-    private const VALID_SCHEMA = <<<GraphQL
+    private const VALID_SCHEMA = <<<'GraphQL'
 schema {
     query: MyQuery,
     mutation: MyMutation, 
@@ -34,7 +34,6 @@ type MyMutation {}
 type MySubscription {}
 GraphQL;
 
-    
     /**
      * @return array
      * @throws \League\Flysystem\FileNotFoundException
@@ -83,7 +82,7 @@ GraphQL;
 
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
-        
+
         static::assertEquals('MyQuery', $schema->getQuery()->getName());
     }
 
@@ -101,7 +100,7 @@ GraphQL;
 
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
-        
+
         static::assertNotNull($schema->getMutation());
     }
 
@@ -119,7 +118,7 @@ GraphQL;
 
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
-        
+
         static::assertEquals('MyMutation', $schema->getMutation()->getName());
     }
 
@@ -137,7 +136,7 @@ GraphQL;
 
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
-        
+
         static::assertNotNull($schema->getSubscription());
     }
 
@@ -155,7 +154,7 @@ GraphQL;
 
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
-        
+
         static::assertEquals('MySubscription', $schema->getSubscription()->getName());
     }
 
@@ -172,7 +171,7 @@ GraphQL;
 
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
-        
+
         static::assertEquals('Schema', $schema->getTypeName());
     }
 
