@@ -12,7 +12,6 @@ namespace Railt\Tests\Compiler;
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
@@ -179,7 +178,7 @@ class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
      */
     public function testValidInputArgumentType(CompilerInterface $compiler): void
     {
-        $document = $compiler->compile(File::fromSources(<<<GraphQL
+        $document = $compiler->compile(File::fromSources(<<<'GraphQL'
 type User {}
 input Where { field: String!, eq: Any, op: String! = "=" }
 
@@ -217,7 +216,7 @@ GraphQL
      */
     public function testValidInputArgumentListType(CompilerInterface $compiler): void
     {
-        $document = $compiler->compile(File::fromSources(<<<GraphQL
+        $document = $compiler->compile(File::fromSources(<<<'GraphQL'
 type User {}
 input Where { field: String!, eq: Any, op: String! = "=" }
 
@@ -251,7 +250,6 @@ GraphQL
         }
     }
 
-
     /**
      * @dataProvider compilersProvider
      * @param CompilerInterface $compiler
@@ -260,7 +258,7 @@ GraphQL
      */
     public function testValidInputArgumentListTypeWithLazyCasting(CompilerInterface $compiler): void
     {
-        $document = $compiler->compile(File::fromSources(<<<GraphQL
+        $document = $compiler->compile(File::fromSources(<<<'GraphQL'
 type User {}
 input Where { field: String!, eq: Any, op: String! = "=" }
 
@@ -294,7 +292,6 @@ GraphQL
         }
     }
 
-
     /**
      * @dataProvider compilersProvider
      * @param CompilerInterface $compiler
@@ -305,7 +302,7 @@ GraphQL
     {
         $this->expectException(TypeConflictException::class);
 
-        $compiler->compile(File::fromSources(<<<GraphQL
+        $compiler->compile(File::fromSources(<<<'GraphQL'
 type User {}
 input Where { field: String!, eq: Any, op: String! = "=" }
 
