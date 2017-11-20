@@ -115,11 +115,11 @@ class File implements ReadableInterface, Arrayable
     public static function fromSplFileInfo(\SplFileInfo $file): ReadableInterface
     {
         if (! \is_file($file->getPathname())) {
-            throw new NotFoundException($file->getPathname());
+            throw NotFoundException::fromFilePath($file->getPathname());
         }
 
         if (! $file->isReadable()) {
-            throw new NotReadableException($file->getPathname());
+            throw NotReadableException::fromFilePath($file->getPathname());
         }
 
         $sources = @\file_get_contents($file->getPathname());

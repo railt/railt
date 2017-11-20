@@ -15,15 +15,14 @@ namespace Railt\Reflection\Filesystem;
 class NotReadableException extends \LogicException
 {
     /**
-     * NotReadableException constructor.
      * @param string $file
-     * @param int $code
      * @param \Throwable|null $previous
+     * @return NotReadableException
      */
-    public function __construct(string $file = '', int $code = 0, \Throwable $previous = null)
+    public static function fromFilePath(string $file = '', \Throwable $previous = null): self
     {
         $message = \sprintf('File "%s" not readable.', $file);
 
-        parent::__construct($message, $code, $previous);
+        return new static($message, 0, $previous);
     }
 }
