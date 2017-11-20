@@ -9,159 +9,77 @@ declare(strict_types=1);
 
 namespace Railt;
 
-use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
-use Railt\Adapters\Factory;
-use Railt\Compiler\Compiler;
-use Railt\Compiler\Debuggable;
-use Railt\Compiler\DebuggableInterface;
-use Railt\Compiler\File;
-use Railt\Compiler\Loggable;
-use Railt\Compiler\Reflection\Autoloader;
-use Railt\Container\Container;
-use Railt\Events\Dispatcher;
-use Railt\Events\Events;
+use Railt\Adapters\AdapterInterface;
+use Railt\Adapters\Youshido\Adapter;
+use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Reflection\Contracts\DocumentInterface;
-use Railt\Routing\Router;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class Endpoint
  */
-class Endpoint implements DebuggableInterface
+class Endpoint
 {
-    use Loggable;
-    use Debuggable;
-
     /**
-     * @var ContainerInterface
+     * @var Document
      */
-    private $container;
+    private $document;
 
     /**
      * Endpoint constructor.
-     * @param ContainerInterface $container
-     * @param LoggerInterface|null $logger
-     * @throws \Railt\Compiler\Exceptions\ParsingException
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
+     * @param CompilerInterface $compiler
+     * @param ReadableInterface $schema
      */
-    public function __construct(ContainerInterface $container = null, LoggerInterface $logger = null)
+    public function __construct(CompilerInterface $compiler, ReadableInterface $schema)
     {
-        $this->container = new Container($container);
-
-        $this->bootContainer($this->container);
-
-        $this->withLogger($logger);
+        $this->document = $compiler->compile($schema);
     }
 
     /**
-     * @param Container $container
-     * @throws \Railt\Compiler\Exceptions\ParsingException
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
+     * @param CompilerInterface $compiler
+     * @param ReadableInterface $schema
+     * @return Endpoint
      */
-    private function bootContainer($container): void
+    public static function new(CompilerInterface $compiler, ReadableInterface $schema): self
     {
-        // Compiler
-        $container->singleton(Compiler::class, new Compiler());
-
-        // Router
-        $container->singleton(Router::class, new Router($container));
-
-        // Dispatcher
-        $dispatcher = new Events();
-        $container->singleton(Events::class, $dispatcher);
-        $container->singleton(Dispatcher::class, $dispatcher);
+        return new static($compiler, $schema);
     }
 
     /**
-     * @return ContainerInterface
+     * @return AdapterInterface
+     * @throws \LogicException
      */
-    public function getContainer(): ContainerInterface
+    protected function adapter(): AdapterInterface
     {
-        return $this->container;
+        return new Adapter($this->resolveSchema());
     }
 
     /**
-     * @return Autoloader
-     */
-    public function getAutoloader(): Autoloader
-    {
-        return $this->getCompiler()->getAutoloader();
-    }
-
-    /**
-     * @return Compiler
-     */
-    public function getCompiler(): Compiler
-    {
-        return $this->container->get(Compiler::class);
-    }
-
-    /**
-     * @param $schema
      * @param RequestInterface $request
      * @return ResponseInterface
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedNodeException
      * @throws \LogicException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    public function request($schema, RequestInterface $request): ResponseInterface
+    public function request(RequestInterface $request): ResponseInterface
     {
-        $adapter = Factory::create($this->createDocument($schema), $this->getEvents(), $this->getRouter());
-
-        if ($adapter instanceof DebuggableInterface) {
-            $adapter->debugMode($this->debug);
-        }
-
-        return $adapter->request($request);
+        return $this->adapter()->request($request);
     }
 
     /**
-     * @param $schema
-     * @return DocumentInterface
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedNodeException
+     * @return SchemaDefinition
      * @throws \LogicException
-     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    private function createDocument($schema): DocumentInterface
+    private function resolveSchema(): SchemaDefinition
     {
-        return $this->getCompiler()
-            ->compile($this->createSchemaFile($schema))
-            ->getDocument();
-    }
+        $schema = $this->document->getSchema();
 
-    /**
-     * @param string|File $schema
-     * @return File
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
-     */
-    private function createSchemaFile($schema): File
-    {
-        if (\is_string($schema)) {
-            return File::make($schema);
+        if ($schema === null) {
+            $error = 'Document file %s is wrongly configured. Schema definition required.';
+            throw new \LogicException(\sprintf($error, $this->document->getFileName()));
         }
 
         return $schema;
-    }
-
-    /**
-     * @return Dispatcher
-     */
-    public function getEvents(): Dispatcher
-    {
-        return $this->container->get(Dispatcher::class);
-    }
-
-    /**
-     * @return Router
-     */
-    public function getRouter(): Router
-    {
-        return $this->container->get(Router::class);
     }
 }

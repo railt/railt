@@ -9,16 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Compiler\Debuggable;
-use Railt\Compiler\DebuggableInterface;
-
 /**
  * Class Response
  */
-class Response implements ResponseInterface, DebuggableInterface
+class Response implements ResponseInterface
 {
-    use Debuggable;
-
     /**
      * Data field name
      */
@@ -38,6 +33,11 @@ class Response implements ResponseInterface, DebuggableInterface
      * @var array
      */
     private $errors = [];
+
+    /**
+     * @var bool
+     */
+    private $debug = false;
 
     /**
      * Response constructor.
@@ -101,10 +101,10 @@ class Response implements ResponseInterface, DebuggableInterface
      */
     public function render(): string
     {
-        $options = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT;
+        $options = \JSON_HEX_TAG | \JSON_HEX_APOS | \JSON_HEX_AMP | \JSON_HEX_QUOT;
 
         if ($this->debug) {
-            $options |= JSON_PRETTY_PRINT;
+            $options |= \JSON_PRETTY_PRINT;
         }
 
         return \json_encode($this->toArray(), $options);
