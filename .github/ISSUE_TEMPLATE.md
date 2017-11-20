@@ -4,5 +4,16 @@
 
 ### Description:
 
+...
 
 ### Steps To Reproduce:
+
+...
+
+### Expected result:
+
+...
+
+### What happens instead?
+
+...
