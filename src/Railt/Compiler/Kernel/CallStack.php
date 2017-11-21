@@ -23,7 +23,7 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
     use Support;
 
     public const EVENT_PUSH = 'push';
-    public const EVENT_POP = 'pop';
+    public const EVENT_POP  = 'pop';
 
     /**
      * @var array|Definition[]
