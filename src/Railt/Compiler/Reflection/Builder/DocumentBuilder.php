@@ -66,8 +66,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
         $this->compiler = $compiler;
         $this->file     = $readable;
 
-        $this->compiler->getStack()->push($this);
-
         try {
             $this->boot($ast, $this);
             $this->name = $readable->getPathname();
