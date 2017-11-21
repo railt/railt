@@ -22,10 +22,18 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
 {
     use Support;
 
+    public const EVENT_PUSH = 'push';
+    public const EVENT_POP = 'pop';
+
     /**
      * @var array|Definition[]
      */
     private $stack = [];
+
+    /**
+     * @var array|\Closure[]
+     */
+    private $subscribers = [];
 
     /**
      * @param Definition[] ...$definitions
@@ -37,7 +45,34 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
             $this->stack[] = $definition;
         }
 
+        $this->fire(static::EVENT_PUSH, ...$definitions);
+
         return $this;
+    }
+
+    /**
+     * @param \Closure $then
+     * @return CallStack
+     */
+    public function listen(\Closure $then): self
+    {
+        $this->subscribers[] = $then;
+
+        return $this;
+    }
+
+    /**
+     * @param string $event
+     * @param Definition[] ...$definitions
+     * @return void
+     */
+    private function fire(string $event, Definition ...$definitions): void
+    {
+        foreach ($definitions as $definition) {
+            foreach ($this->subscribers as $subscriber) {
+                $subscriber($event, $definition);
+            }
+        }
     }
 
     /**
@@ -56,7 +91,8 @@ class CallStack implements Arrayable, Renderable, Jsonable, \JsonSerializable, \
     public function pop(int $size = 1): self
     {
         for ($i = 0; $i < $size; ++$i) {
-            \array_pop($this->stack);
+            $definition = \array_pop($this->stack);
+            $this->fire(static::EVENT_POP, $definition);
         }
 
         return $this;
