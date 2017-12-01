@@ -24,6 +24,7 @@ final class Definitions extends ValidatorsFactory
         Definitions\EnumValidator::class,
         Definitions\ArgumentValidator::class,
         Definitions\ObjectValidator::class,
+        Definitions\SchemaValidator::class,
     ];
 
     /**
