@@ -81,7 +81,7 @@ class SchemaValidator extends BaseDefinitionValidator
         } catch (\TypeError $typo) {
             $error = \vsprintf('The %s contain incompatible type for field %s', [
                 $schema,
-                $field
+                $field,
             ]);
 
             throw new TypeConflictException($error, $this->getCallStack(), $typo);
@@ -112,7 +112,7 @@ class SchemaValidator extends BaseDefinitionValidator
 
         $error = \vsprintf('Schema field %s contain incompatible type %s', [
             $field,
-            $definition
+            $definition,
         ]);
 
         throw new TypeConflictException($error, $this->getCallStack());
