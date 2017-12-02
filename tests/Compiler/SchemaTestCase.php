@@ -175,6 +175,36 @@ GraphQL;
         static::assertEquals('Schema', $schema->getTypeName());
     }
 
+
+    /**
+     * @dataProvider provider
+     * @param CompilerInterface $compiler
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     */
+    public function testSchemaComment(CompilerInterface $compiler): void
+    {
+        $document = $compiler->compile(File::fromSources(<<<GraphQL
+            schema {
+                """Query docs"""
+                query: Query
+                
+                """Mutation docs"""
+                mutation: Mutation
+                
+                """Subscription docs"""
+                subscription: Subscription
+            }
+            
+            type Query {}
+            type Mutation {}
+            type Subscription {}
+GraphQL
+        ));
+
+        static::assertInstanceOf(Document::class, $document);
+    }
+
     /**
      * @dataProvider provider
      * @param CompilerInterface $compiler
