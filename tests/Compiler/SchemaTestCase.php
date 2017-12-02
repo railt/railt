@@ -175,7 +175,6 @@ GraphQL;
         static::assertEquals('Schema', $schema->getTypeName());
     }
 
-
     /**
      * @dataProvider provider
      * @param CompilerInterface $compiler
@@ -184,7 +183,7 @@ GraphQL;
      */
     public function testSchemaComment(CompilerInterface $compiler): void
     {
-        $document = $compiler->compile(File::fromSources(<<<GraphQL
+        $document = $compiler->compile(File::fromSources(<<<'GraphQL'
             schema {
                 """Query docs"""
                 query: Query
