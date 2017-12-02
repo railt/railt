@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Definitions;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
@@ -43,21 +43,24 @@ class SchemaBuilder extends BaseSchema implements Compilable
     /**
      * @param TreeNode $ast
      * @return bool
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
+     * @throws CompilerException
      */
     protected function onCompile(TreeNode $ast): bool
     {
         switch ($ast->getId()) {
             case '#Query':
                 $this->query = $this->unique($this->query, $this->fetchType($ast));
+
                 return true;
 
             case '#Mutation':
                 $this->mutation = $this->unique($this->mutation, $this->fetchType($ast));
+
                 return true;
 
             case '#Subscription':
                 $this->subscription = $this->unique($this->subscription, $this->fetchType($ast));
+
                 return true;
         }
 
@@ -65,27 +68,14 @@ class SchemaBuilder extends BaseSchema implements Compilable
     }
 
     /**
-     * @param string $field
-     * @param Definition $definition
-     * @return void
-     * @throws \Railt\Compiler\Exceptions\TypeConflictException
-     */
-    private function validateFieldType(string $field, Definition $definition): void
-    {
-        if ($definition instanceof ObjectDefinition) {
-            return;
-        }
-
-        $error = \sprintf('The %s must be instance of Object, but %s given.', $field, $definition);
-        throw new TypeConflictException($error, $this->getCompiler()->getStack());
-    }
-
-    /**
      * @param TreeNode $ast
      * @return ObjectDefinition|Definition
+     * @throws CompilerException
      */
     private function fetchType(TreeNode $ast): Definition
     {
+        $name = null;
+
         /**
          * <code>
          * #Query|#Mutation|#Subscription   *->getChild(0)
@@ -93,8 +83,13 @@ class SchemaBuilder extends BaseSchema implements Compilable
          *         token(T_NAME, TypeName)  *->getValueValue()
          * </code>
          */
-        $name = $ast->getChild(0)->getChild(0)->getValueValue();
+        /** @var TreeNode $child */
+        foreach ($ast->getChildren() as $child) {
+            if ($child->getId() === '#Type') {
+                return $this->load($child->getChild(0)->getValueValue());
+            }
+        }
 
-        return $this->load($name);
+        throw new CompilerException('Could not load the schema type. Probably AST is broken.');
     }
 }
