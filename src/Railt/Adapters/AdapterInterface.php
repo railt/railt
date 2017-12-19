@@ -22,13 +22,14 @@ interface AdapterInterface
     /**
      * AdapterInterface constructor.
      * @param Dictionary $dictionary
-     * @param SchemaDefinition $schema
+     * @param bool $debug
      */
-    public function __construct(Dictionary $dictionary, SchemaDefinition $schema);
+    public function __construct(Dictionary $dictionary, bool $debug = false);
 
     /**
+     * @param SchemaDefinition $schema
      * @param RequestInterface $request
      * @return ResponseInterface
      */
-    public function request(RequestInterface $request): ResponseInterface;
+    public function request(SchemaDefinition $schema, RequestInterface $request): ResponseInterface;
 }

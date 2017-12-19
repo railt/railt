@@ -26,11 +26,6 @@ use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 class Adapter implements AdapterInterface
 {
     /**
-     * @var SchemaDefinition
-     */
-    private $schema;
-
-    /**
      * @var Registry
      */
     private $registry;
@@ -41,59 +36,85 @@ class Adapter implements AdapterInterface
     private $dictionary;
 
     /**
+     * @var bool
+     */
+    private $debug;
+
+    /**
      * Adapter constructor.
      * @param Dictionary $dictionary
-     * @param SchemaDefinition $schema
+     * @param bool $debug
      */
-    public function __construct(Dictionary $dictionary, SchemaDefinition $schema)
+    public function __construct(Dictionary $dictionary, bool $debug = false)
     {
-        $this->schema     = $schema;
+        $this->debug = $debug;
         $this->dictionary = $dictionary;
-        $this->registry   = new Registry();
+        $this->registry = new Registry();
     }
 
     /**
+     * @param SchemaDefinition $schema
      * @param RequestInterface $request
      * @return ResponseInterface
+     * @throws \GraphQL\Error\InvariantViolation
+     * @throws \Throwable
      */
-    public function request(RequestInterface $request): ResponseInterface
+    public function request(SchemaDefinition $schema, RequestInterface $request): ResponseInterface
     {
         try {
-            $result = $this->exec($request);
+            $executor = $this->buildExecutor($schema, $request);
+
+            /** @var ExecutionResult $result */
+            $result = $executor();
 
             return new Response((array)$result->data, $result->errors);
         } catch (\Throwable $e) {
+            if ($this->debug) {
+                throw $e;
+            }
+
             return Response::error($e);
         }
     }
 
     /**
+     * @param SchemaDefinition $reflection
      * @param RequestInterface $request
-     * @param null $rootValue
-     * @param null $context
-     * @return ExecutionResult
+     * @return \Closure
      * @throws \GraphQL\Error\InvariantViolation
      */
-    private function exec(RequestInterface $request, $rootValue = null, $context = null): ExecutionResult
+    private function buildExecutor(
+        SchemaDefinition $reflection,
+        RequestInterface $request
+    ): \Closure
     {
-        return GraphQL::executeQuery(
-            $this->buildSchema(),
-            $request->getQuery(),
-            $rootValue,
-            $context,
-            $request->getVariables(),
-            $request->getOperation(),
-            null, /** Field Resolver */
-            null /** Validations */
-        );
+        $schema = $this->buildSchema($reflection);
+
+        if ($this->debug) {
+            $schema->assertValid();
+        }
+
+        return function($rootValue = null, $context = null) use ($schema, $request): ExecutionResult {
+            return GraphQL::executeQuery(
+                $schema,
+                $request->getQuery(),
+                $rootValue,
+                $context,
+                $request->getVariables(),
+                $request->getOperation(),
+                null, /** Field Resolver */
+                null /** Validations */
+            );
+        };
     }
 
     /**
+     * @param SchemaDefinition $schema
      * @return Schema
      */
-    protected function buildSchema(): Schema
+    protected function buildSchema(SchemaDefinition $schema): Schema
     {
-        $builder = new SchemaBuilder($this->dictionary, $this->schema, $this->registry);
+        $builder = new SchemaBuilder($this->dictionary, $schema, $this->registry);
 
         return $builder->build();
     }

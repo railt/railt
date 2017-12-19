@@ -31,12 +31,28 @@ class Application
     private $compiler;
 
     /**
+     * @var bool
+     */
+    private $debug = false;
+
+    /**
      * Application constructor.
      * @param Compiler $compiler
      */
     public function __construct(Compiler $compiler)
     {
         $this->compiler = $compiler;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return Application
+     */
+    public function debug(bool $enabled = false): self
+    {
+        $this->debug = $enabled;
+
+        return $this;
     }
 
     /**
@@ -49,22 +65,10 @@ class Application
      */
     public function request(ReadableInterface $sdl, RequestInterface $request): ResponseInterface
     {
-        return $this->buildAdapter($sdl)->request($request);
-    }
-
-    /**
-     * @param ReadableInterface $sdl
-     * @return AdapterInterface
-     * @throws \Railt\Compiler\Exceptions\TypeNotFoundException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
-     * @throws \Railt\Compiler\Exceptions\SchemaException
-     */
-    private function buildAdapter(ReadableInterface $sdl): AdapterInterface
-    {
         $document = $this->getDocument($sdl);
-        $schema   = $this->getSchema($document);
+        $schema = $this->getSchema($document);
 
-        return $this->getAdapter($schema);
+        return $this->getAdapter($this->debug)->request($schema, $request);
     }
 
     /**
@@ -96,13 +100,13 @@ class Application
     }
 
     /**
-     * @param SchemaDefinition $schema
+     * @param bool $debug
      * @return AdapterInterface
      */
-    protected function getAdapter(SchemaDefinition $schema): AdapterInterface
+    protected function getAdapter(bool $debug): AdapterInterface
     {
         $adapter = self::DEFAULT_GRAPHQL_ADAPTER;
 
-        return new $adapter($this->compiler->getDictionary(), $schema);
+        return new $adapter($this->compiler->getDictionary(), $debug);
     }
 }
