@@ -14,7 +14,7 @@ use GraphQL\Type\Definition\Type;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 
 /**
- * @property-read ObjectDefinition $reflection
+ * @property ObjectDefinition $reflection
  */
 class ObjectBuilder extends TypeBuilder
 {
@@ -27,10 +27,10 @@ class ObjectBuilder extends TypeBuilder
         return new ObjectType([
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
-            'fields'      => function(): array {
+            'fields'      => function (): array {
                 return FieldBuilder::buildFields($this->reflection, $this->getRegistry());
             },
-            'interfaces'  => $this->buildInterfaces()
+            'interfaces'  => $this->buildInterfaces(),
             // isTypeOf
             // resolveField
         ]);

@@ -56,7 +56,7 @@ class ErrorFormatter implements Arrayable
     public function toArray(): array
     {
         $exception = $this->exception;
-        $result = $this->renderItem($exception);
+        $result    = $this->renderItem($exception);
 
         while ($exception->getPrevious()) {
             if (! \array_key_exists('previous', $result)) {
@@ -64,7 +64,7 @@ class ErrorFormatter implements Arrayable
             }
 
             $result['previous'][] = $this->renderItem($exception);
-            $exception = $exception->getPrevious();
+            $exception            = $exception->getPrevious();
         }
 
         return $result;

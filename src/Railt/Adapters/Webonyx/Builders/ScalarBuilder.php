@@ -18,7 +18,7 @@ use Railt\Reflection\Standard\Scalars\IntType;
 use Railt\Reflection\Standard\Scalars\StringType;
 
 /**
- * @property-read ScalarDefinition $reflection
+ * @property ScalarDefinition $reflection
  */
 class ScalarBuilder extends TypeBuilder
 {

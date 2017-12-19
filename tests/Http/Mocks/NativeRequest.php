@@ -28,7 +28,7 @@ class NativeRequest extends Request
      */
     public function __construct(string $body, bool $emulateJson = true)
     {
-        $this->wrapGlobals($emulateJson, function() use ($body) {
+        $this->wrapGlobals($emulateJson, function () use ($body): void {
             $this->body = $body;
             parent::__construct();
         });
@@ -42,7 +42,7 @@ class NativeRequest extends Request
     private function wrapGlobals(bool $emulateJson, \Closure $then): void
     {
         if ($emulateJson) {
-            $contentType = $_SERVER['CONTENT_TYPE'];
+            $contentType             = $_SERVER['CONTENT_TYPE'];
             $_SERVER['CONTENT_TYPE'] = 'application/json';
             $then();
             $_SERVER['CONTENT_TYPE'] = $contentType;

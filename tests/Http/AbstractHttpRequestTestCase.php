@@ -121,7 +121,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
      */
     public function testAllDataIsReadable(): void
     {
-        $query = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
+        $query     = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
         $variables = [(string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
         $operation = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
@@ -144,7 +144,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
      */
     public function testPostIsReadable(): void
     {
-        $query = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
+        $query     = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
         $variables = [(string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
         $operation = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
@@ -167,7 +167,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
      */
     public function testGetIsReadable(): void
     {
-        $query = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
+        $query     = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
         $variables = [(string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
         $operation = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
@@ -190,7 +190,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
      */
     public function testGetHasLowerPriorityThanPost(): void
     {
-        $query = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
+        $query     = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
         $variables = [(string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
         $operation = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
@@ -219,7 +219,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
      */
     public function testRawDataHasLowerPriorityThanJsonRequest(): void
     {
-        $query = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
+        $query     = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
         $variables = [(string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
         $operation = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
@@ -248,13 +248,13 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
      */
     public function testConfigurableRequest(): void
     {
-        $query = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
+        $query         = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
         $queryArgument = '_' . (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
-        $variables = [(string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
+        $variables         = [(string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
         $variablesArgument = '_' . (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
-        $operation = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
+        $operation         = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
         $operationArgument = '_' . (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
         $data = \json_encode([
