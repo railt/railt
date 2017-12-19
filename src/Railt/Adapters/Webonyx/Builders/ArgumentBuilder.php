@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Webonyx\Builders;
 
-use GraphQL\Type\Definition\FieldArgument;
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition as ReflectionArgument;
@@ -37,10 +36,10 @@ class ArgumentBuilder extends DependentDefinitionBuilder
     }
 
     /**
-     * @return FieldArgument
+     * @return array
      * @throws \InvalidArgumentException
      */
-    public function build(): FieldArgument
+    public function build(): array
     {
         $config = [
             'name'        => $this->reflection->getName(),
@@ -56,6 +55,6 @@ class ArgumentBuilder extends DependentDefinitionBuilder
             $config['defaultValue'] = $this->reflection->getDefaultValue();
         }
 
-        return new FieldArgument($config);
+        return $config;
     }
 }
