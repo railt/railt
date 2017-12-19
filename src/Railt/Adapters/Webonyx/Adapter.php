@@ -47,9 +47,9 @@ class Adapter implements AdapterInterface
      */
     public function __construct(Dictionary $dictionary, bool $debug = false)
     {
-        $this->debug = $debug;
+        $this->debug      = $debug;
         $this->dictionary = $dictionary;
-        $this->registry = new Registry();
+        $this->registry   = new Registry();
     }
 
     /**
@@ -86,15 +86,14 @@ class Adapter implements AdapterInterface
     private function buildExecutor(
         SchemaDefinition $reflection,
         RequestInterface $request
-    ): \Closure
-    {
+    ): \Closure {
         $schema = $this->buildSchema($reflection);
 
         if ($this->debug) {
             $schema->assertValid();
         }
 
-        return function($rootValue = null, $context = null) use ($schema, $request): ExecutionResult {
+        return function ($rootValue = null, $context = null) use ($schema, $request): ExecutionResult {
             return GraphQL::executeQuery(
                 $schema,
                 $request->getQuery(),

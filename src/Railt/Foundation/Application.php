@@ -66,7 +66,7 @@ class Application
     public function request(ReadableInterface $sdl, RequestInterface $request): ResponseInterface
     {
         $document = $this->getDocument($sdl);
-        $schema = $this->getSchema($document);
+        $schema   = $this->getSchema($document);
 
         return $this->getAdapter($this->debug)->request($schema, $request);
     }
