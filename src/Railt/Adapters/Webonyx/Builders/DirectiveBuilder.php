@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 
 /**
- * @property-read DirectiveDefinition $reflection
+ * @property DirectiveDefinition $reflection
  */
 class DirectiveBuilder extends TypeBuilder
 {
@@ -38,7 +38,7 @@ class DirectiveBuilder extends TypeBuilder
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
             'locations'   => $this->getLocations(),
-            'args'        => []
+            'args'        => [],
         ]);
     }
 

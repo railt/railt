@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition as ReflectionField;
 
 /**
- * @property-read ReflectionField $reflection
+ * @property ReflectionField $reflection
  */
 class FieldBuilder extends DependentDefinitionBuilder
 {
@@ -46,7 +46,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
             'type'        => $this->buildType(),
-            'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry())
+            'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
             // resolve
             // complexity
         ];

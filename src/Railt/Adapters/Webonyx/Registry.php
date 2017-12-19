@@ -11,7 +11,6 @@ namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
-use Railt\Adapters\Webonyx\Builders;
 use Railt\Adapters\Webonyx\Builders\TypeBuilder;
 use Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

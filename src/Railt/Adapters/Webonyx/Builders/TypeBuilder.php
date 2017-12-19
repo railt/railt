@@ -37,7 +37,7 @@ abstract class TypeBuilder
     public function __construct(TypeDefinition $type, Registry $registry)
     {
         $this->reflection = $type;
-        $this->registry = $registry;
+        $this->registry   = $registry;
     }
 
     /**

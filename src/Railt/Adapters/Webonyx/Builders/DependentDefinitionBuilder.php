@@ -13,7 +13,7 @@ use GraphQL\Type\Definition\Type;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 
 /**
- * @property-read AllowsTypeIndication $reflection
+ * @property AllowsTypeIndication $reflection
  */
 abstract class DependentDefinitionBuilder extends TypeBuilder
 {

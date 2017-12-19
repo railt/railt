@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition as ReflectionArgument;
 
 /**
- * @property-read ReflectionArgument $reflection
+ * @property ReflectionArgument $reflection
  */
 class ArgumentBuilder extends DependentDefinitionBuilder
 {

@@ -14,7 +14,7 @@ use GraphQL\Type\Definition\Type;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 
 /**
- * @property-read InterfaceDefinition $reflection
+ * @property InterfaceDefinition $reflection
  */
 class InterfaceBuilder extends TypeBuilder
 {

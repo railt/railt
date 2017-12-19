@@ -25,7 +25,7 @@ class Request extends BaseRequest
     public function __construct(string $query, array $variables = [], string $operation = null)
     {
         $this->data = [
-            $this->getQueryArgument() => $query,
+            $this->getQueryArgument()     => $query,
             $this->getVariablesArgument() => $variables,
             $this->getOperationArgument() => $operation,
         ];

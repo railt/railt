@@ -56,7 +56,7 @@ class Response implements ResponseInterface
      * @param bool $enabled
      * @return $this|Response
      */
-    public function debug(bool $enabled): Response
+    public function debug(bool $enabled): self
     {
         $this->debug = $enabled;
 

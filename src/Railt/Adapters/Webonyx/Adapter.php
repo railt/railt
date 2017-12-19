@@ -12,12 +12,12 @@ namespace Railt\Adapters\Webonyx;
 use GraphQL\Executor\ExecutionResult;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
+use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Builders\SchemaBuilder;
 use Railt\Compiler\Reflection\Dictionary;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
-use Railt\Adapters\AdapterInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**
@@ -47,9 +47,9 @@ class Adapter implements AdapterInterface
      */
     public function __construct(Dictionary $dictionary, SchemaDefinition $schema)
     {
-        $this->schema = $schema;
+        $this->schema     = $schema;
         $this->dictionary = $dictionary;
-        $this->registry = new Registry();
+        $this->registry   = new Registry();
     }
 
     /**

@@ -62,7 +62,7 @@ class Application
     private function buildAdapter(ReadableInterface $sdl): AdapterInterface
     {
         $document = $this->getDocument($sdl);
-        $schema = $this->getSchema($document);
+        $schema   = $this->getSchema($document);
 
         return $this->getAdapter($schema);
     }

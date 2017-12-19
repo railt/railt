@@ -11,7 +11,6 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Schema;
 use Railt\Adapters\Webonyx\Registry;
-use Railt\Compiler\Compiler;
 use Railt\Compiler\Reflection\Dictionary;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
@@ -19,7 +18,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class SchemaBuilder
- * @property-read SchemaDefinition $reflection
+ * @property SchemaDefinition $reflection
  */
 class SchemaBuilder extends TypeBuilder
 {
@@ -108,7 +107,7 @@ class SchemaBuilder extends TypeBuilder
         }
 
         return [
-            'directives' => $result
+            'directives' => $result,
         ];
     }
 }
