@@ -72,9 +72,9 @@ class Compiler implements CompilerInterface
      */
     public function __construct(Persister $persister = null)
     {
-        $this->stack     = new CallStack();
-        $this->parser    = new Parser($this->stack);
-        $this->loader    = new Loader($this, $this->stack);
+        $this->stack = new CallStack();
+        $this->parser = new Parser($this->stack);
+        $this->loader = new Loader($this, $this->stack);
         $this->validator = new Validator($this->stack);
 
         $this->persister = $this->bootPersister($persister);
@@ -196,18 +196,15 @@ class Compiler implements CompilerInterface
     /**
      * @param ReadableInterface $readable
      * @return Document
-     * @throws \Throwable|\Error|CompilerException|SchemaException
+     * @throws SchemaException
+     * @throws CompilerException
      */
     public function compile(ReadableInterface $readable): Document
     {
-        try {
-            /** @var DocumentBuilder $document */
-            $document = $this->persister->remember($readable, $this->onCompile());
+        /** @var DocumentBuilder $document */
+        $document = $this->persister->remember($readable, $this->onCompile());
 
-            return $document->withCompiler($this);
-        } catch (\Throwable | \Error $error) {
-            throw $error;
-        }
+        return $document->withCompiler($this);
     }
 
     /**
@@ -252,6 +249,15 @@ class Compiler implements CompilerInterface
     }
 
     /**
+     * @param string $type
+     * @return iterable|TypeDefinition[]
+     */
+    public function only(string $type): iterable
+    {
+        return $this->loader->only($type);
+    }
+
+    /**
      * @param string $name
      * @return TypeDefinition
      */
@@ -261,7 +267,7 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @return iterable
+     * @return iterable|TypeDefinition[]
      */
     public function all(): iterable
     {

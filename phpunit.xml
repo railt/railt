@@ -19,6 +19,9 @@
         <testsuite name="GraphQL SDL Compiler Tests">
             <directory suffix="TestCase.php">./tests/Compiler</directory>
         </testsuite>
+        <testsuite name="Application Tests">
+            <directory suffix="TestCase.php">./tests/Application</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist>

@@ -30,12 +30,22 @@ interface ResponseInterface extends Arrayable, Renderable
     public function getData(): array;
 
     /**
-     * @return iterable|array[]
+     * @return array[]
      */
-    public function getErrors(): iterable;
+    public function getErrors(): array;
 
     /**
      * @return void
      */
     public function send(): void;
+
+    /**
+     * @return bool
+     */
+    public function isSuccessful(): bool;
+
+    /**
+     * @return bool
+     */
+    public function hasErrors(): bool;
 }

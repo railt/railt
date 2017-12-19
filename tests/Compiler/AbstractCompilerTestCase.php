@@ -16,9 +16,6 @@ use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Plugin\ListFiles;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\EmulatingPersister;
@@ -55,8 +52,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @return void
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
      */
     public function setUp(): void
     {
@@ -98,11 +93,10 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @param string $body
-     * @return array
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
+     * @return array|Document[][]
+     * @throws \Railt\Compiler\Exceptions\SchemaException
      */
-    protected function dataProviderDocuments(string $body): array
+    public function dataProviderDocuments(string $body): array
     {
         $result = [];
 
@@ -116,8 +110,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param string $body
      * @return iterable|Document[]
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
+     * @throws \Railt\Compiler\Exceptions\SchemaException
      */
     protected function getDocuments(string $body): iterable
     {
@@ -129,19 +122,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     }
 
     /**
-     * @return LoggerInterface
-     */
-    private function getLogger(): LoggerInterface
-    {
-        return new Logger(\class_basename(static::class), [
-            new StreamHandler(@\fopen('php://output', 'wb+')),
-        ]);
-    }
-
-    /**
      * @return \Generator|Compiler[]
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
      */
     protected function getCompilers(): \Generator
     {
@@ -166,8 +147,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @return Persister
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
      */
     private function getPsr6FileSystemPersister(): Persister
     {
@@ -181,8 +160,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param string $name
      * @return AbstractCachePool
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
      */
     private function createFilesystemPool(string $name): AbstractCachePool
     {
@@ -197,8 +174,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @return Persister
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
      */
     private function getPsr16FileSystemPersister(): Persister
     {

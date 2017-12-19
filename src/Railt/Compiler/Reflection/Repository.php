@@ -87,6 +87,19 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
+     * @param string $type
+     * @return iterable|TypeDefinition[]
+     */
+    public function only(string $type): iterable
+    {
+        foreach ($this->definitions as $definition) {
+            if ($definition instanceof $type) {
+                yield $definition;
+            }
+        }
+    }
+
+    /**
      * @return iterable|TypeDefinition[]
      */
     public function all(): iterable

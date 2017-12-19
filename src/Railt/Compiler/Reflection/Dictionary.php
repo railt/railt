@@ -35,6 +35,12 @@ interface Dictionary
     public function all(): iterable;
 
     /**
+     * @param string|TypeDefinition $type
+     * @return iterable|TypeDefinition[]
+     */
+    public function only(string $type): iterable;
+
+    /**
      * @param string $name
      * @return bool
      */

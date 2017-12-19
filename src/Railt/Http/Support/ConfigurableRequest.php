@@ -41,7 +41,7 @@ trait ConfigurableRequest
 
     /**
      * @param string $name
-     * @return ConfigurableRequestInterface
+     * @return ConfigurableRequestInterface|ConfigurableRequest
      */
     public function setQueryArgument(string $name): ConfigurableRequestInterface
     {
@@ -60,7 +60,7 @@ trait ConfigurableRequest
 
     /**
      * @param string $name
-     * @return ConfigurableRequestInterface
+     * @return ConfigurableRequestInterface|ConfigurableRequest
      */
     public function setVariablesArgument(string $name): ConfigurableRequestInterface
     {
@@ -79,7 +79,7 @@ trait ConfigurableRequest
 
     /**
      * @param string $name
-     * @return ConfigurableRequestInterface
+     * @return ConfigurableRequestInterface|ConfigurableRequest
      */
     public function setOperationArgument(string $name): ConfigurableRequestInterface
     {

@@ -39,7 +39,7 @@
         "hoa/protocol": "~1.0",
         "hoa/regex": "~1.0",
         "hoa/visitor": "~2.0",
-        "youshido/graphql": "~1.5"
+        "webonyx/graphql-php": "~0.9"
     },
     "replace": {
         "railt/http": "self.version",
@@ -49,6 +49,7 @@
         "railt/container": "self.version",
         "railt/parser": "self.version",
         "railt/reflection": "self.version",
+        "railt/webonyx-adapter": "self.version",
         "hoa/compiler": "*"
     },
     "autoload": {

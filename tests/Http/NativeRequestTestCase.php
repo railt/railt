@@ -9,9 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http;
 
-use PHPUnit\Framework\Assert;
-use Railt\Http\Request;
 use Railt\Http\RequestInterface;
+use Railt\Tests\Http\Mocks\Request;
 
 /**
  * Class NativeRequestTestCase
@@ -25,35 +24,6 @@ class NativeRequestTestCase extends AbstractHttpRequestTestCase
      */
     protected function request(string $body, bool $makeJson = true): RequestInterface
     {
-        if ($makeJson) {
-            $_SERVER['CONTENT_TYPE'] = 'application/json';
-        }
-
-        return new class($body) extends Request {
-            /**
-             * @var string
-             */
-            private $body;
-
-            /**
-             * Anonymous class constructor.
-             * @param string $body
-             */
-            public function __construct(string $body)
-            {
-                $this->body = $body;
-                parent::__construct();
-            }
-
-            /**
-             * @return string
-             */
-            final protected function getInputStream(): string
-            {
-                Assert::assertEquals('', parent::getInputStream());
-
-                return $this->body;
-            }
-        };
+        return new Request($body, $makeJson);
     }
 }

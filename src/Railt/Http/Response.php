@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * Class Response
  */
@@ -27,12 +29,12 @@ class Response implements ResponseInterface
     /**
      * @var array
      */
-    private $data = [];
+    private $data;
 
     /**
      * @var array
      */
-    private $errors = [];
+    private $errors;
 
     /**
      * @var bool
@@ -48,6 +50,17 @@ class Response implements ResponseInterface
     {
         $this->data   = $data;
         $this->errors = $errors;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return $this|Response
+     */
+    public function debug(bool $enabled): Response
+    {
+        $this->debug = $enabled;
+
+        return $this;
     }
 
     /**
@@ -88,11 +101,15 @@ class Response implements ResponseInterface
     public function send(): void
     {
         if (\headers_sent()) {
-            throw new \RuntimeException('Method send() are not allowed. Headers already sent');
+            $error = 'Method %s() are not allowed. Headers already sent. Use %s() otherwise.';
+            throw new \RuntimeException(\sprintf($error, __METHOD__, 'render'));
         }
 
         \header('Content-Type: application/json');
+
         echo $this->render();
+
+        \flush();
     }
 
     /**
@@ -116,24 +133,45 @@ class Response implements ResponseInterface
      */
     public function toArray(): array
     {
-        $errors = $this->getErrors();
-
         return [
             static::FIELD_DATA   => $this->getData(),
-            static::FIELD_ERRORS => $errors instanceof \Traversable ? \iterator_to_array($errors) : $errors,
+            static::FIELD_ERRORS => $this->getErrors(),
         ];
     }
 
     /**
-     * @return iterable|array[]
+     * @return array[]
      */
-    public function getErrors(): iterable
+    public function getErrors(): array
     {
+        $result = [];
+
         foreach ($this->errors as $error) {
-            yield $error instanceof \Throwable
-                ? ErrorFormatter::render($error, $this->debug)
-                : $error;
+            $result[] = $this->formatError($error, $this->debug);
         }
+
+        return $result;
+    }
+
+    /**
+     * @param mixed $error
+     * @param bool $debug
+     * @return array
+     */
+    private function formatError($error, bool $debug = false): array
+    {
+        switch (true) {
+            case $error instanceof Arrayable:
+                return $error->toArray();
+
+            case $error instanceof \JsonSerializable:
+                return $error->jsonSerialize();
+
+            case $error instanceof \Throwable:
+                return ErrorFormatter::render($error, $debug);
+        }
+
+        return (array)$error;
     }
 
     /**
@@ -142,5 +180,21 @@ class Response implements ResponseInterface
     public function getData(): array
     {
         return $this->data;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasErrors(): bool
+    {
+        return \count($this->errors) > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuccessful(): bool
+    {
+        return ! $this->hasErrors();
     }
 }

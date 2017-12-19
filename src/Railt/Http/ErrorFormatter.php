@@ -10,9 +10,11 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Railt\Compiler\Exceptions\GraphQLSchemaException;
+use Railt\Compiler\Exceptions\SchemaException;
 
 /**
+ * TODO Convert to factory
+ *
  * Class ErrorFormatter
  */
 class ErrorFormatter implements Arrayable
@@ -54,13 +56,14 @@ class ErrorFormatter implements Arrayable
     public function toArray(): array
     {
         $exception = $this->exception;
-
-        $result = [
-            $this->renderItem($exception),
-        ];
+        $result = $this->renderItem($exception);
 
         while ($exception->getPrevious()) {
-            $result[]  = $this->renderItem($exception);
+            if (! \array_key_exists('previous', $result)) {
+                $result['previous'] = [];
+            }
+
+            $result['previous'][] = $this->renderItem($exception);
             $exception = $exception->getPrevious();
         }
 
@@ -71,19 +74,19 @@ class ErrorFormatter implements Arrayable
      * @param \Throwable $e
      * @return array
      */
-    private function renderItem(\Throwable $e)
+    private function renderItem(\Throwable $e): array
     {
         $result = [
             'message' => $e->getMessage(),
         ];
 
-        if ($e instanceof GraphQLSchemaException) {
+        if ($e instanceof SchemaException) {
             $result = [
-                'message'   => 'GraphQL Schema Error: ' . $e->getMessage(),
+                'message'   => 'GraphQL SDL Error: ' . $e->getMessage(),
                 'locations' => [
                     [
-                        'line'   => $e->getCodeLine(),
-                        'column' => $e->getCodeColumn(),
+                        'line'   => $e->getLine(),
+                        'column' => $e->getColumn(),
                     ],
                 ],
             ];
@@ -91,31 +94,11 @@ class ErrorFormatter implements Arrayable
 
         if ($this->debug) {
             $result['in']    = $e->getFile() . ':' . $e->getLine();
-            $result['trace'] = $this->renderTrace($e);
+            $result['trace'] = $e instanceof SchemaException
+                ? $e->getCompilerTrace()
+                : $e->getTraceAsString();
         }
 
         return $result;
-    }
-
-    /**
-     * @param \Throwable $e
-     * @return array
-     */
-    private function renderTrace(\Throwable $e): array
-    {
-        $trace = \explode("\n", $e->getTraceAsString());
-
-        $trace = \array_map(function (string $trace): string {
-            $trace = \preg_replace('/#\d+\s+/iu', '', $trace);
-
-            return $trace;
-        }, $trace);
-
-
-        $trace = \array_filter($trace, function (string $item): bool {
-            return $item !== '{main}';
-        });
-
-        return $trace;
     }
 }

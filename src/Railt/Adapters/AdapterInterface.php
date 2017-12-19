@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
+use Railt\Compiler\Reflection\Dictionary;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface AdapterInterface
@@ -21,19 +21,14 @@ interface AdapterInterface
 {
     /**
      * AdapterInterface constructor.
+     * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
      */
-    public function __construct(SchemaDefinition $schema);
+    public function __construct(Dictionary $dictionary, SchemaDefinition $schema);
 
     /**
      * @param RequestInterface $request
      * @return ResponseInterface
      */
     public function request(RequestInterface $request): ResponseInterface;
-
-    /**
-     * @param TypeDefinition $definition
-     * @return mixed
-     */
-    public function get(TypeDefinition $definition);
 }

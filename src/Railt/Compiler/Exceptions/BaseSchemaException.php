@@ -47,10 +47,34 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
         $info = $stack->getLastDefinitionInfo();
 
         $this->column = $info['column'] ?? 0;
-        $this->file   = $info['file'] ?? $this->file;
-        $this->line   = $info['line'] ?? $this->line;
+        $this->file = $info['file'] ?? $this->file;
+        $this->line = $info['line'] ?? $this->line;
 
         $this->trace = $this->stack->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $result = $this->getInfo() . PHP_EOL;
+
+        [$graphQLStack, $phpStack] = [
+            'GraphQL Stack Trace:' . PHP_EOL .
+            '%s' . PHP_EOL .
+            'PHP Stack Trace:' . PHP_EOL .
+            '%s',
+
+            'Stack Trace:' . PHP_EOL .
+            '%s',
+        ];
+
+        return $result . (
+            \count($this->stack) > 0
+                ? \sprintf($graphQLStack, $this->stack->render(), $this->getTraceAsString())
+                : \sprintf($phpStack, $this->getTraceAsString())
+            );
     }
 
     /**
@@ -68,27 +92,24 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function __toString(): string
+    public function getColumn(): int
     {
-        $result = $this->getInfo() . PHP_EOL;
+        return $this->column;
+    }
 
-        [$graphQLStack, $phpStack] = [
-            'GraphQL Stack Trace:' . PHP_EOL .
-                '%s' . PHP_EOL .
-            'PHP Stack Trace:' . PHP_EOL .
-                '%s',
-
-            'Stack Trace:' . PHP_EOL .
-                '%s',
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'message' => $this->message,
+            'file'    => $this->file,
+            'line'    => $this->line,
+            'column'  => $this->column,
         ];
-
-        return $result . (
-            \count($this->stack) > 0
-                ? \sprintf($graphQLStack, $this->stack->render(), $this->getTraceAsString())
-                : \sprintf($phpStack, $this->getTraceAsString())
-        );
     }
 
     /**
@@ -97,13 +118,5 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     public function getCompilerTrace(): array
     {
         return $this->trace;
-    }
-
-    /**
-     * @return int
-     */
-    public function getColumn(): int
-    {
-        return $this->column;
     }
 }
