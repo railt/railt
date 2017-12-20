@@ -10,9 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\ServiceProviders;
 
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Container\ContainerInterface;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
+use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\GraphQL\RouterDocument;
 use Railt\Routing\Router;
 
@@ -22,26 +20,26 @@ use Railt\Routing\Router;
 class RouterServiceProvider extends BaseServiceProvider
 {
     /**
+     * @var CompilerInterface
+     */
+    private $compiler;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * @param CompilerInterface $compiler
      * @return void
      */
     public function boot(CompilerInterface $compiler): void
     {
-        $this->register(Router::class, function (ContainerInterface $container) {
-            return new Router($container);
-        });
+        $this->compiler = $compiler;
+        $this->router = new Router($this->getContainer());
+
+        $this->instance(RouterInterface::class, $this->router);
 
         $compiler->add(new RouterDocument());
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @param \Closure $then
-     * @param array ...$params
-     * @return ResponseInterface
-     */
-    public function handle(RequestInterface $request, \Closure $then, ...$params): ResponseInterface
-    {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
 }

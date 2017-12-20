@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Container;
+namespace Railt\Container\Exceptions;
 
-use Psr\Container\ContainerInterface as PSRContainer;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
- * Interface ContainerInterface
+ * Class ContainerResolutionException
  */
-interface ContainerInterface extends PSRContainer, Autowireable, Registrable
+class ContainerResolutionException extends \LogicException implements NotFoundExceptionInterface
 {
 }

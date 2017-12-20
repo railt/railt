@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
+use Psr\Container\ContainerInterface as PSRContainer;
+use Railt\Container\Exceptions\ContainerResolutionException;
+
 /**
  * Class Container
  */
@@ -30,34 +33,25 @@ class Container implements ContainerInterface
     private $aliases = [];
 
     /**
-     * @var null|ContainerInterface
+     * @var null|PSRContainer
      */
     private $parent;
 
     /**
-     * Container constructor.
-     * @param ContainerInterface|null $parent
+     * @var ParamResolver
      */
-    public function __construct(ContainerInterface $parent = null)
-    {
-        $this->parent = $parent;
-
-        $this->resolved[ContainerInterface::class] = $this;
-    }
+    private $resolver;
 
     /**
-     * @param string $method
-     * @param array $params
-     * @param \Closure $otherwise
-     * @return mixed
+     * Container constructor.
+     * @param PSRContainer|null $parent
      */
-    private function proxy(string $method, array $params = [], \Closure $otherwise)
+    public function __construct(PSRContainer $parent = null)
     {
-        if ($this->parent !== null) {
-            return \call_user_func_array([$this->parent, $method], $params);
-        }
+        $this->parent = $parent;
+        $this->instance(ContainerInterface::class, $this);
 
-        return $otherwise();
+        $this->resolver = new ParamResolver($this);
     }
 
     /**
@@ -97,12 +91,18 @@ class Container implements ContainerInterface
     /**
      * @param string $id
      * @return mixed
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function get($id)
     {
-        return $this->proxy('get', [$id], function () use ($id) {
-            return $this->resolve($id);
-        });
+        $locator = $this->getLocator($id);
+
+        if ($this->isRegistered($locator)) {
+            return $this->resolve($locator);
+        }
+
+        return $this->parent && $this->parent->get($locator);
     }
 
     /**
@@ -111,24 +111,31 @@ class Container implements ContainerInterface
      */
     public function has($id): bool
     {
-        return $this->proxy('has', [$id], function () use ($id): bool {
-            return $this->getLocator($id) !== null;
-        });
+        $locator = $this->getLocator($id);
+
+        if ($this->isRegistered($locator)) {
+            return true;
+        }
+
+        return $this->parent && $this->parent->has($locator);
     }
 
     /**
      * @param string $id
-     * @return null|string
+     * @return string
      */
-    private function getLocator(string $id): ?string
+    private function getLocator(string $id): string
     {
-        $service = $this->aliases[$id] ?? $id;
+        return $this->aliases[$id] ?? $id;
+    }
 
-        if (\array_key_exists($service, $this->registered)) {
-            return $service;
-        }
-
-        return null;
+    /**
+     * @param string $service
+     * @return bool
+     */
+    private function isRegistered(string $service): bool
+    {
+        return \array_key_exists($service, $this->registered);
     }
 
     /**
@@ -148,8 +155,8 @@ class Container implements ContainerInterface
     {
         $locator = $this->getLocator($id);
 
-        if ($locator === null) {
-            throw new \LogicException('Unresolvable dependency ' . $id);
+        if (! $this->isRegistered($locator)) {
+            throw new ContainerResolutionException('Unresolvable dependency ' . $id);
         }
 
         if (! $this->isResolved($locator)) {
@@ -166,16 +173,32 @@ class Container implements ContainerInterface
      */
     public function call(callable $callable, array $params = [])
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        if (! ($callable instanceof \Closure) ) {
+            $callable = \Closure::fromCallable($callable);
+        }
+
+        $resolved = $this->resolver->fromClosure($callable, $params);
+
+        return \call_user_func_array($callable, $resolved);
     }
 
     /**
      * @param string $class
      * @param array $params
      * @return mixed|object
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function make(string $class, array $params = [])
     {
-        throw new \LogicException(__METHOD__ . ' not implemented yet');
+        if ($this->has($class)) {
+            return $this->get($class);
+        }
+
+        $this->register($class, function() use ($class, $params) {
+            return new $class(...$this->resolver->fromConstructor($class, $params));
+        });
+
+        return $this->resolve($class);
     }
 }

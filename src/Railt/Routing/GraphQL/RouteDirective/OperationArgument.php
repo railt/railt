@@ -14,14 +14,14 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
 
 /**
- * Class ActionArgument
+ * Class OperationArgument
  */
-class ActionArgument extends BaseArgument
+class OperationArgument extends BaseArgument
 {
     /**
      * Route argument name
      */
-    public const ARGUMENT_NAME = 'action';
+    public const ARGUMENT_NAME = 'operations';
 
     /**
      * Route argument type
@@ -40,19 +40,18 @@ class ActionArgument extends BaseArgument
      */
     public function __construct(Document $document, TypeDefinition $parent)
     {
-        $this->parent   = $parent;
+        $this->parent = $parent;
         $this->document = $document;
 
-        $this->name        = static::ARGUMENT_NAME;
+        $this->name = static::ARGUMENT_NAME;
         $this->description = static::ARGUMENT_DESCRIPTION;
-    }
 
-    /**
-     * @return bool
-     */
-    public function isNonNull(): bool
-    {
-        return true;
+        $this->defaultValue = [];
+        $this->hasDefaultValue = true;
+
+        $this->isList = true;
+        $this->isNonNull = true;
+        $this->isListOfNonNulls = true;
     }
 
     /**

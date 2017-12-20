@@ -14,6 +14,7 @@ use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\InputInterface;
 
 /**
@@ -39,21 +40,36 @@ class Input implements InputInterface
     private $path;
 
     /**
-     * @var ObjectDefinition|TypeDefinition
+     * @var FieldDefinition|TypeDefinition
      */
-    private $type;
+    private $field;
+
+    /**
+     * @var mixed|null
+     */
+    private $parent;
 
     /**
      * Input constructor.
-     * @param ObjectDefinition $type
+     * @param FieldDefinition $field
      * @param ResolveInfo $info
      * @param array $arguments
+     * @param mixed|null $parent
      */
-    public function __construct(ObjectDefinition $type, ResolveInfo $info, array $arguments = [])
+    public function __construct(FieldDefinition $field, ResolveInfo $info, array $arguments = [], $parent = null)
     {
         $this->info      = $info;
-        $this->type      = $type;
-        $this->arguments = $arguments;
+        $this->field     = $field;
+        $this->arguments = $this->resolveArguments($field, $arguments);
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getParentValue()
+    {
+        return $this->parent;
     }
 
     /**
@@ -62,7 +78,7 @@ class Input implements InputInterface
      * @return array
      * @throws \InvalidArgumentException
      */
-    public static function resolveArguments(HasArguments $reflection, array $input = []): array
+    private function resolveArguments(HasArguments $reflection, array $input = []): array
     {
         $result = [];
 
@@ -93,11 +109,11 @@ class Input implements InputInterface
     }
 
     /**
-     * @return TypeDefinition
+     * @return FieldDefinition
      */
-    public function getType(): TypeDefinition
+    public function getFieldDefinition(): FieldDefinition
     {
-        return $this->type;
+        return $this->field;
     }
 
     /**

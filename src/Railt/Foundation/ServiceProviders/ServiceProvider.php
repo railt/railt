@@ -22,8 +22,7 @@ interface ServiceProvider extends Registrable, Autowireable
     /**
      * @param RequestInterface $request
      * @param \Closure $then
-     * @param array ...$params
      * @return ResponseInterface
      */
-    public function handle(RequestInterface $request, \Closure $then, ...$params): ResponseInterface;
+    public function handle(RequestInterface $request, \Closure $then): ResponseInterface;
 }

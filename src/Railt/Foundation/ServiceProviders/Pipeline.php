@@ -74,6 +74,14 @@ class Pipeline
      */
     public function handle(RequestInterface $request, \Closure $response): ResponseInterface
     {
-        dd(23);
+        $then = $response;
+
+        foreach ($this->providers as $provider) {
+            $then = function(RequestInterface $request) use ($provider, $then) {
+                return $provider->handle($request, $then);
+            };
+        }
+
+        return $then($request);
     }
 }

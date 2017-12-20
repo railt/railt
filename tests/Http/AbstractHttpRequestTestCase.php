@@ -110,7 +110,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
     {
         $expected = (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
-        $request = $this->request('{"operation": "' . $expected . '"}');
+        $request = $this->request('{"operationName": "' . $expected . '"}');
 
         Assert::assertEquals($expected, $request->getOperation());
     }
@@ -128,7 +128,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
         $data = \json_encode([
             'query'     => $query,
             'variables' => $variables,
-            'operation' => $operation,
+            'operationName' => $operation,
         ]);
 
         $request = $this->request($data);
@@ -151,7 +151,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
         $_POST = [
             'query'     => $query,
             'variables' => $variables,
-            'operation' => $operation,
+            'operationName' => $operation,
         ];
 
         $request = $this->request('', false);
@@ -174,7 +174,7 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
         $_GET = [
             'query'     => $query,
             'variables' => $variables,
-            'operation' => $operation,
+            'operationName' => $operation,
         ];
 
         $request = $this->request('', false);
@@ -197,13 +197,13 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
         $_POST = [
             'query'     => $query,
             'variables' => $variables,
-            'operation' => $operation,
+            'operationName' => $operation,
         ];
 
         $_GET = [
             'query'     => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
             'variables' => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
-            'operation' => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
+            'operationName' => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
         ];
 
         $request = $this->request('', false);
@@ -226,13 +226,13 @@ abstract class AbstractHttpRequestTestCase extends AbstractTestCase
         $data = \json_encode([
             'query'     => $query,
             'variables' => $variables,
-            'operation' => $operation,
+            'operationName' => $operation,
         ]);
 
         $_GET = $_POST = $_REQUEST = $HTTP_GET_VARS = $HTTP_POST_VARS = $HTTP_RAW_POST_DATA = [
             'query'     => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
             'variables' => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
-            'operation' => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
+            'operationName' => (string)\random_int(\PHP_INT_MIN, \PHP_INT_MAX),
         ];
 
         $request = $this->request($data);

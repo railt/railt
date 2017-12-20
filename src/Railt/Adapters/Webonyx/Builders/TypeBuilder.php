@@ -12,6 +12,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use Railt\Adapters\Webonyx\Registry;
+use Railt\Container\ContainerInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -43,9 +44,18 @@ abstract class TypeBuilder
     /**
      * @return Registry
      */
-    public function getRegistry(): Registry
+    protected function getRegistry(): Registry
     {
         return $this->registry;
+    }
+
+    /**
+     * @param string $service
+     * @return mixed|object
+     */
+    protected function resolve(string $service)
+    {
+        return $this->registry->getContainer()->make($service);
     }
 
     /**

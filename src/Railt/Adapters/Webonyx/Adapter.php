@@ -14,7 +14,7 @@ use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Builders\SchemaBuilder;
-use Railt\Compiler\Reflection\Dictionary;
+use Railt\Container\ContainerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
@@ -31,25 +31,20 @@ class Adapter implements AdapterInterface
     private $registry;
 
     /**
-     * @var Dictionary
-     */
-    private $dictionary;
-
-    /**
      * @var bool
      */
     private $debug;
 
     /**
      * Adapter constructor.
-     * @param Dictionary $dictionary
+     * @param ContainerInterface $container
      * @param bool $debug
      */
-    public function __construct(Dictionary $dictionary, bool $debug = false)
+    public function __construct(ContainerInterface $container, bool $debug = false)
     {
         $this->debug      = $debug;
-        $this->dictionary = $dictionary;
-        $this->registry   = new Registry();
+        $this->registry   = new Registry($container);
+        $container->instance(FieldResolver::class, new FieldResolver($container));
     }
 
     /**
@@ -61,6 +56,8 @@ class Adapter implements AdapterInterface
      */
     public function request(SchemaDefinition $schema, RequestInterface $request): ResponseInterface
     {
+        $this->registry->getContainer()->instance(RequestInterface::class, $request);
+
         try {
             $executor = $this->buildExecutor($schema, $request);
 
@@ -83,25 +80,22 @@ class Adapter implements AdapterInterface
      * @return \Closure
      * @throws \GraphQL\Error\InvariantViolation
      */
-    private function buildExecutor(
-        SchemaDefinition $reflection,
-        RequestInterface $request
-    ): \Closure {
+    private function buildExecutor(SchemaDefinition $reflection, RequestInterface $request): \Closure
+    {
         $schema = $this->buildSchema($reflection);
 
         if ($this->debug) {
             $schema->assertValid();
         }
 
-        return function ($rootValue = null, $context = null) use ($schema, $request): ExecutionResult {
+        return function ($rootValue = null, $context = null) use ($reflection, $schema, $request): ExecutionResult {
             return GraphQL::executeQuery(
                 $schema,
                 $request->getQuery(),
                 $rootValue,
-                $context,
+                $reflection,
                 $request->getVariables(),
                 $request->getOperation(),
-                null, /** Field Resolver */
                 null /** Validations */
             );
         };
@@ -113,7 +107,7 @@ class Adapter implements AdapterInterface
      */
     protected function buildSchema(SchemaDefinition $schema): Schema
     {
-        $builder = new SchemaBuilder($this->dictionary, $schema, $this->registry);
+        $builder = new SchemaBuilder($schema, $this->registry);
 
         return $builder->build();
     }

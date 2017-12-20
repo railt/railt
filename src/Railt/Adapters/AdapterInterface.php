@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
-use Railt\Compiler\Reflection\Dictionary;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
+use Railt\Container\ContainerInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**
@@ -21,10 +21,10 @@ interface AdapterInterface
 {
     /**
      * AdapterInterface constructor.
-     * @param Dictionary $dictionary
+     * @param ContainerInterface $container
      * @param bool $debug
      */
-    public function __construct(Dictionary $dictionary, bool $debug = false);
+    public function __construct(ContainerInterface $container, bool $debug = false);
 
     /**
      * @param SchemaDefinition $schema

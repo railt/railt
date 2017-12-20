@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Routing\Contracts;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
  * Interface InputInterface
@@ -35,11 +35,6 @@ interface InputInterface
     public function has(string $argument): bool;
 
     /**
-     * @return TypeDefinition
-     */
-    public function getType(): TypeDefinition;
-
-    /**
      * @return string
      */
     public function getQueryType(): string;
@@ -55,6 +50,11 @@ interface InputInterface
     public function getFieldName(): string;
 
     /**
+     * @return FieldDefinition
+     */
+    public function getFieldDefinition(): FieldDefinition;
+
+    /**
      * @return string
      */
     public function getAlias(): string;
@@ -63,4 +63,9 @@ interface InputInterface
      * @return bool
      */
     public function hasAlias(): bool;
+
+    /**
+     * @return mixed
+     */
+    public function getParentValue();
 }

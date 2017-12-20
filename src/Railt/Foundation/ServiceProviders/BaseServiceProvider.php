@@ -33,14 +33,21 @@ abstract class BaseServiceProvider implements ServiceProvider
     }
 
     /**
+     * @return ContainerInterface
+     */
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
+    }
+
+    /**
      * Can be overriden
      *
      * @param RequestInterface $request
      * @param \Closure $then
-     * @param array ...$params
      * @return ResponseInterface
      */
-    public function handle(RequestInterface $request, \Closure $then, ...$params): ResponseInterface
+    public function handle(RequestInterface $request, \Closure $then): ResponseInterface
     {
         return $then($request);
     }

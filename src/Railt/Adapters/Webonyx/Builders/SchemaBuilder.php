@@ -9,17 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Webonyx\Builders;
 
-use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\ResolveInfo;
-use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
-use Railt\Adapters\Webonyx\Input;
-use Railt\Adapters\Webonyx\Registry;
-use Railt\Compiler\Reflection\Dictionary;
+use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class SchemaBuilder
@@ -27,23 +20,6 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
  */
 class SchemaBuilder extends TypeBuilder
 {
-    /**
-     * @var Dictionary
-     */
-    private $dictionary;
-
-    /**
-     * SchemaBuilder constructor.
-     * @param Dictionary $dictionary
-     * @param TypeDefinition $type
-     * @param Registry $registry
-     */
-    public function __construct(Dictionary $dictionary, TypeDefinition $type, Registry $registry)
-    {
-        $this->dictionary = $dictionary;
-        parent::__construct($type, $registry);
-    }
-
     /**
      * @return Schema
      */
@@ -69,21 +45,6 @@ class SchemaBuilder extends TypeBuilder
         return [
             'query' => $this->load($query),
         ];
-    }
-
-    /**
-     * @param ObjectDefinition $on
-     * @return \Closure
-     */
-    private function getResolver(ObjectDefinition $on): \Closure
-    {
-        return function ($value, array $args = [], $context, ResolveInfo $info) use ($on) {
-            $input = new Input($on, $info, $args);
-
-            return [
-                'id' => $input->getPath(),
-            ];
-        };
     }
 
     /**
@@ -119,27 +80,17 @@ class SchemaBuilder extends TypeBuilder
     }
 
     /**
-     * @param TypeDefinition|ObjectDefinition $type
-     * @return Type
-     */
-    protected function load(TypeDefinition $type): Type
-    {
-        /** @var ObjectType $result */
-        $result                 = parent::load($type);
-        $result->resolveFieldFn = $this->getResolver($type);
-
-        return $result;
-    }
-
-    /**
      * @return array
      */
     private function buildDirectives(): array
     {
+        /** @var CompilerInterface $compiler */
+        $compiler = $this->getRegistry()->getContainer()->make(CompilerInterface::class);
+
         $result = [];
 
         /** @var DirectiveDefinition $directive */
-        foreach ($this->dictionary->only(DirectiveDefinition::class) as $directive) {
+        foreach ($compiler->only(DirectiveDefinition::class) as $directive) {
             if ($directive->isAllowedForQueries()) {
                 $result[] = $this->load($directive);
             }

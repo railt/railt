@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\FieldDefinition;
+use Railt\Adapters\Webonyx\FieldResolver;
 use Railt\Adapters\Webonyx\Registry;
+use Railt\Http\RequestInterface;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition as ReflectionField;
 
@@ -47,7 +49,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             'description' => $this->reflection->getDescription(),
             'type'        => $this->buildType(),
             'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
-            // resolve
+            'resolve'     => $this->getResolver(),
             // complexity
         ];
 
@@ -56,5 +58,19 @@ class FieldBuilder extends DependentDefinitionBuilder
         }
 
         return FieldDefinition::create($config);
+    }
+
+    /**
+     * @return \Closure|null
+     */
+    private function getResolver(): ?\Closure
+    {
+        /** @var RequestInterface $request */
+        $request = $this->resolve(RequestInterface::class);
+
+        /** @var FieldResolver $resolver */
+        $resolver = $this->resolve(FieldResolver::class);
+
+        return $resolver->getCallback($request, $this->reflection);
     }
 }

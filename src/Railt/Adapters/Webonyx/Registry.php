@@ -12,6 +12,7 @@ namespace Railt\Adapters\Webonyx;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use Railt\Adapters\Webonyx\Builders\TypeBuilder;
+use Railt\Container\ContainerInterface;
 use Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
@@ -31,6 +32,28 @@ class Registry
      * @var array|Type[]
      */
     private $types = [];
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
+     * Registry constructor.
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * @return ContainerInterface
+     */
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
+    }
 
     /**
      * @param TypeDefinition $definition

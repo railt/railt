@@ -31,8 +31,6 @@ class ObjectBuilder extends TypeBuilder
                 return FieldBuilder::buildFields($this->reflection, $this->getRegistry());
             },
             'interfaces'  => $this->buildInterfaces(),
-            // isTypeOf
-            // resolveField
         ]);
     }
 

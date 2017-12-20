@@ -130,8 +130,7 @@ class Compiler implements CompilerInterface
      */
     private function complete(Document $document): Document
     {
-        // Register
-        $this->completeRegistration($document);
+        $this->load($document);
 
         foreach ($document->getDefinitions() as $definition) {
             $this->stack->push($definition);
@@ -150,15 +149,17 @@ class Compiler implements CompilerInterface
 
     /**
      * @param Document $document
-     * @return void
+     * @return Document|DocumentBuilder
      */
-    private function completeRegistration(Document $document): void
+    private function load(Document $document): Document
     {
         foreach ($document->getTypeDefinitions() as $type) {
             $this->stack->push($type);
             $this->register($type);
             $this->stack->pop();
         }
+
+        return $document;
     }
 
     /**
@@ -207,7 +208,6 @@ class Compiler implements CompilerInterface
     /**
      * @param ReadableInterface $readable
      * @return Document
-     * @throws SchemaException
      * @throws CompilerException
      */
     public function compile(ReadableInterface $readable): Document

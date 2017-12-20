@@ -13,6 +13,7 @@ use Railt\Reflection\Base\Definitions\BaseDirective;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Document;
 use Railt\Routing\GraphQL\RouteDirective\ActionArgument;
+use Railt\Routing\GraphQL\RouteDirective\OperationArgument;
 
 /**
  * Class RouteDirective
@@ -37,22 +38,11 @@ class RouteDirective extends BaseDirective
     {
         $this->document = $document;
 
-        $this->name        = static::DIRECTIVE_NAME;
+        $this->name = static::DIRECTIVE_NAME;
         $this->description = static::DIRECTIVE_DESCRIPTION;
 
         $this->locations = $this->createLocations();
         $this->arguments = $this->createArguments($document);
-    }
-
-    /**
-     * @param Document $document
-     * @return array
-     */
-    private function createArguments(Document $document): array
-    {
-        return [
-            ActionArgument::ARGUMENT_NAME => new ActionArgument($document, $this),
-        ];
     }
 
     /**
@@ -63,6 +53,18 @@ class RouteDirective extends BaseDirective
         return [
             Location::TARGET_OBJECT,
             Location::TARGET_FIELD_DEFINITION,
+        ];
+    }
+
+    /**
+     * @param Document $document
+     * @return array
+     */
+    private function createArguments(Document $document): array
+    {
+        return [
+            ActionArgument::ARGUMENT_NAME    => new ActionArgument($document, $this),
+            OperationArgument::ARGUMENT_NAME => new OperationArgument($document, $this),
         ];
     }
 }

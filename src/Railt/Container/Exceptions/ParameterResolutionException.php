@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Container;
-
-use Psr\Container\ContainerInterface as PSRContainer;
+namespace Railt\Container\Exceptions;
 
 /**
- * Interface ContainerInterface
+ * Class ParameterResolutionException
  */
-interface ContainerInterface extends PSRContainer, Autowireable, Registrable
+class ParameterResolutionException extends ContainerResolutionException
 {
+
 }

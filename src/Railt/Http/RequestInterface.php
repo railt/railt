@@ -27,7 +27,7 @@ interface RequestInterface
     /**
      * Operation http (GET/POST) argument name passed by default
      */
-    public const DEFAULT_OPERATION_ARGUMENT = 'operation';
+    public const DEFAULT_OPERATION_ARGUMENT = 'operationName';
 
     /**
      * @return string

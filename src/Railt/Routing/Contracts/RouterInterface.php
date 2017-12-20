@@ -9,9 +9,30 @@ declare(strict_types=1);
 
 namespace Railt\Routing\Contracts;
 
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Routing\Route;
+
 /**
  * Interface RouterInterface
  */
 interface RouterInterface
 {
+    /**
+     * @param TypeDefinition $type
+     * @param string|null $field
+     * @return Route
+     */
+    public function route(TypeDefinition $type, string $field = null): Route;
+
+    /**
+     * @param TypeDefinition $type
+     * @return bool
+     */
+    public function has(TypeDefinition $type): bool;
+
+    /**
+     * @param TypeDefinition $type
+     * @return Route|null
+     */
+    public function get(TypeDefinition $type): ?Route;
 }

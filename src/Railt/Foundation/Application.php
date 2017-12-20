@@ -16,6 +16,7 @@ use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
+use Psr\Container\ContainerInterface as PSRContainer;
 use Railt\Foundation\ServiceProviders\Pipeline;
 use Railt\Foundation\ServiceProviders\RouterServiceProvider;
 use Railt\Http\RequestInterface;
@@ -47,31 +48,37 @@ class Application
     private $pipeline;
 
     /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * Application constructor.
      * @param CompilerInterface $compiler
-     * @param ContainerInterface|null $container
+     * @param PSRContainer|null $container
      * @param bool $debug
      */
-    public function __construct(CompilerInterface $compiler, ContainerInterface $container = null, bool $debug = false)
+    public function __construct(CompilerInterface $compiler, PSRContainer $container = null, bool $debug = false)
     {
-        $this->debug    = $debug;
-        $this->compiler = $compiler;
-
-        $this->bootApplication($compiler, $container);
+        $this->debug     = $debug;
+        $this->compiler  = $compiler;
+        $this->container = $this->bootApplication($compiler, $container);
     }
 
     /**
      * @param CompilerInterface $compiler
-     * @param null|ContainerInterface $container
-     * @return void
+     * @param null|PSRContainer $container
+     * @return ContainerInterface
      */
-    private function bootApplication(CompilerInterface $compiler, ?ContainerInterface $container): void
+    private function bootApplication(CompilerInterface $compiler, ?PSRContainer $container): ContainerInterface
     {
         $container = $this->createContainer($container);
 
         $this->registerCompiler($compiler, $container);
 
         $this->pipeline = $this->createPipeline($container);
+
+        return $container;
     }
 
     /**
@@ -102,10 +109,10 @@ class Application
     }
 
     /**
-     * @param ContainerInterface|null $container
+     * @param PSRContainer|null $container
      * @return Container
      */
-    private function createContainer(?ContainerInterface $container): Container
+    private function createContainer(?PSRContainer $container): Container
     {
         if ($container instanceof Container) {
             return $container;
@@ -125,12 +132,16 @@ class Application
     {
         $this->pipeline->boot();
 
-        return $this->pipeline->handle($request, function (RequestInterface $request) use ($sdl): ResponseInterface {
-            $document = $this->getDocument($sdl);
-            $schema   = $this->getSchema($document);
+        $document = $this->getDocument($sdl);
 
-            return $this->getAdapter($this->debug)->request($schema, $request);
-        });
+        $schema   = $this->getSchema($document);
+        $adapter  = $this->getAdapter($this->debug);
+
+        $pipeline = function (RequestInterface $request) use ($adapter, $schema): ResponseInterface {
+            return $adapter->request($schema, $request);
+        };
+
+        return $this->pipeline->handle($request, $pipeline);
     }
 
     /**
@@ -168,6 +179,6 @@ class Application
     {
         $adapter = self::DEFAULT_GRAPHQL_ADAPTER;
 
-        return new $adapter($this->compiler->getDictionary(), $debug);
+        return new $adapter($this->container, $debug);
     }
 }
