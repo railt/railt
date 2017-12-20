@@ -9,36 +9,30 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use Railt\Container\Definitions\FactoryDefinition;
-use Railt\Container\Definitions\SingletonDefinition;
-use Railt\Container\Exceptions\ContainerResolutionException;
-
 /**
  * Class Container
  */
 class Container implements ContainerInterface
 {
     /**
-     * @var ContainerInterface
+     * @var array|\Closure[]
+     */
+    private $registered = [];
+
+    /**
+     * @var array|object[]
+     */
+    private $resolved = [];
+
+    /**
+     * @var array|string
+     */
+    private $aliases = [];
+
+    /**
+     * @var null|ContainerInterface
      */
     private $parent;
-
-    /**
-     * @var array
-     */
-    private $definitions = [];
-
-    /**
-     * @var array|\ReflectionFunction[]
-     */
-    private $closures = [];
-
-    /**
-     * @var ParamResolver
-     */
-    private $paramResolver;
 
     /**
      * Container constructor.
@@ -46,116 +40,69 @@ class Container implements ContainerInterface
      */
     public function __construct(ContainerInterface $parent = null)
     {
-        $this->parent        = $parent;
-        $this->paramResolver = new ParamResolver($this);
+        $this->parent = $parent;
+
+        $this->resolved[ContainerInterface::class] = $this;
     }
 
     /**
-     * @param string $id
-     * @return bool
-     */
-    private function hasParent($id): bool
-    {
-        if ($this->parent === null) {
-            return false;
-        }
-
-        return $this->parent->has($id);
-    }
-
-    /**
-     * @param string $id
-     * @return mixed
-     * @throws ContainerExceptionInterface
-     * @throws ContainerResolutionException
-     * @throws NotFoundExceptionInterface
-     */
-    private function getParent(string $id)
-    {
-        $error = 'Trying to resolve unregistered entity "%s"';
-
-        if ($this->parent === null) {
-            throw new ContainerResolutionException(\sprintf($error, $id));
-        }
-
-        try {
-            return $this->parent->get($id);
-        } catch (\Throwable $e) {
-            throw new ContainerResolutionException(\sprintf($error, $id), $e->getCode(), $e);
-        }
-    }
-
-    /**
-     * @param callable $callable
+     * @param string $method
      * @param array $params
+     * @param \Closure $otherwise
      * @return mixed
-     * @throws \BadMethodCallException
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \Railt\Container\Exceptions\ContainerResolutionException
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
-     * @throws \ReflectionException
-     * @throws \Psr\Container\ContainerExceptionInterface
      */
-    public function call(callable $callable, array $params = [])
+    private function proxy(string $method, array $params = [], \Closure $otherwise)
     {
-        $reflection = $this->getReflectionFunction($callable);
+        if ($this->parent !== null) {
+            return \call_user_func_array([$this->parent, $method], $params);
+        }
 
-        $args = $this->paramResolver->resolve($reflection, $params);
-
-        return \call_user_func_array($callable, \iterator_to_array($args));
+        return $otherwise();
     }
 
     /**
-     * @param callable $callable
-     * @return \ReflectionFunction
-     * @throws \ReflectionException
+     * @param string $class
+     * @param \Closure $resolver
+     * @return void
      */
-    private function getReflectionFunction(callable $callable): \ReflectionFunction
+    public function register(string $class, \Closure $resolver): void
     {
-        switch (true) {
-            case \is_string($callable):
-                if (! \array_key_exists($callable, $this->closures)) {
-                    $this->closures[$callable] = new \ReflectionFunction($callable);
-                }
+        $this->registered[$class] = $resolver;
+    }
 
-                return $this->closures[$callable];
-            case $callable instanceof \Closure:
-                $key = \spl_object_hash($callable);
-                if (! \array_key_exists($key, $this->closures)) {
-                    $this->closures[$key] = new \ReflectionFunction($callable);
-                }
+    /**
+     * @param string $locator
+     * @param object $instance
+     * @return void
+     */
+    public function instance(string $locator, $instance): void
+    {
+        $this->resolved[$locator] = $instance;
 
-                return $this->closures[$key];
-        }
+        $this->registered[$locator] = function() use ($instance) {
+            return $instance;
+        };
+    }
 
-        return new \ReflectionFunction(\Closure::fromCallable($callable));
+    /**
+     * @param string $original
+     * @param string $alias
+     * @return void
+     */
+    public function alias(string $original, string $alias): void
+    {
+        $this->aliases[$alias] = $original;
     }
 
     /**
      * @param string $id
      * @return mixed
-     * @throws ContainerExceptionInterface
-     * @throws ContainerResolutionException
-     * @throws NotFoundExceptionInterface
      */
     public function get($id)
     {
-        if (\array_key_exists($id, $this->definitions)) {
-            return $this->definitions[$id]->resolve();
-        }
-
-        if ($this->hasParent($id)) {
-            return $this->getParent($id);
-        }
-
-        if (\is_string($id) && \class_exists($id)) {
-            $this->factory($id, $id);
-
-            return $this->get($id);
-        }
-
-        return $this->getParent($id);
+        return $this->proxy('get', [$id], function() use ($id) {
+            return $this->resolve($id);
+        });
     }
 
     /**
@@ -164,30 +111,61 @@ class Container implements ContainerInterface
      */
     public function has($id): bool
     {
-        return \array_key_exists($id, $this->definitions) || $this->hasParent($id);
+        return $this->proxy('has', [$id], function() use ($id): bool {
+            return $this->getLocator($id) !== null;
+        });
     }
 
     /**
-     * @param string $key
-     * @param \Closure|string|object $value
-     * @return Container|RegistrableInterface
+     * @param string $id
+     * @return null|string
      */
-    public function factory(string $key, $value): RegistrableInterface
+    private function getLocator(string $id): ?string
     {
-        $this->definitions[$key] = new FactoryDefinition($this, $value);
+        $service = $this->aliases[$id] ?? $id;
 
-        return $this;
+        if (\array_key_exists($service, $this->registered)) {
+            return $service;
+        }
+
+        return null;
     }
 
     /**
-     * @param string $key
-     * @param \Closure|string|object $value
-     * @return Container|RegistrableInterface
+     * @param string $id
+     * @return bool
      */
-    public function singleton(string $key, $value): RegistrableInterface
+    private function isResolved(string $id): bool
     {
-        $this->definitions[$key] = new SingletonDefinition($this, $value);
+        return \array_key_exists($id, $this->resolved);
+    }
 
-        return $this;
+    /**
+     * @param string $id
+     * @return mixed|object
+     */
+    private function resolve(string $id)
+    {
+        $locator = $this->getLocator($id);
+
+        if ($locator === null) {
+            throw new \LogicException('Unresolvable dependency ' . $id);
+        }
+
+        if (! $this->isResolved($locator)) {
+            $this->resolved[$locator] = $this->call($this->registered[$locator]);
+        }
+
+        return $this->resolved[$locator];
+    }
+
+    public function call(callable $callable, array $params = [])
+    {
+        throw new \LogicException(__METHOD__ . ' not implemented yet');
+    }
+
+    public function make(string $class, array $params = [])
+    {
+        throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
 }

@@ -35,7 +35,7 @@ class Reason extends BaseArgument
      */
     public function __construct(Document $document, DirectiveDefinition $type)
     {
-        $this->parent      = $this;
+        $this->parent      = $type;
         $this->document    = $document;
         $this->name        = Deprecation::REASON_ARGUMENT;
         $this->description = self::ARGUMENT_DESCRIPTION;

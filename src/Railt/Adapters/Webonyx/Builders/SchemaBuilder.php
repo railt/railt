@@ -9,10 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Webonyx\Builders;
 
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\ResolveInfo;
+use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
+use Railt\Adapters\Webonyx\Input;
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Compiler\Reflection\Dictionary;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
@@ -59,9 +64,26 @@ class SchemaBuilder extends TypeBuilder
      */
     private function buildQuery(): array
     {
+        $query = $this->reflection->getQuery();
+
         return [
-            'query' => $this->load($this->reflection->getQuery()),
+            'query' => $this->load($query),
         ];
+    }
+
+    /**
+     * @param ObjectDefinition $on
+     * @return \Closure
+     */
+    private function getResolver(ObjectDefinition $on): \Closure
+    {
+        return function ($value, array $args = [], $context, ResolveInfo $info) use ($on) {
+            $input = new Input($on, $info, $args);
+
+            return [
+                'id' => $input->getPath(),
+            ];
+        };
     }
 
     /**
@@ -70,8 +92,10 @@ class SchemaBuilder extends TypeBuilder
     private function buildMutation(): array
     {
         if ($this->reflection->hasMutation()) {
+            $mutation = $this->reflection->getMutation();
+
             return [
-                'mutation' => $this->load($this->reflection->getMutation()),
+                'mutation' => $this->load($mutation),
             ];
         }
 
@@ -84,12 +108,27 @@ class SchemaBuilder extends TypeBuilder
     private function buildSubscription(): array
     {
         if ($this->reflection->hasSubscription()) {
+            $subscription = $this->reflection->getSubscription();
+
             return [
-                'subscription' => $this->load($this->reflection->getSubscription()),
+                'subscription' => $this->load($subscription),
             ];
         }
 
         return [];
+    }
+
+    /**
+     * @param TypeDefinition|ObjectDefinition $type
+     * @return Type
+     */
+    protected function load(TypeDefinition $type): Type
+    {
+        /** @var ObjectType $result */
+        $result = parent::load($type);
+        $result->resolveFieldFn = $this->getResolver($type);
+
+        return $result;
     }
 
     /**

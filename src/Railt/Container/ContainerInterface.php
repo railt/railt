@@ -14,12 +14,6 @@ use Psr\Container\ContainerInterface as PsrContainer;
 /**
  * Interface ContainerInterface
  */
-interface ContainerInterface extends PsrContainer, RegistrableInterface
+interface ContainerInterface extends PsrContainer, Autowireable, Registrable
 {
-    /**
-     * @param callable $callable
-     * @param array $params
-     * @return mixed
-     */
-    public function call(callable $callable, array $params = []);
 }

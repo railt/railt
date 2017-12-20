@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Routing\Contracts;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface InputInterface
@@ -33,15 +34,9 @@ interface InputInterface
     public function has(string $argument): bool;
 
     /**
-     * @return iterable
+     * @return TypeDefinition
      */
-    public function getRelations(): iterable;
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasRelation(string $name): bool;
+    public function getType(): TypeDefinition;
 
     /**
      * @return string

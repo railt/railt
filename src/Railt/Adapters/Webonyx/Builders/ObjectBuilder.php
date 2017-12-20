@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Railt\Adapters\Webonyx\Input;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 
 /**

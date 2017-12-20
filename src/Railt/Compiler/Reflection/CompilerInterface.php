@@ -27,6 +27,12 @@ interface CompilerInterface extends Dictionary
     public function compile(ReadableInterface $readable): Document;
 
     /**
+     * @param Document $document
+     * @return CompilerInterface
+     */
+    public function add(Document $document): CompilerInterface;
+
+    /**
      * @param \Closure $then
      * @return CompilerInterface
      */

@@ -79,11 +79,22 @@ class Compiler implements CompilerInterface
 
         $this->persister = $this->bootPersister($persister);
 
+        $this->add($this->getStandardLibrary());
+    }
+
+    /**
+     * @param Document $document
+     * @return CompilerInterface
+     */
+    public function add(Document $document): CompilerInterface
+    {
         try {
-            $this->bootStandardLibrary();
+            $this->complete($document);
         } catch (\OutOfBoundsException $fatal) {
             throw CompilerException::wrap($fatal);
         }
+
+        return $this;
     }
 
     /**
@@ -108,9 +119,9 @@ class Compiler implements CompilerInterface
      * @return GraphQLDocument|Document
      * @throws \OutOfBoundsException
      */
-    private function bootStandardLibrary(array $extensions = []): GraphQLDocument
+    private function getStandardLibrary(array $extensions = []): GraphQLDocument
     {
-        return $this->complete(new GraphQLDocument($extensions));
+        return new GraphQLDocument($extensions);
     }
 
     /**
