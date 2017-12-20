@@ -173,7 +173,7 @@ class Container implements ContainerInterface
      */
     public function call(callable $callable, array $params = [])
     {
-        if (! ($callable instanceof \Closure) ) {
+        if (! ($callable instanceof \Closure)) {
             $callable = \Closure::fromCallable($callable);
         }
 
@@ -195,7 +195,7 @@ class Container implements ContainerInterface
             return $this->get($class);
         }
 
-        $this->register($class, function() use ($class, $params) {
+        $this->register($class, function () use ($class, $params) {
             return new $class(...$this->resolver->fromConstructor($class, $params));
         });
 

@@ -40,17 +40,17 @@ class OperationArgument extends BaseArgument
      */
     public function __construct(Document $document, TypeDefinition $parent)
     {
-        $this->parent = $parent;
+        $this->parent   = $parent;
         $this->document = $document;
 
-        $this->name = static::ARGUMENT_NAME;
+        $this->name        = static::ARGUMENT_NAME;
         $this->description = static::ARGUMENT_DESCRIPTION;
 
-        $this->defaultValue = [];
+        $this->defaultValue    = [];
         $this->hasDefaultValue = true;
 
-        $this->isList = true;
-        $this->isNonNull = true;
+        $this->isList           = true;
+        $this->isNonNull        = true;
         $this->isListOfNonNulls = true;
     }
 

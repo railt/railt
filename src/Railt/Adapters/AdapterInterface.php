@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Adapters;
 
+use Railt\Container\ContainerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Container\ContainerInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 
 /**

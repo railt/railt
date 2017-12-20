@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
@@ -61,7 +60,7 @@ class Input implements InputInterface
         $this->info      = $info;
         $this->field     = $field;
         $this->arguments = $this->resolveArguments($field, $arguments);
-        $this->parent = $parent;
+        $this->parent    = $parent;
     }
 
     /**

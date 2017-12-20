@@ -38,7 +38,7 @@ class RouteDirective extends BaseDirective
     {
         $this->document = $document;
 
-        $this->name = static::DIRECTIVE_NAME;
+        $this->name        = static::DIRECTIVE_NAME;
         $this->description = static::DIRECTIVE_DESCRIPTION;
 
         $this->locations = $this->createLocations();

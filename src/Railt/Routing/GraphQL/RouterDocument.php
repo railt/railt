@@ -22,8 +22,8 @@ class RouterDocument extends BaseDocument
      */
     public function __construct()
     {
-        $this->name = 'Router additional directives';
-        $this->file = File::fromSources('# Generated');
+        $this->name  = 'Router additional directives';
+        $this->file  = File::fromSources('# Generated');
         $this->types = $this->createTypes();
     }
 

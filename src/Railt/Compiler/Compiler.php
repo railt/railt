@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler;
 
 use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Exceptions\SchemaException;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
 use Railt\Compiler\Kernel\CallStack;
