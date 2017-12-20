@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Routing\Contracts;
+
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**

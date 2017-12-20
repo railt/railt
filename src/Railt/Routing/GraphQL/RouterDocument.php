@@ -22,7 +22,7 @@ class RouterDocument extends BaseDocument
      */
     public function __construct()
     {
-        $this->file = File::fromSources('# Generated');
+        $this->file  = File::fromSources('# Generated');
         $this->types = $this->createTypes();
     }
 

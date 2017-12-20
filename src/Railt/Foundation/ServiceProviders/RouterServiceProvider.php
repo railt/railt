@@ -27,7 +27,7 @@ class RouterServiceProvider extends BaseServiceProvider
      */
     public function boot(CompilerInterface $compiler): void
     {
-        $this->register(Router::class, function(ContainerInterface $container) {
+        $this->register(Router::class, function (ContainerInterface $container) {
             return new Router($container);
         });
 

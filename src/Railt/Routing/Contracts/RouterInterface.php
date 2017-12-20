@@ -14,5 +14,4 @@ namespace Railt\Routing\Contracts;
  */
 interface RouterInterface
 {
-
 }
