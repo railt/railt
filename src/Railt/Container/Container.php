@@ -159,12 +159,22 @@ class Container implements ContainerInterface
         return $this->resolved[$locator];
     }
 
-    public function call(callable $callable, array $params = []): void
+    /**
+     * @param callable $callable
+     * @param array $params
+     * @return mixed
+     */
+    public function call(callable $callable, array $params = [])
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
 
-    public function make(string $class, array $params = []): void
+    /**
+     * @param string $class
+     * @param array $params
+     * @return mixed|object
+     */
+    public function make(string $class, array $params = [])
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
