@@ -22,7 +22,7 @@ class BaseExtensions extends Collection
      * @var array
      */
     private const DEFAULT_EXTENSIONS = [
-        RouterExtension::class
+        RouterExtension::class,
     ];
 
     /**

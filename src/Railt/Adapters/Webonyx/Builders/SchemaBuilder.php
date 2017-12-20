@@ -125,7 +125,7 @@ class SchemaBuilder extends TypeBuilder
     protected function load(TypeDefinition $type): Type
     {
         /** @var ObjectType $result */
-        $result = parent::load($type);
+        $result                 = parent::load($type);
         $result->resolveFieldFn = $this->getResolver($type);
 
         return $result;

@@ -79,7 +79,7 @@ class Container implements ContainerInterface
     {
         $this->resolved[$locator] = $instance;
 
-        $this->registered[$locator] = function() use ($instance) {
+        $this->registered[$locator] = function () use ($instance) {
             return $instance;
         };
     }
@@ -100,7 +100,7 @@ class Container implements ContainerInterface
      */
     public function get($id)
     {
-        return $this->proxy('get', [$id], function() use ($id) {
+        return $this->proxy('get', [$id], function () use ($id) {
             return $this->resolve($id);
         });
     }
@@ -111,7 +111,7 @@ class Container implements ContainerInterface
      */
     public function has($id): bool
     {
-        return $this->proxy('has', [$id], function() use ($id): bool {
+        return $this->proxy('has', [$id], function () use ($id): bool {
             return $this->getLocator($id) !== null;
         });
     }
@@ -159,12 +159,12 @@ class Container implements ContainerInterface
         return $this->resolved[$locator];
     }
 
-    public function call(callable $callable, array $params = [])
+    public function call(callable $callable, array $params = []): void
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }
 
-    public function make(string $class, array $params = [])
+    public function make(string $class, array $params = []): void
     {
         throw new \LogicException(__METHOD__ . ' not implemented yet');
     }

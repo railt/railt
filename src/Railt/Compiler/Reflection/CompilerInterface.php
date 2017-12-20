@@ -30,7 +30,7 @@ interface CompilerInterface extends Dictionary
      * @param Document $document
      * @return CompilerInterface
      */
-    public function add(Document $document): CompilerInterface;
+    public function add(Document $document): self;
 
     /**
      * @param \Closure $then

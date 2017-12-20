@@ -12,9 +12,9 @@ namespace Railt\Adapters\Webonyx;
 use GraphQL\Type\Definition\ResolveInfo;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Routing\Contracts\InputInterface;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Routing\Contracts\InputInterface;
 
 /**
  * Class Input
@@ -51,8 +51,8 @@ class Input implements InputInterface
      */
     public function __construct(ObjectDefinition $type, ResolveInfo $info, array $arguments = [])
     {
-        $this->info = $info;
-        $this->type = $type;
+        $this->info      = $info;
+        $this->type      = $type;
         $this->arguments = $arguments;
     }
 
@@ -149,7 +149,7 @@ class Input implements InputInterface
     public function getPath(): string
     {
         if ($this->path === null) {
-            $path = $this->info->path;
+            $path                    = $this->info->path;
             $path[\count($path) - 1] = $this->getFieldName();
 
             // Remove array indexes
