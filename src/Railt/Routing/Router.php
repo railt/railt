@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
-use Railt\Routing\Contracts\RouterInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Routing\Contracts\RouterInterface;
 
 /**
  * Class Router

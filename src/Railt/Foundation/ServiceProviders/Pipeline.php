@@ -77,7 +77,7 @@ class Pipeline
         $then = $response;
 
         foreach ($this->providers as $provider) {
-            $then = function(RequestInterface $request) use ($provider, $then) {
+            $then = function (RequestInterface $request) use ($provider, $then) {
                 return $provider->handle($request, $then);
             };
         }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Psr\Container\ContainerInterface as PSRContainer;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Adapter;
 use Railt\Compiler\Compiler;
@@ -16,7 +17,6 @@ use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
-use Psr\Container\ContainerInterface as PSRContainer;
 use Railt\Foundation\ServiceProviders\Pipeline;
 use Railt\Foundation\ServiceProviders\RouterServiceProvider;
 use Railt\Http\RequestInterface;

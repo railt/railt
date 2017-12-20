@@ -26,8 +26,8 @@ use Railt\Routing\Route;
  */
 class FieldResolver
 {
-    private const DIRECTIVE = RouteDirective::DIRECTIVE_NAME;
-    private const DIRECTIVE_ACTION = RouteDirective\ActionArgument::ARGUMENT_NAME;
+    private const DIRECTIVE           = RouteDirective::DIRECTIVE_NAME;
+    private const DIRECTIVE_ACTION    = RouteDirective\ActionArgument::ARGUMENT_NAME;
     private const DIRECTIVE_OPERATION = RouteDirective\OperationArgument::ARGUMENT_NAME;
 
     /**
@@ -47,7 +47,7 @@ class FieldResolver
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->router = $container->make(RouterInterface::class);
+        $this->router    = $container->make(RouterInterface::class);
     }
 
     /**

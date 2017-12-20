@@ -51,7 +51,7 @@ class Route
      */
     public function __construct(ContainerInterface $container, TypeDefinition $type)
     {
-        $this->type = $type;
+        $this->type      = $type;
         $this->container = $container;
     }
 
@@ -59,7 +59,7 @@ class Route
      * @param string $field
      * @return Route
      */
-    public function when(string $field): Route
+    public function when(string $field): self
     {
         $this->field = $field;
 
@@ -70,7 +70,7 @@ class Route
      * @param string[] ...$operations
      * @return Route
      */
-    public function on(string ...$operations): Route
+    public function on(string ...$operations): self
     {
         $this->operations = \array_merge($this->operations, $operations);
 
@@ -81,7 +81,7 @@ class Route
      * @param \Closure $action
      * @return Route
      */
-    public function then(\Closure $action): Route
+    public function then(\Closure $action): self
     {
         $this->action = $action;
 
@@ -117,7 +117,8 @@ class Route
      */
     public function getAction(): \Closure
     {
-        return $this->action ?? function(): void {};
+        return $this->action ?? function (): void {
+        };
     }
 
     /**

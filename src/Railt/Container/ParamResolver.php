@@ -94,7 +94,7 @@ class ParamResolver
     private function resolveParameter(\ReflectionParameter $parameter, array $additional = [])
     {
         if ($parameter->hasType()) {
-            $hint = $parameter->getType()->getName();
+            $hint           = $parameter->getType()->getName();
             $hasDefinedType = $this->has($hint, $additional);
 
             if ($hasDefinedType) {
@@ -117,7 +117,7 @@ class ParamResolver
         $error = \vsprintf('Can not resolve parameter %s([#%s => %s])', [
             $parameter->getDeclaringFunction()->getName(),
             $parameter->getPosition(),
-            $parameter->getName()
+            $parameter->getName(),
         ]);
 
         throw new ParameterResolutionException($error);
