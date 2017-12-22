@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
