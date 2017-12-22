@@ -10,31 +10,12 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts\Invocations;
 
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
+use Railt\Reflection\Contracts\Dependent\Argument\HasPassedArguments;
 
 /**
  * Interface DirectiveInvocation
  */
-interface DirectiveInvocation extends DependentDefinition, Invocable
+interface DirectiveInvocation extends HasPassedArguments, DependentDefinition, Invocable
 {
-    /**
-     * @return iterable|ArgumentInvocation[]
-     */
-    public function getPassedArguments(): iterable;
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasPassedArgument(string $name): bool;
-
-    /**
-     * @param string $name
-     * @return null|ArgumentInvocation
-     */
-    public function getPassedArgument(string $name): ?ArgumentInvocation;
-
-    /**
-     * @return int
-     */
-    public function getNumberOfPassedArguments(): int;
 }

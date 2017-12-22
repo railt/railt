@@ -15,7 +15,6 @@ use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Builder\Process\ValueBuilder;
 use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Support;
@@ -39,7 +38,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
-        $this->parent = $parent;
+        $this->parent       = $parent;
         $this->boot($ast, $document);
     }
 
@@ -51,7 +50,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
     {
         if ($ast->getId() === '#Value') {
             $this->hasDefaultValue = true;
-            $this->defaultValue    = ValueBuilder::parse($ast->getChild(0));
+            $this->defaultValue = $this->parseValue($ast->getChild(0), $this->parent);
 
             return true;
         }

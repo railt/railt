@@ -23,7 +23,6 @@ use Railt\Reflection\Filesystem\File;
 
 /**
  * Trait Compiler
- * @mixin Compilable
  */
 trait Compiler
 {
@@ -210,6 +209,16 @@ trait Compiler
 
             $this->getCompiler()->getStack()->pop();
         }
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @param TypeDefinition $parent
+     * @return mixed
+     */
+    protected function parseValue(TreeNode $ast, TypeDefinition $parent)
+    {
+        return $this->getDocument()->getValueBuilder()->parse($ast, $parent);
     }
 
     /**

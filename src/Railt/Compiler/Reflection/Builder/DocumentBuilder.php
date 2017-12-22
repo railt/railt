@@ -13,6 +13,7 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Reflection\Builder\Invocations\ValueBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
@@ -30,7 +31,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
 {
     use Support;
     use Compiler;
-
 
     public const AST_TYPE_MAPPING = [
         // Anonymous types
@@ -55,6 +55,11 @@ class DocumentBuilder extends BaseDocument implements Compilable
     private $compiler;
 
     /**
+     * @var ValueBuilder
+     */
+    private $valueBuilder;
+
+    /**
      * DocumentBuilder constructor.
      * @param TreeNode $ast
      * @param ReadableInterface $readable
@@ -63,6 +68,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
      */
     public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
     {
+        $this->valueBuilder = new ValueBuilder($this);
         $this->compiler = $compiler;
         $this->file     = $readable;
 
@@ -74,6 +80,14 @@ class DocumentBuilder extends BaseDocument implements Compilable
         }
 
         $this->compile();
+    }
+
+    /**
+     * @return ValueBuilder
+     */
+    public function getValueBuilder(): ValueBuilder
+    {
+        return $this->valueBuilder;
     }
 
     /**

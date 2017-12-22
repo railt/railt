@@ -13,7 +13,6 @@ use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Builder\Process\ValueBuilder;
 use Railt\Reflection\Base\Invocations\BaseArgumentInvocation;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
@@ -46,7 +45,7 @@ class ArgumentInvocationBuilder extends BaseArgumentInvocation implements Compil
     protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Value') {
-            $this->value = ValueBuilder::parse($ast->getChild(0));
+            $this->value = $this->parseValue($ast->getChild(0), $this->parent);
         }
 
         return false;

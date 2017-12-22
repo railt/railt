@@ -17,7 +17,7 @@ use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 interface ArgumentInvocation extends DependentDefinition, Invocable
 {
     /**
-     * @return mixed
+     * @return string|null|int|array|InputInvocation|float
      */
     public function getPassedValue();
 }

@@ -7,9 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Reflection\Builder\Process;
+namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Reflection\Builder\DocumentBuilder;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Invocations\InputInvocation;
 
 /**
  * Class ValueBuilder
@@ -25,33 +28,49 @@ class ValueBuilder
     private const TOKEN_BOOL_FALSE = 'T_BOOL_FALSE';
 
     /**
+     * @var DocumentBuilder
+     */
+    private $document;
+
+    /**
+     * ValueBuilder constructor.
+     * @param DocumentBuilder $document
+     */
+    public function __construct(DocumentBuilder $document)
+    {
+        $this->document = $document;
+    }
+
+    /**
      * @param TreeNode $ast
+     * @param TypeDefinition $parent
      * @return mixed
      */
-    public static function parse(TreeNode $ast)
+    public function parse(TreeNode $ast, TypeDefinition $parent)
     {
         switch ($ast->getId()) {
             case self::AST_ID_ARRAY:
-                return self::toArray($ast);
+                return $this->toArray($ast, $parent);
 
             case self::AST_ID_OBJECT:
-                return self::toObject($ast);
+                return $this->toObject($ast, $parent);
         }
 
-        return self::toScalar($ast);
+        return $this->toScalar($ast);
     }
 
     /**
      * @param TreeNode $ast
+     * @param TypeDefinition $parent
      * @return array
      */
-    private static function toArray(TreeNode $ast): array
+    private function toArray(TreeNode $ast, TypeDefinition $parent): array
     {
         $result = [];
 
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            $result[] = self::parse($child->getChild(0));
+            $result[] = $this->parse($child->getChild(0), $parent);
         }
 
         return $result;
@@ -59,34 +78,27 @@ class ValueBuilder
 
     /**
      * @param TreeNode $ast
-     * @return array
+     * @param TypeDefinition $parent
+     * @return InputInvocation
      */
-    private static function toObject(TreeNode $ast): array
+    private function toObject(TreeNode $ast, TypeDefinition $parent): InputInvocation
     {
-        $result = [];
-
-        /** @var TreeNode $child */
-        foreach ($ast->getChildren() as $child) {
-            $key          = (string)$child->getChild(0)->getChild(0)->getValueValue();
-            $result[$key] = self::parse($child->getChild(1)->getChild(0));
-        }
-
-        return $result;
+        return new InputInvocationBuilder($ast, $this->document, $parent);
     }
 
     /**
      * @param TreeNode $ast
-     * @return float|int|string
+     * @return float|int|string|null
      */
-    private static function toScalar(TreeNode $ast)
+    private function toScalar(TreeNode $ast)
     {
         switch ($ast->getValueToken()) {
             case self::TOKEN_NUMBER:
                 if (\strpos((string)$ast->getValueValue(), '.') !== false) {
-                    return self::toFloat($ast);
+                    return $this->toFloat($ast);
                 }
 
-                return self::toInt($ast);
+                return $this->toInt($ast);
 
             case self::TOKEN_NULL:
                 return;
@@ -98,14 +110,14 @@ class ValueBuilder
                 return false;
         }
 
-        return self::toString($ast);
+        return $this->toString($ast);
     }
 
     /**
      * @param TreeNode $ast
      * @return float
      */
-    private static function toFloat(TreeNode $ast): float
+    private function toFloat(TreeNode $ast): float
     {
         return (float)$ast->getValueValue();
     }
@@ -114,7 +126,7 @@ class ValueBuilder
      * @param TreeNode $ast
      * @return int
      */
-    private static function toInt(TreeNode $ast): int
+    private function toInt(TreeNode $ast): int
     {
         return (int)$ast->getValueValue();
     }
@@ -123,15 +135,15 @@ class ValueBuilder
      * @param TreeNode $ast
      * @return string
      */
-    private static function toString(TreeNode $ast): string
+    private function toString(TreeNode $ast): string
     {
         $result = (string)$ast->getValueValue();
 
         // Transform utf char \uXXXX -> X
-        $result = self::renderUtfSequences($result);
+        $result = $this->renderUtfSequences($result);
 
         // Transform special chars
-        $result = self::renderSpecialCharacters($result);
+        $result = $this->renderSpecialCharacters($result);
 
         // Unescape slashes "Some\\Any" => "Some\Any"
         $result = \stripcslashes($result);
@@ -147,7 +159,7 @@ class ValueBuilder
      * @param string $body
      * @return string
      */
-    private static function renderSpecialCharacters(string $body): string
+    private function renderSpecialCharacters(string $body): string
     {
         // TODO Probably may be escaped by backslash like "\\n".
         $source = ['\b', '\f', '\n', '\r', '\t'];
@@ -164,7 +176,7 @@ class ValueBuilder
      * @param string $body
      * @return string
      */
-    private static function renderUtfSequences(string $body): string
+    private function renderUtfSequences(string $body): string
     {
         // TODO Probably may be escaped by backslash like "\\u0000"
         $pattern = '/\\\\u([0-9a-fA-F]{4})/';

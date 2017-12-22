@@ -167,7 +167,6 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
 type User {}
 input Where { field: String!, eq: Any, op: String! = "=" }
 
-
 type UsersRepository {
     # Test input compatibility 
     find(where: Where! = {field: "id", eq: 42}): User
