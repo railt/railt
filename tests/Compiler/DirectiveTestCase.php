@@ -9,9 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\Compiler\Exceptions\TypeConflictException;
+use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Filesystem\File;
 
 /**
  * Class DirectiveTestCase
@@ -217,5 +221,53 @@ GraphQL;
         // Undefined
         static::assertNull($some->getArgument('Opt'));
         static::assertFalse($some->hasArgument('Opt'));
+    }
+
+    /**
+     * @dataProvider dateCompilersProvider
+     *
+     * @param CompilerInterface $compiler
+     * @return void
+     */
+    public function testInvalidSelfReferencingDirective(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources(<<<'GraphQL'
+directive @invalidExample(
+    arg: String @invalidExample(arg: "references itself")
+) on ARGUMENT_DEFINITION
+GraphQL
+        ));
+    }
+
+    /**
+     * @dataProvider dateCompilersProvider
+     *
+     * @param CompilerInterface $compiler
+     * @return void
+     */
+    public function testValidDirectiveOnDirectiveUsage(CompilerInterface $compiler): void
+    {
+        $document = $compiler->compile(File::fromSources(<<<'GraphQL'
+directive @validExample(
+    arg: String @deprecated
+) on ARGUMENT_DEFINITION
+GraphQL
+        ));
+
+        /** @var DirectiveDefinition $directive */
+        $directive = $document->getTypeDefinition('validExample');
+
+        static::assertInstanceOf(DirectiveDefinition::class, $directive);
+
+        /** @var ArgumentDefinition $arg */
+        $arg = $directive->getArgument('arg');
+
+        static::assertInstanceOf(ArgumentDefinition::class, $arg);
+
+        static::assertCount(1, $arg->getDirectives());
+        static::assertEquals('deprecated', $arg->getDirective('deprecated')->getName());
+        static::assertTrue($arg->isDeprecated());
     }
 }

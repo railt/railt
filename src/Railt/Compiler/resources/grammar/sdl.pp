@@ -489,6 +489,7 @@ DirectiveDefinitionArgument:
     Documentation()?
         Key() ::T_COLON:: ValueDefinition()
         DirectiveDefinitionDefaultValue()?
+        Directive()*
     #Argument
 
 DirectiveDefinitionTargets:
@@ -758,9 +759,9 @@ ArgumentDefaultValue:
 
 DirectiveArguments:
     ::T_PARENTHESIS_OPEN::
-        DirectivePair()*
+        DirectiveArgumentPair()*
     ::T_PARENTHESIS_CLOSE::
 
-DirectivePair:
+DirectiveArgumentPair:
     Key() ::T_COLON:: Value()
     #Argument

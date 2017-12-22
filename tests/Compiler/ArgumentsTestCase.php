@@ -37,22 +37,6 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
     }
 
     /**
-     * @return array|CompilerInterface[]
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
-     */
-    public function compilersProvider(): array
-    {
-        $result = [];
-
-        foreach ($this->getCompilers() as $compiler) {
-            $result[] = [$compiler];
-        }
-
-        return $result;
-    }
-
-    /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
      * @throws \Railt\Compiler\Exceptions\CompilerException
@@ -146,7 +130,6 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \League\Flysystem\FileNotFoundException
      * @throws \LogicException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \Railt\Compiler\Exceptions\CompilerException
@@ -171,7 +154,7 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
     }
 
     /**
-     * @dataProvider compilersProvider
+     * @dataProvider dateCompilersProvider
      * @param CompilerInterface $compiler
      * @return void
      * @throws \PHPUnit\Framework\Exception
@@ -209,7 +192,7 @@ GraphQL
     }
 
     /**
-     * @dataProvider compilersProvider
+     * @dataProvider dateCompilersProvider
      * @param CompilerInterface $compiler
      * @return void
      * @throws \PHPUnit\Framework\Exception
@@ -251,7 +234,7 @@ GraphQL
     }
 
     /**
-     * @dataProvider compilersProvider
+     * @dataProvider dateCompilersProvider
      * @param CompilerInterface $compiler
      * @return void
      * @throws \PHPUnit\Framework\Exception
@@ -293,7 +276,7 @@ GraphQL
     }
 
     /**
-     * @dataProvider compilersProvider
+     * @dataProvider dateCompilersProvider
      * @param CompilerInterface $compiler
      * @return void
      * @throws \PHPUnit\Framework\Exception
@@ -315,7 +298,7 @@ GraphQL
     }
 
     /**
-     * @dataProvider compilersProvider
+     * @dataProvider dateCompilersProvider
      *
      * @param CompilerInterface $compiler
      * @return void

@@ -23,6 +23,7 @@ use Railt\Compiler\Persisting\NullablePersister;
 use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Psr16Persister;
 use Railt\Compiler\Persisting\Psr6Persister;
+use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\File;
 use Railt\Reflection\Filesystem\NotReadableException;
@@ -102,6 +103,21 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
         foreach ($this->getDocuments($body) as $document) {
             $result[] = [$document];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array|CompilerInterface[]
+     * @throws \LogicException
+     */
+    public function dateCompilersProvider(): array
+    {
+        $result = [];
+
+        foreach ($this->getCompilers() as $compiler) {
+            $result[] = [$compiler];
         }
 
         return $result;

@@ -71,7 +71,7 @@ trait Compiler
     /**
      * @return TreeNode
      */
-    protected function getAst(): TreeNode
+    public function getAst(): TreeNode
     {
         return $this->ast;
     }
