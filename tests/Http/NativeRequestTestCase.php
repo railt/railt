@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Http;
 
 use Railt\Http\RequestInterface;
-use Railt\Tests\Http\Mocks\Request;
+use Railt\Tests\Http\Mocks\NativeRequest;
 
 /**
  * Class NativeRequestTestCase
@@ -24,6 +24,6 @@ class NativeRequestTestCase extends AbstractHttpRequestTestCase
      */
     protected function request(string $body, bool $makeJson = true): RequestInterface
     {
-        return new Request($body, $makeJson);
+        return new NativeRequest($body, $makeJson);
     }
 }

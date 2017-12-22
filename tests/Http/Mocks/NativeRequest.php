@@ -42,7 +42,7 @@ class NativeRequest extends Request
     private function wrapGlobals(bool $emulateJson, \Closure $then): void
     {
         if ($emulateJson) {
-            $contentType             = $_SERVER['CONTENT_TYPE'];
+            $contentType             = $_SERVER['CONTENT_TYPE'] ?? 'text/html';
             $_SERVER['CONTENT_TYPE'] = 'application/json';
             $then();
             $_SERVER['CONTENT_TYPE'] = $contentType;
