@@ -315,6 +315,8 @@ GraphQL
     }
 
     /**
+     * @dataProvider compilersProvider
+     *
      * @param CompilerInterface $compiler
      * @return void
      */
