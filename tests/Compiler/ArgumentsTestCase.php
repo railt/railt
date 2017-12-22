@@ -12,7 +12,6 @@ namespace Railt\Tests\Compiler;
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\CompilerInterface;
-use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
