@@ -16,6 +16,7 @@ use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\Reflection\Filesystem\File;
 
 /**
@@ -179,8 +180,7 @@ GraphQL
 
         $default = $arg->getDefaultValue();
 
-        // TODO Object?
-        static::assertInternalType('array', $default);
+        static::assertInstanceOf(InputInvocation::class, $default);
 
         static::assertArrayHasKey('field', $default);
         static::assertArrayHasKey('op', $default);
@@ -220,8 +220,7 @@ GraphQL
         static::assertInternalType('array', $default);
 
         foreach ((array)$default as $item) {
-            // TODO Object?
-            static::assertInternalType('array', $item);
+            static::assertInstanceOf(InputInvocation::class, $item);
 
             static::assertArrayHasKey('field', $item);
             static::assertArrayHasKey('op', $item);
@@ -262,8 +261,7 @@ GraphQL
         static::assertInternalType('array', $default);
 
         foreach ((array)$default as $item) {
-            // TODO Object?
-            static::assertInternalType('array', $item);
+            static::assertInstanceOf(InputInvocation::class, $item);
 
             static::assertArrayHasKey('field', $item);
             static::assertArrayHasKey('op', $item);
