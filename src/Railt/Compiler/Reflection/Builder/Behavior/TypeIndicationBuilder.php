@@ -11,12 +11,9 @@ namespace Railt\Compiler\Reflection\Builder\Behavior;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Reflection\Builder\Process\Compilable;
 
 /**
  * Trait TypeIndicationBuilder
- *
- * @mixin Compilable
  */
 trait TypeIndicationBuilder
 {

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
+use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
@@ -45,7 +46,7 @@ class ArgumentInvocationBuilder extends BaseArgumentInvocation implements Compil
     protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Value') {
-            $this->value = $this->parseValue($ast->getChild(0), $this->parent);
+            $this->value = $this->parseValue($ast->getChild(0), $this);
         }
 
         return false;

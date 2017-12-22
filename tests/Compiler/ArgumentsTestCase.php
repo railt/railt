@@ -247,7 +247,7 @@ input Where { field: String!, eq: Any, op: String! = "=" }
 
 type UsersRepository {
     # {field: ...} should auto transform to [{field: ...}] 
-    findAll(where: [Where!] = {field: "id", op: "<>", eq: 42}): [User!]
+    findAll(where: Where! = {field: "id", op: "<>", eq: 42}): [User!]
 }
 GraphQL
         ));
