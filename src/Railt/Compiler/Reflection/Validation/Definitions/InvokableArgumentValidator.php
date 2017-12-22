@@ -52,7 +52,7 @@ class InvokableArgumentValidator extends BaseDefinitionValidator
         if ($definition === null) {
             $error = \vsprintf('In the %s there is no specified %s', [
                 $argument->getParent(),
-                $argument
+                $argument,
             ]);
 
             throw new TypeConflictException($error, $this->getCallStack());
