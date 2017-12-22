@@ -69,8 +69,8 @@ class DocumentBuilder extends BaseDocument implements Compilable
     public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
     {
         $this->valueBuilder = new ValueBuilder($this);
-        $this->compiler = $compiler;
-        $this->file     = $readable;
+        $this->compiler     = $compiler;
+        $this->file         = $readable;
 
         try {
             $this->boot($ast, $this);
