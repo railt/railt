@@ -39,6 +39,7 @@
 %token T_BRACE_OPEN             {
 %token T_BRACE_CLOSE            }   -> default
 %token T_OR                     \|
+%token T_AND                    \&
 %token T_ON                     on\b
 %token T_NUMBER_VALUE           \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b
 %token T_BOOL_TRUE              true\b
@@ -536,7 +537,9 @@ DirectiveDefinitionDefaultValue:
     ::T_BRACE_CLOSE::
 
 ObjectDefinitionImplements:
-    ::T_TYPE_IMPLEMENTS:: Key()+ #Implements
+    ::T_TYPE_IMPLEMENTS:: Key()* (
+        ::T_AND:: Key()
+    )? #Implements
 
 ObjectDefinitionField:
     Documentation()?

@@ -229,7 +229,7 @@ GraphQL
         ));
         /** @var ArgumentDefinition $arg */
         $arg = $document->getTypeDefinition('UsersRepository')
-            ->getField('find')
+            ->getField('findAll')
             ->getArgument('where');
 
         $default = $arg->getDefaultValue();
@@ -271,7 +271,7 @@ GraphQL
         ));
         /** @var ArgumentDefinition $arg */
         $arg = $document->getTypeDefinition('UsersRepository')
-            ->getField('find')
+            ->getField('findAll')
             ->getArgument('where');
 
         $default = $arg->getDefaultValue();
