@@ -12,9 +12,11 @@ namespace Railt\Tests\Compiler;
 use Railt\Compiler\Compiler;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Filesystem\File;
 
 /**
@@ -314,5 +316,74 @@ type Other @some(bar: "Hey! Argument bar wasn't specified for this directive")  
 }
 GraphQL
         ));
+    }
+
+    /**
+     * @dataProvider dateCompilersProvider
+     *
+     * @param CompilerInterface $compiler
+     * @return void
+     */
+    public function testMissingArgumentIntoDirective(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources(<<<'GraphQL'
+directive @some(foo: String!) on TYPE_DEFINITION
+type Example @some() {} # "foo" required 
+GraphQL
+        ));
+    }
+
+    /**
+     * @dataProvider dateCompilersProvider
+     *
+     * @param CompilerInterface $compiler
+     * @return void
+     */
+    public function testAutoExportArgumentsIntoDirective(CompilerInterface $compiler): void
+    {
+        $document = $compiler->compile(File::fromSources(<<<'GraphQL'
+directive @test1(foo: String) on TYPE_DEFINITION
+type Example1 @test1() {} 
+    # No different from: type Example1 @test1(foo: NULL)
+
+directive @test2(foo: String! = "some") on TYPE_DEFINITION
+type Example2 @test2() {}
+    # No different from: type Example1 @test2(foo: "some")
+    
+
+directive @test3(foo: Input3! = {foo: "23"}) on TYPE_DEFINITION
+input Input3 { foo: String! }
+type Example3 @test3() {} 
+   # No different from: type Example1 @test2(foo: {foo: "23"})
+GraphQL
+        ));
+
+        /** @var ObjectDefinition $example1 */
+        $example1 = $document->getTypeDefinition('Example1');
+        /** @var ObjectDefinition $example2 */
+        $example2 = $document->getTypeDefinition('Example2');
+        /** @var ObjectDefinition $example3 */
+        $example3 = $document->getTypeDefinition('Example3');
+
+        static::assertInstanceOf(ObjectDefinition::class, $example1);
+        static::assertInstanceOf(ObjectDefinition::class, $example2);
+        static::assertInstanceOf(ObjectDefinition::class, $example3);
+
+        static::assertCount(1, $example1->getDirectives());
+        static::assertCount(1, $example2->getDirectives());
+        static::assertCount(1, $example3->getDirectives());
+
+        /** @var DirectiveInvocation $test1 */
+        $test1 = $example1->getDirective('test1');
+        /** @var DirectiveInvocation $test2 */
+        $test2 = $example2->getDirective('test2');
+        /** @var DirectiveInvocation $test3 */
+        $test3 = $example3->getDirective('test3');
+
+        static::assertCount(1, $test1->getPassedArguments());
+        static::assertCount(1, $test2->getPassedArguments());
+        static::assertCount(1, $test3->getPassedArguments());
     }
 }
