@@ -238,7 +238,7 @@ GraphQL
      * @return void
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testValidInputArgumentListTypeWithLazyCasting(CompilerInterface $compiler): void
+    public function testTypeCoercionToList(CompilerInterface $compiler): void
     {
         $document = $compiler->compile(File::fromSources(<<<'GraphQL'
 type User {}
