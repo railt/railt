@@ -4,7 +4,7 @@ Type parsing with two interface implementations named "B" and "C"
 
 --FILE--
 
-type A implements B, C {
+type A implements B & C {
 }
 
 --EXPECTF--

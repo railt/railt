@@ -4,7 +4,7 @@ Multiple type definitions
 
 --FILE--
 
-type A implements A, B @DirectiveA(key: value) {
+type A implements A & B @DirectiveA(key: value) {
     id: ID! @isUnique
 }
 

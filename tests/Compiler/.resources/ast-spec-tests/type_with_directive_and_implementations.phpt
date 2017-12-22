@@ -4,7 +4,7 @@ Type parsing with type directive named "Directive" and implementation two interf
 
 --FILE--
 
-type A implements B, C @Directive(key: value) {
+type A implements B & C @Directive(key: value) {
 }
 
 --EXPECTF--

@@ -20,7 +20,7 @@ use Railt\Reflection\Filesystem\File;
 /**
  * Class ArgumentDefaultsTestCase
  */
-class ArgumentDefaultsTestCase extends AbstractCompilerTestCase
+class ArgumentsTestCase extends AbstractCompilerTestCase
 {
     private const ARGUMENT_BODY = 'type A { field(argument: %s): String }';
 
@@ -264,7 +264,7 @@ input Where { field: String!, eq: Any, op: String! = "=" }
 
 
 type UsersRepository {
-    # {field: ...} shoud auto transform to [{field: ...}] 
+    # {field: ...} should auto transform to [{field: ...}] 
     findAll(where: [Where!] = {field: "id", op: "<>", eq: 42}): [User!]
 }
 GraphQL
@@ -309,6 +309,23 @@ input Where { field: String!, eq: Any, op: String! = "=" }
 
 type UsersRepository {
     find(where: Where! = {some: "id"}): User # Field "some" does not exists in input "Where"
+}
+GraphQL
+        ));
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @return void
+     */
+    public function testInvalidArgumentIntoDirective(CompilerInterface $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+
+        $compiler->compile(File::fromSources(<<<'GraphQL'
+directive @some(foo: String) on TYPE_DEFINITION
+
+type Other @some(bar: "Hey! Argument bar wasn't specified for this directive")  {
 }
 GraphQL
         ));

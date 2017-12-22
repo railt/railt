@@ -26,4 +26,12 @@ class RouterTestCase extends AbstractTestCase
     {
         return new Router(new Container());
     }
+
+    /**
+     * @return void
+     */
+    public function testRouteInterface(): void
+    {
+        $this->assertInstanceOf(RouterInterface::class, $this->mock());
+    }
 }
