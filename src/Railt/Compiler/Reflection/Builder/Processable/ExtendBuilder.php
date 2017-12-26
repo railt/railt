@@ -163,6 +163,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
             // NonNull overriding
             $this->isNonNull = $field->isNonNull();
+            $this->isListOfNonNulls = $field->isListOfNonNulls();
         };
     }
 
@@ -219,6 +220,7 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
             // NonNull overriding
             $this->isNonNull = $argument->isNonNull();
+            $this->isListOfNonNulls = $argument->isListOfNonNulls();
         };
     }
 
