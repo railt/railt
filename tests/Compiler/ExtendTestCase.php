@@ -32,7 +32,7 @@ type Test {
 }
 
 extend type Test @deprecated(reason: "Test") {
-    id(arg: String): ID
+    id(arg: String): ID!
     updatedAt: DateTime
 }
 GraphQL;
@@ -94,6 +94,7 @@ GraphQL;
 
         $field = $type->getField('id');
         static::assertNotNull($field);
+        static::assertTrue($field->isNonNull());
 
         static::assertTrue($field->hasArgument('arg'));
         static::assertNotNull($field->getArgument('arg'));
