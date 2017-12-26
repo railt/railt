@@ -160,6 +160,9 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
             // Extend description
             $this->description = $field->description ?: $this->description;
+
+            // NonNull overriding
+            $this->isNonNull = $field->isNonNull();
         };
     }
 
@@ -213,6 +216,9 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
             // Extend description
             $this->description = $argument->description ?: $this->description;
+
+            // NonNull overriding
+            $this->isNonNull = $argument->isNonNull();
         };
     }
 
