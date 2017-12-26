@@ -13,7 +13,6 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface TypeCoercion
- * @package Railt\Compiler\Reflection\Coercion
  */
 interface TypeCoercion
 {

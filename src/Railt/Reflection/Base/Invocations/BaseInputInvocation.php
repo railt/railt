@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Invocations;
 
 use Railt\Reflection\Base\Dependent\BaseDependent;
-use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\Reflection\Base\Invocations\Argument\HasPassedArguments;
+use Railt\Reflection\Contracts\Invocations\InputInvocation;
 
 /**
  * Class BaseInputInvocation
@@ -32,6 +32,7 @@ abstract class BaseInputInvocation extends BaseDependent implements InputInvocat
     {
         return new \ArrayIterator($this->arguments);
     }
+
     /**
      * @param mixed $offset
      * @return bool
@@ -40,6 +41,7 @@ abstract class BaseInputInvocation extends BaseDependent implements InputInvocat
     {
         return $this->hasPassedArgument($offset);
     }
+
     /**
      * @param mixed $offset
      * @return mixed

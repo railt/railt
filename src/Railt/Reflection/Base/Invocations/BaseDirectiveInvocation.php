@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Invocations;
 
 use Railt\Reflection\Base\Dependent\BaseDependent;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Base\Invocations\Argument\HasPassedArguments;
+use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 
 /**
  * Class BaseDirectiveInvocation

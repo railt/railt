@@ -133,9 +133,9 @@ class ArgumentCoercion extends BaseTypeCoercion
      */
     private function set(BaseArgument $argument, $value): void
     {
-        $invocation = function($value) {
+        $invocation = function ($value): void {
             /** @var BaseArgument $this */
-            $this->defaultValue = $value;
+            $this->defaultValue    = $value;
             $this->hasDefaultValue = true;
         };
 
