@@ -89,7 +89,7 @@ class Reader
             $ruleValue = '';
 
             foreach ($this->lines() as $line) {
-                switch ($line{0}) {
+                switch ($line[0]) {
                     case '%':
                         $this->parseDefinition($line);
                         break;

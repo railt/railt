@@ -101,8 +101,7 @@ class Token extends Rule
         $nodeId,
         $unification,
         $kept = false
-    )
-    {
+    ) {
         parent::__construct($name, null, $nodeId);
 
         $this->_tokenName   = $tokenName;
