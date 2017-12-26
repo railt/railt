@@ -9,15 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation;
 
-use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Reflection\Validation\Base\Factory;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 
 /**
  * Class Validator
- *
- * TODO Add lazy initializing
  */
 class Validator
 {
@@ -59,7 +57,6 @@ class Validator
     public function __construct(CallStack $stack)
     {
         $this->stack = $stack;
-
         $this->bootDefaults();
     }
 

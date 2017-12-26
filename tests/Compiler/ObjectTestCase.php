@@ -71,8 +71,7 @@ class ObjectTestCase extends AbstractCompilerTestCase
         foreach ($type->getDirectives() as $directive) {
             static::assertEquals('deprecated', $directive->getName());
 
-            static::assertEquals('Because', $directive->getPassedArgument('reason')->getPassedValue());
-            static::assertNotNull($directive->getPassedArgument('reason')->getTypeDefinition());
+            static::assertEquals('Because', $directive->getPassedArgument('reason'));
             static::assertNull($directive->getPassedArgument('not-exists'));
 
             static::assertTrue($directive->hasPassedArgument('reason'));

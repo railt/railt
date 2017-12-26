@@ -7,9 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Contracts\Dependent\Argument;
-
-use Railt\Reflection\Contracts\Invocations\ArgumentInvocation;
+namespace Railt\Reflection\Contracts\Invocations\Argument;
 
 /**
  * Interface HasPassedArguments
@@ -17,7 +15,7 @@ use Railt\Reflection\Contracts\Invocations\ArgumentInvocation;
 interface HasPassedArguments
 {
     /**
-     * @return iterable|ArgumentInvocation[]
+     * @return iterable|mixed[]
      */
     public function getPassedArguments(): iterable;
 
@@ -29,9 +27,9 @@ interface HasPassedArguments
 
     /**
      * @param string $name
-     * @return null|ArgumentInvocation
+     * @return mixed
      */
-    public function getPassedArgument(string $name): ?ArgumentInvocation;
+    public function getPassedArgument(string $name);
 
     /**
      * @return int

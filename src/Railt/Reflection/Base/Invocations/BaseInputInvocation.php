@@ -10,88 +10,50 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Invocations;
 
 use Railt\Reflection\Base\Dependent\BaseDependent;
-use Railt\Reflection\Contracts\Invocations\ArgumentInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
+use Railt\Reflection\Base\Invocations\Argument\HasPassedArguments;
 
 /**
  * Class BaseInputInvocation
  */
 abstract class BaseInputInvocation extends BaseDependent implements InputInvocation
 {
+    use HasPassedArguments;
+
     /**
-     * Argument type name
+     * Directive type name
      */
     protected const TYPE_NAME = 'Input';
-
-    /**
-     * @var array
-     */
-    protected $values = [];
-
-    /**
-     * @return iterable|ArgumentInvocation[]
-     */
-    public function getPassedValues(): iterable
-    {
-        return \array_values($this->values);
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasPassedValue(string $name): bool
-    {
-        return \array_key_exists($name, $this->values);
-    }
-
-    /**
-     * @param string $name
-     * @return null|ArgumentInvocation
-     */
-    public function getPassedValue(string $name): ?ArgumentInvocation
-    {
-        return $this->values[$name] ?? null;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumberOfPassedValues(): int
-    {
-        return \count($this->values);
-    }
 
     /**
      * @return iterable
      */
     public function getIterator(): iterable
     {
-        return new \ArrayIterator($this->values);
+        return new \ArrayIterator($this->arguments);
     }
-
     /**
      * @param mixed $offset
      * @return bool
      */
     public function offsetExists($offset): bool
     {
-        return $this->hasPassedValue($offset);
+        return $this->hasPassedArgument($offset);
     }
-
     /**
      * @param mixed $offset
      * @return mixed
      */
     public function offsetGet($offset)
     {
-        return $this->getPassedValue($offset);
+        return $this->getPassedArgument($offset);
     }
 
     /**
      * @param mixed $offset
      * @param mixed $value
      * @return void
+     * @throws \BadMethodCallException
      */
     public function offsetSet($offset, $value): void
     {
@@ -102,6 +64,7 @@ abstract class BaseInputInvocation extends BaseDependent implements InputInvocat
     /**
      * @param mixed $offset
      * @return void
+     * @throws \BadMethodCallException
      */
     public function offsetUnset($offset): void
     {
@@ -112,11 +75,8 @@ abstract class BaseInputInvocation extends BaseDependent implements InputInvocat
     /**
      * @return array
      */
-    public function __sleep(): array
+    public function jsonSerialize(): array
     {
-        return \array_merge(parent::__sleep(), [
-            // Values
-            'values',
-        ]);
+        return $this->arguments;
     }
 }

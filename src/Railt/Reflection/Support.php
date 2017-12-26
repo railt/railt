@@ -68,10 +68,7 @@ trait Support
         }
 
         if ($type instanceof TypeDefinition) {
-            return \vsprintf(self::$typeDefinition, [
-                $type->getTypeName(),
-                $type->getName(),
-            ]);
+            return \sprintf(self::$typeDefinition, $type->getTypeName(), $type->getName());
         }
 
         return $type->getName();

@@ -52,6 +52,8 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
             '[String] = null',
             '[String!] = null',
             '[String]! = [null]',
+            // NonNullList init by NULL will be coerced to [NULL]
+            '[String]! = null',
             '[Int!]! = [1,2,3]',
             '[String!] = ["1","2","3"]',
         ];
@@ -79,8 +81,6 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
             'String! = null',
             // NonList init by List
             'String = []',
-            // NonNullList init by NULL
-            '[String]! = null',
             // ListOfNonNull init by List with NULL
             '[String!] = [1,null,3]',
         ];
@@ -247,7 +247,7 @@ input Where { field: String!, eq: Any, op: String! = "=" }
 
 type UsersRepository {
     # {field: ...} should auto transform to [{field: ...}] 
-    findAll(where: Where! = {field: "id", op: "<>", eq: 42}): [User!]
+    findAll(where: [Where!] = {field: "id", op: "<>", eq: 42}): [User!]
 }
 GraphQL
         ));

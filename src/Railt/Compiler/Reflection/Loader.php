@@ -34,11 +34,13 @@ class Loader extends Repository
     /**
      * Loader constructor.
      * @param CompilerInterface $compiler
+     * @param CallStack $stack
      */
     public function __construct(CompilerInterface $compiler, CallStack $stack)
     {
-        parent::__construct($stack);
         $this->compiler = $compiler;
+
+        parent::__construct($stack);
     }
 
     /**
@@ -60,11 +62,23 @@ class Loader extends Repository
      */
     public function get(string $name): TypeDefinition
     {
-        try {
-            return parent::get($name);
-        } catch (TypeNotFoundException $error) {
-            return $this->load($name);
-        }
+        return $this->normalized($name, function (string $name) {
+            try {
+                return parent::get($name);
+            } catch (TypeNotFoundException $error) {
+                return $this->load($name);
+            }
+        });
+    }
+
+    /**
+     * @param string $name
+     * @param \Closure $type
+     * @return TypeDefinition
+     */
+    private function normalized(string $name, \Closure $type): TypeDefinition
+    {
+        return $this->compiler->normalize($type($name));
     }
 
     /**

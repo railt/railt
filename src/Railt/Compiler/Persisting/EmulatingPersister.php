@@ -51,7 +51,7 @@ class EmulatingPersister implements Persister
     private function encode(Document $document): string
     {
         try {
-            return @\serialize($document);
+            return \serialize($document);
         } catch (\Error $e) {
             $error = \sprintf('Error while entity serializing: %s', $e->getMessage());
             throw new CompilerException($error, $e->getCode(), $e);

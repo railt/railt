@@ -18,6 +18,8 @@ use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
+use Railt\Compiler\Reflection\Coercion\Factory;
+use Railt\Compiler\Reflection\Coercion\TypeCoercion;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Dictionary;
 use Railt\Compiler\Reflection\Loader;
@@ -65,8 +67,14 @@ class Compiler implements CompilerInterface
     private $stack;
 
     /**
+     * @var Factory|TypeCoercion
+     */
+    private $coercion;
+
+    /**
      * Compiler constructor.
      * @param Persister|null $persister
+     * @throws \OutOfBoundsException
      * @throws CompilerException
      */
     public function __construct(Persister $persister = null)
@@ -75,6 +83,7 @@ class Compiler implements CompilerInterface
         $this->parser    = new Parser($this->stack);
         $this->loader    = new Loader($this, $this->stack);
         $this->validator = new Validator($this->stack);
+        $this->coercion  = new Factory();
 
         $this->persister = $this->bootPersister($persister);
 
@@ -84,6 +93,7 @@ class Compiler implements CompilerInterface
     /**
      * @param Document $document
      * @return CompilerInterface
+     * @throws \Railt\Compiler\Exceptions\CompilerException
      */
     public function add(Document $document): CompilerInterface
     {
@@ -126,6 +136,7 @@ class Compiler implements CompilerInterface
     /**
      * @param Document $document
      * @return Document
+     * @throws \OutOfBoundsException
      */
     private function complete(Document $document): Document
     {
@@ -185,6 +196,7 @@ class Compiler implements CompilerInterface
     /**
      * @param Definition $definition
      * @return void
+     * @throws \OutOfBoundsException
      */
     private function completeValidation(Definition $definition): void
     {
@@ -207,6 +219,8 @@ class Compiler implements CompilerInterface
     /**
      * @param ReadableInterface $readable
      * @return Document
+     * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
      * @throws CompilerException
      */
     public function compile(ReadableInterface $readable): Document
@@ -219,6 +233,7 @@ class Compiler implements CompilerInterface
 
     /**
      * @return \Closure
+     * @throws \OutOfBoundsException
      * @throws UnexpectedTokenException
      * @throws UnrecognizedTokenException
      * @throws CompilerException
@@ -248,6 +263,15 @@ class Compiler implements CompilerInterface
     public function getParser(): Parser
     {
         return $this->parser;
+    }
+
+    /**
+     * @param TypeDefinition $type
+     * @return TypeDefinition
+     */
+    public function normalize(TypeDefinition $type): TypeDefinition
+    {
+        return $this->coercion->apply($type);
     }
 
     /**

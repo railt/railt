@@ -17,6 +17,7 @@ use Railt\Compiler\Reflection\Validation\Definitions;
 use Railt\Compiler\Reflection\Validation\Uniqueness;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\File;
@@ -204,6 +205,9 @@ trait Compiler
             // Force compile dependent definition
             $this->compile();
 
+            // Normalize types
+            $this->getCompiler()->normalize($this);
+
             // Verify type
             $this->getValidator(Definitions::class)->validate($this);
 
@@ -213,12 +217,13 @@ trait Compiler
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $parent
-     * @return mixed
+     * @param TypeDefinition $argument
+     * @param array $path
+     * @return array|float|int|null|string
      */
-    protected function parseValue(TreeNode $ast, TypeDefinition $parent)
+    protected function parseValue(TreeNode $ast, TypeDefinition $argument, array $path = [])
     {
-        return $this->getDocument()->getValueBuilder()->parse($ast, $parent);
+        return $this->getDocument()->getValueBuilder()->parse($ast, $argument, $path);
     }
 
     /**

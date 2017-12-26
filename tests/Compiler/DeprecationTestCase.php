@@ -119,7 +119,8 @@ GraphQL;
 
                 if ($invocation->hasPassedArgument('reason')) {
                     static::assertSame($type->getDeprecationReason(),
-                        $invocation->getPassedArgument('reason')->getPassedValue());
+                        $invocation->getPassedArgument('reason'));
+
                     static::assertSame('String',
                         $directive->getArgument('reason')->getTypeDefinition()->getName());
                 } else {

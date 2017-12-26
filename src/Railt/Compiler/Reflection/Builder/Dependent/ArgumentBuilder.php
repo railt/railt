@@ -38,7 +38,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
-        $this->parent       = $parent;
+        $this->parent = $parent;
         $this->boot($ast, $document);
     }
 
@@ -50,22 +50,11 @@ class ArgumentBuilder extends BaseArgument implements Compilable
     {
         if ($ast->getId() === '#Value') {
             $this->hasDefaultValue = true;
-            $this->defaultValue = $this->valueCoercion(
-                $this->parseValue($ast->getChild(0), $this)
-            );
+            $this->defaultValue = $this->parseValue($ast->getChild(0), $this);
 
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param mixed $value
-     * @return array|mixed
-     */
-    private function valueCoercion($value)
-    {
-        return $this->isList() ? (array)$value : $value;
     }
 }

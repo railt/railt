@@ -11,13 +11,10 @@ namespace Railt\Compiler\Reflection\Builder\Dependent\Argument;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Trait ArgumentsBuilder
- *
- * @mixin Compiler
  */
 trait ArgumentsBuilder
 {

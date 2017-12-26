@@ -72,7 +72,7 @@ GraphQL;
         /** @var DirectiveInvocation $directive */
         $directive = $type->getDirective('test');
         /** @var string $text */
-        $text = $directive->getPassedArgument('text')->getPassedValue();
+        $text = $directive->getPassedArgument('text');
 
         static::assertInternalType('string', $text);
         static::assertSame('Lol\\Troll' . "\n" . 'example¶', $text);

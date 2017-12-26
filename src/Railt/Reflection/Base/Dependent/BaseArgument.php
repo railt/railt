@@ -41,16 +41,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
      */
     public function getDefaultValue()
     {
-        switch (true) {
-            case $this->hasDefaultValue:
-                return $this->defaultValue;
-
-            case ! $this->isNonNull():
-                return;
-
-            case $this->isList():
-                return [];
-        }
+        return $this->defaultValue;
     }
 
     /**
@@ -58,9 +49,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
      */
     public function hasDefaultValue(): bool
     {
-        return $this->hasDefaultValue  // Initialized by any value
-            || ! $this->isNonNull()               // Can be null
-            || $this->isList();                   // Can be an empty array
+        return $this->hasDefaultValue;
     }
 
     /**
@@ -78,6 +67,9 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
             'isList',
             'isNonNull',
             'isListOfNonNulls',
+
+            // directives
+            'directives'
         ]);
     }
 }

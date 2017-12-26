@@ -45,14 +45,38 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
     protected function onCompile(TreeNode $ast): bool
     {
         if ($ast->getId() === '#Argument') {
-            $argument = new ArgumentInvocationBuilder($ast, $this->getDocument(), $this);
+            [$name, $value] = $this->parseArgumentValue($ast);
 
-            $this->arguments = $this->unique($this->arguments, $argument);
+            $this->arguments[$name] = $this->parseValue($value, $this->getTypeDefinition());
 
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param TreeNode $ast
+     * @return array
+     */
+    private function parseArgumentValue(TreeNode $ast): array
+    {
+        [$key, $value] = [null, null];
+
+        /** @var TreeNode $child */
+        foreach ($ast->getChildren() as $child) {
+            if ($child->getId() === '#Name') {
+                $key = $child->getChild(0)->getValueValue();
+                continue;
+            }
+
+            if ($child->getId() === '#Value') {
+                $value = $child->getChild(0);
+                continue;
+            }
+        }
+
+        return [$key, $value];
     }
 
     /**

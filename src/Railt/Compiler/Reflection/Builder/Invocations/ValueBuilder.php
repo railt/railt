@@ -12,6 +12,9 @@ namespace Railt\Compiler\Reflection\Builder\Invocations;
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 
 /**
@@ -28,32 +31,33 @@ class ValueBuilder
     private const TOKEN_BOOL_FALSE = 'T_BOOL_FALSE';
 
     /**
-     * @var DocumentBuilder
+     * @var Document|DocumentBuilder
      */
     private $document;
 
     /**
      * ValueBuilder constructor.
-     * @param DocumentBuilder $document
+     * @param Document $document
      */
-    public function __construct(DocumentBuilder $document)
+    public function __construct(Document $document)
     {
         $this->document = $document;
     }
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $parent
-     * @return mixed
+     * @param TypeDefinition $argument
+     * @param array $path
+     * @return array|float|int|null|string
      */
-    public function parse(TreeNode $ast, TypeDefinition $parent)
+    public function parse(TreeNode $ast, TypeDefinition $argument, array $path = [])
     {
         switch ($ast->getId()) {
             case self::AST_ID_ARRAY:
-                return $this->toArray($ast, $parent);
+                return $this->toArray($ast, $argument, $path);
 
             case self::AST_ID_OBJECT:
-                return $this->toObject($ast, $parent);
+                return $this->toObject($ast, $argument, $path);
         }
 
         return $this->toScalar($ast);
@@ -61,16 +65,17 @@ class ValueBuilder
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $parent
+     * @param TypeDefinition $argument
+     * @param array $path
      * @return array
      */
-    private function toArray(TreeNode $ast, TypeDefinition $parent): array
+    private function toArray(TreeNode $ast, TypeDefinition $argument, array $path): array
     {
         $result = [];
 
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            $result[] = $this->parse($child->getChild(0), $parent);
+            $result[] = $this->parse($child->getChild(0), $argument, $path);
         }
 
         return $result;
@@ -78,12 +83,13 @@ class ValueBuilder
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $parent
+     * @param TypeDefinition $argument
+     * @param array $path
      * @return InputInvocation
      */
-    private function toObject(TreeNode $ast, TypeDefinition $parent): InputInvocation
+    private function toObject(TreeNode $ast, TypeDefinition $argument, array $path): InputInvocation
     {
-        return new InputInvocationBuilder($ast, $this->document, $parent);
+        return new InputInvocationBuilder($ast, $this->document, $argument, $path);
     }
 
     /**

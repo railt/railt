@@ -11,7 +11,6 @@ namespace Railt\Compiler\Reflection\Builder\Invocations\Directive;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
-use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Base\Behavior\BaseDeprecations;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Behavior\Deprecatable;
@@ -22,8 +21,6 @@ use Railt\Reflection\Standard\Directives\Deprecation;
 
 /**
  * Trait DirectivesBuilder
- *
- * @mixin Compiler
  */
 trait DirectivesBuilder
 {
@@ -66,18 +63,16 @@ trait DirectivesBuilder
      * @param DirectiveInvocation $directive
      * @return string
      */
-    private function getDeprecationReasonValue(DirectiveInvocation $directive): string
+    protected function getDeprecationReasonValue(DirectiveInvocation $directive): string
     {
-        return (string)$directive
-            ->getPassedArgument(Deprecation::REASON_ARGUMENT)
-            ->getPassedValue();
+        return (string)$directive->getPassedArgument(Deprecation::REASON_ARGUMENT);
     }
 
     /**
      * @param DirectiveInvocation $directive
      * @return string
      */
-    private function getDeprecationReasonDefaultValue(DirectiveInvocation $directive): string
+    protected function getDeprecationReasonDefaultValue(DirectiveInvocation $directive): string
     {
         /** @var DirectiveDefinition $definition */
         $definition = $directive->getTypeDefinition();

@@ -10,47 +10,40 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Exceptions\TypeConflictException;
-use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
-use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\Reflection\Validation\Uniqueness\Scalar\UniqueValueValidator;
 use Railt\Reflection\Base\Invocations\BaseInputInvocation;
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 
 /**
  * Class InputInvocationBuilder
+ * @property-read ArgumentDefinition $parent
  */
 class InputInvocationBuilder extends BaseInputInvocation implements Compilable
 {
-    use Compiler {
-        Compiler::compile as compilerCompile;
-    }
+    use Compiler;
 
-    use TypeIndicationBuilder;
+    /**
+     * @var array
+     */
+    protected $path = [];
 
     /**
      * InputInvocationBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @param TypeDefinition|ArgumentBuilder $parent
+     * @param TypeDefinition $parent
+     * @param array $path
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
+    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent, array $path)
     {
+        $this->path = $path;
         $this->parent = $parent;
+        $this->name = $parent->getName();
         $this->boot($ast, $document);
-        $this->name = $this->parent->getName();
-    }
-
-    /**
-     * @return null|TypeDefinition|InputDefinition
-     */
-    public function getTypeDefinition(): ?TypeDefinition
-    {
-        return $this->parent->getTypeDefinition();
     }
 
     /**
@@ -59,25 +52,37 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
      */
     protected function onCompile(TreeNode $ast): bool
     {
-        $key   = $this->key($ast);
-        $value = $this->parseValue($ast->getChild(1)->getChild(0), $this->parent);
+        $key = (string)$ast->getChild(0)->getChild(0)->getValueValue();
+        $value = $ast->getChild(1)->getChild(0);
 
-        if (\array_key_exists($key, $this->values)) {
-            $error = \sprintf(UniqueValueValidator::REDEFINITION_ERROR, $key);
-            throw new TypeConflictException($error, $this->getCompiler()->getStack());
-        }
-
-        $this->values[$key] = $value;
+        $this->arguments[$key] = $this->parseValue($value, $this->parent, \array_merge($this->path, [$key]));
 
         return true;
     }
 
     /**
-     * @param TreeNode $ast
-     * @return string
+     * @return array
      */
-    private function key(TreeNode $ast): string
+    public function __sleep(): array
     {
-        return (string)$ast->getChild(0)->getChild(0)->getValueValue();
+        return \array_merge(parent::__sleep(), [
+            'path'
+        ]);
+    }
+
+    /**
+     * @return null|TypeDefinition
+     */
+    public function getTypeDefinition(): ?TypeDefinition
+    {
+        $reduce = function(?InputDefinition $carry, $item): ?TypeDefinition {
+            /** @var ArgumentDefinition|null $argument */
+            $argument = $carry->getArgument($item);
+            // TODO $argument can be null. Add validation?
+
+            return $argument ? $argument->getTypeDefinition() : null;
+        };
+
+        return \array_reduce($this->path, $reduce, $this->parent->getTypeDefinition());
     }
 }

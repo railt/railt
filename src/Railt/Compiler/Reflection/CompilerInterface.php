@@ -12,6 +12,7 @@ namespace Railt\Compiler\Reflection;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
@@ -48,6 +49,12 @@ interface CompilerInterface extends Dictionary
      * @return ValidatorInterface
      */
     public function getValidator(string $group): ValidatorInterface;
+
+    /**
+     * @param TypeDefinition $type
+     * @return TypeDefinition
+     */
+    public function normalize(TypeDefinition $type): TypeDefinition;
 
     /**
      * @return Dictionary
