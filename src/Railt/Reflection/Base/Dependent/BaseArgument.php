@@ -69,7 +69,7 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
             'isListOfNonNulls',
 
             // directives
-            'directives'
+            'directives',
         ]);
     }
 }
