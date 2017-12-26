@@ -10,7 +10,8 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Llk\Rule;
 
 use Hoa\Compiler;
-use Hoa\File;
+use Hoa\Compiler\Io\PhysicalFile;
+use Hoa\Compiler\Llk\Llk;
 
 /**
  * Class \Hoa\Compiler\Llk\Rule\Token.
@@ -69,30 +70,30 @@ class Token extends Rule
      *
      * @var bool
      */
-    protected $_kept                 = false;
+    protected $_kept = false;
 
     /**
      * Unification index.
      *
      * @var int
      */
-    protected $_unification          = -1;
+    protected $_unification = -1;
 
     /**
      * Token offset.
      *
      * @var int
      */
-    protected $_offset               = 0;
+    protected $_offset = 0;
 
     /**
      * Constructor.
      *
-     * @param   string  $name           Name.
-     * @param   string  $tokenName      Token name.
-     * @param   string  $nodeId         Node ID.
-     * @param   int     $unification    Unification index.
-     * @param   bool    $kept           Whether the token is kept or not in the AST.
+     * @param   string $name Name.
+     * @param   string $tokenName Token name.
+     * @param   string $nodeId Node ID.
+     * @param   int $unification Unification index.
+     * @param   bool $kept Whether the token is kept or not in the AST.
      */
     public function __construct(
         $name,
@@ -100,7 +101,8 @@ class Token extends Rule
         $nodeId,
         $unification,
         $kept = false
-    ) {
+    )
+    {
         parent::__construct($name, null, $nodeId);
 
         $this->_tokenName   = $tokenName;
@@ -119,9 +121,19 @@ class Token extends Rule
     }
 
     /**
+     * Get token namespace.
+     *
+     * @return  string
+     */
+    public function getNamespace()
+    {
+        return $this->_namespace;
+    }
+
+    /**
      * Set token namespace.
      *
-     * @param   string  $namespace    Namespace.
+     * @param   string $namespace Namespace.
      * @return  string
      */
     public function setNamespace($namespace)
@@ -133,19 +145,9 @@ class Token extends Rule
     }
 
     /**
-     * Get token namespace.
-     *
-     * @return  string
-     */
-    public function getNamespace()
-    {
-        return $this->_namespace;
-    }
-
-    /**
      * Set representation.
      *
-     * @param   string  $regex    Representation.
+     * @param   string $regex Representation.
      * @return  string
      */
     public function setRepresentation($regex)
@@ -154,6 +156,30 @@ class Token extends Rule
         $this->_regex = $regex;
 
         return $old;
+    }
+
+    /**
+     * Get AST of the token representation.
+     *
+     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @throws \InvalidArgumentException
+     * @throws Compiler\Exception
+     * @throws Compiler\Exception\UnexpectedToken
+     */
+    public function getAST()
+    {
+        if (null === static::$_regexCompiler) {
+            $stream                 = PhysicalFile::fromPathname('hoa://Library/Regex/Grammar.pp');
+            static::$_regexCompiler = (new Llk($stream))->getParser();
+        }
+
+        if (null === $this->_ast) {
+            $this->_ast = static::$_regexCompiler->parse(
+                $this->getRepresentation()
+            );
+        }
+
+        return $this->_ast;
     }
 
     /**
@@ -167,43 +193,6 @@ class Token extends Rule
     }
 
     /**
-     * Get AST of the token representation.
-     *
-     * @return  \Hoa\Compiler\Llk\TreeNode
-     */
-    public function getAST()
-    {
-        if (null === static::$_regexCompiler) {
-            $stream = new File\Read('hoa://Library/Regex/Grammar.pp');
-            $stream->rewind();
-
-            static::$_regexCompiler = Compiler\Llk::load($stream);
-        }
-
-        if (null === $this->_ast) {
-            $this->_ast = static::$_regexCompiler->parse(
-                $this->getRepresentation()
-            );
-        }
-
-        return $this->_ast;
-    }
-
-    /**
-     * Set token value.
-     *
-     * @param   string  $value    Value.
-     * @return  string
-     */
-    public function setValue($value)
-    {
-        $old          = $this->_value;
-        $this->_value = $value;
-
-        return $old;
-    }
-
-    /**
      * Get token value.
      *
      * @return  string
@@ -214,15 +203,15 @@ class Token extends Rule
     }
 
     /**
-     * Set token offset.
+     * Set token value.
      *
-     * @param   int  $offset    Offset.
-     * @return  int
+     * @param   string $value Value.
+     * @return  string
      */
-    public function setOffset($offset)
+    public function setValue($value)
     {
-        $old           = $this->_offset;
-        $this->_offset = $offset;
+        $old          = $this->_value;
+        $this->_value = $value;
 
         return $old;
     }
@@ -238,15 +227,15 @@ class Token extends Rule
     }
 
     /**
-     * Set whether the token is kept or not in the AST.
+     * Set token offset.
      *
-     * @param   bool  $kept    Kept.
-     * @return  bool
+     * @param   int $offset Offset.
+     * @return  int
      */
-    public function setKept($kept)
+    public function setOffset($offset)
     {
-        $old         = $this->_kept;
-        $this->_kept = $kept;
+        $old           = $this->_offset;
+        $this->_offset = $offset;
 
         return $old;
     }
@@ -259,6 +248,20 @@ class Token extends Rule
     public function isKept()
     {
         return $this->_kept;
+    }
+
+    /**
+     * Set whether the token is kept or not in the AST.
+     *
+     * @param   bool $kept Kept.
+     * @return  bool
+     */
+    public function setKept($kept)
+    {
+        $old         = $this->_kept;
+        $this->_kept = $kept;
+
+        return $old;
     }
 
     /**

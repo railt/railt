@@ -9,33 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Filesystem;
 
+use Hoa\Compiler\Io\Readable;
+
 /**
  * The interface that defines the source of the code.
  */
-interface ReadableInterface
+interface ReadableInterface extends Readable
 {
-    /**
-     * Returns the path to the file.
-     *
-     * @return string
-     */
-    public function getPathname(): string;
-
-    /**
-     * Returns the hash of the file. Required for
-     * disability cache.
-     *
-     * @return string
-     */
-    public function getHash(): string;
-
-    /**
-     * Returns the full contents of the source.
-     *
-     * @return string
-     */
-    public function getContents(): string;
-
     /**
      * Returns the line where this implementation
      * was defined. Required for errors debugging.

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Llk\Rule;
 
 use Hoa\Compiler;
+use Hoa\Compiler\Exception\Exception;
 use Hoa\Iterator;
 
 /**
@@ -357,7 +358,7 @@ class Analyzer
      * Implementation of “simple”.
      *
      * @return  mixed
-     * @throws  \Hoa\Compiler\Exception
+     * @throws  \Hoa\Compiler\Exception\Exception
      * @throws  \Hoa\Compiler\Exception\Rule
      */
     protected function simple(&$pNodeId)
@@ -405,7 +406,7 @@ class Analyzer
             }
 
             if (false == $exists) {
-                throw new Compiler\Exception(
+                throw new Exception(
                     'Token ::%s:: does not exist in rule %s.',
                     3,
                     [$tokenName, $this->_ruleName]

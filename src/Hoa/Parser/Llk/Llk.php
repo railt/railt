@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Llk;
 
 use Hoa\Compiler;
-use Hoa\Stream;
+use Hoa\Compiler\Io\Readable;
+use Hoa\Compiler\Grammar\Reader;
+use Hoa\Compiler\Llk\Rule\Analyzer;
 
 /**
  * Class \Hoa\Compiler\Llk.
@@ -21,46 +23,45 @@ use Hoa\Stream;
  * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
-abstract class Llk
+class Llk
 {
+    /**
+     * @var Reader
+     */
+    private $reader;
+
+    /**
+     * Llk constructor.
+     * @param Readable $grammar
+     */
+    public function __construct(Readable $grammar)
+    {
+        $this->reader = new Reader($grammar);
+    }
+
+    /**
+     * @return Analyzer
+     * @throws \LogicException
+     */
+    public function getAnalyzer(): Analyzer
+    {
+        return new Analyzer($this->reader->getTokens());
+    }
+
     /**
      * Load in-memory parser from a grammar description file.
      * The grammar description language is PP. See
      * `hoa://Library/Compiler/Llk/Llk.pp` for an example, or the documentation.
      *
-     * @param   \Hoa\Stream\IStream\In  $stream    Stream to read to grammar.
-     * @return  \Hoa\Compiler\Llk\Parser
-     * @throws  \Hoa\Compiler\Exception
+     * @return Parser
+     * @throws \LogicException
+     * @throws Compiler\Exception
      */
-    public static function load(Stream\IStream\In $stream)
+    public function getParser(): Parser
     {
-        $pp = $stream->readAll();
+        $rules  = $this->getAnalyzer()->analyzeRules($this->reader->getRules());
 
-        if (empty($pp)) {
-            $message = 'The grammar is empty';
-
-            if ($stream instanceof Stream\IStream\Pointable) {
-                if (0 < $stream->tell()) {
-                    $message .=
-                        ': The stream ' . $stream->getStreamName() .
-                        ' is pointable and not rewinded, maybe it ' .
-                        'could be the reason';
-                } else {
-                    $message .=
-                        ': Nothing to read on the stream ' .
-                        $stream->getStreamName();
-                }
-            }
-
-            throw new Compiler\Exception($message . '.', 0);
-        }
-
-        static::parsePP($pp, $tokens, $rawRules, $pragmas, $stream->getStreamName());
-
-        $ruleAnalyzer = new Rule\Analyzer($tokens);
-        $rules        = $ruleAnalyzer->analyzeRules($rawRules);
-
-        return new Parser($tokens, $rules, $pragmas);
+        return new Parser($this->reader->getTokens(), $rules, $this->reader->getPragma());
     }
 
     /**
@@ -219,126 +220,5 @@ abstract class Llk
             '}' . "\n";
 
         return $out;
-    }
-
-    /**
-     * Parse the grammar description language.
-     *
-     * @param   string  $pp            Grammar description.
-     * @param   array   $tokens        Extracted tokens.
-     * @param   array   $rules         Extracted raw rules.
-     * @param   array   $pragmas       Extracted raw pragmas.
-     * @param   string  $streamName    The name of the stream containing the grammar.
-     * @return  void
-     * @throws  \Hoa\Compiler\Exception
-     */
-    public static function parsePP($pp, &$tokens, &$rules, &$pragmas, $streamName): void
-    {
-        $lines   = \explode("\n", $pp);
-        $pragmas = [];
-        $tokens  = ['default' => []];
-        $rules   = [];
-
-        for ($i = 0, $m = \count($lines); $i < $m; ++$i) {
-            $line = \rtrim($lines[$i]);
-
-            if (0 === \strlen($line) || '//' == \substr($line, 0, 2)) {
-                continue;
-            }
-
-            if ('%' == $line[0]) {
-                if (0 !== \preg_match('#^%pragma\h+([^\h]+)\h+(.*)$#u', $line, $matches)) {
-                    switch ($matches[2]) {
-                        case 'true':
-                            $pragmaValue = true;
-
-                            break;
-
-                        case 'false':
-                            $pragmaValue = false;
-
-                            break;
-
-                        default:
-                            if (true === \ctype_digit($matches[2])) {
-                                $pragmaValue = (int) ($matches[2]);
-                            } else {
-                                $pragmaValue = $matches[2];
-                            }
-                    }
-
-                    $pragmas[$matches[1]] = $pragmaValue;
-                } elseif (0 !== \preg_match('#^%skip\h+(?:([^:]+):)?([^\h]+)\h+(.*)$#u', $line, $matches)) {
-                    if (empty($matches[1])) {
-                        $matches[1] = 'default';
-                    }
-
-                    if (! isset($tokens[$matches[1]])) {
-                        $tokens[$matches[1]] = [];
-                    }
-
-                    if (! isset($tokens[$matches[1]]['skip'])) {
-                        $tokens[$matches[1]]['skip'] = $matches[3];
-                    } else {
-                        $tokens[$matches[1]]['skip'] =
-                            '(?:' .
-                                $tokens[$matches[1]]['skip'] . '|' .
-                                $matches[3] .
-                            ')';
-                    }
-                } elseif (0 !== \preg_match('#^%token\h+(?:([^:]+):)?([^\h]+)\h+(.*?)(?:\h+->\h+(.*))?$#u', $line, $matches)) {
-                    if (empty($matches[1])) {
-                        $matches[1] = 'default';
-                    }
-
-                    if (isset($matches[4]) && ! empty($matches[4])) {
-                        $matches[2] = $matches[2] . ':' . $matches[4];
-                    }
-
-                    if (! isset($tokens[$matches[1]])) {
-                        $tokens[$matches[1]] = [];
-                    }
-
-                    $tokens[$matches[1]][$matches[2]] = $matches[3];
-                } else {
-                    throw new Compiler\Exception(
-                        'Unrecognized instructions:' . "\n" .
-                        '    %s' . "\n" . 'in file %s at line %d.',
-                        1,
-                        [
-                            $line,
-                            $streamName,
-                            $i + 1,
-                        ]
-                    );
-                }
-
-                continue;
-            }
-
-            $ruleName = \substr($line, 0, -1);
-            $rule     = null;
-            ++$i;
-
-            while ($i < $m &&
-                   isset($lines[$i][0]) &&
-                   (' ' === $lines[$i][0] ||
-                    "\t" === $lines[$i][0] ||
-                    '//' === \substr($lines[$i], 0, 2))) {
-                if ('//' === \substr($lines[$i], 0, 2)) {
-                    ++$i;
-
-                    continue;
-                }
-
-                $rule .= ' ' . \trim($lines[$i++]);
-            }
-
-            if (isset($lines[$i][0])) {
-                --$i;
-            }
-
-            $rules[$ruleName] = $rule;
-        }
     }
 }

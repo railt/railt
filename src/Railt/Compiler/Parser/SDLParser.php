@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Compiler\Parser;
 
 use Hoa\Compiler\Exception;
+use Hoa\Compiler\Io\Readable;
 use Hoa\Compiler\Llk\Llk;
 use Hoa\Compiler\Llk\Parser as LlkParser;
-use Hoa\File\Read;
-use Hoa\Stream\IStream\In;
 use Railt\Compiler\Exceptions\CompilerException;
+use Railt\Reflection\Filesystem\File;
 
 /**
  * Class SDLParser
@@ -28,23 +28,23 @@ class SDLParser extends AbstractParser
 
     /**
      * @return LlkParser
+     * @throws \LogicException
+     * @throws \Railt\Reflection\Filesystem\NotReadableException
+     * @throws \InvalidArgumentException
      * @throws CompilerException
      */
     protected function createParser(): LlkParser
     {
         try {
-            return Llk::load($this->getStream());
+            return (new Llk($this->getGrammar()))->getParser();
         } catch (Exception $e) {
             throw new CompilerException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
-    /**
-     * @return In
-     */
-    private function getStream(): In
+    private function getGrammar(): Readable
     {
-        return new Read($this->getGrammarFile());
+        return File::fromPathname($this->getGrammarFile());
     }
 
     /**
