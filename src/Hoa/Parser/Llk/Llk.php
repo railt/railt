@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Llk;
 
 use Hoa\Compiler;
-use Hoa\Compiler\Io\Readable;
 use Hoa\Compiler\Grammar\Reader;
+use Hoa\Compiler\Io\Readable;
 use Hoa\Compiler\Llk\Rule\Analyzer;
 
 /**

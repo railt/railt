@@ -9,10 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Hoa\Compiler\Grammar\GrammarReader;
 use Hoa\Compiler\Grammar\Reader;
 use Hoa\Compiler\Io\PhysicalFile;
-use Hoa\Compiler\Llk\Llk;
 
 /**
  * Class GrammarTestCase
@@ -129,7 +127,7 @@ class GrammarTestCase extends AbstractParserTestCase
 
     private const EXPECTED_PRAGMA = [
         'parser.lookahead' => 1024,
-        'lexer.unicode' => true
+        'lexer.unicode'    => true,
     ];
 
     /**
@@ -138,9 +136,9 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testTokensParsing(): void
     {
         $file    = $this->getGrammarFile();
-        $parser = new Reader(PhysicalFile::fromPathname($file));
+        $parser  = new Reader(PhysicalFile::fromPathname($file));
 
-        $this->assertEquals(self::EXPECTED_TOKENS, $parser->getTokens());
+        $this->assertSame(self::EXPECTED_TOKENS, $parser->getTokens());
     }
 
     /**
@@ -149,9 +147,9 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testRulesParsing(): void
     {
         $file    = $this->getGrammarFile();
-        $parser = new Reader(PhysicalFile::fromPathname($file));
+        $parser  = new Reader(PhysicalFile::fromPathname($file));
 
-        $this->assertEquals(self::EXPECTED_RULES, $parser->getRules());
+        $this->assertSame(self::EXPECTED_RULES, $parser->getRules());
     }
 
     /**
@@ -160,8 +158,8 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testPragmaParsing(): void
     {
         $file    = $this->getGrammarFile();
-        $parser = new Reader(PhysicalFile::fromPathname($file));
+        $parser  = new Reader(PhysicalFile::fromPathname($file));
 
-        $this->assertEquals(self::EXPECTED_PRAGMA, $parser->getPragma());
+        $this->assertSame(self::EXPECTED_PRAGMA, $parser->getPragma());
     }
 }
