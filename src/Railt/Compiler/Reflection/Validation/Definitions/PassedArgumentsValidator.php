@@ -53,7 +53,6 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
         $this->getCallStack()->pop();
     }
 
-
     /**
      * @param HasPassedArguments $invocation
      * @param ArgumentDefinition $argument

@@ -106,7 +106,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
     public function getName(): string
     {
         \assert($this->name !== null, \vsprintf('Name of %s must be initialized.', [
-            \get_class($this)
+            \get_class($this),
         ]));
 
         return (string)$this->name;

@@ -17,7 +17,6 @@ use Railt\Compiler\Reflection\Validation\Definitions;
 use Railt\Compiler\Reflection\Validation\Uniqueness;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Filesystem\File;

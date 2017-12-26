@@ -10,12 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Coercion;
 
 use Railt\Reflection\Base\Invocations\BaseInputInvocation;
-use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
-use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Invocations\Argument\HasPassedArguments;
-use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\Reflection\Contracts\Invocations\Invocable;
 
 /**
@@ -49,7 +46,7 @@ class PassedArgumentsCoercion extends BaseTypeCoercion
      * @param HasArguments $container
      * @param HasPassedArguments $usage
      */
-    private function inferenceDefaultArguments(HasArguments $container, HasPassedArguments $usage)
+    private function inferenceDefaultArguments(HasArguments $container, HasPassedArguments $usage): void
     {
         foreach ($container->getArguments() as $argument) {
             if ($argument->hasDefaultValue() && ! $usage->hasPassedArgument($argument->getName())) {
@@ -63,9 +60,9 @@ class PassedArgumentsCoercion extends BaseTypeCoercion
      * @param string $key
      * @param mixed $value
      */
-    private function set(HasPassedArguments $usage, string $key, $value)
+    private function set(HasPassedArguments $usage, string $key, $value): void
     {
-        $invocation = function(string $key, $value) {
+        $invocation = function (string $key, $value): void {
             /** @var BaseInputInvocation $this */
             $this->arguments[$key] = $value;
         };

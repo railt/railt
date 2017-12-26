@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation;
 
-use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Exceptions\CompilerException;
+use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Reflection\Validation\Base\Factory;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 

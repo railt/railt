@@ -20,7 +20,7 @@ use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 
 /**
  * Class InputInvocationBuilder
- * @property-read ArgumentDefinition $parent
+ * @property ArgumentDefinition $parent
  */
 class InputInvocationBuilder extends BaseInputInvocation implements Compilable
 {
@@ -40,9 +40,9 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent, array $path)
     {
-        $this->path = $path;
+        $this->path   = $path;
         $this->parent = $parent;
-        $this->name = $parent->getName();
+        $this->name   = $parent->getName();
         $this->boot($ast, $document);
     }
 
@@ -52,7 +52,7 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
      */
     protected function onCompile(TreeNode $ast): bool
     {
-        $key = (string)$ast->getChild(0)->getChild(0)->getValueValue();
+        $key   = (string)$ast->getChild(0)->getChild(0)->getValueValue();
         $value = $ast->getChild(1)->getChild(0);
 
         $this->arguments[$key] = $this->parseValue($value, $this->parent, \array_merge($this->path, [$key]));
@@ -66,7 +66,7 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
     public function __sleep(): array
     {
         return \array_merge(parent::__sleep(), [
-            'path'
+            'path',
         ]);
     }
 
@@ -75,7 +75,7 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
      */
     public function getTypeDefinition(): ?TypeDefinition
     {
-        $reduce = function(?InputDefinition $carry, $item): ?TypeDefinition {
+        $reduce = function (?InputDefinition $carry, $item): ?TypeDefinition {
             /** @var ArgumentDefinition|null $argument */
             $argument = $carry->getArgument($item);
             // TODO $argument can be null. Add validation?
