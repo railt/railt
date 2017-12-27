@@ -9,10 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Hoa\Compiler\Grammar\GrammarReader;
 use Hoa\Compiler\Grammar\Reader;
 use Hoa\Compiler\Io\PhysicalFile;
-use Hoa\Compiler\Llk\Llk;
 
 /**
  * Class GrammarTestCase
@@ -128,7 +126,7 @@ class GrammarTestCase extends AbstractParserTestCase
     ];
 
     private const EXPECTED_PRAGMA = [
-        'parser.lookahead' => 1024,
+        'parser.lookahead' => '1024',
         'lexer.unicode' => true
     ];
 
