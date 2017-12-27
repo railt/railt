@@ -37,48 +37,9 @@ trait DirectivesBuilder
 
             $this->directives = $this->unique($this->directives, $directive);
 
-            $this->checkTheDeprecationDirective($directive);
-
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @param DirectiveInvocation $directive
-     * @return void
-     */
-    private function checkTheDeprecationDirective(DirectiveInvocation $directive): void
-    {
-        if ($this instanceof Deprecatable && $directive->getName() === Deprecation::DIRECTIVE_TYPE_NAME) {
-            /** @var BaseDeprecations|Deprecatable $this */
-            $this->deprecationReason = $directive->hasPassedArgument(Deprecation::REASON_ARGUMENT)
-                ? $this->getDeprecationReasonValue($directive)
-                : $this->getDeprecationReasonDefaultValue($directive);
-        }
-    }
-
-    /**
-     * @param DirectiveInvocation $directive
-     * @return string
-     */
-    protected function getDeprecationReasonValue(DirectiveInvocation $directive): string
-    {
-        return (string)$directive->getPassedArgument(Deprecation::REASON_ARGUMENT);
-    }
-
-    /**
-     * @param DirectiveInvocation $directive
-     * @return string
-     */
-    protected function getDeprecationReasonDefaultValue(DirectiveInvocation $directive): string
-    {
-        /** @var DirectiveDefinition $definition */
-        $definition = $directive->getTypeDefinition();
-
-        return $definition
-            ->getArgument(Deprecation::REASON_ARGUMENT)
-            ->getDefaultValue();
     }
 }

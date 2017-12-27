@@ -26,6 +26,7 @@ final class Definitions extends ValidatorsFactory
         Definitions\ObjectValidator::class,
         Definitions\SchemaValidator::class,
         Definitions\PassedArgumentsValidator::class,
+        Definitions\DirectiveInvocationValidator::class,
     ];
 
     /**

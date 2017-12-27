@@ -145,11 +145,17 @@ class Compiler implements CompilerInterface
         $build = function(Definition $definition): void {
             $this->stack->push($definition);
 
-            // Compile
-            $this->completeCompilation($definition);
+            if ($definition instanceof Compilable) {
+                $definition->compile();
+            }
 
-            // Validate
-            $this->completeValidation($definition);
+            if ($definition instanceof TypeDefinition) {
+                $this->normalize($definition);
+            }
+
+            if (! ($definition instanceof StandardType)) {
+                $this->validator->group(Definitions::class)->validate($definition);
+            }
 
             $this->stack->pop();
         };
@@ -190,29 +196,6 @@ class Compiler implements CompilerInterface
     public function register(TypeDefinition $type, bool $force = false): Dictionary
     {
         return $this->loader->register($type, $force);
-    }
-
-    /**
-     * @param Definition $definition
-     * @return void
-     */
-    private function completeCompilation(Definition $definition): void
-    {
-        if ($definition instanceof Compilable) {
-            $definition->compile();
-        }
-    }
-
-    /**
-     * @param Definition $definition
-     * @return void
-     * @throws \OutOfBoundsException
-     */
-    private function completeValidation(Definition $definition): void
-    {
-        if (! ($definition instanceof StandardType)) {
-            $this->validator->group(Definitions::class)->validate($definition);
-        }
     }
 
     /**

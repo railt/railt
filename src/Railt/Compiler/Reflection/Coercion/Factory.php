@@ -22,6 +22,7 @@ class Factory implements TypeCoercion
     private const DEFAULT_TRANSFORMERS = [
         ArgumentCoercion::class,
         PassedArgumentsCoercion::class,
+        DeprecationCoercion::class,
     ];
 
     /**
