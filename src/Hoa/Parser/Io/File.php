@@ -32,7 +32,7 @@ abstract class File implements Writable
     public function __construct(string $contents, string $name)
     {
         $this->contents = $contents;
-        $this->name = $name;
+        $this->name     = $name;
     }
 
     /**

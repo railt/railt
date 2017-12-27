@@ -18,5 +18,5 @@ interface Writable extends Readable
      * @param string $content
      * @return Writable
      */
-    public function update(string $content): Writable;
+    public function update(string $content): self;
 }
