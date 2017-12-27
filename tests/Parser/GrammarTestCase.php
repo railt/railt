@@ -127,7 +127,7 @@ class GrammarTestCase extends AbstractParserTestCase
 
     private const EXPECTED_PRAGMA = [
         'parser.lookahead' => '1024',
-        'lexer.unicode' => true
+        'lexer.unicode'    => true,
     ];
 
     /**
@@ -136,7 +136,7 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testTokensParsing(): void
     {
         $file    = $this->getGrammarFile();
-        $parser = new Reader(PhysicalFile::fromPathname($file));
+        $parser  = new Reader(PhysicalFile::fromPathname($file));
 
         $this->assertSame(self::EXPECTED_TOKENS, $parser->getTokens());
     }
@@ -147,7 +147,7 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testRulesParsing(): void
     {
         $file    = $this->getGrammarFile();
-        $parser = new Reader(PhysicalFile::fromPathname($file));
+        $parser  = new Reader(PhysicalFile::fromPathname($file));
 
         $this->assertSame(self::EXPECTED_RULES, $parser->getRules());
     }
@@ -158,7 +158,7 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testPragmaParsing(): void
     {
         $file    = $this->getGrammarFile();
-        $parser = new Reader(PhysicalFile::fromPathname($file));
+        $parser  = new Reader(PhysicalFile::fromPathname($file));
 
         $this->assertSame(self::EXPECTED_PRAGMA, $parser->getPragma());
     }
