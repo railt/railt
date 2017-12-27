@@ -45,7 +45,7 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
      */
     public function __construct(TreeNode $ast, DocumentBuilder $document, string $parentType, array $path)
     {
-        $this->path   = $path;
+        $this->path       = $path;
         $this->parentType = $parentType;
         $this->boot($ast, $document);
     }

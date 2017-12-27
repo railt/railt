@@ -33,7 +33,7 @@ class DeprecationCoercion extends BaseTypeCoercion
      */
     public function apply(TypeDefinition $directive): void
     {
-        $applier = function () use ($directive) {
+        $applier = function () use ($directive): void {
             $this->deprecationReason = $directive->getPassedArgument(Deprecation::REASON_ARGUMENT);
         };
 
