@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Validation\Definitions;
+
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
@@ -44,7 +45,7 @@ class DirectiveInvocationValidator extends BaseDefinitionValidator
      * @param DirectiveInvocation $definition
      * @param ArgumentDefinition $arg
      */
-    private function validateArgumentDirective(DirectiveInvocation $definition, ArgumentDefinition $arg)
+    private function validateArgumentDirective(DirectiveInvocation $definition, ArgumentDefinition $arg): void
     {
         $parent = $arg->getParent();
 
@@ -58,7 +59,7 @@ class DirectiveInvocationValidator extends BaseDefinitionValidator
      * @param DirectiveDefinition $def
      * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
-    private function validateDirectiveLocatedDirective(DirectiveInvocation $invoke, DirectiveDefinition $def)
+    private function validateDirectiveLocatedDirective(DirectiveInvocation $invoke, DirectiveDefinition $def): void
     {
         if ($def->getName() === $invoke->getName()) {
             $error = \sprintf('Can not define the %s on %s to itself', $def, $invoke->getParent());

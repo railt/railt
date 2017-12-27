@@ -11,13 +11,8 @@ namespace Railt\Compiler\Reflection\Builder\Invocations\Directive;
 
 use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
-use Railt\Reflection\Base\Behavior\BaseDeprecations;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
-use Railt\Reflection\Contracts\Behavior\Deprecatable;
-use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Reflection\Standard\Directives\Deprecation;
 
 /**
  * Trait DirectivesBuilder

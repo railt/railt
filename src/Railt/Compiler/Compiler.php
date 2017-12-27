@@ -142,7 +142,7 @@ class Compiler implements CompilerInterface
     {
         $this->load($document);
 
-        $build = function(Definition $definition): void {
+        $build = function (Definition $definition): void {
             $this->stack->push($definition);
 
             if ($definition instanceof Compilable) {
