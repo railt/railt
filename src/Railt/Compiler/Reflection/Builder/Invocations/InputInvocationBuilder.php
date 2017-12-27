@@ -32,18 +32,30 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
     protected $path = [];
 
     /**
+     * @var string
+     */
+    protected $parentType;
+
+    /**
      * InputInvocationBuilder constructor.
      * @param TreeNode $ast
      * @param DocumentBuilder $document
-     * @param TypeDefinition $parent
+     * @param string $parentType
      * @param array $path
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent, array $path)
+    public function __construct(TreeNode $ast, DocumentBuilder $document, string $parentType, array $path)
     {
         $this->path   = $path;
-        $this->parent = $parent;
-        $this->name   = $parent->getName();
+        $this->parentType = $parentType;
         $this->boot($ast, $document);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->parentType;
     }
 
     /**
@@ -55,9 +67,17 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
         $key   = (string)$ast->getChild(0)->getChild(0)->getValueValue();
         $value = $ast->getChild(1)->getChild(0);
 
-        $this->arguments[$key] = $this->parseValue($value, $this->parent, \array_merge($this->path, [$key]));
+        $this->arguments[$key] = $this->parseValue($value, $this->parentType, \array_merge($this->path, [$key]));
 
         return true;
+    }
+
+    /**
+     * @return TypeDefinition
+     */
+    public function getParent(): TypeDefinition
+    {
+        return $this->load($this->parentType);
     }
 
     /**
@@ -67,6 +87,7 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
     {
         return \array_merge(parent::__sleep(), [
             'path',
+            'parentType',
         ]);
     }
 
@@ -83,6 +104,6 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
             return $argument ? $argument->getTypeDefinition() : null;
         };
 
-        return \array_reduce($this->path, $reduce, $this->parent->getTypeDefinition());
+        return \array_reduce($this->path, $reduce, $this->getParent());
     }
 }

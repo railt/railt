@@ -19,6 +19,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Invocations\Invocable;
 use Railt\Reflection\Filesystem\File;
 
 /**
@@ -192,6 +193,11 @@ trait Compiler
             $this->resolveTypeName();
         }
 
+        if ($this instanceof Compilable && $this instanceof Invocable) {
+            $this->getDocument()->future($this);
+            return;
+        }
+
         /**
          * If the type is not initialized by the Document, but
          * is a child of the root, then the lazy assembly is not needed.
@@ -216,13 +222,13 @@ trait Compiler
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $argument
+     * @param string $type
      * @param array $path
      * @return array|float|int|null|string
      */
-    protected function parseValue(TreeNode $ast, TypeDefinition $argument, array $path = [])
+    protected function parseValue(TreeNode $ast, string $type, array $path = [])
     {
-        return $this->getDocument()->getValueBuilder()->parse($ast, $argument, $path);
+        return $this->getDocument()->getValueBuilder()->parse($ast, $type, $path);
     }
 
     /**

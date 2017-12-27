@@ -60,6 +60,11 @@ class DocumentBuilder extends BaseDocument implements Compilable
     private $valueBuilder;
 
     /**
+     * @var \SplStack|Compilable[]
+     */
+    private $future;
+
+    /**
      * DocumentBuilder constructor.
      * @param TreeNode $ast
      * @param ReadableInterface $readable
@@ -71,6 +76,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
         $this->valueBuilder = new ValueBuilder($this);
         $this->compiler     = $compiler;
         $this->file         = $readable;
+        $this->future       = new \SplStack();
 
         try {
             $this->boot($ast, $this);
@@ -80,6 +86,27 @@ class DocumentBuilder extends BaseDocument implements Compilable
         }
 
         $this->compile();
+    }
+
+    /**
+     * @param Compilable $type
+     * @return DocumentBuilder
+     */
+    public function future(Compilable $type): self
+    {
+        $this->future->push($type);
+
+        return $this;
+    }
+
+    /**
+     * @return iterable
+     */
+    public function getInvocableTypes(): iterable
+    {
+        if ($this->future && $this->future->count()) {
+            yield from $this->future;
+        }
     }
 
     /**

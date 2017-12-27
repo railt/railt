@@ -134,7 +134,7 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param Document $document
+     * @param Document|DocumentBuilder $document
      * @return Document
      * @throws \OutOfBoundsException
      */
@@ -142,7 +142,7 @@ class Compiler implements CompilerInterface
     {
         $this->load($document);
 
-        foreach ($document->getDefinitions() as $definition) {
+        $build = function(Definition $definition): void {
             $this->stack->push($definition);
 
             // Compile
@@ -152,6 +152,16 @@ class Compiler implements CompilerInterface
             $this->completeValidation($definition);
 
             $this->stack->pop();
+        };
+
+        foreach ($document->getDefinitions() as $definition) {
+            $build($definition);
+        }
+
+        if ($document instanceof DocumentBuilder) {
+            foreach ($document->getInvocableTypes() as $definition) {
+                $build($definition);
+            }
         }
 
         return $document;

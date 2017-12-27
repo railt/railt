@@ -44,18 +44,18 @@ class ValueBuilder
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $argument
+     * @param string $type
      * @param array $path
      * @return array|float|int|null|string
      */
-    public function parse(TreeNode $ast, TypeDefinition $argument, array $path = [])
+    public function parse(TreeNode $ast, string $type, array $path = [])
     {
         switch ($ast->getId()) {
             case self::AST_ID_ARRAY:
-                return $this->toArray($ast, $argument, $path);
+                return $this->toArray($ast, $type, $path);
 
             case self::AST_ID_OBJECT:
-                return $this->toObject($ast, $argument, $path);
+                return $this->toObject($ast, $type, $path);
         }
 
         return $this->toScalar($ast);
@@ -63,17 +63,17 @@ class ValueBuilder
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $argument
+     * @param string $type
      * @param array $path
      * @return array
      */
-    private function toArray(TreeNode $ast, TypeDefinition $argument, array $path): array
+    private function toArray(TreeNode $ast, string $type, array $path): array
     {
         $result = [];
 
         /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            $result[] = $this->parse($child->getChild(0), $argument, $path);
+            $result[] = $this->parse($child->getChild(0), $type, $path);
         }
 
         return $result;
@@ -81,13 +81,13 @@ class ValueBuilder
 
     /**
      * @param TreeNode $ast
-     * @param TypeDefinition $argument
+     * @param string $type
      * @param array $path
      * @return InputInvocation
      */
-    private function toObject(TreeNode $ast, TypeDefinition $argument, array $path): InputInvocation
+    private function toObject(TreeNode $ast, string $type, array $path): InputInvocation
     {
-        return new InputInvocationBuilder($ast, $this->document, $argument, $path);
+        return new InputInvocationBuilder($ast, $this->document, $type, $path);
     }
 
     /**

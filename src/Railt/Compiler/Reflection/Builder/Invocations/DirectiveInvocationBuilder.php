@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
 use Hoa\Compiler\Llk\TreeNode;
-use Railt\Compiler\Exceptions\TypeNotFoundException;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
@@ -47,7 +46,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
         if ($ast->getId() === '#Argument') {
             [$name, $value] = $this->parseArgumentValue($ast);
 
-            $this->arguments[$name] = $this->parseValue($value, $this->getTypeDefinition());
+            $this->arguments[$name] = $this->parseValue($value, $this->getName());
 
             return true;
         }
@@ -84,10 +83,6 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
      */
     public function getTypeDefinition(): ?TypeDefinition
     {
-        try {
-            return $this->load($this->getName());
-        } catch (TypeNotFoundException $error) {
-            return null;
-        }
+        return $this->load($this->getName());
     }
 }

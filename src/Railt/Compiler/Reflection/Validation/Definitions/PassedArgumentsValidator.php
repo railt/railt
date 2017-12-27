@@ -57,11 +57,12 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
      * @param HasPassedArguments $invocation
      * @param ArgumentDefinition $argument
      * @return void
+     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     private function validateMissingArgument(HasPassedArguments $invocation, ArgumentDefinition $argument): void
     {
         if (! $invocation->hasPassedArgument($argument->getName())) {
-            $error = \sprintf('Required argument %s of %s not specified', $argument, $argument->getParent());
+            $error = \sprintf('Required argument "%s" of %s not specified', $argument, $argument->getParent());
 
             throw new TypeConflictException($error, $this->getCallStack());
         }
@@ -71,11 +72,12 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
      * @param HasArguments $container
      * @param string $argument
      * @return void
+     * @throws \Railt\Compiler\Exceptions\TypeConflictException
      */
     private function validateArgumentExisting(HasArguments $container, string $argument): void
     {
         if (! $container->hasArgument($argument)) {
-            $error = \sprintf('In the %s there is no specified %s', $container, $argument);
+            $error = \sprintf('In the %s there is no specified argument "%s"', $container, $argument);
 
             throw new TypeConflictException($error, $this->getCallStack());
         }
