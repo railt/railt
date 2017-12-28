@@ -44,10 +44,10 @@
     "replace": {
         "railt/http": "self.version",
         "railt/events": "self.version",
-        "railt/compiler": "self.version",
-        "railt/routing": "self.version",
-        "railt/container": "self.version",
         "railt/parser": "self.version",
+        "railt/routing": "self.version",
+        "railt/compiler": "self.version",
+        "railt/container": "self.version",
         "railt/reflection": "self.version",
         "railt/webonyx-adapter": "self.version",
         "hoa/compiler": "*"
