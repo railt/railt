@@ -35,6 +35,8 @@ thereby solving problems such as:
 
 The documentation is in the process of writing, therefore, in order to understand how it works, a quick start.
 
+### Compiler
+
 ```php
 <?php
 declare(strict_types=1);
@@ -55,6 +57,22 @@ type Example {
 
 \var_dump($document);
 ```
+
+### Application
+```php
+use Railt\Http\Request;
+use Railt\Compiler\Compiler;
+use Railt\Foundation\Application;
+use Railt\Reflection\Filesystem\File;
+
+$app = new Application(new Compiler());
+
+// $schema = File::fromSources(...);
+
+$response = $app->request(new Request(), $schema);
+$response->send();
+```
+
 
 ## Learning Railt
 
