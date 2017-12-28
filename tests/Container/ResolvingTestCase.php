@@ -25,7 +25,19 @@ class ResolvingTestCase extends AbstractContainerTestCase
     public function containerDataProvider(): array
     {
         return [
-            [new Container()]
+            [
+                new Container()
+            ],
+            [
+                new Container(
+                    new \Symfony\Component\DependencyInjection\Container()
+                )
+            ],
+            [
+                new Container(
+                    new \Illuminate\Container\Container()
+                )
+            ]
         ];
     }
 
