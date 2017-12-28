@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Container;
 
+use Psr\Container\ContainerInterface as PSRContainer;
 use Railt\Container\Autowireable;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
-use Psr\Container\ContainerInterface as PSRContainer;
 use Railt\Container\Registrable;
 
 /**

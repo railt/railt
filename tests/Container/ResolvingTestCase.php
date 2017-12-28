@@ -25,7 +25,7 @@ class ResolvingTestCase extends AbstractContainerTestCase
     public function containerDataProvider(): array
     {
         return [
-            [new Container()]
+            [new Container()],
         ];
     }
 
@@ -53,7 +53,7 @@ class ResolvingTestCase extends AbstractContainerTestCase
      */
     public function testSingletonResolvable(ContainerInterface $container): void
     {
-        $container->register(\stdClass::class, function() {
+        $container->register(\stdClass::class, function () {
             $class = new \stdClass();
             $class->field = \random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
@@ -142,7 +142,7 @@ class ResolvingTestCase extends AbstractContainerTestCase
     {
         $container->instance(\stdClass::class, new \stdClass());
 
-        $fn = function(\stdClass $obj): \stdClass {
+        $fn = function (\stdClass $obj): \stdClass {
             return $obj;
         };
 
@@ -158,7 +158,7 @@ class ResolvingTestCase extends AbstractContainerTestCase
     {
         $this->expectException(ParameterResolutionException::class);
 
-        $fn = function(\stdClass $obj): \stdClass {
+        $fn = function (\stdClass $obj): \stdClass {
             return $obj;
         };
 
@@ -173,14 +173,14 @@ class ResolvingTestCase extends AbstractContainerTestCase
      */
     public function testAutowiringWithAdditionalParameters(ContainerInterface $container): void
     {
-        [$i, $j] = [\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
-        $obj = new \stdClass();
+        [$i, $j]    = [\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
+        $obj        = new \stdClass();
         $obj->value = \random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
         $container->instance(\stdClass::class, $obj);
 
 
-        $result = $container->call(function(\stdClass $c, int $a1, int $a2): string {
+        $result = $container->call(function (\stdClass $c, int $a1, int $a2): string {
             return $c->value . ' ' . $a1 . ' ' . $a2;
         }, ['a1' => $i, 'a2' => $j]);
 
