@@ -18,8 +18,8 @@ use Hoa\Compiler\Llk\Llk;
  *
  * The token rule.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Token extends Rule
 {
@@ -89,11 +89,11 @@ class Token extends Rule
     /**
      * Constructor.
      *
-     * @param   string $name Name.
-     * @param   string $tokenName Token name.
-     * @param   string $nodeId Node ID.
-     * @param   int $unification Unification index.
-     * @param   bool $kept Whether the token is kept or not in the AST.
+     * @param string $name Name.
+     * @param string $tokenName Token name.
+     * @param string $nodeId Node ID.
+     * @param int $unification Unification index.
+     * @param bool $kept Whether the token is kept or not in the AST.
      */
     public function __construct(
         $name,
@@ -112,7 +112,7 @@ class Token extends Rule
     /**
      * Get token name.
      *
-     * @return  string
+     * @return string
      */
     public function getTokenName()
     {
@@ -122,7 +122,7 @@ class Token extends Rule
     /**
      * Get token namespace.
      *
-     * @return  string
+     * @return string
      */
     public function getNamespace()
     {
@@ -132,8 +132,8 @@ class Token extends Rule
     /**
      * Set token namespace.
      *
-     * @param   string $namespace Namespace.
-     * @return  string
+     * @param string $namespace Namespace.
+     * @return string
      */
     public function setNamespace($namespace)
     {
@@ -146,8 +146,8 @@ class Token extends Rule
     /**
      * Set representation.
      *
-     * @param   string $regex Representation.
-     * @return  string
+     * @param string $regex Representation.
+     * @return string
      */
     public function setRepresentation($regex)
     {
@@ -160,9 +160,11 @@ class Token extends Rule
     /**
      * Get AST of the token representation.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return \Hoa\Compiler\Llk\TreeNode
+     * @throws \Hoa\Compiler\Exception\UnrecognizedToken
+     * @throws \LogicException
      * @throws \InvalidArgumentException
-     * @throws Compiler\Exception
+     * @throws Compiler\Exception\Exception
      * @throws Compiler\Exception\UnexpectedToken
      */
     public function getAST()
@@ -173,9 +175,8 @@ class Token extends Rule
         }
 
         if (null === $this->_ast) {
-            $this->_ast = static::$_regexCompiler->parse(
-                $this->getRepresentation()
-            );
+            $this->_ast = static::$_regexCompiler
+                ->parse($this->getRepresentation());
         }
 
         return $this->_ast;
@@ -184,7 +185,7 @@ class Token extends Rule
     /**
      * Get token representation.
      *
-     * @return  string
+     * @return string
      */
     public function getRepresentation()
     {
@@ -194,7 +195,7 @@ class Token extends Rule
     /**
      * Get token value.
      *
-     * @return  string
+     * @return string
      */
     public function getValue()
     {
@@ -204,8 +205,8 @@ class Token extends Rule
     /**
      * Set token value.
      *
-     * @param   string $value Value.
-     * @return  string
+     * @param string $value Value.
+     * @return string
      */
     public function setValue($value)
     {
@@ -228,8 +229,8 @@ class Token extends Rule
     /**
      * Set token offset.
      *
-     * @param   int $offset Offset.
-     * @return  int
+     * @param int $offset Offset.
+     * @return int
      */
     public function setOffset($offset)
     {
@@ -242,7 +243,7 @@ class Token extends Rule
     /**
      * Check whether the token is kept in the AST or not.
      *
-     * @return  bool
+     * @return bool
      */
     public function isKept()
     {
@@ -252,8 +253,8 @@ class Token extends Rule
     /**
      * Set whether the token is kept or not in the AST.
      *
-     * @param   bool $kept Kept.
-     * @return  bool
+     * @param bool $kept Kept.
+     * @return bool
      */
     public function setKept($kept)
     {
@@ -266,7 +267,7 @@ class Token extends Rule
     /**
      * Get unification index.
      *
-     * @return  int
+     * @return int
      */
     public function getUnificationIndex()
     {

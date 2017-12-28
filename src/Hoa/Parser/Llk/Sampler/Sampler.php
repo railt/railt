@@ -10,22 +10,27 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Llk\Sampler;
 
 use Hoa\Compiler;
+use Hoa\Compiler\Exception\Exception;
+use Hoa\Compiler\Llk\Parser;
+use Hoa\Compiler\Llk\Rule\Token;
+use Hoa\Compiler\Llk\TreeNode;
 use Hoa\Visitor;
+use Hoa\Visitor\Visit;
 
 /**
  * Class \Hoa\Compiler\Llk\Sampler.
  *
  * Sampler parent.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 abstract class Sampler
 {
     /**
      * Compiler.
      *
-     * @var \Hoa\Compiler\Llk\Parser
+     * @var Parser
      */
     protected $_compiler;
 
@@ -46,7 +51,7 @@ abstract class Sampler
     /**
      * Token sampler.
      *
-     * @var \Hoa\Visitor\Visit
+     * @var Visit
      */
     protected $_tokenSampler;
 
@@ -74,12 +79,12 @@ abstract class Sampler
     /**
      * Construct a generator.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $compiler        Compiler/parser.
-     * @param   \Hoa\Visitor\Visit        $tokenSampler    Token sampler.
+     * @param Parser $compiler Compiler/parser.
+     * @param Visit $tokenSampler Token sampler.
      */
     public function __construct(
-        Compiler\Llk\Parser $compiler,
-        Visitor\Visit       $tokenSampler
+        Parser $compiler,
+        Visit       $tokenSampler
     ) {
         $this->_compiler     = $compiler;
         $this->_tokens       = $compiler->getTokens();
@@ -91,9 +96,9 @@ abstract class Sampler
     /**
      * Get compiler.
      *
-     * @return  \Hoa\Compiler\Llk\Parser
+     * @return Parser
      */
-    public function getCompiler()
+    public function getCompiler(): Parser
     {
         return $this->_compiler;
     }
@@ -101,12 +106,15 @@ abstract class Sampler
     /**
      * Get the AST of the current namespace skip token.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return TreeNode
+     * @throws \InvalidArgumentException
+     * @throws \Hoa\Compiler\Exception\UnexpectedToken
+     * @throws Exception
      */
-    protected function getSkipTokenAST()
+    protected function getSkipTokenAST(): TreeNode
     {
         if (! isset($this->_skipTokenAST[$this->_currentNamespace])) {
-            $token = new Compiler\Llk\Rule\Token(
+            $token = new Token(
                 -1,
                 'skip',
                 null,
@@ -127,10 +135,10 @@ abstract class Sampler
      * Complete a token (namespace and representation).
      * It returns the next namespace.
      *
-     * @param   \Hoa\Compiler\Llk\Rule\Token  $token    Token.
-     * @return  string
+     * @param Token $token Token.
+     * @return string
      */
-    protected function completeToken(Compiler\Llk\Rule\Token $token)
+    protected function completeToken(Token $token)
     {
         if (null !== $token->getRepresentation()) {
             return $this->_currentNamespace;
@@ -166,8 +174,8 @@ abstract class Sampler
     /**
      * Set current token namespace.
      *
-     * @param   string  $namespace    Token namespace.
-     * @return  string
+     * @param string $namespace Token namespace.
+     * @return string
      */
     protected function setCurrentNamespace($namespace)
     {
@@ -181,10 +189,11 @@ abstract class Sampler
      * Generate a token value.
      * Complete and set next token namespace.
      *
-     * @param   \Hoa\Compiler\Llk\Rule\Token  $token    Token.
-     * @return  string
+     * @param Token $token Token.
+     * @return string
+     * @throws Exception
      */
-    protected function generateToken(Compiler\Llk\Rule\Token $token)
+    protected function generateToken(Token $token)
     {
         $toNamespace = $this->completeToken($token);
         $this->setCurrentNamespace($toNamespace);

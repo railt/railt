@@ -11,15 +11,18 @@ namespace Hoa\Compiler\Llk\Rule;
 
 use Hoa\Compiler;
 use Hoa\Compiler\Exception\Exception;
+use Hoa\Compiler\Exception\RuleException;
+use Hoa\Compiler\Llk\Lexer;
 use Hoa\Iterator;
+use Hoa\Iterator\Lookahead;
 
 /**
  * Class \Hoa\Compiler\Llk\Rule\Analyzer.
  *
  * Analyze rules and transform them into atomic rules operations.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Analyzer
 {
@@ -49,7 +52,7 @@ class Analyzer
     /**
      * Lexer iterator.
      *
-     * @var \Hoa\Iterator\Lookahead
+     * @var Lookahead
      */
     protected $_lexer;
 
@@ -88,7 +91,7 @@ class Analyzer
     /**
      * Constructor.
      *
-     * @param   array $tokens Tokens.
+     * @param array $tokens Tokens.
      */
     public function __construct(array $tokens)
     {
@@ -98,22 +101,23 @@ class Analyzer
     /**
      * Build the analyzer of the rules (does not analyze the rules).
      *
-     * @param   array $rules Rule to be analyzed.
-     * @return  void
-     * @throws  \Hoa\Compiler\Exception
+     * @param array $rules Rule to be analyzed.
+     * @return array
+     * @throws \Hoa\Compiler\Exception\Exception
+     * @throws \Hoa\Compiler\Exception\RuleException
      */
-    public function analyzeRules(array $rules)
+    public function analyzeRules(array $rules): array
     {
         if (empty($rules)) {
-            throw new Compiler\Exception\Rule('No rules specified!', 0);
+            throw new RuleException('No rules specified!', 0);
         }
 
         $this->_parsedRules = [];
         $this->_rules       = $rules;
-        $lexer              = new Compiler\Llk\Lexer();
+        $lexer              = new Lexer();
 
         foreach ($rules as $key => $value) {
-            $this->_lexer = new Iterator\Lookahead($lexer->lexMe($value, static::$_ppLexemes));
+            $this->_lexer = new Lookahead($lexer->lexMe($value, static::$_ppLexemes));
             $this->_lexer->rewind();
 
             $this->_ruleName = $key;
@@ -128,11 +132,7 @@ class Analyzer
             $rule    = $this->rule($pNodeId);
 
             if (null === $rule) {
-                throw new Compiler\Exception(
-                    'Error while parsing rule %s.',
-                    1,
-                    $key
-                );
+                throw new Exception('Error while parsing rule %s.', 1, $key);
             }
 
             $zeRule = $this->_parsedRules[$rule];
@@ -153,7 +153,7 @@ class Analyzer
     /**
      * Implementation of “rule”.
      *
-     * @return  mixed
+     * @return mixed
      */
     protected function rule(&$pNodeId)
     {
@@ -163,7 +163,7 @@ class Analyzer
     /**
      * Implementation of “choice”.
      *
-     * @return  mixed
+     * @return mixed
      */
     protected function choice(&$pNodeId)
     {
@@ -217,7 +217,8 @@ class Analyzer
     /**
      * Implementation of “concatenation”.
      *
-     * @return  mixed
+     * @return mixed
+     * @throws Exception
      */
     protected function concatenation(&$pNodeId)
     {
@@ -256,8 +257,7 @@ class Analyzer
     /**
      * Implementation of “repetition”.
      *
-     * @return  mixed
-     * @throws  \Hoa\Compiler\Exception
+     * @return mixed
      */
     protected function repetition(&$pNodeId)
     {
@@ -333,8 +333,8 @@ class Analyzer
             return $children;
         }
 
-        if (-1 != $max && $max < $min) {
-            throw new Compiler\Exception(
+        if (-1 !== $max && $max < $min) {
+            throw new Exception(
                 'Upper bound %d must be greater or ' .
                 'equal to lower bound %d in rule %s.',
                 2,
@@ -357,9 +357,9 @@ class Analyzer
     /**
      * Implementation of “simple”.
      *
-     * @return  mixed
-     * @throws  \Hoa\Compiler\Exception\Exception
-     * @throws  \Hoa\Compiler\Exception\Rule
+     * @return mixed
+     * @throws \Hoa\Compiler\Exception\Exception
+     * @throws RuleException
      */
     protected function simple(&$pNodeId)
     {
@@ -405,7 +405,7 @@ class Analyzer
                 }
             }
 
-            if (false == $exists) {
+            if ($exists === false) {
                 throw new Exception(
                     'Token ::%s:: does not exist in rule %s.',
                     3,
@@ -450,8 +450,8 @@ class Analyzer
                 }
             }
 
-            if (false == $exists) {
-                throw new Compiler\Exception(
+            if ($exists === false) {
+                throw new Exception(
                     'Token <%s> does not exist in rule %s.',
                     4,
                     [$tokenName, $this->_ruleName]
@@ -477,7 +477,7 @@ class Analyzer
 
             if (false === \array_key_exists($tokenName, $this->_rules) &&
                 false === \array_key_exists('#' . $tokenName, $this->_rules)) {
-                throw new Compiler\Exception\Rule(
+                throw new RuleException(
                     'Cannot call rule %s() in rule %s because it does not exist.',
                     5,
                     [$tokenName, $this->_ruleName]

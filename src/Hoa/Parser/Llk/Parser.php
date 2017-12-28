@@ -11,6 +11,7 @@ namespace Hoa\Compiler\Llk;
 
 use Hoa\Compiler;
 use Hoa\Compiler\Exception;
+use Hoa\Compiler\Exception\UnexpectedToken;
 use Hoa\Compiler\Llk\Rule\Choice;
 use Hoa\Compiler\Llk\Rule\Concatenation;
 use Hoa\Compiler\Llk\Rule\Ekzit;
@@ -19,14 +20,15 @@ use Hoa\Compiler\Llk\Rule\Repetition;
 use Hoa\Compiler\Llk\Rule\Rule;
 use Hoa\Compiler\Llk\Rule\Token;
 use Hoa\Iterator;
+use Hoa\Iterator\Buffer;
 
 /**
  * Class \Hoa\Compiler\Llk\Parser.
  *
  * LL(k) parser.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Parser
 {
@@ -104,15 +106,16 @@ class Parser
     /**
      * Construct the parser.
      *
-     * @param   array $tokens Tokens.
-     * @param   array $rules Rules.
-     * @param   array $pragmas Pragmas.
+     * @param array $tokens Tokens.
+     * @param array $rules Rules.
+     * @param array $pragmas Pragmas.
      */
     public function __construct(
         array $tokens = [],
         array $rules = [],
         array $pragmas = []
-    ) {
+    )
+    {
         $this->_tokens  = $tokens;
         $this->_rules   = $rules;
         $this->_pragmas = $pragmas;
@@ -121,11 +124,13 @@ class Parser
     /**
      * Parse :-).
      *
-     * @param   string $text Text to parse.
-     * @param   string $rule The axiom, i.e. root rule.
-     * @param   bool $tree Whether build tree or not.
-     * @return  mixed
-     * @throws  \Hoa\Compiler\Exception\UnexpectedToken
+     * @param string $text Text to parse.
+     * @param string $rule The axiom, i.e. root rule.
+     * @param bool $tree Whether build tree or not.
+     * @return mixed
+     * @throws \Hoa\Compiler\Exception\UnrecognizedToken
+     * @throws UnexpectedToken
+     * @throws Exception\Exception
      */
     public function parse($text, $rule = null, $tree = true)
     {
@@ -136,7 +141,7 @@ class Parser
         }
 
         $lexer                = new Lexer($this->_pragmas);
-        $this->_tokenSequence = new Iterator\Buffer(
+        $this->_tokenSequence = new Buffer(
             $lexer->lexMe($text, $this->_tokens),
             $k
         );
@@ -174,7 +179,7 @@ class Parser
                     $token['token'],
                 ]);
 
-                throw Compiler\Exception\UnexpectedToken::fromOffset($error, $text, $token['offset']);
+                throw UnexpectedToken::fromOffset($error, $text, $token['offset']);
             }
         } while (true);
 
@@ -194,9 +199,9 @@ class Parser
     /**
      * Get root rule.
      *
-     * @return  string
+     * @return string|null
      */
-    public function getRootRule()
+    public function getRootRule(): ?string
     {
         foreach ($this->_rules as $rule => $_) {
             if (! \is_int($rule)) {
@@ -210,7 +215,7 @@ class Parser
     /**
      * Unfold trace.
      *
-     * @return  mixed
+     * @return mixed
      */
     protected function unfold()
     {
@@ -246,7 +251,7 @@ class Parser
      * @param int $next Next rule index.
      * @return bool
      */
-    protected function _parse(Rule $zeRule, $next)
+    protected function _parse(Rule $zeRule, $next): bool
     {
         if ($zeRule instanceof Token) {
             $name = $this->_tokenSequence->current()['token'];
@@ -398,15 +403,15 @@ class Parser
             }
             $max = $zeRule->getMax();
 
-            if ($max != -1 && $next > $max) {
+            if ($max !== -1 && $next > $max) {
                 return false;
             }
 
             $this->_todo[] = new Ekzit(
-                    $zeRule->getName(),
-                    $next,
-                    $this->_todo
-                );
+                $zeRule->getName(),
+                $next,
+                $this->_todo
+            );
             $this->_todo[] = new Ekzit($nextRule, 0);
             $this->_todo[] = new Entry($nextRule, 0);
 
@@ -419,9 +424,9 @@ class Parser
     /**
      * Backtrack the trace.
      *
-     * @return  bool
+     * @return bool
      */
-    protected function backtrack()
+    protected function backtrack(): bool
     {
         $found = false;
 
@@ -460,9 +465,9 @@ class Parser
      * Build AST from trace.
      * Walk through the trace iteratively and recursively.
      *
-     * @param   int $i Current trace index.
-     * @param   array &$children Collected children.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param int $i Current trace index.
+     * @param array &$children Collected children.
+     * @return \Hoa\Compiler\Llk\TreeNode
      */
     protected function _buildTree($i = 0, &$children = [])
     {
@@ -582,19 +587,20 @@ class Parser
     /**
      * Try to merge directly children into an existing node.
      *
-     * @param   array &$children Current children being gathering.
-     * @param   array &$handle Children of the new node.
-     * @param   string $cId Node ID.
-     * @param   bool $recursive Whether we should merge recursively or
+     * @param array &$children Current children being gathering.
+     * @param array &$handle Children of the new node.
+     * @param string $cId Node ID.
+     * @param bool $recursive Whether we should merge recursively or
      *                                not.
-     * @return  bool
+     * @return bool
      */
     protected function mergeTree(
         &$children,
         &$handle,
         $cId,
         $recursive = false
-    ) {
+    ): bool
+    {
         \end($children);
         $last = \current($children);
 
@@ -626,9 +632,9 @@ class Parser
      * Merge recursively.
      * Please, see self::mergeTree() to know the context.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode $node Node that receives.
-     * @param   \Hoa\Compiler\Llk\TreeNode $newNode Node to merge.
-     * @return  void
+     * @param \Hoa\Compiler\Llk\TreeNode $node Node that receives.
+     * @param \Hoa\Compiler\Llk\TreeNode $newNode Node to merge.
+     * @return void
      */
     protected function mergeTreeRecursive(TreeNode $node, TreeNode $newNode): void
     {
@@ -660,9 +666,9 @@ class Parser
     /**
      * Get AST.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return \Hoa\Compiler\Llk\TreeNode
      */
-    public function getTree()
+    public function getTree(): ?TreeNode
     {
         return $this->_tree;
     }
@@ -670,9 +676,9 @@ class Parser
     /**
      * Get trace.
      *
-     * @return  array
+     * @return array
      */
-    public function getTrace()
+    public function getTrace(): ?array
     {
         return $this->_trace;
     }
@@ -680,9 +686,9 @@ class Parser
     /**
      * Get pragmas.
      *
-     * @return  array
+     * @return array
      */
-    public function getPragmas()
+    public function getPragmas(): ?array
     {
         return $this->_pragmas;
     }
@@ -690,9 +696,9 @@ class Parser
     /**
      * Get tokens.
      *
-     * @return  array
+     * @return array
      */
-    public function getTokens()
+    public function getTokens(): ?array
     {
         return $this->_tokens;
     }
@@ -700,9 +706,9 @@ class Parser
     /**
      * Get the lexer iterator.
      *
-     * @return  \Hoa\Iterator\Buffer
+     * @return Buffer
      */
-    public function getTokenSequence()
+    public function getTokenSequence(): ?Buffer
     {
         return $this->_tokenSequence;
     }

@@ -14,8 +14,8 @@ namespace Hoa\Compiler\Llk\Rule;
  *
  * The choice rule.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Choice extends Rule
 {

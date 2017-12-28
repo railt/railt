@@ -26,11 +26,11 @@ class UnrecognizedToken extends Exception
     /**
      * Override line and add column support.
      *
-     * @param   string  $message    Formatted message.
-     * @param   int     $code       Code (the ID).
-     * @param   array   $arg        RaiseError string arguments.
-     * @param   int     $line       Line.
-     * @param   int     $column     Column.
+     * @param string $message Formatted message.
+     * @param int $code Code (the ID).
+     * @param array $arg RaiseError string arguments.
+     * @param int $line Line.
+     * @param int $column Column.
      */
     public function __construct($message, $code, $arg, $line, $column)
     {
@@ -41,11 +41,11 @@ class UnrecognizedToken extends Exception
     }
 
     /**
-     * @param   string  $message        Formatted message.
-     * @param   string  $text           Source code
-     * @param   int     $offsetInBytes  Error offset in bytes
-     * @param   int     $code           Code (the ID).
-     * @return  static
+     * @param string $message Formatted message.
+     * @param string $text Source code
+     * @param int $offsetInBytes Error offset in bytes
+     * @param int $code Code (the ID).
+     * @return static
      */
     public static function fromOffset($message, $text, $offsetInBytes, $code = 0)
     {
@@ -62,7 +62,7 @@ class UnrecognizedToken extends Exception
     /**
      * Get column.
      *
-     * @return  int
+     * @return int
      */
     public function getColumn()
     {

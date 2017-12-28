@@ -14,8 +14,8 @@ namespace Hoa\Compiler\Llk\Rule;
  *
  * Rule parent.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 abstract class Rule
 {
@@ -79,9 +79,9 @@ abstract class Rule
     /**
      * Constructor.
      *
-     * @param   string $name Rule name.
-     * @param   mixed $children Children.
-     * @param   string $nodeId Node ID.
+     * @param string $name Rule name.
+     * @param mixed $children Children.
+     * @param string $nodeId Node ID.
      */
     public function __construct($name, $children, $nodeId = null)
     {
@@ -93,7 +93,7 @@ abstract class Rule
     /**
      * Get rule name.
      *
-     * @return  string
+     * @return string
      */
     public function getName()
     {
@@ -103,8 +103,8 @@ abstract class Rule
     /**
      * Set rule name.
      *
-     * @param   string $name Rule name.
-     * @return  string
+     * @param string $name Rule name.
+     * @return string
      */
     public function setName($name)
     {
@@ -117,7 +117,7 @@ abstract class Rule
     /**
      * Get rule's children.
      *
-     * @return  mixed
+     * @return mixed
      */
     public function getChildren()
     {
@@ -127,8 +127,8 @@ abstract class Rule
     /**
      * Set rule's children.
      *
-     * @param   mixed $children Children.
-     * @return  mixed
+     * @param mixed $children Children.
+     * @return mixed
      */
     protected function setChildren($children)
     {
@@ -141,7 +141,7 @@ abstract class Rule
     /**
      * Get node ID.
      *
-     * @return  string
+     * @return string
      */
     public function getNodeId()
     {
@@ -151,8 +151,8 @@ abstract class Rule
     /**
      * Set node ID.
      *
-     * @param   string $nodeId Node ID.
-     * @return  string
+     * @param string $nodeId Node ID.
+     * @return string
      */
     public function setNodeId($nodeId)
     {
@@ -172,7 +172,7 @@ abstract class Rule
     /**
      * Get node options.
      *
-     * @retrun  array
+     * @retrun array
      */
     public function getNodeOptions()
     {
@@ -182,7 +182,7 @@ abstract class Rule
     /**
      * Get default ID.
      *
-     * @return  string
+     * @return string
      */
     public function getDefaultId()
     {
@@ -192,8 +192,8 @@ abstract class Rule
     /**
      * Set default ID.
      *
-     * @param   string $defaultId Default ID.
-     * @return  string
+     * @param string $defaultId Default ID.
+     * @return string
      */
     public function setDefaultId($defaultId)
     {
@@ -213,7 +213,7 @@ abstract class Rule
     /**
      * Get default options.
      *
-     * @return  array
+     * @return array
      */
     public function getDefaultOptions()
     {
@@ -223,8 +223,8 @@ abstract class Rule
     /**
      * Set PP representation of the rule.
      *
-     * @param   string $pp PP representation.
-     * @return  string
+     * @param string $pp PP representation.
+     * @return string
      */
     public function setPPRepresentation($pp)
     {
@@ -238,7 +238,7 @@ abstract class Rule
     /**
      * Get PP representation of the rule.
      *
-     * @return  string
+     * @return string
      */
     public function getPPRepresentation()
     {
@@ -248,7 +248,7 @@ abstract class Rule
     /**
      * Check whether the rule is transitional or not.
      *
-     * @return  bool
+     * @return bool
      */
     public function isTransitional()
     {

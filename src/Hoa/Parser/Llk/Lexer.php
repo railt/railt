@@ -10,14 +10,16 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Llk;
 
 use Hoa\Compiler;
+use Hoa\Compiler\Exception\LexerException;
+use Hoa\Compiler\Exception\UnrecognizedToken;
 
 /**
  * Class \Hoa\Compiler\Llk\Lexer.
  *
  * Lexical analyser, i.e. split a string into a set of lexeme, i.e. tokens.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Lexer
 {
@@ -59,7 +61,7 @@ class Lexer
     /**
      * Constructor.
      *
-     * @param   array  $pragmas    Pragmas.
+     * @param array $pragmas Pragmas.
      */
     public function __construct(array $pragmas = [])
     {
@@ -72,10 +74,10 @@ class Lexer
      * Text tokenizer: splits the text in parameter in an ordered array of
      * tokens.
      *
-     * @param   string  $text      Text to tokenize.
-     * @param   array   $tokens    Tokens to be returned.
-     * @return  \Generator
-     * @throws  \Hoa\Compiler\Exception\UnrecognizedToken
+     * @param string $text Text to tokenize.
+     * @param array $tokens Tokens to be returned.
+     * @return \Generator
+     * @throws UnrecognizedToken
      */
     public function lexMe($text, array $tokens)
     {
@@ -118,7 +120,7 @@ class Lexer
             if (null === $nextToken) {
                 $error = \sprintf('Unrecognized token "%s"', \mb_substr(\substr($text, $offset), 0, 1));
 
-                throw Compiler\Exception\UnrecognizedToken::fromOffset($error, $text, $offset);
+                throw UnrecognizedToken::fromOffset($error, $text, $offset);
             }
 
             if (true === $nextToken['keep']) {
@@ -142,9 +144,9 @@ class Lexer
     /**
      * Compute the next token recognized at the beginning of the string.
      *
-     * @param   int  $offset    Offset.
-     * @return  array
-     * @throws  \Hoa\Compiler\Exception\Lexer
+     * @param int $offset Offset.
+     * @return array
+     * @throws LexerException
      */
     protected function nextToken($offset)
     {
@@ -171,7 +173,7 @@ class Lexer
                         $i = isset($matches[1]) ? (int) ($matches[1]) : 1;
 
                         if ($i > ($c = \count($this->_nsStack))) {
-                            throw new Compiler\Exception\Lexer(
+                            throw new LexerException(
                                 'Cannot shift namespace %d-times, from token ' .
                                 '%s in namespace %s, because the stack ' .
                                 'contains only %d namespaces.',
@@ -194,7 +196,7 @@ class Lexer
                     }
 
                     if (! isset($this->_tokens[$nextState])) {
-                        throw new Compiler\Exception\Lexer(
+                        throw new LexerException(
                             'Namespace %s does not exist, called by token %s ' .
                             'in namespace %s.',
                             2,
@@ -221,11 +223,11 @@ class Lexer
     /**
      * Check if a given lexeme is matched at the beginning of the text.
      *
-     * @param   string  $lexeme    Name of the lexeme.
-     * @param   string  $regex     Regular expression describing the lexeme.
-     * @param   int     $offset    Offset.
-     * @return  array
-     * @throws  \Hoa\Compiler\Exception\Lexer
+     * @param string $lexeme Name of the lexeme.
+     * @param string $regex Regular expression describing the lexeme.
+     * @param int $offset Offset.
+     * @return array
+     * @throws LexerException
      */
     protected function matchLexeme($lexeme, $regex, $offset)
     {
@@ -243,7 +245,7 @@ class Lexer
         }
 
         if ('' === $matches[0]) {
-            throw new Compiler\Exception\Lexer(
+            throw new LexerException(
                 'A lexeme must not match an empty value, which is the ' .
                 'case of "%s" (%s).',
                 3,

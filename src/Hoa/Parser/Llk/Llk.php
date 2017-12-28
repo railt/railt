@@ -13,6 +13,8 @@ use Hoa\Compiler;
 use Hoa\Compiler\Grammar\Reader;
 use Hoa\Compiler\Io\Readable;
 use Hoa\Compiler\Llk\Rule\Analyzer;
+use Hoa\Compiler\Llk\Rule\Repetition;
+use Hoa\Compiler\Llk\Rule\Token;
 
 /**
  * Class \Hoa\Compiler\Llk.
@@ -20,8 +22,8 @@ use Hoa\Compiler\Llk\Rule\Analyzer;
  * This class provides a set of static helpers to manipulate (load and save) a
  * compiler more easily.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Llk
 {
@@ -55,7 +57,7 @@ class Llk
      *
      * @return Parser
      * @throws \LogicException
-     * @throws Compiler\Exception
+     * @throws Compiler\Exception\Exception
      */
     public function getParser(): Parser
     {
@@ -70,9 +72,9 @@ class Llk
      * will be reset. The parser will be saved as a class, named after
      * `$className`. To retrieve the parser, one must instanciate this class.
      *
-     * @param   \Hoa\Compiler\Llk\Parser  $parser       Parser to save.
-     * @param   string                    $className    Parser classname.
-     * @return  string
+     * @param \Hoa\Compiler\Llk\Parser $parser Parser to save.
+     * @param string $className Parser classname.
+     * @return string
      */
     public static function save(Parser $parser, $className)
     {
@@ -83,7 +85,7 @@ class Llk
         $outExtra   = null;
 
         $escapeRuleName = function ($ruleName) use ($parser) {
-            if (true == $parser->getRule($ruleName)->isTransitional()) {
+            if (true === $parser->getRule($ruleName)->isTransitional()) {
                 return $ruleName;
             }
 
@@ -112,11 +114,11 @@ class Llk
             // Name.
             $arguments['name'] = $escapeRuleName($rule->getName());
 
-            if ($rule instanceof Rule\Token) {
+            if ($rule instanceof Token) {
                 // Token name.
                 $arguments['tokenName'] = '\'' . $rule->getTokenName() . '\'';
             } else {
-                if ($rule instanceof Rule\Repetition) {
+                if ($rule instanceof Repetition) {
                     // Minimum.
                     $arguments['min'] = $rule->getMin();
 
@@ -148,7 +150,7 @@ class Llk
                 $arguments['nodeId'] = '\'' . $nodeId . '\'';
             }
 
-            if ($rule instanceof Rule\Token) {
+            if ($rule instanceof Token) {
                 // Unification.
                 $arguments['unification'] = $rule->getUnificationIndex();
 

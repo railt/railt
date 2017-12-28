@@ -18,9 +18,9 @@ trait ExceptionHelper
      * This is an auxiliary method that returns the line number, shift,
      * and line of code by shift relative to the beginning of the file.
      *
-     * @param   string $text        The source code
-     * @param   int    $bytesOffset Offset in bytes
-     * @return  array
+     * @param string $text The source code
+     * @param int $bytesOffset Offset in bytes
+     * @return array
      */
     protected static function getErrorPositionByOffset($text, $bytesOffset)
     {
@@ -65,7 +65,7 @@ trait ExceptionHelper
     /**
      * The method draws the highlight of the error place.
      *
-     * @param  int $charsOffset Error offset in symbols
+     * @param int $charsOffset Error offset in symbols
      * @return string
      */
     private static function getStringHighligher($charsOffset)
@@ -82,8 +82,8 @@ trait ExceptionHelper
     /**
      * Returns the error location in UTF characters by the offset in bytes.
      *
-     * @param  string $line        The code line from which we get a offset in the characters
-     * @param  int    $bytesOffset Length of offset in bytes
+     * @param string $line The code line from which we get a offset in the characters
+     * @param int $bytesOffset Length of offset in bytes
      * @return int
      */
     private static function getMbColumnPosition($line, $bytesOffset)
@@ -96,8 +96,8 @@ trait ExceptionHelper
     /**
      * Returns information about the error location: line, column and affected text lines.
      *
-     * @param string $text        The source code in which we search for a line and a column
-     * @param int    $bytesOffset Offset in bytes relative to the beginning of the source code
+     * @param string $text The source code in which we search for a line and a column
+     * @param int $bytesOffset Offset in bytes relative to the beginning of the source code
      * @return array
      */
     private static function getErrorInfo($text, $bytesOffset)

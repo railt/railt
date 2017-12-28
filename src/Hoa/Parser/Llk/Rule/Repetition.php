@@ -10,14 +10,15 @@ declare(strict_types=1);
 namespace Hoa\Compiler\Llk\Rule;
 
 use Hoa\Compiler;
+use Hoa\Compiler\Exception\RuleException;
 
 /**
  * Class \Hoa\Compiler\Llk\Rule\Repetition.
  *
  * The repetition rule.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Repetition extends Rule
 {
@@ -38,11 +39,12 @@ class Repetition extends Rule
     /**
      * Constructor.
      *
-     * @param   string  $name        Name.
-     * @param   int     $min         Minimum bound.
-     * @param   int     $max         Maximum bound.
-     * @param   mixed   $children    Children.
-     * @param   string  $nodeId      Node ID.
+     * @param string $name Name.
+     * @param int $min Minimum bound.
+     * @param int $max Maximum bound.
+     * @param mixed $children Children.
+     * @param string $nodeId Node ID.
+     * @throws \Hoa\Compiler\Exception\RuleException
      */
     public function __construct($name, $min, $max, $children, $nodeId)
     {
@@ -52,7 +54,7 @@ class Repetition extends Rule
         $max = \max(-1, (int) $max);
 
         if (-1 !== $max && $min > $max) {
-            throw new Compiler\Exception\Rule(
+            throw new RuleException(
                 'Cannot repeat with a min (%d) greater than max (%d).',
                 0,
                 [$min, $max]
@@ -66,7 +68,7 @@ class Repetition extends Rule
     /**
      * Get minimum bound.
      *
-     * @return  int
+     * @return int
      */
     public function getMin()
     {
@@ -76,7 +78,7 @@ class Repetition extends Rule
     /**
      * Get maximum bound.
      *
-     * @return  int
+     * @return int
      */
     public function getMax()
     {
@@ -86,7 +88,7 @@ class Repetition extends Rule
     /**
      * Check whether the maximum repetition is unbounded.
      *
-     * @return   bool
+     * @return bool
      */
     public function isInfinite()
     {

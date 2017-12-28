@@ -9,11 +9,21 @@ declare(strict_types=1);
 
 namespace Hoa\Compiler\Exception;
 
-use Hoa\Exception\Exception as HoaException;
-
 /**
  * Class Exception
  */
-class Exception extends HoaException
+class Exception extends \LogicException
 {
+    /**
+     * Exception constructor.
+     * @param string $message
+     * @param int $code
+     * @param array $arguments
+     * @param \Throwable|null $previous
+     */
+    public function __construct(string $message, int $code = 0, array $arguments = [], \Throwable $previous = null)
+    {
+        $message = \vsprintf($message, $arguments);
+        parent::__construct($message, $code, $previous);
+    }
 }

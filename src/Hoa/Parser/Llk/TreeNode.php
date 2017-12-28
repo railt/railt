@@ -9,17 +9,18 @@ declare(strict_types=1);
 
 namespace Hoa\Compiler\Llk;
 
-use Hoa\Visitor;
+use Hoa\Visitor\Element;
+use Hoa\Visitor\Visit;
 
 /**
  * Class \Hoa\Compiler\Llk\TreeNode.
  *
  * Provide a generic node for the AST produced by LL(k) parser.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
-class TreeNode implements Visitor\Element
+class TreeNode implements Element
 {
     /**
      * ID (should be something like #ruleName or token).
@@ -59,10 +60,10 @@ class TreeNode implements Visitor\Element
     /**
      * Constructor.
      *
-     * @param   string                      $id          ID.
-     * @param   array                       $value       Value.
-     * @param   array                       $children    Children.
-     * @param   \Hoa\Compiler\Llk\TreeNode  $parent    Parent.
+     * @param string $id ID.
+     * @param array $value Value.
+     * @param array $children Children.
+     * @param \Hoa\Compiler\Llk\TreeNode $parent Parent.
      */
     public function __construct(
         $id,
@@ -86,8 +87,8 @@ class TreeNode implements Visitor\Element
     /**
      * Set ID.
      *
-     * @param   string  $id    ID.
-     * @return  string
+     * @param string $id ID.
+     * @return string
      */
     public function setId($id)
     {
@@ -100,7 +101,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get ID.
      *
-     * @return  string
+     * @return string
      */
     public function getId()
     {
@@ -110,8 +111,8 @@ class TreeNode implements Visitor\Element
     /**
      * Set value.
      *
-     * @param   array  $value    Value (token & value).
-     * @return  array
+     * @param array $value Value (token & value).
+     * @return array
      */
     public function setValue(array $value)
     {
@@ -124,7 +125,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get value.
      *
-     * @return  array
+     * @return array
      */
     public function getValue()
     {
@@ -134,7 +135,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get value token.
      *
-     * @return  string
+     * @return string
      */
     public function getValueToken()
     {
@@ -147,7 +148,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get value value.
      *
-     * @return  string
+     * @return string
      */
     public function getValueValue()
     {
@@ -160,7 +161,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get token offset.
      *
-     * @return  int
+     * @return int
      */
     public function getOffset()
     {
@@ -173,7 +174,7 @@ class TreeNode implements Visitor\Element
     /**
      * Check if the node represents a token or not.
      *
-     * @return  bool
+     * @return bool
      */
     public function isToken()
     {
@@ -183,8 +184,8 @@ class TreeNode implements Visitor\Element
     /**
      * Prepend a child.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode  $child    Child.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param \Hoa\Compiler\Llk\TreeNode $child Child.
+     * @return \Hoa\Compiler\Llk\TreeNode
      */
     public function prependChild(self $child)
     {
@@ -196,8 +197,8 @@ class TreeNode implements Visitor\Element
     /**
      * Append a child.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode  $child    Child.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param \Hoa\Compiler\Llk\TreeNode $child Child.
+     * @return \Hoa\Compiler\Llk\TreeNode
      */
     public function appendChild(self $child)
     {
@@ -209,8 +210,8 @@ class TreeNode implements Visitor\Element
     /**
      * Set children.
      *
-     * @param   array  $children    Children.
-     * @return  array
+     * @param array $children Children.
+     * @return array
      */
     public function setChildren(array $children)
     {
@@ -223,8 +224,8 @@ class TreeNode implements Visitor\Element
     /**
      * Get child.
      *
-     * @param   int  $i    Index.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param int $i Index.
+     * @return \Hoa\Compiler\Llk\TreeNode
      */
     public function getChild($i)
     {
@@ -237,7 +238,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get children.
      *
-     * @return  array
+     * @return array
      */
     public function getChildren()
     {
@@ -247,7 +248,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get number of children.
      *
-     * @return  int
+     * @return int
      */
     public function getChildrenNumber()
     {
@@ -257,8 +258,8 @@ class TreeNode implements Visitor\Element
     /**
      * Check if a child exists.
      *
-     * @param   int  $i    Index.
-     * @return  bool
+     * @param int $i Index.
+     * @return bool
      */
     public function childExists($i)
     {
@@ -268,8 +269,8 @@ class TreeNode implements Visitor\Element
     /**
      * Set parent.
      *
-     * @param   \Hoa\Compiler\Llk\TreeNode  $parent    Parent.
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @param \Hoa\Compiler\Llk\TreeNode $parent Parent.
+     * @return \Hoa\Compiler\Llk\TreeNode
      */
     public function setParent(self $parent)
     {
@@ -282,7 +283,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get parent.
      *
-     * @return  \Hoa\Compiler\Llk\TreeNode
+     * @return \Hoa\Compiler\Llk\TreeNode
      */
     public function getParent()
     {
@@ -292,7 +293,7 @@ class TreeNode implements Visitor\Element
     /**
      * Get data.
      *
-     * @return  array
+     * @return array
      */
     public function &getData()
     {
@@ -302,13 +303,13 @@ class TreeNode implements Visitor\Element
     /**
      * Accept a visitor.
      *
-     * @param   \Hoa\Visitor\Visit  $visitor    Visitor.
-     * @param   mixed               &$handle    Handle (reference).
-     * @param   mixed               $eldnah     Handle (no reference).
-     * @return  mixed
+     * @param \Hoa\Visitor\Visit $visitor Visitor.
+     * @param mixed &$handle Handle (reference).
+     * @param mixed $eldnah Handle (no reference).
+     * @return mixed
      */
     public function accept(
-        Visitor\Visit $visitor,
+        Visit $visitor,
         &$handle = null,
         $eldnah  = null
     ) {
@@ -318,7 +319,7 @@ class TreeNode implements Visitor\Element
     /**
      * Remove circular reference to the parent (help the garbage collector).
      *
-     * @return  void
+     * @return void
      */
     public function __destruct()
     {

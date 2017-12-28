@@ -54,7 +54,9 @@
         "hoa/file": "*",
         "hoa/stream": "*",
         "hoa/math": "*",
-        "hoa/zformat": "*"
+        "hoa/zformat": "*",
+        "hoa/exception": "*",
+        "hoa/protocol": "*"
     },
     "autoload": {
         "psr-4": {

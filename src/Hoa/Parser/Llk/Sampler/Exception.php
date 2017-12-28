@@ -16,8 +16,8 @@ use Hoa\Compiler;
  *
  * Extending the \Hoa\Compiler\Exception class.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
+ * @copyright Copyright © 2007-2017 Hoa community
+ * @license New BSD License
  */
 class Exception extends Compiler\Exception
 {
