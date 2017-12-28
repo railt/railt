@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder;
 
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\TypeConflictException;

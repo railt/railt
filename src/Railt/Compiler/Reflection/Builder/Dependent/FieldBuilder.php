@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Dependent;
 
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\Compiler\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Hoa\Compiler\Grammar\Reader;
-use Hoa\Compiler\Io\PhysicalFile;
+use Railt\Parser\Grammar\Reader;
+use Railt\Parser\Io\PhysicalFile;
 
 /**
  * Class GrammarTestCase

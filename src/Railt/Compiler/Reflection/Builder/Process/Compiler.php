@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Process;
 
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;

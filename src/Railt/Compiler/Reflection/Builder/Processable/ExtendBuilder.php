@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Processable;
 
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeConflictException;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;

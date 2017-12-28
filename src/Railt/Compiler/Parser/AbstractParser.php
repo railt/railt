@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser;
 
-use Hoa\Compiler\Exception\UnexpectedToken;
-use Hoa\Compiler\Exception\UnrecognizedToken;
-use Hoa\Compiler\Llk\Parser as LlkParser;
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Exception\UnexpectedToken;
+use Railt\Parser\Exception\UnrecognizedToken;
+use Railt\Parser\Llk\Parser as LlkParser;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
 use Railt\Compiler\Kernel\CallStack;

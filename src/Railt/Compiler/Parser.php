@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Hoa\Compiler\Exception;
-use Hoa\Compiler\Llk\Llk;
-use Hoa\Compiler\Llk\Parser as LlkParser;
+use Railt\Parser\Exception;
+use Railt\Parser\Llk\Llk;
+use Railt\Parser\Llk\Parser as LlkParser;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Parser\CompiledSDLParser;
 use Railt\Compiler\Parser\SDLParser;
@@ -56,7 +56,7 @@ class Parser extends SDLParser
     }
 
     /**
-     * @return iterable|\Hoa\Compiler\Llk\Rule\Rule[]
+     * @return iterable|\Railt\Parser\Llk\Rule\Rule[]
      */
     public function getRules(): iterable
     {

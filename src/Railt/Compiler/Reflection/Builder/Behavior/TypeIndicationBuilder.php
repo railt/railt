@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Behavior;
 
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
 
 /**

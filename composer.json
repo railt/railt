@@ -32,12 +32,6 @@
         "psr/cache": "~1.0",
         "psr/simple-cache": "~1.0",
         "illuminate/support": "~5.5",
-        "hoa/exception": "~1.0",
-        "hoa/file": "~1.0",
-        "hoa/iterator": "~2.0",
-        "hoa/math": "~1.0",
-        "hoa/protocol": "~1.0",
-        "hoa/regex": "~1.0",
         "hoa/visitor": "~2.0",
         "webonyx/graphql-php": "~0.9"
     },
@@ -51,17 +45,11 @@
         "railt/reflection": "self.version",
         "railt/webonyx-adapter": "self.version",
         "hoa/compiler": "*",
-        "hoa/file": "*",
-        "hoa/stream": "*",
-        "hoa/math": "*",
-        "hoa/zformat": "*",
-        "hoa/exception": "*",
-        "hoa/protocol": "*"
+        "hoa/consistency": "*"
     },
     "autoload": {
         "psr-4": {
-            "Railt\\": "src/Railt/",
-            "Hoa\\Compiler\\": "src/Hoa/Parser/"
+            "Railt\\": "src/Railt/"
         }
     },
     "require-dev": {
