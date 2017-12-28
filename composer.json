@@ -50,7 +50,11 @@
         "railt/container": "self.version",
         "railt/reflection": "self.version",
         "railt/webonyx-adapter": "self.version",
-        "hoa/compiler": "*"
+        "hoa/compiler": "*",
+        "hoa/file": "*",
+        "hoa/stream": "*",
+        "hoa/math": "*",
+        "hoa/zformat": "*"
     },
     "autoload": {
         "psr-4": {
