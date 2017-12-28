@@ -76,7 +76,7 @@ $schema = File::fromSources('
     }
 
     type Example {
-        say(what: String = "Hello"): String! 
+        say(message: String = "Hello"): String! 
             @route(action: "ExampleController@say")
     }
 ');
@@ -94,7 +94,7 @@ class ExampleController
 {
     public function say(Input $input): string
     {
-        return $input->get('what');
+        return $input->get('message');
     }
 }
 ```
@@ -104,7 +104,7 @@ class ExampleController
 ```graphql
 # Request
 {
-    say("Something is awesome!")
+    say(message: "Something is awesome!")
 }
 ```
 
