@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser;
 
-use Railt\Parser\Exception\UnexpectedToken;
-use Railt\Parser\Exception\UnrecognizedToken;
-use Railt\Parser\Llk\Parser as LlkParser;
-use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
 use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Profiler;
+use Railt\Parser\Exception\UnexpectedToken;
+use Railt\Parser\Exception\UnrecognizedToken;
+use Railt\Parser\Llk\Parser as LlkParser;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**

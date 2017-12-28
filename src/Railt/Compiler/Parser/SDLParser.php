@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser;
 
+use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Parser\Exception;
 use Railt\Parser\Io\Readable;
 use Railt\Parser\Llk\Llk;
 use Railt\Parser\Llk\Parser as LlkParser;
-use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Reflection\Filesystem\File;
 
 /**

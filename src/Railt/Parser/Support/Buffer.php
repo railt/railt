@@ -133,7 +133,7 @@ class Buffer implements \OuterIterator
 
             $buffer->push([
                 self::BUFFER_KEY   => $innerIterator->key(),
-                self::BUFFER_VALUE => $innerIterator->current()
+                self::BUFFER_VALUE => $innerIterator->current(),
             ]);
 
             // Seek to the end of the buffer.
@@ -166,7 +166,7 @@ class Buffer implements \OuterIterator
         if (true === $buffer->isEmpty()) {
             $buffer->push([
                 self::BUFFER_KEY   => $innerIterator->key(),
-                self::BUFFER_VALUE => $innerIterator->current()
+                self::BUFFER_VALUE => $innerIterator->current(),
             ]);
         }
 

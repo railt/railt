@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
-use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 

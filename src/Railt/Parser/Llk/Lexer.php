@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk;
 
-use Railt\Parser;
 use Railt\Parser\Exception\LexerException;
 use Railt\Parser\Exception\UnrecognizedToken;
 

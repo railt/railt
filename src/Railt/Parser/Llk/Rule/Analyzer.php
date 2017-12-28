@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk\Rule;
 
-use Railt\Parser;
 use Railt\Parser\Exception\Exception;
 use Railt\Parser\Exception\RuleException;
 use Railt\Parser\Llk\Lexer;
@@ -481,7 +480,6 @@ class Analyzer
 
             if (false === \array_key_exists($tokenName, $this->_rules) &&
                 false === \array_key_exists('#' . $tokenName, $this->_rules)) {
-
                 $error = 'Cannot call rule %s() in rule %s because it does not exist.';
                 throw new RuleException($error, 5, [$tokenName, $this->_ruleName]);
             }

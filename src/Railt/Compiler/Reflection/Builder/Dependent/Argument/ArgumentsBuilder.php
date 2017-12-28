@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Dependent\Argument;
 
-use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Dependent\ArgumentBuilder;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**

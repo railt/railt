@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Process;
 
-use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 use Railt\Compiler\Reflection\Validation\Definitions;
 use Railt\Compiler\Reflection\Validation\Uniqueness;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
