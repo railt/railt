@@ -62,7 +62,9 @@
         "phpunit/phpunit": "~6.1",
         "symfony/finder": "~4.0",
         "cache/filesystem-adapter": "~1.0",
-        "symfony/var-dumper": "~4.0"
+        "symfony/var-dumper": "~4.0",
+        "symfony/dependency-injection": "3.*|4.*",
+        "illuminate/container": "~5.5"
     },
     "autoload-dev": {
         "psr-4": {
