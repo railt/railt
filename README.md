@@ -59,6 +59,9 @@ type Example {
 ```
 
 ### Application
+
+> `index.php`
+
 ```php
 use Railt\Http\Request;
 use Railt\Compiler\Compiler;
@@ -67,10 +70,49 @@ use Railt\Reflection\Filesystem\File;
 
 $app = new Application(new Compiler());
 
-// $schema = File::fromSources(...);
+$schema = File::fromSources('
+    schema {
+        query: Example
+    }
+
+    type Example {
+        say(what: String = "Hello"): String! 
+            @route(action: "ExampleController@say")
+    }
+');
 
 $response = $app->request(new Request(), $schema);
 $response->send();
+```
+
+> `ExampleController.php`
+
+```php
+use Railt\Routing\Contracts\InputInterface as Input;
+
+class ExampleController
+{
+    public function say(Input $input): string
+    {
+        return $input->get('what');
+    }
+}
+```
+
+> GraphQL
+
+```graphql
+# Request
+{
+    say("Something is awesome!")
+}
+```
+
+```json
+// Response
+{
+    "say": "Something is awesome!"
+}
 ```
 
 
