@@ -31,6 +31,31 @@ thereby solving problems such as:
 [Laravel](https://github.com/laravel/framework) or [Symfony](https://github.com/symfony/symfony))
 - And others
 
+## Quick start
+
+The documentation is in the process of writing, therefore, in order to understand how it works, a quick start.
+
+```php
+<?php
+declare(strict_types=1);
+
+use Railt\Compiler\Compiler;
+use Railt\Reflection\Filesystem\File;
+
+$document = (new Compiler())->compile(File::fromSources('
+"""
+    This is a simple example of 
+    GraphQL RL/SDL language.
+"""
+type Example {
+    id: ID!
+    some: String
+}
+'));
+
+\var_dump($document);
+```
+
 ## Learning Railt
 
 > This documentation can contain NOT RELEVANT information and currently in progress.
