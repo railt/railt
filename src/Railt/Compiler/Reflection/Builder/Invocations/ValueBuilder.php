@@ -166,7 +166,7 @@ class ValueBuilder
     {
         // TODO Probably may be escaped by backslash like "\\n".
         $source = ['\b', '\f', '\n', '\r', '\t'];
-        $out    = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u{0009}"];
+        $out    = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u {0009}"];
 
         return \str_replace($source, $out, $body);
     }
