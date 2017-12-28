@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Behavior;
 
-use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Exceptions\TypeNotFoundException;
+use Railt\Parser\Llk\TreeNode;
 
 /**
  * Trait TypeIndicationBuilder

@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Railt\Parser\Exception;
-use Railt\Parser\Llk\Llk;
-use Railt\Parser\Llk\Parser as LlkParser;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Parser\CompiledSDLParser;
 use Railt\Compiler\Parser\SDLParser;
+use Railt\Parser\Exception;
+use Railt\Parser\Llk\Llk;
+use Railt\Parser\Llk\Parser as LlkParser;
 use Railt\Reflection\Filesystem\NotFoundException;
 
 /**

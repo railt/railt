@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder;
 
-use Railt\Parser\Llk\TreeNode;
 use Railt\Compiler\Exceptions\BuildingException;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\TypeConflictException;
@@ -18,6 +17,7 @@ use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
 use Railt\Compiler\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Base\BaseDocument;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

@@ -19,7 +19,7 @@ class Lookahead implements \OuterIterator
      *
      * @var \Iterator
      */
-    protected $_iterator = null;
+    protected $_iterator;
 
     /**
      * Current key.
@@ -33,7 +33,7 @@ class Lookahead implements \OuterIterator
      *
      * @var mixed
      */
-    protected $_current  = null;
+    protected $_current;
 
     /**
      * Whether the current element is valid or not.
@@ -41,8 +41,6 @@ class Lookahead implements \OuterIterator
      * @var bool
      */
     protected $_valid    = false;
-
-
 
     /**
      * Construct.
@@ -52,8 +50,6 @@ class Lookahead implements \OuterIterator
     public function __construct(\Iterator $iterator)
     {
         $this->_iterator = $iterator;
-
-        return;
     }
 
     /**

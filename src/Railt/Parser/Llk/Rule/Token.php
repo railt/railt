@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk\Rule;
 
-use Railt\Parser;
 use Railt\Parser\Io\PhysicalFile;
 use Railt\Parser\Llk\Llk;
 

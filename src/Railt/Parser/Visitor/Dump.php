@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Visitor;
 
-use Hoa\Visitor;
 use Hoa\Visitor\Element;
 use Hoa\Visitor\Visit;
 use Railt\Parser\Llk\TreeNode;
