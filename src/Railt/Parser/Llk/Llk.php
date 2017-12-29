@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk;
 
-use Railt\Parser;
+use Railt\Parser\Exception\Exception;
 use Railt\Parser\Grammar\Reader;
 use Railt\Parser\Io\Readable;
 use Railt\Parser\Llk\Rule\Analyzer;
@@ -57,7 +57,7 @@ class Llk
      *
      * @return Parser
      * @throws \LogicException
-     * @throws Compiler\Exception\Exception
+     * @throws Exception
      */
     public function getParser(): Parser
     {

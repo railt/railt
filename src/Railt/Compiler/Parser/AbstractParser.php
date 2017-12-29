@@ -85,6 +85,9 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @param ReadableInterface $file
      * @return TreeNode
+     * @throws \Railt\Compiler\Exceptions\UnexpectedTokenException
+     * @throws \Railt\Parser\Exception\LexerException
+     * @throws \Railt\Parser\Exception\Exception
      * @throws UnrecognizedTokenException
      */
     public function parse(ReadableInterface $file): TreeNode

@@ -29,19 +29,20 @@ class SDLParser extends AbstractParser
     /**
      * @return LlkParser
      * @throws \LogicException
-     * @throws \Railt\Reflection\Filesystem\NotReadableException
-     * @throws \InvalidArgumentException
-     * @throws CompilerException
      */
     protected function createParser(): LlkParser
     {
         try {
             return (new Llk($this->getGrammar()))->getParser();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new CompilerException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
+    /**
+     * @return Readable
+     * @throws \Railt\Reflection\Filesystem\NotReadableException
+     */
     private function getGrammar(): Readable
     {
         return File::fromPathname($this->getGrammarFile());
