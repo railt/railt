@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk\Rule;
 
-use Hoa\Iterator\Lookahead;
-use Railt\Parser;
-use Railt\Parser\Exception\Exception;
 use Hoa\Iterator;
+use Hoa\Iterator\Lookahead;
+use Railt\Parser\Exception\Exception;
 use Railt\Parser\Exception\RuleException;
 use Railt\Parser\Exception\UnrecognizedToken;
 use Railt\Parser\Llk\Lexer;

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk;
 
+use Hoa\Iterator;
 use Hoa\Iterator\Buffer;
 use Railt\Parser\Exception\Exception;
 use Railt\Parser\Exception\UnexpectedToken;
@@ -19,7 +20,6 @@ use Railt\Parser\Llk\Rule\Entry;
 use Railt\Parser\Llk\Rule\Repetition;
 use Railt\Parser\Llk\Rule\Rule;
 use Railt\Parser\Llk\Rule\Token;
-use Hoa\Iterator;
 
 /**
  * Class \Railt\Parser\Llk\Parser.
