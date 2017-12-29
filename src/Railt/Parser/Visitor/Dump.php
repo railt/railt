@@ -42,8 +42,7 @@ class Dump implements Visit
         Element $element,
         &$handle = null,
         $eldnah = null
-    )
-    {
+    ) {
         ++self::$_i;
 
         $out = \str_repeat('>  ', self::$_i) . $element->getId();
