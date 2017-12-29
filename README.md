@@ -35,33 +35,72 @@ thereby solving problems such as:
 
 The documentation is in the process of writing, therefore, in order to understand how it works, a quick start.
 
-```php
-<?php
-declare(strict_types=1);
+> `index.php`
 
+```php
+use Railt\Http\Request;
 use Railt\Compiler\Compiler;
+use Railt\Foundation\Application;
 use Railt\Reflection\Filesystem\File;
 
-$document = (new Compiler())->compile(File::fromSources('
-"""
-    This is a simple example of 
-    GraphQL RL/SDL language.
-"""
-type Example {
-    id: ID!
-    some: String
-}
-'));
+$app = new Application(new Compiler());
 
-\var_dump($document);
+$schema = File::fromFile(__DIR__ . '/schema.graphqls');
+
+$response = $app->request(new Request(), $schema);
+$response->send();
 ```
+
+> `schema.graphqls`
+
+```graphql
+schema {
+    query: Example
+}
+
+type Example {
+    say(message: String = "Hello"): String! 
+        @route(action: "ExampleController@say")
+}
+```
+
+> `ExampleController.php`
+
+```php
+use Railt\Routing\Contracts\InputInterface as Input;
+
+class ExampleController
+{
+    public function say(Input $input): string
+    {
+        return $input->get('message');
+    }
+}
+```
+
+> GraphQL
+
+```graphql
+# Request
+{
+    say(message: "Something is awesome!")
+}
+```
+
+```json
+// Response
+{
+    "say": "Something is awesome!"
+}
+```
+
 
 ## Learning Railt
 
 > This documentation can contain NOT RELEVANT information and currently in progress.
 
-- [Russian](https://railt.org/ru/)
-- [English](https://railt.org/en/)
+- [Russian](https://ru.railt.org)
+- [English](https://en.railt.org)
 
 ## Contributing
 
@@ -78,7 +117,7 @@ at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
 The Railt Framework is open-sourced software licensed under 
 the [MIT license](https://opensource.org/licenses/MIT).
 
-The Hoa\Compiler, which is part of the Railt Framework re-distribute 
+The Railt\Parser, which is part of the Railt Framework re-distribute 
 under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 
 ## Production ready

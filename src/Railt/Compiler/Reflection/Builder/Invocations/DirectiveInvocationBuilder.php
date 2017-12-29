@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
-use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\Reflection\Builder\Process\Compilable;
 use Railt\Compiler\Reflection\Builder\Process\Compiler;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 

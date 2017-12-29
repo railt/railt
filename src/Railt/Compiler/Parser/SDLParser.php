@@ -9,11 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser;
 
-use Hoa\Compiler\Exception;
-use Hoa\Compiler\Io\Readable;
-use Hoa\Compiler\Llk\Llk;
-use Hoa\Compiler\Llk\Parser as LlkParser;
 use Railt\Compiler\Exceptions\CompilerException;
+use Railt\Parser\Io\Readable;
+use Railt\Parser\Llk\Llk;
+use Railt\Parser\Llk\Parser as LlkParser;
 use Railt\Reflection\Filesystem\File;
 
 /**
@@ -29,19 +28,20 @@ class SDLParser extends AbstractParser
     /**
      * @return LlkParser
      * @throws \LogicException
-     * @throws \Railt\Reflection\Filesystem\NotReadableException
-     * @throws \InvalidArgumentException
-     * @throws CompilerException
      */
     protected function createParser(): LlkParser
     {
         try {
             return (new Llk($this->getGrammar()))->getParser();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             throw new CompilerException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
+    /**
+     * @return Readable
+     * @throws \Railt\Reflection\Filesystem\NotReadableException
+     */
     private function getGrammar(): Readable
     {
         return File::fromPathname($this->getGrammarFile());

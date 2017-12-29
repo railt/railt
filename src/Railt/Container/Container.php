@@ -102,7 +102,17 @@ class Container implements ContainerInterface
             return $this->resolve($locator);
         }
 
-        return $this->parent && $this->parent->get($locator);
+        if ($this->parent && $this->parent->has($locator)) {
+            return $this->parent->get($locator);
+        }
+
+        $error = \sprintf('"%s" entry is not registered', $id);
+
+        if ($id !== $locator) {
+            $error = \sprintf('"%s" entry defined as "%s" is not registered', $id, $locator);
+        }
+
+        throw new ContainerResolutionException($error);
     }
 
     /**

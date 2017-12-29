@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser;
 
-use Hoa\Compiler\Llk\TreeNode;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**

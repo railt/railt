@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Invocations\Directive;
 
-use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 

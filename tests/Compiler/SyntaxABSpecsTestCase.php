@@ -37,7 +37,7 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
      * @dataProvider loadPositiveABTests
      *
      * @param ReadableInterface $file
-     * @throws \Hoa\Compiler\Exception\UnrecognizedToken
+     * @throws \Railt\Parser\Exception\UnrecognizedToken
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \Throwable
      */

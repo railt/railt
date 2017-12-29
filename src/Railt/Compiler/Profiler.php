@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Hoa\Compiler\Llk\Lexer;
-use Hoa\Compiler\Llk\Parser as LlkParser;
-use Hoa\Compiler\Llk\TreeNode;
-use Hoa\Compiler\Visitor\Dump;
+use Railt\Parser\Llk\Lexer;
+use Railt\Parser\Llk\Parser as LlkParser;
+use Railt\Parser\Llk\TreeNode;
+use Railt\Parser\Visitor\Dump;
 
 /**
  * Class Profiler
@@ -73,7 +73,7 @@ class Profiler
     /**
      * @param string $content
      * @return string
-     * @throws \Hoa\Compiler\Exception\UnrecognizedToken
+     * @throws \Railt\Parser\Exception\UnrecognizedToken
      */
     public function tokens(string $content): string
     {

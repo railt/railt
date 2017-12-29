@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Hoa\Compiler\Exception;
-use Hoa\Compiler\Llk\Llk;
-use Hoa\Compiler\Llk\Parser as LlkParser;
 use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Parser\CompiledSDLParser;
 use Railt\Compiler\Parser\SDLParser;
+use Railt\Parser\Exception;
+use Railt\Parser\Llk\Llk;
+use Railt\Parser\Llk\Parser as LlkParser;
 use Railt\Reflection\Filesystem\NotFoundException;
 
 /**
@@ -56,7 +56,7 @@ class Parser extends SDLParser
     }
 
     /**
-     * @return iterable|\Hoa\Compiler\Llk\Rule\Rule[]
+     * @return iterable|\Railt\Parser\Llk\Rule\Rule[]
      */
     public function getRules(): iterable
     {
@@ -64,18 +64,8 @@ class Parser extends SDLParser
     }
 
     /**
-     * @throws CompilerException
-     * @throws NotFoundException
-     */
-    public function __destruct()
-    {
-        if (! $this->hasOptimizedLayer()) {
-            $this->compile();
-        }
-    }
-
-    /**
      * @return void
+     * @throws \LogicException
      * @throws CompilerException
      * @throws NotFoundException
      */
@@ -83,13 +73,14 @@ class Parser extends SDLParser
     {
         $sources = $this->compileSources(self::COMPILED_NAMESPACE, self::COMPILED_CLASS);
 
-        \file_put_contents(self::COMPILED_FILE, $sources);
+        \file_put_contents(self::COMPILED_FILE, $sources, LOCK_EX);
     }
 
     /**
      * @param string $namespace
      * @param string $class
      * @return string
+     * @throws \LogicException
      * @throws NotFoundException
      * @throws CompilerException
      */
@@ -117,6 +108,7 @@ class Parser extends SDLParser
 
     /**
      * @return LlkParser
+     * @throws \LogicException
      * @throws CompilerException
      */
     protected function createParser(): LlkParser

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Reflection\Builder\Invocations;
 
-use Hoa\Compiler\Llk\TreeNode;
 use Railt\Compiler\Reflection\Builder\DocumentBuilder;
+use Railt\Parser\Llk\TreeNode;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 
@@ -166,7 +166,7 @@ class ValueBuilder
     {
         // TODO Probably may be escaped by backslash like "\\n".
         $source = ['\b', '\f', '\n', '\r', '\t'];
-        $out    = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u{0009}"];
+        $out    = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u {0009}"];
 
         return \str_replace($source, $out, $body);
     }

@@ -16,7 +16,10 @@
         <testsuite name="GraphQL SDL Compiler Tests">
             <directory suffix="TestCase.php">./tests/Compiler</directory>
         </testsuite>
-        <!--<testsuite name="Http Kernel Tests">
+        <testsuite name="Container Tests">
+            <directory suffix="TestCase.php">./tests/Container</directory>
+        </testsuite>
+        <testsuite name="Http Kernel Tests">
             <directory suffix="TestCase.php">./tests/Http</directory>
         </testsuite>
         <testsuite name="Routing Tests">
@@ -24,7 +27,7 @@
         </testsuite>
         <testsuite name="Application Tests">
             <directory suffix="TestCase.php">./tests/Application</directory>
-        </testsuite>-->
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist>
