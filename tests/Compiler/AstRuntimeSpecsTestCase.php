@@ -21,7 +21,7 @@ use Railt\Tests\Support\SpecTest;
  * Class CompilerTestCase
  * @group large
  */
-class AstSpecsTestCase extends AbstractCompilerTestCase
+class AstRuntimeSpecsTestCase extends AbstractCompilerTestCase
 {
     use SpecSupport;
 
@@ -31,6 +31,20 @@ class AstSpecsTestCase extends AbstractCompilerTestCase
     protected $specDirectory = __DIR__ . '/.resources/ast-spec-tests';
 
     /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $compiled = __DIR__ . '/../../src/Railt/Compiler/Parser/CompiledSDLParser.php';
+
+        if (\is_file($compiled)) {
+            \unlink($compiled);
+        }
+    }
+
+    /**
      * @dataProvider specProvider
      *
      * @param SpecTest $spec
@@ -38,7 +52,7 @@ class AstSpecsTestCase extends AbstractCompilerTestCase
      * @throws \Railt\Compiler\Exceptions\CompilerException
      * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
      */
-    public function testLanguageAstParsing(SpecTest $spec): void
+    public function testRuntimeLanguageAstParsing(SpecTest $spec): void
     {
         $compiler = new Parser(new CallStack());
 

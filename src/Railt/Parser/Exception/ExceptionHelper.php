@@ -20,7 +20,7 @@ trait ExceptionHelper
      *
      * @param string $text The source code
      * @param int $bytesOffset Offset in bytes
-     * @return array
+     * @return  array
      */
     protected static function getErrorPositionByOffset($text, $bytesOffset)
     {

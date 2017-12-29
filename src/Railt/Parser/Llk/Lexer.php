@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk;
 
+use Railt\Parser;
 use Railt\Parser\Exception\LexerException;
 use Railt\Parser\Exception\UnrecognizedToken;
 
@@ -75,9 +76,8 @@ class Lexer
      *
      * @param string $text Text to tokenize.
      * @param array $tokens Tokens to be returned.
-     * @return \Generator
-     * @throws \Railt\Parser\Exception\LexerException
-     * @throws UnrecognizedToken
+     * @return  \Generator
+     * @throws  UnrecognizedToken
      */
     public function lexMe($text, array $tokens)
     {
@@ -101,7 +101,7 @@ class Lexer
 
                 [$lexeme, $namespace] = \explode(':', $fullLexeme, 2);
 
-                $stack |= 0 === \strpos($namespace, '__shift__');
+                $stack |= ('__shift__' === \substr($namespace, 0, 9));
 
                 unset($tokens[$fullLexeme]);
                 $_tokens[$lexeme] = [$regex, $namespace];
@@ -110,7 +110,7 @@ class Lexer
             $tokens = $_tokens;
         }
 
-        if (true === $stack) {
+        if (true == $stack) {
             $this->_nsStack = new \SplStack();
         }
 
@@ -145,8 +145,8 @@ class Lexer
      * Compute the next token recognized at the beginning of the string.
      *
      * @param int $offset Offset.
-     * @return array
-     * @throws LexerException
+     * @return  array
+     * @throws  LexerException
      */
     protected function nextToken($offset)
     {
@@ -170,7 +170,7 @@ class Lexer
 
                     if (null !== $this->_nsStack &&
                         0 !== \preg_match('#^__shift__(?:\s*\*\s*(\d+))?$#', $nextState, $matches)) {
-                        $i = (int)($matches[1] ?? 1);
+                        $i = isset($matches[1]) ? (int) ($matches[1]) : 1;
 
                         if ($i > ($c = \count($this->_nsStack))) {
                             throw new LexerException(
@@ -226,8 +226,8 @@ class Lexer
      * @param string $lexeme Name of the lexeme.
      * @param string $regex Regular expression describing the lexeme.
      * @param int $offset Offset.
-     * @return array
-     * @throws LexerException
+     * @return  array
+     * @throws  LexerException
      */
     protected function matchLexeme($lexeme, $regex, $offset)
     {

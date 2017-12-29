@@ -36,16 +36,17 @@ class Dump implements Visit
      * @param Element|TreeNode $element Element to visit.
      * @param mixed &$handle Handle (reference).
      * @param mixed $eldnah Handle (not reference).
-     * @return mixed
+     * @return  mixed
      */
     public function visit(
         Element $element,
         &$handle = null,
-        $eldnah  = null
-    ) {
+        $eldnah = null
+    )
+    {
         ++self::$_i;
 
-        $out  = \str_repeat('>  ', self::$_i) . $element->getId();
+        $out = \str_repeat('>  ', self::$_i) . $element->getId();
 
         if (null !== $value = $element->getValue()) {
             $out .=
@@ -79,7 +80,7 @@ class Dump implements Visit
      * Dump data.
      *
      * @param mixed $data Data.
-     * @return string
+     * @return  string
      */
     protected function dumpData($data)
     {

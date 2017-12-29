@@ -48,12 +48,10 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
-        "hoa/visitor": "~2.0"
+        "php": ">=7.1"
     },
     "replace": {
-        "hoa/compiler": "*",
-        "hoa/consistency": "*"
+        "hoa/compiler": "*"
     },
     "autoload": {
         "psr-4": {

@@ -41,7 +41,7 @@ class IllegalToken extends Exception
     /**
      * Get column.
      *
-     * @return int
+     * @return  int
      */
     public function getColumn()
     {

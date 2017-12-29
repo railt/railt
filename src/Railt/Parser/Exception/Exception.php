@@ -18,12 +18,11 @@ class Exception extends \LogicException
      * Exception constructor.
      * @param string $message
      * @param int $code
-     * @param array $arguments
+     * @param array $args
      * @param \Throwable|null $previous
      */
-    public function __construct(string $message, int $code = 0, array $arguments = [], \Throwable $previous = null)
+    public function __construct(string $message, int $code = 0, array $args = [], \Throwable $previous = null)
     {
-        $message = \vsprintf($message, $arguments);
-        parent::__construct($message, $code, $previous);
+        parent::__construct(\vsprintf($message, $args), $code, $previous);
     }
 }

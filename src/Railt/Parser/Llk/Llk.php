@@ -13,8 +13,6 @@ use Railt\Parser\Exception\Exception;
 use Railt\Parser\Grammar\Reader;
 use Railt\Parser\Io\Readable;
 use Railt\Parser\Llk\Rule\Analyzer;
-use Railt\Parser\Llk\Rule\Repetition;
-use Railt\Parser\Llk\Rule\Token;
 
 /**
  * Class \Railt\Parser\Llk.
@@ -72,9 +70,9 @@ class Llk
      * will be reset. The parser will be saved as a class, named after
      * `$className`. To retrieve the parser, one must instanciate this class.
      *
-     * @param \Railt\Parser\Llk\Parser $parser Parser to save.
+     * @param Parser $parser Parser to save.
      * @param string $className Parser classname.
-     * @return string
+     * @return  string
      */
     public static function save(Parser $parser, $className)
     {
@@ -85,7 +83,7 @@ class Llk
         $outExtra   = null;
 
         $escapeRuleName = function ($ruleName) use ($parser) {
-            if (true === $parser->getRule($ruleName)->isTransitional()) {
+            if (true == $parser->getRule($ruleName)->isTransitional()) {
                 return $ruleName;
             }
 
@@ -114,11 +112,11 @@ class Llk
             // Name.
             $arguments['name'] = $escapeRuleName($rule->getName());
 
-            if ($rule instanceof Token) {
+            if ($rule instanceof Rule\Token) {
                 // Token name.
                 $arguments['tokenName'] = '\'' . $rule->getTokenName() . '\'';
             } else {
-                if ($rule instanceof Repetition) {
+                if ($rule instanceof Rule\Repetition) {
                     // Minimum.
                     $arguments['min'] = $rule->getMin();
 
@@ -150,7 +148,7 @@ class Llk
                 $arguments['nodeId'] = '\'' . $nodeId . '\'';
             }
 
-            if ($rule instanceof Token) {
+            if ($rule instanceof Rule\Token) {
                 // Unification.
                 $arguments['unification'] = $rule->getUnificationIndex();
 

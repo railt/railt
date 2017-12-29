@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk;
 
+use Hoa\Visitor;
 use Hoa\Visitor\Element;
 use Hoa\Visitor\Visit;
 
@@ -88,7 +89,7 @@ class TreeNode implements Element
      * Set ID.
      *
      * @param string $id ID.
-     * @return string
+     * @return  string
      */
     public function setId($id)
     {
@@ -101,7 +102,7 @@ class TreeNode implements Element
     /**
      * Get ID.
      *
-     * @return string
+     * @return  string
      */
     public function getId()
     {
@@ -112,7 +113,7 @@ class TreeNode implements Element
      * Set value.
      *
      * @param array $value Value (token & value).
-     * @return array
+     * @return  array
      */
     public function setValue(array $value)
     {
@@ -125,7 +126,7 @@ class TreeNode implements Element
     /**
      * Get value.
      *
-     * @return array
+     * @return  array
      */
     public function getValue()
     {
@@ -135,7 +136,7 @@ class TreeNode implements Element
     /**
      * Get value token.
      *
-     * @return string
+     * @return  string
      */
     public function getValueToken()
     {
@@ -148,7 +149,7 @@ class TreeNode implements Element
     /**
      * Get value value.
      *
-     * @return string
+     * @return  string
      */
     public function getValueValue()
     {
@@ -161,7 +162,7 @@ class TreeNode implements Element
     /**
      * Get token offset.
      *
-     * @return int
+     * @return  int
      */
     public function getOffset()
     {
@@ -174,7 +175,7 @@ class TreeNode implements Element
     /**
      * Check if the node represents a token or not.
      *
-     * @return bool
+     * @return  bool
      */
     public function isToken()
     {
@@ -185,7 +186,7 @@ class TreeNode implements Element
      * Prepend a child.
      *
      * @param \Railt\Parser\Llk\TreeNode $child Child.
-     * @return \Railt\Parser\Llk\TreeNode
+     * @return  \Railt\Parser\Llk\TreeNode
      */
     public function prependChild(self $child)
     {
@@ -198,7 +199,7 @@ class TreeNode implements Element
      * Append a child.
      *
      * @param \Railt\Parser\Llk\TreeNode $child Child.
-     * @return \Railt\Parser\Llk\TreeNode
+     * @return  \Railt\Parser\Llk\TreeNode
      */
     public function appendChild(self $child)
     {
@@ -211,7 +212,7 @@ class TreeNode implements Element
      * Set children.
      *
      * @param array $children Children.
-     * @return array
+     * @return  array
      */
     public function setChildren(array $children)
     {
@@ -225,7 +226,7 @@ class TreeNode implements Element
      * Get child.
      *
      * @param int $i Index.
-     * @return \Railt\Parser\Llk\TreeNode
+     * @return  \Railt\Parser\Llk\TreeNode
      */
     public function getChild($i)
     {
@@ -238,7 +239,7 @@ class TreeNode implements Element
     /**
      * Get children.
      *
-     * @return array
+     * @return  array
      */
     public function getChildren()
     {
@@ -248,7 +249,7 @@ class TreeNode implements Element
     /**
      * Get number of children.
      *
-     * @return int
+     * @return  int
      */
     public function getChildrenNumber()
     {
@@ -259,7 +260,7 @@ class TreeNode implements Element
      * Check if a child exists.
      *
      * @param int $i Index.
-     * @return bool
+     * @return  bool
      */
     public function childExists($i)
     {
@@ -270,7 +271,7 @@ class TreeNode implements Element
      * Set parent.
      *
      * @param \Railt\Parser\Llk\TreeNode $parent Parent.
-     * @return \Railt\Parser\Llk\TreeNode
+     * @return  \Railt\Parser\Llk\TreeNode
      */
     public function setParent(self $parent)
     {
@@ -283,7 +284,7 @@ class TreeNode implements Element
     /**
      * Get parent.
      *
-     * @return \Railt\Parser\Llk\TreeNode
+     * @return  \Railt\Parser\Llk\TreeNode
      */
     public function getParent()
     {
@@ -293,7 +294,7 @@ class TreeNode implements Element
     /**
      * Get data.
      *
-     * @return array
+     * @return  array
      */
     public function &getData()
     {
@@ -303,10 +304,10 @@ class TreeNode implements Element
     /**
      * Accept a visitor.
      *
-     * @param \Hoa\Visitor\Visit $visitor Visitor.
+     * @param Visit $visitor Visitor.
      * @param mixed &$handle Handle (reference).
      * @param mixed $eldnah Handle (no reference).
-     * @return mixed
+     * @return  mixed
      */
     public function accept(
         Visit $visitor,
@@ -319,7 +320,7 @@ class TreeNode implements Element
     /**
      * Remove circular reference to the parent (help the garbage collector).
      *
-     * @return void
+     * @return  void
      */
     public function __destruct()
     {

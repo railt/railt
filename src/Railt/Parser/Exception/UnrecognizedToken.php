@@ -45,7 +45,7 @@ class UnrecognizedToken extends Exception
      * @param string $text Source code
      * @param int $offsetInBytes Error offset in bytes
      * @param int $code Code (the ID).
-     * @return static
+     * @return  static
      */
     public static function fromOffset($message, $text, $offsetInBytes, $code = 0)
     {
@@ -62,7 +62,7 @@ class UnrecognizedToken extends Exception
     /**
      * Get column.
      *
-     * @return int
+     * @return  int
      */
     public function getColumn()
     {

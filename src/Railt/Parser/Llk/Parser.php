@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk;
 
+use Hoa\Iterator\Buffer;
 use Railt\Parser\Exception\Exception;
 use Railt\Parser\Exception\UnexpectedToken;
 use Railt\Parser\Llk\Rule\Choice;
@@ -18,7 +19,7 @@ use Railt\Parser\Llk\Rule\Entry;
 use Railt\Parser\Llk\Rule\Repetition;
 use Railt\Parser\Llk\Rule\Rule;
 use Railt\Parser\Llk\Rule\Token;
-use Railt\Parser\Support\Buffer;
+use Hoa\Iterator;
 
 /**
  * Class \Railt\Parser\Llk\Parser.
@@ -62,7 +63,7 @@ class Parser
     /**
      * Lexer iterator.
      *
-     * @var Buffer
+     * @var \Hoa\Iterator\Lookahead
      */
     protected $_tokenSequence;
 
@@ -106,13 +107,16 @@ class Parser
      *
      * @param array $tokens Tokens.
      * @param array $rules Rules.
-     * @param array $pragma Pragmas.
+     * @param array $pragmas Pragmas.
      */
-    public function __construct(array $tokens = [], array $rules = [], array $pragma = [])
-    {
+    public function __construct(
+        array $tokens = [],
+        array $rules = [],
+        array $pragmas = []
+    ) {
         $this->_tokens  = $tokens;
         $this->_rules   = $rules;
-        $this->_pragmas = $pragma;
+        $this->_pragmas = $pragmas;
     }
 
     /**
@@ -121,11 +125,8 @@ class Parser
      * @param string $text Text to parse.
      * @param string $rule The axiom, i.e. root rule.
      * @param bool $tree Whether build tree or not.
-     * @return mixed
-     * @throws \Railt\Parser\Exception\LexerException
-     * @throws \Railt\Parser\Exception\UnrecognizedToken
-     * @throws UnexpectedToken
-     * @throws Exception
+     * @return  mixed
+     * @throws  UnexpectedToken
      */
     public function parse($text, $rule = null, $tree = true)
     {
@@ -194,9 +195,9 @@ class Parser
     /**
      * Get root rule.
      *
-     * @return string|null
+     * @return  string
      */
-    public function getRootRule(): ?string
+    public function getRootRule()
     {
         foreach ($this->_rules as $rule => $_) {
             if (! \is_int($rule)) {
@@ -210,7 +211,7 @@ class Parser
     /**
      * Unfold trace.
      *
-     * @return mixed
+     * @return  mixed
      */
     protected function unfold()
     {
@@ -246,7 +247,7 @@ class Parser
      * @param int $next Next rule index.
      * @return bool
      */
-    protected function _parse(Rule $zeRule, $next): bool
+    protected function _parse(Rule $zeRule, $next)
     {
         if ($zeRule instanceof Token) {
             $name = $this->_tokenSequence->current()['token'];
@@ -398,7 +399,7 @@ class Parser
             }
             $max = $zeRule->getMax();
 
-            if ($max !== -1 && $next > $max) {
+            if ($max != -1 && $next > $max) {
                 return false;
             }
 
@@ -419,9 +420,9 @@ class Parser
     /**
      * Backtrack the trace.
      *
-     * @return bool
+     * @return  bool
      */
-    protected function backtrack(): bool
+    protected function backtrack()
     {
         $found = false;
 
@@ -462,7 +463,7 @@ class Parser
      *
      * @param int $i Current trace index.
      * @param array &$children Collected children.
-     * @return \Railt\Parser\Llk\TreeNode
+     * @return  \Railt\Parser\Llk\TreeNode
      */
     protected function _buildTree($i = 0, &$children = [])
     {
@@ -587,14 +588,14 @@ class Parser
      * @param string $cId Node ID.
      * @param bool $recursive Whether we should merge recursively or
      *                                not.
-     * @return bool
+     * @return  bool
      */
     protected function mergeTree(
         &$children,
         &$handle,
         $cId,
         $recursive = false
-    ): bool {
+    ) {
         \end($children);
         $last = \current($children);
 
@@ -628,7 +629,7 @@ class Parser
      *
      * @param \Railt\Parser\Llk\TreeNode $node Node that receives.
      * @param \Railt\Parser\Llk\TreeNode $newNode Node to merge.
-     * @return void
+     * @return  void
      */
     protected function mergeTreeRecursive(TreeNode $node, TreeNode $newNode): void
     {
@@ -660,9 +661,9 @@ class Parser
     /**
      * Get AST.
      *
-     * @return \Railt\Parser\Llk\TreeNode
+     * @return  \Railt\Parser\Llk\TreeNode
      */
-    public function getTree(): ?TreeNode
+    public function getTree()
     {
         return $this->_tree;
     }
@@ -670,9 +671,9 @@ class Parser
     /**
      * Get trace.
      *
-     * @return array
+     * @return  array
      */
-    public function getTrace(): ?array
+    public function getTrace()
     {
         return $this->_trace;
     }
@@ -680,9 +681,9 @@ class Parser
     /**
      * Get pragmas.
      *
-     * @return array
+     * @return  array
      */
-    public function getPragmas(): ?array
+    public function getPragmas()
     {
         return $this->_pragmas;
     }
@@ -690,9 +691,9 @@ class Parser
     /**
      * Get tokens.
      *
-     * @return array
+     * @return  array
      */
-    public function getTokens(): ?array
+    public function getTokens()
     {
         return $this->_tokens;
     }
@@ -700,9 +701,9 @@ class Parser
     /**
      * Get the lexer iterator.
      *
-     * @return Buffer
+     * @return  Buffer
      */
-    public function getTokenSequence(): ?Buffer
+    public function getTokenSequence()
     {
         return $this->_tokenSequence;
     }

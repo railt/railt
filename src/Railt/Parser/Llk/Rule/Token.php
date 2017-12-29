@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk\Rule;
 
+use Railt\Parser;
 use Railt\Parser\Io\PhysicalFile;
 use Railt\Parser\Llk\Llk;
 
@@ -111,7 +112,7 @@ class Token extends Rule
     /**
      * Get token name.
      *
-     * @return string
+     * @return  string
      */
     public function getTokenName()
     {
@@ -121,7 +122,7 @@ class Token extends Rule
     /**
      * Get token namespace.
      *
-     * @return string
+     * @return  string
      */
     public function getNamespace()
     {
@@ -132,7 +133,7 @@ class Token extends Rule
      * Set token namespace.
      *
      * @param string $namespace Namespace.
-     * @return string
+     * @return  string
      */
     public function setNamespace($namespace)
     {
@@ -146,7 +147,7 @@ class Token extends Rule
      * Set representation.
      *
      * @param string $regex Representation.
-     * @return string
+     * @return  string
      */
     public function setRepresentation($regex)
     {
@@ -159,12 +160,10 @@ class Token extends Rule
     /**
      * Get AST of the token representation.
      *
-     * @return \Railt\Parser\Llk\TreeNode
-     * @throws \Railt\Parser\Exception\UnrecognizedToken
-     * @throws \LogicException
+     * @return  \Railt\Parser\Llk\TreeNode
      * @throws \InvalidArgumentException
-     * @throws Compiler\Exception\Exception
-     * @throws Compiler\Exception\UnexpectedToken
+     * @throws Parser\Exception
+     * @throws Parser\Exception\UnexpectedToken
      */
     public function getAST()
     {
@@ -174,8 +173,9 @@ class Token extends Rule
         }
 
         if (null === $this->_ast) {
-            $this->_ast = static::$_regexCompiler
-                ->parse($this->getRepresentation());
+            $this->_ast = static::$_regexCompiler->parse(
+                $this->getRepresentation()
+            );
         }
 
         return $this->_ast;
@@ -184,7 +184,7 @@ class Token extends Rule
     /**
      * Get token representation.
      *
-     * @return string
+     * @return  string
      */
     public function getRepresentation()
     {
@@ -194,7 +194,7 @@ class Token extends Rule
     /**
      * Get token value.
      *
-     * @return string
+     * @return  string
      */
     public function getValue()
     {
@@ -205,7 +205,7 @@ class Token extends Rule
      * Set token value.
      *
      * @param string $value Value.
-     * @return string
+     * @return  string
      */
     public function setValue($value)
     {
@@ -229,7 +229,7 @@ class Token extends Rule
      * Set token offset.
      *
      * @param int $offset Offset.
-     * @return int
+     * @return  int
      */
     public function setOffset($offset)
     {
@@ -242,7 +242,7 @@ class Token extends Rule
     /**
      * Check whether the token is kept in the AST or not.
      *
-     * @return bool
+     * @return  bool
      */
     public function isKept()
     {
@@ -253,7 +253,7 @@ class Token extends Rule
      * Set whether the token is kept or not in the AST.
      *
      * @param bool $kept Kept.
-     * @return bool
+     * @return  bool
      */
     public function setKept($kept)
     {
@@ -266,7 +266,7 @@ class Token extends Rule
     /**
      * Get unification index.
      *
-     * @return int
+     * @return  int
      */
     public function getUnificationIndex()
     {

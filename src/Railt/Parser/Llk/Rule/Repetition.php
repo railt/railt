@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk\Rule;
 
+use Railt\Parser;
 use Railt\Parser\Exception\RuleException;
 
 /**
@@ -43,7 +44,6 @@ class Repetition extends Rule
      * @param int $max Maximum bound.
      * @param mixed $children Children.
      * @param string $nodeId Node ID.
-     * @throws \Railt\Parser\Exception\RuleException
      */
     public function __construct($name, $min, $max, $children, $nodeId)
     {
@@ -67,7 +67,7 @@ class Repetition extends Rule
     /**
      * Get minimum bound.
      *
-     * @return int
+     * @return  int
      */
     public function getMin()
     {
@@ -77,7 +77,7 @@ class Repetition extends Rule
     /**
      * Get maximum bound.
      *
-     * @return int
+     * @return  int
      */
     public function getMax()
     {
@@ -87,7 +87,7 @@ class Repetition extends Rule
     /**
      * Check whether the maximum repetition is unbounded.
      *
-     * @return bool
+     * @return  bool
      */
     public function isInfinite()
     {

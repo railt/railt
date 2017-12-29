@@ -9,10 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Llk\Rule;
 
+use Hoa\Iterator\Lookahead;
+use Railt\Parser;
 use Railt\Parser\Exception\Exception;
+use Hoa\Iterator;
 use Railt\Parser\Exception\RuleException;
+use Railt\Parser\Exception\UnrecognizedToken;
 use Railt\Parser\Llk\Lexer;
-use Railt\Parser\Support\Lookahead;
 
 /**
  * Class \Railt\Parser\Llk\Rule\Analyzer.
@@ -67,21 +70,18 @@ class Analyzer
      * @var array
      */
     protected $_rules;
-
     /**
      * Parsed rules.
      *
      * @var array
      */
     protected $_parsedRules;
-
     /**
      * Counter to auto-name transitional rules.
      *
      * @var int
      */
     protected $_transitionalRuleCounter = 0;
-
     /**
      * Rule name being analyzed.
      *
@@ -102,14 +102,12 @@ class Analyzer
     /**
      * Build the analyzer of the rules (does not analyze the rules).
      *
-     * @param array $rules Rule to be analyzed.
+     * @param array $rules
      * @return array
-     * @throws \Railt\Parser\Exception\UnrecognizedToken
-     * @throws \Railt\Parser\Exception\LexerException
-     * @throws \Railt\Parser\Exception\Exception
-     * @throws \Railt\Parser\Exception\RuleException
+     * @throws UnrecognizedToken
+     * @throws RuleException
      */
-    public function analyzeRules(array $rules): array
+    public function analyzeRules(array $rules)
     {
         if (empty($rules)) {
             throw new RuleException('No rules specified!', 0);
@@ -156,7 +154,7 @@ class Analyzer
     /**
      * Implementation of “rule”.
      *
-     * @return mixed
+     * @return  mixed
      */
     protected function rule(&$pNodeId)
     {
@@ -166,8 +164,7 @@ class Analyzer
     /**
      * Implementation of “choice”.
      *
-     * @return mixed
-     * @throws \Railt\Parser\Exception\Exception
+     * @return  mixed
      */
     protected function choice(&$pNodeId)
     {
@@ -221,8 +218,7 @@ class Analyzer
     /**
      * Implementation of “concatenation”.
      *
-     * @return mixed
-     * @throws Exception
+     * @return  mixed
      */
     protected function concatenation(&$pNodeId)
     {
@@ -261,17 +257,15 @@ class Analyzer
     /**
      * Implementation of “repetition”.
      *
-     * @return mixed
-     * @throws \Railt\Parser\Exception\Exception
+     * @param $pNodeId
+     * @return int|mixed|void
      */
     protected function repetition(&$pNodeId)
     {
-        [$min, $max] = [null, null];
-
         // simple() …
         $children = $this->simple($pNodeId);
 
-        if ($children === null) {
+        if (null === $children) {
             return;
         }
 
@@ -336,11 +330,11 @@ class Analyzer
             $this->_lexer->next();
         }
 
-        if ($min !== null) {
+        if (! isset($min)) {
             return $children;
         }
 
-        if ($max !== -1 && $max < $min) {
+        if (-1 != $max && $max < $min) {
             throw new Exception(
                 'Upper bound %d must be greater or ' .
                 'equal to lower bound %d in rule %s.',
@@ -364,9 +358,9 @@ class Analyzer
     /**
      * Implementation of “simple”.
      *
-     * @return mixed
-     * @throws \Railt\Parser\Exception\Exception
-     * @throws RuleException
+     * @return  mixed
+     * @throws  \Railt\Parser\Exception\Exception
+     * @throws  RuleException
      */
     protected function simple(&$pNodeId)
     {
@@ -412,7 +406,7 @@ class Analyzer
                 }
             }
 
-            if ($exists === false) {
+            if (false == $exists) {
                 throw new Exception(
                     'Token ::%s:: does not exist in rule %s.',
                     3,
@@ -446,8 +440,12 @@ class Analyzer
 
             foreach ($this->_tokens as $namespace => $tokens) {
                 foreach ($tokens as $token => $value) {
-                    if ($token === $tokenName || \strpos($token, $tokenName) === 0) {
+                    if (
+                        $token === $tokenName ||
+                        \substr($token, 0, (int)\strpos($token, ':')) === $tokenName
+                    ) {
                         $exists = true;
+
                         break 2;
                     }
                 }
@@ -478,10 +476,15 @@ class Analyzer
         if ('named' === $this->_lexer->current()['token']) {
             $tokenName = \rtrim($this->_lexer->current()['value'], '()');
 
-            if (false === \array_key_exists($tokenName, $this->_rules) &&
-                false === \array_key_exists('#' . $tokenName, $this->_rules)) {
-                $error = 'Cannot call rule %s() in rule %s because it does not exist.';
-                throw new RuleException($error, 5, [$tokenName, $this->_ruleName]);
+            $isEmptyRule = ! \array_key_exists($tokenName, $this->_rules) &&
+                ! \array_key_exists('#' . $tokenName, $this->_rules);
+
+            if ($isEmptyRule) {
+                throw new RuleException(
+                    'Cannot call rule %s() in rule %s because it does not exist.',
+                    5,
+                    [$tokenName, $this->_ruleName]
+                );
             }
 
             if (0 === $this->_lexer->key() &&
@@ -500,7 +503,5 @@ class Analyzer
 
             return $name;
         }
-
-        return null;
     }
 }

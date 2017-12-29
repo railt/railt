@@ -79,7 +79,7 @@ abstract class Invocation
     /**
      * Get rule name.
      *
-     * @return string
+     * @return  string
      */
     public function getRule()
     {
@@ -89,7 +89,7 @@ abstract class Invocation
     /**
      * Get data.
      *
-     * @return mixed
+     * @return  mixed
      */
     public function getData()
     {
@@ -99,7 +99,7 @@ abstract class Invocation
     /**
      * Get todo sequence.
      *
-     * @return array
+     * @return  array
      */
     public function getTodo()
     {
@@ -110,7 +110,7 @@ abstract class Invocation
      * Set depth in trace.
      *
      * @param int $depth Depth.
-     * @return int
+     * @return  int
      */
     public function setDepth($depth)
     {
@@ -123,7 +123,7 @@ abstract class Invocation
     /**
      * Get depth in trace.
      *
-     * @return int
+     * @return  int
      */
     public function getDepth()
     {
@@ -133,7 +133,7 @@ abstract class Invocation
     /**
      * Check whether the rule is transitional or not.
      *
-     * @return bool
+     * @return  bool
      */
     public function isTransitional()
     {
