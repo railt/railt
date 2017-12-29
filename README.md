@@ -99,8 +99,8 @@ class ExampleController
 
 > This documentation can contain NOT RELEVANT information and currently in progress.
 
-- [Russian](https://railt.org/ru/)
-- [English](https://railt.org/en/)
+- [Russian](https://ru.railt.org)
+- [English](https://en.railt.org)
 
 ## Contributing
 
