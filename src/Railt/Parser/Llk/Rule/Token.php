@@ -24,13 +24,6 @@ use Railt\Parser\Llk\Llk;
 class Token extends Rule
 {
     /**
-     * LL(k) compiler of hoa://Library/Regex/Grammar.pp.
-     *
-     * @var \Railt\Parser\Llk\Parser
-     */
-    protected static $_regexCompiler = null;
-
-    /**
      * Token name.
      *
      * @var string
@@ -155,40 +148,6 @@ class Token extends Rule
         $this->_regex = $regex;
 
         return $old;
-    }
-
-    /**
-     * Get AST of the token representation.
-     *
-     * @return  \Railt\Parser\Llk\TreeNode
-     * @throws \InvalidArgumentException
-     * @throws Parser\Exception
-     * @throws Parser\Exception\UnexpectedToken
-     */
-    public function getAST()
-    {
-        if (null === static::$_regexCompiler) {
-            $stream                 = PhysicalFile::fromPathname('hoa://Library/Regex/Grammar.pp');
-            static::$_regexCompiler = (new Llk($stream))->getParser();
-        }
-
-        if (null === $this->_ast) {
-            $this->_ast = static::$_regexCompiler->parse(
-                $this->getRepresentation()
-            );
-        }
-
-        return $this->_ast;
-    }
-
-    /**
-     * Get token representation.
-     *
-     * @return  string
-     */
-    public function getRepresentation()
-    {
-        return $this->_regex;
     }
 
     /**

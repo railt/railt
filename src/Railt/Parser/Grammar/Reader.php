@@ -128,6 +128,7 @@ class Reader
                 $this->parsePragma($this->escape($line, self::T_PRAGMA_PREFIX_LEN));
                 break;
 
+
             case $this->startsWith($line, self::T_TOKEN_PREFIX):
                 $this->parseToken($this->escape($line, self::T_TOKEN_PREFIX_LEN));
                 break;
