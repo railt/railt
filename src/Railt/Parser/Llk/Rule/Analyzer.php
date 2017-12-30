@@ -65,19 +65,19 @@ class Analyzer
      * @var array
      */
     protected $rules;
-    
+
     /**
      * Parsed rules.
      * @var array
      */
     protected $parsedRules;
-    
+
     /**
      * Counter to auto-name transitional rules.
      * @var int
      */
     protected $transitionalRuleCounter = 0;
-    
+
     /**
      * Rule name being analyzed.
      * @var string
@@ -108,15 +108,15 @@ class Analyzer
             throw new RuleException('No rules specified!', 0);
         }
 
-        $this->parsedRules = [];
-        $this->rules       = $rules;
+        $this->parsedRules  = [];
+        $this->rules        = $rules;
         $lexer              = new Lexer();
 
         foreach ($rules as $key => $value) {
             $this->lexer = new Lookahead($lexer->lexMe($value, static::$ppLexemes));
             $this->lexer->rewind();
 
-            $this->ruleName = $key;
+            $this->ruleName  = $key;
             $nodeId          = null;
 
             if ('#' === $key[0]) {
@@ -205,7 +205,7 @@ class Analyzer
         }
 
         $name                      = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name] = new Choice($name, $children);
+        $this->parsedRules[$name]  = new Choice($name, $children);
 
         return $name;
     }
@@ -240,7 +240,7 @@ class Analyzer
         }
 
         $name                      = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name] = new Concatenation(
+        $this->parsedRules[$name]  = new Concatenation(
             $name,
             $children,
             null
@@ -339,7 +339,7 @@ class Analyzer
         }
 
         $name                      = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name] = new Repetition(
+        $this->parsedRules[$name]  = new Repetition(
             $name,
             $min,
             $max,
@@ -410,7 +410,7 @@ class Analyzer
             }
 
             $name                      = $this->transitionalRuleCounter++;
-            $this->parsedRules[$name] = new Token(
+            $this->parsedRules[$name]  = new Token(
                 $name,
                 $tokenName,
                 null,
@@ -485,7 +485,7 @@ class Analyzer
             if (0 === $this->lexer->key() &&
                 'EOF' === $this->lexer->getNext()['token']) {
                 $name                      = $this->transitionalRuleCounter++;
-                $this->parsedRules[$name] = new Concatenation(
+                $this->parsedRules[$name]  = new Concatenation(
                     $name,
                     [$tokenName],
                     null
