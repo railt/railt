@@ -54,12 +54,12 @@
         "railt/webonyx-adapter": "self.version",
         "hoa/compiler": "*",
         "hoa/consistency": "*",
-        "hoa/exception"  : "*",
-        "hoa/test"  : "*"
+        "hoa/exception": "*",
+        "hoa/test": "*"
     },
     "autoload": {
         "psr-4": {
-            "Railt\\": "src/Railt/"
+            "Railt\\": "src/"
         }
     },
     "require-dev": {
