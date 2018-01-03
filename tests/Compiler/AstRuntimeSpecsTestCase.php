@@ -11,7 +11,6 @@ namespace Railt\Tests\Compiler;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Compiler\Kernel\CallStack;
 use Railt\Compiler\Parser\Factory;
 use Railt\Parser\Runtime;
 use Railt\Reflection\Filesystem\File;
@@ -59,7 +58,7 @@ class AstRuntimeSpecsTestCase extends AbstractCompilerTestCase
         $runtime  = new Runtime(File::fromPathname(__DIR__ . '/../../src/Compiler/resources/grammar/sdl.pp'));
         $compiler->setRuntime($runtime);
 
-        //
+
 
         $ast = $compiler->parse(File::fromSources($spec->getIn(), $spec->getPath()));
 
