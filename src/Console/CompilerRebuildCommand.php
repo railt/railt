@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Console;
 
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Parser;
+use Railt\Compiler\Parser\Factory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -38,7 +38,7 @@ class CompilerRebuildCommand extends Command
      */
     public function execute(InputInterface $in, OutputInterface $out)
     {
-        $parser = new Parser(new CallStack());
+        $parser = new Factory(new CallStack());
         $parser->compile();
 
         $out->writeln('<info>OK</info>');

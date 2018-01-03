@@ -108,11 +108,8 @@ class Parser
      * @param array $rules Rules.
      * @param array $pragmas Pragmas.
      */
-    public function __construct(
-        array $tokens = [],
-        array $rules = [],
-        array $pragmas = []
-    ) {
+    public function __construct(array $tokens = [], array $rules = [], array $pragmas = [])
+    {
         $this->_tokens  = $tokens;
         $this->_rules   = $rules;
         $this->_pragmas = $pragmas;
@@ -594,7 +591,8 @@ class Parser
         &$handle,
         $cId,
         $recursive = false
-    ) {
+    )
+    {
         \end($children);
         $last = \current($children);
 

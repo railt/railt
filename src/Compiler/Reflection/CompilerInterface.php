@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Reflection;
 
 use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Parser;
+use Railt\Compiler\Parser\Factory;
 use Railt\Compiler\Reflection\Validation\Base\ValidatorInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
@@ -40,9 +40,9 @@ interface CompilerInterface extends Dictionary
     public function autoload(\Closure $then): self;
 
     /**
-     * @return Parser
+     * @return Factory
      */
-    public function getParser(): Parser;
+    public function getParser(): Factory;
 
     /**
      * @param string $group

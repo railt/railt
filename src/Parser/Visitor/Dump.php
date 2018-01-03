@@ -95,4 +95,22 @@ class Dump implements Visit
 
         return $out;
     }
+
+    /**
+     * @param TreeNode $ast
+     * @return string
+     */
+    public function dump(TreeNode $ast): string
+    {
+        $result = (string)$this->visit($ast);
+
+        $result = \str_replace('>  ', '    ', $result);
+        $result = \preg_replace('/^\s{4}/ium', '', $result);
+
+        $result = \preg_replace_callback('/token\((\w+),(.*?)\)/isu', function ($args) {
+            return 'token(' . $args[1] . ',' . \str_replace(["\n"], ['\n'], $args[2]) . ')';
+        }, $result);
+
+        return \trim($result);
+    }
 }

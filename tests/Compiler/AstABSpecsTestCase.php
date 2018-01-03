@@ -10,8 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Compiler;
 
 use PHPUnit\Framework\AssertionFailedError;
-use Railt\Compiler\Kernel\CallStack;
-use Railt\Compiler\Parser;
+use Railt\Compiler\Parser\Factory;
 use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
@@ -38,7 +37,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
         $error = $file->getPathname() . ' must not throws an exception: ' . "\n" . $file->getContents();
 
         try {
-            $compiler = new Parser(new CallStack());
+            $compiler = new Factory();
             $compiler->parse($file);
         } catch (\Throwable $e) {
             static::throwException(new AssertionFailedError($error));
@@ -65,7 +64,6 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
      * @throws \PHPUnit\Framework\Exception
      * @throws \Railt\Compiler\Exceptions\CompilerException
      * @throws \Railt\Compiler\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\Compiler\Exceptions\NotReadableException
      */
     public function testNegativeCompilation(ReadableInterface $file): void
     {
@@ -73,7 +71,7 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
             $file->getContents();
 
         try {
-            $compiler = new Parser();
+            $compiler = new Factory();
             $ast      = $compiler->parse($file);
         } catch (\Throwable $e) {
             static::assertTrue(true);

@@ -15,16 +15,50 @@ namespace Railt\Parser;
 class Generator
 {
     /**
+     *
+     */
+    private const BASE_PARSER_CLASS_NAME = Parser::class;
+
+    /**
+     * @var Parser
+     */
+    private $parser;
+
+    /**
+     * @var string
+     */
+    private $namespace;
+
+    /**
+     * Generator constructor.
+     * @param Parser $parser
+     */
+    public function __construct(Parser $parser)
+    {
+        $this->parser = $parser;
+    }
+
+    /**
+     * @param string $namespace
+     * @return Generator
+     */
+    public function setNamespace(string $namespace): self
+    {
+        $this->namespace = $namespace;
+
+        return $this;
+    }
+
+    /**
      * Save in-memory parser to PHP code.
      * The generated PHP code will load the same in-memory parser. The state
      * will be reset. The parser will be saved as a class, named after
      * `$className`. To retrieve the parser, one must instanciate this class.
      *
-     * @param Parser $parser Parser to save.
      * @param string $className Parser classname.
      * @return  string
      */
-    public static function save(Parser $parser, string $className): string
+    public function generate(string $className): string
     {
         $out        = null;
         $outTokens  = null;
@@ -32,15 +66,15 @@ class Generator
         $outPragmas = null;
         $outExtra   = null;
 
-        $escapeRuleName = function ($ruleName) use ($parser) {
-            if (true == $parser->getRule($ruleName)->isTransitional()) {
+        $escapeRuleName = function ($ruleName) {
+            if (true == $this->parser->getRule($ruleName)->isTransitional()) {
                 return $ruleName;
             }
 
             return '\'' . $ruleName . '\'';
         };
 
-        foreach ($parser->getTokens() as $namespace => $tokens) {
+        foreach ($this->parser->getTokens() as $namespace => $tokens) {
             $outTokens .= '                \'' . $namespace . '\' => [' . "\n";
 
             foreach ($tokens as $tokenName => $tokenValue) {
@@ -56,7 +90,7 @@ class Generator
             $outTokens .= '                ],' . "\n";
         }
 
-        foreach ($parser->getRules() as $rule) {
+        foreach ($this->parser->getRules() as $rule) {
             $arguments = [];
 
             // Name.
@@ -137,7 +171,7 @@ class Generator
                 '),';
         }
 
-        foreach ($parser->getPragmas() as $pragmaName => $pragmaValue) {
+        foreach ($this->parser->getPragmas() as $pragmaName => $pragmaValue) {
             $outPragmas .=
                 "\n" .
                 '                \'' . $pragmaName . '\' => ' .
@@ -150,7 +184,7 @@ class Generator
         }
 
         $out .=
-            'class ' . $className . ' extends \Railt\Parser\Parser' . "\n" .
+            'class ' . $className . ' extends \\' . self::BASE_PARSER_CLASS_NAME . "\n" .
             '{' . "\n" .
             '    public function __construct()' . "\n" .
             '    {' . "\n" .
@@ -170,5 +204,53 @@ class Generator
             '}' . "\n";
 
         return $out;
+    }
+
+    /**
+     * @return string
+     */
+    private function getNamespace(): string
+    {
+        return $this->namespace
+            ? 'namespace ' . $this->namespace . ';' . "\n\n"
+            : '';
+    }
+
+    /**
+     * @return string
+     */
+    private function getHeader(): string
+    {
+        return '<?php' . "\n" .
+                '/**' . "\n" .
+                ' * This is generated file.' . "\n" .
+                ' * Do not update it manually.' . "\n" .
+                ' * Generated at ' . \date('d-m-Y H:i:s') . "\n" .
+                ' */' . "\n" .
+            'declare(strict_types=1);' . "\n\n";
+    }
+
+    /**
+     * @param string $filePath
+     * @param string $class
+     * @return string
+     */
+    private function fileName(string $filePath, string $class): string
+    {
+        return $filePath . '/' . $class . '.php';
+    }
+
+    /**
+     * @param string $className
+     * @param string $filePath
+     * @return void
+     */
+    public function saveTo(string $className, string $filePath): void
+    {
+        $sources = $this->getHeader() .
+            $this->getNamespace() .
+            $this->generate($className);
+
+        \file_put_contents($this->fileName($filePath, $className), $sources);
     }
 }

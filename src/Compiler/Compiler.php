@@ -33,6 +33,7 @@ use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Reflection\Standard\GraphQLDocument;
 use Railt\Reflection\Standard\StandardType;
 use Railt\Reflection\Support;
+use Railt\Compiler\Parser\Factory as ParserFactory;
 
 /**
  * Class Compiler
@@ -47,7 +48,7 @@ class Compiler implements CompilerInterface
     private $loader;
 
     /**
-     * @var Parser
+     * @var ParserFactory
      */
     private $parser;
 
@@ -80,7 +81,7 @@ class Compiler implements CompilerInterface
     public function __construct(Persister $persister = null)
     {
         $this->stack     = new CallStack();
-        $this->parser    = new Parser();
+        $this->parser    = new ParserFactory();
         $this->loader    = new Loader($this, $this->stack);
         $this->validator = new Validator($this->stack);
         $this->coercion  = new Factory();
@@ -251,9 +252,9 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @return Parser
+     * @return ParserFactory
      */
-    public function getParser(): Parser
+    public function getParser(): ParserFactory
     {
         return $this->parser;
     }
