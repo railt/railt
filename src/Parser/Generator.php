@@ -14,9 +14,6 @@ namespace Railt\Parser;
  */
 class Generator
 {
-    /**
-     *
-     */
     private const BASE_PARSER_CLASS_NAME = Parser::class;
 
     /**

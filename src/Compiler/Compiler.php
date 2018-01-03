@@ -13,6 +13,7 @@ use Railt\Compiler\Exceptions\CompilerException;
 use Railt\Compiler\Exceptions\UnexpectedTokenException;
 use Railt\Compiler\Exceptions\UnrecognizedTokenException;
 use Railt\Compiler\Kernel\CallStack;
+use Railt\Compiler\Parser\Factory as ParserFactory;
 use Railt\Compiler\Persisting\ArrayPersister;
 use Railt\Compiler\Persisting\Persister;
 use Railt\Compiler\Persisting\Proxy;
@@ -33,7 +34,6 @@ use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Reflection\Standard\GraphQLDocument;
 use Railt\Reflection\Standard\StandardType;
 use Railt\Reflection\Support;
-use Railt\Compiler\Parser\Factory as ParserFactory;
 
 /**
  * Class Compiler
