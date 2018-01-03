@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Parser;
 
 use Railt\Parser\Io\Readable;
-use Railt\Parser\Runtime\Grammar;
 use Railt\Parser\Runtime\Analyzer;
+use Railt\Parser\Runtime\Grammar;
 
 /**
  * Class Runtime
@@ -24,11 +24,11 @@ class Runtime extends Parser
      */
     public function __construct(Readable $grammar)
     {
-        $parser = new Grammar($grammar);
+        $parser                     = new Grammar($grammar);
         [$tokens, $rules, $pragmas] = [$parser->getTokens(), $parser->getRules(), $parser->getPragmas()];
 
         $analyzer = new Analyzer($tokens);
-        $rules = $analyzer->analyzeRules($rules);
+        $rules    = $analyzer->analyzeRules($rules);
 
         parent::__construct($tokens, $rules, $pragmas);
     }
