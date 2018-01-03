@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Railt\Compiler\Kernel\CallStack;
 use Railt\Parser\Io\Readable;
 use Railt\Parser\Runtime;
 use Railt\Parser\TreeNode;
@@ -36,7 +35,7 @@ class Parser
      */
     public function __construct()
     {
-        $this->runtime = new Runtime(File::fromPathname(__DIR__ . '/resources/grammar/sdl.pp'));
+        $this->runtime  = new Runtime(File::fromPathname(__DIR__ . '/resources/grammar/sdl.pp'));
         $this->profiler = new Profiler($this->runtime);
     }
 
@@ -51,7 +50,6 @@ class Parser
 
     public function compile(): void
     {
-        //
     }
 
     /**
