@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Parser;
 
 use Railt\Parser\Exception\Exception;
-use Railt\Parser\Grammar;
 use Railt\Parser\Io\Readable;
 use Railt\Parser\Rule\Analyzer;
 
