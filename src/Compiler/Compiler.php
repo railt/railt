@@ -80,7 +80,7 @@ class Compiler implements CompilerInterface
     public function __construct(Persister $persister = null)
     {
         $this->stack     = new CallStack();
-        $this->parser    = new Parser($this->stack);
+        $this->parser    = new Parser();
         $this->loader    = new Loader($this, $this->stack);
         $this->validator = new Validator($this->stack);
         $this->coercion  = new Factory();

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Railt\Parser\Grammar;
+use Railt\Parser\Runtime\Grammar;
 use Railt\Parser\Io\PhysicalFile;
 
 /**
@@ -160,6 +160,6 @@ class GrammarTestCase extends AbstractParserTestCase
         $file    = $this->getGrammarFile();
         $parser  = new Grammar(PhysicalFile::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_PRAGMA, $parser->getPragma());
+        $this->assertSame(self::EXPECTED_PRAGMA, $parser->getPragmas());
     }
 }

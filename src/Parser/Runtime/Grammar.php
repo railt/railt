@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser;
+namespace Railt\Parser\Runtime;
 
 use Railt\Parser\Io\Readable;
 
 /**
- * Class Reader
+ * Class Grammar
  */
 class Grammar
 {
@@ -53,7 +53,7 @@ class Grammar
     /**
      * @var array
      */
-    private $pragma = [];
+    private $pragmas = [];
 
     /**
      * @var array
@@ -125,7 +125,7 @@ class Grammar
     {
         switch (true) {
             case $this->startsWith($line, self::T_PRAGMA_PREFIX):
-                $this->parsePragma($this->escape($line, self::T_PRAGMA_PREFIX_LEN));
+                $this->parsePragmas($this->escape($line, self::T_PRAGMA_PREFIX_LEN));
                 break;
 
 
@@ -166,28 +166,28 @@ class Grammar
     }
 
     /**
-     * @param string $pragma
+     * @param string $pragmas
      * @return void
      * @throws \LogicException
      */
-    private function parsePragma(string $pragma): void
+    private function parsePragmas(string $pragmas): void
     {
         // [1 => name, 2 => value]
-        $valid = \preg_match('/^([^\h]+)\h+(.*)$/u', $pragma, $matches);
+        $valid = \preg_match('/^([^\h]+)\h+(.*)$/u', $pragmas, $matches);
 
         if ($valid === 0) {
-            throw new \LogicException('Invalid pragma definition format in "' . $pragma . '"');
+            throw new \LogicException('Invalid pragmas definition format in "' . $pragmas . '"');
         }
 
         switch ($matches[2]) {
             case 'true':
-                $this->pragma[$matches[1]] = true;
+                $this->pragmas[$matches[1]] = true;
                 break;
             case 'false':
-                $this->pragma[$matches[1]] = false;
+                $this->pragmas[$matches[1]] = false;
                 break;
             default:
-                $this->pragma[$matches[1]] = $matches[2];
+                $this->pragmas[$matches[1]] = $matches[2];
         }
     }
 
@@ -256,8 +256,8 @@ class Grammar
      * @return array
      * @throws \LogicException
      */
-    public function getPragma(): array
+    public function getPragmas(): array
     {
-        return $this->parsed()->pragma;
+        return $this->parsed()->pragmas;
     }
 }

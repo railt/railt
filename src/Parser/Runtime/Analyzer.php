@@ -7,21 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Rule;
+namespace Railt\Parser\Runtime;
 
 use Hoa\Iterator\Lookahead;
 use Railt\Parser\Exception\Exception;
 use Railt\Parser\Exception\RuleException;
 use Railt\Parser\Exception\UnrecognizedToken;
 use Railt\Parser\Lexer;
+use Railt\Parser\Rule\Choice;
+use Railt\Parser\Rule\Concatenation;
+use Railt\Parser\Rule\Repetition;
+use Railt\Parser\Rule\Token;
 
 /**
- * Class \Railt\Parser\Rule\Analyzer.
- *
  * Analyze rules and transform them into atomic rules operations.
- *
- * @copyright Copyright © 2007-2017 Hoa community
- * @license New BSD License
  */
 class Analyzer
 {
@@ -108,16 +107,16 @@ class Analyzer
             throw new RuleException('No rules specified!', 0);
         }
 
-        $this->parsedRules  = [];
-        $this->rules        = $rules;
-        $lexer              = new Lexer();
+        $this->parsedRules = [];
+        $this->rules       = $rules;
+        $lexer             = new Lexer();
 
         foreach ($rules as $key => $value) {
             $this->lexer = new Lookahead($lexer->lexMe($value, static::$ppLexemes));
             $this->lexer->rewind();
 
-            $this->ruleName  = $key;
-            $nodeId          = null;
+            $this->ruleName = $key;
+            $nodeId         = null;
 
             if ('#' === $key[0]) {
                 $nodeId = $key;
@@ -204,8 +203,8 @@ class Analyzer
             return $rule;
         }
 
-        $name                      = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name]  = new Choice($name, $children);
+        $name                     = $this->transitionalRuleCounter++;
+        $this->parsedRules[$name] = new Choice($name, $children);
 
         return $name;
     }
@@ -239,8 +238,8 @@ class Analyzer
             return $rule;
         }
 
-        $name                      = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name]  = new Concatenation(
+        $name                     = $this->transitionalRuleCounter++;
+        $this->parsedRules[$name] = new Concatenation(
             $name,
             $children,
             null
@@ -338,8 +337,8 @@ class Analyzer
             );
         }
 
-        $name                      = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name]  = new Repetition(
+        $name                     = $this->transitionalRuleCounter++;
+        $this->parsedRules[$name] = new Repetition(
             $name,
             $min,
             $max,
@@ -409,8 +408,8 @@ class Analyzer
                 );
             }
 
-            $name                      = $this->transitionalRuleCounter++;
-            $this->parsedRules[$name]  = new Token(
+            $name                     = $this->transitionalRuleCounter++;
+            $this->parsedRules[$name] = new Token(
                 $name,
                 $tokenName,
                 null,
@@ -454,14 +453,15 @@ class Analyzer
                 );
             }
 
-            $name                      = $this->transitionalRuleCounter++;
-            $token                     = new Token(
+            $name  = $this->transitionalRuleCounter++;
+            $token = new Token(
                 $name,
                 $tokenName,
                 null,
                 $uId,
                 true
             );
+
             $this->parsedRules[$name] = $token;
             $this->lexer->next();
 
@@ -484,8 +484,8 @@ class Analyzer
 
             if (0 === $this->lexer->key() &&
                 'EOF' === $this->lexer->getNext()['token']) {
-                $name                      = $this->transitionalRuleCounter++;
-                $this->parsedRules[$name]  = new Concatenation(
+                $name                     = $this->transitionalRuleCounter++;
+                $this->parsedRules[$name] = new Concatenation(
                     $name,
                     [$tokenName],
                     null

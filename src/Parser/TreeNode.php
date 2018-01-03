@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser;
 
-use Hoa\Visitor;
 use Hoa\Visitor\Element;
 use Hoa\Visitor\Visit;
 

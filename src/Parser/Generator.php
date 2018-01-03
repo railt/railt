@@ -9,60 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Parser;
 
-use Railt\Parser\Exception\Exception;
-use Railt\Parser\Io\Readable;
-use Railt\Parser\Rule\Analyzer;
-
 /**
- * Class \Railt\Parser.
- *
- * This class provides a set of static helpers to manipulate (load and save) a
- * compiler more easily.
- *
- * @copyright Copyright © 2007-2017 Hoa community
- * @license New BSD License
+ * Class Generator
  */
-class Llk
+class Generator
 {
-    /**
-     * @var Grammar
-     */
-    private $reader;
-
-    /**
-     * Llk constructor.
-     * @param Readable $grammar
-     */
-    public function __construct(Readable $grammar)
-    {
-        $this->reader = new Grammar($grammar);
-    }
-
-    /**
-     * @return Analyzer
-     * @throws \LogicException
-     */
-    public function getAnalyzer(): Analyzer
-    {
-        return new Analyzer($this->reader->getTokens());
-    }
-
-    /**
-     * Load in-memory parser from a grammar description file.
-     * The grammar description language is PP. See
-     * `hoa://Library/Compiler/Llk/Llk.pp` for an example, or the documentation.
-     *
-     * @return Parser
-     * @throws \LogicException
-     * @throws Exception
-     */
-    public function getParser(): Parser
-    {
-        $rules  = $this->getAnalyzer()->analyzeRules($this->reader->getRules());
-
-        return new Parser($this->reader->getTokens(), $rules, $this->reader->getPragma());
-    }
-
     /**
      * Save in-memory parser to PHP code.
      * The generated PHP code will load the same in-memory parser. The state
@@ -73,7 +24,7 @@ class Llk
      * @param string $className Parser classname.
      * @return  string
      */
-    public static function save(Parser $parser, $className)
+    public static function save(Parser $parser, string $className): string
     {
         $out        = null;
         $outTokens  = null;
@@ -166,7 +117,7 @@ class Llk
                 $outExtra .=
                     "\n" .
                     '        $this->getRule(' . $arguments['name'] . ')->setDefaultId(' .
-                        '\'' . $defaultNodeId . '\'' .
+                    '\'' . $defaultNodeId . '\'' .
                     ');';
             }
 
@@ -175,7 +126,7 @@ class Llk
                 $outExtra .=
                     "\n" .
                     '        $this->getRule(' . $arguments['name'] . ')->setPPRepresentation(' .
-                        '\'' . \str_replace('\'', '\\\'', $ppRepresentation) . '\'' .
+                    '\'' . \str_replace('\'', '\\\'', $ppRepresentation) . '\'' .
                     ');';
             }
 

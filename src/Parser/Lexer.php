@@ -13,12 +13,7 @@ use Railt\Parser\Exception\LexerException;
 use Railt\Parser\Exception\UnrecognizedToken;
 
 /**
- * Class \Railt\Parser\Lexer.
- *
  * Lexical analyser, i.e. split a string into a set of lexeme, i.e. tokens.
- *
- * @copyright Copyright © 2007-2017 Hoa community
- * @license New BSD License
  */
 class Lexer
 {
@@ -75,10 +70,10 @@ class Lexer
      *
      * @param string $text Text to tokenize.
      * @param array $tokens Tokens to be returned.
-     * @return  \Generator
-     * @throws  UnrecognizedToken
+     * @return \Generator|\Traversable
+     * @throws UnrecognizedToken
      */
-    public function lexMe($text, array $tokens)
+    public function lexMe(string $text, array $tokens): \Traversable
     {
         $this->_text       = $text;
         $this->_tokens     = $tokens;

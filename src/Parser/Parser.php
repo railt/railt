@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser;
 
-use Hoa\Iterator;
 use Hoa\Iterator\Buffer;
 use Railt\Parser\Exception\Exception;
 use Railt\Parser\Exception\UnexpectedToken;
@@ -128,7 +127,7 @@ class Parser
      * @return  mixed
      * @throws  UnexpectedToken
      */
-    public function parse($text, $rule = null, $tree = true)
+    public function parse(string $text, $rule = null, $tree = true)
     {
         $k = 1024;
 

@@ -9,122 +9,57 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Railt\Compiler\Exceptions\CompilerException;
-use Railt\Compiler\Parser\CompiledSDLParser;
-use Railt\Compiler\Parser\SDLParser;
-use Railt\Parser\Exception;
-use Railt\Parser\Llk;
-use Railt\Parser\Parser as LlkParser;
-use Railt\Reflection\Filesystem\NotFoundException;
+use Railt\Compiler\Kernel\CallStack;
+use Railt\Parser\Io\Readable;
+use Railt\Parser\Runtime;
+use Railt\Parser\TreeNode;
+use Railt\Parser\Visitor\Dump;
+use Railt\Reflection\Filesystem\File;
 
 /**
  * Class Parser
  */
-class Parser extends SDLParser
+class Parser
 {
     /**
-     * Compiled parser namespace
+     * @var Runtime
      */
-    private const COMPILED_NAMESPACE = __NAMESPACE__ . '\\Parser';
+    private $runtime;
 
     /**
-     * Compiled parser class
+     * @var Profiler
      */
-    private const COMPILED_CLASS = 'CompiledSDLParser';
+    private $profiler;
 
     /**
-     * Compiled file path
+     * Parser constructor.
      */
-    private const COMPILED_FILE = __DIR__ . '/Parser/CompiledSDLParser.php';
-
-    /**
-     * Optimised template
-     */
-    private const COMPILED_TEMPLATE = __DIR__ . '/resources/templates/optimised-parser.php';
-
-    /**
-     * Return all tokens
-     * @return iterable|string[]
-     */
-    public function getTokens(): iterable
+    public function __construct()
     {
-        foreach ($this->parser->getTokens() as $namespace => $tokens) {
-            foreach ((array)$tokens as $token => $pattern) {
-                yield $namespace => \array_first(\explode(':', $token));
-            }
-        }
+        $this->runtime = new Runtime(File::fromPathname(__DIR__ . '/resources/grammar/sdl.pp'));
+        $this->profiler = new Profiler($this->runtime);
     }
 
     /**
-     * @return iterable|\Railt\Parser\Rule\Rule[]
+     * @param Readable $sources
+     * @return TreeNode
      */
-    public function getRules(): iterable
+    public function parse(Readable $sources): TreeNode
     {
-        return $this->parser->getRules();
+        return $this->runtime->parse($sources->getContents());
     }
 
-    /**
-     * @return void
-     * @throws \LogicException
-     * @throws CompilerException
-     * @throws NotFoundException
-     */
     public function compile(): void
     {
-        $sources = $this->compileSources(self::COMPILED_NAMESPACE, self::COMPILED_CLASS);
-
-        \file_put_contents(self::COMPILED_FILE, $sources, LOCK_EX);
+        //
     }
 
     /**
-     * @param string $namespace
-     * @param string $class
+     * @param TreeNode $ast
      * @return string
-     * @throws \LogicException
-     * @throws NotFoundException
-     * @throws CompilerException
      */
-    private function compileSources(string $namespace, string $class): string
+    public function dump(TreeNode $ast): string
     {
-        [$selfClass, $selfFunction] = [__CLASS__, __FUNCTION__];
-
-        try {
-            $sources = Llk::save(parent::createParser(), $class);
-        } catch (Exception $fatal) {
-            throw CompilerException::wrap($fatal);
-        }
-
-        try {
-            \ob_start();
-            require self::COMPILED_TEMPLATE;
-            $result = \ob_get_contents();
-            \ob_end_clean();
-
-            return $result;
-        } catch (\Throwable $e) {
-            throw new NotFoundException('Can not build optimized parser because template not resolvable');
-        }
-    }
-
-    /**
-     * @return LlkParser
-     * @throws \LogicException
-     * @throws CompilerException
-     */
-    protected function createParser(): LlkParser
-    {
-        if ($this->hasOptimizedLayer()) {
-            return new CompiledSDLParser();
-        }
-
-        return parent::createParser();
-    }
-
-    /**
-     * @return bool
-     */
-    private function hasOptimizedLayer(): bool
-    {
-        return \class_exists(CompiledSDLParser::class);
+        return $this->profiler->dump($ast);
     }
 }
