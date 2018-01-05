@@ -115,7 +115,7 @@ abstract class Invocation
     public function setDepth($depth)
     {
         $old          = $this->depth;
-        $this->depth = $depth;
+        $this->depth  = $depth;
 
         return $old;
     }

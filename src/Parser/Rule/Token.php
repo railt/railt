@@ -127,7 +127,7 @@ class Token extends Rule
     public function setNamespace($namespace)
     {
         $old              = $this->namespace;
-        $this->namespace = $namespace;
+        $this->namespace  = $namespace;
 
         return $old;
     }
@@ -141,7 +141,7 @@ class Token extends Rule
     public function setRepresentation($regex)
     {
         $old          = $this->regex;
-        $this->regex = $regex;
+        $this->regex  = $regex;
 
         return $old;
     }
@@ -165,7 +165,7 @@ class Token extends Rule
     public function setValue($value)
     {
         $old          = $this->value;
-        $this->value = $value;
+        $this->value  = $value;
 
         return $old;
     }
@@ -189,7 +189,7 @@ class Token extends Rule
     public function setOffset($offset)
     {
         $old           = $this->offset;
-        $this->offset = $offset;
+        $this->offset  = $offset;
 
         return $old;
     }
@@ -213,7 +213,7 @@ class Token extends Rule
     public function setKept($kept)
     {
         $old         = $this->kept;
-        $this->kept = $kept;
+        $this->kept  = $kept;
 
         return $old;
     }
