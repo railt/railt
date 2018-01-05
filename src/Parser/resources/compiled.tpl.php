@@ -1,4 +1,4 @@
-<?='<?php'?>
+<?='<?php'; ?>
 
 /**
  * This file is part of Railt package.
@@ -8,31 +8,31 @@
  */
 declare(strict_types=1);
 
-namespace <?=$namespace?>;
+namespace <?=$namespace; ?>;
 
 /**
  * This is generated file.
  * Do not update it manually.
- * Generated at <?=\date('d-m-Y H:i:s')?>
+ * Generated at <?=\date('d-m-Y H:i:s'); ?>
 
  */
-class <?=$class?> extends <?=$base?>
+class <?=$class; ?> extends <?=$base; ?>
 
 {
     /**
      * The list of defined tokens.
      */
-    private const TOKENS = <?=$this->value($tokens)?>;
+    private const TOKENS = <?=$this->value($tokens); ?>;
 
     public function __construct()
     {
         parent::__construct(
             self::TOKENS,
-            [<?=$rules?>],
-            <?=$this->value($pragmas)?>
+            [<?=$rules; ?>],
+            <?=$this->value($pragmas);?>
         );
 
-        <?=$extra?>
+        <?=$extra;?>
 
     }
 }
