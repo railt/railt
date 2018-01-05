@@ -27,35 +27,35 @@ class TreeNode implements Element
      *
      * @var string
      */
-    protected $_id;
+    protected $id;
 
     /**
      * Value of the node (non-null for token nodes).
      *
      * @var array
      */
-    protected $_value;
+    protected $value;
 
     /**
      * Children.
      *
      * @var array
      */
-    protected $_children;
+    protected $children;
 
     /**
      * Parent.
      *
      * @var \Railt\Parser\TreeNode
      */
-    protected $_parent;
+    protected $parent;
 
     /**
      * Attached data.
      *
      * @var array
      */
-    protected $_data     = [];
+    protected $data     = [];
 
     /**
      * Constructor.
@@ -92,8 +92,8 @@ class TreeNode implements Element
      */
     public function setId($id)
     {
-        $old       = $this->_id;
-        $this->_id = $id;
+        $old       = $this->id;
+        $this->id = $id;
 
         return $old;
     }
@@ -105,7 +105,7 @@ class TreeNode implements Element
      */
     public function getId()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -116,8 +116,8 @@ class TreeNode implements Element
      */
     public function setValue(array $value)
     {
-        $old          = $this->_value;
-        $this->_value = $value;
+        $old          = $this->value;
+        $this->value = $value;
 
         return $old;
     }
@@ -129,7 +129,7 @@ class TreeNode implements Element
      */
     public function getValue()
     {
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -140,8 +140,8 @@ class TreeNode implements Element
     public function getValueToken()
     {
         return
-            isset($this->_value['token'])
-                ? $this->_value['token']
+            isset($this->value['token'])
+                ? $this->value['token']
                 : null;
     }
 
@@ -153,8 +153,8 @@ class TreeNode implements Element
     public function getValueValue()
     {
         return
-            isset($this->_value['value'])
-                ? $this->_value['value']
+            isset($this->value['value'])
+                ? $this->value['value']
                 : null;
     }
 
@@ -166,8 +166,8 @@ class TreeNode implements Element
     public function getOffset()
     {
         return
-            isset($this->_value['offset'])
-                ? $this->_value['offset']
+            isset($this->value['offset'])
+                ? $this->value['offset']
                 : 0;
     }
 
@@ -178,7 +178,7 @@ class TreeNode implements Element
      */
     public function isToken()
     {
-        return ! empty($this->_value);
+        return ! empty($this->value);
     }
 
     /**
@@ -189,7 +189,7 @@ class TreeNode implements Element
      */
     public function prependChild(self $child)
     {
-        \array_unshift($this->_children, $child);
+        \array_unshift($this->children, $child);
 
         return $this;
     }
@@ -202,7 +202,7 @@ class TreeNode implements Element
      */
     public function appendChild(self $child)
     {
-        $this->_children[] = $child;
+        $this->children[] = $child;
 
         return $this;
     }
@@ -215,8 +215,8 @@ class TreeNode implements Element
      */
     public function setChildren(array $children)
     {
-        $old             = $this->_children;
-        $this->_children = $children;
+        $old             = $this->children;
+        $this->children = $children;
 
         return $old;
     }
@@ -231,7 +231,7 @@ class TreeNode implements Element
     {
         return
             true === $this->childExists($i)
-                ? $this->_children[$i]
+                ? $this->children[$i]
                 : null;
     }
 
@@ -242,7 +242,7 @@ class TreeNode implements Element
      */
     public function getChildren()
     {
-        return $this->_children;
+        return $this->children;
     }
 
     /**
@@ -252,7 +252,7 @@ class TreeNode implements Element
      */
     public function getChildrenNumber()
     {
-        return \count($this->_children);
+        return \count($this->children);
     }
 
     /**
@@ -263,7 +263,7 @@ class TreeNode implements Element
      */
     public function childExists($i)
     {
-        return \array_key_exists($i, $this->_children);
+        return \array_key_exists($i, $this->children);
     }
 
     /**
@@ -274,8 +274,8 @@ class TreeNode implements Element
      */
     public function setParent(self $parent)
     {
-        $old           = $this->_parent;
-        $this->_parent = $parent;
+        $old           = $this->parent;
+        $this->parent = $parent;
 
         return $old;
     }
@@ -287,7 +287,7 @@ class TreeNode implements Element
      */
     public function getParent()
     {
-        return $this->_parent;
+        return $this->parent;
     }
 
     /**
@@ -297,7 +297,7 @@ class TreeNode implements Element
      */
     public function &getData()
     {
-        return $this->_data;
+        return $this->data;
     }
 
     /**
@@ -323,6 +323,6 @@ class TreeNode implements Element
      */
     public function __destruct()
     {
-        unset($this->_parent);
+        unset($this->parent);
     }
 }

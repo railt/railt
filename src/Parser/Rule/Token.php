@@ -24,56 +24,56 @@ class Token extends Rule
      *
      * @var string
      */
-    protected $_tokenName;
+    protected $tokenName;
 
     /**
      * Namespace.
      *
      * @var string
      */
-    protected $_namespace;
+    protected $namespace;
 
     /**
      * Token representation.
      *
      * @var string
      */
-    protected $_regex;
+    protected $regex;
 
     /**
      * AST of the regex.
      *
      * @var \Railt\Parser\TreeNode
      */
-    protected $_ast;
+    protected $ast;
 
     /**
      * Token value.
      *
      * @var string
      */
-    protected $_value;
+    protected $value;
 
     /**
      * Whether the token is kept or not in the AST.
      *
      * @var bool
      */
-    protected $_kept = false;
+    protected $kept = false;
 
     /**
      * Unification index.
      *
      * @var int
      */
-    protected $_unification = -1;
+    protected $unification = -1;
 
     /**
      * Token offset.
      *
      * @var int
      */
-    protected $_offset = 0;
+    protected $offset = 0;
 
     /**
      * Constructor.
@@ -93,8 +93,8 @@ class Token extends Rule
     ) {
         parent::__construct($name, null, $nodeId);
 
-        $this->_tokenName   = $tokenName;
-        $this->_unification = $unification;
+        $this->tokenName   = $tokenName;
+        $this->unification = $unification;
         $this->setKept($kept);
     }
 
@@ -105,7 +105,7 @@ class Token extends Rule
      */
     public function getTokenName()
     {
-        return $this->_tokenName;
+        return $this->tokenName;
     }
 
     /**
@@ -115,7 +115,7 @@ class Token extends Rule
      */
     public function getNamespace()
     {
-        return $this->_namespace;
+        return $this->namespace;
     }
 
     /**
@@ -126,8 +126,8 @@ class Token extends Rule
      */
     public function setNamespace($namespace)
     {
-        $old              = $this->_namespace;
-        $this->_namespace = $namespace;
+        $old              = $this->namespace;
+        $this->namespace = $namespace;
 
         return $old;
     }
@@ -140,8 +140,8 @@ class Token extends Rule
      */
     public function setRepresentation($regex)
     {
-        $old          = $this->_regex;
-        $this->_regex = $regex;
+        $old          = $this->regex;
+        $this->regex = $regex;
 
         return $old;
     }
@@ -153,7 +153,7 @@ class Token extends Rule
      */
     public function getValue()
     {
-        return $this->_value;
+        return $this->value;
     }
 
     /**
@@ -164,8 +164,8 @@ class Token extends Rule
      */
     public function setValue($value)
     {
-        $old          = $this->_value;
-        $this->_value = $value;
+        $old          = $this->value;
+        $this->value = $value;
 
         return $old;
     }
@@ -177,7 +177,7 @@ class Token extends Rule
      */
     public function getOffset()
     {
-        return $this->_offset;
+        return $this->offset;
     }
 
     /**
@@ -188,8 +188,8 @@ class Token extends Rule
      */
     public function setOffset($offset)
     {
-        $old           = $this->_offset;
-        $this->_offset = $offset;
+        $old           = $this->offset;
+        $this->offset = $offset;
 
         return $old;
     }
@@ -201,7 +201,7 @@ class Token extends Rule
      */
     public function isKept()
     {
-        return $this->_kept;
+        return $this->kept;
     }
 
     /**
@@ -212,8 +212,8 @@ class Token extends Rule
      */
     public function setKept($kept)
     {
-        $old         = $this->_kept;
-        $this->_kept = $kept;
+        $old         = $this->kept;
+        $this->kept = $kept;
 
         return $old;
     }
@@ -225,6 +225,6 @@ class Token extends Rule
      */
     public function getUnificationIndex()
     {
-        return $this->_unification;
+        return $this->unification;
     }
 }

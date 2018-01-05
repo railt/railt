@@ -26,14 +26,14 @@ class Repetition extends Rule
      *
      * @var int
      */
-    protected $_min = 0;
+    protected $min = 0;
 
     /**
      * Maximum bound.
      *
      * @var int
      */
-    protected $_max = 0;
+    protected $max = 0;
 
     /**
      * Constructor.
@@ -59,8 +59,8 @@ class Repetition extends Rule
             );
         }
 
-        $this->_min = $min;
-        $this->_max = $max;
+        $this->min = $min;
+        $this->max = $max;
     }
 
     /**
@@ -70,7 +70,7 @@ class Repetition extends Rule
      */
     public function getMin()
     {
-        return $this->_min;
+        return $this->min;
     }
 
     /**
@@ -80,7 +80,7 @@ class Repetition extends Rule
      */
     public function getMax()
     {
-        return $this->_max;
+        return $this->max;
     }
 
     /**

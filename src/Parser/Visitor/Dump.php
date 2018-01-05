@@ -28,7 +28,7 @@ class Dump implements Visit
      *
      * @var int
      */
-    protected static $_i = 0;
+    protected static $i = 0;
 
     /**
      * Visit an element.
@@ -43,9 +43,9 @@ class Dump implements Visit
         &$handle = null,
         $eldnah = null
     ) {
-        ++self::$_i;
+        ++self::$i;
 
-        $out = \str_repeat('>  ', self::$_i) . $element->getId();
+        $out = \str_repeat('>  ', self::$i) . $element->getId();
 
         if (null !== $value = $element->getValue()) {
             $out .=
@@ -70,7 +70,7 @@ class Dump implements Visit
             $out .= $child->accept($this, $handle, $eldnah);
         }
 
-        --self::$_i;
+        --self::$i;
 
         return $out;
     }

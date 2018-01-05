@@ -1,3 +1,5 @@
+%pragma lexer.unicode true
+
 //
 // --------------------------------------------------------------------------
 //  GraphQL Schema Definition Language (SDL) Grammar

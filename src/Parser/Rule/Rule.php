@@ -24,49 +24,49 @@ abstract class Rule
      *
      * @var string
      */
-    protected $_name;
+    protected $name;
 
     /**
      * Rule's children. Can be an array of names or a single name.
      *
      * @var mixed
      */
-    protected $_children;
+    protected $children;
 
     /**
      * Node ID.
      *
      * @var string
      */
-    protected $_nodeId;
+    protected $nodeId;
 
     /**
      * Node options.
      *
      * @var array
      */
-    protected $_nodeOptions = [];
+    protected $nodeOptions = [];
 
     /**
      * Default ID.
      *
      * @var string
      */
-    protected $_defaultId;
+    protected $defaultId;
 
     /**
      * Default options.
      *
      * @var array
      */
-    protected $_defaultOptions = [];
+    protected $defaultOptions = [];
 
     /**
      * For non-transitional rule: PP representation.
      *
      * @var string
      */
-    protected $_pp;
+    protected $pp;
 
     /**
      * Whether the rule is transitional or not (i.e. not declared in the grammar
@@ -74,7 +74,7 @@ abstract class Rule
      *
      * @var bool
      */
-    protected $_transitional = true;
+    protected $transitional = true;
 
     /**
      * Constructor.
@@ -97,7 +97,7 @@ abstract class Rule
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -108,8 +108,8 @@ abstract class Rule
      */
     public function setName($name)
     {
-        $old         = $this->_name;
-        $this->_name = $name;
+        $old         = $this->name;
+        $this->name = $name;
 
         return $old;
     }
@@ -121,7 +121,7 @@ abstract class Rule
      */
     public function getChildren()
     {
-        return $this->_children;
+        return $this->children;
     }
 
     /**
@@ -132,8 +132,8 @@ abstract class Rule
      */
     protected function setChildren($children)
     {
-        $old             = $this->_children;
-        $this->_children = $children;
+        $old             = $this->children;
+        $this->children = $children;
 
         return $old;
     }
@@ -145,7 +145,7 @@ abstract class Rule
      */
     public function getNodeId()
     {
-        return $this->_nodeId;
+        return $this->nodeId;
     }
 
     /**
@@ -156,14 +156,14 @@ abstract class Rule
      */
     public function setNodeId($nodeId)
     {
-        $old = $this->_nodeId;
+        $old = $this->nodeId;
 
         if (false !== $pos = \strpos((string)$nodeId, ':')) {
-            $this->_nodeId      = \substr((string)$nodeId, 0, $pos);
-            $this->_nodeOptions = \str_split(\substr((string)$nodeId, $pos + 1));
+            $this->nodeId      = \substr((string)$nodeId, 0, $pos);
+            $this->nodeOptions = \str_split(\substr((string)$nodeId, $pos + 1));
         } else {
-            $this->_nodeId      = $nodeId;
-            $this->_nodeOptions = [];
+            $this->nodeId      = $nodeId;
+            $this->nodeOptions = [];
         }
 
         return $old;
@@ -176,7 +176,7 @@ abstract class Rule
      */
     public function getNodeOptions()
     {
-        return $this->_nodeOptions;
+        return $this->nodeOptions;
     }
 
     /**
@@ -186,7 +186,7 @@ abstract class Rule
      */
     public function getDefaultId()
     {
-        return $this->_defaultId;
+        return $this->defaultId;
     }
 
     /**
@@ -197,14 +197,14 @@ abstract class Rule
      */
     public function setDefaultId($defaultId)
     {
-        $old = $this->_defaultId;
+        $old = $this->defaultId;
 
         if (false !== $pos = \strpos($defaultId, ':')) {
-            $this->_defaultId      = \substr($defaultId, 0, $pos);
-            $this->_defaultOptions = \str_split(\substr($defaultId, $pos + 1));
+            $this->defaultId      = \substr($defaultId, 0, $pos);
+            $this->defaultOptions = \str_split(\substr($defaultId, $pos + 1));
         } else {
-            $this->_defaultId      = $defaultId;
-            $this->_defaultOptions = [];
+            $this->defaultId      = $defaultId;
+            $this->defaultOptions = [];
         }
 
         return $old;
@@ -217,7 +217,7 @@ abstract class Rule
      */
     public function getDefaultOptions()
     {
-        return $this->_defaultOptions;
+        return $this->defaultOptions;
     }
 
     /**
@@ -228,9 +228,9 @@ abstract class Rule
      */
     public function setPPRepresentation($pp)
     {
-        $old                 = $this->_pp;
-        $this->_pp           = $pp;
-        $this->_transitional = false;
+        $old                 = $this->pp;
+        $this->pp           = $pp;
+        $this->transitional = false;
 
         return $old;
     }
@@ -242,7 +242,7 @@ abstract class Rule
      */
     public function getPPRepresentation()
     {
-        return $this->_pp;
+        return $this->pp;
     }
 
     /**
@@ -252,6 +252,6 @@ abstract class Rule
      */
     public function isTransitional()
     {
-        return $this->_transitional;
+        return $this->transitional;
     }
 }

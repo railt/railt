@@ -24,28 +24,28 @@ abstract class Invocation
      *
      * @var string
      */
-    protected $_rule;
+    protected $rule;
 
     /**
      * Data.
      *
      * @var mixed
      */
-    protected $_data;
+    protected $data;
 
     /**
      * Piece of todo sequence.
      *
      * @var array
      */
-    protected $_todo;
+    protected $todo;
 
     /**
      * Depth in the trace.
      *
      * @var int
      */
-    protected $_depth        = -1;
+    protected $depth        = -1;
 
     /**
      * Whether the rule is transitional or not (i.e. not declared in the grammar
@@ -53,7 +53,7 @@ abstract class Invocation
      *
      * @var bool
      */
-    protected $_transitional = false;
+    protected $transitional = false;
 
     /**
      * Constructor.
@@ -69,11 +69,11 @@ abstract class Invocation
         array $todo = null,
         $depth      = -1
     ) {
-        $this->_rule         = $rule;
-        $this->_data         = $data;
-        $this->_todo         = $todo;
-        $this->_depth        = $depth;
-        $this->_transitional = \is_int($rule);
+        $this->rule         = $rule;
+        $this->data         = $data;
+        $this->todo         = $todo;
+        $this->depth        = $depth;
+        $this->transitional = \is_int($rule);
     }
 
     /**
@@ -83,7 +83,7 @@ abstract class Invocation
      */
     public function getRule()
     {
-        return $this->_rule;
+        return $this->rule;
     }
 
     /**
@@ -93,7 +93,7 @@ abstract class Invocation
      */
     public function getData()
     {
-        return $this->_data;
+        return $this->data;
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class Invocation
      */
     public function getTodo()
     {
-        return $this->_todo;
+        return $this->todo;
     }
 
     /**
@@ -114,8 +114,8 @@ abstract class Invocation
      */
     public function setDepth($depth)
     {
-        $old          = $this->_depth;
-        $this->_depth = $depth;
+        $old          = $this->depth;
+        $this->depth = $depth;
 
         return $old;
     }
@@ -127,7 +127,7 @@ abstract class Invocation
      */
     public function getDepth()
     {
-        return $this->_depth;
+        return $this->depth;
     }
 
     /**
@@ -137,6 +137,6 @@ abstract class Invocation
      */
     public function isTransitional()
     {
-        return $this->_transitional;
+        return $this->transitional;
     }
 }
