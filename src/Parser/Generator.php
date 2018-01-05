@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Parser;
+
 use Zend\Code\Generator\ValueGenerator;
 
 /**
@@ -90,10 +91,10 @@ class Generator
             'namespace' => $this->namespace,
             'class'     => $className,
             'base'      => '\\' . self::BASE_PARSER_CLASS_NAME,
-            'tokens'  => $this->getTokens(),
-            'rules'   => $rules,
-            'pragmas' => $this->getPragmas(),
-            'extra'   => $extra,
+            'tokens'    => $this->getTokens(),
+            'rules'     => $rules,
+            'pragmas'   => $this->getPragmas(),
+            'extra'     => $extra,
         ]);
     }
 
@@ -125,7 +126,7 @@ class Generator
 
             if ($rule instanceof Rule\Token) {
                 $arguments['unification'] = $rule->getUnificationIndex();
-                $arguments['kept'] = $rule->isKept() ? 'true' : 'false';
+                $arguments['kept']        = $rule->isKept() ? 'true' : 'false';
             }
 
             yield $rule => $arguments;
