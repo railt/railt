@@ -41,7 +41,8 @@
         "webonyx/graphql-php": "~0.9",
         "symfony/console": ">=2.8|3.*|4.*",
         "hoa/iterator": "~2.0",
-        "hoa/visitor": "~2.0"
+        "hoa/visitor": "~2.0",
+        "zendframework/zend-code": "~3.0"
     },
     "replace": {
         "railt/http": "self.version",

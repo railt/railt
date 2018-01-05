@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Parser;
+use Zend\Code\Generator\ValueGenerator;
 
 /**
  * Class Generator
@@ -15,9 +16,14 @@ namespace Railt\Parser;
 class Generator
 {
     /**
-     *
+     * Base parser class
      */
     private const BASE_PARSER_CLASS_NAME = Parser::class;
+
+    /**
+     * Code indention
+     */
+    private const INDENTION = "\n        ";
 
     /**
      * @var Parser
@@ -50,6 +56,18 @@ class Generator
     }
 
     /**
+     * @param string $className
+     * @param string $filePath
+     * @return void
+     */
+    public function saveTo(string $className, string $filePath): void
+    {
+        $sources = $this->generate($className);
+
+        \file_put_contents($this->fileName($filePath, $className), $sources);
+    }
+
+    /**
      * Save in-memory parser to PHP code.
      * The generated PHP code will load the same in-memory parser. The state
      * will be reset. The parser will be saved as a class, named after
@@ -60,174 +78,151 @@ class Generator
      */
     public function generate(string $className): string
     {
-        $out        = null;
-        $outTokens  = null;
-        $outRules   = null;
-        $outPragmas = null;
-        $outExtra   = null;
+        $rules = '';
+        $extra = '';
 
-        $escapeRuleName = function ($ruleName) {
-            if (true == $this->parser->getRule($ruleName)->isTransitional()) {
-                return $ruleName;
-            }
-
-            return '\'' . $ruleName . '\'';
-        };
-
-        foreach ($this->parser->getTokens() as $namespace => $tokens) {
-            $outTokens .= '                \'' . $namespace . '\' => [' . "\n";
-
-            foreach ($tokens as $tokenName => $tokenValue) {
-                $outTokens .=
-                    '                    \'' . $tokenName . '\' => \'' .
-                    \str_replace(
-                        ['\'', '\\\\'],
-                        ['\\\'', '\\\\\\'],
-                        $tokenValue
-                    ) . '\',' . "\n";
-            }
-
-            $outTokens .= '                ],' . "\n";
+        foreach ($this->getArguments() as $rule => $arguments) {
+            $rules .= $this->buildRule($rule, $arguments);
+            $extra .= $this->buildExtra($rule, $arguments);
         }
 
+        return $this->read(__DIR__ . '/resources/compiled.tpl.php', [
+            'namespace' => $this->namespace,
+            'class'     => $className,
+            'base'      => '\\' . self::BASE_PARSER_CLASS_NAME,
+            'tokens'  => $this->getTokens(),
+            'rules'   => $rules,
+            'pragmas' => $this->getPragmas(),
+            'extra'   => $extra,
+        ]);
+    }
+
+    /**
+     * @return \Traversable
+     */
+    private function getArguments(): \Traversable
+    {
         foreach ($this->parser->getRules() as $rule) {
             $arguments = [];
 
             // Name.
-            $arguments['name'] = $escapeRuleName($rule->getName());
+            $arguments['name'] = $this->value($rule->getName());
 
             if ($rule instanceof Rule\Token) {
                 // Token name.
-                $arguments['tokenName'] = '\'' . $rule->getTokenName() . '\'';
+                $arguments['tokenName'] = $this->value($rule->getTokenName());
             } else {
                 if ($rule instanceof Rule\Repetition) {
-                    // Minimum.
                     $arguments['min'] = $rule->getMin();
-
-                    // Maximum.
                     $arguments['max'] = $rule->getMax();
                 }
 
-                // Children.
-                $ruleChildren = $rule->getChildren();
-
-                if (null === $ruleChildren) {
-                    $arguments['children'] = 'null';
-                } elseif (false === \is_array($ruleChildren)) {
-                    $arguments['children'] = $escapeRuleName($ruleChildren);
-                } else {
-                    $arguments['children'] =
-                        '[' .
-                        \implode(', ', \array_map($escapeRuleName, $ruleChildren)) .
-                        ']';
-                }
+                $arguments['children'] = $this->value($rule->getChildren(), true);
             }
 
             // Node ID.
-            $nodeId = $rule->getNodeId();
-
-            if (null === $nodeId) {
-                $arguments['nodeId'] = 'null';
-            } else {
-                $arguments['nodeId'] = '\'' . $nodeId . '\'';
-            }
+            $arguments['nodeId'] = $this->value($rule->getNodeId());
 
             if ($rule instanceof Rule\Token) {
-                // Unification.
                 $arguments['unification'] = $rule->getUnificationIndex();
-
-                // Kept.
                 $arguments['kept'] = $rule->isKept() ? 'true' : 'false';
             }
 
-            // Default node ID.
-            if (null !== $defaultNodeId = $rule->getDefaultId()) {
-                $defaultNodeOptions = $rule->getDefaultOptions();
-
-                if (! empty($defaultNodeOptions)) {
-                    $defaultNodeId .= ':' . \implode('', $defaultNodeOptions);
-                }
-
-                $outExtra .=
-                    "\n" .
-                    '        $this->getRule(' . $arguments['name'] . ')->setDefaultId(' .
-                    '\'' . $defaultNodeId . '\'' .
-                    ');';
-            }
-
-            // PP representation.
-            if (null !== $ppRepresentation = $rule->getPPRepresentation()) {
-                $outExtra .=
-                    "\n" .
-                    '        $this->getRule(' . $arguments['name'] . ')->setPPRepresentation(' .
-                    '\'' . \str_replace('\'', '\\\'', $ppRepresentation) . '\'' .
-                    ');';
-            }
-
-            $outRules .=
-                "\n" .
-                '                ' . $arguments['name'] . ' => new \\' . \get_class($rule) . '(' .
-                \implode(', ', $arguments) .
-                '),';
+            yield $rule => $arguments;
         }
-
-        foreach ($this->parser->getPragmas() as $pragmaName => $pragmaValue) {
-            $outPragmas .=
-                "\n" .
-                '                \'' . $pragmaName . '\' => ' .
-                (\is_bool($pragmaValue)
-                    ? (true === $pragmaValue ? 'true' : 'false')
-                    : (\is_int($pragmaValue)
-                        ? $pragmaValue
-                        : '\'' . $pragmaValue . '\'')) .
-                ',';
-        }
-
-        $out .=
-            'class ' . $className . ' extends \\' . self::BASE_PARSER_CLASS_NAME . "\n" .
-            '{' . "\n" .
-            '    public function __construct()' . "\n" .
-            '    {' . "\n" .
-            '        parent::__construct(' . "\n" .
-            '            [' . "\n" .
-            $outTokens .
-            '            ],' . "\n" .
-            '            [' .
-            $outRules . "\n" .
-            '            ],' . "\n" .
-            '            [' .
-            $outPragmas . "\n" .
-            '            ]' . "\n" .
-            '        );' . "\n" .
-            $outExtra . "\n" .
-            '    }' . "\n" .
-            '}' . "\n";
-
-        return $out;
     }
 
     /**
+     * @param $rule
+     * @param array $arguments
      * @return string
      */
-    private function getNamespace(): string
+    private function buildRule($rule, array $arguments): string
     {
-        return $this->namespace
-            ? 'namespace ' . $this->namespace . ';' . "\n\n"
-            : '';
+        $sub = \str_repeat(' ', 8);
+
+        return self::INDENTION . $sub . $arguments['name'] . ' => new \\' . \get_class($rule) . '(' .
+            \implode(', ', $arguments) .
+        '),';
     }
 
     /**
+     * @param $rule
+     * @param array $arguments
      * @return string
      */
-    private function getHeader(): string
+    private function buildExtra($rule, array $arguments): string
     {
-        return '<?php' . "\n" .
-                '/**' . "\n" .
-                ' * This is generated file.' . "\n" .
-                ' * Do not update it manually.' . "\n" .
-                ' * Generated at ' . \date('d-m-Y H:i:s') . "\n" .
-                ' */' . "\n" .
-            'declare(strict_types=1);' . "\n\n";
+        $result = '';
+
+        // Resolve default node ID.
+        if (($defaultNodeId = $rule->getDefaultId()) !== null) {
+            if ($rule->getDefaultOptions()) {
+                $defaultNodeId .= ':' . \implode('', $rule->getDefaultOptions());
+            }
+
+            $result .= self::INDENTION . '$this->getRule(' . $arguments['name'] . ')' .
+                '->setDefaultId(' . $this->value($defaultNodeId, true) . ');';
+        }
+
+        // PP representation.
+        if (($ppRepresentation = $rule->getPPRepresentation()) !== null) {
+            $result .= self::INDENTION . '$this->getRule(' . $arguments['name'] . ')' .
+                '->setPPRepresentation(' . $this->value($ppRepresentation, true) . ');';
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    private function getTokens(): array
+    {
+        return $this->parser->getTokens();
+    }
+
+    /**
+     * @return array
+     */
+    private function getPragmas(): array
+    {
+        return $this->parser->getPragmas();
+    }
+
+    /**
+     * @param mixed $value
+     * @param bool $inline
+     * @param string|null $type
+     * @return string
+     */
+    private function value($value, bool $inline = false, string $type = null): string
+    {
+        $generator = new ValueGenerator($value, $type ?? ValueGenerator::TYPE_AUTO);
+
+        if ($inline) {
+            $generator->setIndentation('');
+
+            return \str_replace(["\r", "\n"], '', $generator->generate());
+        }
+
+        return $generator->generate();
+    }
+
+    /**
+     * @param string $file
+     * @param array $params
+     * @return string
+     */
+    private function read(string $file, array $params = []): string
+    {
+        \ob_start();
+        \extract($params, \EXTR_OVERWRITE);
+        require $file;
+        $content = \ob_get_contents();
+        \ob_end_clean();
+
+        return $content;
     }
 
     /**
@@ -238,19 +233,5 @@ class Generator
     private function fileName(string $filePath, string $class): string
     {
         return $filePath . '/' . $class . '.php';
-    }
-
-    /**
-     * @param string $className
-     * @param string $filePath
-     * @return void
-     */
-    public function saveTo(string $className, string $filePath): void
-    {
-        $sources = $this->getHeader() .
-            $this->getNamespace() .
-            $this->generate($className);
-
-        \file_put_contents($this->fileName($filePath, $className), $sources);
     }
 }
