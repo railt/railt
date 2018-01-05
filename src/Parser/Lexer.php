@@ -139,8 +139,8 @@ class Lexer
      * Compute the next token recognized at the beginning of the string.
      *
      * @param int $offset Offset.
-     * @return  array
-     * @throws  LexerException
+     * @return array
+     * @throws LexerException
      */
     protected function nextToken($offset)
     {
@@ -220,8 +220,8 @@ class Lexer
      * @param string $lexeme Name of the lexeme.
      * @param string $regex Regular expression describing the lexeme.
      * @param int $offset Offset.
-     * @return  array
-     * @throws  LexerException
+     * @return array
+     * @throws LexerException
      */
     protected function matchLexeme($lexeme, $regex, $offset)
     {
