@@ -109,7 +109,7 @@ abstract class Rule
     public function setName($name)
     {
         $old         = $this->name;
-        $this->name = $name;
+        $this->name  = $name;
 
         return $old;
     }
@@ -133,7 +133,7 @@ abstract class Rule
     protected function setChildren($children)
     {
         $old             = $this->children;
-        $this->children = $children;
+        $this->children  = $children;
 
         return $old;
     }
@@ -229,8 +229,8 @@ abstract class Rule
     public function setPPRepresentation($pp)
     {
         $old                 = $this->pp;
-        $this->pp           = $pp;
-        $this->transitional = false;
+        $this->pp            = $pp;
+        $this->transitional  = false;
 
         return $old;
     }

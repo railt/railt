@@ -93,7 +93,7 @@ class TreeNode implements Element
     public function setId($id)
     {
         $old       = $this->id;
-        $this->id = $id;
+        $this->id  = $id;
 
         return $old;
     }
@@ -117,7 +117,7 @@ class TreeNode implements Element
     public function setValue(array $value)
     {
         $old          = $this->value;
-        $this->value = $value;
+        $this->value  = $value;
 
         return $old;
     }
@@ -216,7 +216,7 @@ class TreeNode implements Element
     public function setChildren(array $children)
     {
         $old             = $this->children;
-        $this->children = $children;
+        $this->children  = $children;
 
         return $old;
     }
@@ -275,7 +275,7 @@ class TreeNode implements Element
     public function setParent(self $parent)
     {
         $old           = $this->parent;
-        $this->parent = $parent;
+        $this->parent  = $parent;
 
         return $old;
     }
