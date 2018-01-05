@@ -137,7 +137,7 @@ class WrapperValidator extends BaseInheritanceValidator
             $parent->isListOfNonNulls() && ! $child->isListOfNonNulls();
 
         if ($invalidWrapperInheritance || $invalidListWrapperInheritance) {
-            $error = '%s postcondition of %s can not be relaxed by %s of %s';
+            $error = '%s postcondition of %s can not be weakened by %s of %s';
             $error = \sprintf($error, $parent, $parent->getParent(), $child, $child->getParent());
 
             throw new TypeConflictException($error, $this->getCallStack());
