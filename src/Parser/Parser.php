@@ -591,8 +591,7 @@ class Parser
         &$handle,
         $cId,
         $recursive = false
-    )
-    {
+    ) {
         \end($children);
         $last = \current($children);
 
