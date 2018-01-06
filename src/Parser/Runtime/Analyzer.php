@@ -376,10 +376,10 @@ class Analyzer
                 return $this->group($pNodeId);
 
             case self::T_SKIPPED:
-                return $this->skipped();
+                return $this->token(false);
 
             case self::T_KEPT:
-                return $this->kept();
+                return $this->token();
 
             case self::T_NAMED:
                 return $this->named();
@@ -424,11 +424,12 @@ class Analyzer
     }
 
     /**
+     * @param bool $kept
      * @return int|string|null
      */
-    protected function kept()
+    protected function token(bool $kept = true)
     {
-        $tokenName = \trim($this->lexer->current()[Lexer\Token::T_VALUE], '<>');
+        $tokenName = \trim($this->lexer->current()[Lexer\Token::T_VALUE], $kept ? '<>' : ':');
 
         if (\substr($tokenName, -1) === ']') {
             $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
@@ -449,12 +450,12 @@ class Analyzer
         }
 
         if ($exists === false) {
-            $error = \sprintf('Token <%s> does not exist in rule %s.', $tokenName, $this->ruleName);
+            $error = \sprintf('Token %s does not exist in rule %s.', $tokenName, $this->ruleName);
             throw new Exception($error, 4);
         }
 
         $name                     = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name] = new Token($name, $tokenName, null, $uId, true);
+        $this->parsedRules[$name] = new Token($name, $tokenName, null, $uId, $kept);
         $this->lexer->next();
 
         return $name;
@@ -480,43 +481,5 @@ class Analyzer
         $this->lexer->next();
 
         return $rule;
-    }
-
-    /**
-     * @return int|string|null
-     */
-    protected function skipped()
-    {
-        $tokenName = \trim($this->lexer->current()[Lexer\Token::T_VALUE], ':');
-
-        if (\substr($tokenName, -1) === ']') {
-            $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
-            $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
-        } else {
-            $uId = -1;
-        }
-
-        $exists = false;
-
-        foreach ($this->tokens as $namespace => $tokens) {
-            foreach ((array)$tokens as $name => $token) {
-                if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
-                    $exists = true;
-
-                    break 2;
-                }
-            }
-        }
-
-        if (! $exists) {
-            $error = \sprintf('Token ::%s:: does not exist in rule %s.', $tokenName, $this->ruleName);
-            throw new Exception($error, 3);
-        }
-
-        $name                     = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name] = new Token($name, $tokenName, null, $uId);
-        $this->lexer->next();
-
-        return $name;
     }
 }
