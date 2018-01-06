@@ -134,8 +134,8 @@ under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 
 | Component                 | Release                                                                          |
 |---------------------------|----------------------------------------------------------------------------------|
-| `railt/parser`            | ![Latest Stable Version](https://poser.pugx.org/railt/parser/version)            |
-| `railt/compiler`          | ![Latest Stable Version](https://poser.pugx.org/railt/compiler/version)          |
+| `railt/compiler`            | ![Latest Stable Version](https://poser.pugx.org/railt/compiler/version)            |
+| `railt/graphql`          | ![Latest Stable Version](https://poser.pugx.org/railt/graphql/version)          |
 | `railt/reflection`        | ![Latest Stable Version](https://poser.pugx.org/railt/reflection/version)        |
 | `railt/container`         | ![Latest Stable Version](https://poser.pugx.org/railt/container/version)         |
 | `railt/events`            | ![Latest Stable Version](https://poser.pugx.org/railt/events/version)            |
