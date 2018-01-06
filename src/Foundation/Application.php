@@ -12,9 +12,9 @@ namespace Railt\Foundation;
 use Psr\Container\ContainerInterface as PSRContainer;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Adapter;
-use Railt\Compiler\Compiler;
-use Railt\Compiler\Exceptions\TypeNotFoundException;
-use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\GraphQL\Compiler;
+use Railt\GraphQL\Exceptions\TypeNotFoundException;
+use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\ServiceProviders\Pipeline;
@@ -125,8 +125,8 @@ class Application
      * @param ReadableInterface $sdl
      * @param RequestInterface $request
      * @return ResponseInterface
-     * @throws \Railt\Compiler\Exceptions\TypeNotFoundException
-     * @throws \Railt\Compiler\Exceptions\CompilerException
+     * @throws \Railt\GraphQL\Exceptions\TypeNotFoundException
+     * @throws \Railt\GraphQL\Exceptions\CompilerException
      */
     public function request(ReadableInterface $sdl, RequestInterface $request): ResponseInterface
     {
@@ -147,7 +147,7 @@ class Application
     /**
      * @param ReadableInterface $sdl
      * @return Document
-     * @throws \Railt\Compiler\Exceptions\CompilerException
+     * @throws \Railt\GraphQL\Exceptions\CompilerException
      */
     private function getDocument(ReadableInterface $sdl): Document
     {
@@ -157,7 +157,7 @@ class Application
     /**
      * @param Document $document
      * @return SchemaDefinition
-     * @throws \Railt\Compiler\Exceptions\TypeNotFoundException
+     * @throws \Railt\GraphQL\Exceptions\TypeNotFoundException
      */
     private function getSchema(Document $document): SchemaDefinition
     {

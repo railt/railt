@@ -25,7 +25,7 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
      *
      * @param Application $app
      * @return void
-     * @throws \Railt\Compiler\Exceptions\SchemaException
+     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     public function testObjectTypeIsResolvable(Application $app): void
     {
@@ -46,7 +46,7 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
      *
      * @param Application $app
      * @return void
-     * @throws \Railt\Compiler\Exceptions\SchemaException
+     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     public function testInterfaceTypeIsResolvable(Application $app): void
     {
@@ -67,7 +67,7 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
      *
      * @param Application $app
      * @return void
-     * @throws \Railt\Compiler\Exceptions\SchemaException
+     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     public function testDirectivesTypeIsResolvable(Application $app): void
     {

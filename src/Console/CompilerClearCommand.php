@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Console;
 
+use Railt\GraphQL\Parser\Compiled;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -32,16 +33,15 @@ class CompilerClearCommand extends Command
      * @param InputInterface $in
      * @param OutputInterface $out
      * @return int|null|void
-     * @throws \ReflectionException
      * @throws \LogicException
      */
     public function execute(InputInterface $in, OutputInterface $out)
     {
-        if (! \class_exists(Parser\CompiledSDLParser::class)) {
+        if (! \class_exists(Compiled::class)) {
             return $out->writeln('<comment>Compiled sources not found</comment>');
         }
 
-        $reflection = new \ReflectionClass(Parser\CompiledSDLParser::class);
+        $reflection = new \ReflectionClass(Compiled::class);
         \unlink($reflection->getFileName());
 
         $out->writeln('<info>OK</info>');

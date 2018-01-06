@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
-use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\Foundation\Extensions\Collection;
 use Railt\Foundation\Extensions\RouterExtension;
 

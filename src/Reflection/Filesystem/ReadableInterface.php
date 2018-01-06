@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Filesystem;
 
-use Railt\Parser\Io\Readable;
+use Railt\Compiler\Io\Readable;
 
 /**
  * The interface that defines the source of the code.

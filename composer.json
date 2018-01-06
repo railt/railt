@@ -47,7 +47,7 @@
     "replace": {
         "railt/http": "self.version",
         "railt/events": "self.version",
-        "railt/parser": "self.version",
+        "railt/graphql": "self.version",
         "railt/routing": "self.version",
         "railt/compiler": "self.version",
         "railt/container": "self.version",

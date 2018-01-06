@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Railt\Compiler\Exceptions\SchemaException;
+use Railt\GraphQL\Exceptions\SchemaException;
 
 /**
  * TODO Convert to factory

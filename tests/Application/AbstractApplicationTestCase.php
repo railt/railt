@@ -13,7 +13,7 @@ use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Reflection\Filesystem\File;
 use Railt\Reflection\Filesystem\ReadableInterface;
-use Railt\Tests\Compiler\AbstractCompilerTestCase;
+use Railt\Tests\GraphQL\AbstractCompilerTestCase;
 use Railt\Tests\Http\Mocks\Request;
 
 /**

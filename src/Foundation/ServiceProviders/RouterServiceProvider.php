@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\ServiceProviders;
 
-use Railt\Compiler\Reflection\CompilerInterface;
+use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\GraphQL\RouterDocument;
 use Railt\Routing\Router;

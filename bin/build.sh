@@ -6,6 +6,6 @@ git subsplit publish --heads="master" --no-tags src/Compiler:git@github.com:rail
 git subsplit publish --heads="master" --no-tags src/Routing:git@github.com:railt/routing.git
 git subsplit publish --heads="master" --no-tags src/Events:git@github.com:railt/events.git
 git subsplit publish --heads="master" --no-tags src/Reflection:git@github.com:railt/reflection.git
-git subsplit publish --heads="master" --no-tags src/Parser:git@github.com:railt/parser.git
+git subsplit publish --heads="master" --no-tags src/GraphQL:git@github.com:railt/graphql.git
 git subsplit publish --heads="master" --no-tags src/Adapters/Webonyx:git@github.com:railt/webonyx-adapter.git
 rm -rf .subsplit/

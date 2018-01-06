@@ -39,7 +39,7 @@ The documentation is in the process of writing, therefore, in order to understan
 
 ```php
 use Railt\Http\Request;
-use Railt\Compiler\Compiler;
+use Railt\GraphQL\Compiler;
 use Railt\Foundation\Application;
 use Railt\Reflection\Filesystem\File;
 
@@ -117,7 +117,7 @@ at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
 The Railt Framework is open-sourced software licensed under 
 the [MIT license](https://opensource.org/licenses/MIT).
 
-The Railt\Parser, which is part of the Railt Framework re-distribute 
+The Railt\Compiler, which is part of the Railt Framework re-distribute 
 under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 
 ## Production ready
