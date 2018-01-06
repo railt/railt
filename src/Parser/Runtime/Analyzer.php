@@ -23,26 +23,46 @@ use Railt\Parser\Rule\Token;
  */
 class Analyzer
 {
+    /**#@+
+     * List of grammar token names.
+     */
+    private const T_SKIP = 'skip';
+    private const T_OR = 'or';
+    private const T_ZERO_OR_ONE = 'zero_or_one';
+    private const T_ONE_OR_MORE = 'one_or_more';
+    private const T_ZERO_OR_MORE = 'zero_or_more';
+    private const T_N_TO_M = 'n_to_m';
+    private const T_ZERO_TO_M = 'zero_to_m';
+    private const T_N_OR_MORE = 'n_or_more';
+    private const T_EXACTLY_N = 'exactly_n';
+    private const T_SKIPPED = 'skipped';
+    private const T_KEPT = 'kept';
+    private const T_NAMED = 'named';
+    private const T_NODE = 'node';
+    private const T_GROUP_OPEN = 'capturing_';
+    private const T_GROUP_CLOSE = '_capturing';
+    /**#@-*/
+
     /**
      * PP lexemes.
      */
-    protected static $ppLexemes = [
-        'default' => [
-            'skip'         => ['\s', null, false],
-            'or'           => ['\|', null],
-            'zero_or_one'  => ['\?', null],
-            'one_or_more'  => ['\+', null],
-            'zero_or_more' => ['\*', null],
-            'n_to_m'       => ['\{[0-9]+,[0-9]+\}', null],
-            'zero_to_m'    => ['\{,[0-9]+\}', null],
-            'n_or_more'    => ['\{[0-9]+,\}', null],
-            'exactly_n'    => ['\{[0-9]+\}', null],
-            'skipped'      => ['::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::', null],
-            'kept'         => ['<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>', null],
-            'named'        => ['[a-zA-Z_][a-zA-Z0-9_]*\(\)', null],
-            'node'         => ['#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?', null],
-            'capturing_'   => ['\(', null],
-            '_capturing'   => ['\)', null],
+    protected const PP_LEXEMES = [
+        Lexer\Token::T_DEFAULT_NAMESPACE => [
+            self::T_SKIP         => ['\s', null, false],
+            self::T_OR           => ['\|', null],
+            self::T_ZERO_OR_ONE  => ['\?', null],
+            self::T_ONE_OR_MORE  => ['\+', null],
+            self::T_ZERO_OR_MORE => ['\*', null],
+            self::T_N_TO_M       => ['\{[0-9]+,[0-9]+\}', null],
+            self::T_ZERO_TO_M    => ['\{,[0-9]+\}', null],
+            self::T_N_OR_MORE    => ['\{[0-9]+,\}', null],
+            self::T_EXACTLY_N    => ['\{[0-9]+\}', null],
+            self::T_SKIPPED      => ['::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::', null],
+            self::T_KEPT         => ['<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>', null],
+            self::T_NAMED        => ['[a-zA-Z_][a-zA-Z0-9_]*\(\)', null],
+            self::T_NODE         => ['#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?', null],
+            self::T_GROUP_OPEN   => ['\(', null],
+            self::T_GROUP_CLOSE  => ['\)', null],
         ],
     ];
 
@@ -83,9 +103,8 @@ class Analyzer
     private $ruleName;
 
     /**
-     * Constructor.
-     *
-     * @param array $tokens Tokens.
+     * Analyzer constructor.
+     * @param array $tokens
      */
     public function __construct(array $tokens)
     {
@@ -101,17 +120,15 @@ class Analyzer
      */
     public function analyzeRules(array $rules): array
     {
-        if (empty($rules)) {
-            throw new RuleException('No rules specified!', 0);
+        if (\count($rules) === 0) {
+            throw new RuleException('No rules specified');
         }
 
         $this->parsedRules = [];
         $this->rules       = $rules;
 
         foreach ($rules as $key => $value) {
-            $this->lexer = new Lookahead(
-                (new Lexer($value, static::$ppLexemes))->getIterator()
-            );
+            $this->lexer = $this->getLookaheadIterator($value);
             $this->lexer->rewind();
 
             $this->ruleName = $key;
@@ -125,7 +142,7 @@ class Analyzer
             $pNodeId = $nodeId;
             $rule    = $this->rule($pNodeId);
 
-            if (null === $rule) {
+            if ($rule === null) {
                 throw new Exception('Error while parsing rule %s.', 1, $key);
             }
 
@@ -133,7 +150,7 @@ class Analyzer
             $zeRule->setName($key);
             $zeRule->setPPRepresentation($value);
 
-            if (null !== $nodeId) {
+            if ($nodeId !== null) {
                 $zeRule->setDefaultId($nodeId);
             }
 
@@ -145,9 +162,21 @@ class Analyzer
     }
 
     /**
+     * @param string $rule
+     * @return Lookahead
+     */
+    private function getLookaheadIterator(string $rule): Lookahead
+    {
+        $lexer = new Lexer($rule, static::PP_LEXEMES);
+
+        return new Lookahead($lexer->getIterator());
+    }
+
+    /**
      * Implementation of “rule”.
      *
-     * @return  mixed
+     * @param string|null $pNodeId
+     * @return string|int|null
      */
     protected function rule(&$pNodeId)
     {
@@ -157,7 +186,8 @@ class Analyzer
     /**
      * Implementation of “choice”.
      *
-     * @return  mixed
+     * @param string|null $pNodeId
+     * @return string|int|null
      */
     protected function choice(&$pNodeId)
     {
@@ -167,11 +197,11 @@ class Analyzer
         $nNodeId = $pNodeId;
         $rule    = $this->concatenation($nNodeId);
 
-        if (null === $rule) {
-            return;
+        if ($rule === null) {
+            return null;
         }
 
-        if (null !== $nNodeId) {
+        if ($nNodeId !== null) {
             $this->parsedRules[$rule]->setNodeId($nNodeId);
         }
 
@@ -179,14 +209,14 @@ class Analyzer
         $others     = false;
 
         // … ( ::or:: concatenation() )*
-        while ('or' === $this->lexer->current()['token']) {
+        while ($this->lexer->current()[Lexer\Token::T_TOKEN] === self::T_OR) {
             $this->lexer->next();
             $others  = true;
             $nNodeId = $pNodeId;
             $rule    = $this->concatenation($nNodeId);
 
             if (null === $rule) {
-                return;
+                return null;
             }
 
             if (null !== $nNodeId) {
@@ -211,7 +241,8 @@ class Analyzer
     /**
      * Implementation of “concatenation”.
      *
-     * @return  mixed
+     * @param string|null $pNodeId
+     * @return string|int|null
      */
     protected function concatenation(&$pNodeId)
     {
@@ -220,8 +251,8 @@ class Analyzer
         // repetition() …
         $rule = $this->repetition($pNodeId);
 
-        if (null === $rule) {
-            return;
+        if ($rule === null) {
+            return null;
         }
 
         $children[] = $rule;
@@ -233,16 +264,12 @@ class Analyzer
             $others     = true;
         }
 
-        if (false === $others && null === $pNodeId) {
+        if ($others === false && $pNodeId === null) {
             return $rule;
         }
 
         $name                     = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name] = new Concatenation(
-            $name,
-            $children,
-            null
-        );
+        $this->parsedRules[$name] = new Concatenation($name, $children);
 
         return $name;
     }
@@ -250,100 +277,86 @@ class Analyzer
     /**
      * Implementation of “repetition”.
      *
-     * @param $pNodeId
-     * @return int|mixed|void
+     * @param string|null $pNodeId
+     * @return string|int|null
      */
     protected function repetition(&$pNodeId)
     {
+        [$min, $max] = [null, null];
+
         // simple() …
         $children = $this->simple($pNodeId);
 
-        if (null === $children) {
-            return;
+        if ($children === null) {
+            return null;
         }
 
         // … quantifier()?
-        switch ($this->lexer->current()['token']) {
-            case 'zero_or_one':
+        switch ($this->lexer->current()[Lexer\Token::T_TOKEN]) {
+            case self::T_ZERO_OR_ONE:
                 $min = 0;
                 $max = 1;
                 $this->lexer->next();
-
                 break;
 
-            case 'one_or_more':
+            case self::T_ONE_OR_MORE:
                 $min = 1;
                 $max = -1;
                 $this->lexer->next();
-
                 break;
 
-            case 'zero_or_more':
+            case self::T_ZERO_OR_MORE:
                 $min = 0;
                 $max = -1;
                 $this->lexer->next();
-
                 break;
 
-            case 'n_to_m':
-                $handle = \trim($this->lexer->current()['value'], '{}');
+            case self::T_N_TO_M:
+                $handle = \trim($this->lexer->current()[Lexer\Token::T_VALUE], '{}');
                 $nm     = \explode(',', $handle);
                 $min    = (int)\trim($nm[0]);
                 $max    = (int)\trim($nm[1]);
                 $this->lexer->next();
-
                 break;
 
-            case 'zero_to_m':
+            case self::T_ZERO_TO_M:
                 $min = 0;
-                $max = (int)\trim($this->lexer->current()['value'], '{,}');
+                $max = (int)\trim($this->lexer->current()[Lexer\Token::T_VALUE], '{,}');
                 $this->lexer->next();
-
                 break;
 
-            case 'n_or_more':
-                $min = (int)\trim($this->lexer->current()['value'], '{,}');
+            case self::T_N_OR_MORE:
+                $min = (int)\trim($this->lexer->current()[Lexer\Token::T_VALUE], '{,}');
                 $max = -1;
                 $this->lexer->next();
-
                 break;
 
-            case 'exactly_n':
-                $handle = \trim($this->lexer->current()['value'], '{}');
+            case self::T_EXACTLY_N:
+                $handle = \trim($this->lexer->current()[Lexer\Token::T_VALUE], '{}');
                 $min    = (int)$handle;
                 $max    = $min;
                 $this->lexer->next();
-
                 break;
         }
 
         // … <node>?
-        if ('node' === $this->lexer->current()['token']) {
-            $pNodeId = $this->lexer->current()['value'];
+        if ($this->lexer->current()[Lexer\Token::T_TOKEN] === self::T_NODE) {
+            $pNodeId = $this->lexer->current()[Lexer\Token::T_VALUE];
             $this->lexer->next();
         }
 
-        if (! isset($min)) {
+        if ($min === null) {
             return $children;
         }
 
-        if (-1 != $max && $max < $min) {
-            throw new Exception(
-                'Upper bound %d must be greater or ' .
-                'equal to lower bound %d in rule %s.',
-                2,
-                [$max, $min, $this->ruleName]
-            );
+        if ($max !== -1 && $max < $min) {
+            $error = 'Upper bound %d must be greater or equal to lower bound %d in rule %s.';
+            $error = \sprintf($error, $max, $min, $this->ruleName);
+            throw new Exception($error, 2);
         }
 
         $name                     = $this->transitionalRuleCounter++;
-        $this->parsedRules[$name] = new Repetition(
-            $name,
-            $min,
-            $max,
-            $children,
-            null
-        );
+        $this->parsedRules[$name] = new Repetition($name, $min, $max, $children, null);
 
         return $name;
     }
@@ -351,138 +364,159 @@ class Analyzer
     /**
      * Implementation of “simple”.
      *
-     * @return  mixed
-     * @throws  \Railt\Parser\Exception\Exception
-     * @throws  RuleException
+     * @param int|string|null $pNodeId
+     * @return string|int|null
+     * @throws \Railt\Parser\Exception\Exception
+     * @throws RuleException
      */
     protected function simple(&$pNodeId)
     {
-        if ($this->lexer->current()['token'] === 'capturing_') {
-            $this->lexer->next();
-            $rule = $this->choice($pNodeId);
+        switch ($this->lexer->current()[Lexer\Token::T_TOKEN]) {
+            case self::T_GROUP_OPEN:
+                return $this->group($pNodeId);
 
-            if ($rule === null) {
-                return;
-            }
+            case self::T_SKIPPED:
+                return $this->skipped();
 
-            if ($this->lexer->current()['token'] !== '_capturing') {
-                return;
-            }
+            case self::T_KEPT:
+                return $this->kept();
 
-            $this->lexer->next();
+            case self::T_NAMED:
+                return $this->named();
 
-            return $rule;
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * @return int|string|null
+     */
+    protected function named()
+    {
+        $tokenName = \rtrim($this->lexer->current()[Lexer\Token::T_VALUE], '()');
+
+        $isEmptyRule = ! \array_key_exists($tokenName, $this->rules) &&
+            ! \array_key_exists('#' . $tokenName, $this->rules);
+
+        if ($isEmptyRule) {
+            $error = \vsprintf('Cannot call rule %s() in rule %s because it does not exist.', [
+                $tokenName,
+                $this->ruleName,
+            ]);
+
+            throw new RuleException($error, 5);
         }
 
-        if ($this->lexer->current()['token'] === 'skipped') {
-            $tokenName = \trim($this->lexer->current()['value'], ':');
-
-            if (\substr($tokenName, -1) === ']') {
-                $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
-                $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
-            } else {
-                $uId = -1;
-            }
-
-            $exists = false;
-
-            foreach ($this->tokens as $namespace => $tokens) {
-                foreach ((array)$tokens as $name => $token) {
-                    if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
-                        $exists = true;
-
-                        break 2;
-                    }
-                }
-            }
-
-            if (! $exists) {
-                $error = \sprintf('Token ::%s:: does not exist in rule %s.', $tokenName, $this->ruleName);
-                throw new Exception($error, 3);
-            }
-
+        if (
+            $this->lexer->key() === 0 &&
+            $this->lexer->getNext()[Lexer\Token::T_TOKEN] === Lexer\Token::T_EOF_NAME
+        ) {
             $name                     = $this->transitionalRuleCounter++;
-            $this->parsedRules[$name] = new Token(
-                $name,
-                $tokenName,
-                null,
-                $uId
-            );
-            $this->lexer->next();
-
-            return $name;
+            $this->parsedRules[$name] = new Concatenation($name, [$tokenName]);
+        } else {
+            $name = $tokenName;
         }
 
-        if ($this->lexer->current()['token'] === 'kept') {
-            $tokenName = \trim($this->lexer->current()['value'], '<>');
+        $this->lexer->next();
 
-            if (\substr($tokenName, -1) === ']') {
-                $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
-                $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
-            } else {
-                $uId = -1;
-            }
+        return $name;
+    }
 
-            $exists = false;
+    /**
+     * @return int|string|null
+     */
+    protected function kept()
+    {
+        $tokenName = \trim($this->lexer->current()[Lexer\Token::T_VALUE], '<>');
 
-            foreach ($this->tokens as $namespace => $tokens) {
-                foreach ((array)$tokens as $name => $token) {
-                    if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
-                        $exists = true;
-                        break 2;
-                    }
+        if (\substr($tokenName, -1) === ']') {
+            $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
+            $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
+        } else {
+            $uId = -1;
+        }
+
+        $exists = false;
+
+        foreach ($this->tokens as $namespace => $tokens) {
+            foreach ((array)$tokens as $name => $token) {
+                if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
+                    $exists = true;
+                    break 2;
                 }
             }
-
-            if ($exists === false) {
-                $error = \sprintf('Token <%s> does not exist in rule %s.', $tokenName, $this->ruleName);
-                throw new Exception($error, 4);
-            }
-
-            $name  = $this->transitionalRuleCounter++;
-            $token = new Token(
-                $name,
-                $tokenName,
-                null,
-                $uId,
-                true
-            );
-
-            $this->parsedRules[$name] = $token;
-            $this->lexer->next();
-
-            return $name;
         }
 
-        if ('named' === $this->lexer->current()['token']) {
-            $tokenName = \rtrim($this->lexer->current()['value'], '()');
-
-            $isEmptyRule = ! \array_key_exists($tokenName, $this->rules) &&
-                ! \array_key_exists('#' . $tokenName, $this->rules);
-
-            if ($isEmptyRule) {
-                throw new RuleException(
-                    'Cannot call rule %s() in rule %s because it does not exist.',
-                    5,
-                    [$tokenName, $this->ruleName]
-                );
-            }
-
-            if (0 === $this->lexer->key() &&
-                'EOF' === $this->lexer->getNext()['token']) {
-                $name                     = $this->transitionalRuleCounter++;
-                $this->parsedRules[$name] = new Concatenation(
-                    $name,
-                    [$tokenName],
-                    null
-                );
-            } else {
-                $name = $tokenName;
-            }
-
-            $this->lexer->next();
-
-            return $name;
+        if ($exists === false) {
+            $error = \sprintf('Token <%s> does not exist in rule %s.', $tokenName, $this->ruleName);
+            throw new Exception($error, 4);
         }
+
+        $name                     = $this->transitionalRuleCounter++;
+        $this->parsedRules[$name] = new Token($name, $tokenName, null, $uId, true);
+        $this->lexer->next();
+
+        return $name;
+    }
+
+    /**
+     * @param int|string|null $pNodeId
+     * @return int|null|string
+     */
+    protected function group(&$pNodeId)
+    {
+        $this->lexer->next();
+        $rule = $this->choice($pNodeId);
+
+        if ($rule === null) {
+            return null;
+        }
+
+        if ($this->lexer->current()[Lexer\Token::T_TOKEN] !== self::T_GROUP_CLOSE) {
+            return null;
+        }
+
+        $this->lexer->next();
+
+        return $rule;
+    }
+
+    /**
+     * @return int|string|null
+     */
+    protected function skipped()
+    {
+        $tokenName = \trim($this->lexer->current()[Lexer\Token::T_VALUE], ':');
+
+        if (\substr($tokenName, -1) === ']') {
+            $uId       = (int)\substr($tokenName, \strpos($tokenName, '[') + 1, -1);
+            $tokenName = \substr($tokenName, 0, \strpos($tokenName, '['));
+        } else {
+            $uId = -1;
+        }
+
+        $exists = false;
+
+        foreach ($this->tokens as $namespace => $tokens) {
+            foreach ((array)$tokens as $name => $token) {
+                if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
+                    $exists = true;
+
+                    break 2;
+                }
+            }
+        }
+
+        if (! $exists) {
+            $error = \sprintf('Token ::%s:: does not exist in rule %s.', $tokenName, $this->ruleName);
+            throw new Exception($error, 3);
+        }
+
+        $name                     = $this->transitionalRuleCounter++;
+        $this->parsedRules[$name] = new Token($name, $tokenName, null, $uId);
+        $this->lexer->next();
+
+        return $name;
     }
 }
