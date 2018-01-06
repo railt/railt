@@ -195,7 +195,7 @@ class Parser
                 ]);
 
                 throw new UnexpectedTokenException($error, 0, null, [
-                    'input' => $text,
+                    'input'  => $text,
                     'offset' => $token['offset'],
                 ]);
             }

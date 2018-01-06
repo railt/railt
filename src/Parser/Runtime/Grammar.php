@@ -212,7 +212,7 @@ class Grammar
         $this->tokens[$namespace][$matches[2]] = [
             $matches[3],
             $matches[4] ?? null,
-            $kept
+            $kept,
         ];
     }
 
