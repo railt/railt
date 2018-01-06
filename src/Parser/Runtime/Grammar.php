@@ -10,13 +10,14 @@ declare(strict_types=1);
 namespace Railt\Parser\Runtime;
 
 use Railt\Parser\Io\Readable;
+use Railt\Parser\Lexer\Token;
 
 /**
  * Class Grammar
  */
 class Grammar
 {
-    private const DEFAULT_NAMESPACE = 'default';
+    private const DEFAULT_NAMESPACE = Token::T_DEFAULT_NAMESPACE;
 
     private const T_COMMENT_PREFIX = '//';
 
@@ -25,7 +26,6 @@ class Grammar
 
     private const T_SKIPPED_TOKEN_PREFIX     = '%skip';
     private const T_SKIPPED_TOKEN_PREFIX_lEN = 5;
-    private const T_SKIPPED_TOKEN_NAME       = 'skip';
 
     private const T_PRAGMA_PREFIX     = '%pragma';
     private const T_PRAGMA_PREFIX_LEN = 7;
@@ -54,11 +54,6 @@ class Grammar
      * @var array
      */
     private $pragmas = [];
-
-    /**
-     * @var array
-     */
-    private $skipped = [];
 
     /**
      * Parser constructor.
@@ -105,12 +100,6 @@ class Grammar
                 }
             }
 
-            foreach ($this->skipped as $namespace => $token) {
-                if (\array_key_exists($namespace, $this->tokens)) {
-                    $this->tokens[$namespace][self::T_SKIPPED_TOKEN_NAME] = $token;
-                }
-            }
-
             $this->parsed = true;
         }
 
@@ -128,13 +117,12 @@ class Grammar
                 $this->parsePragmas($this->escape($line, self::T_PRAGMA_PREFIX_LEN));
                 break;
 
-
             case $this->startsWith($line, self::T_TOKEN_PREFIX):
                 $this->parseToken($this->escape($line, self::T_TOKEN_PREFIX_LEN));
                 break;
 
             case $this->startsWith($line, self::T_SKIPPED_TOKEN_PREFIX):
-                $this->parseSkipped($this->escape($line, self::T_SKIPPED_TOKEN_PREFIX_lEN));
+                $this->parseToken($this->escape($line, self::T_SKIPPED_TOKEN_PREFIX_lEN), false);
                 break;
         }
     }
@@ -203,9 +191,10 @@ class Grammar
 
     /**
      * @param string $token
-     * @throws \LogicException
+     * @param bool $kept
+     * @return void
      */
-    private function parseToken(string $token): void
+    private function parseToken(string $token, bool $kept = true): void
     {
         // [1 => namespace, 2 => name, 3 => body, 4 => namespace]
         $valid = \preg_match('/^(?:([^:]+):)?([^\h]+)\h+(.*?)(?:\h+->\h+(.*))?$/u', $token, $matches);
@@ -220,27 +209,11 @@ class Grammar
             $this->tokens[$namespace] = [];
         }
 
-        $this->tokens[$namespace][$matches[2] . (isset($matches[4]) ? ':' . $matches[4] : '')] = $matches[3];
-    }
-
-    /**
-     * @param string $skip
-     * @throws \LogicException
-     */
-    private function parseSkipped(string $skip): void
-    {
-        // [1 => namespace, 2 => name, 3 => body]
-        $valid = \preg_match('/^(?:([^:]+):)?([^\h]+)\h+(.*)$/u', $skip, $matches);
-
-        if ($valid === 0) {
-            throw new \LogicException('Invalid skipped token definition format in "' . $skip . '"');
-        }
-
-        $namespace = $matches[1] ?: self::DEFAULT_NAMESPACE;
-
-        $this->skipped[$namespace] = \array_key_exists($namespace, $this->skipped)
-            ? '(?:' . $this->skipped[$namespace] . '|' . $matches[3] . ')'
-            : $matches[3];
+        $this->tokens[$namespace][$matches[2]] = [
+            $matches[3],
+            $matches[4] ?? null,
+            $kept
+        ];
     }
 
     /**

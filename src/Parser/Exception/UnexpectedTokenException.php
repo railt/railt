@@ -10,9 +10,8 @@ declare(strict_types=1);
 namespace Railt\Parser\Exception;
 
 /**
- * Class LexerException
+ * Class UnexpectedTokenException
  */
-class LexerException extends \LogicException
+class UnexpectedTokenException extends UnrecognizedTokenException
 {
-
 }

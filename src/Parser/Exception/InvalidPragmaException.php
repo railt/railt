@@ -10,8 +10,9 @@ declare(strict_types=1);
 namespace Railt\Parser\Exception;
 
 /**
- * Class UnexpectedToken
+ * Class InvalidPragmaException
  */
-class UnexpectedToken extends UnrecognizedToken
+class InvalidPragmaException extends \InvalidArgumentException
 {
+
 }

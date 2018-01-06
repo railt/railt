@@ -19,50 +19,53 @@ class GrammarTestCase extends AbstractParserTestCase
 {
     private const EXPECTED_TOKENS = [
         'default'          => [
-            'T_NON_NULL'                               => '!',
-            'T_VAR'                                    => '\$',
-            'T_PARENTHESIS_OPEN'                       => '\(',
-            'T_PARENTHESIS_CLOSE'                      => '\)',
-            'T_THREE_DOTS'                             => '\.\.\.',
-            'T_COLON'                                  => ':',
-            'T_EQUAL'                                  => '=',
-            'T_DIRECTIVE_AT'                           => '@',
-            'T_BRACKET_OPEN'                           => '\[',
-            'T_BRACKET_CLOSE'                          => '\]',
-            'T_BRACE_OPEN'                             => '{',
-            'T_BRACE_CLOSE:default'                    => '}',
-            'T_OR'                                     => '\|',
-            'T_AND'                                    => '\&',
-            'T_ON'                                     => 'on\b',
-            'T_NUMBER_VALUE'                           => '\-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b',
-            'T_BOOL_TRUE'                              => 'true\b',
-            'T_BOOL_FALSE'                             => 'false\b',
-            'T_NULL'                                   => 'null\b',
-            'T_MULTILINE_STRING_OPEN:multiline_string' => '"""',
-            'T_STRING_OPEN:string'                     => '"',
-            'T_TYPE'                                   => 'type\b',
-            'T_TYPE_IMPLEMENTS'                        => 'implements\b',
-            'T_ENUM'                                   => 'enum\b',
-            'T_UNION'                                  => 'union\b',
-            'T_INTERFACE'                              => 'interface\b',
-            'T_SCHEMA'                                 => 'schema\b',
-            'T_SCHEMA_QUERY'                           => 'query\b',
-            'T_SCHEMA_MUTATION'                        => 'mutation\b',
-            'T_SCHEMA_SUBSCRIPTION'                    => 'subscription\b',
-            'T_SCALAR'                                 => 'scalar\b',
-            'T_DIRECTIVE'                              => 'directive\b',
-            'T_INPUT'                                  => 'input\b',
-            'T_EXTEND'                                 => 'extend\b',
-            'T_NAME'                                   => '([_A-Za-z][_0-9A-Za-z]*)',
-            'skip'                                     => '(?:(?:[\xfe\xff|\x20|\x09|\x0a|\x0d]+|#[^\n]*)|,)',
+            'T_NON_NULL'              => ['!', null, true],
+            'T_VAR'                   => ['\$', null, true],
+            'T_PARENTHESIS_OPEN'      => ['\(', null, true],
+            'T_PARENTHESIS_CLOSE'     => ['\)', null, true],
+            'T_THREE_DOTS'            => ['\.\.\.', null, true],
+            'T_COLON'                 => [':', null, true],
+            'T_EQUAL'                 => ['=', null, true],
+            'T_DIRECTIVE_AT'          => ['@', null, true],
+            'T_BRACKET_OPEN'          => ['\[', null, true],
+            'T_BRACKET_CLOSE'         => ['\]', null, true],
+            'T_BRACE_OPEN'            => ['{', null, true],
+            'T_BRACE_CLOSE'           => ['}', 'default', true],
+            'T_OR'                    => ['\|', null, true],
+            'T_AND'                   => ['\&', null, true],
+            'T_ON'                    => ['on\b', null, true],
+            'T_NUMBER_VALUE'          => ['\-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b', null, true],
+            'T_BOOL_TRUE'             => ['true\b', null, true],
+            'T_BOOL_FALSE'            => ['false\b', null, true],
+            'T_NULL'                  => ['null\b', null, true],
+            'T_MULTILINE_STRING_OPEN' => ['"""', 'multiline_string', true],
+            'T_STRING_OPEN'           => ['"', 'string', true],
+            'T_TYPE'                  => ['type\b', null, true],
+            'T_TYPE_IMPLEMENTS'       => ['implements\b', null, true],
+            'T_ENUM'                  => ['enum\b', null, true],
+            'T_UNION'                 => ['union\b', null, true],
+            'T_INTERFACE'             => ['interface\b', null, true],
+            'T_SCHEMA'                => ['schema\b', null, true],
+            'T_SCHEMA_QUERY'          => ['query\b', null, true],
+            'T_SCHEMA_MUTATION'       => ['mutation\b', null, true],
+            'T_SCHEMA_SUBSCRIPTION'   => ['subscription\b', null, true],
+            'T_SCALAR'                => ['scalar\b', null, true],
+            'T_DIRECTIVE'             => ['directive\b', null, true],
+            'T_INPUT'                 => ['input\b', null, true],
+            'T_EXTEND'                => ['extend\b', null, true],
+            'T_NAME'                  => ['([_A-Za-z][_0-9A-Za-z]*)', null, true],
+            // Hidden
+            'T_IGNORE'                => ['[\xfe\xff|\x20|\x09|\x0a|\x0d]+', null, false],
+            'T_COMMENT'               => ['#[^\n]*', null, false],
+            'T_COMMA'                 => [',', null, false],
         ],
         'multiline_string' => [
-            'T_MULTILINE_STRING'               => '(?:\\\\"""|(?!""").|\s)+',
-            'T_MULTILINE_STRING_CLOSE:default' => '"""',
+            'T_MULTILINE_STRING'       => ['(?:\\\\"""|(?!""").|\s)+', null, true],
+            'T_MULTILINE_STRING_CLOSE' => ['"""', 'default', true],
         ],
         'string'           => [
-            'T_STRING'               => '[^"\\\\]+(\\\\.[^"\\\\]*)*',
-            'T_STRING_CLOSE:default' => '"',
+            'T_STRING'       => ['[^"\\\\]+(\\\\.[^"\\\\]*)*', null, true],
+            'T_STRING_CLOSE' => ['"', 'default', true],
         ],
     ];
 
@@ -135,8 +138,8 @@ class GrammarTestCase extends AbstractParserTestCase
      */
     public function testTokensParsing(): void
     {
-        $file    = $this->getGrammarFile();
-        $parser  = new Grammar(PhysicalFile::fromPathname($file));
+        $file   = $this->getGrammarFile();
+        $parser = new Grammar(PhysicalFile::fromPathname($file));
 
         $this->assertSame(self::EXPECTED_TOKENS, $parser->getTokens());
     }
@@ -146,8 +149,8 @@ class GrammarTestCase extends AbstractParserTestCase
      */
     public function testRulesParsing(): void
     {
-        $file    = $this->getGrammarFile();
-        $parser  = new Grammar(PhysicalFile::fromPathname($file));
+        $file   = $this->getGrammarFile();
+        $parser = new Grammar(PhysicalFile::fromPathname($file));
 
         $this->assertSame(self::EXPECTED_RULES, $parser->getRules());
     }
@@ -157,8 +160,8 @@ class GrammarTestCase extends AbstractParserTestCase
      */
     public function testPragmaParsing(): void
     {
-        $file    = $this->getGrammarFile();
-        $parser  = new Grammar(PhysicalFile::fromPathname($file));
+        $file   = $this->getGrammarFile();
+        $parser = new Grammar(PhysicalFile::fromPathname($file));
 
         $this->assertSame(self::EXPECTED_PRAGMA, $parser->getPragmas());
     }

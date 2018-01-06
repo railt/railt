@@ -20,19 +20,14 @@ final class Pragma
     public const LEXER_UNICODE = 'lexer.unicode';
 
     /**
+     * Unrecognized token error.
+     */
+    public const ERROR_UNRECOGNIZED_TOKEN = 'error.unrecognized_token';
+
+    /**
      * Lookahead parsing depth.
      */
     public const LOOKAHEAD_DEPTH = 'parser.lookahead';
-
-    /**
-     * @param array $pragmas
-     * @return bool
-     */
-    public static function isUnicode(array $pragmas): bool
-    {
-        return \array_key_exists(self::LEXER_UNICODE, $pragmas) &&
-            $pragmas[self::LEXER_UNICODE] === true;
-    }
 
     /**
      * @param array $pragmas

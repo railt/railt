@@ -9,248 +9,206 @@ declare(strict_types=1);
 
 namespace Railt\Parser;
 
+use Railt\Parser\Lexer\Token;
 use Railt\Parser\Exception\LexerException;
-use Railt\Parser\Exception\UnrecognizedToken;
+use Railt\Parser\Exception\InvalidPragmaException;
+use Railt\Parser\Exception\UnrecognizedTokenException;
 
 /**
- * Lexical analyser, i.e. split a string into a set of lexeme, i.e. tokens.
+ * Class Lexer
  */
-class Lexer
+class Lexer implements \IteratorAggregate
 {
-    /**
-     * Lexer state.
-     *
-     * @var array
+    /**#@+
+     * Token input definition indexes
      */
-    protected $lexerState;
+    public const INPUT_TOKEN_PATTERN = 0;
+    public const INPUT_TOKEN_CONTINUE_NAMESPACE = 1;
+    public const INPUT_TOKEN_KEPT = 2;
+    /**#@-*/
 
     /**
-     * Text.
-     *
      * @var string
      */
-    protected $text;
+    private $input;
 
     /**
-     * Tokens.
-     *
      * @var array
      */
-    protected $tokens = [];
+    private $tokens;
 
     /**
-     * Namespace stacks.
-     *
-     * @var \SplStack
+     * @var bool
      */
-    protected $nsStack;
+    private $isUnicode;
 
     /**
-     * PCRE options.
-     *
      * @var string
      */
-    protected $pcreOptions;
+    private $errorUnrecognized;
 
     /**
-     * Constructor.
-     *
-     * @param array $pragmas Pragmas.
+     * Lexer constructor.
+     * @param string $input
+     * @param array $tokens
+     * @param array $pragmas
+     * @throws \Railt\Parser\Exception\InvalidPragmaException
      */
-    public function __construct(array $pragmas = [])
+    public function __construct(string $input, array $tokens = [], array $pragmas = [])
     {
-        if (Pragma::isUnicode($pragmas)) {
-            $this->pcreOptions .= 'u';
-        }
+        $this->input  = $input;
+        $this->tokens = $tokens;
+
+        $this->isUnicode         = $this->isUnicode($pragmas);
+        $this->errorUnrecognized = $this->getUnrecognizedToken($pragmas);
     }
 
     /**
-     * Text tokenizer: splits the text in parameter in an ordered array of
-     * tokens.
-     *
-     * @param string $text Text to tokenize.
-     * @param array $tokens Tokens to be returned.
-     * @return \Generator|\Traversable
-     * @throws UnrecognizedToken
+     * @param array $pragmas
+     * @return bool
      */
-    public function lexMe(string $text, array $tokens): \Traversable
+    private function isUnicode(array $pragmas): bool
     {
-        $this->text       = $text;
-        $this->tokens     = $tokens;
-        $this->nsStack    = null;
-        $offset           = 0;
-        $maxOffset        = \strlen($this->text);
-        $this->lexerState = 'default';
-        $stack            = false;
+        $exists = \array_key_exists(Pragma::LEXER_UNICODE, $pragmas);
 
-        foreach ($this->tokens as &$tokens) {
-            $_tokens = [];
-
-            foreach ($tokens as $fullLexeme => $regex) {
-                if (false === \strpos($fullLexeme, ':')) {
-                    $_tokens[$fullLexeme] = [$regex, null];
-
-                    continue;
-                }
-
-                [$lexeme, $namespace] = \explode(':', $fullLexeme, 2);
-
-                $stack |= ('__shift__' === \substr($namespace, 0, 9));
-
-                unset($tokens[$fullLexeme]);
-                $_tokens[$lexeme] = [$regex, $namespace];
-            }
-
-            $tokens = $_tokens;
+        if ($exists) {
+            return (bool)$pragmas[Pragma::LEXER_UNICODE];
         }
 
-        if (true == $stack) {
-            $this->nsStack = new \SplStack();
-        }
-
-        while ($offset < $maxOffset) {
-            $nextToken = $this->nextToken($offset);
-
-            if (null === $nextToken) {
-                $error = \sprintf('Unrecognized token "%s"', \mb_substr(\substr($text, $offset), 0, 1));
-
-                throw UnrecognizedToken::fromOffset($error, $text, $offset);
-            }
-
-            if (true === $nextToken['keep']) {
-                $nextToken['offset'] = $offset;
-                yield $nextToken;
-            }
-
-            $offset += \strlen($nextToken['value']);
-        }
-
-        yield [
-            'token'     => 'EOF',
-            'value'     => 'EOF',
-            'length'    => 0,
-            'namespace' => 'default',
-            'keep'      => true,
-            'offset'    => $offset,
-        ];
+        return true;
     }
 
     /**
-     * Compute the next token recognized at the beginning of the string.
-     *
-     * @param int $offset Offset.
+     * @param array $pragmas
+     * @return string
+     * @throws \Railt\Parser\Exception\InvalidPragmaException
+     */
+    private function getUnrecognizedToken(array $pragmas): string
+    {
+        $exists = \array_key_exists(Pragma::ERROR_UNRECOGNIZED_TOKEN, $pragmas);
+
+        if ($exists) {
+            $class = (string)$pragmas[Pragma::ERROR_UNRECOGNIZED_TOKEN];
+
+            if (! \class_exists($class)) {
+                $error = 'Invalid pragma "%s" value. Class "%s" does not exists.';
+                throw new InvalidPragmaException(\sprintf($error, Pragma::ERROR_UNRECOGNIZED_TOKEN, $class));
+            }
+
+            return $class;
+        }
+
+        return UnrecognizedTokenException::class;
+    }
+
+    /**
+     * @return \Traversable|\SplFixedArray
+     * @throws \Railt\Parser\Exception\LexerException
+     */
+    public function getIterator(): \Traversable
+    {
+        [$offset, $max] = [0, \strlen($this->input)];
+
+        $namespace = Token::T_DEFAULT_NAMESPACE;
+
+        while ($offset < $max) {
+            [$next, $namespace] = $this->reduce($offset, $namespace);
+
+            if ($next === null) {
+                $error = \sprintf('Unrecognized token "%s"', $this->input[$offset]);
+                throw new $this->errorUnrecognized($error, 0, null, ['input' => $this->input, 'offset' => $offset]);
+            }
+
+            if ($next[Token::T_KEEP]) {
+                yield $next;
+            }
+
+            $offset += $next[Token::T_LENGTH];
+        }
+
+        yield Token::eof($offset);
+    }
+
+    /**
+     * @param int $offset
+     * @param string $namespace
      * @return array
-     * @throws LexerException
+     * @throws \Railt\Parser\Exception\LexerException
      */
-    protected function nextToken($offset)
+    private function reduce(int $offset, string $namespace): array
     {
-        $tokenArray = &$this->tokens[$this->lexerState];
+        if (! \array_key_exists($namespace, $this->tokens)) {
+            $error = \sprintf('Namespace "%s" does not exist', $namespace);
+            throw new LexerException($error);
+        }
 
-        foreach ($tokenArray as $lexeme => $bucket) {
-            [$regex, $nextState] = $bucket;
+        /** @var array $tokens */
+        $tokens = $this->tokens[$namespace];
 
-            if (null === $nextState) {
-                $nextState = $this->lexerState;
-            }
+        foreach ($tokens as $name => $token) {
+            $lexeme = $this->matchLexeme($name, $token[static::INPUT_TOKEN_PATTERN], $offset);
 
-            $out = $this->matchLexeme($lexeme, $regex, $offset);
+            if ($lexeme !== null) {
+                $result = [
+                    Token::T_TOKEN     => $name,
+                    Token::T_VALUE     => $lexeme,
+                    Token::T_LENGTH    => $this->strlen($lexeme),
+                    Token::T_NAMESPACE => $namespace,
+                    Token::T_KEEP      => $token[static::INPUT_TOKEN_KEPT] ?? true,
+                    Token::T_OFFSET    => $offset,
+                ];
 
-            if (null !== $out) {
-                $out['namespace'] = $this->lexerState;
-                $out['keep']      = 'skip' !== $lexeme;
-
-                if ($nextState !== $this->lexerState) {
-                    $shift = false;
-
-                    if (null !== $this->nsStack &&
-                        0 !== \preg_match('#^__shift__(?:\s*\*\s*(\d+))?$#', $nextState, $matches)) {
-                        $i = isset($matches[1]) ? (int)($matches[1]) : 1;
-
-                        if ($i > ($c = \count($this->nsStack))) {
-                            throw new LexerException(
-                                'Cannot shift namespace %d-times, from token ' .
-                                '%s in namespace %s, because the stack ' .
-                                'contains only %d namespaces.',
-                                1,
-                                [
-                                    $i,
-                                    $lexeme,
-                                    $this->lexerState,
-                                    $c,
-                                ]
-                            );
-                        }
-
-                        while (1 <= $i--) {
-                            $previousNamespace = $this->nsStack->pop();
-                        }
-
-                        $nextState = $previousNamespace;
-                        $shift     = true;
-                    }
-
-                    if (! isset($this->tokens[$nextState])) {
-                        throw new LexerException(
-                            'Namespace %s does not exist, called by token %s ' .
-                            'in namespace %s.',
-                            2,
-                            [
-                                $nextState,
-                                $lexeme,
-                                $this->lexerState,
-                            ]
-                        );
-                    }
-
-                    if (null !== $this->nsStack && false === $shift) {
-                        $this->nsStack[] = $this->lexerState;
-                    }
-
-                    $this->lexerState = $nextState;
-                }
-
-                return $out;
+                return [
+                    $result,
+                    $token[static::INPUT_TOKEN_CONTINUE_NAMESPACE] ?? $namespace,
+                ];
             }
         }
+
+        return [null, $namespace];
     }
 
     /**
      * Check if a given lexeme is matched at the beginning of the text.
      *
      * @param string $lexeme Name of the lexeme.
-     * @param string $regex Regular expression describing the lexeme.
+     * @param string $pattern Regular expression describing the lexeme.
      * @param int $offset Offset.
-     * @return array
+     * @return null|string
      * @throws LexerException
      */
-    protected function matchLexeme($lexeme, $regex, $offset)
+    protected function matchLexeme(string $lexeme, string $pattern, int $offset): ?string
     {
-        $_regex = \str_replace('#', '\#', $regex);
-        $preg   = \preg_match(
-            '#\G(?|' . $_regex . ')#' . $this->pcreOptions,
-            $this->text,
-            $matches,
-            0,
-            $offset
-        );
-
-        if (0 === $preg) {
-            return;
+        if (\preg_match($this->regex($pattern), $this->input, $matches, 0, $offset) === 0) {
+            return null;
         }
 
-        if ('' === $matches[0]) {
-            throw new LexerException(
-                'A lexeme must not match an empty value, which is the ' .
-                'case of "%s" (%s).',
-                3,
-                [$lexeme, $regex]
-            );
+        if ($matches[0] === '') {
+            $error = 'A lexeme must not match an empty value, which is the case of "%s" (%s).';
+            $error = \sprintf($error, $lexeme, $pattern);
+            throw new LexerException($error);
         }
 
-        return [
-            'token'  => $lexeme,
-            'value'  => $matches[0],
-            'length' => \mb_strlen($matches[0]),
-        ];
+        return $matches[0];
+    }
+
+    /**
+     * @param string $pattern
+     * @return string
+     */
+    private function regex(string $pattern): string
+    {
+        $modifiers = $this->isUnicode ? 'u' : '';
+
+        return '#\G(?|' . \str_replace('#', '\#', $pattern) . ')#' . $modifiers;
+    }
+
+    /**
+     * @param string $text
+     * @return int
+     */
+    private function strlen(string $text): int
+    {
+        return $this->isUnicode ? \mb_strlen($text) : \strlen($text);
     }
 }

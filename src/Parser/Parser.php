@@ -11,7 +11,7 @@ namespace Railt\Parser;
 
 use Hoa\Iterator\Buffer;
 use Railt\Parser\Exception\Exception;
-use Railt\Parser\Exception\UnexpectedToken;
+use Railt\Parser\Exception\UnexpectedTokenException;
 use Railt\Parser\Rule\Choice;
 use Railt\Parser\Rule\Concatenation;
 use Railt\Parser\Rule\Ekzit;
@@ -48,7 +48,7 @@ class Parser
      * Associative array (token name => token regex), to be defined in
      * precedence order.
      *
-     * @var array
+     * @var array|array[]
      */
     protected $tokens;
 
@@ -116,21 +116,50 @@ class Parser
     }
 
     /**
+     * @param array $pragmas
+     * @return int
+     */
+    private function getLookahead(array $pragmas): int
+    {
+        if (\array_key_exists(Pragma::LOOKAHEAD_DEPTH, $pragmas)) {
+            return \max(0, (int)$pragmas[Pragma::LOOKAHEAD_DEPTH]);
+        }
+
+        return 1024;
+    }
+
+    /**
+     * @param string $input
+     * @return Lexer
+     */
+    private function getLexer(string $input): Lexer
+    {
+        return new Lexer($input, $this->tokens, $this->pragmas);
+    }
+
+    /**
+     * @param string $input
+     * @return Buffer
+     */
+    private function getBuffer(string $input): Buffer
+    {
+        $tokens = $this->getLexer($input)->getIterator();
+
+        return new Buffer($tokens, $this->getLookahead($this->pragmas));
+    }
+
+    /**
      * Parse :-).
      *
      * @param string $text Text to parse.
      * @param string $rule The axiom, i.e. root rule.
      * @param bool $tree Whether build tree or not.
      * @return  mixed
-     * @throws  UnexpectedToken
+     * @throws  UnexpectedTokenException
      */
     public function parse(string $text, $rule = null, $tree = true)
     {
-        $lexer        = new Lexer($this->pragmas);
-        $this->buffer = new Buffer(
-            $lexer->lexMe($text, $this->tokens),
-            Pragma::getLookahead($this->pragmas)
-        );
+        $this->buffer = $this->getBuffer($text);
         $this->buffer->rewind();
 
         $this->errorToken = null;
@@ -165,7 +194,10 @@ class Parser
                     $token['token'],
                 ]);
 
-                throw UnexpectedToken::fromOffset($error, $text, $token['offset']);
+                throw new UnexpectedTokenException($error, 0, null, [
+                    'input' => $text,
+                    'offset' => $token['offset'],
+                ]);
             }
         } while (true);
 
@@ -290,7 +322,8 @@ class Parser
             if (isset($this->tokens[$namespace][$name])) {
                 $zzeRule->setRepresentation($this->tokens[$namespace][$name]);
             } else {
-                foreach ($this->tokens[$namespace] as $_name => $regex) {
+                /** @var array $token */
+                foreach ($this->tokens[$namespace] as $_name => $token) {
                     if (($pos = \strpos($_name, ':')) === false) {
                         continue;
                     }
@@ -302,7 +335,7 @@ class Parser
                     }
                 }
 
-                $zzeRule->setRepresentation($regex);
+                $zzeRule->setRepresentation($token[Lexer::INPUT_TOKEN_PATTERN]);
             }
 
             \array_pop($this->todo);
@@ -681,9 +714,9 @@ class Parser
     /**
      * Get tokens.
      *
-     * @return  array
+     * @return array
      */
-    public function getTokens()
+    public function getTokens(): array
     {
         return $this->tokens;
     }

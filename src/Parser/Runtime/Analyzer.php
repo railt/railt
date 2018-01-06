@@ -12,7 +12,6 @@ namespace Railt\Parser\Runtime;
 use Hoa\Iterator\Lookahead;
 use Railt\Parser\Exception\Exception;
 use Railt\Parser\Exception\RuleException;
-use Railt\Parser\Exception\UnrecognizedToken;
 use Railt\Parser\Lexer;
 use Railt\Parser\Rule\Choice;
 use Railt\Parser\Rule\Concatenation;
@@ -29,21 +28,21 @@ class Analyzer
      */
     protected static $ppLexemes = [
         'default' => [
-            'skip'         => '\s',
-            'or'           => '\|',
-            'zero_or_one'  => '\?',
-            'one_or_more'  => '\+',
-            'zero_or_more' => '\*',
-            'n_to_m'       => '\{[0-9]+,[0-9]+\}',
-            'zero_to_m'    => '\{,[0-9]+\}',
-            'n_or_more'    => '\{[0-9]+,\}',
-            'exactly_n'    => '\{[0-9]+\}',
-            'skipped'      => '::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::',
-            'kept'         => '<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>',
-            'named'        => '[a-zA-Z_][a-zA-Z0-9_]*\(\)',
-            'node'         => '#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?',
-            'capturing_'   => '\(',
-            '_capturing'   => '\)',
+            'skip'         => ['\s', null, false],
+            'or'           => ['\|', null],
+            'zero_or_one'  => ['\?', null],
+            'one_or_more'  => ['\+', null],
+            'zero_or_more' => ['\*', null],
+            'n_to_m'       => ['\{[0-9]+,[0-9]+\}', null],
+            'zero_to_m'    => ['\{,[0-9]+\}', null],
+            'n_or_more'    => ['\{[0-9]+,\}', null],
+            'exactly_n'    => ['\{[0-9]+\}', null],
+            'skipped'      => ['::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::', null],
+            'kept'         => ['<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>', null],
+            'named'        => ['[a-zA-Z_][a-zA-Z0-9_]*\(\)', null],
+            'node'         => ['#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?', null],
+            'capturing_'   => ['\(', null],
+            '_capturing'   => ['\)', null],
         ],
     ];
 
@@ -98,10 +97,9 @@ class Analyzer
      *
      * @param array $rules
      * @return array
-     * @throws UnrecognizedToken
      * @throws RuleException
      */
-    public function analyzeRules(array $rules)
+    public function analyzeRules(array $rules): array
     {
         if (empty($rules)) {
             throw new RuleException('No rules specified!', 0);
@@ -109,10 +107,11 @@ class Analyzer
 
         $this->parsedRules = [];
         $this->rules       = $rules;
-        $lexer             = new Lexer();
 
         foreach ($rules as $key => $value) {
-            $this->lexer = new Lookahead($lexer->lexMe($value, static::$ppLexemes));
+            $this->lexer = new Lookahead(
+                (new Lexer($value, static::$ppLexemes))->getIterator()
+            );
             $this->lexer->rewind();
 
             $this->ruleName = $key;
@@ -388,11 +387,8 @@ class Analyzer
             $exists = false;
 
             foreach ($this->tokens as $namespace => $tokens) {
-                foreach ($tokens as $token => $value) {
-                    if (
-                        $token === $tokenName ||
-                        \strpos($token, $tokenName) === 0
-                    ) {
+                foreach ((array)$tokens as $name => $token) {
+                    if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
                         $exists = true;
 
                         break 2;
@@ -400,12 +396,9 @@ class Analyzer
                 }
             }
 
-            if (false == $exists) {
-                throw new Exception(
-                    'Token ::%s:: does not exist in rule %s.',
-                    3,
-                    [$tokenName, $this->ruleName]
-                );
+            if (! $exists) {
+                $error = \sprintf('Token ::%s:: does not exist in rule %s.', $tokenName, $this->ruleName);
+                throw new Exception($error, 3);
             }
 
             $name                     = $this->transitionalRuleCounter++;
@@ -433,24 +426,17 @@ class Analyzer
             $exists = false;
 
             foreach ($this->tokens as $namespace => $tokens) {
-                foreach ($tokens as $token => $value) {
-                    if (
-                        $token === $tokenName ||
-                        \substr($token, 0, (int)\strpos($token, ':')) === $tokenName
-                    ) {
+                foreach ((array)$tokens as $name => $token) {
+                    if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
                         $exists = true;
-
                         break 2;
                     }
                 }
             }
 
             if ($exists === false) {
-                throw new Exception(
-                    'Token <%s> does not exist in rule %s.',
-                    4,
-                    [$tokenName, $this->ruleName]
-                );
+                $error = \sprintf('Token <%s> does not exist in rule %s.', $tokenName, $this->ruleName);
+                throw new Exception($error, 4);
             }
 
             $name  = $this->transitionalRuleCounter++;
