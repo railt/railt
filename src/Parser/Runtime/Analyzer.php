@@ -26,21 +26,21 @@ class Analyzer
     /**#@+
      * List of grammar token names.
      */
-    private const T_SKIP = 'skip';
-    private const T_OR = 'or';
-    private const T_ZERO_OR_ONE = 'zero_or_one';
-    private const T_ONE_OR_MORE = 'one_or_more';
+    private const T_SKIP         = 'skip';
+    private const T_OR           = 'or';
+    private const T_ZERO_OR_ONE  = 'zero_or_one';
+    private const T_ONE_OR_MORE  = 'one_or_more';
     private const T_ZERO_OR_MORE = 'zero_or_more';
-    private const T_N_TO_M = 'n_to_m';
-    private const T_ZERO_TO_M = 'zero_to_m';
-    private const T_N_OR_MORE = 'n_or_more';
-    private const T_EXACTLY_N = 'exactly_n';
-    private const T_SKIPPED = 'skipped';
-    private const T_KEPT = 'kept';
-    private const T_NAMED = 'named';
-    private const T_NODE = 'node';
-    private const T_GROUP_OPEN = 'capturing_';
-    private const T_GROUP_CLOSE = '_capturing';
+    private const T_N_TO_M       = 'n_to_m';
+    private const T_ZERO_TO_M    = 'zero_to_m';
+    private const T_N_OR_MORE    = 'n_or_more';
+    private const T_EXACTLY_N    = 'exactly_n';
+    private const T_SKIPPED      = 'skipped';
+    private const T_KEPT         = 'kept';
+    private const T_NAMED        = 'named';
+    private const T_NODE         = 'node';
+    private const T_GROUP_OPEN   = 'capturing_';
+    private const T_GROUP_CLOSE  = '_capturing';
     /**#@-*/
 
     /**
