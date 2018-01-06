@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Processable;
 
+use Railt\Compiler\TreeNode;
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compilable;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
 use Railt\GraphQL\Reflection\Validation\Inheritance;
-use Railt\Compiler\TreeNode;
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Base\Dependent\BaseField;

@@ -11,8 +11,8 @@ namespace Railt\Tests\GraphQL;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\GraphQL\Parser\Factory;
 use Railt\Compiler\Runtime;
+use Railt\GraphQL\Parser\Factory;
 use Railt\Reflection\Filesystem\File;
 use Railt\Tests\Support\SpecSupport;
 use Railt\Tests\Support\SpecTest;
@@ -29,7 +29,6 @@ class AstRuntimeSpecsTestCase extends AbstractCompilerTestCase
      * @var string
      */
     protected $specDirectory = __DIR__ . '/.resources/ast-spec-tests';
-
 
     /**
      * @dataProvider specProvider
