@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Parser;
 
-use Railt\Parser\Lexer\Token;
-use Railt\Parser\Exception\LexerException;
 use Railt\Parser\Exception\InvalidPragmaException;
+use Railt\Parser\Exception\LexerException;
 use Railt\Parser\Exception\UnrecognizedTokenException;
+use Railt\Parser\Lexer\Token;
 
 /**
  * Class Lexer
@@ -22,9 +22,9 @@ class Lexer implements \IteratorAggregate
     /**#@+
      * Token input definition indexes
      */
-    public const INPUT_TOKEN_PATTERN = 0;
+    public const INPUT_TOKEN_PATTERN            = 0;
     public const INPUT_TOKEN_CONTINUE_NAMESPACE = 1;
-    public const INPUT_TOKEN_KEPT = 2;
+    public const INPUT_TOKEN_KEPT               = 2;
     /**#@-*/
 
     /**
