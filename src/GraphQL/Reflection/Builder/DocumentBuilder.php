@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder;
 
+use Railt\Compiler\TreeNode;
 use Railt\GraphQL\Exceptions\BuildingException;
 use Railt\GraphQL\Exceptions\CompilerException;
 use Railt\GraphQL\Exceptions\TypeConflictException;
@@ -17,7 +18,6 @@ use Railt\GraphQL\Reflection\Builder\Process\Compilable;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
 use Railt\GraphQL\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\GraphQL\Reflection\CompilerInterface;
-use Railt\Compiler\TreeNode;
 use Railt\Reflection\Base\BaseDocument;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

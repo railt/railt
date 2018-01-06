@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Invocations;
 
-use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\Compiler\TreeNode;
+use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 

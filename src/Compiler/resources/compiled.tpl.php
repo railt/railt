@@ -29,10 +29,10 @@ class <?=$class; ?> extends <?=$base; ?>
         parent::__construct(
             self::TOKENS,
             [<?=$rules; ?>],
-            <?=$this->value($pragmas);?>
+            <?=$this->value($pragmas); ?>
         );
 
-        <?=$extra;?>
+        <?=$extra; ?>
 
     }
 }

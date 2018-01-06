@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Dependent\Field;
 
+use Railt\Compiler\TreeNode;
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\Builder\Dependent\FieldBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\TreeNode;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 

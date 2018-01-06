@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Dependent\Argument;
 
-use Railt\GraphQL\Reflection\Builder\Dependent\ArgumentBuilder;
 use Railt\Compiler\TreeNode;
+use Railt\GraphQL\Reflection\Builder\Dependent\ArgumentBuilder;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
