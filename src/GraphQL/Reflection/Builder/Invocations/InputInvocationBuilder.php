@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Invocations;
 
+use Railt\Compiler\TreeNode;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compilable;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
-use Railt\Compiler\TreeNode;
 use Railt\Reflection\Base\Invocations\BaseInputInvocation;
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

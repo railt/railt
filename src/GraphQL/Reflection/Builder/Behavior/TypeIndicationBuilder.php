@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Behavior;
 
-use Railt\GraphQL\Exceptions\TypeNotFoundException;
 use Railt\Compiler\TreeNode;
+use Railt\GraphQL\Exceptions\TypeNotFoundException;
 
 /**
  * Trait TypeIndicationBuilder

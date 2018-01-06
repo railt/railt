@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Process;
 
+use Railt\Compiler\TreeNode;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\GraphQL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\GraphQL\Reflection\Validation\Definitions;
 use Railt\GraphQL\Reflection\Validation\Uniqueness;
-use Railt\Compiler\TreeNode;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
