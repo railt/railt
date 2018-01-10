@@ -11,11 +11,11 @@ namespace Railt\Tests\GraphQL;
 
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Io\File;
 
 /**
  * Class DirectiveTestCase
