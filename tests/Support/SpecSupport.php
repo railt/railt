@@ -12,7 +12,7 @@ namespace Railt\Tests\Support;
 /**
  * Trait SpecSupport
  *
- * @property-read  string $specDirectory
+ * @property  string $specDirectory
  */
 trait SpecSupport
 {
