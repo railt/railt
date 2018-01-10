@@ -45,10 +45,10 @@
         "zendframework/zend-code": "~3.0"
     },
     "replace": {
+        "railt/io": "self.version",
         "railt/http": "self.version",
         "railt/events": "self.version",
         "railt/graphql": "self.version",
-        "railt/routing": "self.version",
         "railt/compiler": "self.version",
         "railt/container": "self.version",
         "railt/reflection": "self.version",
