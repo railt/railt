@@ -11,7 +11,7 @@ namespace Railt\Tests\GraphQL;
 
 use Railt\GraphQL\Exceptions\TypeNotFoundException;
 use Railt\GraphQL\Reflection\CompilerInterface;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 
 /**
  * Class AutoloadingTestCase
@@ -20,8 +20,6 @@ class AutoloadingTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
      */
     public function provider(): array
     {

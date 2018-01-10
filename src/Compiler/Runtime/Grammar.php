@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Runtime;
 
-use Railt\Compiler\Io\Readable;
 use Railt\Compiler\Lexer\Token;
+use Railt\Io\Readable;
 
 /**
  * Class Grammar

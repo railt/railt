@@ -11,8 +11,8 @@ namespace Railt\Tests\Application;
 
 use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
-use Railt\Reflection\Filesystem\File;
-use Railt\Reflection\Filesystem\ReadableInterface;
+use Railt\Io\File;
+use Railt\Io\Readable;
 use Railt\Tests\GraphQL\AbstractCompilerTestCase;
 use Railt\Tests\Http\Mocks\Request;
 
@@ -32,9 +32,9 @@ abstract class AbstractApplicationTestCase extends AbstractCompilerTestCase
 
     /**
      * @param string $body
-     * @return ReadableInterface
+     * @return Readable
      */
-    protected function query(string $body): ReadableInterface
+    protected function query(string $body): Readable
     {
         return File::fromSources(
             'schema { query: Query } ' . "\n" . $body
@@ -43,9 +43,9 @@ abstract class AbstractApplicationTestCase extends AbstractCompilerTestCase
 
     /**
      * @param string $body
-     * @return ReadableInterface
+     * @return Readable
      */
-    protected function mutation(string $body): ReadableInterface
+    protected function mutation(string $body): Readable
     {
         return File::fromSources(
             'schema { query: Query, mutation: Mutation } type Query {} ' . "\n" . $body

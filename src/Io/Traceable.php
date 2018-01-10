@@ -7,14 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Filesystem;
-
-use Railt\Compiler\Io\Readable;
+namespace Railt\Io;
 
 /**
- * The interface that defines the source of the code.
+ * Interface Traceable
  */
-interface ReadableInterface extends Readable
+interface Traceable
 {
     /**
      * Returns the line where this implementation
@@ -31,9 +29,4 @@ interface ReadableInterface extends Readable
      * @return string
      */
     public function getDefinitionFileName(): string;
-
-    /**
-     * @return bool
-     */
-    public function isFile(): bool;
 }

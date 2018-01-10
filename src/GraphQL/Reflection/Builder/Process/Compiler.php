@@ -15,12 +15,12 @@ use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\GraphQL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\GraphQL\Reflection\Validation\Definitions;
 use Railt\GraphQL\Reflection\Validation\Uniqueness;
+use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\Invocable;
-use Railt\Reflection\Filesystem\File;
 
 /**
  * Trait Compiler

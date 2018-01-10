@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Railt\Compiler\Io\Readable;
 use Railt\Compiler\Runtime\Analyzer;
 use Railt\Compiler\Runtime\Grammar;
+use Railt\Io\Readable;
 
 /**
  * Class Runtime

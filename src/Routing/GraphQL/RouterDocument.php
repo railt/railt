@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Routing\GraphQL;
 
+use Railt\Io\File;
 use Railt\Reflection\Base\BaseDocument;
-use Railt\Reflection\Filesystem\File;
 
 /**
  * Class RouterDocument

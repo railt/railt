@@ -12,8 +12,8 @@ namespace Railt\GraphQL\Persisting;
 use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\SimpleCache\CacheInterface;
 use Railt\GraphQL\Exceptions\CompilerException;
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class Psr16Persister
@@ -44,14 +44,14 @@ class Psr16Persister implements Persister
     }
 
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @param \Closure $then
      * @return Document
      * @throws \Exception
      * @throws CompilerException
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    public function remember(ReadableInterface $readable, \Closure $then): Document
+    public function remember(Readable $readable, \Closure $then): Document
     {
         $document = $this->storage->get($readable->getHash());
 

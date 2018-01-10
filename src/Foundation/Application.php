@@ -21,9 +21,9 @@ use Railt\GraphQL\Exceptions\TypeNotFoundException;
 use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class Application
@@ -122,13 +122,13 @@ class Application
     }
 
     /**
-     * @param ReadableInterface $sdl
+     * @param Readable $sdl
      * @param RequestInterface $request
      * @return ResponseInterface
      * @throws \Railt\GraphQL\Exceptions\TypeNotFoundException
      * @throws \Railt\GraphQL\Exceptions\CompilerException
      */
-    public function request(ReadableInterface $sdl, RequestInterface $request): ResponseInterface
+    public function request(Readable $sdl, RequestInterface $request): ResponseInterface
     {
         $this->pipeline->boot();
 
@@ -145,11 +145,11 @@ class Application
     }
 
     /**
-     * @param ReadableInterface $sdl
+     * @param Readable $sdl
      * @return Document
      * @throws \Railt\GraphQL\Exceptions\CompilerException
      */
-    private function getDocument(ReadableInterface $sdl): Document
+    private function getDocument(Readable $sdl): Document
     {
         return $this->compiler->compile($sdl);
     }

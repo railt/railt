@@ -13,7 +13,7 @@ use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 
 /**
  * Class IntrospectionTestCase
@@ -25,7 +25,6 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
      *
      * @param Application $app
      * @return void
-     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     public function testObjectTypeIsResolvable(Application $app): void
     {
@@ -46,7 +45,6 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
      *
      * @param Application $app
      * @return void
-     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     public function testInterfaceTypeIsResolvable(Application $app): void
     {
@@ -67,7 +65,6 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
      *
      * @param Application $app
      * @return void
-     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     public function testDirectivesTypeIsResolvable(Application $app): void
     {

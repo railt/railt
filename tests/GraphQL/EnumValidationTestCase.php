@@ -11,7 +11,7 @@ namespace Railt\Tests\GraphQL;
 
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\CompilerInterface;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 
 /**
  * Class EnumValidationTestCase
@@ -20,8 +20,6 @@ class EnumValidationTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \LogicException
      */
     public function provider(): array
     {
@@ -39,7 +37,6 @@ class EnumValidationTestCase extends AbstractCompilerTestCase
      *
      * @param CompilerInterface $compiler
      * @return void
-     * @throws \PHPUnit\Framework\Exception
      */
     public function testEnumCanNotBeEmpty(CompilerInterface $compiler): void
     {

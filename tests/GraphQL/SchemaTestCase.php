@@ -13,7 +13,7 @@ use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 
 /**
  * Class SchemaTestCase
@@ -36,7 +36,6 @@ GraphQL;
 
     /**
      * @return array
-     * @throws \League\Flysystem\FileNotFoundException
      * @throws \LogicException
      */
     public function provider(): array

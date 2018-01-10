@@ -24,10 +24,10 @@ use Railt\GraphQL\Persisting\Persister;
 use Railt\GraphQL\Persisting\Psr16Persister;
 use Railt\GraphQL\Persisting\Psr6Persister;
 use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\Io\File;
+use Railt\Io\Readable;
+use Railt\Io\Writable;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\File;
-use Railt\Reflection\Filesystem\NotReadableException;
-use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Tests\AbstractTestCase;
 use Symfony\Component\Finder\Finder;
 
@@ -95,7 +95,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param string $body
      * @return array|Document[][]
-     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     public function dataProviderDocuments(string $body): array
     {
@@ -126,7 +125,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param string $body
      * @return iterable|Document[]
-     * @throws \Railt\GraphQL\Exceptions\SchemaException
      */
     protected function getDocuments(string $body): iterable
     {
@@ -157,7 +155,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
         // PSR-6 + Flysystem Serialization
         yield new Compiler($this->getPsr6FileSystemPersister());
 
-        // PSR-16 + Filesystem Serialization
+        // PSR-16 + system Serialization
         yield new Compiler($this->getPsr16FileSystemPersister());
     }
 
@@ -168,7 +166,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     {
         $cachePool = $this->createFilesystemPool('psr6');
 
-        return new Psr6Persister($cachePool, function (ReadableInterface $readable, Document $document) {
+        return new Psr6Persister($cachePool, function (Readable $readable, Document $document) {
             return new CacheItem($readable->getHash(), true, $document);
         });
     }
@@ -207,8 +205,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @return array
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
      */
     public function loadPositiveABTests(): array
     {
@@ -222,8 +218,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @return array
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
      */
     public function loadNegativeABTests(): array
     {
@@ -238,7 +232,6 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
     /**
      * @param \Traversable $files
      * @return array
-     * @throws NotReadableException
      */
     private function formatProvider(\Traversable $files): array
     {
@@ -253,8 +246,7 @@ abstract class AbstractCompilerTestCase extends AbstractTestCase
 
     /**
      * @param string $file
-     * @return File
-     * @throws NotReadableException
+     * @return File|Writable|Readable
      */
     public function file(string $file): File
     {

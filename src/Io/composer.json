@@ -1,0 +1,32 @@
+{
+    "name": "railt/io",
+    "description": "The Railt Input/Output and Filesystem utils.",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "file",
+        "filesystem",
+        "fso",
+        "input",
+        "output"
+    ],
+    "homepage": "http://railt.org",
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/railt"
+    },
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Io\\": "."
+        }
+    }
+}

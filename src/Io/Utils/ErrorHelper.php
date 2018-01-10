@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Filesystem;
+namespace Railt\Io\Utils;
 
 /**
- * Trait FileHelpers
+ * Trait ErrorHelper
  */
-trait FileHelpers
+trait ErrorHelper
 {
     /**
      * Returns information about the error location: line, column and affected text lines.
@@ -34,7 +34,7 @@ trait FileHelpers
 
         foreach (\explode("\n", $sources) as $line => $code) {
             $previous = $current;
-            $current += \strlen($code) + 1;
+            $current  += \strlen($code) + 1;
             $trace[]  = $code;
 
             if ($current > $bytesOffset) {

@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\GraphQL\Parser;
 
 use Railt\Compiler\Generator;
-use Railt\Compiler\Io\Readable;
 use Railt\Compiler\Parser as BaseParser;
 use Railt\Compiler\Runtime;
 use Railt\Compiler\TreeNode;
 use Railt\Compiler\Visitor\Dump;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
+use Railt\Io\Readable;
 
 /**
  * Class Parser

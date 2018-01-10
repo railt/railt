@@ -27,10 +27,10 @@ use Railt\GraphQL\Reflection\Loader;
 use Railt\GraphQL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\GraphQL\Reflection\Validation\Definitions;
 use Railt\GraphQL\Reflection\Validation\Validator;
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Reflection\Standard\GraphQLDocument;
 use Railt\Reflection\Standard\StandardType;
 use Railt\Reflection\Support;
@@ -211,13 +211,13 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @return Document
      * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
      * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
      * @throws CompilerException
      */
-    public function compile(ReadableInterface $readable): Document
+    public function compile(Readable $readable): Document
     {
         /** @var DocumentBuilder $document */
         $document = $this->persister->remember($readable, $this->onCompile());
@@ -234,7 +234,7 @@ class Compiler implements CompilerInterface
      */
     private function onCompile(): \Closure
     {
-        return function (ReadableInterface $readable): Document {
+        return function (Readable $readable): Document {
             $ast = $this->parser->parse($readable);
 
             return $this->complete(new DocumentBuilder($ast, $readable, $this));

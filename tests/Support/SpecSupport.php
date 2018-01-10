@@ -12,7 +12,7 @@ namespace Railt\Tests\Support;
 /**
  * Trait SpecSupport
  *
- * @property string $specDirectory
+ * @property-read  string $specDirectory
  */
 trait SpecSupport
 {
@@ -33,7 +33,7 @@ trait SpecSupport
      */
     public function specProvider(): array
     {
-        $files = \iterator_to_array($this->findFiles());
+        $files = \iterator_to_array($this->finds());
         \sort($files, SORT_STRING);
 
         $tests = [];
@@ -41,7 +41,7 @@ trait SpecSupport
         foreach ($files as $test) {
             $spec = new SpecTest($test->getRealPath());
 
-            foreach ($this->diffFiles($spec) as $diff) {
+            foreach ($this->diffs($spec) as $diff) {
                 if (\is_file($diff)) {
                     @\unlink($diff);
                 }
@@ -56,7 +56,7 @@ trait SpecSupport
     /**
      * @return \RegexIterator
      */
-    private function findFiles(): \RegexIterator
+    private function finds(): \RegexIterator
     {
         $files = new \RecursiveDirectoryIterator($this->getSpecDirectory());
         $files = new \RecursiveIteratorIterator($files);
@@ -86,7 +86,7 @@ trait SpecSupport
             return '';
         }
 
-        [$fileExpected, $fileActual, $fileDiff] = $this->diffFiles($spec);
+        [$fileExpected, $fileActual, $fileDiff] = $this->diffs($spec);
 
         $cmd = 'diff --strip-trailing-cr --label "%s" --label "%s" --unified "%s" "%s"';
         $cmd = \sprintf($cmd, 'expect', 'out', $fileExpected, $fileActual);
@@ -107,7 +107,7 @@ trait SpecSupport
      * @param SpecTest $spec
      * @return array
      */
-    private function diffFiles(SpecTest $spec): array
+    private function diffs(SpecTest $spec): array
     {
         return [
             $spec->getPath() . '.exp',

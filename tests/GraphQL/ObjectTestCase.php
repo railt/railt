@@ -18,7 +18,7 @@ class ObjectTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array
-     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \League\Flysystem\NotFoundException
      * @throws \LogicException
      */
     public function provider(): array

@@ -13,7 +13,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
 use Railt\GraphQL\Parser\Compiled;
 use Railt\GraphQL\Parser\Factory;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 use Railt\Tests\Support\SpecSupport;
 use Railt\Tests\Support\SpecTest;
 
@@ -50,7 +50,6 @@ class AstCompiledSpecsTestCase extends AbstractCompilerTestCase
     {
         $compiler = new Factory();
         $compiler->setRuntime(new Compiled());
-
 
 
         $ast = $compiler->parse(File::fromSources($spec->getIn(), $spec->getPath()));

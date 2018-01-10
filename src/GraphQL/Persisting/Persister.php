@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Persisting;
 
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Interface Persister
@@ -18,9 +18,9 @@ use Railt\Reflection\Filesystem\ReadableInterface;
 interface Persister
 {
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @param \Closure $then
      * @return Document
      */
-    public function remember(ReadableInterface $readable, \Closure $then): Document;
+    public function remember(Readable $readable, \Closure $then): Document;
 }

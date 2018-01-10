@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\GraphQL\Persisting;
 
 use Railt\GraphQL\Exceptions\CompilerException;
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class EmulatingPersister
@@ -24,12 +24,12 @@ class EmulatingPersister implements Persister
     private $storage = [];
 
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @param \Closure $then
      * @return Document
      * @throws CompilerException
      */
-    public function remember(ReadableInterface $readable, \Closure $then): Document
+    public function remember(Readable $readable, \Closure $then): Document
     {
         $key = $readable->getHash();
 

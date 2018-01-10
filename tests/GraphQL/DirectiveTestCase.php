@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 
 /**
  * Class DirectiveTestCase

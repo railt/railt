@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Io;
+namespace Railt\Io;
 
 /**
  * Interface Readable
@@ -35,4 +35,9 @@ interface Readable
      * @return string
      */
     public function getContents(): string;
+
+    /**
+     * @return bool
+     */
+    public function isFile(): bool;
 }

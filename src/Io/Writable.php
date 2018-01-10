@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Io;
+namespace Railt\Io;
 
 /**
  * Interface Writable

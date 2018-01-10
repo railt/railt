@@ -12,9 +12,9 @@ namespace Railt\GraphQL\Reflection;
 use Railt\GraphQL\Kernel\CallStack;
 use Railt\GraphQL\Parser\Factory;
 use Railt\GraphQL\Reflection\Validation\Base\ValidatorInterface;
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class CompilerInterface
@@ -22,10 +22,10 @@ use Railt\Reflection\Filesystem\ReadableInterface;
 interface CompilerInterface extends Dictionary
 {
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @return Document
      */
-    public function compile(ReadableInterface $readable): Document;
+    public function compile(Readable $readable): Document;
 
     /**
      * @param Document $document

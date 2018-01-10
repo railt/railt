@@ -21,7 +21,7 @@ class DocumentTestCase extends AbstractCompilerTestCase
 
     /**
      * @return array
-     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \League\Flysystem\NotFoundException
      * @throws \LogicException
      */
     public function provider(): array
@@ -80,9 +80,9 @@ class DocumentTestCase extends AbstractCompilerTestCase
         static::assertNotNull($document->getName());
 
         $reflection = new \ReflectionClass(parent::class);
-        $reflection->getFileName();
+        $reflection->getName();
 
-        static::assertSame($reflection->getFileName(), $document->getName());
+        static::assertSame($reflection->getName(), $document->getName());
     }
 
     /**
@@ -113,7 +113,7 @@ class DocumentTestCase extends AbstractCompilerTestCase
 
     /**
      * @return void
-     * @throws \League\Flysystem\FileNotFoundException
+     * @throws \League\Flysystem\NotFoundException
      * @throws \LogicException
      */
     public function testStdlibDocument(): void

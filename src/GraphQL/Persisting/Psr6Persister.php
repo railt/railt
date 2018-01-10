@@ -14,8 +14,8 @@ use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\InvalidArgumentException;
 use Railt\GraphQL\Exceptions\CompilerException;
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class Psr6Persister
@@ -49,21 +49,22 @@ class Psr6Persister implements Persister
         CacheItemPoolInterface $pool,
         \Closure $persist,
         int $timeout = self::DEFAULT_REMEMBER_TIME
-    ) {
+    )
+    {
         $this->pool    = $pool;
         $this->persist = $persist;
         $this->timeout = $timeout;
     }
 
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @param \Closure $then
      * @return Document
      * @throws CompilerException
      * @throws \Exception
      * @throws \Psr\Cache\InvalidArgumentException
      */
-    public function remember(ReadableInterface $readable, \Closure $then): Document
+    public function remember(Readable $readable, \Closure $then): Document
     {
         $exists = $this->pool->hasItem($readable->getHash());
 
@@ -75,14 +76,15 @@ class Psr6Persister implements Persister
     }
 
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @return Document
-     * @throws CompilerException
+     * @throws \Psr\Cache\InvalidArgumentException
      */
-    private function restore(ReadableInterface $readable): Document
+    private function restore(Readable $readable): Document
     {
         try {
             $result = $this->pool->getItem($readable->getHash());
+
             return $this->touch($result)->get();
         } catch (InvalidArgumentException | \Throwable $fatal) {
             throw CompilerException::wrap($fatal);
@@ -99,12 +101,12 @@ class Psr6Persister implements Persister
     }
 
     /**
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @param Document $document
      * @return Document
      * @throws \Exception
      */
-    private function store(ReadableInterface $readable, Document $document): Document
+    private function store(Readable $readable, Document $document): Document
     {
         try {
             /** @var CacheItemInterface $item */

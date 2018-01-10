@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\GraphQL;
 
 use PHPUnit\Framework\AssertionFailedError;
-use Railt\Reflection\Filesystem\ReadableInterface;
+use Railt\Io\Readable;
 
 /**
  * Class SyntaxABSpecsTestCase
@@ -36,8 +36,7 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
     /**
      * @dataProvider loadPositiveABTests
      *
-     * @param ReadableInterface $file
-     * @throws \Railt\Compiler\Exception\UnrecognizedToken
+     * @param Readable $file
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \Throwable
      */
@@ -59,16 +58,15 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
     /**
      * @dataProvider loadNegativeABTests
      *
-     * @param ReadableInterface $file
+     * @param Readable $file
      * @return void
      * @throws \Exception
-     * @throws \League\Flysystem\FileNotFoundException
      * @throws \LogicException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
      * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
      */
-    public function testNegativeCompilation(ReadableInterface $file): void
+    public function testNegativeCompilation(Readable $file): void
     {
         $error = $file->getPathname() . ' must throw an error but compiled successfully: ' . "\n" . $file->getContents();
 

@@ -12,12 +12,12 @@ namespace Railt\Tests\GraphQL;
 use Railt\GraphQL\Compiler;
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
-use Railt\Reflection\Filesystem\File;
 
 /**
  * Class ArgumentDefaultsTestCase

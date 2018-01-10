@@ -7,21 +7,21 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Reflection\Filesystem;
+namespace Railt\Io\Exceptions;
 
 /**
- * Class NotReadableException
+ * Class NotFoundException
  */
-class NotReadableException extends \LogicException
+class NotFoundException extends NotReadableException
 {
     /**
      * @param string $file
      * @param \Throwable|null $previous
-     * @return NotReadableException
+     * @return NotReadableException|NotFoundException
      */
-    public static function fromFilePath(string $file = '', \Throwable $previous = null): self
+    public static function fromFilePath(string $file = '', \Throwable $previous = null): NotReadableException
     {
-        $message = \sprintf('File "%s" not readable.', $file);
+        $message = \sprintf('File "%s" not found.', $file);
 
         return new static($message, 0, $previous);
     }

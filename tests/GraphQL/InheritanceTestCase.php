@@ -12,7 +12,7 @@ namespace Railt\Tests\GraphQL;
 use Railt\GraphQL\Compiler;
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\CompilerInterface;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 
 /**
  * Class InheritanceTestCase
@@ -459,7 +459,6 @@ class InheritanceTestCase extends AbstractCompilerTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \League\Flysystem\FileNotFoundException
      * @throws \LogicException
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception

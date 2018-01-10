@@ -13,7 +13,7 @@ use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Compiler\Runtime;
 use Railt\GraphQL\Parser\Factory;
-use Railt\Reflection\Filesystem\File;
+use Railt\Io\File;
 use Railt\Tests\Support\SpecSupport;
 use Railt\Tests\Support\SpecTest;
 

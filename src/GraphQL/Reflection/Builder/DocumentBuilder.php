@@ -18,10 +18,10 @@ use Railt\GraphQL\Reflection\Builder\Process\Compilable;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
 use Railt\GraphQL\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\Io\Readable;
 use Railt\Reflection\Base\BaseDocument;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Filesystem\ReadableInterface;
 use Railt\Reflection\Support;
 
 /**
@@ -67,11 +67,11 @@ class DocumentBuilder extends BaseDocument implements Compilable
     /**
      * DocumentBuilder constructor.
      * @param TreeNode $ast
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @param CompilerInterface $compiler
      * @throws CompilerException
      */
-    public function __construct(TreeNode $ast, ReadableInterface $readable, CompilerInterface $compiler)
+    public function __construct(TreeNode $ast, Readable $readable, CompilerInterface $compiler)
     {
         $this->valueBuilder = new ValueBuilder($this);
         $this->compiler     = $compiler;
@@ -129,14 +129,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
     }
 
     /**
-     * @return CompilerInterface
-     */
-    final public function getCompiler(): CompilerInterface
-    {
-        return $this->compiler;
-    }
-
-    /**
      * @param TreeNode $ast
      * @return bool
      * @throws \OutOfBoundsException
@@ -171,6 +163,14 @@ class DocumentBuilder extends BaseDocument implements Compilable
 
             throw new BuildingException($error, $this->getCompiler()->getStack());
         }
+    }
+
+    /**
+     * @return CompilerInterface
+     */
+    final public function getCompiler(): CompilerInterface
+    {
+        return $this->compiler;
     }
 
     /**

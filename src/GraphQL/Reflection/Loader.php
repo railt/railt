@@ -11,10 +11,9 @@ namespace Railt\GraphQL\Reflection;
 
 use Railt\GraphQL\Exceptions\TypeNotFoundException;
 use Railt\GraphQL\Kernel\CallStack;
+use Railt\Io\File;
+use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Filesystem\File;
-use Railt\Reflection\Filesystem\NotReadableException;
-use Railt\Reflection\Filesystem\ReadableInterface;
 
 /**
  * Class Loader
@@ -57,7 +56,6 @@ class Loader extends Repository
     /**
      * @param string $name
      * @return TypeDefinition
-     * @throws NotReadableException
      * @throws TypeNotFoundException
      */
     public function get(string $name): TypeDefinition
@@ -84,8 +82,6 @@ class Loader extends Repository
     /**
      * @param string $name
      * @return TypeDefinition
-     * @throws TypeNotFoundException
-     * @throws NotReadableException
      */
     private function load(string $name): TypeDefinition
     {
@@ -113,17 +109,16 @@ class Loader extends Repository
     }
 
     /**
-     * @param string|ReadableInterface|mixed $result
-     * @return null|ReadableInterface
-     * @throws NotReadableException
+     * @param string|Readable|mixed $result
+     * @return null|Readable
      */
-    private function parseResult($result): ?ReadableInterface
+    private function parseResult($result): ?Readable
     {
         if (\is_string($result)) {
             return File::fromPathname($result);
         }
 
-        if ($result instanceof ReadableInterface) {
+        if ($result instanceof Readable) {
             return $result;
         }
 
@@ -132,10 +127,10 @@ class Loader extends Repository
 
     /**
      * @param string $name
-     * @param ReadableInterface $readable
+     * @param Readable $readable
      * @return null|TypeDefinition
      */
-    private function findType(string $name, ReadableInterface $readable): ?TypeDefinition
+    private function findType(string $name, Readable $readable): ?TypeDefinition
     {
         $document = $this->compiler->compile($readable);
 
