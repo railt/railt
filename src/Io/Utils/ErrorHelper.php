@@ -34,7 +34,7 @@ trait ErrorHelper
 
         foreach (\explode("\n", $sources) as $line => $code) {
             $previous = $current;
-            $current  += \strlen($code) + 1;
+            $current += \strlen($code) + 1;
             $trace[]  = $code;
 
             if ($current > $bytesOffset) {
