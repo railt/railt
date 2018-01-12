@@ -11,7 +11,7 @@ namespace Railt\Storage;
 
 use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\SimpleCache\CacheInterface;
-use Railt\GraphQL\Exceptions\CompilerException;
+use Railt\SDL\Exceptions\CompilerException;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
 

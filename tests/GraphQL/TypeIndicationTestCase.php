@@ -21,9 +21,9 @@ class TypeIndicationTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function provider(): array
     {

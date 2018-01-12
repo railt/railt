@@ -13,7 +13,7 @@ use Psr\Cache\CacheException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\InvalidArgumentException;
-use Railt\GraphQL\Exceptions\CompilerException;
+use Railt\SDL\Exceptions\CompilerException;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
 
@@ -77,7 +77,7 @@ class Psr6Persister implements Persister
     /**
      * @param Readable $readable
      * @return Document
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\CompilerException
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function restore(Readable $readable): Document

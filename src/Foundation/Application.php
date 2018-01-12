@@ -16,9 +16,9 @@ use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\ServiceProviders\Pipeline;
 use Railt\Foundation\ServiceProviders\RouterServiceProvider;
-use Railt\GraphQL\Compiler;
-use Railt\GraphQL\Exceptions\TypeNotFoundException;
-use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\SDL\Compiler;
+use Railt\SDL\Exceptions\TypeNotFoundException;
+use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
@@ -125,8 +125,8 @@ class Application
      * @param Readable $sdl
      * @param RequestInterface $request
      * @return ResponseInterface
-     * @throws \Railt\GraphQL\Exceptions\TypeNotFoundException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
+     * @throws \Railt\SDL\Exceptions\CompilerException
      */
     public function request(Readable $sdl, RequestInterface $request): ResponseInterface
     {
@@ -147,7 +147,7 @@ class Application
     /**
      * @param Readable $sdl
      * @return Document
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\CompilerException
      */
     private function getDocument(Readable $sdl): Document
     {
@@ -157,7 +157,7 @@ class Application
     /**
      * @param Document $document
      * @return SchemaDefinition
-     * @throws \Railt\GraphQL\Exceptions\TypeNotFoundException
+     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
      */
     private function getSchema(Document $document): SchemaDefinition
     {

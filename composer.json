@@ -45,10 +45,10 @@
     },
     "replace": {
         "railt/io": "self.version",
+        "railt/sdl": "self.version",
         "railt/http": "self.version",
         "railt/events": "self.version",
         "railt/storage": "self.version",
-        "railt/graphql": "self.version",
         "railt/compiler": "self.version",
         "railt/container": "self.version",
         "railt/reflection": "self.version",

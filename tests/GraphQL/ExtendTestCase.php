@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
-use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
+use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
 

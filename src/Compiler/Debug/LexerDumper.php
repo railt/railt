@@ -144,8 +144,7 @@ class LexerDumper implements Dumper
      */
     private function delimiter(string $input = '-'): string
     {
-        return '|' . \str_repeat($input, $this->width - 2) . '|' .
-            \PHP_EOL;
+        return '|' . \str_repeat($input, $this->width - 2) . '|' . "\n";
     }
 
     /**
@@ -169,7 +168,7 @@ class LexerDumper implements Dumper
             '| %-' . $this->tokenWidth . 's ' .
             '| %-' . $valueWidth . 's ' .
             '| %-' . $this->lengthWidth . 's |' .
-            \PHP_EOL;
+            "\n";
     }
 
     /**

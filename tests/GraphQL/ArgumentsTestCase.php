@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
-use Railt\GraphQL\Compiler;
-use Railt\GraphQL\Exceptions\TypeConflictException;
-use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\SDL\Compiler;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
@@ -29,9 +29,9 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function provider(): array
     {
@@ -41,9 +41,9 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function positiveProvider(): array
     {
@@ -70,9 +70,9 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function negativeProvider(): array
     {
@@ -134,10 +134,10 @@ class ArgumentsTestCase extends AbstractCompilerTestCase
      * @return void
      * @throws \LogicException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\TypeNotFoundException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function testInvalidArgumentDefaultValue(string $schema): void
     {

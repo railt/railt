@@ -63,8 +63,8 @@ class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
      * @throws \Exception
      * @throws \LogicException
      * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function testNegativeCompilation(Readable $file): void
     {

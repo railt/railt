@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
-use Railt\GraphQL\Exceptions\TypeNotFoundException;
-use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\SDL\Exceptions\TypeNotFoundException;
+use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Io\File;
 
 /**

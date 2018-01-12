@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Storage;
 
-use Railt\GraphQL\Exceptions\CompilerException;
+use Railt\SDL\Exceptions\CompilerException;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
 
@@ -46,7 +46,7 @@ class EmulatingPersister implements Persister
     /**
      * @param Document $document
      * @return string
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\CompilerException
      */
     private function encode(Document $document): string
     {

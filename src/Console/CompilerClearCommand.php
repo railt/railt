@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Console;
 
-use Railt\GraphQL\Parser\Compiled;
+use Railt\SDL\Parser\Compiled;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

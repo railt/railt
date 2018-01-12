@@ -15,7 +15,6 @@
 ## Introduction
 
 This is a pure PHP realization of the **GraphQL** protocol based on the 
-[youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
 [webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields) 
 implementations of the official GraphQL Specification 
 located on [Facebook GitHub](http://facebook.github.io/graphql/).
@@ -38,16 +37,16 @@ The documentation is in the process of writing, therefore, in order to understan
 > `index.php`
 
 ```php
+use Railt\Io\File;
+use Railt\SDL\Compiler;
 use Railt\Http\Request;
-use Railt\GraphQL\Compiler;
 use Railt\Foundation\Application;
-use Railt\Reflection\Filesystem\File;
 
 $app = new Application(new Compiler());
 
 $schema = File::fromFile(__DIR__ . '/schema.graphqls');
 
-$response = $app->request(new Request(), $schema);
+$response = $app->request($schema, new Request());
 $response->send();
 ```
 
@@ -127,17 +126,17 @@ under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 | Package                   | Release                                                                          |
 |---------------------------|----------------------------------------------------------------------------------|
 | `railt/railt`             | ![Latest Stable Version](https://poser.pugx.org/railt/railt/version)             |
-| `railt/webonyx-adapter`   | ![Latest Stable Version](https://poser.pugx.org/railt/webonyx-adapter/version)   |
-| `railt/youshido-adapter`  | ![Latest Stable Version](https://poser.pugx.org/railt/youshido-adapter/version)  |
 | `railt/laravel-provider`  | ![Latest Stable Version](https://poser.pugx.org/railt/laravel-provider/version)  |
 | `railt/symfony-bundle`    | ![Latest Stable Version](https://poser.pugx.org/railt/symfony-bundle/version)    |
 
 | Component                 | Release                                                                          |
 |---------------------------|----------------------------------------------------------------------------------|
-| `railt/compiler`            | ![Latest Stable Version](https://poser.pugx.org/railt/compiler/version)            |
-| `railt/graphql`          | ![Latest Stable Version](https://poser.pugx.org/railt/graphql/version)          |
+| `railt/compiler`          | ![Latest Stable Version](https://poser.pugx.org/railt/compiler/version)          |
+| `railt/sdl`               | ![Latest Stable Version](https://poser.pugx.org/railt/sdl/version)               |
+| `railt/storage`           | ![Latest Stable Version](https://poser.pugx.org/railt/storage/version)           |
 | `railt/reflection`        | ![Latest Stable Version](https://poser.pugx.org/railt/reflection/version)        |
 | `railt/container`         | ![Latest Stable Version](https://poser.pugx.org/railt/container/version)         |
 | `railt/events`            | ![Latest Stable Version](https://poser.pugx.org/railt/events/version)            |
 | `railt/http`              | ![Latest Stable Version](https://poser.pugx.org/railt/http/version)              |
-| `railt/routing`           | ![Latest Stable Version](https://poser.pugx.org/railt/routing/version)           |
+| `railt/webonyx-adapter`   | ![Latest Stable Version](https://poser.pugx.org/railt/webonyx-adapter/version)   |
+| `railt/youshido-adapter`  | *Not planned yet :3*  |

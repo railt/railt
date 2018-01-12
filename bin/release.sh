@@ -17,8 +17,8 @@ cd events && git pull && git tag -a ${VERSION} -m "Release v${VERSION}" && git p
 git clone git@github.com:railt/reflection.git
 cd reflection && git pull && git tag -a ${VERSION} -m "Release v${VERSION}" && git push origin ${VERSION} && cd ../
 
-git clone git@github.com:railt/graphql.git
-cd graphql && git pull && git tag -a ${VERSION} -m "Release v${VERSION}" && git push origin ${VERSION} && cd ../
+git clone git@github.com:railt/sdl.git
+cd sdl && git pull && git tag -a ${VERSION} -m "Release v${VERSION}" && git push origin ${VERSION} && cd ../
 
 git clone git@github.com:railt/io.git
 cd io && git pull && git tag -a ${VERSION} -m "Release v${VERSION}" && git push origin ${VERSION} && cd ../

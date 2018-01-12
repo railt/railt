@@ -57,6 +57,6 @@ trait DumpHelpers
             $this->initialIndention + $this->indention
         ));
 
-        return $prefix . $line . \PHP_EOL;
+        return $prefix . $line . "\n";
     }
 }

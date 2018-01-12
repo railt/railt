@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Schema;
-use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 

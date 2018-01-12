@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\GraphQL;
 
 use PHPUnit\Framework\AssertionFailedError;
-use Railt\GraphQL\Parser\Factory;
+use Railt\SDL\Parser\Factory;
 use Railt\Io\Readable;
 
 /**
@@ -61,8 +61,8 @@ class AstABSpecsTestCase extends AbstractCompilerTestCase
      * @param Readable $file
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function testNegativeCompilation(Readable $file): void
     {

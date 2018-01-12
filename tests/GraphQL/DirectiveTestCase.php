@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
-use Railt\GraphQL\Exceptions\TypeConflictException;
-use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
@@ -25,9 +25,9 @@ class DirectiveTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function provider(): array
     {

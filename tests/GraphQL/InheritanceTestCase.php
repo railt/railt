@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
-use Railt\GraphQL\Compiler;
-use Railt\GraphQL\Exceptions\TypeConflictException;
-use Railt\GraphQL\Reflection\CompilerInterface;
+use Railt\SDL\Compiler;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Io\File;
 
 /**
@@ -27,9 +27,9 @@ class InheritanceTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function provider(): array
     {
@@ -39,9 +39,9 @@ class InheritanceTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function positiveProvider(): array
     {
@@ -218,9 +218,9 @@ class InheritanceTestCase extends AbstractCompilerTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\GraphQL\Exceptions\CompilerException
-     * @throws \Railt\GraphQL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\GraphQL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function negativeProvider(): array
     {
