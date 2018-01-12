@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Invocations\Directive;
 
-use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
