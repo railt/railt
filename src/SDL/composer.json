@@ -1,7 +1,7 @@
 {
     "name": "railt/sdl",
     "type": "library",
-    "description": "The Railt GraphQL SDL is designed to build Reflection API classes from AST.",
+    "description": "The GraphQL RL/SDL grammar based on LL(k) parser-compiler.",
     "license": "MIT",
     "keywords": [ "graphql", "idl", "sdl", "otd", "ast", "reflection", "reader", "parser", "llk", "introspection" ],
     "homepage": "http://railt.org",
