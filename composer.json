@@ -82,12 +82,6 @@
         "psr/simple-cache-implementation": "(~1.0) PSR-16 Cache Implementation"
     },
     "scripts": {
-        "post-install-cmd": [
-            "@build"
-        ],
-        "post-update-cmd": [
-            "@build"
-        ],
         "build": [
             "@php bin/railt compiler:build"
         ]
