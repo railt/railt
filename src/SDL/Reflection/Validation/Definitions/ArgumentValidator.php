@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Definitions;
 
-use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\SDL\Exceptions\TypeConflictException;
 
 /**
  * Class ArgumentValidator

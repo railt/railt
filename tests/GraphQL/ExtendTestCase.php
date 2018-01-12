@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
-use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Reflection\Builder\DocumentBuilder;
 
 /**
  * Class ExtendTestCase

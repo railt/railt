@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
-use Railt\SDL\Compiler;
-use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
+use Railt\SDL\Compiler;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\CompilerInterface;
 
 /**
  * Class ArgumentDefaultsTestCase

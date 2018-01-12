@@ -9,6 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Railt\Io\Readable;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Standard\GraphQLDocument;
+use Railt\Reflection\Standard\StandardType;
+use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\CompilerException;
 use Railt\SDL\Exceptions\UnexpectedTokenException;
 use Railt\SDL\Exceptions\UnrecognizedTokenException;
@@ -24,13 +31,6 @@ use Railt\SDL\Reflection\Loader;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\SDL\Reflection\Validation\Definitions;
 use Railt\SDL\Reflection\Validation\Validator;
-use Railt\Io\Readable;
-use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Standard\GraphQLDocument;
-use Railt\Reflection\Standard\StandardType;
-use Railt\Reflection\Support;
 use Railt\Storage\ArrayPersister;
 use Railt\Storage\Persister;
 use Railt\Storage\Proxy;

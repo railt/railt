@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
 use Railt\Compiler\Ast\NodeInterface;
+use Railt\Reflection\Base\Definitions\BaseEnum;
 use Railt\SDL\Reflection\Builder\Definitions\Enum\ValueBuilder;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Builder\Process\Compiler;
-use Railt\Reflection\Base\Definitions\BaseEnum;
 
 /**
  * Class EnumBuilder

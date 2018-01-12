@@ -10,6 +10,11 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Builder;
 
 use Railt\Compiler\Ast\NodeInterface;
+use Railt\Io\Readable;
+use Railt\Reflection\Base\BaseDocument;
+use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\BuildingException;
 use Railt\SDL\Exceptions\CompilerException;
 use Railt\SDL\Exceptions\TypeConflictException;
@@ -18,11 +23,6 @@ use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Builder\Process\Compiler;
 use Railt\SDL\Reflection\Builder\Processable\ExtendBuilder;
 use Railt\SDL\Reflection\CompilerInterface;
-use Railt\Io\Readable;
-use Railt\Reflection\Base\BaseDocument;
-use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Support;
 
 /**
  * Class DocumentBuilder

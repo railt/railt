@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
+use Railt\Io\File;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Reflection\CompilerInterface;
-use Railt\Io\File;
 
 /**
  * Class AutoloadingTestCase

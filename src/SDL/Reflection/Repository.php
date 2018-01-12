@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Kernel\CallStack;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Support;
 
 /**
  * Class Repository
