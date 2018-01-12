@@ -69,7 +69,8 @@
         "symfony/var-dumper": "~4.0",
         "symfony/dependency-injection": "3.*|4.*",
         "illuminate/container": "~5.5",
-        "zendframework/zend-code": "~3.0"
+        "zendframework/zend-code": "~3.0",
+        "symfony/console": "3.*|4.*"
     },
     "autoload-dev": {
         "psr-4": {
@@ -78,8 +79,7 @@
     },
     "suggest": {
         "psr/cache-implementation": "(~1.0) PSR-6 Cache Implementation",
-        "psr/simple-cache-implementation": "(~1.0) PSR-16 Cache Implementation",
-        "symfony/console": "(>=2.8|3.*|4.*) CLI Commands support"
+        "psr/simple-cache-implementation": "(~1.0) PSR-16 Cache Implementation"
     },
     "scripts": {
         "post-install-cmd": [
