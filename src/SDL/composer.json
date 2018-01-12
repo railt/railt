@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\GraphQL\\": ""
+            "Railt\\SDL\\": ""
         }
     },
     "config": {
