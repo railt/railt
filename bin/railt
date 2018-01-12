@@ -12,6 +12,10 @@ use Railt\Console\CompilerClearCommand;
 use Railt\Console\CompilerRebuildCommand;
 use Symfony\Component\Console\Application;
 
+if (! \class_exists(Application::class)) {
+    throw new \LogicException('Please install "symfony/console" first.');
+}
+
 \define('RAILT_START', \microtime(true));
 
 /*
