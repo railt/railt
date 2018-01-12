@@ -78,7 +78,8 @@
     },
     "suggest": {
         "psr/cache-implementation": "(~1.0) PSR-6 Cache Implementation",
-        "psr/simple-cache-implementation": "(~1.0) PSR-16 Cache Implementation"
+        "psr/simple-cache-implementation": "(~1.0) PSR-16 Cache Implementation",
+        "monolog/monolog": "(1.*) PSR-3 Logger Implementation"
     },
     "scripts": {
         "build": [
