@@ -41,7 +41,7 @@ class AstRuntimeSpecsTestCase extends AbstractCompilerTestCase
     public function testRuntimeLanguageAstParsing(SpecTest $spec): void
     {
         $compiler = new Factory();
-        $runtime  = new Runtime(File::fromPathname(__DIR__ . '/../../src/GraphQL/resources/grammar/sdl.pp'));
+        $runtime  = new Runtime(File::fromPathname(__DIR__ . '/../../src/SDL/resources/grammar/sdl.pp'));
         $compiler->setRuntime($runtime);
 
 
