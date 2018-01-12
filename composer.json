@@ -28,7 +28,7 @@
         "bin/railt"
     ],
     "require": {
-        "php": ">=7.1",
+        "php": "^7.1.3",
         "ext-mbstring": ">=7.1",
         "ext-json": "~1.4|2.*",
         "ext-pcre": ">=7.1",
@@ -77,16 +77,10 @@
         }
     },
     "suggest": {
-        "psr/cache-implementation": "PSR-6 Cache Implementation",
-        "psr/simple-cache-implementation": "PSR-16 Cache Implementation"
+        "psr/cache-implementation": "(~1.0) PSR-6 Cache Implementation",
+        "psr/simple-cache-implementation": "(~1.0) PSR-16 Cache Implementation"
     },
     "scripts": {
-        "post-install-cmd": [
-            "@build"
-        ],
-        "post-update-cmd": [
-            "@build"
-        ],
         "build": [
             "@php bin/railt compiler:build"
         ]

@@ -63,7 +63,7 @@ class NodeDumper implements Dumper
 
             $token = \vsprintf('token(%s, %s)', [
                 $prefix . $node->getName(),
-                $this->inline($node->getValue())
+                $this->inline($node->getValue()),
             ]);
 
             return $this->depth($token, $depth);
@@ -112,7 +112,7 @@ class NodeDumper implements Dumper
      */
     public function toXml(): string
     {
-        $dom  = new \DOMDocument('1.1', 'UTF-8');
+        $dom               = new \DOMDocument('1.1', 'UTF-8');
         $dom->formatOutput = true;
 
         $root = $dom->createElement('Ast');

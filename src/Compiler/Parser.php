@@ -13,8 +13,10 @@ use Hoa\Iterator\Buffer;
 use Railt\Compiler\Ast\Leaf;
 use Railt\Compiler\Ast\Node;
 use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\Rule as AstRule;
 use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Exception\UnexpectedTokenException;
+use Railt\Compiler\Lexer\Token as LexicalToken;
 use Railt\Compiler\Rule\Choice;
 use Railt\Compiler\Rule\Concatenation;
 use Railt\Compiler\Rule\Ekzit;
@@ -22,8 +24,6 @@ use Railt\Compiler\Rule\Entry;
 use Railt\Compiler\Rule\Repetition;
 use Railt\Compiler\Rule\Rule;
 use Railt\Compiler\Rule\Token;
-use Railt\Compiler\Lexer\Token as LexicalToken;
-use Railt\Compiler\Ast\Rule as AstRule;
 
 /**
  * Class \Railt\Compiler\Parser.
@@ -549,7 +549,7 @@ class Parser
                     continue;
                 }
 
-                $cTree = new AstRule((string)($id ?: $cId), \array_reverse($handle));
+                $cTree      = new AstRule((string)($id ?: $cId), \array_reverse($handle));
                 $children[] = $cTree;
             } elseif ($trace instanceof Ekzit) {
                 return $i + 1;

@@ -14,9 +14,6 @@ use Railt\GraphQL\Exceptions\UnexpectedTokenException;
 use Railt\GraphQL\Exceptions\UnrecognizedTokenException;
 use Railt\GraphQL\Kernel\CallStack;
 use Railt\GraphQL\Parser\Factory as ParserFactory;
-use Railt\Storage\ArrayPersister;
-use Railt\Storage\Persister;
-use Railt\Storage\Proxy;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compilable;
 use Railt\GraphQL\Reflection\Coercion\Factory;
@@ -34,6 +31,9 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Standard\GraphQLDocument;
 use Railt\Reflection\Standard\StandardType;
 use Railt\Reflection\Support;
+use Railt\Storage\ArrayPersister;
+use Railt\Storage\Persister;
+use Railt\Storage\Proxy;
 
 /**
  * Class Compiler

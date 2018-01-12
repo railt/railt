@@ -48,7 +48,7 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": "^7.1.3",
         "railt/io": "~1.0",
         "hoa/iterator": "~2.0",
         "zendframework/zend-code": "~3.0"
