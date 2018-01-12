@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Builder\Dependent\Argument;
 
 use Railt\Compiler\Ast\NodeInterface;
-use Railt\SDL\Reflection\Builder\Dependent\ArgumentBuilder;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Reflection\Builder\Dependent\ArgumentBuilder;
 
 /**
  * Trait ArgumentsBuilder

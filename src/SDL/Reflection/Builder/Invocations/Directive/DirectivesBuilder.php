@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Builder\Invocations\Directive;
 
 use Railt\Compiler\Ast\NodeInterface;
-use Railt\SDL\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
 
 /**
  * Trait DirectivesBuilder

@@ -11,14 +11,14 @@ namespace Railt\SDL\Reflection\Builder\Dependent;
 
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Reflection\Base\Dependent\BaseArgument;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Support;
 use Railt\SDL\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Builder\Process\Compiler;
-use Railt\Reflection\Base\Dependent\BaseArgument;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Support;
 
 /**
  * Class ArgumentBuilder

@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Definitions;
 
-use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Exceptions\TypeConflictException;
 
 /**
  * Class SchemaValidator

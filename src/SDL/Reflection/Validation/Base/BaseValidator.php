@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Base;
 
+use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\SchemaException;
 use Railt\SDL\Kernel\CallStack;
 use Railt\SDL\Reflection\Validation\Validator;
-use Railt\Reflection\Support;
 
 /**
  * Class BaseValidator

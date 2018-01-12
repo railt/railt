@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation;
 
-use Railt\SDL\Reflection\Validation\Base\ValidatorsFactory;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Reflection\Validation\Base\ValidatorsFactory;
 
 /**
  * Class Inheritance

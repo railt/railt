@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection;
 
-use Railt\SDL\Kernel\CallStack;
-use Railt\SDL\Parser\Factory;
-use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Kernel\CallStack;
+use Railt\SDL\Parser\Factory;
+use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 
 /**
  * Class CompilerInterface

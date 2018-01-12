@@ -11,9 +11,9 @@ namespace Railt\Tests\GraphQL;
 
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Io\File;
 use Railt\SDL\Parser\Compiled;
 use Railt\SDL\Parser\Factory;
-use Railt\Io\File;
 use Railt\Tests\Support\SpecSupport;
 use Railt\Tests\Support\SpecTest;
 

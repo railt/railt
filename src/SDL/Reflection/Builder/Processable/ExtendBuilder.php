@@ -10,11 +10,6 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Builder\Processable;
 
 use Railt\Compiler\Ast\NodeInterface;
-use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\Builder\DocumentBuilder;
-use Railt\SDL\Reflection\Builder\Process\Compilable;
-use Railt\SDL\Reflection\Builder\Process\Compiler;
-use Railt\SDL\Reflection\Validation\Inheritance;
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Base\Dependent\BaseField;
@@ -29,6 +24,11 @@ use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Processable\ExtendDefinition;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\Builder\DocumentBuilder;
+use Railt\SDL\Reflection\Builder\Process\Compilable;
+use Railt\SDL\Reflection\Builder\Process\Compiler;
+use Railt\SDL\Reflection\Validation\Inheritance;
 
 /**
  * Class ExtendBuilder

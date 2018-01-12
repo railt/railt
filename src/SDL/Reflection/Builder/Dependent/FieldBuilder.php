@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Builder\Dependent;
 
 use Railt\Compiler\Ast\NodeInterface;
+use Railt\Reflection\Base\Dependent\BaseField;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\SDL\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Builder\Process\Compiler;
-use Railt\Reflection\Base\Dependent\BaseField;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class FieldBuilder
