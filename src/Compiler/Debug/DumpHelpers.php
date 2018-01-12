@@ -40,7 +40,7 @@ trait DumpHelpers
      */
     public function indent(int $depth = 4, int $initial = 0)
     {
-        $this->indention = $depth;
+        $this->indention        = $depth;
         $this->initialIndention = $initial;
 
         return $this;

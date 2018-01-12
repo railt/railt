@@ -42,8 +42,8 @@ class Leaf extends Node implements LeafInterface
     {
         parent::__construct($name);
 
-        $this->value = $value;
-        $this->offset = $offset;
+        $this->value     = $value;
+        $this->offset    = $offset;
         $this->namespace = $namespace;
     }
 

@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Parser;
 
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Debug\NodeDumper;
 use Railt\Compiler\Generator;
 use Railt\Compiler\Parser as BaseParser;
 use Railt\Compiler\Runtime;
-use Railt\Compiler\Ast\NodeInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
 

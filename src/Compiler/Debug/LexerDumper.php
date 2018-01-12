@@ -67,7 +67,7 @@ class LexerDumper implements Dumper
      */
     public function __construct(Parser $parser, string $sources)
     {
-        $this->parser = $parser;
+        $this->parser  = $parser;
         $this->sources = $sources;
     }
 
@@ -89,7 +89,7 @@ class LexerDumper implements Dumper
     public function toString(): string
     {
         $reflection = new \ReflectionObject($this->parser);
-        $method = $reflection->getMethod('getLexer');
+        $method     = $reflection->getMethod('getLexer');
         $method->setAccessible(true);
 
         /** @var Lexer $lexer */
@@ -187,12 +187,12 @@ class LexerDumper implements Dumper
         //      ^ = 1
         $suffix = 1;
 
-        return $this->width    -
+        return $this->width -
             $this->offsetWidth -
-            $this->keepWidth   -
-            $this->scopeWidth  -
+            $this->keepWidth -
+            $this->scopeWidth -
             $this->lengthWidth -
-            $this->tokenWidth  -
+            $this->tokenWidth -
             ($columns * $prefix + $suffix);
     }
 
