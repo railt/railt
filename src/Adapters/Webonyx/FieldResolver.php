@@ -99,9 +99,9 @@ class FieldResolver
         /** @var DirectiveInvocation $directive */
         $directive = $field->getDirective(self::DIRECTIVE);
 
-        $urn = (string)$directive->getPassedArgument(self::DIRECTIVE_ACTION)->getPassedValue();
+        $urn = (string)$directive->getPassedArgument(self::DIRECTIVE_ACTION);
 
-        $route = $this->router->route($object, $field->getName())
+        $this->router->route($object, $field->getName())
             ->then($this->createCallback($urn));
 
         // TODO Add operations
