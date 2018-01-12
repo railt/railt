@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Definitions;
 
-use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Invocations\Argument\HasPassedArguments;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
+use Railt\SDL\Exceptions\TypeConflictException;
 
 /**
  * Class InputInvocationValidator

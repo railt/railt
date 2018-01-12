@@ -11,12 +11,12 @@ namespace Railt\SDL\Reflection\Builder\Invocations;
 
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\SDL\Reflection\Builder\DocumentBuilder;
-use Railt\SDL\Reflection\Builder\Process\Compilable;
-use Railt\SDL\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Reflection\Builder\DocumentBuilder;
+use Railt\SDL\Reflection\Builder\Process\Compilable;
+use Railt\SDL\Reflection\Builder\Process\Compiler;
 
 /**
  * Class DirectiveInvocationBuilder

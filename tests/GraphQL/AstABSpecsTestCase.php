@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Tests\GraphQL;
 
 use PHPUnit\Framework\AssertionFailedError;
-use Railt\SDL\Parser\Factory;
 use Railt\Io\Readable;
+use Railt\SDL\Parser\Factory;
 
 /**
  * Class AstABSpecsTestCase

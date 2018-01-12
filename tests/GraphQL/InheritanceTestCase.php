@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\GraphQL;
 
+use Railt\Io\File;
 use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\CompilerInterface;
-use Railt\Io\File;
 
 /**
  * Class InheritanceTestCase

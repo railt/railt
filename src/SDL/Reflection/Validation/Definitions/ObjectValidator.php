@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Definitions;
 
-use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\Validation\Inheritance;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\Validation\Inheritance;
 
 /**
  * Class ObjectValidator

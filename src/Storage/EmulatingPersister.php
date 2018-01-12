@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Storage;
 
-use Railt\SDL\Exceptions\CompilerException;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Exceptions\CompilerException;
 
 /**
  * Class EmulatingPersister

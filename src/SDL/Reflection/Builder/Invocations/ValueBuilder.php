@@ -12,9 +12,9 @@ namespace Railt\SDL\Reflection\Builder\Invocations;
 use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
+use Railt\SDL\Reflection\Builder\DocumentBuilder;
 
 /**
  * Class ValueBuilder

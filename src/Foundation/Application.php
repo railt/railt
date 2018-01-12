@@ -16,14 +16,14 @@ use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\ServiceProviders\Pipeline;
 use Railt\Foundation\ServiceProviders\RouterServiceProvider;
-use Railt\SDL\Compiler;
-use Railt\SDL\Exceptions\TypeNotFoundException;
-use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Compiler;
+use Railt\SDL\Exceptions\TypeNotFoundException;
+use Railt\SDL\Reflection\CompilerInterface;
 
 /**
  * Class Application

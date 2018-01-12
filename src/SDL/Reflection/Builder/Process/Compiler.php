@@ -11,17 +11,17 @@ namespace Railt\SDL\Reflection\Builder\Process;
 
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\SDL\Reflection\Builder\DocumentBuilder;
-use Railt\SDL\Reflection\CompilerInterface;
-use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
-use Railt\SDL\Reflection\Validation\Definitions;
-use Railt\SDL\Reflection\Validation\Uniqueness;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\Invocable;
+use Railt\SDL\Reflection\Builder\DocumentBuilder;
+use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
+use Railt\SDL\Reflection\Validation\Definitions;
+use Railt\SDL\Reflection\Validation\Uniqueness;
 
 /**
  * Trait Compiler

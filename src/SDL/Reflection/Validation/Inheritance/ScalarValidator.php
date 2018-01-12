@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Inheritance;
 
-use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Exceptions\TypeConflictException;
 
 /**
  * Class ScalarValidator
