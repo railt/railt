@@ -12,7 +12,7 @@ namespace Railt\GraphQL\Parser;
 /**
  * This is generated file.
  * Do not update it manually.
- * Generated at 11-01-2018 21:30:21
+ * Generated at 12-01-2018 21:49:56
  */
 class Compiled extends \Railt\Compiler\Parser
 {

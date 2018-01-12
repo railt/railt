@@ -40,8 +40,8 @@
         "illuminate/support": "~5.5",
         "webonyx/graphql-php": "~0.9",
         "symfony/console": ">=2.8|3.*|4.*",
-        "hoa/iterator": "~2.0",
-        "hoa/visitor": "~2.0"
+        "zendframework/zend-code": "~3.0",
+        "hoa/iterator": "~2.0"
     },
     "replace": {
         "railt/io": "self.version",
@@ -69,8 +69,7 @@
         "cache/filesystem-adapter": "~1.0",
         "symfony/var-dumper": "~4.0",
         "symfony/dependency-injection": "3.*|4.*",
-        "illuminate/container": "~5.5",
-        "zendframework/zend-code": "~3.0"
+        "illuminate/container": "~5.5"
     },
     "autoload-dev": {
         "psr-4": {

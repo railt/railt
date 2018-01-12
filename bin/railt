@@ -53,4 +53,11 @@ $cli = new Application();
 $cli->add(new CompilerRebuildCommand());
 $cli->add(new CompilerClearCommand());
 
-exit($cli->run());
+try {
+    $code = $cli->run();
+} catch (Throwable $e) {
+    echo $e;
+    $code = $e->getCode() ?: 1;
+} finally {
+    exit($code);
+}
