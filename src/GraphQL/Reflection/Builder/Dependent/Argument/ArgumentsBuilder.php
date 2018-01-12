@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Dependent\Argument;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Reflection\Builder\Dependent\ArgumentBuilder;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
@@ -19,14 +19,14 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 trait ArgumentsBuilder
 {
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function compileArgumentsBuilder(TreeNode $ast): bool
+    public function compileArgumentsBuilder(NodeInterface $ast): bool
     {
         /** @var TypeDefinition $this */
-        switch ($ast->getId()) {
+        switch ($ast->getName()) {
             case '#Argument':
                 $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
 

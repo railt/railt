@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Rule;
 
+use Railt\Compiler\Ast\NodeInterface;
+
 /**
  * Class \Railt\Compiler\Rule\Token.
  *
@@ -43,7 +45,7 @@ class Token extends Rule
     /**
      * AST of the regex.
      *
-     * @var \Railt\Compiler\TreeNode
+     * @var NodeInterface
      */
     protected $ast;
 

@@ -116,6 +116,9 @@ class Analyzer
      *
      * @param array $rules
      * @return array
+     * @throws \Railt\Compiler\Exception\LexerException
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
+     * @throws \Railt\Compiler\Exception\Exception
      * @throws RuleException
      */
     public function analyzeRules(array $rules): array
@@ -164,6 +167,8 @@ class Analyzer
     /**
      * @param string $rule
      * @return Lookahead
+     * @throws \Railt\Compiler\Exception\LexerException
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
     private function getLookaheadIterator(string $rule): Lookahead
     {
@@ -279,6 +284,7 @@ class Analyzer
      *
      * @param string|null $pNodeId
      * @return string|int|null
+     * @throws \Railt\Compiler\Exception\Exception
      */
     protected function repetition(&$pNodeId)
     {
@@ -391,6 +397,7 @@ class Analyzer
 
     /**
      * @return int|string|null
+     * @throws \Railt\Compiler\Exception\RuleException
      */
     protected function named()
     {
@@ -426,6 +433,7 @@ class Analyzer
     /**
      * @param bool $kept
      * @return int|string|null
+     * @throws \Railt\Compiler\Exception\Exception
      */
     protected function token(bool $kept = true)
     {

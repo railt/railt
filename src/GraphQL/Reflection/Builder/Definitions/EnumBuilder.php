@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Reflection\Builder\Definitions\Enum\ValueBuilder;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
@@ -27,24 +27,24 @@ class EnumBuilder extends BaseEnum implements Compilable
 
     /**
      * EnumBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
         $this->boot($ast, $document);
         $this->offset = $this->offsetPrefixedBy('enum');
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws \LogicException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->getId() === '#Value') {
+        if ($ast->is('#Value')) {
             $value = new ValueBuilder($ast, $this->getDocument(), $this);
 
             $this->values = $this->unique($this->values, $value);

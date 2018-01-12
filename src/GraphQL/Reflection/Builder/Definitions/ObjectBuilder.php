@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Reflection\Builder\Dependent\Field\FieldsBuilder;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
@@ -28,27 +29,26 @@ class ObjectBuilder extends BaseObject implements Compilable
 
     /**
      * SchemaBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
         $this->boot($ast, $document);
         $this->offset = $this->offsetPrefixedBy('type');
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return bool
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->getId() === '#Implements') {
-            /** @var TreeNode $child */
+        if ($ast->is('#Implements')) {
             foreach ($ast->getChildren() as $child) {
-                $name = $child->getChild(0)->getValueValue();
+                $name = $child->getChild(0)->getValue();
 
                 $interface = $this->load($name);
 

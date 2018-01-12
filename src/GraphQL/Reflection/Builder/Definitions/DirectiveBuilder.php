@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compilable;
@@ -27,33 +28,31 @@ class DirectiveBuilder extends BaseDirective implements Compilable
 
     /**
      * DirectiveBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
         $this->boot($ast, $document);
         $this->offset = $this->offsetPrefixedBy('directive');
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return bool
      * @throws \OutOfBoundsException
-     * @throws \Railt\GraphQL\Exceptions\TypeRedefinitionException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        switch ($ast->getId()) {
+        switch ($ast->getName()) {
             case '#Target':
                 $validator = $this->getValidator(Uniqueness::class);
 
-                /** @var TreeNode $child */
                 foreach ($ast->getChild(0)->getChildren() as $child) {
-                    $location = $child->getValueValue();
+                    $location = $child->getValue();
 
-                    $validator->validate($this->locations, $location, static::LOCATION_TYPE_NAME);
+                    $validator->validate($this->locations, $child->getValue(), static::LOCATION_TYPE_NAME);
 
                     $this->locations[] = $location;
                 }

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\GraphQL\Persisting;
+namespace Railt\Storage;
 
 use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\SimpleCache\CacheInterface;

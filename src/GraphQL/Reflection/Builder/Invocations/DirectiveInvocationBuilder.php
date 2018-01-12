@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Invocations;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compilable;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
 use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Document;
 
 /**
  * Class DirectiveInvocationBuilder
@@ -25,25 +27,25 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
 
     /**
      * DirectiveInvocationBuilder constructor.
-     * @param TreeNode $ast
-     * @param DocumentBuilder $document
+     * @param NodeInterface $ast
+     * @param DocumentBuilder|Document $document
      * @param TypeDefinition $parent
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
         $this->parent = $parent;
         $this->boot($ast, $document);
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->getId() === '#Argument') {
+        if ($ast->is('#Argument')) {
             [$name, $value] = $this->parseArgumentValue($ast);
 
             $this->arguments[$name] = $this->parseValue($value, $this->getName());
@@ -55,21 +57,20 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return array
      */
-    private function parseArgumentValue(TreeNode $ast): array
+    private function parseArgumentValue(NodeInterface $ast): array
     {
         [$key, $value] = [null, null];
 
-        /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            if ($child->getId() === '#Name') {
-                $key = $child->getChild(0)->getValueValue();
+            if ($child->is('#Name')) {
+                $key = $child->getChild(0)->getValue();
                 continue;
             }
 
-            if ($child->getId() === '#Value') {
+            if ($child->is('#Value')) {
                 $value = $child->getChild(0);
                 continue;
             }

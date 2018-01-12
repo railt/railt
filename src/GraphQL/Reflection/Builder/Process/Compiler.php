@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Process;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\CompilerInterface;
 use Railt\GraphQL\Reflection\Validation\Base\ValidatorInterface;
@@ -33,7 +34,7 @@ trait Compiler
     protected $offset = 0;
 
     /**
-     * @var TreeNode
+     * @var NodeInterface
      */
     private $ast;
 
@@ -55,7 +56,6 @@ trait Compiler
         if ($this->completed === false) {
             $this->completed = true;
 
-            /** @var TreeNode $child */
             foreach ($this->getAst()->getChildren() as $child) {
                 if ($this->compileSiblings($child)) {
                     continue;
@@ -69,18 +69,18 @@ trait Compiler
     }
 
     /**
-     * @return TreeNode
+     * @return NodeInterface|RuleInterface
      */
-    public function getAst(): TreeNode
+    public function getAst(): NodeInterface
     {
         return $this->ast;
     }
 
     /**
-     * @param TreeNode $child
+     * @param NodeInterface $child
      * @return bool
      */
-    protected function compileSiblings(TreeNode $child): bool
+    protected function compileSiblings(NodeInterface $child): bool
     {
         foreach ($this->siblingActions as $action) {
             if ($this->$action($child)) {
@@ -164,11 +164,11 @@ trait Compiler
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param Document $document
      * @return void
      */
-    protected function boot(TreeNode $ast, Document $document): void
+    protected function boot(NodeInterface $ast, Document $document): void
     {
         $this->ast      = $ast;
         $this->document = $document;
@@ -221,12 +221,12 @@ trait Compiler
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param string $type
      * @param array $path
      * @return array|float|int|null|string
      */
-    protected function parseValue(TreeNode $ast, string $type, array $path = [])
+    protected function parseValue(NodeInterface $ast, string $type, array $path = [])
     {
         return $this->getDocument()->getValueBuilder()->parse($ast, $type, $path);
     }
@@ -238,12 +238,11 @@ trait Compiler
      */
     private function resolveTypeName(string $name = '#Name', string $desc = '#Description'): void
     {
-        /** @var TreeNode $child */
         foreach ($this->getAst()->getChildren() as $child) {
-            switch ($child->getId()) {
+            switch ($child->getName()) {
                 case $name:
                     $node                        = $child->getChild(0);
-                    [$this->name, $this->offset] = [$node->getValueValue(), $node->getOffset()];
+                    [$this->name, $this->offset] = [$node->getValue(), $node->getOffset()];
                     break;
 
                 case $desc:
@@ -254,12 +253,12 @@ trait Compiler
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return string
      */
-    private function parseDescription(TreeNode $ast): string
+    private function parseDescription(NodeInterface $ast): string
     {
-        $description = \trim($ast->getChild(0)->getValueValue());
+        $description = \trim($ast->getChild(0)->getValue());
 
         return $description
             ? \preg_replace('/^\h*#?\h+(.*?)\h*$/imsu', '$1', $description)
@@ -267,10 +266,10 @@ trait Compiler
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
         return false;
     }
@@ -303,10 +302,10 @@ trait Compiler
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return string
      */
-    protected function dump(TreeNode $ast): string
+    protected function dump(NodeInterface $ast): string
     {
         return $this->getCompiler()->getParser()->dump($ast);
     }

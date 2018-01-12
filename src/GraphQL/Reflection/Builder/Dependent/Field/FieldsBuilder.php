@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Dependent\Field;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\Builder\Dependent\FieldBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
@@ -24,14 +24,14 @@ use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 trait FieldsBuilder
 {
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws TypeConflictException
      */
-    protected function compileFieldsBuilder(TreeNode $ast): bool
+    protected function compileFieldsBuilder(NodeInterface $ast): bool
     {
         /** @var TypeDefinition|HasFields $this */
-        if ($this instanceof HasFields && $ast->getId() === '#Field') {
+        if ($this instanceof HasFields && $ast->is('#Field')) {
             $field = new FieldBuilder($ast, $this->getDocument(), $this);
 
             $this->fields = $this->unique($this->fields, $field);

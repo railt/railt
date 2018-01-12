@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Processable;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compilable;
@@ -39,25 +39,25 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
     /**
      * ExtendBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @throws TypeConflictException
      * @throws \Exception
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
         $this->boot($ast, $document);
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws TypeConflictException
      * @throws \OutOfBoundsException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        $type = DocumentBuilder::AST_TYPE_MAPPING[$ast->getId()] ?? null;
+        $type = DocumentBuilder::AST_TYPE_MAPPING[$ast->getName()] ?? null;
 
         if ($type !== null && ! ($type instanceof ExtendDefinition)) {
             /** @var Compilable $virtualType */

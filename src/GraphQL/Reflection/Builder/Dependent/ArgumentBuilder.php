@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Dependent;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
@@ -31,24 +32,24 @@ class ArgumentBuilder extends BaseArgument implements Compilable
 
     /**
      * ArgumentBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @param TypeDefinition $parent
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
         $this->parent = $parent;
         $this->boot($ast, $document);
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return bool
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->getId() === '#Value') {
+        if ($ast->is('#Value')) {
             $this->hasDefaultValue = true;
             $this->defaultValue    = $this->parseValue(
                 $ast->getChild(0),

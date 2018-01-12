@@ -7,23 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Railt\GraphQL\Persisting;
+namespace Railt\Storage;
 
 use Railt\Io\Readable;
-use Railt\Reflection\Contracts\Document;
 
 /**
- * Class NullablePersister
+ * Interface Persister
  */
-class NullablePersister implements Persister
+interface Persister
 {
     /**
      * @param Readable $readable
      * @param \Closure $then
-     * @return Document
+     * @return object|\Railt\Reflection\Contracts\Document
      */
-    public function remember(Readable $readable, \Closure $then): Document
-    {
-        return $then($readable);
-    }
+    public function remember(Readable $readable, \Closure $then);
 }

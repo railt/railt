@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Parser;
 
+use Railt\Compiler\Debug\NodeDumper;
 use Railt\Compiler\Generator;
 use Railt\Compiler\Parser as BaseParser;
 use Railt\Compiler\Runtime;
-use Railt\Compiler\TreeNode;
-use Railt\Compiler\Visitor\Dump;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
 
@@ -38,9 +38,9 @@ class Factory
 
     /**
      * @param Readable $sources
-     * @return TreeNode
+     * @return NodeInterface
      */
-    public function parse(Readable $sources): TreeNode
+    public function parse(Readable $sources): NodeInterface
     {
         return $this->getRuntime()->parse($sources->getContents());
     }
@@ -82,11 +82,11 @@ class Factory
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return string
      */
-    public function dump(TreeNode $ast): string
+    public function dump(NodeInterface $ast): string
     {
-        return (new Dump())->dump($ast);
+        return (new NodeDumper($ast))->toString();
     }
 }

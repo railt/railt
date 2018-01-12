@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Invocations;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Process\Compilable;
 use Railt\GraphQL\Reflection\Builder\Process\Compiler;
@@ -38,12 +39,12 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
 
     /**
      * InputInvocationBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @param string $parentType
      * @param array $path
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, string $parentType, array $path)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document, string $parentType, array $path)
     {
         $this->path       = $path;
         $this->parentType = $parentType;
@@ -59,12 +60,12 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return bool
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        $key   = (string)$ast->getChild(0)->getChild(0)->getValueValue();
+        $key   = (string)$ast->getChild(0)->getChild(0)->getValue();
         $value = $ast->getChild(1)->getChild(0);
 
         $this->arguments[$key] = $this->parseValue($value, $this->parentType, \array_merge($this->path, [$key]));

@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Exceptions\TypeConflictException;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
@@ -27,27 +28,26 @@ class UnionBuilder extends BaseUnion implements Compilable
 
     /**
      * UnionBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
         $this->boot($ast, $document);
         $this->offset = $this->offsetPrefixedBy('union');
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return bool
      * @throws TypeConflictException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->getId() === '#Relations') {
-            /** @var TreeNode $relation */
+        if ($ast->is('#Relations')) {
             foreach ($ast->getChildren() as $relation) {
-                $name = $relation->getChild(0)->getValueValue();
+                $name = $relation->getChild(0)->getValue();
 
                 $child = $this->load($name);
 

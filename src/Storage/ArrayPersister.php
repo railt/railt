@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\GraphQL\Persisting;
+namespace Railt\Storage;
 
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
@@ -25,9 +25,9 @@ class ArrayPersister implements Persister
     /**
      * @param Readable $readable
      * @param \Closure $then
-     * @return Document
+     * @return object
      */
-    public function remember(Readable $readable, \Closure $then): Document
+    public function remember(Readable $readable, \Closure $then)
     {
         $key = $readable->getHash();
 

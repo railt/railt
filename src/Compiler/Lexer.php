@@ -48,6 +48,11 @@ class Lexer implements \IteratorAggregate
     private $errorUnrecognized;
 
     /**
+     * @var bool
+     */
+    private $keepAll = false;
+
+    /**
      * Lexer constructor.
      * @param string $input
      * @param array $tokens
@@ -61,6 +66,17 @@ class Lexer implements \IteratorAggregate
 
         $this->isUnicode         = $this->isUnicode($pragmas);
         $this->errorUnrecognized = $this->getUnrecognizedToken($pragmas);
+    }
+
+    /**
+     * @param bool $keep
+     * @return Lexer
+     */
+    public function keepAll(bool $keep = true): self
+    {
+        $this->keepAll = $keep;
+
+        return $this;
     }
 
     /**
@@ -119,7 +135,7 @@ class Lexer implements \IteratorAggregate
                 throw new $this->errorUnrecognized($error, 0, null, ['input' => $this->input, 'offset' => $offset]);
             }
 
-            if ($next[Token::T_KEEP]) {
+            if ($this->keepAll || $next[Token::T_KEEP]) {
                 yield $next;
             }
 

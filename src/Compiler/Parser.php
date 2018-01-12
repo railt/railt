@@ -10,6 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler;
 
 use Hoa\Iterator\Buffer;
+use Railt\Compiler\Ast\Leaf;
+use Railt\Compiler\Ast\Node;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Exception\UnexpectedTokenException;
 use Railt\Compiler\Rule\Choice;
@@ -19,6 +22,8 @@ use Railt\Compiler\Rule\Entry;
 use Railt\Compiler\Rule\Repetition;
 use Railt\Compiler\Rule\Rule;
 use Railt\Compiler\Rule\Token;
+use Railt\Compiler\Lexer\Token as LexicalToken;
+use Railt\Compiler\Ast\Rule as AstRule;
 
 /**
  * Class \Railt\Compiler\Parser.
@@ -88,13 +93,6 @@ class Parser
     protected $todo;
 
     /**
-     * AST.
-     *
-     * @var \Railt\Compiler\TreeNode
-     */
-    protected $tree;
-
-    /**
      * Current depth while building the trace.
      *
      * @var int
@@ -131,6 +129,7 @@ class Parser
     /**
      * @param string $input
      * @return Lexer
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
     private function getLexer(string $input): Lexer
     {
@@ -140,6 +139,8 @@ class Parser
     /**
      * @param string $input
      * @return Buffer
+     * @throws \Railt\Compiler\Exception\LexerException
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
     private function getBuffer(string $input): Buffer
     {
@@ -152,12 +153,13 @@ class Parser
      * Parse :-).
      *
      * @param string $text Text to parse.
-     * @param string $rule The axiom, i.e. root rule.
-     * @param bool $tree Whether build tree or not.
-     * @return  mixed
+     * @return mixed
+     * @throws \Railt\Compiler\Exception\LexerException
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
+     * @throws \Railt\Compiler\Exception\Exception
      * @throws  UnexpectedTokenException
      */
-    public function parse(string $text, $rule = null, $tree = true)
+    public function parse(string $text): NodeInterface
     {
         $this->buffer = $this->getBuffer($text);
         $this->buffer->rewind();
@@ -166,9 +168,7 @@ class Parser
         $this->trace      = [];
         $this->todo       = [];
 
-        if (\array_key_exists($rule, $this->rules) === false) {
-            $rule = $this->getRootRule();
-        }
+        $rule = $this->getRootRule();
 
         $closeRule  = new Ekzit($rule, 0);
         $openRule   = new Entry($rule, 0, [$closeRule]);
@@ -177,8 +177,7 @@ class Parser
         do {
             $out = $this->unfold();
 
-            if ($out !== null &&
-                $this->buffer->current()['token'] === 'EOF') {
+            if ($out !== null && $this->buffer->current()[LexicalToken::T_TOKEN] === LexicalToken::T_EOF_NAME) {
                 break;
             }
 
@@ -190,44 +189,41 @@ class Parser
                 }
 
                 $error = \vsprintf('Unexpected token "%s" (%s)', [
-                    $token['value'],
-                    $token['token'],
+                    $token[LexicalToken::T_VALUE],
+                    $token[LexicalToken::T_TOKEN],
                 ]);
 
                 throw new UnexpectedTokenException($error, 0, null, [
                     'input'  => $text,
-                    'offset' => $token['offset'],
+                    'offset' => $token[LexicalToken::T_OFFSET],
                 ]);
             }
         } while (true);
 
-        if ($tree === false) {
-            return true;
-        }
+        $ast = $this->buildTree();
 
-        $tree = $this->buildTree();
-
-        if (! ($tree instanceof TreeNode)) {
+        if (! ($ast instanceof NodeInterface)) {
             throw new Exception('Parsing error: cannot build AST, the trace is corrupted.', 1);
         }
 
-        return $this->tree = $tree;
+        return $ast;
     }
 
     /**
      * Get root rule.
      *
-     * @return  string
+     * @return string
+     * @throws \Railt\Compiler\Exception\Exception
      */
-    public function getRootRule()
+    public function getRootRule(): string
     {
         foreach ($this->rules as $rule => $_) {
-            if (! \is_int($rule)) {
-                break;
+            if (\is_string($rule)) {
+                return $rule;
             }
         }
 
-        return $rule;
+        throw new Exception('Invalid grammar root rule (Can not find)');
     }
 
     /**
@@ -443,9 +439,9 @@ class Parser
     /**
      * Backtrack the trace.
      *
-     * @return  bool
+     * @return bool
      */
-    protected function backtrack()
+    protected function backtrack(): bool
     {
         $found = false;
 
@@ -486,9 +482,9 @@ class Parser
      *
      * @param int $i Current trace index.
      * @param array &$children Collected children.
-     * @return  \Railt\Compiler\TreeNode
+     * @return Node|int
      */
-    protected function buildTree($i = 0, &$children = [])
+    protected function buildTree($i = 0, array &$children = [])
     {
         $max = \count($this->trace);
 
@@ -503,8 +499,7 @@ class Parser
                 $id        = $rule->getNodeId();
 
                 // Optimization: Skip empty trace sequence.
-                if ($nextTrace instanceof Ekzit &&
-                    $ruleName === $nextTrace->getRule()) {
+                if ($nextTrace instanceof Ekzit && $ruleName === $nextTrace->getRule()) {
                     $i += 2;
 
                     continue;
@@ -529,7 +524,6 @@ class Parser
 
                 $handle   = [];
                 $cId      = null;
-                $cOptions = [];
 
                 do {
                     $pop = \array_pop($children);
@@ -538,15 +532,13 @@ class Parser
                         $handle[] = $pop;
                     } elseif (\is_array($pop) === true && $cId === null) {
                         $cId      = $pop['id'];
-                        $cOptions = $pop['options'];
                     } elseif ($ruleName === $pop) {
                         break;
                     }
                 } while ($pop !== null);
 
                 if ($cId === null) {
-                    $cId      = $rule->getDefaultId();
-                    $cOptions = $rule->getDefaultOptions();
+                    $cId  = $rule->getDefaultId();
                 }
 
                 if ($cId === null) {
@@ -557,27 +549,7 @@ class Parser
                     continue;
                 }
 
-                if (
-                    \in_array('M', $cOptions, true) === true &&
-                    $this->mergeTree($children, $handle, $cId) === true
-                ) {
-                    continue;
-                }
-
-                if (
-                    \in_array('m', $cOptions, true) === true &&
-                    $this->mergeTree($children, $handle, $cId, true) === true
-                ) {
-                    continue;
-                }
-
-                $cTree = new TreeNode($id ?: $cId);
-
-                foreach ($handle as $child) {
-                    $child->setParent($cTree);
-                    $cTree->prependChild($child);
-                }
-
+                $cTree = new AstRule((string)($id ?: $cId), \array_reverse($handle));
                 $children[] = $cTree;
             } elseif ($trace instanceof Ekzit) {
                 return $i + 1;
@@ -588,12 +560,12 @@ class Parser
                     continue;
                 }
 
-                $child = new TreeNode('token', [
-                    'token'     => $trace->getTokenName(),
-                    'value'     => $trace->getValue(),
-                    'namespace' => $trace->getNamespace(),
-                    'offset'    => $trace->getOffset(),
-                ]);
+                $child = new Leaf(
+                    $trace->getTokenName(),
+                    $trace->getValue(),
+                    $trace->getOffset(),
+                    $trace->getNamespace()
+                );
 
                 $children[] = $child;
                 ++$i;
@@ -609,16 +581,10 @@ class Parser
      * @param array &$children Current children being gathering.
      * @param array &$handle Children of the new node.
      * @param string $cId Node ID.
-     * @param bool $recursive Whether we should merge recursively or
-     *                                not.
      * @return  bool
      */
-    protected function mergeTree(
-        &$children,
-        &$handle,
-        $cId,
-        $recursive = false
-    ) {
+    protected function mergeTree(&$children, &$handle, $cId)
+    {
         \end($children);
         $last = \current($children);
 
@@ -630,65 +596,12 @@ class Parser
             return false;
         }
 
-        if ($recursive === true) {
-            foreach ($handle as $child) {
-                $this->mergeTreeRecursive($last, $child);
-            }
-
-            return true;
-        }
-
         foreach ($handle as $child) {
             $last->appendChild($child);
             $child->setParent($last);
         }
 
         return true;
-    }
-
-    /**
-     * Merge recursively.
-     * Please, see self::mergeTree() to know the context.
-     *
-     * @param \Railt\Compiler\TreeNode $node Node that receives.
-     * @param \Railt\Compiler\TreeNode $newNode Node to merge.
-     * @return  void
-     */
-    protected function mergeTreeRecursive(TreeNode $node, TreeNode $newNode): void
-    {
-        $nNId = $newNode->getId();
-
-        if ($nNId === 'token') {
-            $node->appendChild($newNode);
-            $newNode->setParent($node);
-
-            return;
-        }
-
-        $children = $node->getChildren();
-        \end($children);
-        $last = \current($children);
-
-        if ($last->getId() !== $nNId) {
-            $node->appendChild($newNode);
-            $newNode->setParent($node);
-
-            return;
-        }
-
-        foreach ($newNode->getChildren() as $child) {
-            $this->mergeTreeRecursive($last, $child);
-        }
-    }
-
-    /**
-     * Get AST.
-     *
-     * @return  \Railt\Compiler\TreeNode
-     */
-    public function getTree()
-    {
-        return $this->tree;
     }
 
     /**

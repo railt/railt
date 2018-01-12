@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Behavior;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Exceptions\TypeNotFoundException;
 
 /**
@@ -18,13 +19,13 @@ use Railt\GraphQL\Exceptions\TypeNotFoundException;
 trait TypeIndicationBuilder
 {
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws TypeNotFoundException
      */
-    protected function compileTypeIndicationBuilder(TreeNode $ast): bool
+    protected function compileTypeIndicationBuilder(NodeInterface $ast): bool
     {
-        switch ($ast->getId()) {
+        switch ($ast->getName()) {
             case '#Type':
                 return $this->buildType($ast);
 
@@ -36,23 +37,21 @@ trait TypeIndicationBuilder
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return bool
      * @throws \Railt\GraphQL\Exceptions\TypeNotFoundException
      */
-    private function buildType(TreeNode $ast): bool
+    private function buildType(NodeInterface $ast): bool
     {
-        /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            if ($child->getValueToken() === 'T_NON_NULL') {
+            if ($child->is('T_NON_NULL')) {
                 if ($this->isList) {
                     $this->isListOfNonNulls = true;
                 } else {
                     $this->isNonNull = true;
                 }
             } else {
-                $name       = $child->getValueValue();
-                $this->type = $this->load($name);
+                $this->type = $this->load($child->getValue());
             }
         }
 
@@ -60,22 +59,21 @@ trait TypeIndicationBuilder
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return bool
      * @throws TypeNotFoundException
      */
-    private function buildList(TreeNode $ast): bool
+    private function buildList(NodeInterface $ast): bool
     {
         $this->isList = true;
 
-        /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            if ($child->getId() === '#Type') {
+            if ($child->is('#Type')) {
                 $this->buildType($child);
                 continue;
             }
 
-            if ($child->getValueToken() === 'T_NON_NULL') {
+            if ($child->is('T_NON_NULL')) {
                 $this->isNonNull = true;
             }
         }

@@ -119,7 +119,7 @@
 //
 //
 //                             [ BOM | WHITESPACE | HTAB | LF | CR ]
-%skip T_IGNORE                 [\xfe\xff|\x20|\x09|\x0a|\x0d]+
+%skip T_WHITESPACE             [\xfe\xff|\x20|\x09|\x0a|\x0d]+
 %skip T_COMMENT                #[^\n]*
 %skip T_COMMA                  ,
 

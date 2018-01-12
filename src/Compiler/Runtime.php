@@ -21,6 +21,7 @@ class Runtime extends Parser
     /**
      * Runtime constructor.
      * @param Readable $grammar
+     * @throws \LogicException
      */
     public function __construct(Readable $grammar)
     {

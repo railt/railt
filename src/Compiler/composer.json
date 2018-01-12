@@ -50,8 +50,9 @@
     "require": {
         "php": ">=7.1",
         "railt/io": "~1.0",
+        "hoa/visitor": "~2.0",
         "hoa/iterator": "~2.0",
-        "hoa/visitor": "~2.0"
+        "zendframework/zend-code": "~3.0"
     },
     "replace": {
         "hoa/compiler": "*",

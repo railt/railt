@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Exceptions\CompilerException;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\GraphQL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
@@ -31,23 +32,23 @@ class SchemaBuilder extends BaseSchema implements Compilable
      * SchemaBuilder constructor.
      * TODO Offset doesn't works correctly =\
      *
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
         $this->name = static::DEFAULT_SCHEMA_NAME;
         $this->boot($ast, $document);
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws CompilerException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        switch ($ast->getId()) {
+        switch ($ast->getName()) {
             case '#Query':
                 $this->query = $this->unique($this->query, $this->fetchType($ast));
 
@@ -68,11 +69,11 @@ class SchemaBuilder extends BaseSchema implements Compilable
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @return ObjectDefinition|Definition
      * @throws CompilerException
      */
-    private function fetchType(TreeNode $ast): Definition
+    private function fetchType(NodeInterface $ast): Definition
     {
         $name = null;
 
@@ -83,10 +84,9 @@ class SchemaBuilder extends BaseSchema implements Compilable
          *         token(T_NAME, TypeName)  *->getValueValue()
          * </code>
          */
-        /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
-            if ($child->getId() === '#Type') {
-                return $this->load($child->getChild(0)->getValueValue());
+            if ($child->is('#Type')) {
+                return $this->load($child->getChild(0)->getValue());
             }
         }
 

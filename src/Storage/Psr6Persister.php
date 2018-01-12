@@ -7,15 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\GraphQL\Persisting;
+namespace Railt\Storage;
 
-use Cache\Adapter\Common\Exception\CachePoolException;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\InvalidArgumentException;
 use Railt\GraphQL\Exceptions\CompilerException;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
+use Psr\Cache\CacheException;
 
 /**
  * Class Psr6Persister
@@ -77,6 +77,7 @@ class Psr6Persister implements Persister
     /**
      * @param Readable $readable
      * @return Document
+     * @throws \Railt\GraphQL\Exceptions\CompilerException
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function restore(Readable $readable): Document
@@ -112,7 +113,7 @@ class Psr6Persister implements Persister
             $item = ($this->persist)($readable, $document);
             $this->touch($item);
             $this->pool->save($item);
-        } catch (CachePoolException $error) {
+        } catch (CacheException $error) {
             throw $error->getPrevious();
         }
 

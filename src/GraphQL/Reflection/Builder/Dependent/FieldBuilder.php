@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Dependent;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Reflection\Builder\Behavior\TypeIndicationBuilder;
 use Railt\GraphQL\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
@@ -31,12 +31,12 @@ class FieldBuilder extends BaseField implements Compilable
 
     /**
      * SchemaBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @param TypeDefinition $parent
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    public function __construct(TreeNode $ast, DocumentBuilder $document, TypeDefinition $parent)
+    public function __construct(NodeInterface $ast, DocumentBuilder $document, TypeDefinition $parent)
     {
         $this->parent = $parent;
         $this->boot($ast, $document);

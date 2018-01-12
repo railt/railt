@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Invocations;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\LeafInterface;
+use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\GraphQL\Reflection\Builder\DocumentBuilder;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
@@ -42,14 +44,14 @@ class ValueBuilder
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface|LeafInterface $ast
      * @param string $type
      * @param array $path
      * @return array|float|int|null|string
      */
-    public function parse(TreeNode $ast, string $type, array $path = [])
+    public function parse(NodeInterface $ast, string $type, array $path = [])
     {
-        switch ($ast->getId()) {
+        switch ($ast->getName()) {
             case self::AST_ID_ARRAY:
                 return $this->toArray($ast, $type, $path);
 
@@ -61,16 +63,15 @@ class ValueBuilder
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface|RuleInterface $ast
      * @param string $type
      * @param array $path
      * @return array
      */
-    private function toArray(TreeNode $ast, string $type, array $path): array
+    private function toArray(NodeInterface $ast, string $type, array $path): array
     {
         $result = [];
 
-        /** @var TreeNode $child */
         foreach ($ast->getChildren() as $child) {
             $result[] = $this->parse($child->getChild(0), $type, $path);
         }
@@ -79,32 +80,32 @@ class ValueBuilder
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param string $type
      * @param array $path
      * @return InputInvocation
      */
-    private function toObject(TreeNode $ast, string $type, array $path): InputInvocation
+    private function toObject(NodeInterface $ast, string $type, array $path): InputInvocation
     {
         return new InputInvocationBuilder($ast, $this->document, $type, $path);
     }
 
     /**
-     * @param TreeNode $ast
+     * @param LeafInterface $ast
      * @return float|int|string|null
      */
-    private function toScalar(TreeNode $ast)
+    private function toScalar(LeafInterface $ast)
     {
-        switch ($ast->getValueToken()) {
+        switch ($ast->getName()) {
             case self::TOKEN_NUMBER:
-                if (\strpos((string)$ast->getValueValue(), '.') !== false) {
+                if (\strpos($ast->getValue(), '.') !== false) {
                     return $this->toFloat($ast);
                 }
 
                 return $this->toInt($ast);
 
             case self::TOKEN_NULL:
-                return;
+                return null;
 
             case self::TOKEN_BOOL_TRUE:
                 return true;
@@ -117,30 +118,30 @@ class ValueBuilder
     }
 
     /**
-     * @param TreeNode $ast
+     * @param LeafInterface $ast
      * @return float
      */
-    private function toFloat(TreeNode $ast): float
+    private function toFloat(LeafInterface $ast): float
     {
-        return (float)$ast->getValueValue();
+        return (float)$ast->getValue();
     }
 
     /**
-     * @param TreeNode $ast
+     * @param LeafInterface $ast
      * @return int
      */
-    private function toInt(TreeNode $ast): int
+    private function toInt(LeafInterface $ast): int
     {
-        return (int)$ast->getValueValue();
+        return (int)$ast->getValue();
     }
 
     /**
-     * @param TreeNode $ast
+     * @param LeafInterface $ast
      * @return string
      */
-    private function toString(TreeNode $ast): string
+    private function toString(LeafInterface $ast): string
     {
-        $result = (string)$ast->getValueValue();
+        $result = $ast->getValue();
 
         // Transform utf char \uXXXX -> X
         $result = $this->renderUtfSequences($result);

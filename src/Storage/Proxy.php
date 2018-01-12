@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\GraphQL\Persisting;
+namespace Railt\Storage;
 
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Exceptions\BuildingException;
 use Railt\GraphQL\Exceptions\CompilerException;
 use Railt\GraphQL\Exceptions\TypeConflictException;
@@ -66,12 +66,12 @@ class DocumentBuilder extends BaseDocument implements Compilable
 
     /**
      * DocumentBuilder constructor.
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @param Readable $readable
      * @param CompilerInterface $compiler
      * @throws CompilerException
      */
-    public function __construct(TreeNode $ast, Readable $readable, CompilerInterface $compiler)
+    public function __construct(NodeInterface $ast, Readable $readable, CompilerInterface $compiler)
     {
         $this->valueBuilder = new ValueBuilder($this);
         $this->compiler     = $compiler;
@@ -129,15 +129,15 @@ class DocumentBuilder extends BaseDocument implements Compilable
     }
 
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws \OutOfBoundsException
      * @throws TypeConflictException
      * @throws BuildingException
      */
-    protected function onCompile(TreeNode $ast): bool
+    protected function onCompile(NodeInterface $ast): bool
     {
-        $class = self::AST_TYPE_MAPPING[$ast->getId()] ?? null;
+        $class = self::AST_TYPE_MAPPING[$ast->getName()] ?? null;
 
         $this->verifyAst($class, $ast);
 
@@ -151,15 +151,15 @@ class DocumentBuilder extends BaseDocument implements Compilable
 
     /**
      * @param null|string $class
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return void
      * @throws BuildingException
      */
-    private function verifyAst(?string $class, TreeNode $ast): void
+    private function verifyAst(?string $class, NodeInterface $ast): void
     {
         if ($class === null) {
             $error = 'Broken abstract syntax tree, because a file %s can not contain an undefined Node %s';
-            $error = \sprintf($error, $this->getName(), $ast->getId());
+            $error = \sprintf($error, $this->getName(), $ast->getName());
 
             throw new BuildingException($error, $this->getCompiler()->getStack());
         }

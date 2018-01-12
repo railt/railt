@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Reflection\Builder\Invocations\Directive;
 
-use Railt\Compiler\TreeNode;
+use Railt\Compiler\Ast\LeafInterface;
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\GraphQL\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
@@ -20,13 +21,13 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 trait DirectivesBuilder
 {
     /**
-     * @param TreeNode $ast
+     * @param NodeInterface $ast
      * @return bool
      * @throws \Railt\GraphQL\Exceptions\TypeConflictException
      */
-    protected function compileDirectivesBuilder(TreeNode $ast): bool
+    protected function compileDirectivesBuilder(NodeInterface $ast): bool
     {
-        if ($ast->getId() === '#Directive') {
+        if ($ast->is('#Directive')) {
             /** @var BaseDirectivesContainer|TypeDefinition $this */
             $directive = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
 
