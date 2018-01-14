@@ -14,7 +14,7 @@
             <directory suffix="TestCase.php">./tests/Compiler</directory>
         </testsuite>
         <testsuite name="GraphQL SDL Tests">
-            <directory suffix="TestCase.php">./tests/GraphQL</directory>
+            <directory suffix="TestCase.php">./tests/SDL</directory>
         </testsuite>
         <testsuite name="Container Tests">
             <directory suffix="TestCase.php">./tests/Container</directory>

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\GraphQL;
+namespace Railt\Tests\SDL;
 
 use Cache\Adapter\Common\AbstractCachePool;
 use Cache\Adapter\Common\CacheItem;

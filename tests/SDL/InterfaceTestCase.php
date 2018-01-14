@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\GraphQL;
+namespace Railt\Tests\SDL;
 
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
