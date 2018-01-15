@@ -11,6 +11,7 @@ namespace Railt\Tests\SDL;
 
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
+use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\CompilerInterface;
 
 /**
@@ -42,7 +43,7 @@ class DirectiveLocationsTestCase extends AbstractSDLTestCase
                         "\n" . $source->getContents() .
                         "\n" . \str_repeat('-', 80);
                     $this->assertTrue($isPositiveTest, $error);
-                } catch (\Throwable $e) {
+                } catch (TypeConflictException $e) {
                     $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:') .
                         "\n" . $source->getContents() .
                         "\n" . \str_repeat('-', 80);
