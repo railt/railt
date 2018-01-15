@@ -39,14 +39,14 @@ class DirectiveLocationsTestCase extends AbstractSDLTestCase
                 try {
                     $compiler->compile($source);
 
-                    $error = 'Must be positive:' .
+                    $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:')  .
                         "\n" . $source->getContents() .
                         "\n" . \str_repeat('-', 80);
                     $this->assertTrue($isPositiveTest, $error);
 
                 } catch (\Throwable $e) {
 
-                    $error = 'Must be negative:' .
+                    $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:') .
                         "\n" . $source->getContents() .
                         "\n" . \str_repeat('-', 80);
                     $this->assertFalse($isPositiveTest, $error);
