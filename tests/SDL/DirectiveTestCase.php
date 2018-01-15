@@ -12,11 +12,8 @@ namespace Railt\Tests\SDL;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\CompilerInterface;
 

@@ -11,7 +11,6 @@ namespace Railt\Tests\SDL;
 
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
-use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Reflection\CompilerInterface;
 
 /**
@@ -43,9 +42,7 @@ class DirectiveLocationsTestCase extends AbstractSDLTestCase
                         "\n" . $source->getContents() .
                         "\n" . \str_repeat('-', 80);
                     $this->assertTrue($isPositiveTest, $error);
-
                 } catch (\Throwable $e) {
-
                     $error = 'Must be negative:' .
                         "\n" . $source->getContents() .
                         "\n" . \str_repeat('-', 80);
