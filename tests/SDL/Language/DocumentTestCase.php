@@ -21,8 +21,7 @@ class DocumentTestCase extends AbstractLanguageTestCase
 
     /**
      * @return array
-     * @throws \League\Flysystem\NotFoundException
-     * @throws \LogicException
+     * @throws \Exception
      */
     public function provider(): array
     {
@@ -113,8 +112,7 @@ class DocumentTestCase extends AbstractLanguageTestCase
 
     /**
      * @return void
-     * @throws \League\Flysystem\NotFoundException
-     * @throws \LogicException
+     * @throws \Exception
      */
     public function testStdlibDocument(): void
     {

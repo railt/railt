@@ -7,11 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\SDL\Language;
+namespace Railt\Tests\SDL\Language\Inputs;
 
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**
  * Class InputTestCase
@@ -20,8 +21,7 @@ class InputTestCase extends AbstractLanguageTestCase
 {
     /**
      * @return array
-     * @throws \League\Flysystem\NotFoundException
-     * @throws \LogicException
+     * @throws \Exception
      */
     public function provider(): array
     {

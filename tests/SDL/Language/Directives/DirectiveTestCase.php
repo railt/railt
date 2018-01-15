@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\SDL\Language\Directive;
+namespace Railt\Tests\SDL\Language\Directives;
 
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;

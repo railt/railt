@@ -7,9 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\SDL\Language;
+namespace Railt\Tests\SDL\Language\Objects;
 
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**
  * Class ObjectTestCase
@@ -18,8 +19,7 @@ class ObjectTestCase extends AbstractLanguageTestCase
 {
     /**
      * @return array
-     * @throws \League\Flysystem\NotFoundException
-     * @throws \LogicException
+     * @throws \Exception
      */
     public function provider(): array
     {

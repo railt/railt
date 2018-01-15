@@ -7,11 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\SDL\Language;
+namespace Railt\Tests\SDL\Language\Enums;
 
 use Railt\Io\File;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\CompilerInterface;
+use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**
  * Class EnumValidationTestCase
@@ -20,6 +21,7 @@ class EnumValidationTestCase extends AbstractLanguageTestCase
 {
     /**
      * @return array
+     * @throws \Exception
      */
     public function provider(): array
     {

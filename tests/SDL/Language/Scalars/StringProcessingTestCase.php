@@ -7,13 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\SDL\Language;
+namespace Railt\Tests\SDL\Language\Scalars;
 
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**
  * Class StringProcessingTestCase
@@ -22,9 +23,7 @@ class StringProcessingTestCase extends AbstractLanguageTestCase
 {
     /**
      * @return array
-     * @throws \Railt\SDL\Exceptions\CompilerException
-     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Exception
      */
     public function provider(): array
     {

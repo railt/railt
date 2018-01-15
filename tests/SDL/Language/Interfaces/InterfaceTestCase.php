@@ -7,11 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\SDL\Language;
+namespace Railt\Tests\SDL\Language\Interfaces;
 
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**
  * Class InterfaceTestCase
@@ -108,8 +109,7 @@ class InterfaceTestCase extends AbstractLanguageTestCase
 
     /**
      * @return array
-     * @throws \League\Flysystem\NotFoundException
-     * @throws \LogicException
+     * @throws \Exception
      */
     public function provider(): array
     {

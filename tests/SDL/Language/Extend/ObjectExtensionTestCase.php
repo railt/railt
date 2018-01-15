@@ -7,21 +7,21 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\SDL\Language;
+namespace Railt\Tests\SDL\Language\Extend;
 
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
+use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**
- * Class ExtendTestCase
+ * Class ObjectExtensionTestCase
  */
-class ExtendTestCase extends AbstractLanguageTestCase
+class ObjectExtensionTestCase extends AbstractLanguageTestCase
 {
     /**
      * @return array
-     * @throws \League\Flysystem\NotFoundException
-     * @throws \LogicException
+     * @throws \Exception
      */
     public function provider(): array
     {
