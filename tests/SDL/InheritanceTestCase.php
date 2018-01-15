@@ -17,7 +17,7 @@ use Railt\SDL\Reflection\CompilerInterface;
 /**
  * Class InheritanceTestCase
  */
-class InheritanceTestCase extends AbstractCompilerTestCase
+class InheritanceTestCase extends AbstractSDLTestCase
 {
     /**
      * @var array

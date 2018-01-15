@@ -17,7 +17,7 @@ use Railt\SDL\Parser\Factory;
  * Class AstABSpecsTestCase
  * @group large
  */
-class AstABSpecsTestCase extends AbstractCompilerTestCase
+class AstABSpecsTestCase extends AbstractSDLTestCase
 {
     /**
      * @var string

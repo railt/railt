@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class EnumTestCase
  */
-class EnumTestCase extends AbstractCompilerTestCase
+class EnumTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

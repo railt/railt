@@ -16,7 +16,7 @@ use Railt\Io\Readable;
  * Class SyntaxABSpecsTestCase
  * @group large
  */
-class SyntaxABSpecsTestCase extends AbstractCompilerTestCase
+class SyntaxABSpecsTestCase extends AbstractSDLTestCase
 {
     /**
      * @var string

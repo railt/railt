@@ -13,13 +13,13 @@ use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
-use Railt\Tests\SDL\AbstractCompilerTestCase;
+use Railt\Tests\SDL\AbstractSDLTestCase;
 use Railt\Tests\Http\Mocks\Request;
 
 /**
  * Class AbstractApplicationTestCase
  */
-abstract class AbstractApplicationTestCase extends AbstractCompilerTestCase
+abstract class AbstractApplicationTestCase extends AbstractSDLTestCase
 {
     /**
      * @param string $file

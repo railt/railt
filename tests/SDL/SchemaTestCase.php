@@ -18,7 +18,7 @@ use Railt\SDL\Reflection\CompilerInterface;
 /**
  * Class SchemaTestCase
  */
-class SchemaTestCase extends AbstractCompilerTestCase
+class SchemaTestCase extends AbstractSDLTestCase
 {
     private const VALID_SCHEMA = <<<'GraphQL'
 schema {

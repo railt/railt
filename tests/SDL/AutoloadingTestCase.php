@@ -16,7 +16,7 @@ use Railt\SDL\Reflection\CompilerInterface;
 /**
  * Class AutoloadingTestCase
  */
-class AutoloadingTestCase extends AbstractCompilerTestCase
+class AutoloadingTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

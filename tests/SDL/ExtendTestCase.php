@@ -16,7 +16,7 @@ use Railt\SDL\Reflection\Builder\DocumentBuilder;
 /**
  * Class ExtendTestCase
  */
-class ExtendTestCase extends AbstractCompilerTestCase
+class ExtendTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

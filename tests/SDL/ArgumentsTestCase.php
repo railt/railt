@@ -22,7 +22,7 @@ use Railt\SDL\Reflection\CompilerInterface;
 /**
  * Class ArgumentDefaultsTestCase
  */
-class ArgumentsTestCase extends AbstractCompilerTestCase
+class ArgumentsTestCase extends AbstractSDLTestCase
 {
     private const ARGUMENT_BODY = 'type A { field(argument: %s): String }';
 

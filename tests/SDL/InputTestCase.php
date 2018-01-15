@@ -16,7 +16,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class InputTestCase
  */
-class InputTestCase extends AbstractCompilerTestCase
+class InputTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

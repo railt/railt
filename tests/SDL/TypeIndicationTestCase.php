@@ -16,7 +16,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class TypeIndicationTestCase
  */
-class TypeIndicationTestCase extends AbstractCompilerTestCase
+class TypeIndicationTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

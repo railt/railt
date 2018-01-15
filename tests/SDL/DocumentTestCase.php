@@ -15,7 +15,7 @@ use Railt\SDL\Reflection\CompilerInterface;
 /**
  * Class DocumentTestCase
  */
-class DocumentTestCase extends AbstractCompilerTestCase
+class DocumentTestCase extends AbstractSDLTestCase
 {
     private const DOCUMENT_ID_PATTERN = '[0-9a-f]{32}';
 

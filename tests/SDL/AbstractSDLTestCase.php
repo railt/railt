@@ -34,7 +34,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Class AbstractReflectionTestCase
  */
-abstract class AbstractCompilerTestCase extends AbstractTestCase
+abstract class AbstractSDLTestCase extends AbstractTestCase
 {
     /**
      * @var string

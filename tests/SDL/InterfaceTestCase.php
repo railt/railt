@@ -16,7 +16,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class InterfaceTestCase
  */
-class InterfaceTestCase extends AbstractCompilerTestCase
+class InterfaceTestCase extends AbstractSDLTestCase
 {
     /**
      * @dataProvider provider

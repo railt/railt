@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class UnionTestCase
  */
-class UnionTestCase extends AbstractCompilerTestCase
+class UnionTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

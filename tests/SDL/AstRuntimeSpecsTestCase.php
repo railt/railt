@@ -21,7 +21,7 @@ use Railt\Tests\Support\SpecTest;
  * Class CompilerTestCase
  * @group large
  */
-class AstRuntimeSpecsTestCase extends AbstractCompilerTestCase
+class AstRuntimeSpecsTestCase extends AbstractSDLTestCase
 {
     use SpecSupport;
 

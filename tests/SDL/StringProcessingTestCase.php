@@ -18,7 +18,7 @@ use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 /**
  * Class StringProcessingTestCase
  */
-class StringProcessingTestCase extends AbstractCompilerTestCase
+class StringProcessingTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

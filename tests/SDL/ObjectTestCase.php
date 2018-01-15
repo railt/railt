@@ -14,7 +14,7 @@ use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 /**
  * Class ObjectTestCase
  */
-class ObjectTestCase extends AbstractCompilerTestCase
+class ObjectTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class DeprecationTestCase
  */
-class DeprecationTestCase extends AbstractCompilerTestCase
+class DeprecationTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

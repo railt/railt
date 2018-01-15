@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class ScalarTestCase
  */
-class ScalarTestCase extends AbstractCompilerTestCase
+class ScalarTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array

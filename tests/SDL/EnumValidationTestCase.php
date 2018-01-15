@@ -16,7 +16,7 @@ use Railt\SDL\Reflection\CompilerInterface;
 /**
  * Class EnumValidationTestCase
  */
-class EnumValidationTestCase extends AbstractCompilerTestCase
+class EnumValidationTestCase extends AbstractSDLTestCase
 {
     /**
      * @return array
