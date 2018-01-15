@@ -79,7 +79,7 @@ class DirectiveLocationsTestCase extends AbstractSDLTestCase
                 return 'enum T { Value @test }';
 
             case Location::TARGET_UNION:
-                return 'union T = String | Int @test';
+                return 'union T @test = String | Int';
 
             case Location::TARGET_INTERFACE:
                 return 'interface T @test {}';
