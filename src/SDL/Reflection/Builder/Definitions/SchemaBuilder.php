@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
+use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Reflection\Base\Definitions\BaseSchema;
@@ -30,15 +31,30 @@ class SchemaBuilder extends BaseSchema implements Compilable
 
     /**
      * SchemaBuilder constructor.
-     * TODO Offset doesn't works correctly =\
      *
      * @param NodeInterface $ast
      * @param DocumentBuilder $document
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
-        $this->name = static::DEFAULT_SCHEMA_NAME;
         $this->boot($ast, $document);
+        $this->name = ($this->name ?? static::DEFAULT_SCHEMA_NAME);
+        $this->offset = $this->resolveSchemaOffset($ast);
+    }
+
+    /**
+     * @param NodeInterface|RuleInterface $rules
+     * @return int
+     */
+    private function resolveSchemaOffset(NodeInterface $rules): int
+    {
+        foreach ($rules->getChildren() as $node) {
+            if ($node instanceof LeafInterface && $node->is('T_SCHEMA')) {
+                return $node->getOffset();
+            }
+        }
+
+        return 0;
     }
 
     /**
