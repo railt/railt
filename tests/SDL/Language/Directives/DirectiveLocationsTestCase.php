@@ -28,9 +28,9 @@ class DirectiveLocationsTestCase extends AbstractLanguageTestCase
     {
         $result = [];
 
-        foreach ($this->getCompilers() as $compiler) {
-            foreach (Location::TARGET_GRAPHQL_SDL as $definition) {
-                foreach (Location::TARGET_GRAPHQL_SDL as $implementation) {
+        foreach (Location::TARGET_GRAPHQL_SDL as $definition) {
+            foreach (Location::TARGET_GRAPHQL_SDL as $implementation) {
+                foreach ($this->getCompilers() as $compiler) {
                     $result[] = [$compiler, $definition, $implementation];
                 }
             }
@@ -65,6 +65,7 @@ class DirectiveLocationsTestCase extends AbstractLanguageTestCase
             $this->assertTrue($isPositiveTest, $error);
         } catch (TypeConflictException $e) {
             $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:') .
+                "\n" . $e->getMessage() .
                 "\n" . $source->getContents() .
                 "\n" . \str_repeat('-', 80);
             $this->assertFalse($isPositiveTest, $error);
