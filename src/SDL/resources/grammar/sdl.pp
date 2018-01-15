@@ -320,7 +320,7 @@ Documentation:
 
 #SchemaDefinition:
     Documentation()?
-    ::T_SCHEMA:: Directive()*
+    <T_SCHEMA> Name()? Directive()*
     ::T_BRACE_OPEN::
         SchemaDefinitionBody()
     ::T_BRACE_CLOSE::
