@@ -25,6 +25,7 @@ schema {
 <Ast>
   <Node name="Document">
     <Node name="SchemaDefinition">
+      <Leaf name="T_SCHEMA" namespace="default" offset="31">schema</Leaf>
       <Node name="Query">
         <Node name="Type">
           <Leaf name="T_NAME" namespace="default" offset="73">TestQuery</Leaf>

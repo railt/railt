@@ -14,7 +14,7 @@ schema {
 # COMMENT
 } # COMMENT
 # DocBlock: schema
-schema { # COMMENT
+schema Example { # COMMENT
 # DocBlock: schema { mutation }
     mutation: MutationType # COMMENT
 # DocBlock: schema { query }
@@ -138,6 +138,7 @@ directive @include2(if: Boolean!) on # COMMENT
 <Ast>
   <Node name="Document">
     <Node name="SchemaDefinition">
+      <Leaf name="T_SCHEMA" namespace="default" offset="19">schema</Leaf>
       <Node name="Query">
         <Node name="Type">
           <Leaf name="T_NAME" namespace="default" offset="102">QueryType</Leaf>
@@ -150,154 +151,158 @@ directive @include2(if: Boolean!) on # COMMENT
       </Node>
     </Node>
     <Node name="SchemaDefinition">
+      <Leaf name="T_SCHEMA" namespace="default" offset="232">schema</Leaf>
+      <Node name="Name">
+        <Leaf name="T_NAME" namespace="default" offset="239">Example</Leaf>
+      </Node>
       <Node name="Mutation">
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="297">MutationType</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="305">MutationType</Leaf>
         </Node>
       </Node>
       <Node name="Query">
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="360">QueryType</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="368">QueryType</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="ObjectDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="428">Foo</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="436">Foo</Leaf>
       </Node>
       <Node name="Implements">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="443">Bar</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="451">Bar</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="516">one</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="524">one</Leaf>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="521">Type</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="529">Type</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="569">two</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="577">two</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="573">argument</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="581">argument</Leaf>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="583">InputType</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="592">!</Leaf>
-          </Node>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="596">Type</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="646">three</Leaf>
-        </Node>
-        <Node name="Argument">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="652">argument</Leaf>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="662">InputType</Leaf>
-          </Node>
-        </Node>
-        <Node name="Argument">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="673">other</Leaf>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="680">String</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="591">InputType</Leaf>
+            <Leaf name="T_NON_NULL" namespace="default" offset="600">!</Leaf>
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="689">Int</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="604">Type</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="737">four</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="654">three</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="742">argument</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="660">argument</Leaf>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="752">String</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="670">InputType</Leaf>
+          </Node>
+        </Node>
+        <Node name="Argument">
+          <Node name="Name">
+            <Leaf name="T_NAME" namespace="default" offset="681">other</Leaf>
+          </Node>
+          <Node name="Type">
+            <Leaf name="T_NAME" namespace="default" offset="688">String</Leaf>
+          </Node>
+        </Node>
+        <Node name="Type">
+          <Leaf name="T_NAME" namespace="default" offset="697">Int</Leaf>
+        </Node>
+      </Node>
+      <Node name="Field">
+        <Node name="Name">
+          <Leaf name="T_NAME" namespace="default" offset="745">four</Leaf>
+        </Node>
+        <Node name="Argument">
+          <Node name="Name">
+            <Leaf name="T_NAME" namespace="default" offset="750">argument</Leaf>
+          </Node>
+          <Node name="Type">
+            <Leaf name="T_NAME" namespace="default" offset="760">String</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="762">string</Leaf>
+            <Leaf name="T_STRING" namespace="string" offset="770">string</Leaf>
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="772">String</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="780">String</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="823">five</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="831">five</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="828">argument</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="836">argument</Leaf>
           </Node>
           <Node name="List">
             <Node name="Type">
-              <Leaf name="T_NAME" namespace="default" offset="839">String</Leaf>
+              <Leaf name="T_NAME" namespace="default" offset="847">String</Leaf>
             </Node>
           </Node>
           <Node name="Value">
             <Node name="List">
               <Node name="Value">
-                <Leaf name="T_STRING" namespace="string" offset="851">string</Leaf>
+                <Leaf name="T_STRING" namespace="string" offset="859">string</Leaf>
               </Node>
               <Node name="Value">
-                <Leaf name="T_STRING" namespace="string" offset="861">string</Leaf>
+                <Leaf name="T_STRING" namespace="string" offset="869">string</Leaf>
               </Node>
             </Node>
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="872">String</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="880">String</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="922">six</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="930">six</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="926">argument</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="934">argument</Leaf>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="936">InputType</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="944">InputType</Leaf>
           </Node>
           <Node name="Value">
             <Node name="Object">
               <Node name="ObjectPair">
                 <Node name="Name">
-                  <Leaf name="T_NAME" namespace="default" offset="958">key</Leaf>
+                  <Leaf name="T_NAME" namespace="default" offset="966">key</Leaf>
                 </Node>
                 <Node name="Value">
-                  <Leaf name="T_STRING" namespace="string" offset="964">value</Leaf>
+                  <Leaf name="T_STRING" namespace="string" offset="972">value</Leaf>
                 </Node>
               </Node>
               <Node name="ObjectPair">
                 <Node name="Name">
-                  <Leaf name="T_NAME" namespace="default" offset="980">key2</Leaf>
+                  <Leaf name="T_NAME" namespace="default" offset="988">key2</Leaf>
                 </Node>
                 <Node name="Value">
                   <Node name="List">
                     <Node name="Value">
-                      <Leaf name="T_STRING" namespace="string" offset="988">value1</Leaf>
+                      <Leaf name="T_STRING" namespace="string" offset="996">value1</Leaf>
                     </Node>
                     <Node name="Value">
-                      <Leaf name="T_STRING" namespace="string" offset="998">value2</Leaf>
+                      <Leaf name="T_STRING" namespace="string" offset="1006">value2</Leaf>
                     </Node>
                   </Node>
                 </Node>
@@ -306,53 +311,53 @@ directive @include2(if: Boolean!) on # COMMENT
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="1015">Type</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1023">Type</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1065">seven</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1073">seven</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1071">argument</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1079">argument</Leaf>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="1081">Int</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1089">Int</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_NULL" namespace="default" offset="1087">null</Leaf>
+            <Leaf name="T_NULL" namespace="default" offset="1095">null</Leaf>
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="1094">Type</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1102">Type</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="ObjectDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="1169">AnnotatedObject</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="1177">AnnotatedObject</Leaf>
       </Node>
       <Node name="Directive">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1186">onObject</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1194">onObject</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1195">arg</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1203">arg</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="1201">value</Leaf>
+            <Leaf name="T_STRING" namespace="string" offset="1209">value</Leaf>
           </Node>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1209">arg2</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1217">arg2</Leaf>
           </Node>
           <Node name="Value">
             <Node name="List">
               <Node name="Value">
-                <Leaf name="T_NAME" namespace="default" offset="1216">Relation</Leaf>
+                <Leaf name="T_NAME" namespace="default" offset="1224">Relation</Leaf>
               </Node>
             </Node>
           </Node>
@@ -360,253 +365,253 @@ directive @include2(if: Boolean!) on # COMMENT
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1295">annotatedField</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1303">annotatedField</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1310">arg</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1318">arg</Leaf>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="1315">Type</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1323">Type</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="1323">default</Leaf>
+            <Leaf name="T_STRING" namespace="string" offset="1331">default</Leaf>
           </Node>
           <Node name="Directive">
             <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="1333">onArg</Leaf>
+              <Leaf name="T_NAME" namespace="default" offset="1341">onArg</Leaf>
             </Node>
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="1341">Type</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1349">Type</Leaf>
         </Node>
         <Node name="Directive">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1347">onField</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1355">onField</Leaf>
           </Node>
         </Node>
       </Node>
     </Node>
     <Node name="InterfaceDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="1423">Bar</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="1431">Bar</Leaf>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1506">one</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1514">one</Leaf>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="1511">Type</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1519">Type</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1565">four</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1573">four</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1570">argument</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1578">argument</Leaf>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="1580">String</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1588">String</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="1590">string</Leaf>
+            <Leaf name="T_STRING" namespace="string" offset="1598">string</Leaf>
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="1600">String</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1608">String</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="InterfaceDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="1690">AnnotatedInterface</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="1698">AnnotatedInterface</Leaf>
       </Node>
       <Node name="Directive">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1710">onInterface</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1718">onInterface</Leaf>
         </Node>
       </Node>
       <Node name="Field">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1798">annotatedField</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1806">annotatedField</Leaf>
         </Node>
         <Node name="Argument">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1813">arg</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1821">arg</Leaf>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="1818">Type</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1826">Type</Leaf>
           </Node>
           <Node name="Directive">
             <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="1824">onArg</Leaf>
+              <Leaf name="T_NAME" namespace="default" offset="1832">onArg</Leaf>
             </Node>
           </Node>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="1832">Type</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1840">Type</Leaf>
         </Node>
         <Node name="Directive">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="1838">onField</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="1846">onField</Leaf>
           </Node>
         </Node>
       </Node>
     </Node>
     <Node name="UnionDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="1907">Feed</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="1915">Feed</Leaf>
       </Node>
       <Node name="Relations">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1914">Story</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1922">Story</Leaf>
         </Node>
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1922">Article</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1930">Article</Leaf>
         </Node>
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="1932">Advert</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="1940">Advert</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="UnionDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="1988">AnnotatedUnion</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="1996">AnnotatedUnion</Leaf>
       </Node>
       <Node name="Directive">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2004">onUnion</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2012">onUnion</Leaf>
         </Node>
       </Node>
       <Node name="Relations">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2014">A</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2022">A</Leaf>
         </Node>
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2018">B</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2026">B</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="UnionDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="2072">AnnotatedUnionTwo</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="2080">AnnotatedUnionTwo</Leaf>
       </Node>
       <Node name="Directive">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2091">onUnion</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2099">onUnion</Leaf>
         </Node>
       </Node>
       <Node name="Relations">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2103">A</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2111">A</Leaf>
         </Node>
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2107">B</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2115">B</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="ScalarDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="2158">CustomScalar</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="2166">CustomScalar</Leaf>
       </Node>
     </Node>
     <Node name="ScalarDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="2223">AnnotatedScalar</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="2231">AnnotatedScalar</Leaf>
       </Node>
       <Node name="Directive">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2240">onScalar</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2248">onScalar</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="EnumDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="2286">Site</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="2294">Site</Leaf>
       </Node>
       <Node name="Value">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2341">DESKTOP</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2349">DESKTOP</Leaf>
         </Node>
       </Node>
       <Node name="Value">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2396">MOBILE</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2404">MOBILE</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="EnumDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="2461">AnnotatedEnum</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="2469">AnnotatedEnum</Leaf>
       </Node>
       <Node name="Directive">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2476">onEnum</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2484">onEnum</Leaf>
         </Node>
       </Node>
       <Node name="Value">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2550">ANNOTATED_VALUE</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2558">ANNOTATED_VALUE</Leaf>
         </Node>
         <Node name="Directive">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="2567">onEnumValue</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="2575">onEnumValue</Leaf>
           </Node>
         </Node>
       </Node>
       <Node name="Value">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2640">OTHER_VALUE</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2648">OTHER_VALUE</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="InputDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="2718">InputType</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="2726">InputType</Leaf>
       </Node>
       <Node name="Argument">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2780">key</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2788">key</Leaf>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="2785">String</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="2791">!</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2793">String</Leaf>
+          <Leaf name="T_NON_NULL" namespace="default" offset="2799">!</Leaf>
         </Node>
       </Node>
       <Node name="Argument">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2846">answer</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2854">answer</Leaf>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="2854">Int</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2862">Int</Leaf>
         </Node>
         <Node name="Value">
-          <Leaf name="T_NUMBER_VALUE" namespace="default" offset="2860">42</Leaf>
+          <Leaf name="T_NUMBER_VALUE" namespace="default" offset="2868">42</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="InputDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="2934">AnnotatedInput</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="2942">AnnotatedInput</Leaf>
       </Node>
       <Node name="Directive">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="2950">onInputObjectType</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="2958">onInputObjectType</Leaf>
         </Node>
       </Node>
       <Node name="Argument">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3036">annotatedField</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3044">annotatedField</Leaf>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="3052">Type</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3060">Type</Leaf>
         </Node>
         <Node name="Directive">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="3058">onField</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="3066">onField</Leaf>
           </Node>
         </Node>
       </Node>
@@ -614,24 +619,24 @@ directive @include2(if: Boolean!) on # COMMENT
     <Node name="ExtendDefinition">
       <Node name="ObjectDefinition">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3138">Foo</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3146">Foo</Leaf>
         </Node>
         <Node name="Field">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="3196">seven</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="3204">seven</Leaf>
           </Node>
           <Node name="Argument">
             <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="3202">argument</Leaf>
+              <Leaf name="T_NAME" namespace="default" offset="3210">argument</Leaf>
             </Node>
             <Node name="List">
               <Node name="Type">
-                <Leaf name="T_NAME" namespace="default" offset="3213">String</Leaf>
+                <Leaf name="T_NAME" namespace="default" offset="3221">String</Leaf>
               </Node>
             </Node>
           </Node>
           <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="3223">Type</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="3231">Type</Leaf>
           </Node>
         </Node>
       </Node>
@@ -639,104 +644,104 @@ directive @include2(if: Boolean!) on # COMMENT
     <Node name="ExtendDefinition">
       <Node name="ObjectDefinition">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3300">Foo</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3308">Foo</Leaf>
         </Node>
         <Node name="Directive">
           <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="3305">onType</Leaf>
+            <Leaf name="T_NAME" namespace="default" offset="3313">onType</Leaf>
           </Node>
         </Node>
       </Node>
     </Node>
     <Node name="ObjectDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="3377">NoFields</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="3385">NoFields</Leaf>
       </Node>
     </Node>
     <Node name="DirectiveDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="3459">skip</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="3467">skip</Leaf>
       </Node>
       <Node name="Argument">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3464">if</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3472">if</Leaf>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="3468">Boolean</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="3475">!</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3476">Boolean</Leaf>
+          <Leaf name="T_NON_NULL" namespace="default" offset="3483">!</Leaf>
         </Node>
       </Node>
       <Node name="Target">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3495">FIELD</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3503">FIELD</Leaf>
         </Node>
       </Node>
       <Node name="Target">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3503">FRAGMENT_SPREAD</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3511">FRAGMENT_SPREAD</Leaf>
         </Node>
       </Node>
       <Node name="Target">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3521">INLINE_FRAGMENT</Leaf>
-        </Node>
-      </Node>
-    </Node>
-    <Node name="DirectiveDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="3599">include</Leaf>
-      </Node>
-      <Node name="Argument">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3607">if</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="3611">Boolean</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="3618">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Target">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3638">FIELD</Leaf>
-        </Node>
-      </Node>
-      <Node name="Target">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3646">FRAGMENT_SPREAD</Leaf>
-        </Node>
-      </Node>
-      <Node name="Target">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3664">INLINE_FRAGMENT</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3529">INLINE_FRAGMENT</Leaf>
         </Node>
       </Node>
     </Node>
     <Node name="DirectiveDefinition">
       <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="3723">include2</Leaf>
+        <Leaf name="T_NAME" namespace="default" offset="3607">include</Leaf>
       </Node>
       <Node name="Argument">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3732">if</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3615">if</Leaf>
         </Node>
         <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="3736">Boolean</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="3743">!</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3619">Boolean</Leaf>
+          <Leaf name="T_NON_NULL" namespace="default" offset="3626">!</Leaf>
         </Node>
       </Node>
       <Node name="Target">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3765">FIELD</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3646">FIELD</Leaf>
         </Node>
       </Node>
       <Node name="Target">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3777">FRAGMENT_SPREAD</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3654">FRAGMENT_SPREAD</Leaf>
         </Node>
       </Node>
       <Node name="Target">
         <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="3809">INLINE_FRAGMENT</Leaf>
+          <Leaf name="T_NAME" namespace="default" offset="3672">INLINE_FRAGMENT</Leaf>
+        </Node>
+      </Node>
+    </Node>
+    <Node name="DirectiveDefinition">
+      <Node name="Name">
+        <Leaf name="T_NAME" namespace="default" offset="3731">include2</Leaf>
+      </Node>
+      <Node name="Argument">
+        <Node name="Name">
+          <Leaf name="T_NAME" namespace="default" offset="3740">if</Leaf>
+        </Node>
+        <Node name="Type">
+          <Leaf name="T_NAME" namespace="default" offset="3744">Boolean</Leaf>
+          <Leaf name="T_NON_NULL" namespace="default" offset="3751">!</Leaf>
+        </Node>
+      </Node>
+      <Node name="Target">
+        <Node name="Name">
+          <Leaf name="T_NAME" namespace="default" offset="3773">FIELD</Leaf>
+        </Node>
+      </Node>
+      <Node name="Target">
+        <Node name="Name">
+          <Leaf name="T_NAME" namespace="default" offset="3785">FRAGMENT_SPREAD</Leaf>
+        </Node>
+      </Node>
+      <Node name="Target">
+        <Node name="Name">
+          <Leaf name="T_NAME" namespace="default" offset="3817">INLINE_FRAGMENT</Leaf>
         </Node>
       </Node>
     </Node>
