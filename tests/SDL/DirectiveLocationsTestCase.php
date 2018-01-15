@@ -20,36 +20,52 @@ use Railt\SDL\Reflection\CompilerInterface;
 class DirectiveLocationsTestCase extends AbstractSDLTestCase
 {
     /**
-     * @dataProvider dateCompilersProvider
-     *
-     * @param CompilerInterface $compiler
-     * @return void
+     * @return array
      */
-    public function testLocations(CompilerInterface $compiler): void
+    public function locationsProvider(): array
     {
-        foreach (Location::TARGET_GRAPHQL_SDL as $definition) {
-            foreach (Location::TARGET_GRAPHQL_SDL as $implementation) {
-                $isPositiveTest = $definition === $implementation;
+        $result = [];
 
-                $source = File::fromSources(
-                    'directive @test on ' . $definition . "\n" .
-                    $this->getBody($implementation)
-                );
-
-                try {
-                    $compiler->compile($source);
-
-                    $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:') .
-                        "\n" . $source->getContents() .
-                        "\n" . \str_repeat('-', 80);
-                    $this->assertTrue($isPositiveTest, $error);
-                } catch (TypeConflictException $e) {
-                    $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:') .
-                        "\n" . $source->getContents() .
-                        "\n" . \str_repeat('-', 80);
-                    $this->assertFalse($isPositiveTest, $error);
+        foreach ($this->getCompilers() as $compiler) {
+            foreach (Location::TARGET_GRAPHQL_SDL as $definition) {
+                foreach (Location::TARGET_GRAPHQL_SDL as $implementation) {
+                    $result[] = [$compiler, $definition, $implementation];
                 }
             }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @dataProvider locationsProvider
+     *
+     * @param CompilerInterface $compiler
+     * @param string $definition
+     * @param string $implementation
+     * @return void
+     */
+    public function testLocations(CompilerInterface $compiler, string $definition, string $implementation): void
+    {
+        $isPositiveTest = $definition === $implementation;
+
+        $source = File::fromSources(
+            'directive @test on ' . $definition . "\n" .
+            $this->getBody($implementation)
+        );
+
+        try {
+            $compiler->compile($source);
+
+            $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:') .
+                "\n" . $source->getContents() .
+                "\n" . \str_repeat('-', 80);
+            $this->assertTrue($isPositiveTest, $error);
+        } catch (TypeConflictException $e) {
+            $error = ($isPositiveTest ? 'Must be positive:' : 'Must be negative:') .
+                "\n" . $source->getContents() .
+                "\n" . \str_repeat('-', 80);
+            $this->assertFalse($isPositiveTest, $error);
         }
     }
 
