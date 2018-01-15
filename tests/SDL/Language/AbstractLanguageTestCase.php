@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Tests\SDL\Language;
 
 use Railt\Io\File;
-use Railt\Tests\AbstractTestCase;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Reflection\CompilerInterface;
+use Railt\Tests\AbstractTestCase;
 use Railt\Tests\SDL\Helpers\CompilerStubs;
 
 /**

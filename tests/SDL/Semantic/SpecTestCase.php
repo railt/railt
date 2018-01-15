@@ -57,7 +57,6 @@ class SpecTestCase extends AbstractSemanticTestCase
         return $result;
     }
 
-
     /**
      * @dataProvider positiveProvider
      *
