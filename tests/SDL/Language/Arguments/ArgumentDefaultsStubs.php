@@ -51,8 +51,7 @@ trait ArgumentDefaultsStubs
         yield 'DateTime' => '"2002-10-02T15:00:00.05Z"';
 
         yield 'Float'    => '0.23';
-        yield 'Float'    => '.42';
-        yield 'Float'    => '-.023';
+        yield 'Float'    => '-0.23';
 
         yield 'Int'      => '-23';
         yield 'Int'      => '42';
