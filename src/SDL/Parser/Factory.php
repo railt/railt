@@ -58,6 +58,14 @@ class Factory
     }
 
     /**
+     * @return Readable
+     */
+    public static function getGrammarFile(): Readable
+    {
+        return File::fromPathname(__DIR__ . '/../resources/grammar/sdl.pp');
+    }
+
+    /**
      * @return BaseParser
      */
     private function resolveRuntime(): BaseParser
@@ -66,9 +74,7 @@ class Factory
             return new Compiled();
         }
 
-        $grammar = File::fromPathname(__DIR__ . '/../resources/grammar/sdl.pp');
-
-        return new Runtime($grammar);
+        return new Runtime(static::getGrammarFile());
     }
 
     /**

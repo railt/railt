@@ -13,22 +13,16 @@ use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
+use Railt\Tests\AbstractTestCase;
 use Railt\Tests\Http\Mocks\Request;
-use Railt\Tests\SDL\AbstractSDLTestCase;
+use Railt\Tests\SDL\Helpers\CompilerStubs;
 
 /**
  * Class AbstractApplicationTestCase
  */
-abstract class AbstractApplicationTestCase extends AbstractSDLTestCase
+abstract class AbstractApplicationTestCase extends AbstractTestCase
 {
-    /**
-     * @param string $file
-     * @return string
-     */
-    final public function resource(string $file): string
-    {
-        return __DIR__ . '/.resources/' . $this->resourcesPath . $file;
-    }
+    use CompilerStubs;
 
     /**
      * @param string $body
@@ -54,6 +48,7 @@ abstract class AbstractApplicationTestCase extends AbstractSDLTestCase
 
     /**
      * @return \Traversable|Application[]
+     * @throws \Exception
      */
     protected function getApplications(): \Traversable
     {
@@ -75,6 +70,7 @@ abstract class AbstractApplicationTestCase extends AbstractSDLTestCase
 
     /**
      * @return array|Application[][]
+     * @throws \Exception
      */
     public function provider(): array
     {

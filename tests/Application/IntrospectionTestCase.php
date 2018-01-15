@@ -85,7 +85,7 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
      */
     private function introspection(): RequestInterface
     {
-        $file = File::fromPathname($this->resource('introspection.graphql'));
+        $file = File::fromPathname(__DIR__ . '/.resources/introspection.graphql');
 
         return $this->request($file->getContents());
     }
