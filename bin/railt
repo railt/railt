@@ -12,10 +12,6 @@ use Railt\Console\CompilerClearCommand;
 use Railt\Console\CompilerRebuildCommand;
 use Symfony\Component\Console\Application;
 
-if (! \class_exists(Application::class)) {
-    throw new \LogicException('Please install "symfony/console" first.');
-}
-
 \define('RAILT_START', \microtime(true));
 
 /*
@@ -39,6 +35,11 @@ foreach ($loaders as $loader) {
         require_once $loader;
         break;
     }
+}
+
+// Check dependencies
+if (! \class_exists(Application::class)) {
+    throw new \LogicException('Please install "symfony/console" first.');
 }
 
 /*
