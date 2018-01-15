@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Arguments;
 
-use Railt\Io\File;
 use Railt\Io\Readable;
 use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeConflictException;

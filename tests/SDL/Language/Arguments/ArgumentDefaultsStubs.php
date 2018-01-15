@@ -61,11 +61,7 @@ trait ArgumentDefaultsStubs
         yield 'ID'       => '"2"';
 
         yield 'Boolean'  => 'true';
-        yield 'Boolean'  => 'TRUE';
-        yield 'Boolean'  => 'True';
         yield 'Boolean'  => 'false';
-        yield 'Boolean'  => 'FALSE';
-        yield 'Boolean'  => 'False';
 
         yield 'Any'      => '"String"';
         yield 'Any'      => '"2018-01-15 08:23:03"';
@@ -83,25 +79,15 @@ trait ArgumentDefaultsStubs
             yield $scalar . ' = ' . $value;
             yield $scalar . '! = ' . $value;
             yield $scalar . ' = null';
-            yield $scalar . ' = NULL';
-            yield $scalar . ' = Null';
 
             // Initialized by null
             yield '[' . $scalar . ']  = null';
-            yield '[' . $scalar . ']  = NULL';
-            yield '[' . $scalar . ']  = Null';
             yield '[' . $scalar . '!] = null';
-            yield '[' . $scalar . '!] = NULL';
-            yield '[' . $scalar . '!] = Null';
             yield '[' . $scalar . ']! = [null]';
-            yield '[' . $scalar . ']! = [NULL]';
-            yield '[' . $scalar . ']! = [Null]';
 
             // Type coercion
             // Must be converted to "= [null]"
             yield '[' . $scalar . ']! = null';
-            yield '[' . $scalar . ']! = NULL';
-            yield '[' . $scalar . ']! = Null';
 
             // List defaults
             yield '[' . $scalar . '!]  = [' . $value . ']';
@@ -124,17 +110,9 @@ trait ArgumentDefaultsStubs
 
             // [X!] = [..., NULL, ...]
             yield '[' . $scalar . '!] = [null]';
-            yield '[' . $scalar . '!] = [NULL]';
-            yield '[' . $scalar . '!] = [Null]';
             yield '[' . $scalar . '!] = [' . $value . ', null]';
-            yield '[' . $scalar . '!] = [' . $value . ', NULL]';
-            yield '[' . $scalar . '!] = [' . $value . ', Null]';
             yield '[' . $scalar . '!] = [null, ' . $value . ']';
-            yield '[' . $scalar . '!] = [NULL, ' . $value . ']';
-            yield '[' . $scalar . '!] = [Null, ' . $value . ']';
             yield '[' . $scalar . '!] = [' . $value . ', null, ' . $value . ']';
-            yield '[' . $scalar . '!] = [' . $value . ', NULL, ' . $value . ']';
-            yield '[' . $scalar . '!] = [' . $value . ', Null, ' . $value . ']';
         }
     }
 }
