@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Helpers;
 
-use Railt\Compiler\Parser;
 use Railt\Compiler\Runtime;
 use Railt\SDL\Parser\Compiled;
 use Railt\SDL\Parser\Factory;

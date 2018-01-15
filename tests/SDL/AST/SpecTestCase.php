@@ -43,7 +43,6 @@ class SpecTestCase extends AbstractASTTestCase
         return $result;
     }
 
-
     /**
      * @dataProvider provider
      *
@@ -57,6 +56,6 @@ class SpecTestCase extends AbstractASTTestCase
     {
         $ast = $parser->parse(File::fromSources($code));
 
-        $this->assertEquals($expected, (new NodeDumper($ast))->toXml(), $title);
+        $this->assertSame($expected, (new NodeDumper($ast))->toXml(), $title);
     }
 }
