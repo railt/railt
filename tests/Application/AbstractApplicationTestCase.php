@@ -13,8 +13,8 @@ use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
-use Railt\Tests\SDL\AbstractSDLTestCase;
 use Railt\Tests\Http\Mocks\Request;
+use Railt\Tests\SDL\AbstractSDLTestCase;
 
 /**
  * Class AbstractApplicationTestCase
