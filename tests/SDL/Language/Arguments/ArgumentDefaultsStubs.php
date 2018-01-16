@@ -82,7 +82,7 @@ trait ArgumentDefaultsStubs
         // "input TestInput { a: Int }"
         // "input TestInputWithDefault { a: Int = 42 }"
 
-        yield 'TestInput'=> '{a: 42}';
+        yield 'TestInput'=> '{a: 42.0}';
         yield 'TestInputWithDefault'=> '{a: 66}';
         yield 'TestInputWithDefault'=> '{}';
     }
