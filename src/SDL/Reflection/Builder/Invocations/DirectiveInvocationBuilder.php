@@ -15,6 +15,7 @@ use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Builder\Process\Compiler;
@@ -50,12 +51,22 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
             [$name, $value] = $this->parseArgumentValue($ast);
 
             /** @var DirectiveDefinition $type */
-            $type = $this->getTypeDefinition();
+            $definition = $this->getTypeDefinition();
 
-            $this->arguments[$name] = $this->parseValue($value, $type
-                ->getArgument($name)
-                ->getTypeDefinition()
-                ->getName()
+            if (! $definition->getArgument($name)) {
+                $this->getCompiler()->getStack()->push($definition);
+
+                $error = \sprintf('Argument %s not defined in %s', $name, $definition);
+                throw new TypeConflictException($error, $this->getCompiler()->getStack());
+            }
+
+
+            $this->arguments[$name] = $this->parseValue(
+                $value,
+                $definition
+                    ->getArgument($name)
+                    ->getTypeDefinition()
+                    ->getName()
             );
 
             return true;
