@@ -55,7 +55,7 @@ class DirectiveInvocationValidator extends BaseDefinitionValidator
             $error = \vsprintf('Trying to define directive %s on %s, but only %s locations allowed.', [
                 $directive,
                 $directive->getParent(),
-                \implode(', ', $definition->getLocations())
+                \implode(', ', $definition->getLocations()),
             ]);
             throw new TypeConflictException($error, $this->getCallStack());
         }
