@@ -67,6 +67,10 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
         $type  = $argument->getTypeDefinition();
         $value = $invocation->getPassedArgument($argument->getName());
 
+        if ($value === null) {
+            return;
+        }
+
         if (! ($type instanceof Inputable)) {
             $error = \sprintf('%s must be type of Scalar, Enum or Input', $type);
             throw new TypeConflictException($error, $this->getCallStack());
