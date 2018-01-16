@@ -39,7 +39,9 @@ class DirectiveDefinitionValidator extends BaseDefinitionValidator
         $locations = $definition->getLocations();
 
         foreach ($locations as $location) {
-            if (! ($this->isSDLLocation($location) && $this->isQueryLocation($location))) {
+            $isValidLocation = $this->isSDLLocation($location) || $this->isQueryLocation($location);
+
+            if (! $isValidLocation) {
                 $error = \vsprintf('Trying to define directive %s, but %s location is invalid', [
                     $definition,
                     $location,
@@ -57,7 +59,7 @@ class DirectiveDefinitionValidator extends BaseDefinitionValidator
      */
     private function isSDLLocation(string $location): bool
     {
-        return  \in_array($location, Location::TARGET_GRAPHQL_SDL, true);
+        return \in_array($location, Location::TARGET_GRAPHQL_SDL, true);
     }
 
     /**
@@ -66,6 +68,6 @@ class DirectiveDefinitionValidator extends BaseDefinitionValidator
      */
     private function isQueryLocation(string $location): bool
     {
-        return  \in_array($location, Location::TARGET_GRAPHQL_SDL, true);
+        return \in_array($location, Location::TARGET_GRAPHQL_QUERY, true);
     }
 }
