@@ -323,7 +323,7 @@ GraphQL
         $this->expectException(TypeConflictException::class);
 
         $compiler->compile(File::fromSources(<<<'GraphQL'
-directive @some(foo: String!) on TYPE_DEFINITION
+directive @some(foo: String!) on OBJECT
 type Example @some() {} # "foo" required 
 GraphQL
         ));
@@ -338,16 +338,16 @@ GraphQL
     public function testAutoExportArgumentsIntoDirective(CompilerInterface $compiler): void
     {
         $document = $compiler->compile(File::fromSources(<<<'GraphQL'
-directive @test1(foo: String) on TYPE_DEFINITION
+directive @test1(foo: String) on OBJECT
 type Example1 @test1() {} 
     # No different from: type Example1 @test1(foo: NULL)
 
-directive @test2(foo: String! = "some") on TYPE_DEFINITION
+directive @test2(foo: String! = "some") on OBJECT
 type Example2 @test2() {}
     # No different from: type Example1 @test2(foo: "some")
     
 
-directive @test3(foo: Input3! = {foo: "23"}) on TYPE_DEFINITION
+directive @test3(foo: Input3! = {foo: "23"}) on OBJECT
 input Input3 { foo: String! }
 type Example3 @test3() {} 
    # No different from: type Example1 @test2(foo: {foo: "23"})
