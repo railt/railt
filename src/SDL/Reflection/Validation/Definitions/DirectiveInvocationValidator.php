@@ -14,7 +14,6 @@ use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\Validation\Definitions;
 
 /**
  * Class DirectiveInvocationValidator
