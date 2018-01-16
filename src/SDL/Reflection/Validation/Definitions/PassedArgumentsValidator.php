@@ -42,12 +42,14 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
         /** @var HasArguments $container */
         $container = $invocation->getTypeDefinition();
 
-        foreach ($invocation->getPassedArguments() as $argument => $value) {
-            $this->validateArgumentExisting($container, $argument);
-        }
+        if ($container instanceof HasArguments) {
+            foreach ($invocation->getPassedArguments() as $argument => $value) {
+                $this->validateArgumentExisting($container, $argument);
+            }
 
-        foreach ($container->getArguments() as $argument) {
-            $this->validateMissingArgument($invocation, $argument);
+            foreach ($container->getArguments() as $argument) {
+                $this->validateMissingArgument($invocation, $argument);
+            }
         }
 
         $this->getCallStack()->pop();

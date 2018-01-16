@@ -68,7 +68,7 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
      * @param Readable $src
      * @return void
      */
-    public function testScalarsValidDefaultArguments(Compiler $compiler, Readable $src): void
+    public function testValidDefaultArguments(Compiler $compiler, Readable $src): void
     {
         $this->positiveTestWrapper(function () use ($compiler, $src): void {
             $compiler->compile($src);
@@ -82,10 +82,10 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
      * @param Readable $src
      * @return void
      */
-    public function testScalarsInvalidDefaultArguments(Compiler $compiler, Readable $src): void
+    public function testInvalidDefaultArguments(Compiler $compiler, Readable $src): void
     {
-        $this->expectException(TypeConflictException::class);
-
-        $compiler->compile($src);
+        $this->negativeTestWrapper(function() use ($compiler, $src) {
+            $compiler->compile($src);
+        }, $src->getContents(), TypeConflictException::class);
     }
 }

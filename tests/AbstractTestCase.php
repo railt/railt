@@ -39,9 +39,10 @@ abstract class AbstractTestCase extends TestCase
     /**
      * @param \Closure $execution
      * @param string $suffix
+     * @param string $error
      * @return void
      */
-    protected function negativeTestWrapper(\Closure $execution, string $suffix): void
+    protected function negativeTestWrapper(\Closure $execution, string $suffix, string $error = \Throwable::class): void
     {
         try {
             $execution();
@@ -51,7 +52,12 @@ abstract class AbstractTestCase extends TestCase
                 \str_repeat('-', 60) . "\n"
             );
         } catch (\Throwable $e) {
-            $this->assertTrue(true);
+            $this->assertInstanceOf($error, $e,
+                'Error must be an instance of ' . $error . ' but ' . \get_class($e) . ' given:' . "\n" .
+                (string)$e . "\n" .
+                $suffix . "\n" .
+                \str_repeat('-', 60) . "\n"
+            );
         }
     }
 }

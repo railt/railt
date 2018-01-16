@@ -37,7 +37,7 @@ class PassedArgumentsCoercion extends BaseTypeCoercion
         /** @var HasArguments $container */
         $container = $type->getTypeDefinition();
 
-        if ($container !== null) {
+        if ($container instanceof HasArguments) {
             $this->inferenceDefaultArguments($container, $type);
         }
     }

@@ -131,8 +131,10 @@ trait ArgumentDefaultsStubs
             yield '[' . $arg . '!] = [null, ' . $value . ']';
             yield '[' . $arg . '!] = [' . $value . ', null, ' . $value . ']';
 
-            yield $arg . ' = {a: "Example"}';
-            yield $arg . ' = {b: 23}';
+            if ($arg !== 'Any') {
+                yield $arg . ' = {a: "Example"}';
+                yield $arg . ' = {b: 23}';
+            }
         }
     }
 }
