@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Definitions;
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
+use Railt\Reflection\Contracts\Invocations\InputInvocation;
 
 /**
  * Class BaseInput
@@ -27,14 +28,12 @@ abstract class BaseInput extends BaseTypeDefinition implements InputDefinition
     protected const TYPE_NAME = 'Input';
 
     /**
-     * TODO Verify input
-     *
      * @param mixed $value
      * @return bool
      */
     public function isCompatible($value): bool
     {
-        return true;
+        return $value instanceof InputInvocation;
     }
 
     /**

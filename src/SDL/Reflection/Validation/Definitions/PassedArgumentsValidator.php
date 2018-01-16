@@ -38,8 +38,6 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
      */
     public function validate(Definition $invocation): void
     {
-        $this->getCallStack()->push($invocation);
-
         /** @var HasArguments $container */
         $container = $invocation->getTypeDefinition();
 
@@ -49,12 +47,12 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
             }
 
             foreach ($container->getArguments() as $argument) {
-                $this->validateMissingArgument($invocation, $argument);
-                $this->validateArgumentTypes($invocation, $argument);
+                $this->getCallStack()->push($argument);
+                    $this->validateMissingArgument($invocation, $argument);
+                    $this->validateArgumentTypes($invocation, $argument);
+                $this->getCallStack()->pop();
             }
         }
-
-        $this->getCallStack()->pop();
     }
 
     /**
@@ -71,6 +69,8 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
             return;
         }
 
+        $this->getCallStack()->push($type);
+
         if (! ($type instanceof Inputable)) {
             $error = \sprintf('%s must be type of Scalar, Enum or Input', $type);
             throw new TypeConflictException($error, $this->getCallStack());
@@ -80,6 +80,8 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
             $error = \sprintf('%s contain non compatible value %s', $type, $this->valueToString($value));
             throw new TypeConflictException($error, $this->getCallStack());
         }
+
+        $this->getCallStack()->pop();
     }
 
     /**
