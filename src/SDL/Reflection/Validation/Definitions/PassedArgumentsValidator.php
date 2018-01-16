@@ -48,8 +48,8 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
 
             foreach ($container->getArguments() as $argument) {
                 $this->getCallStack()->push($argument);
-                    $this->validateMissingArgument($invocation, $argument);
-                    $this->validateArgumentTypes($invocation, $argument);
+                $this->validateMissingArgument($invocation, $argument);
+                $this->validateArgumentTypes($invocation, $argument);
                 $this->getCallStack()->pop();
             }
         }
