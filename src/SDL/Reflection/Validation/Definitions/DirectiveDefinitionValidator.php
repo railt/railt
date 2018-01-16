@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Definitions;
+
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
@@ -41,7 +42,7 @@ class DirectiveDefinitionValidator extends BaseDefinitionValidator
             if (! ($this->isSDLLocation($location) && $this->isQueryLocation($location))) {
                 $error = \vsprintf('Trying to define directive %s, but %s location is invalid', [
                     $definition,
-                    $location
+                    $location,
                 ]);
                 throw new TypeConflictException($error, $this->getCallStack());
             }
