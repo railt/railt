@@ -22,9 +22,10 @@ final class Definitions extends ValidatorsFactory
      */
     protected const VALIDATOR_CLASSES = [
         Definitions\EnumValidator::class,
-        Definitions\ArgumentValidator::class,
         Definitions\ObjectValidator::class,
         Definitions\SchemaValidator::class,
+        Definitions\ArgumentValidator::class,
+        Definitions\DirectiveDefinitionValidator::class,
         Definitions\PassedArgumentsValidator::class,
         Definitions\DirectiveInvocationValidator::class,
     ];

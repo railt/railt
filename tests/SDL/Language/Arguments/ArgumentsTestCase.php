@@ -133,12 +133,7 @@ class ArgumentsTestCase extends AbstractLanguageTestCase
      *
      * @param string $schema
      * @return void
-     * @throws \LogicException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \Railt\SDL\Exceptions\CompilerException
-     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
-     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Exception
      */
     public function testInvalidArgumentDefaultValue(string $schema): void
     {
@@ -158,6 +153,7 @@ class ArgumentsTestCase extends AbstractLanguageTestCase
 
     /**
      * @dataProvider dateCompilersProvider
+     *
      * @param CompilerInterface $compiler
      * @return void
      * @throws \PHPUnit\Framework\Exception
@@ -194,6 +190,7 @@ GraphQL
 
     /**
      * @dataProvider dateCompilersProvider
+     *
      * @param CompilerInterface $compiler
      * @return void
      * @throws \PHPUnit\Framework\Exception
@@ -235,6 +232,7 @@ GraphQL
 
     /**
      * @dataProvider dateCompilersProvider
+     *
      * @param CompilerInterface $compiler
      * @return void
      * @throws \PHPUnit\Framework\Exception
@@ -244,7 +242,6 @@ GraphQL
         $document = $compiler->compile(File::fromSources(<<<'GraphQL'
 type User {}
 input Where { field: String!, eq: Any, op: String! = "=" }
-
 
 type UsersRepository {
     # {field: ...} should auto transform to [{field: ...}] 
@@ -307,7 +304,7 @@ GraphQL
         $this->expectException(TypeConflictException::class);
 
         $compiler->compile(File::fromSources(<<<'GraphQL'
-directive @some(foo: String) on TYPE_DEFINITION
+directive @some(foo: String) on OBJECT
 
 type Other @some(bar: "Hey! Argument bar wasn't specified for this directive")  {
 }

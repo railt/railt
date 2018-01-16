@@ -37,11 +37,15 @@ trait CompilerStubs
      * @return array
      * @throws \Exception
      */
-    protected function providerCompilers(): array
+    public function providerCompilers(): array
     {
-        return \array_map(function (Compiler $compiler): array {
-            return [$compiler];
-        }, \iterator_to_array($this->getCompilers()));
+        $result = [];
+
+        foreach ($this->getCompilers() as $compiler) {
+            $result[] = [$compiler];
+        }
+
+        return $result;
     }
 
     /**

@@ -11,6 +11,7 @@ namespace Railt\Tests\SDL\Language\Directives;
 
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
+use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\CompilerInterface;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
@@ -37,6 +38,18 @@ class DirectiveLocationsTestCase extends AbstractLanguageTestCase
         }
 
         return $result;
+    }
+
+    /**
+     * @dataProvider providerCompilers
+     *
+     * @param Compiler $compiler
+     * @return void
+     */
+    public function testInvalidLocation(Compiler $compiler): void
+    {
+        $this->expectException(TypeConflictException::class);
+        $compiler->compile(File::fromSources('directive @example on INVALID_LOCATION'));
     }
 
     /**

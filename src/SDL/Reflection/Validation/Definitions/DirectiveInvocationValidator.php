@@ -52,7 +52,11 @@ class DirectiveInvocationValidator extends BaseDefinitionValidator
         $definition = $directive->getTypeDefinition();
 
         if (! $definition->isAllowedFor($directive->getParent())) {
-            $error = 'Directive ' . (string)$directive . ' not available for define on ' . (string)$definition;
+            $error = \vsprintf('Trying to define directive %s on %s, but only %s locations allowed.', [
+                $directive,
+                $directive->getParent(),
+                \implode(', ', $definition->getLocations())
+            ]);
             throw new TypeConflictException($error, $this->getCallStack());
         }
     }
