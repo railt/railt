@@ -70,7 +70,7 @@ class IntrospectionTestCase extends AbstractApplicationTestCase
     {
         /** @var Response $response */
         $response = $app->request(
-            $this->query('type Query @some {} directive @some on FIELD | TYPE'),
+            $this->query('type Query @some {} directive @some on FIELD_DEFINITION | OBJECT'),
             $this->introspection()
         );
 
