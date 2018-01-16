@@ -14,6 +14,7 @@ use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\Validation\Definitions;
 
 /**
  * Class DirectiveInvocationValidator
@@ -34,10 +35,26 @@ class DirectiveInvocationValidator extends BaseDefinitionValidator
      */
     public function validate(Definition $definition): void
     {
-        $parent = $definition->getParent();
+        $this->validateDirectiveLocation($definition);
 
+        $parent = $definition->getParent();
         if ($parent instanceof ArgumentDefinition) {
             $this->validateArgumentDirective($definition, $parent);
+        }
+    }
+
+    /**
+     * @param DirectiveInvocation $directive
+     * @return void
+     */
+    private function validateDirectiveLocation(DirectiveInvocation $directive): void
+    {
+        /** @var DirectiveDefinition $definition */
+        $definition = $directive->getTypeDefinition();
+
+        if (! $definition->isAllowedFor($directive->getParent())) {
+            $error = 'Directive ' . (string)$directive . ' not available for define on ' . (string)$definition;
+            throw new TypeConflictException($error, $this->getCallStack());
         }
     }
 
