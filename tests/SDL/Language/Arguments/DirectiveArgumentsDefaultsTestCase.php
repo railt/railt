@@ -70,7 +70,7 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
      */
     public function testScalarsValidDefaultArguments(Compiler $compiler, Readable $src): void
     {
-        $this->positiveTestWrapper(function() use ($compiler, $src) {
+        $this->positiveTestWrapper(function () use ($compiler, $src): void {
             $compiler->compile($src);
         }, $src->getContents());
     }

@@ -39,7 +39,7 @@ trait CompilerStubs
      */
     protected function providerCompilers(): array
     {
-        return \array_map(function(Compiler $compiler): array {
+        return \array_map(function (Compiler $compiler): array {
             return [$compiler];
         }, \iterator_to_array($this->getCompilers()));
     }
