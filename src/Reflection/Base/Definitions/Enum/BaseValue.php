@@ -11,12 +11,15 @@ namespace Railt\Reflection\Base\Definitions\Enum;
 
 use Railt\Reflection\Base\Dependent\BaseDependent;
 use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 
 /**
  * Class BaseValue
  */
 abstract class BaseValue extends BaseDependent implements ValueDefinition
 {
+    use BaseDirectivesContainer;
+
     /**
      * Enum value type name
      */
