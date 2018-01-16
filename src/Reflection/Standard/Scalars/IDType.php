@@ -33,4 +33,13 @@ final class IDType extends StringType implements StandardType
         'response as a String; however, it is not intended to be human-readable. ' .
         'When expected as an input type, any string (such as `"4"`) or integer ' .
         '(such as `4`) input value will be accepted as an ID.';
+
+    /**
+     * @param mixed|string $value
+     * @return bool
+     */
+    public function isCompatible($value): bool
+    {
+        return \is_string($value) || \is_int($value);
+    }
 }
