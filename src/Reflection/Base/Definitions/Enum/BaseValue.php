@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Reflection\Base\Definitions\Enum;
 
 use Railt\Reflection\Base\Dependent\BaseDependent;
-use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
+use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
 
 /**
  * Class BaseValue
