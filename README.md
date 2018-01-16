@@ -44,7 +44,7 @@ use Railt\Foundation\Application;
 
 $app = new Application(new Compiler());
 
-$schema = File::fromFile(__DIR__ . '/schema.graphqls');
+$schema = File::fromPathname(__DIR__ . '/schema.graphqls');
 
 $response = $app->request($schema, new Request());
 $response->send();
