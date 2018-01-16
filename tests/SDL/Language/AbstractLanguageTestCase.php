@@ -23,26 +23,6 @@ abstract class AbstractLanguageTestCase extends AbstractTestCase
     use CompilerStubs;
 
     /**
-     * @return void
-     * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\SkippedTestError
-     */
-    public function testProviderIsLoadable(): void
-    {
-        if (! \method_exists($this, 'provider')) {
-            static::markTestSkipped(__CLASS__ . ' does not provide a data provider');
-
-            return;
-        }
-
-        static::assertInternalType('array', $this->provider());
-
-        foreach ($this->provider() ?? [] as $item) {
-            static::assertInternalType('array', $item);
-        }
-    }
-
-    /**
      * @param string $body
      * @return array|Document[][]
      * @throws \Exception
