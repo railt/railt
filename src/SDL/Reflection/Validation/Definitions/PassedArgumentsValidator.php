@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Validation\Definitions;
 
+use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
@@ -49,10 +50,32 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
 
             foreach ($container->getArguments() as $argument) {
                 $this->validateMissingArgument($invocation, $argument);
+                $this->validateArgumentTypes($invocation, $argument);
             }
         }
 
         $this->getCallStack()->pop();
+    }
+
+    /**
+     * @param HasPassedArguments $invocation
+     * @param ArgumentDefinition $argument
+     * @return void
+     */
+    private function validateArgumentTypes(HasPassedArguments $invocation, ArgumentDefinition $argument): void
+    {
+        $type  = $argument->getTypeDefinition();
+        $value = $invocation->getPassedArgument($argument->getName());
+
+        if (! ($type instanceof Inputable)) {
+            $error = \sprintf('%s must be type of Scalar, Enum or Input', $type);
+            throw new TypeConflictException($error, $this->getCallStack());
+        }
+
+        if (! $type->isCompatible($value)) {
+            $error = \sprintf('%s contain non compatible value %s', $type, $this->valueToString($value));
+            throw new TypeConflictException($error, $this->getCallStack());
+        }
     }
 
     /**
