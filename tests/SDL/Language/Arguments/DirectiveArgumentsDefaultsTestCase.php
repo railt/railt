@@ -84,7 +84,7 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
      */
     public function testInvalidDefaultArguments(Compiler $compiler, Readable $src): void
     {
-        $this->negativeTestWrapper(function() use ($compiler, $src) {
+        $this->negativeTestWrapper(function () use ($compiler, $src): void {
             $compiler->compile($src);
         }, $src->getContents(), TypeConflictException::class);
     }
