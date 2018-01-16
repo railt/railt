@@ -31,7 +31,7 @@ class ObjectArgumentsDefaultsTestCase extends AbstractLanguageTestCase
         $result = [];
 
         $data = $this->scalarArgumentsDataProvider(
-            $this->getPositiveScalarArguments(),
+            $this->getPositiveArguments(),
             'type Example { field(arg: %s): String }'
         );
 
@@ -51,7 +51,7 @@ class ObjectArgumentsDefaultsTestCase extends AbstractLanguageTestCase
         $result = [];
 
         $data = $this->scalarArgumentsDataProvider(
-            $this->getNegativeScalarArguments(),
+            $this->getNegativeArguments(),
             'type Example { field(arg: %s): String }'
         );
 
@@ -71,15 +71,9 @@ class ObjectArgumentsDefaultsTestCase extends AbstractLanguageTestCase
      */
     public function testScalarsValidDefaultArguments(Compiler $compiler, Readable $src): void
     {
-        try {
+        $this->positiveTestWrapper(function() use ($compiler, $src) {
             $compiler->compile($src);
-
-            $this->assertTrue(true);
-        } catch (\Throwable $e) {
-            throw new \LogicException(
-                (string)$e->getMessage() . "\n" . 'BUT Should be successful:' . "\n" . $src->getContents()
-            );
-        }
+        }, $src->getContents());
     }
 
     /**

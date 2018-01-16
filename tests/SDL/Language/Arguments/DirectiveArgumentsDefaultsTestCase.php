@@ -30,7 +30,7 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
         $result = [];
 
         $data = $this->scalarArgumentsDataProvider(
-            $this->getPositiveScalarArguments(),
+            $this->getPositiveArguments(),
             'directive @example(arg: %s) on OBJECT'
         );
 
@@ -50,7 +50,7 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
         $result = [];
 
         $data = $this->scalarArgumentsDataProvider(
-            $this->getNegativeScalarArguments(),
+            $this->getNegativeArguments(),
             'directive @example(arg: %s) on OBJECT'
         );
 
@@ -70,15 +70,9 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
      */
     public function testScalarsValidDefaultArguments(Compiler $compiler, Readable $src): void
     {
-        try {
+        $this->positiveTestWrapper(function() use ($compiler, $src) {
             $compiler->compile($src);
-
-            $this->assertTrue(true);
-        } catch (\Throwable $e) {
-            throw new \LogicException(
-                (string)$e->getMessage() . "\n" . 'BUT Should be successful:' . "\n" . $src->getContents()
-            );
-        }
+        }, $src->getContents());
     }
 
     /**

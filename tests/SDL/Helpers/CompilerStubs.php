@@ -34,49 +34,53 @@ trait CompilerStubs
     use ParserStubs;
 
     /**
+     * @return array
+     * @throws \Exception
+     */
+    protected function providerCompilers(): array
+    {
+        return \array_map(function(Compiler $compiler): array {
+            return [$compiler];
+        }, \iterator_to_array($this->getCompilers()));
+    }
+
+    /**
      * @return \Generator|Compiler[]|CompilerInterface[]
      * @throws \Exception
      */
-    protected function getCompilers(): \Generator
+    protected function getCompilers(): \Traversable
     {
         $storage = __DIR__ . '/.temp/';
 
         // Default
-        yield from $this->compilers(null);
+        yield new Compiler(
+            null
+        );
 
         // Nullable (Return Document "as is")
-        yield from $this->compilers(
+        yield new Compiler(
             new NullablePersister()
         );
 
         // Array (Return Document "as is" and store same files into php array stateless memory)
-        yield from $this->compilers(
+        yield new Compiler(
             new ArrayPersister()
         );
 
         // Emulation of data saving
-        yield from $this->compilers(
+        yield new Compiler(
             new EmulatingPersister()
         );
 
         // PSR-6 + Flysystem Serialization
-        yield from $this->compilers(
+        yield new Compiler(
             $this->getPsr6FileSystemPersister($storage)
         );
 
         // PSR-16 + system Serialization
-        yield from $this->compilers(
+        yield new Compiler(
             $this->getPsr16FileSystemPersister($storage)
         );
-    }
-
-    /**
-     * @param Persister|null $persister
-     * @return \Traversable
-     */
-    protected function compilers(Persister $persister = null): \Traversable
-    {
-        yield new Compiler($persister);
     }
 
     /**

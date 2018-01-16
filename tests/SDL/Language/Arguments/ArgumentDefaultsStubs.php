@@ -28,7 +28,11 @@ trait ArgumentDefaultsStubs
     protected function scalarArgumentsDataProvider(iterable $arguments, string $pattern): \Traversable
     {
         foreach ($arguments as $argument) {
-            $sources = File::fromSources(\sprintf($pattern, $argument));
+            $sources = File::fromSources(\sprintf(
+                'enum Color { Red, Green, Blue }' . "\n" .
+                $pattern,
+                $argument
+            ));
 
             foreach ($this->getCompilers() as $compiler) {
                 yield $sources => $compiler;
@@ -67,12 +71,16 @@ trait ArgumentDefaultsStubs
         yield 'Any'      => '0.23';
         yield 'Any'      => '2';
         yield 'Any'      => '42';
+
+        // Enums: "enum Color { Red, Green, Blue }"
+        yield 'Color'     => 'Red';
+        yield 'Color'     => '"Red"';
     }
 
     /**
      * @return array
      */
-    protected function getPositiveScalarArguments(): iterable
+    protected function getPositiveArguments(): iterable
     {
         foreach ($this->getScalarDefaults() as $scalar => $value) {
             yield $scalar . ' = ' . $value;
@@ -98,7 +106,7 @@ trait ArgumentDefaultsStubs
     /**
      * @return array
      */
-    protected function getNegativeScalarArguments(): iterable
+    protected function getNegativeArguments(): iterable
     {
         foreach ($this->getScalarDefaults() as $scalar => $value) {
             // X! = null
