@@ -14,6 +14,7 @@ use Railt\Io\Readable;
 use Railt\Reflection\Base\BaseDocument;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Invocations\Invocable;
 use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\BuildingException;
 use Railt\SDL\Exceptions\CompilerException;
@@ -100,12 +101,12 @@ class DocumentBuilder extends BaseDocument implements Compilable
     }
 
     /**
-     * @return iterable
+     * @return iterable|Invocable[]|Compilable[]
      */
     public function getInvocableTypes(): iterable
     {
-        if ($this->future && $this->future->count()) {
-            yield from $this->future;
+        while ($this->future->count() > 0) {
+            yield $this->future->pop();
         }
     }
 

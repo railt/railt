@@ -12,6 +12,7 @@ namespace Railt\SDL\Reflection\Builder\Invocations;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Reflection\Base\Invocations\BaseDirectiveInvocation;
+use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
@@ -48,7 +49,14 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
         if ($ast->is('#Argument')) {
             [$name, $value] = $this->parseArgumentValue($ast);
 
-            $this->arguments[$name] = $this->parseValue($value, $this->getName());
+            /** @var DirectiveDefinition $type */
+            $type = $this->getTypeDefinition();
+
+            $this->arguments[$name] = $this->parseValue($value, $type
+                ->getArgument($name)
+                ->getTypeDefinition()
+                ->getName()
+            );
 
             return true;
         }
