@@ -29,7 +29,9 @@ trait ArgumentDefaultsStubs
     {
         foreach ($arguments as $argument) {
             $sources = File::fromSources(\sprintf(
-                'enum Color { Red, Green, Blue }' . "\n" .
+                'enum TestEnum { Red, Green, Blue }' . "\n" .
+                'input TestInput { a: Float }' . "\n" .
+                'input TestInputWithDefault { a: Int = 42 }' . "\n" .
                 $pattern,
                 $argument
             ));
@@ -43,7 +45,7 @@ trait ArgumentDefaultsStubs
     /**
      * @return iterable
      */
-    private function getScalarDefaults(): iterable
+    private function getArgumentDefaults(): iterable
     {
         yield 'String'   => '"String"';
         yield 'String'   => '"""' . "\n" . 'Multiline String' . "\n" . '"""';
@@ -72,9 +74,17 @@ trait ArgumentDefaultsStubs
         yield 'Any'      => '2';
         yield 'Any'      => '42';
 
-        // Enums: "enum Color { Red, Green, Blue }"
-        yield 'Color'     => 'Red';
-        yield 'Color'     => '"Red"';
+        // Enum: "enum TestEnum { Red, Green, Blue }"
+        yield 'TestEnum' => 'Red';
+        yield 'TestEnum' => '"Red"';
+
+        // Input:
+        // "input TestInput { a: Int }"
+        // "input TestInputWithDefault { a: Int = 42 }"
+
+        yield 'TestInput'=> '{a: 42}';
+        yield 'TestInputWithDefault'=> '{a: 66}';
+        yield 'TestInputWithDefault'=> '{}';
     }
 
     /**
@@ -82,24 +92,24 @@ trait ArgumentDefaultsStubs
      */
     protected function getPositiveArguments(): iterable
     {
-        foreach ($this->getScalarDefaults() as $scalar => $value) {
-            yield $scalar . ' = ' . $value;
-            yield $scalar . '! = ' . $value;
-            yield $scalar . ' = null';
+        foreach ($this->getArgumentDefaults() as $arg => $value) {
+            yield $arg . ' = ' . $value;
+            yield $arg . '! = ' . $value;
+            yield $arg . ' = null';
 
             // Initialized by null
-            yield '[' . $scalar . ']  = null';
-            yield '[' . $scalar . '!] = null';
-            yield '[' . $scalar . ']! = [null]';
+            yield '[' . $arg . ']  = null';
+            yield '[' . $arg . '!] = null';
+            yield '[' . $arg . ']! = [null]';
 
             // Type coercion
             // Must be converted to "= [null]"
-            yield '[' . $scalar . ']! = null';
+            yield '[' . $arg . ']! = null';
 
             // List defaults
-            yield '[' . $scalar . '!]  = [' . $value . ']';
-            yield '[' . $scalar . ']!  = [' . $value . ']';
-            yield '[' . $scalar . '!]! = [' . $value . ']';
+            yield '[' . $arg . '!]  = [' . $value . ']';
+            yield '[' . $arg . ']!  = [' . $value . ']';
+            yield '[' . $arg . '!]! = [' . $value . ']';
         }
     }
 
@@ -108,18 +118,21 @@ trait ArgumentDefaultsStubs
      */
     protected function getNegativeArguments(): iterable
     {
-        foreach ($this->getScalarDefaults() as $scalar => $value) {
+        foreach ($this->getArgumentDefaults() as $arg => $value) {
             // X! = null
-            yield $scalar . '! = null';
+            yield $arg . '! = null';
 
             // X = []
-            yield $scalar . ' = []';
+            yield $arg . ' = []';
 
             // [X!] = [..., NULL, ...]
-            yield '[' . $scalar . '!] = [null]';
-            yield '[' . $scalar . '!] = [' . $value . ', null]';
-            yield '[' . $scalar . '!] = [null, ' . $value . ']';
-            yield '[' . $scalar . '!] = [' . $value . ', null, ' . $value . ']';
+            yield '[' . $arg . '!] = [null]';
+            yield '[' . $arg . '!] = [' . $value . ', null]';
+            yield '[' . $arg . '!] = [null, ' . $value . ']';
+            yield '[' . $arg . '!] = [' . $value . ', null, ' . $value . ']';
+
+            yield $arg . ' = {a: "Example"}';
+            yield $arg . ' = {b: 23}';
         }
     }
 }
