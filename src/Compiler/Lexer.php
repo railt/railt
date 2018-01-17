@@ -132,7 +132,10 @@ class Lexer implements \IteratorAggregate
 
             if ($next === null) {
                 $error = \sprintf('Unrecognized token "%s"', $this->input[$offset]);
-                throw new $this->errorUnrecognized($error, 0, null, ['input' => $this->input, 'offset' => $offset]);
+                throw new $this->errorUnrecognized($error, 0, null, [
+                    'input' => $this->input,
+                    'offset' => $offset
+                ]);
             }
 
             if ($this->keepAll || $next[Token::T_KEEP]) {
@@ -168,7 +171,7 @@ class Lexer implements \IteratorAggregate
                 $result = [
                     Token::T_TOKEN     => $name,
                     Token::T_VALUE     => $lexeme,
-                    Token::T_LENGTH    => $this->strlen($lexeme),
+                    Token::T_LENGTH    => \strlen($lexeme),
                     Token::T_NAMESPACE => $namespace,
                     Token::T_KEEP      => $token[static::INPUT_TOKEN_KEPT] ?? true,
                     Token::T_OFFSET    => $offset,
@@ -217,14 +220,5 @@ class Lexer implements \IteratorAggregate
         $modifiers = $this->isUnicode ? 'u' : '';
 
         return '#\G(?|' . \str_replace('#', '\#', $pattern) . ')#' . $modifiers;
-    }
-
-    /**
-     * @param string $text
-     * @return int
-     */
-    private function strlen(string $text): int
-    {
-        return $this->isUnicode ? \mb_strlen($text) : \strlen($text);
     }
 }
