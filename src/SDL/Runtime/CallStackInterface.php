@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
  * Interface CallStackInterface
@@ -17,10 +17,10 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 interface CallStackInterface extends \Countable
 {
     /**
-     * @param TypeDefinition[] ...$definitions
+     * @param Definition[] ...$definitions
      * @return CallStackInterface
      */
-    public function push(TypeDefinition ...$definitions): CallStackInterface;
+    public function push(Definition ...$definitions): CallStackInterface;
 
     /**
      * @param int $size
@@ -29,7 +29,7 @@ interface CallStackInterface extends \Countable
     public function pop(int $size = 1): CallStackInterface;
 
     /**
-     * @return TypeDefinition|null
+     * @return Definition|null
      */
-    public function last(): ?TypeDefinition;
+    public function last(): ?Definition;
 }

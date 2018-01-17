@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\SDL\Runtime;
 
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Class ObservableCallStack
@@ -38,10 +37,10 @@ class ObservableCallStack extends CallStack
 
     /**
      * @param string $event
-     * @param TypeDefinition $data
+     * @param Definition $data
      * @return void
      */
-    private function fire(string $event, TypeDefinition $data): void
+    private function fire(string $event, Definition $data): void
     {
         foreach ($this->observers as $observer) {
             $observer($event, $data);
@@ -49,10 +48,10 @@ class ObservableCallStack extends CallStack
     }
 
     /**
-     * @param TypeDefinition[] ...$definitions
+     * @param Definition[] ...$definitions
      * @return CallStackInterface
      */
-    public function push(TypeDefinition ...$definitions): CallStackInterface
+    public function push(Definition ...$definitions): CallStackInterface
     {
         foreach ($definitions as $definition) {
             parent::push($definition);

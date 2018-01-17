@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\Definition;
 
 /**
  * Class CallStack
@@ -17,7 +17,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 class CallStack implements CallStackInterface, \IteratorAggregate
 {
     /**
-     * @var \SplStack|TypeDefinition[]
+     * @var \SplStack|Definition[]
      */
     protected $stack;
 
@@ -30,10 +30,10 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     }
 
     /**
-     * @param TypeDefinition[] ...$definitions
+     * @param Definition[] ...$definitions
      * @return CallStack|$this|static
      */
-    public function push(TypeDefinition ...$definitions): CallStackInterface
+    public function push(Definition ...$definitions): CallStackInterface
     {
         foreach ($definitions as $definition) {
             $this->stack->push($definition);
@@ -56,9 +56,9 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     }
 
     /**
-     * @return TypeDefinition|null
+     * @return Definition|null
      */
-    public function last(): ?TypeDefinition
+    public function last(): ?Definition
     {
         return $this->stack->count() > 0 ? $this->stack->pop() : null;
     }

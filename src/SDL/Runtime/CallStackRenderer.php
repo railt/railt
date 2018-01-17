@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -46,10 +47,10 @@ class CallStackRenderer
     }
 
     /**
-     * @param TypeDefinition $definition
+     * @param Definition $definition
      * @return array
      */
-    private function definitionToArray(?TypeDefinition $definition): array
+    private function definitionToArray(?Definition $definition): array
     {
         if ($definition === null) {
             return [];
@@ -63,7 +64,9 @@ class CallStackRenderer
             self::TRACE_FILE      => $file->isFile() ? $file->getPathname() : $file->getDefinitionFileName(),
             self::TRACE_LINE      => $definition->getDeclarationLine() + $fileDefOffset,
             self::TRACE_COLUMN    => $definition->getDeclarationColumn(),
-            self::TRACE_TYPE      => $definition->getTypeName(),
+            self::TRACE_TYPE      => $definition instanceof TypeDefinition
+                ? $definition->getTypeName()
+                : $definition->getName(),
             self::TRACE_TYPE_NAME => $definition->getName(),
             self::TRACE_TYPE_DEF  => (string)$definition,
         ];
