@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
-use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -18,7 +17,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 class ObservableCallStack extends CallStack
 {
     public const PUSH_EVENT = 'push';
-    public const POP_EVENT = 'pop';
+    public const POP_EVENT  = 'pop';
 
     /**
      * @var array
@@ -29,7 +28,7 @@ class ObservableCallStack extends CallStack
      * @param \Closure $observer
      * @return ObservableCallStack
      */
-    public function subscribe(\Closure $observer): ObservableCallStack
+    public function subscribe(\Closure $observer): self
     {
         $this->observers[] = $observer;
 
