@@ -11,7 +11,6 @@ namespace Railt\SDL\Reflection\Validation\Definitions;
 
 use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Invocations\Argument\HasPassedArguments;
