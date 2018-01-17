@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Exceptions;
 
-use Railt\SDL\Kernel\CallStack;
+use Railt\SDL\Runtime\CallStack;
 
 /**
  * Interface SchemaException
@@ -41,5 +41,5 @@ interface SchemaException extends \Throwable
     /**
      * @return string
      */
-    public function getInfo(): string;
+    public function getCompilerTraceAsString(): string;
 }

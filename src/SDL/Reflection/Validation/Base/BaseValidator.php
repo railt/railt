@@ -11,7 +11,7 @@ namespace Railt\SDL\Reflection\Validation\Base;
 
 use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\SchemaException;
-use Railt\SDL\Kernel\CallStack;
+use Railt\SDL\Runtime\CallStack;
 use Railt\SDL\Reflection\Validation\Validator;
 
 /**

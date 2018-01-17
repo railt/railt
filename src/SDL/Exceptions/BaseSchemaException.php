@@ -10,7 +10,8 @@ declare(strict_types=1);
 namespace Railt\SDL\Exceptions;
 
 use Illuminate\Support\Str;
-use Railt\SDL\Kernel\CallStack;
+use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackRenderer;
 
 /**
  * Class BaseSchemaException
@@ -23,14 +24,9 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     private $column;
 
     /**
-     * @var CallStack
+     * @var CallStackRenderer
      */
-    private $stack;
-
-    /**
-     * @var array
-     */
-    private $trace;
+    private $renderer;
 
     /**
      * BaseSchemaException constructor.
@@ -42,15 +38,11 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     {
         parent::__construct(Str::ucfirst($message), 0, $previous);
 
-        $this->stack = $stack;
+        $this->renderer = new CallStackRenderer($stack);
 
-        $info = $stack->getLastDefinitionInfo();
-
-        $this->column = $info['column'] ?? 0;
-        $this->file   = $info['file'] ?? $this->file;
-        $this->line   = $info['line'] ?? $this->line;
-
-        $this->trace = $this->stack->toArray();
+        $this->column = $this->renderer->getColumn();
+        $this->file   = $this->renderer->getFile();
+        $this->line   = $this->renderer->getLine();
     }
 
     /**
@@ -58,37 +50,41 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
      */
     public function __toString(): string
     {
-        $result = $this->getInfo() . PHP_EOL;
-
-        [$graphQLStack, $phpStack] = [
-            'GraphQL Stack Trace:' . PHP_EOL .
-            '%s' . PHP_EOL .
-            'PHP Stack Trace:' . PHP_EOL .
-            '%s',
-
-            'Stack Trace:' . PHP_EOL .
-            '%s',
-        ];
-
-        return $result . (
-            \count($this->stack) > 0
-                ? \sprintf($graphQLStack, $this->stack->render(), $this->getTraceAsString())
-                : \sprintf($phpStack, $this->getTraceAsString())
-            );
-    }
-
-    /**
-     * @return string
-     */
-    public function getInfo(): string
-    {
-        return \vsprintf('%s: %s in %s:%d:%d', [
+        $header = \vsprintf('%s: %s in %s:%d:%d', [
             \class_basename($this),
             $this->getMessage(),
             $this->getFile(),
             $this->getLine(),
             $this->getColumn(),
         ]);
+
+        $result = $header . \PHP_EOL;
+
+        if ($this->renderer->hasTrace()) {
+            $result .= 'GraphQL Stack trace:' . \PHP_EOL .
+                $this->getCompilerTraceAsString() . \PHP_EOL;
+        }
+
+        $result .= 'PHP Stack trace:' . \PHP_EOL .
+                $this->getTraceAsString();
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCompilerTrace(): array
+    {
+        return $this->renderer->getTrace();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompilerTraceAsString(): string
+    {
+        return $this->renderer->getTraceAsString();
     }
 
     /**
@@ -110,13 +106,5 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
             'line'    => $this->line,
             'column'  => $this->column,
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompilerTrace(): array
-    {
-        return $this->trace;
     }
 }

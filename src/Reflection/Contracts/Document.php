@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts;
 
 use Railt\Io\Readable;
+use Railt\Io\Traceable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
@@ -33,7 +34,7 @@ interface Document extends Definition
     public function getName(): string;
 
     /**
-     * @return Readable
+     * @return Readable|Traceable
      */
     public function getFile(): Readable;
 

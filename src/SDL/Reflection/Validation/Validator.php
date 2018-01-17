@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Validation;
 
 use Railt\SDL\Exceptions\CompilerException;
-use Railt\SDL\Kernel\CallStack;
+use Railt\SDL\Runtime\CallStack;
 use Railt\SDL\Reflection\Validation\Base\Factory;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 

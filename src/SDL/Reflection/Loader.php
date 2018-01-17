@@ -13,7 +13,7 @@ use Railt\Io\File;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Exceptions\TypeNotFoundException;
-use Railt\SDL\Kernel\CallStack;
+use Railt\SDL\Runtime\CallStack;
 
 /**
  * Class Loader

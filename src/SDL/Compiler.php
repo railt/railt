@@ -19,7 +19,7 @@ use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\CompilerException;
 use Railt\SDL\Exceptions\UnexpectedTokenException;
 use Railt\SDL\Exceptions\UnrecognizedTokenException;
-use Railt\SDL\Kernel\CallStack;
+use Railt\SDL\Runtime\CallStack;
 use Railt\SDL\Parser\Factory as ParserFactory;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
