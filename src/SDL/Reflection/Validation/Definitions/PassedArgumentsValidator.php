@@ -11,6 +11,7 @@ namespace Railt\SDL\Reflection\Validation\Definitions;
 
 use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Invocations\Argument\HasPassedArguments;
@@ -76,12 +77,44 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
             throw new TypeConflictException($error, $this->getCallStack());
         }
 
+        if ($argument->isList()) {
+            $this->validateListArguments($type, $value);
+        } else {
+            $this->validateSingleArgument($type, $value);
+        }
+
+
+        $this->getCallStack()->pop();
+    }
+
+    /**
+     * @param Inputable $type
+     * @param $value
+     * @return void
+     */
+    private function validateSingleArgument(Inputable $type, $value): void
+    {
         if (! $type->isCompatible($value)) {
             $error = \sprintf('%s contain non compatible value %s', $type, $this->valueToString($value));
             throw new TypeConflictException($error, $this->getCallStack());
         }
+    }
 
-        $this->getCallStack()->pop();
+    /**
+     * @param Inputable $type
+     * @param iterable $value
+     * @return void
+     */
+    private function validateListArguments(Inputable $type, $value): void
+    {
+        if (! \is_iterable($value)) {
+            $error = \sprintf('%s should contain list value, but %s given', $type, $this->valueToString($value));
+            throw new TypeConflictException($error, $this->getCallStack());
+        }
+
+        foreach ($value as $i) {
+            $this->validateSingleArgument($type, $value);
+        }
     }
 
     /**

@@ -12,6 +12,7 @@ namespace Railt\Routing\GraphQL\RouteDirective;
 use Railt\Reflection\Base\Dependent\BaseArgument;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Routing\GraphQL\RouterDocument;
 
 /**
  * Class ActionArgument
@@ -35,7 +36,7 @@ class ActionArgument extends BaseArgument
 
     /**
      * ActionArgument constructor.
-     * @param Document $document
+     * @param Document|RouterDocument $document
      * @param TypeDefinition $parent
      */
     public function __construct(Document $document, TypeDefinition $parent)
@@ -60,6 +61,6 @@ class ActionArgument extends BaseArgument
      */
     public function getTypeDefinition(): TypeDefinition
     {
-        return $this->document->getTypeDefinition(self::ARGUMENT_TYPE);
+        return $this->document->load(self::ARGUMENT_TYPE);
     }
 }

@@ -40,6 +40,6 @@ class RouterServiceProvider extends BaseServiceProvider
 
         $this->instance(RouterInterface::class, $this->router);
 
-        $compiler->add(new RouterDocument());
+        $compiler->add(new RouterDocument($compiler->getDictionary()));
     }
 }

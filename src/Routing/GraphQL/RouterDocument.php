@@ -11,6 +11,8 @@ namespace Railt\Routing\GraphQL;
 
 use Railt\Io\File;
 use Railt\Reflection\Base\BaseDocument;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Class RouterDocument
@@ -18,13 +20,29 @@ use Railt\Reflection\Base\BaseDocument;
 class RouterDocument extends BaseDocument
 {
     /**
-     * RouterDocument constructor.
+     * @var Dictionary
      */
-    public function __construct()
+    private $dictionary;
+
+    /**
+     * RouterDocument constructor.
+     * @param Dictionary $dictionary
+     */
+    public function __construct(Dictionary $dictionary)
     {
         $this->name  = 'Router additional directives';
         $this->file  = File::fromSources('# Generated');
         $this->types = $this->createTypes();
+        $this->dictionary = $dictionary;
+    }
+
+    /**
+     * @param string $type
+     * @return null|TypeDefinition
+     */
+    public function load(string $type): ?TypeDefinition
+    {
+        return $this->dictionary->get($type);
     }
 
     /**
