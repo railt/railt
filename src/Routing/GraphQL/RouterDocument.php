@@ -30,9 +30,9 @@ class RouterDocument extends BaseDocument
      */
     public function __construct(Dictionary $dictionary)
     {
-        $this->name  = 'Router additional directives';
-        $this->file  = File::fromSources('# Generated');
-        $this->types = $this->createTypes();
+        $this->name       = 'Router additional directives';
+        $this->file       = File::fromSources('# Generated');
+        $this->types      = $this->createTypes();
         $this->dictionary = $dictionary;
     }
 
