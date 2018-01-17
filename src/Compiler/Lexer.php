@@ -133,8 +133,8 @@ class Lexer implements \IteratorAggregate
             if ($next === null) {
                 $error = \sprintf('Unrecognized token "%s"', $this->input[$offset]);
                 throw new $this->errorUnrecognized($error, 0, null, [
-                    'input' => $this->input,
-                    'offset' => $offset
+                    'input'  => $this->input,
+                    'offset' => $offset,
                 ]);
             }
 

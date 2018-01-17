@@ -17,7 +17,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 class ObservableCallStack extends CallStack
 {
     public const PUSH_EVENT = 'push';
-    public const POP_EVENT = 'pop';
+    public const POP_EVENT  = 'pop';
 
     /**
      * @var array
@@ -28,7 +28,7 @@ class ObservableCallStack extends CallStack
      * @param \Closure $observer
      * @return ObservableCallStack
      */
-    public function subscribe(\Closure $observer): ObservableCallStack
+    public function subscribe(\Closure $observer): self
     {
         $this->observers[] = $observer;
 
