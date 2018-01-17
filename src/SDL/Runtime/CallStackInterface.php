@@ -20,13 +20,13 @@ interface CallStackInterface extends \Countable
      * @param TypeDefinition[] ...$definitions
      * @return CallStackInterface
      */
-    public function push(TypeDefinition ...$definitions): CallStackInterface;
+    public function push(TypeDefinition ...$definitions): self;
 
     /**
      * @param int $size
      * @return CallStackInterface
      */
-    public function pop(int $size = 1): CallStackInterface;
+    public function pop(int $size = 1): self;
 
     /**
      * @return TypeDefinition|null
