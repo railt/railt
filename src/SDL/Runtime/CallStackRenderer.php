@@ -17,12 +17,12 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
  */
 class CallStackRenderer
 {
-    public const TRACE_FILE = 'file';
-    public const TRACE_LINE = 'line';
-    public const TRACE_COLUMN = 'column';
-    public const TRACE_TYPE = 'type';
+    public const TRACE_FILE      = 'file';
+    public const TRACE_LINE      = 'line';
+    public const TRACE_COLUMN    = 'column';
+    public const TRACE_TYPE      = 'type';
     public const TRACE_TYPE_NAME = 'name';
-    public const TRACE_TYPE_DEF = 'definition';
+    public const TRACE_TYPE_DEF  = 'definition';
 
     /**
      * @var array|TypeDefinition[]

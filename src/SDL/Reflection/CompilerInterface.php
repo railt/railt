@@ -12,9 +12,9 @@ namespace Railt\SDL\Reflection;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\SDL\Runtime\CallStack;
 use Railt\SDL\Parser\Factory;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
+use Railt\SDL\Runtime\CallStack;
 
 /**
  * Class CompilerInterface
