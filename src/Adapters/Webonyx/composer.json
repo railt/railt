@@ -2,6 +2,7 @@
     "name": "railt/webonyx-adapter",
     "type": "library",
     "description": "Webonyx Adapter for Railt Framework",
+    "version": "1.1",
     "license": "MIT",
     "keywords": [ "graphql", "idl", "otd", "webonyx", "railt" ],
     "homepage": "http://railt.org",

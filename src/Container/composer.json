@@ -2,6 +2,7 @@
     "name": "railt/container",
     "type": "library",
     "description": "Simple Dependency Injection Container",
+    "version": "1.1",
     "license": "MIT",
     "keywords": [ "di", "container", "dependency injection", "ioc" ],
     "homepage": "http://railt.org",

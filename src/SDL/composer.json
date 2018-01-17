@@ -2,6 +2,7 @@
     "name": "railt/sdl",
     "type": "library",
     "description": "The GraphQL RL/SDL grammar based on LL(k) parser-compiler.",
+    "version": "1.1",
     "license": "MIT",
     "keywords": [ "graphql", "idl", "sdl", "otd", "ast", "reflection", "reader", "parser", "llk", "introspection" ],
     "homepage": "http://railt.org",
