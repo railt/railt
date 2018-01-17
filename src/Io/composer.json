@@ -2,7 +2,6 @@
     "name": "railt/io",
     "type": "library",
     "description": "The Railt Input/Output and Filesystem utils.",
-    "version": "1.1",
     "license": "MIT",
     "keywords": [
         "file",
