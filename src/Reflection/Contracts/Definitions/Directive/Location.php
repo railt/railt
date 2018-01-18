@@ -139,6 +139,6 @@ interface Location
         self::TARGET_ARGUMENT_DEFINITION,
 
         // Non-standard
-        self::TARGET_DOCUMENT
+        self::TARGET_DOCUMENT,
     ];
 }
