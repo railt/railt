@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\TypeConflictException;
@@ -67,10 +68,10 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
 
     /**
      * @param string $name
-     * @param TypeDefinition|null $from
+     * @param Definition|null $from
      * @return TypeDefinition
      */
-    public function get(string $name, TypeDefinition $from = null): TypeDefinition
+    public function get(string $name, Definition $from = null): TypeDefinition
     {
         if ($this->has($name)) {
             $result = $this->definitions[$name];

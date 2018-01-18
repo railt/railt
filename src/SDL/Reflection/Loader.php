@@ -11,6 +11,7 @@ namespace Railt\SDL\Reflection;
 
 use Railt\Io\File;
 use Railt\Io\Readable;
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Runtime\CallStack;
@@ -55,10 +56,10 @@ class Loader extends Repository
 
     /**
      * @param string $name
-     * @param TypeDefinition|null $from
+     * @param Definition|null $from
      * @return TypeDefinition
      */
-    public function get(string $name, TypeDefinition $from = null): TypeDefinition
+    public function get(string $name, Definition $from = null): TypeDefinition
     {
         return $this->normalized($name, function (string $name) use ($from) {
             try {
@@ -81,10 +82,10 @@ class Loader extends Repository
 
     /**
      * @param string $name
-     * @param TypeDefinition $from
+     * @param Definition $from
      * @return TypeDefinition
      */
-    private function load(string $name, TypeDefinition $from): TypeDefinition
+    private function load(string $name, Definition $from): TypeDefinition
     {
         foreach ($this->loaders as $loader) {
             $result = $this->parseResult($loader($name, $from));

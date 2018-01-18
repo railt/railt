@@ -287,10 +287,10 @@ class Compiler implements CompilerInterface
 
     /**
      * @param string $name
-     * @param TypeDefinition|null $from
+     * @param Definition|null $from
      * @return TypeDefinition
      */
-    public function get(string $name, TypeDefinition $from = null): TypeDefinition
+    public function get(string $name, Definition $from = null): TypeDefinition
     {
         return $this->loader->get($name, $from);
     }

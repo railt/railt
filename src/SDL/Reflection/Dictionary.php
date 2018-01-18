@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection;
 
+use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -25,10 +26,10 @@ interface Dictionary
 
     /**
      * @param string $name
-     * @param TypeDefinition|null $from
+     * @param Definition|null $from
      * @return TypeDefinition
      */
-    public function get(string $name, TypeDefinition $from = null): TypeDefinition;
+    public function get(string $name, Definition $from = null): TypeDefinition;
 
     /**
      * @return iterable|TypeDefinition[]
