@@ -131,7 +131,7 @@ class Compiler implements CompilerInterface
      */
     private function getStandardLibrary(array $extensions = []): GraphQLDocument
     {
-        return new GraphQLDocument($extensions);
+        return new GraphQLDocument($this->getDictionary(), $extensions);
     }
 
     /**
@@ -287,10 +287,10 @@ class Compiler implements CompilerInterface
 
     /**
      * @param string $name
-     * @param TypeDefinition $from
+     * @param TypeDefinition|null $from
      * @return TypeDefinition
      */
-    public function get(string $name, TypeDefinition $from): TypeDefinition
+    public function get(string $name, TypeDefinition $from = null): TypeDefinition
     {
         return $this->loader->get($name, $from);
     }
