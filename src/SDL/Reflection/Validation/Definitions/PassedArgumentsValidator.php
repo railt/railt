@@ -77,42 +77,53 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
         }
 
         if ($argument->isList()) {
-            $this->validateListArguments($type, $value);
+            $this->validateListArguments($argument, $type, $value);
         } else {
-            $this->validateSingleArgument($type, $value);
+            $this->validateSingleArgument($argument, $type, $value);
         }
-
 
         $this->getCallStack()->pop();
     }
 
     /**
+     * @param ArgumentDefinition $arg
      * @param Inputable $type
      * @param $value
      * @return void
      */
-    private function validateSingleArgument(Inputable $type, $value): void
+    private function validateSingleArgument(ArgumentDefinition $arg, Inputable $type, $value): void
     {
         if (! $type->isCompatible($value)) {
-            $error = \sprintf('%s contain non compatible value %s', $type, $this->valueToString($value));
+            $error = \vsprintf('The argument %s of %s contain non compatible value %s', [
+                $arg->getName(),
+                $type,
+                $this->valueToString($value)
+            ]);
+
             throw new TypeConflictException($error, $this->getCallStack());
         }
     }
 
     /**
+     * @param ArgumentDefinition $arg
      * @param Inputable $type
      * @param iterable $value
      * @return void
      */
-    private function validateListArguments(Inputable $type, $value): void
+    private function validateListArguments(ArgumentDefinition $arg, Inputable $type, $value): void
     {
         if (! \is_iterable($value)) {
-            $error = \sprintf('%s should contain list value, but %s given', $type, $this->valueToString($value));
+            $error = \vsprintf('The argument %s of %s should contain list value, but %s given', [
+                $arg->getName(),
+                $type,
+                $this->valueToString($value)
+            ]);
+
             throw new TypeConflictException($error, $this->getCallStack());
         }
 
-        foreach ($value as $i) {
-            $this->validateSingleArgument($type, $i);
+        foreach ($value as $item) {
+            $this->validateSingleArgument($arg, $type, $item);
         }
     }
 
