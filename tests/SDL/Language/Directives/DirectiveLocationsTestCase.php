@@ -124,6 +124,9 @@ class DirectiveLocationsTestCase extends AbstractLanguageTestCase
 
             case Location::TARGET_ARGUMENT_DEFINITION:
                 return 'type T { field(arg: String @test): String }';
+
+            case Location::TARGET_DOCUMENT:
+                return '@test';
         }
 
         throw new \InvalidArgumentException('Invalid location ' . $location);
