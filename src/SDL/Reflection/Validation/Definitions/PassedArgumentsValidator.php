@@ -97,7 +97,7 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
             $error = \vsprintf('The argument %s of %s contain non compatible value %s', [
                 $arg->getName(),
                 $type,
-                $this->valueToString($value)
+                $this->valueToString($value),
             ]);
 
             throw new TypeConflictException($error, $this->getCallStack());
@@ -116,7 +116,7 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
             $error = \vsprintf('The argument %s of %s should contain list value, but %s given', [
                 $arg->getName(),
                 $type,
-                $this->valueToString($value)
+                $this->valueToString($value),
             ]);
 
             throw new TypeConflictException($error, $this->getCallStack());
