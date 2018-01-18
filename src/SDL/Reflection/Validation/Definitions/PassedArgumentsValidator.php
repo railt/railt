@@ -112,7 +112,7 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
         }
 
         foreach ($value as $i) {
-            $this->validateSingleArgument($type, $value);
+            $this->validateSingleArgument($type, $i);
         }
     }
 
