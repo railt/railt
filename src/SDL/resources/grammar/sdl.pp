@@ -128,9 +128,10 @@
 // ==========================================================================
 
 #Document:
-    Definitions()*
+    Directive()*
+    Definition()*
 
-Definitions:
+Definition:
     ObjectDefinition()
         |
     InterfaceDefinition()

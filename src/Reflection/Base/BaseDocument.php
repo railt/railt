@@ -11,6 +11,7 @@ namespace Railt\Reflection\Base;
 
 use Railt\Io\Readable;
 use Railt\Reflection\Base\Definitions\BaseDefinition;
+use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
@@ -21,6 +22,8 @@ use Railt\Reflection\Contracts\Document;
  */
 abstract class BaseDocument extends BaseDefinition implements Document
 {
+    use BaseDirectivesContainer;
+
     /**
      * Document type name
      */
@@ -143,5 +146,13 @@ abstract class BaseDocument extends BaseDefinition implements Document
             // instanceof Definition
             'definitions',
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTypeName(): string
+    {
+        return self::TYPE_NAME;
     }
 }

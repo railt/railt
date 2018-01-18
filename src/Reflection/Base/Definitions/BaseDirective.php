@@ -15,6 +15,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Dependent;
+use Railt\Reflection\Contracts\Document;
 
 /**
  * Class BaseDirectiveDefinition
@@ -51,6 +52,9 @@ abstract class BaseDirective extends BaseTypeDefinition implements DirectiveDefi
         Location::TARGET_ARGUMENT_DEFINITION => Dependent\ArgumentDefinition::class,
 
         Location::TARGET_INPUT_FIELD_DEFINITION => Dependent\ArgumentDefinition::class,
+
+        // Custom
+        Location::TARGET_DOCUMENT => Document::class,
     ];
 
     /**
@@ -176,7 +180,6 @@ abstract class BaseDirective extends BaseTypeDefinition implements DirectiveDefi
 
     /**
      * @return array
-     * @throws \ReflectionException
      */
     protected function getAllAllowedLocations(): array
     {

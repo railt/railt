@@ -19,6 +19,7 @@ use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\BuildingException;
 use Railt\SDL\Exceptions\CompilerException;
 use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\SDL\Reflection\Builder\Invocations\ValueBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Builder\Process\Compiler;
@@ -32,6 +33,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
 {
     use Support;
     use Compiler;
+    use DirectivesBuilder;
 
     public const AST_TYPE_MAPPING = [
         // Anonymous types

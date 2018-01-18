@@ -15,6 +15,11 @@ namespace Railt\Reflection\Contracts\Definitions\Directive;
 interface Location
 {
     /**
+     * Location adjacent to an document (global).
+     */
+    public const TARGET_DOCUMENT = 'DOCUMENT';
+
+    /**
      * Location adjacent to an enum definition.
      */
     public const TARGET_ENUM = 'ENUM';
@@ -132,5 +137,8 @@ interface Location
         self::TARGET_SCALAR,
         self::TARGET_FIELD_DEFINITION,
         self::TARGET_ARGUMENT_DEFINITION,
+
+        // Non-standard
+        self::TARGET_DOCUMENT
     ];
 }

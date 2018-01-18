@@ -12,8 +12,9 @@ namespace Railt\Reflection\Contracts;
 use Railt\Io\Readable;
 use Railt\Io\Traceable;
 use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
  * The Document is an object that contains information
@@ -21,7 +22,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
  *
  * This can be, for example, a GraphQL schema file.
  */
-interface Document extends Definition
+interface Document extends TypeDefinition, HasDirectives
 {
     /**
      * Should return the name of file if the Document is physically located on
