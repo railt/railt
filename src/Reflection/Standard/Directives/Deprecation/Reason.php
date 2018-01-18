@@ -14,6 +14,7 @@ use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Standard\Directives\Deprecation;
+use Railt\Reflection\Standard\GraphQLDocument;
 
 /**
  * Class Reason
@@ -30,7 +31,7 @@ class Reason extends BaseArgument
 
     /**
      * Reason constructor.
-     * @param Document $document
+     * @param Document|GraphQLDocument $document
      * @param DirectiveDefinition $type
      */
     public function __construct(Document $document, DirectiveDefinition $type)
@@ -49,6 +50,6 @@ class Reason extends BaseArgument
      */
     public function getTypeDefinition(): TypeDefinition
     {
-        return $this->document->getTypeDefinition(self::ARGUMENT_TYPE);
+        return $this->document->getDictionary()->get(self::ARGUMENT_TYPE, $this);
     }
 }

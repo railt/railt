@@ -25,9 +25,10 @@ interface Dictionary
 
     /**
      * @param string $name
+     * @param TypeDefinition $from
      * @return TypeDefinition
      */
-    public function get(string $name): TypeDefinition;
+    public function get(string $name, TypeDefinition $from): TypeDefinition;
 
     /**
      * @return iterable|TypeDefinition[]

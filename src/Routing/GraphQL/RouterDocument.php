@@ -37,12 +37,11 @@ class RouterDocument extends BaseDocument
     }
 
     /**
-     * @param string $type
-     * @return null|TypeDefinition
+     * @return Dictionary
      */
-    public function load(string $type): ?TypeDefinition
+    public function getDictionary(): Dictionary
     {
-        return $this->dictionary->get($type);
+        return $this->dictionary;
     }
 
     /**

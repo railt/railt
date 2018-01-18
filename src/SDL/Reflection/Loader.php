@@ -46,7 +46,7 @@ class Loader extends Repository
      * @param \Closure $resolver
      * @return $this
      */
-    public function autoload(\Closure $resolver)
+    public function autoload(\Closure $resolver): self
     {
         $this->loaders[] = $resolver;
 
@@ -55,16 +55,16 @@ class Loader extends Repository
 
     /**
      * @param string $name
+     * @param TypeDefinition $from
      * @return TypeDefinition
-     * @throws TypeNotFoundException
      */
-    public function get(string $name): TypeDefinition
+    public function get(string $name, TypeDefinition $from): TypeDefinition
     {
-        return $this->normalized($name, function (string $name) {
+        return $this->normalized($name, function (string $name) use ($from) {
             try {
-                return parent::get($name);
+                return parent::get($name, $from);
             } catch (TypeNotFoundException $error) {
-                return $this->load($name);
+                return $this->load($name, $from);
             }
         });
     }
@@ -81,12 +81,13 @@ class Loader extends Repository
 
     /**
      * @param string $name
+     * @param TypeDefinition $from
      * @return TypeDefinition
      */
-    private function load(string $name): TypeDefinition
+    private function load(string $name, TypeDefinition $from): TypeDefinition
     {
         foreach ($this->loaders as $loader) {
-            $result = $this->parseResult($loader($name));
+            $result = $this->parseResult($loader($name, $from));
 
             /**
              * Checks that the autoloader returns a valid file type.
@@ -105,6 +106,7 @@ class Loader extends Repository
         }
 
         $error = \sprintf('Type "%s" not found and could not be loaded', $name);
+
         throw new TypeNotFoundException($error, $this->stack);
     }
 

@@ -280,7 +280,7 @@ trait Compiler
      */
     protected function load(string $type): TypeDefinition
     {
-        return $this->getCompiler()->get($type);
+        return $this->getCompiler()->get($type, $this);
     }
 
     /**

@@ -61,6 +61,6 @@ class ActionArgument extends BaseArgument
      */
     public function getTypeDefinition(): TypeDefinition
     {
-        return $this->document->load(self::ARGUMENT_TYPE);
+        return $this->document->getDictionary()->get(self::ARGUMENT_TYPE, $this);
     }
 }

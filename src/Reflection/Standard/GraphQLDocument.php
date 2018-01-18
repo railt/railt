@@ -21,6 +21,7 @@ use Railt\Reflection\Standard\Scalars\FloatType;
 use Railt\Reflection\Standard\Scalars\IDType;
 use Railt\Reflection\Standard\Scalars\IntType;
 use Railt\Reflection\Standard\Scalars\StringType;
+use Railt\SDL\Reflection\Dictionary;
 
 /**
  * This class contains a Document implementation for
@@ -39,15 +40,30 @@ class GraphQLDocument extends BaseDocument implements StandardType
     private $additionalTypes;
 
     /**
+     * @var Dictionary
+     */
+    private $dictionary;
+
+    /**
      * GraphQLDocument constructor.
+     * @param Dictionary $dictionary
      * @param array|string[] $additionalTypes
      */
-    public function __construct(array $additionalTypes = [])
+    public function __construct(Dictionary $dictionary, array $additionalTypes = [])
     {
+        $this->file = File::fromSources('# Generated');
         $this->additionalTypes = $additionalTypes;
-        $this->file            = File::fromSources('# Generated');
 
         $this->createStandardTypes();
+        $this->dictionary = $dictionary;
+    }
+
+    /**
+     * @return Dictionary
+     */
+    public function getDictionary(): Dictionary
+    {
+        return $this->dictionary;
     }
 
     /**

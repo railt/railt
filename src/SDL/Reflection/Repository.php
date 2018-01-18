@@ -67,10 +67,10 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
 
     /**
      * @param string $name
+     * @param TypeDefinition $from
      * @return TypeDefinition
-     * @throws TypeNotFoundException
      */
-    public function get(string $name): TypeDefinition
+    public function get(string $name, TypeDefinition $from): TypeDefinition
     {
         if ($this->has($name)) {
             $result = $this->definitions[$name];
