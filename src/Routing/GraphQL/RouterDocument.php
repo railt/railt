@@ -11,7 +11,6 @@ namespace Railt\Routing\GraphQL;
 
 use Railt\Io\File;
 use Railt\Reflection\Base\BaseDocument;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Reflection\Dictionary;
 
 /**
