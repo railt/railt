@@ -49,6 +49,7 @@ class DirectiveLocationsTestCase extends AbstractLanguageTestCase
     public function testInvalidLocation(Compiler $compiler): void
     {
         $this->expectException(TypeConflictException::class);
+
         $compiler->compile(File::fromSources('directive @example on INVALID_LOCATION'));
     }
 
@@ -65,8 +66,8 @@ class DirectiveLocationsTestCase extends AbstractLanguageTestCase
         $isPositiveTest = $definition === $implementation;
 
         $source = File::fromSources(
-            'directive @test on ' . $definition . "\n" .
-            $this->getBody($implementation)
+            $this->getBody($implementation) . "\n" .
+            'directive @test on ' . $definition . "\n"
         );
 
         try {
