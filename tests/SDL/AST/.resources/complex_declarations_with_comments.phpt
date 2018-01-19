@@ -236,7 +236,7 @@ directive @include2(if: Boolean!) on # COMMENT
             <Leaf name="T_NAME" namespace="default" offset="760">String</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="770">string</Leaf>
+            <Leaf name="T_STRING" namespace="default" offset="769">"string"</Leaf>
           </Node>
         </Node>
         <Node name="Type">
@@ -259,10 +259,10 @@ directive @include2(if: Boolean!) on # COMMENT
           <Node name="Value">
             <Node name="List">
               <Node name="Value">
-                <Leaf name="T_STRING" namespace="string" offset="859">string</Leaf>
+                <Leaf name="T_STRING" namespace="default" offset="858">"string"</Leaf>
               </Node>
               <Node name="Value">
-                <Leaf name="T_STRING" namespace="string" offset="869">string</Leaf>
+                <Leaf name="T_STRING" namespace="default" offset="868">"string"</Leaf>
               </Node>
             </Node>
           </Node>
@@ -289,7 +289,7 @@ directive @include2(if: Boolean!) on # COMMENT
                   <Leaf name="T_NAME" namespace="default" offset="966">key</Leaf>
                 </Node>
                 <Node name="Value">
-                  <Leaf name="T_STRING" namespace="string" offset="972">value</Leaf>
+                  <Leaf name="T_STRING" namespace="default" offset="971">"value"</Leaf>
                 </Node>
               </Node>
               <Node name="ObjectPair">
@@ -299,10 +299,10 @@ directive @include2(if: Boolean!) on # COMMENT
                 <Node name="Value">
                   <Node name="List">
                     <Node name="Value">
-                      <Leaf name="T_STRING" namespace="string" offset="996">value1</Leaf>
+                      <Leaf name="T_STRING" namespace="default" offset="995">"value1"</Leaf>
                     </Node>
                     <Node name="Value">
-                      <Leaf name="T_STRING" namespace="string" offset="1006">value2</Leaf>
+                      <Leaf name="T_STRING" namespace="default" offset="1005">"value2"</Leaf>
                     </Node>
                   </Node>
                 </Node>
@@ -347,7 +347,7 @@ directive @include2(if: Boolean!) on # COMMENT
             <Leaf name="T_NAME" namespace="default" offset="1203">arg</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="1209">value</Leaf>
+            <Leaf name="T_STRING" namespace="default" offset="1208">"value"</Leaf>
           </Node>
         </Node>
         <Node name="Argument">
@@ -375,7 +375,7 @@ directive @include2(if: Boolean!) on # COMMENT
             <Leaf name="T_NAME" namespace="default" offset="1323">Type</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="1331">default</Leaf>
+            <Leaf name="T_STRING" namespace="default" offset="1330">"default"</Leaf>
           </Node>
           <Node name="Directive">
             <Node name="Name">
@@ -417,7 +417,7 @@ directive @include2(if: Boolean!) on # COMMENT
             <Leaf name="T_NAME" namespace="default" offset="1588">String</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="1598">string</Leaf>
+            <Leaf name="T_STRING" namespace="default" offset="1597">"string"</Leaf>
           </Node>
         </Node>
         <Node name="Type">

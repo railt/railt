@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
+use Railt\Compiler\Exception\LexerException;
 use Railt\Compiler\Lexer\Token;
 
 /**
@@ -62,6 +63,8 @@ class FastLexer extends Lexer
             $length = \strlen($body);
             $kept   = $this->tokens[$name][self::INPUT_TOKEN_KEPT] ?? true;
 
+            $this->verifyOffset($offset, $body);
+
             if ($this->keepAll || $kept) {
                 $result[] = [
                     Token::T_TOKEN     => $name,
@@ -83,18 +86,41 @@ class FastLexer extends Lexer
     }
 
     /**
+     * @param int $offset
+     * @param string $body
+     * @return void
+     */
+    private function verifyOffset(int $offset, string $body): void
+    {
+        $isValid = \substr($this->input, $offset, \strlen($body)) === $body;
+
+        if (! $isValid) {
+            $this->throwUnrecognizedToken($offset);
+        }
+    }
+
+    /**
      * @param array $data
      * @return array
      */
     private function getTokenInfo(array $data): array
     {
-        foreach ($data as $index => $body) {
-            if (\is_string($index) && $body !== '') {
+        $last = '';
+
+        foreach (\array_reverse($data) as $index => $body) {
+            if (! \is_string($index)) {
+                continue;
+            }
+
+            $last = $index;
+
+            if ($body !== '') {
                 return [$index, $body];
             }
         }
 
-        throw new \LogicException('Pattern can not be nullable and must contain non-empty value.');
+        $error = \sprintf('A lexeme must not match an empty value, which is the case of "%s"', $last);
+        throw new LexerException($error);
     }
 
     /**

@@ -100,6 +100,11 @@ class Parser
     protected $depth = -1;
 
     /**
+     * @var bool
+     */
+    private $useFastLexer = true;
+
+    /**
      * Construct the parser.
      *
      * @param array $tokens Tokens.
@@ -111,6 +116,17 @@ class Parser
         $this->tokens  = $tokens;
         $this->rules   = $rules;
         $this->pragmas = $pragmas;
+    }
+
+    /**
+     * @param bool $compatibilityMode
+     * @return Parser
+     */
+    public function useLexerFallback(bool $compatibilityMode = false): self
+    {
+        $this->useFastLexer = !$compatibilityMode;
+
+        return $this;
     }
 
     /**
@@ -133,7 +149,9 @@ class Parser
      */
     private function getLexer(string $input): Lexer
     {
-        return new Lexer($input, $this->tokens, $this->pragmas);
+        $class = $this->useFastLexer ? FastLexer::class : Lexer::class;
+
+        return new $class($input, $this->tokens, $this->pragmas);
     }
 
     /**

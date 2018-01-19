@@ -48,7 +48,7 @@ class Factory
     /**
      * @return BaseParser
      */
-    private function getRuntime(): BaseParser
+    public function getRuntime(): BaseParser
     {
         if ($this->runtime === null) {
             $this->runtime = $this->resolveRuntime();

@@ -131,11 +131,7 @@ class Lexer implements \IteratorAggregate
             [$next, $namespace] = $this->reduce($offset, $namespace);
 
             if ($next === null) {
-                $error = \sprintf('Unrecognized token "%s"', $this->input[$offset]);
-                throw new $this->errorUnrecognized($error, 0, null, [
-                    'input'  => $this->input,
-                    'offset' => $offset,
-                ]);
+                $this->throwUnrecognizedToken($offset);
             }
 
             if ($this->keepAll || $next[Token::T_KEEP]) {
@@ -146,6 +142,20 @@ class Lexer implements \IteratorAggregate
         }
 
         yield Token::eof($offset);
+    }
+
+    /**
+     * @param int $offset
+     * @return void
+     */
+    protected function throwUnrecognizedToken(int $offset): void
+    {
+        $error = \sprintf('Unrecognized token "%s"', $this->input[$offset]);
+
+        throw new $this->errorUnrecognized($error, 0, null, [
+            'input'  => $this->input,
+            'offset' => $offset,
+        ]);
     }
 
     /**

@@ -173,7 +173,7 @@ class Analyzer
      */
     private function getLookaheadIterator(string $rule): Lookahead
     {
-        $lexer = new FastLexer($rule, static::PP_LEXEMES);
+        $lexer = new Lexer($rule, static::PP_LEXEMES);
 
         return new Lookahead($lexer->getIterator());
     }

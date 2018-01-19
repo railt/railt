@@ -76,7 +76,7 @@ type User {
             <Leaf name="T_NON_NULL" namespace="default" offset="133">!</Leaf>
           </Node>
           <Node name="Value">
-            <Leaf name="T_STRING" namespace="string" offset="138">Some</Leaf>
+            <Leaf name="T_STRING" namespace="default" offset="137">"Some"</Leaf>
           </Node>
         </Node>
         <Node name="Type">

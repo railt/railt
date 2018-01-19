@@ -141,7 +141,7 @@ class ValueBuilder
      */
     private function toString(LeafInterface $ast): string
     {
-        $result = $ast->getValue();
+        $result = $this->unpackStringData($ast);
 
         // Transform utf char \uXXXX -> X
         $result = $this->renderUtfSequences($result);
@@ -153,6 +153,22 @@ class ValueBuilder
         $result = \stripcslashes($result);
 
         return $result;
+    }
+
+    /**
+     * @param LeafInterface $ast
+     * @return string
+     */
+    private function unpackStringData(LeafInterface $ast): string
+    {
+        switch (true) {
+            case $ast->is('T_STRING'):
+                return \substr($ast->getValue(), 1, -1);
+            case $ast->is('T_MULTILINE_STRING'):
+                return \substr($ast->getValue(), 3, -3);
+        }
+
+        return (string)$ast->getValue();
     }
 
     /**

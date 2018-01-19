@@ -51,10 +51,14 @@
 //
 // Multiline string
 //
-%token T_MULTILINE_STRING      """(?:\\"""|(?!""").|\s)+"""
+// PCRE: """((\\(?P=quote)|(?!(?P=quote))).?)*"""
+//
+%token T_MULTILINE_STRING       """((\\"|(?!")).?)*"""
 
 //
-// Inline string
+// Single line string
+//
+// PCRE: "[^"\\]+(\\.[^"\\]*)*"
 //
 %token T_STRING                 "[^"\\]+(\\.[^"\\]*)*"
 
@@ -210,9 +214,9 @@ Boolean:
     <T_BOOL_FALSE>
 
 String:
-    <T_MULTILINE_STRING>
+    (<T_MULTILINE_STRING>)
         |
-    <T_STRING>
+    (<T_STRING>)
 
 Word:
     <T_NAME>
@@ -280,7 +284,9 @@ List:
     #List
 
 Documentation:
-    <T_MULTILINE_STRING> #Description
+    (
+        <T_MULTILINE_STRING>
+    ) #Description
 
 // ==========================================================================
 //                             TYPE DEFINITIONS

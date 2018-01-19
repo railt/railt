@@ -258,7 +258,10 @@ trait Compiler
      */
     private function parseDescription(NodeInterface $ast): string
     {
-        $description = \trim($ast->getChild(0)->getValue());
+        $description = \trim($this->parseValue(
+            $ast->getChild(0),
+            'String'
+        ));
 
         return $description
             ? \preg_replace('/^\h*#?\h+(.*?)\h*$/imsu', '$1', $description)
