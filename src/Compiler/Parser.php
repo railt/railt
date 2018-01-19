@@ -124,7 +124,7 @@ class Parser
      */
     public function useLexerFallback(bool $compatibilityMode = false): self
     {
-        $this->useFastLexer = !$compatibilityMode;
+        $this->useFastLexer = ! $compatibilityMode;
 
         return $this;
     }
