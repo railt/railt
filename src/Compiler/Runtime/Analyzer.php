@@ -13,6 +13,7 @@ use Hoa\Iterator\Lookahead;
 use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Exception\RuleException;
 use Railt\Compiler\Lexer;
+use Railt\Compiler\FastLexer;
 use Railt\Compiler\Rule\Choice;
 use Railt\Compiler\Rule\Concatenation;
 use Railt\Compiler\Rule\Repetition;
@@ -172,7 +173,7 @@ class Analyzer
      */
     private function getLookaheadIterator(string $rule): Lookahead
     {
-        $lexer = new Lexer($rule, static::PP_LEXEMES);
+        $lexer = new FastLexer($rule, static::PP_LEXEMES);
 
         return new Lookahead($lexer->getIterator());
     }

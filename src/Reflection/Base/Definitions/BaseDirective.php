@@ -31,6 +31,11 @@ abstract class BaseDirective extends BaseTypeDefinition implements DirectiveDefi
     protected const TYPE_NAME = Type::DIRECTIVE;
 
     /**
+     * Directive location type name
+     */
+    protected const LOCATION_TYPE_NAME = 'DirectiveLocation';
+
+    /**
      * Mappings location to allowed type
      */
     protected const LOCATION_TARGET_MAPPINGS = [

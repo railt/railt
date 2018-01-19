@@ -30,27 +30,27 @@ class Lexer implements \IteratorAggregate
     /**
      * @var string
      */
-    private $input;
+    protected $input;
 
     /**
      * @var array
      */
-    private $tokens;
+    protected $tokens;
 
     /**
      * @var bool
      */
-    private $isUnicode;
+    protected $isUnicode;
 
     /**
      * @var string
      */
-    private $errorUnrecognized;
+    protected $errorUnrecognized;
 
     /**
      * @var bool
      */
-    private $keepAll = false;
+    protected $keepAll = false;
 
     /**
      * Lexer constructor.
@@ -83,7 +83,7 @@ class Lexer implements \IteratorAggregate
      * @param array $pragmas
      * @return bool
      */
-    private function isUnicode(array $pragmas): bool
+    protected function isUnicode(array $pragmas): bool
     {
         $exists = \array_key_exists(Pragma::LEXER_UNICODE, $pragmas);
 
@@ -99,7 +99,7 @@ class Lexer implements \IteratorAggregate
      * @return string
      * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
-    private function getUnrecognizedToken(array $pragmas): string
+    protected function getUnrecognizedToken(array $pragmas): string
     {
         $exists = \array_key_exists(Pragma::ERROR_UNRECOGNIZED_TOKEN, $pragmas);
 

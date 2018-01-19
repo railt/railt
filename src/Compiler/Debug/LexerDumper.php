@@ -61,14 +61,17 @@ class LexerDumper implements Dumper
     private $lengthWidth = 10;
 
     /**
-     * LexerDumper constructor.
-     * @param Parser $parser
-     * @param string $sources
+     * @var Lexer
      */
-    public function __construct(Parser $parser, string $sources)
+    private $lexer;
+
+    /**
+     * LexerDumper constructor.
+     * @param Lexer $lexer
+     */
+    public function __construct(Lexer $lexer)
     {
-        $this->parser  = $parser;
-        $this->sources = $sources;
+        $this->lexer = $lexer;
     }
 
     /**
@@ -88,13 +91,7 @@ class LexerDumper implements Dumper
      */
     public function toString(): string
     {
-        $reflection = new \ReflectionObject($this->parser);
-        $method     = $reflection->getMethod('getLexer');
-        $method->setAccessible(true);
-
-        /** @var Lexer $lexer */
-        $lexer = $method->invoke($this->parser, $this->sources);
-        $lexer->keepAll();
+        $this->lexer->keepAll();
 
         $header =
             $this->delimiter() .
@@ -106,7 +103,7 @@ class LexerDumper implements Dumper
             $this->header() .
             $this->delimiter('=');
 
-        foreach ($lexer as $i => $token) {
+        foreach ($this->lexer->getIterator() as $i => $token) {
             if ($i !== 0 && ($i % 20) === 0) {
                 $result .= $header;
             }
