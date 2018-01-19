@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Dependent;
 use Railt\Reflection\Base\Behavior\BaseTypeIndicator;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseArgument
@@ -23,8 +24,10 @@ abstract class BaseArgument extends BaseDependent implements ArgumentDefinition
 
     /**
      * Argument type name
+     *
+     * TODO or input field.
      */
-    protected const TYPE_NAME = 'Argument';
+    protected const TYPE_NAME = Type::OBJECT_ARGUMENT;
 
     /**
      * @var mixed

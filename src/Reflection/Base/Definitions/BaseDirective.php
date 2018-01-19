@@ -16,6 +16,7 @@ use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Dependent;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseDirectiveDefinition
@@ -27,12 +28,7 @@ abstract class BaseDirective extends BaseTypeDefinition implements DirectiveDefi
     /**
      * Type name
      */
-    protected const TYPE_NAME = 'Directive';
-
-    /**
-     * Directive location type name
-     */
-    protected const LOCATION_TYPE_NAME = 'DirectiveLocation';
+    protected const TYPE_NAME = Type::DIRECTIVE;
 
     /**
      * Mappings location to allowed type

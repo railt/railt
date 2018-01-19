@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Definitions;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\UnionDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseUnion
@@ -23,7 +24,7 @@ abstract class BaseUnion extends BaseTypeDefinition implements UnionDefinition
     /**
      * Type definition
      */
-    protected const TYPE_NAME = 'Union';
+    protected const TYPE_NAME = Type::UNION;
 
     /**
      * @var array|Definition[]

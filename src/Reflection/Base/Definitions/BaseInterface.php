@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Definitions;
 use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseInterface
@@ -24,7 +25,7 @@ abstract class BaseInterface extends BaseTypeDefinition implements InterfaceDefi
     /**
      * Base type name
      */
-    protected const TYPE_NAME = 'Interface';
+    protected const TYPE_NAME = Type::INTERFACE;
 
     /**
      * @return array

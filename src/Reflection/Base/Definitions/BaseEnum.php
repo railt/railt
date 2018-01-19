@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Definitions;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
 use Railt\Reflection\Contracts\Definitions\EnumDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseEnum
@@ -23,7 +24,7 @@ abstract class BaseEnum extends BaseTypeDefinition implements EnumDefinition
     /**
      * Enum type name
      */
-    protected const TYPE_NAME = 'Enum';
+    protected const TYPE_NAME = Type::ENUM;
 
     /**
      * @var array|ValueDefinition[]

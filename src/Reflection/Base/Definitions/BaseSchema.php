@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Definitions;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseSchema
@@ -23,9 +24,11 @@ abstract class BaseSchema extends BaseTypeDefinition implements SchemaDefinition
     /**
      * Schema type name
      */
-    protected const TYPE_NAME = 'Schema';
+    protected const TYPE_NAME = Type::SCHEMA;
 
-
+    /**
+     * Default schema name
+     */
     protected const DEFAULT_SCHEMA_NAME = 'DefaultSchema';
 
     /**

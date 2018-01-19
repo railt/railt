@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Invocations;
 use Railt\Reflection\Base\Dependent\BaseDependent;
 use Railt\Reflection\Base\Invocations\Argument\HasPassedArguments;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseInputInvocation
@@ -23,7 +24,7 @@ abstract class BaseInputInvocation extends BaseDependent implements InputInvocat
     /**
      * Directive type name
      */
-    protected const TYPE_NAME = 'Input';
+    protected const TYPE_NAME = Type::INPUT_INVOCATION;
 
     /**
      * @return iterable

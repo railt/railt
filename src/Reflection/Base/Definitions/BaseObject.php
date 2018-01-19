@@ -13,6 +13,7 @@ use Railt\Reflection\Base\Dependent\Field\BaseFieldsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseObject
@@ -25,7 +26,7 @@ abstract class BaseObject extends BaseTypeDefinition implements ObjectDefinition
     /**
      * Object type name
      */
-    protected const TYPE_NAME = 'Object';
+    protected const TYPE_NAME = Type::OBJECT;
 
     /**
      * @var array|InterfaceDefinition[]

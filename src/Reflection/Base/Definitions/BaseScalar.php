@@ -11,6 +11,7 @@ namespace Railt\Reflection\Base\Definitions;
 
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseScalar
@@ -20,11 +21,16 @@ abstract class BaseScalar extends BaseTypeDefinition implements ScalarDefinition
     use BaseDirectivesContainer;
 
     /**
+     * Object type name
+     */
+    protected const TYPE_NAME = Type::SCALAR;
+
+    /**
      * @return string
      */
     public function getTypeName(): string
     {
-        return 'Scalar';
+        return static::TYPE_NAME;
     }
 
     /**

@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Invocations;
 use Railt\Reflection\Base\Dependent\BaseDependent;
 use Railt\Reflection\Base\Invocations\Argument\HasPassedArguments;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseDirectiveInvocation
@@ -23,5 +24,5 @@ abstract class BaseDirectiveInvocation extends BaseDependent implements Directiv
     /**
      * Directive type name
      */
-    protected const TYPE_NAME = 'Directive';
+    protected const TYPE_NAME = Type::DIRECTIVE_INVOCATION;
 }

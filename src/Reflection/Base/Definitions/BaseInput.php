@@ -13,6 +13,7 @@ use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseInput
@@ -25,7 +26,7 @@ abstract class BaseInput extends BaseTypeDefinition implements InputDefinition
     /**
      * Input type name
      */
-    protected const TYPE_NAME = 'Input';
+    protected const TYPE_NAME = Type::INPUT;
 
     /**
      * @param mixed $value

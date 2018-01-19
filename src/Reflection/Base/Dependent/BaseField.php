@@ -13,6 +13,7 @@ use Railt\Reflection\Base\Behavior\BaseTypeIndicator;
 use Railt\Reflection\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\Reflection\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseField
@@ -25,8 +26,10 @@ abstract class BaseField extends BaseDependent implements FieldDefinition
 
     /**
      * Field type name
+     *
+     * TODO or interface field
      */
-    protected const TYPE_NAME = 'Field';
+    protected const TYPE_NAME = Type::OBJECT_FIELD;
 
     /**
      * @return array

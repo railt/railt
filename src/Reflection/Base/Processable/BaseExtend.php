@@ -12,6 +12,7 @@ namespace Railt\Reflection\Base\Processable;
 use Railt\Reflection\Base\Definitions\BaseDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Processable\ExtendDefinition;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseExtend
@@ -21,7 +22,7 @@ abstract class BaseExtend extends BaseDefinition implements ExtendDefinition
     /**
      * Extend type name
      */
-    protected const TYPE_NAME = 'Extend';
+    protected const TYPE_NAME = Type::EXTENSION;
 
     /**
      * @var TypeDefinition

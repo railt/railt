@@ -19,7 +19,7 @@ class Compiled extends \Railt\Compiler\Parser
     /**
      * The list of defined tokens.
      */
-    private const TOKENS = [
+    public const TOKENS = [
     'default' => [
         'T_NON_NULL' => [
             '!',

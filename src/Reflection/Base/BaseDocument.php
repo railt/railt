@@ -16,6 +16,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Type;
 
 /**
  * Class BaseDocument
@@ -27,7 +28,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
     /**
      * Document type name
      */
-    protected const TYPE_NAME = 'Document';
+    protected const TYPE_NAME = Type::DOCUMENT;
 
     /**
      * @var SchemaDefinition|null
