@@ -16,15 +16,6 @@ use Railt\Compiler\Lexer\Token;
  */
 class FastLexer extends Lexer
 {
-    /**#@+
-     * Token input definition indexes
-     */
-    public const INPUT_TOKEN_PATTERN            = 0;
-    public const INPUT_TOKEN_CONTINUE_NAMESPACE = 1;
-    public const INPUT_TOKEN_KEPT               = 2;
-    /**#@-*/
-
-
     /**
      * ReLexer constructor.
      * @param string $input
