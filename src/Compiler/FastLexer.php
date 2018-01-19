@@ -56,7 +56,7 @@ class FastLexer extends Lexer
         $offset  = 0;
         $result  = [];
 
-        \preg_replace_callback($pattern, function(array $matches) use (&$result, &$offset) {
+        \preg_replace_callback($pattern, function (array $matches) use (&$result, &$offset): void {
             [$name, $body] = $this->getTokenInfo($matches);
 
             $length = \strlen($body);
@@ -69,12 +69,11 @@ class FastLexer extends Lexer
                     Token::T_LENGTH    => $length,
                     Token::T_NAMESPACE => Token::T_DEFAULT_NAMESPACE,
                     Token::T_KEEP      => $kept,
-                    Token::T_OFFSET    => $offset
+                    Token::T_OFFSET    => $offset,
                 ];
             }
 
             $offset += $length;
-
         }, $this->input);
 
         yield from $result;
@@ -119,7 +118,7 @@ class FastLexer extends Lexer
         foreach ($tokens as $name => $info) {
             $result[] = \vsprintf('(?<%s>%s)', [
                 \preg_quote($name, '#'),
-                \str_replace('#', '\#', $info[self::INPUT_TOKEN_PATTERN])
+                \str_replace('#', '\#', $info[self::INPUT_TOKEN_PATTERN]),
             ]);
         }
 
