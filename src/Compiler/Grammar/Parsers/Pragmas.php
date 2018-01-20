@@ -21,7 +21,7 @@ use Railt\Compiler\Grammar\Pragmas\UnrecognizedToken;
  */
 class Pragmas extends BaseParser
 {
-    private const PREFIX_PRAGMA = '%pragma';
+    private const PREFIX_PRAGMA     = '%pragma';
     private const PREFIX_PRAGMA_LEN = 7;
 
     /**
