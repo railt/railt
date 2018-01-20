@@ -11,7 +11,7 @@ namespace Railt\Tests\SDL\Compiler;
 
 use Railt\Io\File;
 use Railt\SDL\Exceptions\TypeNotFoundException;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class AutoloadingTestCase

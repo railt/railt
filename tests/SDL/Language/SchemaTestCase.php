@@ -13,7 +13,7 @@ use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class SchemaTestCase

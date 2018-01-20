@@ -24,7 +24,8 @@ use Railt\SDL\Reflection\Builder\Invocations\ValueBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Builder\Process\Compiler;
 use Railt\SDL\Reflection\Builder\Processable\ExtendBuilder;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
+use Railt\SDL\Schema\Configuration;
 
 /**
  * Class DocumentBuilder
@@ -164,12 +165,12 @@ class DocumentBuilder extends BaseDocument implements Compilable
             $error = 'Broken abstract syntax tree, because a file %s can not contain an undefined Node %s';
             $error = \sprintf($error, $this->getName(), $ast->getName());
 
-            throw new BuildingException($error, $this->getCompiler()->getStack());
+            throw new BuildingException($error, $this->getCompiler()->getCallStack());
         }
     }
 
     /**
-     * @return CompilerInterface
+     * @return CompilerInterface|Configuration
      */
     final public function getCompiler(): CompilerInterface
     {

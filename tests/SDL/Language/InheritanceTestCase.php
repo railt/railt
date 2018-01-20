@@ -12,7 +12,7 @@ namespace Railt\Tests\SDL\Language;
 use Railt\Io\File;
 use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class InheritanceTestCase

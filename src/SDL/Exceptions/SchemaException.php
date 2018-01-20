@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Exceptions;
 
-use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
 
 /**
  * Interface SchemaException
@@ -19,10 +19,10 @@ interface SchemaException extends \Throwable
     /**
      * SchemaException constructor.
      * @param string $message
-     * @param CallStack $stack
+     * @param CallStackInterface $stack
      * @param \Throwable|null $previous
      */
-    public function __construct(string $message, CallStack $stack, \Throwable $previous = null);
+    public function __construct(string $message, CallStackInterface $stack, \Throwable $previous = null);
 
     /**
      * Should return a source code column on which the error occurred.

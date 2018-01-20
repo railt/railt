@@ -17,7 +17,7 @@ use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

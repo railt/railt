@@ -57,10 +57,10 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
             $argument   = $definition->getArgument($name);
 
             if (! $argument) {
-                $this->getCompiler()->getStack()->push($definition);
+                $this->getCompiler()->getCallStack()->push($definition);
 
                 $error = \sprintf('Argument %s not defined in %s', $name, $definition);
-                throw new TypeConflictException($error, $this->getCompiler()->getStack());
+                throw new TypeConflictException($error, $this->getCompiler()->getCallStack());
             }
 
             $typeName = $argument->getTypeDefinition()->getName();

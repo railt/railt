@@ -15,6 +15,7 @@ use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class Loader
@@ -61,23 +62,11 @@ class Loader extends Repository
      */
     public function get(string $name, Definition $from = null): TypeDefinition
     {
-        return $this->normalized($name, function (string $name) use ($from) {
-            try {
-                return parent::get($name, $from);
-            } catch (TypeNotFoundException $error) {
-                return $this->load($name, $from);
-            }
-        });
-    }
-
-    /**
-     * @param string $name
-     * @param \Closure $type
-     * @return TypeDefinition
-     */
-    private function normalized(string $name, \Closure $type): TypeDefinition
-    {
-        return $this->compiler->normalize($type($name));
+        try {
+            return parent::get($name, $from);
+        } catch (TypeNotFoundException $error) {
+            return $this->load($name, $from);
+        }
     }
 
     /**
@@ -85,7 +74,7 @@ class Loader extends Repository
      * @param Definition $from
      * @return TypeDefinition
      */
-    private function load(string $name, Definition $from): TypeDefinition
+    private function load(string $name, Definition $from = null): TypeDefinition
     {
         foreach ($this->loaders as $loader) {
             $result = $this->parseResult($loader($name, $from));

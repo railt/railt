@@ -13,7 +13,7 @@ use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

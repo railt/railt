@@ -23,7 +23,7 @@ use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeNotFoundException;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class Application
@@ -82,16 +82,16 @@ class Application
     }
 
     /**
-     * @param ContainerInterface $container
-     * @return Pipeline
+     * @param PSRContainer|null $container
+     * @return Container
      */
-    private function createPipeline(ContainerInterface $container): Pipeline
+    private function createContainer(?PSRContainer $container): Container
     {
-        $pipeline = new Pipeline($container);
+        if ($container instanceof Container) {
+            return $container;
+        }
 
-        $pipeline->add(RouterServiceProvider::class);
-
-        return $pipeline;
+        return new Container($container);
     }
 
     /**
@@ -109,16 +109,16 @@ class Application
     }
 
     /**
-     * @param PSRContainer|null $container
-     * @return Container
+     * @param ContainerInterface $container
+     * @return Pipeline
      */
-    private function createContainer(?PSRContainer $container): Container
+    private function createPipeline(ContainerInterface $container): Pipeline
     {
-        if ($container instanceof Container) {
-            return $container;
-        }
+        $pipeline = new Pipeline($container);
 
-        return new Container($container);
+        $pipeline->add(RouterServiceProvider::class);
+
+        return $pipeline;
     }
 
     /**
@@ -134,8 +134,8 @@ class Application
 
         $document = $this->getDocument($sdl);
 
-        $schema   = $this->getSchema($document);
-        $adapter  = $this->getAdapter($this->debug);
+        $schema  = $this->getSchema($document);
+        $adapter = $this->getAdapter($this->debug);
 
         $pipeline = function (RequestInterface $request) use ($adapter, $schema): ResponseInterface {
             return $adapter->request($schema, $request);

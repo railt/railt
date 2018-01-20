@@ -18,7 +18,7 @@ use Railt\Io\File;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Compiler;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\Storage\ArrayPersister;
 use Railt\Storage\EmulatingPersister;
 use Railt\Storage\NullablePersister;

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Exceptions;
 
 use Illuminate\Support\Str;
-use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
 use Railt\SDL\Runtime\CallStackRenderer;
 
 /**
@@ -31,10 +31,10 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     /**
      * BaseSchemaException constructor.
      * @param string $message
-     * @param CallStack $stack
+     * @param CallStackInterface $stack
      * @param \Throwable|null $previous
      */
-    public function __construct(string $message, CallStack $stack, \Throwable $previous = null)
+    public function __construct(string $message, CallStackInterface $stack, \Throwable $previous = null)
     {
         parent::__construct(Str::ucfirst($message), 0, $previous);
 

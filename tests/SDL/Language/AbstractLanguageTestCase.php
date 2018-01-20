@@ -11,7 +11,7 @@ namespace Railt\Tests\SDL\Language;
 
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Document;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\Tests\AbstractTestCase;
 use Railt\Tests\SDL\Helpers\CompilerStubs;
 

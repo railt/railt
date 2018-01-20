@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Railt\Compiler\Parser;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
@@ -24,13 +25,15 @@ use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Coercion\Factory;
 use Railt\SDL\Reflection\Coercion\TypeCoercion;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Runtime\CallStackInterface;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Reflection\Loader;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\SDL\Reflection\Validation\Definitions;
 use Railt\SDL\Reflection\Validation\Validator;
 use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Schema\Configuration;
 use Railt\Storage\ArrayPersister;
 use Railt\Storage\Persister;
 use Railt\Storage\Proxy;
@@ -38,7 +41,7 @@ use Railt\Storage\Proxy;
 /**
  * Class Compiler
  */
-class Compiler implements CompilerInterface
+class Compiler implements CompilerInterface, Configuration
 {
     use Support;
 
@@ -60,17 +63,17 @@ class Compiler implements CompilerInterface
     /**
      * @var Validator
      */
-    private $validator;
+    private $typeValidator;
+
+    /**
+     * @var Factory|TypeCoercion
+     */
+    private $typeCoercion;
 
     /**
      * @var CallStack
      */
     private $stack;
-
-    /**
-     * @var Factory|TypeCoercion
-     */
-    private $coercion;
 
     /**
      * Compiler constructor.
@@ -81,10 +84,10 @@ class Compiler implements CompilerInterface
     public function __construct(Persister $persister = null)
     {
         $this->stack     = new CallStack();
-        $this->parser    = new ParserFactory();
+        $this->parser    = (new ParserFactory())->getParser();
         $this->loader    = new Loader($this, $this->stack);
-        $this->validator = new Validator($this->stack);
-        $this->coercion  = new Factory();
+        $this->typeValidator = new Validator($this->stack);
+        $this->typeCoercion  = new Factory();
 
         $this->persister = $this->bootPersister($persister);
 
@@ -151,11 +154,11 @@ class Compiler implements CompilerInterface
             }
 
             if ($definition instanceof TypeDefinition) {
-                $this->normalize($definition);
+                $this->typeCoercion->apply($definition);
             }
 
             if (! ($definition instanceof StandardType)) {
-                $this->validator->group(Definitions::class)->validate($definition);
+                $this->typeValidator->group(Definitions::class)->validate($definition);
             }
 
             $this->stack->pop();
@@ -225,7 +228,7 @@ class Compiler implements CompilerInterface
     private function onCompile(): \Closure
     {
         return function (Readable $readable): Document {
-            $ast = $this->parser->parse($readable);
+            $ast = $this->parser->parse($readable->getContents());
 
             return $this->complete(new DocumentBuilder($ast, $readable, $this));
         };
@@ -238,24 +241,31 @@ class Compiler implements CompilerInterface
      */
     public function getValidator(string $group): ValidatorInterface
     {
-        return $this->validator->group($group);
+        return $this->typeValidator->group($group);
     }
 
     /**
-     * @return ParserFactory
+     * @return Parser
      */
-    public function getParser(): ParserFactory
+    public function getParser(): Parser
     {
         return $this->parser;
     }
 
     /**
-     * @param TypeDefinition $type
-     * @return TypeDefinition
+     * @return TypeCoercion
      */
-    public function normalize(TypeDefinition $type): TypeDefinition
+    public function getTypeCoercion(): TypeCoercion
     {
-        return $this->coercion->apply($type);
+        return $this->typeCoercion;
+    }
+
+    /**
+     * @return Persister
+     */
+    public function getPersister(): Persister
+    {
+        return $this->persister;
     }
 
     /**
@@ -267,9 +277,9 @@ class Compiler implements CompilerInterface
     }
 
     /**
-     * @return CallStack
+     * @return CallStackInterface
      */
-    public function getStack(): CallStack
+    public function getCallStack(): CallStackInterface
     {
         return $this->stack;
     }

@@ -134,7 +134,7 @@ class GrammarTestCase extends AbstractParserTestCase
         $file   = $this->getGrammarFile();
         $parser = new Reader(File::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_TOKENS, $parser->getTokens());
+        $this->assertEquals(self::EXPECTED_TOKENS, $parser->getTokens());
     }
 
     /**
@@ -145,7 +145,7 @@ class GrammarTestCase extends AbstractParserTestCase
         $file   = $this->getGrammarFile();
         $parser = new Reader(File::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_RULES, $parser->getRules());
+        $this->assertEquals(self::EXPECTED_RULES, $parser->getRules());
     }
 
     /**
@@ -156,6 +156,6 @@ class GrammarTestCase extends AbstractParserTestCase
         $file   = $this->getGrammarFile();
         $parser = new Reader(File::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_PRAGMA, $parser->getPragmas());
+        $this->assertEquals(self::EXPECTED_PRAGMA, $parser->getPragmas());
     }
 }

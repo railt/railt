@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\SDL\Language;
 
 use Railt\Reflection\Contracts\Document;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class DocumentTestCase
