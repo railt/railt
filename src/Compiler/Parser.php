@@ -108,7 +108,7 @@ class Parser
      * @param Readable $grammar
      * @return Parser
      */
-    public static function fromGrammar(Readable $grammar): Parser
+    public static function fromGrammar(Readable $grammar): self
     {
         $parser   = new Reader($grammar);
         $analyzer = new Analyzer($parser->getTokens());

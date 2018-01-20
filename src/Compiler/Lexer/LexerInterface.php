@@ -18,5 +18,5 @@ interface LexerInterface extends \IteratorAggregate
      * @param bool $keep
      * @return LexerInterface
      */
-    public function keepAll(bool $keep = false): LexerInterface;
+    public function keepAll(bool $keep = false): self;
 }
