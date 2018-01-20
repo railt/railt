@@ -12,7 +12,6 @@ namespace Railt\SDL\Parser;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Debug\NodeDumper;
 use Railt\Compiler\Generator;
-use Railt\Compiler\Parser as BaseParser;
 use Railt\Compiler\Parser;
 use Railt\Io\File;
 use Railt\Io\Readable;
@@ -22,9 +21,6 @@ use Railt\Io\Readable;
  */
 class Factory
 {
-    /**
-     *
-     */
     public const GRAMMAR_FILE = __DIR__ . '/../resources/grammar/sdl.pp';
 
     /**
@@ -48,7 +44,7 @@ class Factory
      * @param Parser $parser
      * @return Factory
      */
-    public function setParser(Parser $parser): Factory
+    public function setParser(Parser $parser): self
     {
         $this->parser = $parser;
 

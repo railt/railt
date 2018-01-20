@@ -47,7 +47,7 @@ class Reader
      * @param Readable $grammar
      * @return Reader
      */
-    private function parse(Readable $grammar): Reader
+    private function parse(Readable $grammar): self
     {
         $ruleName  = null;
         $ruleValue = '';
@@ -59,7 +59,7 @@ class Reader
                     break;
 
                 case ' ':
-                    $ruleValue              .= ' ' . \trim($line);
+                    $ruleValue .= ' ' . \trim($line);
                     $this->rules[$ruleName] = $ruleValue;
                     break;
 
@@ -93,7 +93,7 @@ class Reader
      */
     private function isCommentedLine(string $line): bool
     {
-        return $line{0} === '/' && $line{1} === '/';
+        return $line[0] === '/' && $line[1] === '/';
     }
 
     /**
