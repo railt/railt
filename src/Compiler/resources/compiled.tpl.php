@@ -19,20 +19,14 @@ namespace <?=$namespace; ?>;
 class <?=$class; ?> extends <?=$base; ?>
 
 {
-    /**
-     * The list of defined tokens.
-     */
-    private const TOKENS = <?=$this->value($tokens); ?>;
-
     public function __construct()
     {
         parent::__construct(
-            self::TOKENS,
+            <?=$this->value($tokens); ?>,
             [<?=$rules; ?>],
             <?=$this->value($pragmas); ?>
         );
 
         <?=$extra; ?>
-
     }
 }

@@ -11,7 +11,7 @@
       <option name="HAS_PARENS" value="true" />
       <option name="HAS_STRING_ESCAPES" value="true" />
     </options>
-    <keywords keywords="%skip;%token" ignore_case="false" />
+    <keywords keywords="%skip;%token;%pragma" ignore_case="false" />
     <keywords2 keywords="#;();*;+;,;::;&lt;;&gt;;?;[;];{;|;}" />
     <keywords3 keywords="\a;\b;\e;\f;\n;\r;\s;\t;\v;false;null;true" />
     <keywords4 keywords="-&gt;" />

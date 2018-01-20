@@ -41,9 +41,9 @@ class IllegalToken extends Exception
     /**
      * Get column.
      *
-     * @return  int
+     * @return int
      */
-    public function getColumn()
+    public function getColumn(): int
     {
         return $this->column;
     }

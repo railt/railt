@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Runtime;
+namespace Railt\Compiler\Grammar;
 
 use Hoa\Iterator\Lookahead;
 use Railt\Compiler\Exception\Exception;
@@ -47,23 +47,21 @@ class Analyzer
      * PP lexemes.
      */
     protected const PP_LEXEMES = [
-        Lexer\Token::T_DEFAULT_NAMESPACE => [
-            self::T_SKIP         => ['\s', null, false],
-            self::T_OR           => ['\|', null],
-            self::T_ZERO_OR_ONE  => ['\?', null],
-            self::T_ONE_OR_MORE  => ['\+', null],
-            self::T_ZERO_OR_MORE => ['\*', null],
-            self::T_N_TO_M       => ['\{[0-9]+,[0-9]+\}', null],
-            self::T_ZERO_TO_M    => ['\{,[0-9]+\}', null],
-            self::T_N_OR_MORE    => ['\{[0-9]+,\}', null],
-            self::T_EXACTLY_N    => ['\{[0-9]+\}', null],
-            self::T_SKIPPED      => ['::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::', null],
-            self::T_KEPT         => ['<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>', null],
-            self::T_NAMED        => ['[a-zA-Z_][a-zA-Z0-9_]*\(\)', null],
-            self::T_NODE         => ['#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?', null],
-            self::T_GROUP_OPEN   => ['\(', null],
-            self::T_GROUP_CLOSE  => ['\)', null],
-        ],
+        self::T_SKIP         => ['\s', false],
+        self::T_OR           => ['\|'],
+        self::T_ZERO_OR_ONE  => ['\?'],
+        self::T_ONE_OR_MORE  => ['\+'],
+        self::T_ZERO_OR_MORE => ['\*'],
+        self::T_N_TO_M       => ['\{[0-9]+,[0-9]+\}'],
+        self::T_ZERO_TO_M    => ['\{,[0-9]+\}'],
+        self::T_N_OR_MORE    => ['\{[0-9]+,\}'],
+        self::T_EXACTLY_N    => ['\{[0-9]+\}'],
+        self::T_SKIPPED      => ['::[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?::'],
+        self::T_KEPT         => ['<[a-zA-Z_][a-zA-Z0-9_]*(\[\d+\])?>'],
+        self::T_NAMED        => ['[a-zA-Z_][a-zA-Z0-9_]*\(\)'],
+        self::T_NODE         => ['#[a-zA-Z_][a-zA-Z0-9_]*(:[mM])?'],
+        self::T_GROUP_OPEN   => ['\('],
+        self::T_GROUP_CLOSE  => ['\)'],
     ];
 
     /**
@@ -448,12 +446,10 @@ class Analyzer
 
         $exists = false;
 
-        foreach ($this->tokens as $namespace => $tokens) {
-            foreach ((array)$tokens as $name => $token) {
-                if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
-                    $exists = true;
-                    break 2;
-                }
+        foreach ($this->tokens as $name => $info) {
+            if ($name === $tokenName || \strpos($name, $tokenName) === 0) {
+                $exists = true;
+                break;
             }
         }
 

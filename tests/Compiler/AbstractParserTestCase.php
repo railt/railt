@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
+use Railt\SDL\Parser\Factory;
 use Railt\Tests\AbstractTestCase;
 
 /**
@@ -21,6 +22,6 @@ abstract class AbstractParserTestCase extends AbstractTestCase
      */
     protected function getGrammarFile(): string
     {
-        return __DIR__ . '/.resources/2017-12-26-grammar.pp';
+        return Factory::GRAMMAR_FILE;
     }
 }

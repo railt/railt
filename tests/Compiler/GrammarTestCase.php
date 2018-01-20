@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Runtime\Grammar;
+use Railt\Compiler\Exception\UnexpectedTokenException;
+use Railt\Compiler\Exception\UnrecognizedTokenException;
+use Railt\Compiler\Grammar\Reader;
 use Railt\Io\File;
 
 /**
@@ -18,66 +20,54 @@ use Railt\Io\File;
 class GrammarTestCase extends AbstractParserTestCase
 {
     private const EXPECTED_TOKENS = [
-        'default'          => [
-            'T_NON_NULL'              => ['!', null, true],
-            'T_VAR'                   => ['\$', null, true],
-            'T_PARENTHESIS_OPEN'      => ['\(', null, true],
-            'T_PARENTHESIS_CLOSE'     => ['\)', null, true],
-            'T_THREE_DOTS'            => ['\.\.\.', null, true],
-            'T_COLON'                 => [':', null, true],
-            'T_EQUAL'                 => ['=', null, true],
-            'T_DIRECTIVE_AT'          => ['@', null, true],
-            'T_BRACKET_OPEN'          => ['\[', null, true],
-            'T_BRACKET_CLOSE'         => ['\]', null, true],
-            'T_BRACE_OPEN'            => ['{', null, true],
-            'T_BRACE_CLOSE'           => ['}', 'default', true],
-            'T_OR'                    => ['\|', null, true],
-            'T_AND'                   => ['\&', null, true],
-            'T_ON'                    => ['on\b', null, true],
-            'T_NUMBER_VALUE'          => ['\-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b', null, true],
-            'T_BOOL_TRUE'             => ['true\b', null, true],
-            'T_BOOL_FALSE'            => ['false\b', null, true],
-            'T_NULL'                  => ['null\b', null, true],
-            'T_MULTILINE_STRING_OPEN' => ['"""', 'multiline_string', true],
-            'T_STRING_OPEN'           => ['"', 'string', true],
-            'T_TYPE'                  => ['type\b', null, true],
-            'T_TYPE_IMPLEMENTS'       => ['implements\b', null, true],
-            'T_ENUM'                  => ['enum\b', null, true],
-            'T_UNION'                 => ['union\b', null, true],
-            'T_INTERFACE'             => ['interface\b', null, true],
-            'T_SCHEMA'                => ['schema\b', null, true],
-            'T_SCHEMA_QUERY'          => ['query\b', null, true],
-            'T_SCHEMA_MUTATION'       => ['mutation\b', null, true],
-            'T_SCHEMA_SUBSCRIPTION'   => ['subscription\b', null, true],
-            'T_SCALAR'                => ['scalar\b', null, true],
-            'T_DIRECTIVE'             => ['directive\b', null, true],
-            'T_INPUT'                 => ['input\b', null, true],
-            'T_EXTEND'                => ['extend\b', null, true],
-            'T_NAME'                  => ['([_A-Za-z][_0-9A-Za-z]*)', null, true],
-            // Hidden
-            'T_IGNORE'                => ['[\xfe\xff|\x20|\x09|\x0a|\x0d]+', null, false],
-            'T_COMMENT'               => ['#[^\n]*', null, false],
-            'T_COMMA'                 => [',', null, false],
-        ],
-        'multiline_string' => [
-            'T_MULTILINE_STRING'       => ['(?:\\\\"""|(?!""").|\s)+', null, true],
-            'T_MULTILINE_STRING_CLOSE' => ['"""', 'default', true],
-        ],
-        'string'           => [
-            'T_STRING'       => ['[^"\\\\]+(\\\\.[^"\\\\]*)*', null, true],
-            'T_STRING_CLOSE' => ['"', 'default', true],
-        ],
+        'T_NON_NULL'            => ['!', true],
+        'T_VAR'                 => ['\$', true],
+        'T_PARENTHESIS_OPEN'    => ['\(', true],
+        'T_PARENTHESIS_CLOSE'   => ['\)', true],
+        'T_THREE_DOTS'          => ['\.\.\.', true],
+        'T_COLON'               => [':', true],
+        'T_EQUAL'               => ['=', true],
+        'T_DIRECTIVE_AT'        => ['@', true],
+        'T_BRACKET_OPEN'        => ['\[', true],
+        'T_BRACKET_CLOSE'       => ['\]', true],
+        'T_BRACE_OPEN'          => ['{', true],
+        'T_BRACE_CLOSE'         => ['}', true],
+        'T_OR'                  => ['\|', true],
+        'T_AND'                 => ['\&', true],
+        'T_ON'                  => ['on\b', true],
+        'T_NUMBER_VALUE'        => ['\-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b', true],
+        'T_BOOL_TRUE'           => ['true\b', true],
+        'T_BOOL_FALSE'          => ['false\b', true],
+        'T_NULL'                => ['null\b', true],
+        'T_MULTILINE_STRING'    => ['"""(?:\\\\"""|(?!""").|\s)+"""', true],
+        'T_STRING'              => ['"[^"\\\\]+(\\\\.[^"\\\\]*)*"', true],
+        'T_TYPE'                => ['type\b', true],
+        'T_TYPE_IMPLEMENTS'     => ['implements\b', true],
+        'T_ENUM'                => ['enum\b', true],
+        'T_UNION'               => ['union\b', true],
+        'T_INTERFACE'           => ['interface\b', true],
+        'T_SCHEMA'              => ['schema\b', true],
+        'T_SCHEMA_QUERY'        => ['query\b', true],
+        'T_SCHEMA_MUTATION'     => ['mutation\b', true],
+        'T_SCHEMA_SUBSCRIPTION' => ['subscription\b', true],
+        'T_SCALAR'              => ['scalar\b', true],
+        'T_DIRECTIVE'           => ['directive\b', true],
+        'T_INPUT'               => ['input\b', true],
+        'T_EXTEND'              => ['extend\b', true],
+        'T_NAME'                => ['([_A-Za-z][_0-9A-Za-z]*)', true],
+        'T_WHITESPACE'          => ['[\xfe\xff|\x20|\x09|\x0a|\x0d]+', false],
+        'T_COMMENT'             => ['#[^\n]*', false],
+        'T_COMMA'               => [',', false],
     ];
 
     private const EXPECTED_RULES = [
-        '#Document'                       => ' Definitions()*',
-        'Definitions'                     => ' ObjectDefinition() | InterfaceDefinition() | EnumDefinition() | UnionDefinition() | SchemaDefinition() | ScalarDefinition() | InputDefinition() | ExtendDefinition() | DirectiveDefinition()',
+        '#Document'                       => ' Directive()* Definition()*',
         'ValueKeyword'                    => ' <T_BOOL_TRUE> | <T_BOOL_FALSE> | <T_NULL>',
         'Keyword'                         => ' <T_ON> | <T_TYPE> | <T_TYPE_IMPLEMENTS> | <T_ENUM> | <T_UNION> | <T_INTERFACE> | <T_SCHEMA> | <T_SCHEMA_QUERY> | <T_SCHEMA_MUTATION> | <T_SCALAR> | <T_DIRECTIVE> | <T_INPUT> | <T_EXTEND>',
         'Number'                          => ' <T_NUMBER_VALUE>',
         'Nullable'                        => ' <T_NULL>',
         'Boolean'                         => ' <T_BOOL_TRUE> | <T_BOOL_FALSE>',
-        'String'                          => ' (::T_MULTILINE_STRING_OPEN:: <T_MULTILINE_STRING> ::T_MULTILINE_STRING_CLOSE::) | (::T_STRING_OPEN:: <T_STRING> ::T_STRING_CLOSE::)',
+        'String'                          => ' <T_MULTILINE_STRING> | <T_STRING>',
         'Word'                            => ' <T_NAME> | ValueKeyword()',
         'Name'                            => ' Word() #Name',
         'Key'                             => ' ( String() | Word() | Keyword() ) #Name',
@@ -89,8 +79,8 @@ class GrammarTestCase extends AbstractParserTestCase
         'Object'                          => ' ::T_BRACE_OPEN:: ObjectPair()* ::T_BRACE_CLOSE:: #Object',
         'ObjectPair'                      => ' Key() ::T_COLON:: Value() #ObjectPair',
         'List'                            => ' ::T_BRACKET_OPEN:: Value()* ::T_BRACKET_CLOSE:: #List',
-        'Documentation'                   => ' ( ::T_MULTILINE_STRING_OPEN:: <T_MULTILINE_STRING> ::T_MULTILINE_STRING_CLOSE:: ) #Description',
-        '#SchemaDefinition'               => ' Documentation()? ::T_SCHEMA:: Directive()* ::T_BRACE_OPEN:: SchemaDefinitionBody() ::T_BRACE_CLOSE::',
+        'Documentation'                   => ' <T_MULTILINE_STRING> #Description',
+        '#SchemaDefinition'               => ' Documentation()? <T_SCHEMA> Name()? Directive()* ::T_BRACE_OPEN:: SchemaDefinitionBody() ::T_BRACE_CLOSE::',
         'SchemaDefinitionBody'            => ' ( SchemaDefinitionQuery() | SchemaDefinitionMutation() | SchemaDefinitionSubscription() )*',
         'SchemaDefinitionQuery'           => ' Documentation()? ::T_SCHEMA_QUERY:: ::T_COLON:: SchemaDefinitionFieldValue() #Query',
         'SchemaDefinitionMutation'        => ' Documentation()? ::T_SCHEMA_MUTATION:: ::T_COLON:: SchemaDefinitionFieldValue() #Mutation',
@@ -126,11 +116,14 @@ class GrammarTestCase extends AbstractParserTestCase
         '#Directive'                      => ' ::T_DIRECTIVE_AT:: Name() DirectiveArguments()?',
         'DirectiveArguments'              => ' ::T_PARENTHESIS_OPEN:: DirectiveArgumentPair()* ::T_PARENTHESIS_CLOSE::',
         'DirectiveArgumentPair'           => ' Key() ::T_COLON:: Value() #Argument',
+        'Definition'                      => ' ObjectDefinition() | InterfaceDefinition() | EnumDefinition() | UnionDefinition() | SchemaDefinition() | ScalarDefinition() | InputDefinition() | ExtendDefinition() | DirectiveDefinition()',
     ];
 
     private const EXPECTED_PRAGMA = [
-        'parser.lookahead' => '1024',
-        'lexer.unicode'    => true,
+        'parser.lookahead'         => 1024,
+        'lexer.unicode'            => true,
+        'error.unexpected_token'   => UnexpectedTokenException::class,
+        'error.unrecognized_token' => UnrecognizedTokenException::class,
     ];
 
     /**
@@ -139,9 +132,9 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testTokensParsing(): void
     {
         $file   = $this->getGrammarFile();
-        $parser = new Grammar(File::fromPathname($file));
+        $parser = new Reader(File::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_TOKENS, $parser->getTokens());
+        $this->assertEquals(self::EXPECTED_TOKENS, $parser->getTokens());
     }
 
     /**
@@ -150,9 +143,9 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testRulesParsing(): void
     {
         $file   = $this->getGrammarFile();
-        $parser = new Grammar(File::fromPathname($file));
+        $parser = new Reader(File::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_RULES, $parser->getRules());
+        $this->assertEquals(self::EXPECTED_RULES, $parser->getRules());
     }
 
     /**
@@ -161,8 +154,8 @@ class GrammarTestCase extends AbstractParserTestCase
     public function testPragmaParsing(): void
     {
         $file   = $this->getGrammarFile();
-        $parser = new Grammar(File::fromPathname($file));
+        $parser = new Reader(File::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_PRAGMA, $parser->getPragmas());
+        $this->assertEquals(self::EXPECTED_PRAGMA, $parser->getPragmas());
     }
 }

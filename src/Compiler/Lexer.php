@@ -9,22 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
-use Railt\Compiler\Exception\InvalidPragmaException;
 use Railt\Compiler\Exception\LexerException;
-use Railt\Compiler\Exception\UnrecognizedTokenException;
+use Railt\Compiler\Grammar\Parsers\Pragmas;
+use Railt\Compiler\Grammar\Pragmas\Unicode;
+use Railt\Compiler\Grammar\Pragmas\UnrecognizedToken;
+use Railt\Compiler\Lexer\LexerInterface;
 use Railt\Compiler\Lexer\Token;
 
 /**
- * Class Lexer
+ * Class ReLexer
  */
-class Lexer implements \IteratorAggregate
+class Lexer implements LexerInterface
 {
     /**#@+
      * Token input definition indexes
      */
     public const INPUT_TOKEN_PATTERN            = 0;
-    public const INPUT_TOKEN_CONTINUE_NAMESPACE = 1;
-    public const INPUT_TOKEN_KEPT               = 2;
+    public const INPUT_TOKEN_KEPT               = 1;
     /**#@-*/
 
     /**
@@ -64,15 +65,15 @@ class Lexer implements \IteratorAggregate
         $this->input  = $input;
         $this->tokens = $tokens;
 
-        $this->isUnicode         = $this->isUnicode($pragmas);
-        $this->errorUnrecognized = $this->getUnrecognizedToken($pragmas);
+        $this->isUnicode         = Pragmas::get($pragmas, Unicode::class);
+        $this->errorUnrecognized = Pragmas::get($pragmas, UnrecognizedToken::class);
     }
 
     /**
      * @param bool $keep
      * @return Lexer
      */
-    public function keepAll(bool $keep = true): self
+    public function keepAll(bool $keep = true): LexerInterface
     {
         $this->keepAll = $keep;
 
@@ -80,68 +81,54 @@ class Lexer implements \IteratorAggregate
     }
 
     /**
-     * @param array $pragmas
-     * @return bool
-     */
-    protected function isUnicode(array $pragmas): bool
-    {
-        $exists = \array_key_exists(Pragma::LEXER_UNICODE, $pragmas);
-
-        if ($exists) {
-            return (bool)$pragmas[Pragma::LEXER_UNICODE];
-        }
-
-        return true;
-    }
-
-    /**
-     * @param array $pragmas
-     * @return string
-     * @throws \Railt\Compiler\Exception\InvalidPragmaException
-     */
-    protected function getUnrecognizedToken(array $pragmas): string
-    {
-        $exists = \array_key_exists(Pragma::ERROR_UNRECOGNIZED_TOKEN, $pragmas);
-
-        if ($exists) {
-            $class = (string)$pragmas[Pragma::ERROR_UNRECOGNIZED_TOKEN];
-
-            if (! \class_exists($class)) {
-                $error = 'Invalid pragma "%s" value. Class "%s" does not exists.';
-                throw new InvalidPragmaException(\sprintf($error, Pragma::ERROR_UNRECOGNIZED_TOKEN, $class));
-            }
-
-            return $class;
-        }
-
-        return UnrecognizedTokenException::class;
-    }
-
-    /**
-     * @return \Traversable|\SplFixedArray
-     * @throws \Railt\Compiler\Exception\LexerException
+     * @return \Generator
      */
     public function getIterator(): \Traversable
     {
-        [$offset, $max] = [0, \strlen($this->input)];
+        $pattern = $this->regex($this->tokens);
 
-        $namespace = Token::T_DEFAULT_NAMESPACE;
+        $offset  = 0;
+        $result  = [];
 
-        while ($offset < $max) {
-            [$next, $namespace] = $this->reduce($offset, $namespace);
+        \preg_replace_callback($pattern, function (array $matches) use (&$result, &$offset): void {
+            [$name, $body] = $this->getTokenInfo($matches);
 
-            if ($next === null) {
-                $this->throwUnrecognizedToken($offset);
+            $length = \strlen($body);
+            $kept   = $this->tokens[$name][self::INPUT_TOKEN_KEPT] ?? true;
+
+            $this->verifyOffset($offset, $body);
+
+            if ($this->keepAll || $kept) {
+                $result[] = [
+                    Token::T_TOKEN     => $name,
+                    Token::T_VALUE     => $body,
+                    Token::T_LENGTH    => $length,
+                    Token::T_NAMESPACE => Token::T_DEFAULT_NAMESPACE,
+                    Token::T_KEEP      => $kept,
+                    Token::T_OFFSET    => $offset,
+                ];
             }
 
-            if ($this->keepAll || $next[Token::T_KEEP]) {
-                yield $next;
-            }
+            $offset += $length;
+        }, $this->input);
 
-            $offset += $next[Token::T_LENGTH];
-        }
+        yield from $result;
 
         yield Token::eof($offset);
+    }
+
+    /**
+     * @param int $offset
+     * @param string $body
+     * @return void
+     */
+    private function verifyOffset(int $offset, string $body): void
+    {
+        $isValid = \substr($this->input, $offset, \strlen($body)) === $body;
+
+        if (! $isValid) {
+            $this->throwUnrecognizedToken($offset);
+        }
     }
 
     /**
@@ -159,76 +146,69 @@ class Lexer implements \IteratorAggregate
     }
 
     /**
-     * @param int $offset
-     * @param string $namespace
+     * @param array $data
      * @return array
-     * @throws \Railt\Compiler\Exception\LexerException
      */
-    private function reduce(int $offset, string $namespace): array
+    private function getTokenInfo(array $data): array
     {
-        if (! \array_key_exists($namespace, $this->tokens)) {
-            $error = \sprintf('Namespace "%s" does not exist', $namespace);
-            throw new LexerException($error);
-        }
+        $last = '';
 
-        /** @var array $tokens */
-        $tokens = $this->tokens[$namespace];
+        foreach (\array_reverse($data) as $index => $body) {
+            if (! \is_string($index)) {
+                continue;
+            }
 
-        foreach ($tokens as $name => $token) {
-            $lexeme = $this->matchLexeme($name, $token[static::INPUT_TOKEN_PATTERN], $offset);
+            $last = $index;
 
-            if ($lexeme !== null) {
-                $result = [
-                    Token::T_TOKEN     => $name,
-                    Token::T_VALUE     => $lexeme,
-                    Token::T_LENGTH    => \strlen($lexeme),
-                    Token::T_NAMESPACE => $namespace,
-                    Token::T_KEEP      => $token[static::INPUT_TOKEN_KEPT] ?? true,
-                    Token::T_OFFSET    => $offset,
-                ];
-
-                return [
-                    $result,
-                    $token[static::INPUT_TOKEN_CONTINUE_NAMESPACE] ?? $namespace,
-                ];
+            if ($body !== '') {
+                return [$index, $body];
             }
         }
 
-        return [null, $namespace];
+        $error = \sprintf('A lexeme must not match an empty value, which is the case of "%s"', $last);
+        throw new LexerException($error);
     }
 
     /**
-     * Check if a given lexeme is matched at the beginning of the text.
-     *
-     * @param string $lexeme Name of the lexeme.
-     * @param string $pattern Regular expression describing the lexeme.
-     * @param int $offset Offset.
-     * @return null|string
-     * @throws LexerException
-     */
-    protected function matchLexeme(string $lexeme, string $pattern, int $offset): ?string
-    {
-        if (\preg_match($this->regex($pattern), $this->input, $matches, 0, $offset) === 0) {
-            return null;
-        }
-
-        if ($matches[0] === '') {
-            $error = 'A lexeme must not match an empty value, which is the case of "%s" (%s).';
-            $error = \sprintf($error, $lexeme, $pattern);
-            throw new LexerException($error);
-        }
-
-        return $matches[0];
-    }
-
-    /**
-     * @param string $pattern
+     * @param array $tokens
      * @return string
      */
-    private function regex(string $pattern): string
+    private function regex(array $tokens): string
     {
-        $modifiers = $this->isUnicode ? 'u' : '';
+        $result = $this->collectRegexGroups($tokens);
 
-        return '#\G(?|' . \str_replace('#', '\#', $pattern) . ')#' . $modifiers;
+        return \sprintf('#(%s)#%s', \implode('|', $result), $this->getRegexFlags());
+    }
+
+    /**
+     * @param array $tokens
+     * @return array
+     */
+    private function collectRegexGroups(array $tokens): array
+    {
+        $result = [];
+
+        foreach ($tokens as $name => $info) {
+            $result[] = \vsprintf('(?<%s>%s)', [
+                \preg_quote($name, '#'),
+                \str_replace('#', '\#', $info[self::INPUT_TOKEN_PATTERN]),
+            ]);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    private function getRegexFlags(): string
+    {
+        $flags = '';
+
+        if ($this->isUnicode) {
+            $flags .= 'u';
+        }
+
+        return $flags;
     }
 }

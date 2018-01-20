@@ -13,7 +13,7 @@ use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Debug\NodeDumper;
 use Railt\Compiler\Generator;
 use Railt\Compiler\Parser as BaseParser;
-use Railt\Compiler\Runtime;
+use Railt\Compiler\Parser;
 use Railt\Io\File;
 use Railt\Io\Readable;
 
@@ -23,17 +23,48 @@ use Railt\Io\Readable;
 class Factory
 {
     /**
-     * @var BaseParser
+     *
      */
-    private $runtime;
+    public const GRAMMAR_FILE = __DIR__ . '/../resources/grammar/sdl.pp';
 
     /**
-     * @param BaseParser $parser
-     * @return void
+     * @var Parser|null
      */
-    public function setRuntime(BaseParser $parser): void
+    private $parser;
+
+    /**
+     * @return Parser
+     */
+    public function getParser(): Parser
     {
-        $this->runtime = $parser;
+        if ($this->parser === null) {
+            $this->parser = $this->createParser();
+        }
+
+        return $this->parser;
+    }
+
+    /**
+     * @param Parser $parser
+     * @return Factory
+     */
+    public function setParser(Parser $parser): Factory
+    {
+        $this->parser = $parser;
+
+        return $this;
+    }
+
+    /**
+     * @return Parser
+     */
+    private function createParser(): Parser
+    {
+        if (\class_exists(Compiled::class)) {
+            return new Compiled();
+        }
+
+        return Parser::fromGrammar(File::fromPathname(static::GRAMMAR_FILE));
     }
 
     /**
@@ -42,39 +73,7 @@ class Factory
      */
     public function parse(Readable $sources): NodeInterface
     {
-        return $this->getRuntime()->parse($sources->getContents());
-    }
-
-    /**
-     * @return BaseParser
-     */
-    public function getRuntime(): BaseParser
-    {
-        if ($this->runtime === null) {
-            $this->runtime = $this->resolveRuntime();
-        }
-
-        return $this->runtime;
-    }
-
-    /**
-     * @return Readable
-     */
-    public static function getGrammarFile(): Readable
-    {
-        return File::fromPathname(__DIR__ . '/../resources/grammar/sdl.pp');
-    }
-
-    /**
-     * @return BaseParser
-     */
-    private function resolveRuntime(): BaseParser
-    {
-        if (\class_exists(Compiled::class)) {
-            return new Compiled();
-        }
-
-        return new Runtime(static::getGrammarFile());
+        return $this->getParser()->parse($sources->getContents());
     }
 
     /**
@@ -82,7 +81,7 @@ class Factory
      */
     public function compile(): void
     {
-        $generator = new Generator($this->getRuntime());
+        $generator = new Generator($this->getParser());
         $generator->setNamespace(__NAMESPACE__);
         $generator->saveTo('Compiled', __DIR__);
     }

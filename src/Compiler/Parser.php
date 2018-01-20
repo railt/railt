@@ -16,6 +16,10 @@ use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\Rule as AstRule;
 use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Exception\UnexpectedTokenException;
+use Railt\Compiler\Grammar\Analyzer;
+use Railt\Compiler\Grammar\Parsers\Pragmas;
+use Railt\Compiler\Grammar\Pragmas\Lookahead;
+use Railt\Compiler\Grammar\Reader;
 use Railt\Compiler\Lexer\Token as LexicalToken;
 use Railt\Compiler\Rule\Choice;
 use Railt\Compiler\Rule\Concatenation;
@@ -24,6 +28,7 @@ use Railt\Compiler\Rule\Entry;
 use Railt\Compiler\Rule\Repetition;
 use Railt\Compiler\Rule\Rule;
 use Railt\Compiler\Rule\Token;
+use Railt\Io\Readable;
 
 /**
  * Class \Railt\Compiler\Parser.
@@ -100,9 +105,18 @@ class Parser
     protected $depth = -1;
 
     /**
-     * @var bool
+     * @param Readable $grammar
+     * @return Parser
      */
-    private $useFastLexer = true;
+    public static function fromGrammar(Readable $grammar): Parser
+    {
+        $parser   = new Reader($grammar);
+        $analyzer = new Analyzer($parser->getTokens());
+
+        $rules = $analyzer->analyzeRules($parser->getRules());
+
+        return new static($parser->getTokens(), $rules, $parser->getPragmas());
+    }
 
     /**
      * Construct the parser.
@@ -119,39 +133,12 @@ class Parser
     }
 
     /**
-     * @param bool $compatibilityMode
-     * @return Parser
-     */
-    public function useLexerFallback(bool $compatibilityMode = false): self
-    {
-        $this->useFastLexer = ! $compatibilityMode;
-
-        return $this;
-    }
-
-    /**
      * @param array $pragmas
      * @return int
      */
     private function getLookahead(array $pragmas): int
     {
-        if (\array_key_exists(Pragma::LOOKAHEAD_DEPTH, $pragmas)) {
-            return \max(0, (int)$pragmas[Pragma::LOOKAHEAD_DEPTH]);
-        }
-
-        return 1024;
-    }
-
-    /**
-     * @param string $input
-     * @return Lexer
-     * @throws \Railt\Compiler\Exception\InvalidPragmaException
-     */
-    private function getLexer(string $input): Lexer
-    {
-        $class = $this->useFastLexer ? FastLexer::class : Lexer::class;
-
-        return new $class($input, $this->tokens, $this->pragmas);
+        return Pragmas::get($pragmas, Lookahead::class);
     }
 
     /**
@@ -162,9 +149,9 @@ class Parser
      */
     private function getBuffer(string $input): Buffer
     {
-        $tokens = $this->getLexer($input)->getIterator();
+        $lexer = new Lexer($input, $this->tokens, $this->pragmas);
 
-        return new Buffer($tokens, $this->getLookahead($this->pragmas));
+        return new Buffer($lexer->getIterator(), $this->getLookahead($this->pragmas));
     }
 
     /**
@@ -333,11 +320,11 @@ class Parser
             $zzeRule->setOffset($offset);
             $zzeRule->setNamespace($namespace);
 
-            if (isset($this->tokens[$namespace][$name])) {
-                $zzeRule->setRepresentation($this->tokens[$namespace][$name]);
+            if (isset($this->tokens[$name])) {
+                $zzeRule->setRepresentation($this->tokens[$name]);
             } else {
                 /** @var array $token */
-                foreach ($this->tokens[$namespace] as $_name => $token) {
+                foreach ($this->tokens as $_name => $token) {
                     if (($pos = \strpos($_name, ':')) === false) {
                         continue;
                     }
@@ -540,8 +527,8 @@ class Parser
                     continue;
                 }
 
-                $handle   = [];
-                $cId      = null;
+                $handle = [];
+                $cId    = null;
 
                 do {
                     $pop = \array_pop($children);
@@ -549,14 +536,14 @@ class Parser
                     if (\is_object($pop) === true) {
                         $handle[] = $pop;
                     } elseif (\is_array($pop) === true && $cId === null) {
-                        $cId      = $pop['id'];
+                        $cId = $pop['id'];
                     } elseif ($ruleName === $pop) {
                         break;
                     }
                 } while ($pop !== null);
 
                 if ($cId === null) {
-                    $cId  = $rule->getDefaultId();
+                    $cId = $rule->getDefaultId();
                 }
 
                 if ($cId === null) {

@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Helpers;
 
-use Railt\Compiler\Runtime;
+use Railt\Compiler\Parser;
+use Railt\Io\File;
 use Railt\SDL\Parser\Compiled;
 use Railt\SDL\Parser\Factory;
 
@@ -23,21 +24,10 @@ trait ParserStubs
      */
     protected function getParsers(): \Traversable
     {
-        yield from $this->wrapParsers(new Factory());
-    }
+        yield (new Factory())->setParser(new Compiled());
 
-    /**
-     * @param Factory $parser
-     * @return \Traversable
-     */
-    protected function wrapParsers(Factory $parser): \Traversable
-    {
-        $complied = clone $parser;
-        $complied->setRuntime(new Compiled());
-        yield $complied;
-
-        $runtime = clone $parser;
-        $runtime->setRuntime(new Runtime(Factory::getGrammarFile()));
-        yield $runtime;
+        yield (new Factory())->setParser(
+            Parser::fromGrammar(File::fromPathname(Factory::GRAMMAR_FILE))
+        );
     }
 }
