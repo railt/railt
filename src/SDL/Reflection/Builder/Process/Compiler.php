@@ -283,7 +283,7 @@ trait Compiler
      */
     protected function load(string $type): TypeDefinition
     {
-        return $this->getCompiler()->get($type, $this);
+        return $this->getCompiler()->getDictionary()->get($type, $this);
     }
 
     /**

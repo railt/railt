@@ -118,7 +118,7 @@ class DocumentTestCase extends AbstractLanguageTestCase
     {
         /** @var CompilerInterface $compiler */
         foreach ($this->getCompilers() as $compiler) {
-            $string = $compiler->get('String');
+            $string = $compiler->getDictionary()->get('String');
             $stdlib = $string->getDocument();
 
             static::assertSame('GraphQL Standard Library', $stdlib->getName());

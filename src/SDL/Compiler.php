@@ -182,21 +182,11 @@ class Compiler implements CompilerInterface
     {
         foreach ($document->getTypeDefinitions() as $type) {
             $this->stack->push($type);
-            $this->register($type);
+            $this->loader->register($type);
             $this->stack->pop();
         }
 
         return $document;
-    }
-
-    /**
-     * @param TypeDefinition $type
-     * @param bool $force
-     * @return Dictionary
-     */
-    public function register(TypeDefinition $type, bool $force = false): Dictionary
-    {
-        return $this->loader->register($type, $force);
     }
 
     /**
@@ -274,42 +264,6 @@ class Compiler implements CompilerInterface
     public function getDictionary(): Dictionary
     {
         return $this->loader;
-    }
-
-    /**
-     * @param string $type
-     * @return iterable|TypeDefinition[]
-     */
-    public function only(string $type): iterable
-    {
-        return $this->loader->only($type);
-    }
-
-    /**
-     * @param string $name
-     * @param Definition|null $from
-     * @return TypeDefinition
-     */
-    public function get(string $name, Definition $from = null): TypeDefinition
-    {
-        return $this->loader->get($name, $from);
-    }
-
-    /**
-     * @return iterable|TypeDefinition[]
-     */
-    public function all(): iterable
-    {
-        yield from $this->loader->all();
-    }
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function has(string $name): bool
-    {
-        return $this->loader->has($name);
     }
 
     /**

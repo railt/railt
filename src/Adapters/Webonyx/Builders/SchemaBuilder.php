@@ -90,7 +90,7 @@ class SchemaBuilder extends TypeBuilder
         $result = [];
 
         /** @var DirectiveDefinition $directive */
-        foreach ($compiler->only(DirectiveDefinition::class) as $directive) {
+        foreach ($compiler->getDictionary()->only(DirectiveDefinition::class) as $directive) {
             if ($directive->isAllowedForQueries()) {
                 $result[] = $this->load($directive);
             }

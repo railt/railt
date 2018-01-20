@@ -19,7 +19,7 @@ use Railt\SDL\Runtime\CallStack;
 /**
  * Class CompilerInterface
  */
-interface CompilerInterface extends Dictionary
+interface CompilerInterface
 {
     /**
      * @param Readable $readable
