@@ -14,7 +14,6 @@ use Cache\Adapter\Common\CacheItem;
 use Cache\Adapter\Filesystem\FilesystemCachePool;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use Railt\Io\File;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Compiler;
@@ -102,16 +101,6 @@ trait CompilerStubs
     }
 
     /**
-     * @param string $dir
-     * @return Persister
-     * @throws \Exception
-     */
-    private function getPsr16FileSystemPersister(string $dir): Persister
-    {
-        return new Psr16Persister($this->createFilesystemPool('psr16', $dir));
-    }
-
-    /**
      * @param string $name
      * @param string $dir
      * @return AbstractCachePool
@@ -121,9 +110,19 @@ trait CompilerStubs
     {
         $filesystem = new Filesystem(new Local($dir));
 
-        $folder     = \snake_case(\class_basename($this)) .
+        $folder = \snake_case(\class_basename($this)) .
             '/' . $name . '_' . \random_int(0, \PHP_INT_MAX);
 
         return new FilesystemCachePool($filesystem, $folder);
+    }
+
+    /**
+     * @param string $dir
+     * @return Persister
+     * @throws \Exception
+     */
+    private function getPsr16FileSystemPersister(string $dir): Persister
+    {
+        return new Psr16Persister($this->createFilesystemPool('psr16', $dir));
     }
 }

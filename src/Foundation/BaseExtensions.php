@@ -11,7 +11,7 @@ namespace Railt\Foundation;
 
 use Railt\Foundation\Extensions\Collection;
 use Railt\Foundation\Extensions\RouterExtension;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class BaseExtensions

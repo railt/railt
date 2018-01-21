@@ -12,7 +12,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 use GraphQL\Type\Schema;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class SchemaBuilder

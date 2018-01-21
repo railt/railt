@@ -165,7 +165,7 @@ class Application
 
         if ($schema === null) {
             $error = \sprintf('The document %s must contain a schema definition', $document->getFileName());
-            throw new TypeNotFoundException($error, $this->compiler->getStack());
+            throw new TypeNotFoundException($error, $this->compiler->getCallStack());
         }
 
         return $schema;

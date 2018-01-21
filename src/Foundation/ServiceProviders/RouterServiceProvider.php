@@ -12,7 +12,7 @@ namespace Railt\Foundation\ServiceProviders;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\GraphQL\RouterDocument;
 use Railt\Routing\Router;
-use Railt\SDL\Reflection\CompilerInterface;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class RouterServiceProvider
