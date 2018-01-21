@@ -25,14 +25,14 @@ use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Coercion\Factory;
 use Railt\SDL\Reflection\Coercion\TypeCoercion;
-use Railt\SDL\Runtime\CallStackInterface;
-use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Reflection\Loader;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\SDL\Reflection\Validation\Definitions;
 use Railt\SDL\Reflection\Validation\Validator;
 use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
 use Railt\Storage\ArrayPersister;
 use Railt\Storage\Persister;
@@ -83,9 +83,9 @@ class Compiler implements CompilerInterface, Configuration
      */
     public function __construct(Persister $persister = null)
     {
-        $this->stack     = new CallStack();
-        $this->parser    = (new ParserFactory())->getParser();
-        $this->loader    = new Loader($this, $this->stack);
+        $this->stack         = new CallStack();
+        $this->parser        = (new ParserFactory())->getParser();
+        $this->loader        = new Loader($this, $this->stack);
         $this->typeValidator = new Validator($this->stack);
         $this->typeCoercion  = new Factory();
 

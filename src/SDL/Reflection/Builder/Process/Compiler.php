@@ -18,10 +18,10 @@ use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\Invocable;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
-use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\SDL\Reflection\Validation\Definitions;
 use Railt\SDL\Reflection\Validation\Uniqueness;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
 
 /**
