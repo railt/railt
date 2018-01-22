@@ -18,9 +18,10 @@ use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 interface HasDirectives
 {
     /**
+     * @param string|null $name
      * @return iterable|DirectiveInvocation[]
      */
-    public function getDirectives(): iterable;
+    public function getDirectives(string $name = null): iterable;
 
     /**
      * @param string $name
@@ -31,6 +32,7 @@ interface HasDirectives
     /**
      * @param string $name
      * @return null|DirectiveInvocation
+     * @deprecated Use ...->getDirectives($name) instead.
      */
     public function getDirective(string $name): ?DirectiveInvocation;
 

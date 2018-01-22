@@ -30,7 +30,9 @@ trait DirectivesBuilder
             /** @var BaseDirectivesContainer|TypeDefinition $this */
             $directive = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
 
-            $this->directives = $this->unique($this->directives, $directive);
+            $this->directives[] = [
+                $directive->getName() => $directive,
+            ];
 
             return true;
         }

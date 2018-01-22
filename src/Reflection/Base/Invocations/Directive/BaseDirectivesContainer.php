@@ -20,16 +20,32 @@ use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 trait BaseDirectivesContainer
 {
     /**
+     * Internal structure will look like this:
+     * <code>
+     *  protected $directives = [
+     *      ['name' => DirectiveInvocation],
+     *      ['name' => DirectiveInvocation],
+     *      ['name' => DirectiveInvocation],
+     *  ];
+     * </code>
+     *
      * @var array|DirectiveInvocation[]
      */
     protected $directives = [];
 
     /**
+     * @param string|null $name
      * @return iterable|DirectiveInvocation[]
      */
-    public function getDirectives(): iterable
+    public function getDirectives(string $name = null): iterable
     {
-        return \array_values($this->directives);
+        foreach ($this->directives as $definitions) {
+            foreach ((array)$definitions as $found => $invocation) {
+                if ($name === null || $name === $found) {
+                    yield $found => $invocation;
+                }
+            }
+        }
     }
 
     /**
@@ -38,7 +54,11 @@ trait BaseDirectivesContainer
      */
     public function hasDirective(string $name): bool
     {
-        return \array_key_exists($name, $this->directives);
+        foreach ($this->getDirectives($name) as $directive) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -47,7 +67,11 @@ trait BaseDirectivesContainer
      */
     public function getDirective(string $name): ?DirectiveInvocation
     {
-        return $this->directives[$name] ?? null;
+        foreach ($this->getDirectives($name) as $directive) {
+            return $directive;
+        }
+
+        return null;
     }
 
     /**

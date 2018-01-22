@@ -62,6 +62,7 @@ class GrammarTestCase extends AbstractParserTestCase
 
     private const EXPECTED_RULES = [
         '#Document'                       => ' Directive()* Definition()*',
+        'Definition'                      => ' ObjectDefinition() | InterfaceDefinition() | EnumDefinition() | UnionDefinition() | SchemaDefinition() | ScalarDefinition() | InputDefinition() | ExtendDefinition() | DirectiveDefinition()',
         'ValueKeyword'                    => ' <T_BOOL_TRUE> | <T_BOOL_FALSE> | <T_NULL>',
         'Keyword'                         => ' <T_ON> | <T_TYPE> | <T_TYPE_IMPLEMENTS> | <T_ENUM> | <T_UNION> | <T_INTERFACE> | <T_SCHEMA> | <T_SCHEMA_QUERY> | <T_SCHEMA_MUTATION> | <T_SCALAR> | <T_DIRECTIVE> | <T_INPUT> | <T_EXTEND>',
         'Number'                          => ' <T_NUMBER_VALUE>',
@@ -116,12 +117,11 @@ class GrammarTestCase extends AbstractParserTestCase
         '#Directive'                      => ' ::T_DIRECTIVE_AT:: Name() DirectiveArguments()?',
         'DirectiveArguments'              => ' ::T_PARENTHESIS_OPEN:: DirectiveArgumentPair()* ::T_PARENTHESIS_CLOSE::',
         'DirectiveArgumentPair'           => ' Key() ::T_COLON:: Value() #Argument',
-        'Definition'                      => ' ObjectDefinition() | InterfaceDefinition() | EnumDefinition() | UnionDefinition() | SchemaDefinition() | ScalarDefinition() | InputDefinition() | ExtendDefinition() | DirectiveDefinition()',
     ];
 
     private const EXPECTED_PRAGMA = [
-        'parser.lookahead'         => 1024,
         'lexer.unicode'            => true,
+        'parser.lookahead'         => 1024,
         'error.unexpected_token'   => UnexpectedTokenException::class,
         'error.unrecognized_token' => UnrecognizedTokenException::class,
     ];
