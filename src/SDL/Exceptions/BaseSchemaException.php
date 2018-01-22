@@ -48,25 +48,30 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     /**
      * @return string
      */
-    public function __toString(): string
+    public function getCompilerMessage(): string
     {
-        $header = \vsprintf('%s: %s in %s:%d:%d', [
+        return \vsprintf('%s: %s in %s:%d:%d', [
             \class_basename($this),
             $this->getMessage(),
             $this->getFile(),
             $this->getLine(),
             $this->getColumn(),
         ]);
+    }
 
-        $result = $header . \PHP_EOL;
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $result = $this->getCompilerMessage() . \PHP_EOL .
+            'Stack trace:' . \PHP_EOL;
 
         if ($this->renderer->hasTrace()) {
-            $result .= 'GraphQL Stack trace:' . \PHP_EOL .
-                $this->getCompilerTraceAsString() . \PHP_EOL;
+            $result .= $this->getCompilerTraceAsString() . \PHP_EOL;
         }
 
-        $result .= 'PHP Stack trace:' . \PHP_EOL .
-                $this->getTraceAsString();
+        $result .= $this->getTraceAsString();
 
         return $result;
     }
