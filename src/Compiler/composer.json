@@ -54,7 +54,6 @@
         "zendframework/zend-code": "~3.0"
     },
     "replace": {
-        "hoa/compiler": "*",
         "hoa/consistency": "*",
         "hoa/exception": "*",
         "hoa/test": "*"
