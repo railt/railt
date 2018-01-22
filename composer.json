@@ -52,10 +52,7 @@
         "railt/compiler": "self.version",
         "railt/container": "self.version",
         "railt/reflection": "self.version",
-        "railt/webonyx-adapter": "self.version",
-        "hoa/consistency": "*",
-        "hoa/exception": "*",
-        "hoa/test": "*"
+        "railt/webonyx-adapter": "self.version"
     },
     "autoload": {
         "psr-4": {

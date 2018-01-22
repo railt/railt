@@ -53,11 +53,6 @@
         "hoa/iterator": "~2.0",
         "zendframework/zend-code": "~3.0"
     },
-    "replace": {
-        "hoa/consistency": "*",
-        "hoa/exception": "*",
-        "hoa/test": "*"
-    },
     "autoload": {
         "psr-4": {
             "Railt\\Compiler\\": "."
