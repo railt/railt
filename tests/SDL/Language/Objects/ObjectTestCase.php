@@ -65,7 +65,7 @@ class ObjectTestCase extends AbstractLanguageTestCase
      */
     public function testGetDirectives(ObjectDefinition $type): void
     {
-        static::assertArrayHasKey(0, $type->getDirectives());
+        static::assertTrue(\is_iterable($type->getDirectives()));
         static::assertCount(1, $type->getDirectives());
 
         foreach ($type->getDirectives() as $directive) {
