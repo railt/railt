@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\SDL\Reflection\Validation\Base;
 
 use Railt\SDL\Reflection\Validation\Validator;
-use Railt\SDL\Runtime\CallStack;
 use Railt\SDL\Runtime\CallStackInterface;
 
 /**
