@@ -12,6 +12,7 @@ namespace Railt\SDL\Reflection\Validation\Definitions;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Exceptions\TypeConflictException;
@@ -42,10 +43,27 @@ class ObjectValidator extends BaseDefinitionValidator
         foreach ($object->getInterfaces() as $interface) {
             $this->getCallStack()->push($interface);
 
-            $this->validateFieldsExistence($interface, $object);
+            $this->validateImplementationType($object, $interface);
+            $this->validateFieldsExistence($object, $interface);
 
             $this->getCallStack()->pop();
         }
+    }
+
+    /**
+     * @param ObjectDefinition $object
+     * @param TypeDefinition $type
+     * @return void
+     */
+    private function validateImplementationType(ObjectDefinition $object, TypeDefinition $type): void
+    {
+        if ($type instanceof InterfaceDefinition) {
+            return;
+        }
+
+        $error = 'Only interface can be implemented by the %s, but %s given.';
+
+        throw new TypeConflictException(\sprintf($error, $object, $type), $this->getCallStack());
     }
 
     /**
@@ -57,7 +75,7 @@ class ObjectValidator extends BaseDefinitionValidator
      * @throws \OutOfBoundsException
      * @throws \Railt\SDL\Exceptions\TypeConflictException
      */
-    private function validateFieldsExistence(InterfaceDefinition $interface, ObjectDefinition $object): void
+    private function validateFieldsExistence(ObjectDefinition $object, InterfaceDefinition $interface): void
     {
         foreach ($interface->getFields() as $field) {
             $this->getCallStack()->push($field);
