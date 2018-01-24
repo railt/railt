@@ -14,7 +14,7 @@ use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Exceptions\TypeNotFoundException;
-use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**
@@ -35,9 +35,9 @@ class Loader extends Repository
     /**
      * Loader constructor.
      * @param CompilerInterface $compiler
-     * @param CallStack $stack
+     * @param CallStackInterface $stack
      */
-    public function __construct(CompilerInterface $compiler, CallStack $stack)
+    public function __construct(CompilerInterface $compiler, CallStackInterface $stack)
     {
         $this->compiler = $compiler;
 
@@ -62,11 +62,11 @@ class Loader extends Repository
      */
     public function get(string $name, Definition $from = null): TypeDefinition
     {
-        try {
+        if (parent::has($name)) {
             return parent::get($name, $from);
-        } catch (TypeNotFoundException $error) {
-            return $this->load($name, $from);
         }
+
+        return $this->load($name, $from);
     }
 
     /**
@@ -94,6 +94,7 @@ class Loader extends Repository
                 }
             }
         }
+
 
         $error = \sprintf('Type "%s" not found and could not be loaded', $name);
         throw new TypeNotFoundException($error, $this->stack);

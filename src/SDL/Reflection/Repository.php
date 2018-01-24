@@ -15,7 +15,7 @@ use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
-use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
 
 /**
  * Class Repository
@@ -30,15 +30,15 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     private $definitions = [];
 
     /**
-     * @var CallStack
+     * @var CallStackInterface
      */
     protected $stack;
 
     /**
      * Repository constructor.
-     * @param CallStack $stack
+     * @param CallStackInterface $stack
      */
-    public function __construct(CallStack $stack)
+    public function __construct(CallStackInterface $stack)
     {
         $this->stack = $stack;
     }
