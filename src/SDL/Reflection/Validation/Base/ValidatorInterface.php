@@ -11,6 +11,7 @@ namespace Railt\SDL\Reflection\Validation\Base;
 
 use Railt\SDL\Reflection\Validation\Validator;
 use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
 
 /**
  * Interface ValidatorInterface
@@ -20,10 +21,10 @@ interface ValidatorInterface
     /**
      * ValidatorInterface constructor.
      * @param Validator $validator
-     * @param CallStack $stack
+     * @param CallStackInterface $stack
      * @param string|null $group
      */
-    public function __construct(Validator $validator, CallStack $stack, ?string $group);
+    public function __construct(Validator $validator, CallStackInterface $stack, ?string $group);
 
     /**
      * @return string
@@ -37,9 +38,9 @@ interface ValidatorInterface
     public function getValidator(string $group): self;
 
     /**
-     * @return CallStack
+     * @return CallStackInterface
      */
-    public function getCallStack(): CallStack;
+    public function getCallStack(): CallStackInterface;
 
     /**
      * @param string $exception

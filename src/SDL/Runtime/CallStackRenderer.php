@@ -58,11 +58,9 @@ class CallStackRenderer
 
         $file = $definition->getDocument()->getFile();
 
-        $fileDefOffset = $file->isFile() ? 0 : ($file->getDefinitionLine() - 1);
-
         return [
             self::TRACE_FILE      => $file->isFile() ? $file->getPathname() : $file->getDefinitionFileName(),
-            self::TRACE_LINE      => $definition->getDeclarationLine() + $fileDefOffset,
+            self::TRACE_LINE      => $definition->getDeclarationLine(),
             self::TRACE_COLUMN    => $definition->getDeclarationColumn(),
             self::TRACE_TYPE      => $definition instanceof TypeDefinition
                 ? $definition->getTypeName()

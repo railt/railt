@@ -96,7 +96,6 @@ class Loader extends Repository
         }
 
         $error = \sprintf('Type "%s" not found and could not be loaded', $name);
-
         throw new TypeNotFoundException($error, $this->stack);
     }
 

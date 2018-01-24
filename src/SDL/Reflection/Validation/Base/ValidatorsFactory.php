@@ -11,6 +11,7 @@ namespace Railt\SDL\Reflection\Validation\Base;
 
 use Railt\SDL\Reflection\Validation\Validator;
 use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
 
 /**
  * Class Definitions
@@ -25,12 +26,12 @@ abstract class ValidatorsFactory extends Factory
     /**
      * Definitions constructor.
      * @param Validator $factory
-     * @param CallStack $stack
+     * @param CallStackInterface $stack
      * @param null|string $name
      * @throws \InvalidArgumentException
      * @throws \OutOfBoundsException
      */
-    public function __construct(Validator $factory, CallStack $stack, ?string $name)
+    public function __construct(Validator $factory, CallStackInterface $stack, ?string $name)
     {
         parent::__construct($factory, $stack, $name ?? static::class);
 

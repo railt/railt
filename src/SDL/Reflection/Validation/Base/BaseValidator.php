@@ -13,6 +13,7 @@ use Railt\Reflection\Support;
 use Railt\SDL\Exceptions\SchemaException;
 use Railt\SDL\Reflection\Validation\Validator;
 use Railt\SDL\Runtime\CallStack;
+use Railt\SDL\Runtime\CallStackInterface;
 
 /**
  * Class BaseValidator
@@ -39,10 +40,10 @@ abstract class BaseValidator implements ValidatorInterface
     /**
      * BaseValidator constructor.
      * @param Validator $factory
-     * @param CallStack $stack
+     * @param CallStackInterface $stack
      * @param null|string $name
      */
-    public function __construct(Validator $factory, CallStack $stack, ?string $name)
+    public function __construct(Validator $factory, CallStackInterface $stack, ?string $name)
     {
         $this->validator = $factory;
         $this->stack     = $stack;
@@ -68,9 +69,9 @@ abstract class BaseValidator implements ValidatorInterface
     }
 
     /**
-     * @return CallStack
+     * @return CallStack|CallStackInterface
      */
-    public function getCallStack(): CallStack
+    public function getCallStack(): CallStackInterface
     {
         return $this->stack;
     }

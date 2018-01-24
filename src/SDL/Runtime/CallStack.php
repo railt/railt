@@ -30,6 +30,14 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     }
 
     /**
+     * @return void
+     */
+    public function __clone()
+    {
+        $this->stack = clone $this->stack;
+    }
+
+    /**
      * @param Definition[] ...$definitions
      * @return CallStack|$this|static
      */
