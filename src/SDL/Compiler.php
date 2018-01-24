@@ -185,7 +185,7 @@ class Compiler implements CompilerInterface, Configuration
     {
         foreach ($document->getTypeDefinitions() as $type) {
             $this->stack->push($type);
-                $this->loader->register($type);
+            $this->loader->register($type);
             $this->stack->pop();
         }
 

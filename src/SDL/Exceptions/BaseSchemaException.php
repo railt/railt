@@ -74,7 +74,7 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
         $startAt = \count($this->renderer->getTrace());
 
         $result .= \preg_replace_callback('/^#(\d+)\h/imu',
-            function(array $matches) use ($startAt): string {
+            function (array $matches) use ($startAt): string {
                 return \sprintf('#%d ', $matches[1] + $startAt);
             }, $this->getTraceAsString());
 
