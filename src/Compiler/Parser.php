@@ -11,9 +11,11 @@ namespace Railt\Compiler;
 
 use Hoa\Iterator\Buffer;
 use Railt\Compiler\Ast\Leaf;
+use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\Node;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\Rule as AstRule;
+use Railt\Compiler\Ast\RuleInterface;
 use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Exception\UnexpectedTokenException;
 use Railt\Compiler\Grammar\Analyzer;
@@ -158,7 +160,7 @@ class Parser
      * Parse :-).
      *
      * @param string $text Text to parse.
-     * @return mixed
+     * @return RuleInterface|LeafInterface|NodeInterface
      * @throws \Railt\Compiler\Exception\LexerException
      * @throws \Railt\Compiler\Exception\InvalidPragmaException
      * @throws \Railt\Compiler\Exception\Exception

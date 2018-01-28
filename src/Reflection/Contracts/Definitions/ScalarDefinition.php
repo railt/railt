@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Definitions;
 
-use Railt\Reflection\Contracts\Behavior\Inputable;
-use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
+use Railt\Reflection\Contracts\Definitions\Common\Inputable;
 
 /**
  * Interface ScalarDefinition
  */
-interface ScalarDefinition extends TypeDefinition, HasDirectives, Inputable
+interface ScalarDefinition extends TypeDefinition, Inputable
 {
 }

@@ -11,31 +11,31 @@ namespace Railt\Io;
 
 use Railt\Io\Exceptions\NotFoundException;
 use Railt\Io\Exceptions\NotReadableException;
-use Railt\Io\Utils\ErrorHelper;
-use Railt\Io\Utils\TraceHelper;
 
 /**
  * Class File
  */
-class File implements Writable, Traceable
+class File implements Writable
 {
-    use ErrorHelper;
-    use TraceHelper;
+    /**
+     * @var string
+     */
+    protected $contents;
 
     /**
      * @var string
      */
-    private $contents;
-
-    /**
-     * @var string
-     */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
     protected $hash;
+
+    /**
+     * @var Declaration
+     */
+    private $declaration;
 
     /**
      * File constructor.
@@ -44,10 +44,8 @@ class File implements Writable, Traceable
      */
     public function __construct(string $contents, string $name = null)
     {
-        [$this->definitionFile, $this->definitionLine, $this->definitionClass] = $this->getBacktrace();
-
-        $this->contents = $contents;
-        $this->name     = ($name ?? $this->definitionClass) ?? $this->definitionFile;
+        $this->declaration = Declaration::make(Readable::class);
+        $this->contents    = $contents;
     }
 
     /**
@@ -105,14 +103,6 @@ class File implements Writable, Traceable
     }
 
     /**
-     * @return string
-     */
-    public function getContents(): string
-    {
-        return $this->contents;
-    }
-
-    /**
      * @param string $content
      * @return Writable
      */
@@ -161,5 +151,50 @@ class File implements Writable, Traceable
     public function isFile(): bool
     {
         return \is_file($this->getPathname());
+    }
+
+    /**
+     * @return string
+     */
+    public function getContents(): string
+    {
+        return $this->contents;
+    }
+
+    /**
+     * @param int $bytesOffset
+     * @return Position
+     */
+    public function getPosition(int $bytesOffset): Position
+    {
+        return new Position($this->getContents(), $bytesOffset);
+    }
+
+    /**
+     * @return Declaration
+     */
+    public function getDeclaration(): Declaration
+    {
+        return $this->declaration;
+    }
+
+    /**
+     * @return void
+     */
+    public function __wakeup()
+    {
+        $this->declaration = Declaration::make(static::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return [
+            'contents',
+            'name',
+            'hash',
+        ];
     }
 }

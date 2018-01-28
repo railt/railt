@@ -9,18 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Invocations;
 
-use Railt\Reflection\Contracts\Dependent\DependentDefinition;
-use Railt\Reflection\Contracts\Invocations\Argument\HasPassedArguments;
+use Railt\Reflection\Contracts\Invocations\Common\HasPassedArguments;
 
 /**
  * Interface InputInvocation
  */
-interface InputInvocation extends
-    DependentDefinition,
-    Invocable,
-    HasPassedArguments,
-    \ArrayAccess,
-    \IteratorAggregate,
-    \JsonSerializable
+interface InputInvocation extends TypeInvocation, HasPassedArguments, \ArrayAccess, \IteratorAggregate, \JsonSerializable
 {
+
 }

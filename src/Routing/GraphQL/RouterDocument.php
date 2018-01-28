@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Routing\GraphQL;
 
 use Railt\Io\File;
-use Railt\Reflection\Base\BaseDocument;
+use Railt\Reflection\Base\Document;
 use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Class RouterDocument
  */
-class RouterDocument extends BaseDocument
+class RouterDocument extends Document
 {
     /**
      * @var Dictionary

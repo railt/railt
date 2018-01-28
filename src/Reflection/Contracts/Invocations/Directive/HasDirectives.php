@@ -32,7 +32,6 @@ interface HasDirectives
     /**
      * @param string $name
      * @return null|DirectiveInvocation
-     * @deprecated Use ...->getDirectives($name) instead.
      */
     public function getDirective(string $name): ?DirectiveInvocation;
 

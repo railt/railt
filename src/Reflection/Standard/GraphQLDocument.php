@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Reflection\Standard;
 
 use Railt\Io\File;
-use Railt\Reflection\Base\BaseDocument;
+use Railt\Reflection\Base\Document;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Standard\Directives\Deprecation;
@@ -27,7 +27,7 @@ use Railt\SDL\Reflection\Dictionary;
  * This class contains a Document implementation for
  * the standard GraphQL library.
  */
-class GraphQLDocument extends BaseDocument implements StandardType
+class GraphQLDocument extends Document implements StandardType
 {
     /**
      * The name of our document constant.

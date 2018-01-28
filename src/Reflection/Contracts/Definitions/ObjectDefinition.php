@@ -9,33 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Definitions;
 
-use Railt\Reflection\Contracts\Dependent\Field\HasFields;
-use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
-
 /**
  * Interface ObjectDefinition
  */
-interface ObjectDefinition extends TypeDefinition, HasFields, HasDirectives
+interface ObjectDefinition extends InterfaceDefinition
 {
-    /**
-     * @return iterable|InterfaceDefinition[]
-     */
-    public function getInterfaces(): iterable;
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function hasInterface(string $name): bool;
-
-    /**
-     * @param string $name
-     * @return null|InterfaceDefinition
-     */
-    public function getInterface(string $name): ?InterfaceDefinition;
-
-    /**
-     * @return int
-     */
-    public function getNumberOfInterfaces(): int;
 }

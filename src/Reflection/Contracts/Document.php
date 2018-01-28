@@ -9,12 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts;
 
-use Railt\Io\Readable;
-use Railt\Io\Traceable;
-use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
  * The Document is an object that contains information
@@ -22,7 +18,7 @@ use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
  *
  * This can be, for example, a GraphQL schema file.
  */
-interface Document extends TypeDefinition, HasDirectives
+interface Document extends TypeDefinition
 {
     /**
      * Should return the name of file if the Document is physically located on
@@ -33,11 +29,6 @@ interface Document extends TypeDefinition, HasDirectives
      * @return string The name of file or unique document name.
      */
     public function getName(): string;
-
-    /**
-     * @return Readable|Traceable
-     */
-    public function getFile(): Readable;
 
     /**
      * A Document can contain a root api element, which is represented as a
@@ -70,14 +61,4 @@ interface Document extends TypeDefinition, HasDirectives
      * @return int
      */
     public function getNumberOfTypeDefinitions(): int;
-
-    /**
-     * @return iterable|Definition[]
-     */
-    public function getDefinitions(): iterable;
-
-    /**
-     * @return string
-     */
-    public function getContents(): string;
 }

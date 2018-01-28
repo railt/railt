@@ -53,7 +53,7 @@ class Reader
         $ruleValue = '';
 
         foreach ($this->read($grammar) as $line) {
-            switch ($line[0]) {
+            switch ($line[0] ?? '') {
                 case '%':
                     $this->parseDefinition($line);
                     break;
@@ -93,7 +93,8 @@ class Reader
      */
     private function isCommentedLine(string $line): bool
     {
-        return $line[0] === '/' && $line[1] === '/';
+        return ($line[0] ?? '') === '/' &&
+            ($line[1] ?? '') === '/';
     }
 
     /**

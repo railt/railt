@@ -29,4 +29,11 @@ interface RuleInterface extends NodeInterface, \Countable, \IteratorAggregate
      * @param NodeInterface $node
      */
     public function append(NodeInterface $node): void;
+
+    /**
+     * @param string $name
+     * @param int|null $depth
+     * @return null|NodeInterface|RuleInterface|LeafInterface
+     */
+    public function find(string $name, int $depth = null): ?NodeInterface;
 }

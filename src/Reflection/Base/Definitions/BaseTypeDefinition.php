@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Base\Definitions;
 
+use Railt\Reflection\Base\BaseDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -17,17 +18,23 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 abstract class BaseTypeDefinition extends BaseDefinition implements TypeDefinition
 {
     /**
-     * Type definition name
+     * @var string|null
      */
-    protected const TYPE_NAME = '';
+    protected $deprecation;
+
+    /**
+     * @return bool
+     */
+    public function isDeprecated(): bool
+    {
+        return $this->deprecation !== null;
+    }
 
     /**
      * @return string
      */
-    public function getTypeName(): string
+    public function getDeprecationReason(): string
     {
-        \assert(static::TYPE_NAME !== '', 'Type name must be initialized');
-
-        return static::TYPE_NAME;
+        return (string)$this->deprecation;
     }
 }

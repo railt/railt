@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Compiler\Ast;
+use Railt\Compiler\Debug\NodeDumper;
 
 /**
  * Class Node
@@ -43,5 +44,13 @@ abstract class Node implements NodeInterface
     public function is(string $name): bool
     {
         return $this->name === $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return (new NodeDumper($this))->toXml();
     }
 }

@@ -37,6 +37,17 @@ interface Readable
     public function getContents(): string;
 
     /**
+     * @param int $bytesOffset
+     * @return Position
+     */
+    public function getPosition(int $bytesOffset): Position;
+
+    /**
+     * @return Declaration
+     */
+    public function getDeclaration(): Declaration;
+
+    /**
      * @return bool
      */
     public function isFile(): bool;

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Definitions;
 
-use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
+use Railt\Reflection\Contracts\Defintions\Directive\HasArguments;
 
 /**
  * Interface DirectiveDefinition
@@ -35,10 +35,10 @@ interface DirectiveDefinition extends TypeDefinition, HasArguments
     public function getNumberOfLocations(): int;
 
     /**
-     * @param null|Definition $type
+     * @param null|TypeDefinition $type
      * @return bool
      */
-    public function isAllowedFor(?Definition $type): bool;
+    public function isAllowedFor(?TypeDefinition $type): bool;
 
     /**
      * @return bool

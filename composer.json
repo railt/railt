@@ -3,15 +3,7 @@
     "type": "library",
     "description": "The Railt Framework.",
     "license": "MIT",
-    "keywords": [
-        "graphql",
-        "idl",
-        "otd",
-        "ast",
-        "framework",
-        "railt",
-        "application"
-    ],
+    "keywords": ["graphql", "sdl", "language", "framework", "railt", "application"],
     "homepage": "http://railt.org",
     "version": "dev-master",
     "support": {
@@ -33,9 +25,9 @@
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-spl": "*",
-        "psr/container": "~1.0",
         "psr/log": "~1.0",
         "psr/cache": "~1.0",
+        "psr/container": "~1.0",
         "psr/simple-cache": "~1.0",
         "illuminate/support": "~5.5",
         "webonyx/graphql-php": "~0.9",

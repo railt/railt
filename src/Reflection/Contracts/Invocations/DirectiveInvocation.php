@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Invocations;
 
-use Railt\Reflection\Contracts\Dependent\DependentDefinition;
-use Railt\Reflection\Contracts\Invocations\Argument\HasPassedArguments;
+use Railt\Reflection\Contracts\Invocations\Common\HasPassedArguments;
 
 /**
  * Interface DirectiveInvocation
  */
-interface DirectiveInvocation extends HasPassedArguments, DependentDefinition, Invocable
+interface DirectiveInvocation extends TypeInvocation, HasPassedArguments
 {
 }

@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Definitions\Enum;
 
-use Railt\Reflection\Contracts\Dependent\DependentDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\Common\Dependent;
 
 /**
  * Interface ValueDefinition
  */
-interface ValueDefinition extends DependentDefinition
+interface ValueDefinition extends TypeDefinition, Dependent
 {
     /**
      * @return string

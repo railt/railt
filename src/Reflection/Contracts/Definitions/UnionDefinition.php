@@ -9,17 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Definitions;
 
-use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
-
 /**
  * Interface UnionDefinition
  */
-interface UnionDefinition extends TypeDefinition, HasDirectives
+interface UnionDefinition extends TypeDefinition
 {
     /**
-     * @return iterable|Definition[]
+     * @return iterable|TypeDefinition[]
      */
-    public function getTypes(): iterable;
+    public function getTypeDefinitions(): iterable;
 
     /**
      * This method should return a Boolean value that indicates
@@ -28,21 +26,21 @@ interface UnionDefinition extends TypeDefinition, HasDirectives
      * @param string $name The name of required type.
      * @return bool Presence of the type in the container.
      */
-    public function hasType(string $name): bool;
+    public function hasTypeDefinition(string $name): bool;
 
     /**
      * This method should return the Type (except Union and Interface) that is contained
      * in the Union by type's name.
      *
      * @param string $name The name of required type.
-     * @return null|Definition The type object or null if there is no such Type in the container.
+     * @return null|TypeDefinition The type object or null if there is no such Type in the container.
      */
-    public function getType(string $name): ?Definition;
+    public function getTypeDefinition(string $name): ?TypeDefinition;
 
     /**
      * Returns the number of types that the container contains.
      *
      * @return int
      */
-    public function getNumberOfTypes(): int;
+    public function getNumberOfTypeDefinitions(): int;
 }
