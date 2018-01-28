@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Compiler\Ast;
+
 use Railt\Compiler\Debug\NodeDumper;
 
 /**

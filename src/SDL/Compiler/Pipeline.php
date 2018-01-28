@@ -24,11 +24,11 @@ class Pipeline
     /**+@#
      * Pipeline state list
      */
-    public const STATE_COLLECT = 0x00;
-    public const STATE_BUILDING = 0x01;
-    public const STATE_COERCION = 0x02;
-    public const STATE_VALIDATION = 0x03;
-    public const STATE_EXTENSIONS = 0x04; // -> 2
+    public const STATE_COLLECT     = 0x00;
+    public const STATE_BUILDING    = 0x01;
+    public const STATE_COERCION    = 0x02;
+    public const STATE_VALIDATION  = 0x03;
+    public const STATE_EXTENSIONS  = 0x04; // -> 2
     public const STATE_INVOCATIONS = 0x05; // -> 2
     /**-@#*/
 

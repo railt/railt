@@ -33,7 +33,7 @@ class SymbolTable
      * @param Record $record
      * @return SymbolTable
      */
-    public function register(Record $record): SymbolTable
+    public function register(Record $record): self
     {
         $this->table->push($record);
 
@@ -46,7 +46,7 @@ class SymbolTable
     public function __debugInfo(): array
     {
         return [
-            'table' => $this->table
+            'table' => $this->table,
         ];
     }
 }

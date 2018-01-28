@@ -79,7 +79,7 @@ final class Declaration
      * @param string $requiredDefinition
      * @return Declaration
      */
-    public static function make(string $requiredDefinition): Declaration
+    public static function make(string $requiredDefinition): self
     {
         [$file, $line, $class] = ['undefined', 0, null];
 

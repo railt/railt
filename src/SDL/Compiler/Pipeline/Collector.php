@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\Pipeline;
+
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\SymbolTable\Builder;

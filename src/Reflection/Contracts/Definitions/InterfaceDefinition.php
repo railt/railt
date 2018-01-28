@@ -31,7 +31,7 @@ interface InterfaceDefinition extends TypeDefinition, HasFields
      * @param string $name
      * @return null|InterfaceDefinition
      */
-    public function getInterface(string $name): ?InterfaceDefinition;
+    public function getInterface(string $name): ?self;
 
     /**
      * @return int

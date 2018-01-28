@@ -12,7 +12,6 @@ namespace Railt\SDL;
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Compiler\Parser;
 use Railt\Io\Readable;
-use Railt\SDL\Compiler\TypeNameExtractors;
 use Railt\SDL\Compiler\Pipeline;
 use Railt\SDL\Parser\Factory;
 
@@ -59,7 +58,7 @@ class Compiler
          * name is based on data inside the document
          * (for example, directives).
          */
-        $pipeline->subscribe(Pipeline::STATE_COLLECT, function(RuleInterface $ast) {
+        $pipeline->subscribe(Pipeline::STATE_COLLECT, function (RuleInterface $ast) {
             return (new HeaderBuilder($ast))->getHeader();
         });
 

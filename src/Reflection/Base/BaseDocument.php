@@ -11,5 +11,4 @@ namespace Railt\Reflection\Base;
 
 abstract class BaseDocument
 {
-
 }

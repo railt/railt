@@ -49,7 +49,7 @@ class Builder
      * @param Extractor $extractor
      * @return Builder
      */
-    public function addExtractor(Extractor $extractor): Builder
+    public function addExtractor(Extractor $extractor): self
     {
         $this->extractors[] = $extractor;
 

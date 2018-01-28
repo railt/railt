@@ -18,7 +18,7 @@ interface Stage
      * @param mixed $data
      * @return Stage
      */
-    public function push($data): Stage;
+    public function push($data): self;
 
     /**
      * @return bool
