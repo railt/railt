@@ -16,5 +16,4 @@ use Railt\Reflection\Contracts\Invocations\Common\HasPassedArguments;
  */
 interface InputInvocation extends TypeInvocation, HasPassedArguments, \ArrayAccess, \IteratorAggregate, \JsonSerializable
 {
-
 }

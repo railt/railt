@@ -14,5 +14,4 @@ namespace Railt\Reflection\Contracts\Definitions;
  */
 interface ObjectDefinition extends InterfaceDefinition
 {
-
 }

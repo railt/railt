@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Definitions\Enum;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Definitions\Common\Dependent;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface ValueDefinition

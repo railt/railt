@@ -11,8 +11,8 @@ namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\SDL\Compiler\Exceptions\CompilerException;
-use Railt\SDL\Compiler\Type;
 use Railt\SDL\Compiler\SymbolTable\Record;
+use Railt\SDL\Compiler\Type;
 
 /**
  * Class TypeDefinitionExtractor

@@ -181,7 +181,7 @@ class File implements Writable
     /**
      * @return void
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         $this->declaration = Declaration::make(static::class);
     }

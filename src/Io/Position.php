@@ -14,8 +14,8 @@ namespace Railt\Io;
  */
 final class Position
 {
-    private const INDEX_LINE = 0x00;
-    private const INDEX_COLUMN = 0x01;
+    private const INDEX_LINE            = 0x00;
+    private const INDEX_COLUMN          = 0x01;
     private const INDEX_AFFECTED_SOURCE = 0x02;
 
     /**
@@ -72,7 +72,7 @@ final class Position
 
         foreach (\explode("\n", $sources) as $line => $text) {
             $previous = $current;
-            $current  += \strlen($text) + 1;
+            $current += \strlen($text) + 1;
             $trace[]  = $text;
 
             if ($current > $bytesOffset) {
