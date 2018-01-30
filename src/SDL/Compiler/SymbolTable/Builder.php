@@ -46,7 +46,7 @@ class Builder
     public function __construct(RuleInterface $rule, Readable $input)
     {
         $this->input = $input;
-        $this->rule = $rule;
+        $this->rule  = $rule;
 
         $this->addExtractor(new SchemaDefinitionExtractor());
         $this->addExtractor(new TypeDefinitionExtractor());

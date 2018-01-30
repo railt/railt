@@ -24,7 +24,5 @@ class Building extends BaseStage
     public function resolve($record): Definition
     {
         \assert($record instanceof Record);
-
-        //
     }
 }

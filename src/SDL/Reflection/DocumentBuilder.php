@@ -21,8 +21,7 @@ class DocumentBuilder extends BaseDocument
     {
     }
 
-    public function addType(TypeDefinition $definition)
+    public function addType(TypeDefinition $definition): void
     {
-
     }
 }

@@ -14,5 +14,4 @@ namespace Railt\SDL\Exceptions;
  */
 class TypeNotFoundException extends BaseSchemaException
 {
-
 }

@@ -21,8 +21,8 @@ use Railt\SDL\Compiler\SymbolTable\Record;
  */
 class Pipeline
 {
-    public const STAGE_BUILDING = 0x00;
-    public const STAGE_COERCION = 0x01;
+    public const STAGE_BUILDING   = 0x00;
+    public const STAGE_COERCION   = 0x01;
     public const STAGE_VALIDATION = 0x02;
 
     /**
