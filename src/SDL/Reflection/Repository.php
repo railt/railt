@@ -8,31 +8,24 @@
 declare(strict_types=1);
 
 namespace Railt\SDL\Reflection;
-
-use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Support;
-use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Exceptions\TypeNotFoundException;
-use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Runtime\CallStackInterface;
 
 /**
  * Class Repository
  */
-class Repository implements Dictionary, \Countable, \IteratorAggregate
+class Repository implements Dictionary
 {
-    use Support;
-
     /**
      * @var array|TypeDefinition[]
      */
-    private $definitions = [];
+    private $types = [];
 
     /**
      * @var CallStackInterface
      */
-    protected $stack;
+    private $stack;
 
     /**
      * Repository constructor.
@@ -44,68 +37,43 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param TypeDefinition $type
-     * @param bool $force
-     * @return Dictionary
-     * @throws TypeConflictException
+     * @param string $name
+     * @return string
      */
-    public function register(TypeDefinition $type, bool $force = false): Dictionary
+    private function index(string $name): string
     {
-        if (! $force && $this->has($type->getName())) {
-            $error = \sprintf(
-                'Can not declare %s, because the name %s already in use',
-                $this->typeToString($type),
-                $type->getName()
-            );
-
-            throw new TypeConflictException($error, $this->stack);
-        }
-
-        $this->definitions[$type->getName()] = $type;
-
-        return $this;
+        return $name;
     }
 
     /**
      * @param string $name
-     * @param Definition|null $from
+     * @param TypeDefinition|null $from
      * @return TypeDefinition
+     * @throws TypeNotFoundException
      */
-    public function get(string $name, Definition $from = null): TypeDefinition
+    public function get(string $name, TypeDefinition $from = null): TypeDefinition
     {
-        if ($this->has($name)) {
-            $result = $this->definitions[$name];
-
-            if ($result instanceof Compilable) {
-                $result->compile();
-            }
-
-            return $result;
+        if (!$this->has($name)) {
+            $this->throwTypeNotFoundError($name, $from);
         }
 
-        $error = \sprintf('Type "%s" not found', $name);
+        return $this->types[$this->index($name)];
+    }
+
+    /**
+     * @param string $name
+     * @param TypeDefinition|null $from
+     * @return void
+     * @throws TypeNotFoundException
+     */
+    protected function throwTypeNotFoundError(string $name, TypeDefinition $from = null): void
+    {
+        if ($from) {
+            $this->stack->push($from);
+        }
+
+        $error = \sprintf('Type %s not found', $name);
         throw new TypeNotFoundException($error, $this->stack);
-    }
-
-    /**
-     * @param string $type
-     * @return iterable|TypeDefinition[]
-     */
-    public function only(string $type): iterable
-    {
-        foreach ($this->definitions as $definition) {
-            if ($definition instanceof $type) {
-                yield $definition;
-            }
-        }
-    }
-
-    /**
-     * @return iterable|TypeDefinition[]
-     */
-    public function all(): iterable
-    {
-        yield from $this->getIterator();
     }
 
     /**
@@ -114,15 +82,26 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     public function has(string $name): bool
     {
-        return \array_key_exists($name, $this->definitions);
+        return \array_key_exists($this->index($name), $this->types);
     }
 
     /**
-     * @return \Traversable|TypeDefinition[]
+     * @param TypeDefinition $type
+     * @return Dictionary
      */
-    public function getIterator(): \Traversable
+    public function add(TypeDefinition $type): Dictionary
     {
-        return new \ArrayIterator(\array_values($this->definitions));
+        $this->types[$this->index($type->getName())] = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return iterable|TypeDefinition[]
+     */
+    public function all(): iterable
+    {
+        return \array_values($this->types);
     }
 
     /**
@@ -130,6 +109,6 @@ class Repository implements Dictionary, \Countable, \IteratorAggregate
      */
     public function count(): int
     {
-        return \count($this->definitions);
+        return \count($this->types);
     }
 }

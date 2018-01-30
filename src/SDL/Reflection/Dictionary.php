@@ -9,42 +9,34 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection;
 
-use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface Dictionary
  */
-interface Dictionary
+interface Dictionary extends \Traversable, \Countable
 {
     /**
-     * @param TypeDefinition $type
-     * @param bool $force
-     * @return Dictionary
-     */
-    public function register(TypeDefinition $type, bool $force = false): self;
-
-    /**
      * @param string $name
-     * @param Definition|null $from
+     * @param TypeDefinition|null $from
      * @return TypeDefinition
      */
-    public function get(string $name, Definition $from = null): TypeDefinition;
-
-    /**
-     * @return iterable|TypeDefinition[]
-     */
-    public function all(): iterable;
-
-    /**
-     * @param string|TypeDefinition $type
-     * @return iterable|TypeDefinition[]
-     */
-    public function only(string $type): iterable;
+    public function get(string $name, TypeDefinition $from = null): TypeDefinition;
 
     /**
      * @param string $name
      * @return bool
      */
     public function has(string $name): bool;
+
+    /**
+     * @param TypeDefinition $type
+     * @return Dictionary
+     */
+    public function add(TypeDefinition $type): Dictionary;
+
+    /**
+     * @return iterable|TypeDefinition[]
+     */
+    public function all(): iterable;
 }

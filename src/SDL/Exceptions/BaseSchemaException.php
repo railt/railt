@@ -16,7 +16,7 @@ use Railt\SDL\Runtime\CallStackRenderer;
 /**
  * Class BaseSchemaException
  */
-abstract class BaseSchemaException extends \LogicException implements SchemaException
+abstract class BaseSchemaException extends \DomainException implements SchemaException
 {
     /**
      * @var int

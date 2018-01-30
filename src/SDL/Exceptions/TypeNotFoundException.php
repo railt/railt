@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\SDL\Exceptions;
 
 /**
- * An exception that occurs when errors are found for
- * valid types when documents linking.
+ * Class TypeNotFoundException
  */
-class TypeNotFoundException extends TypeException
+class TypeNotFoundException extends BaseSchemaException
 {
+
 }

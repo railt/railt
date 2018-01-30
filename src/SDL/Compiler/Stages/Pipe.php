@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\SDL\Reflection;
+namespace Railt\SDL\Compiler\Stages;
 
 /**
- * Class Loader
+ * Class Pipe
  */
-class Loader extends Repository
+final class Pipe extends BaseStage
 {
 
 }

@@ -9,13 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
-use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Events\Observer;
+use Railt\Reflection\Contracts\Definition;
 
 /**
  * Class CallStack
  */
 class CallStack implements CallStackInterface, \IteratorAggregate
 {
+    use Observer;
+
     /**
      * @var \SplStack|Definition[]
      */
@@ -44,7 +47,7 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     public function push(Definition ...$definitions): CallStackInterface
     {
         foreach ($definitions as $definition) {
-            $this->stack->push($definition);
+            $this->stack->push($this->notify($definition, true));
         }
 
         return $this;
@@ -57,7 +60,7 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     public function pop(int $size = 1): CallStackInterface
     {
         for ($i = 0; $i < $size; ++$i) {
-            $this->last();
+            $this->notify($this->last());
         }
 
         return $this;

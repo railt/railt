@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\SymbolTable;
 
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Io\Readable;
 use Railt\SDL\Compiler\Exceptions\CompilerException;
 use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\SymbolTable\Extractors\ExtensionDefinitionExtractor;
@@ -33,11 +34,18 @@ class Builder
     private $extractors = [];
 
     /**
+     * @var Readable
+     */
+    private $input;
+
+    /**
      * HeaderBuilder constructor.
      * @param RuleInterface $rule
+     * @param Readable $input
      */
-    public function __construct(RuleInterface $rule)
+    public function __construct(RuleInterface $rule, Readable $input)
     {
+        $this->input = $input;
         $this->rule = $rule;
 
         $this->addExtractor(new SchemaDefinitionExtractor());
@@ -61,7 +69,7 @@ class Builder
      */
     public function build(): SymbolTable
     {
-        $table = new SymbolTable();
+        $table = new SymbolTable($this->input);
 
         foreach ($this->rule->getChildren() as $child) {
             $table->register($this->resolve($child));

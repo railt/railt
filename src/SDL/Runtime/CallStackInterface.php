@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
-use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Events\Observable;
+use Railt\Reflection\Contracts\Definition;
 
 /**
  * Interface CallStackInterface
  */
-interface CallStackInterface extends \Countable
+interface CallStackInterface extends \Countable, Observable
 {
     /**
      * @param Definition[] ...$definitions

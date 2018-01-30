@@ -65,13 +65,33 @@ final class Type
      */
     // TODO Think of how it should look like ♥
     // public const EXTENSION_DOCUMENT  = 'DocumentExtension';
-    public const EXTENSION_OBJECT    = 'ObjectExtension';
-    public const EXTENSION_SCHEMA    = 'SchemaExtension';
+    public const EXTENSION_OBJECT = 'ObjectExtension';
+    public const EXTENSION_SCHEMA = 'SchemaExtension';
     public const EXTENSION_INTERFACE = 'InterfaceExtension';
     public const EXTENSION_DIRECTIVE = 'DirectiveExtension';
-    public const EXTENSION_INPUT     = 'InputExtension';
-    public const EXTENSION_ENUM      = 'EnumExtension';
-    public const EXTENSION_UNION     = 'UnionExtension';
-    public const EXTENSION_SCALAR    = 'ScalarExtension';
+    public const EXTENSION_INPUT = 'InputExtension';
+    public const EXTENSION_ENUM = 'EnumExtension';
+    public const EXTENSION_UNION = 'UnionExtension';
+    public const EXTENSION_SCALAR = 'ScalarExtension';
     /**#@-*/
+
+    private const EXTENSIONS = [
+        self::EXTENSION_OBJECT,
+        self::EXTENSION_SCHEMA,
+        self::EXTENSION_INTERFACE,
+        self::EXTENSION_DIRECTIVE,
+        self::EXTENSION_INPUT,
+        self::EXTENSION_ENUM,
+        self::EXTENSION_UNION,
+        self::EXTENSION_SCALAR,
+    ];
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    public static function isExtension(string $type): bool
+    {
+        return \in_array($type, self::EXTENSIONS, true);
+    }
 }

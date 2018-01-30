@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
-use Railt\Reflection\Contracts\Definitions\Definition;
+use Railt\Reflection\Contracts\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -59,11 +59,14 @@ class CallStackRenderer
         $file = $definition->getDocument()->getFile();
 
         return [
-            self::TRACE_FILE      => $file->isFile() ? $file->getPathname() : $file->getDefinitionFileName(),
-            self::TRACE_LINE      => $definition->getDeclarationLine(),
-            self::TRACE_COLUMN    => $definition->getDeclarationColumn(),
+            self::TRACE_FILE      => $file->isFile()
+                ? $file->getPathname()
+                : $file->getDeclaration()->getPathname(),
+
+            self::TRACE_LINE      => $definition->getDeclaration()->getLine(),
+            self::TRACE_COLUMN    => $definition->getDeclaration()->getColumn(),
             self::TRACE_TYPE      => $definition instanceof TypeDefinition
-                ? $definition->getTypeName()
+                ? $definition->getType()
                 : $definition->getName(),
             self::TRACE_TYPE_NAME => $definition->getName(),
             self::TRACE_TYPE_DEF  => (string)$definition,

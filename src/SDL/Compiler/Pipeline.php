@@ -9,31 +9,24 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler;
 
-use Railt\Compiler\Ast\NodeInterface;
-use Railt\Compiler\Ast\RuleInterface;
-use Railt\SDL\Compiler\Pipeline\Builder;
-use Railt\SDL\Compiler\Pipeline\Collector;
-use Railt\SDL\Compiler\Pipeline\Pipe;
-use Railt\SDL\Compiler\Pipeline\Stage;
+use Railt\Reflection\Contracts\Definition;
+use Railt\SDL\Compiler\Stages\Building;
+use Railt\SDL\Compiler\Stages\Coercion;
+use Railt\SDL\Compiler\Stages\Stage;
+use Railt\SDL\Compiler\Stages\Validation;
+use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
- * Class Pipeline
+ * Class DefinitionBuilder
  */
 class Pipeline
 {
-    /**+@#
-     * Pipeline state list
-     */
-    public const STATE_COLLECT     = 0x00;
-    public const STATE_BUILDING    = 0x01;
-    public const STATE_COERCION    = 0x02;
-    public const STATE_VALIDATION  = 0x03;
-    public const STATE_EXTENSIONS  = 0x04; // -> 2
-    public const STATE_INVOCATIONS = 0x05; // -> 2
-    /**-@#*/
+    public const STAGE_BUILDING = 0x00;
+    public const STAGE_COERCION = 0x01;
+    public const STAGE_VALIDATION = 0x02;
 
     /**
-     * @var array|Stage[]
+     * @var \SplFixedArray|Stage[]
      */
     private $stages;
 
@@ -43,79 +36,24 @@ class Pipeline
     public function __construct()
     {
         $this->stages = \SplFixedArray::fromArray([
-            self::STATE_COLLECT     => new Collector(),
-            self::STATE_BUILDING    => new Builder($this), // TODO
-            self::STATE_COERCION    => new Pipe(), // TODO
-            self::STATE_VALIDATION  => new Pipe(), // TODO
-            self::STATE_EXTENSIONS  => new Pipe(), // TODO
-            self::STATE_INVOCATIONS => new Pipe(), // TODO
+            self::STAGE_BUILDING   => new Building(),
+            self::STAGE_COERCION   => new Coercion(),
+            self::STAGE_VALIDATION => new Validation(),
         ]);
     }
 
     /**
-     * @param int $stageId
-     * @param $data
-     * @return $this
+     * @param Record $record
+     * @return Definition
      */
-    public function push(int $stageId, $data)
+    public function make(Record $record): Definition
     {
-        $stageId = \min(self::STATE_INVOCATIONS, $stageId);
-        $stageId = \max(self::STATE_COLLECT, $stageId);
+        $result = $record;
 
-        $this->stages[$stageId]->push($data);
-
-        return $this;
-    }
-
-    /**
-     * @param $data
-     * @return Pipeline
-     */
-    public function add($data)
-    {
-        switch (true) {
-            case $data instanceof NodeInterface:
-                return $this->push(self::STATE_COLLECT, $data);
+        foreach ($this->stages as $stage) {
+            $result = $stage->resolve($result);
         }
 
-        // Error
-    }
-
-    /**
-     * @param RuleInterface $ast
-     * @return mixed
-     */
-    public function process(RuleInterface $ast)
-    {
-        $this->add($ast);
-        $data = null;
-
-        boot:
-        foreach ($this->stages as $id => $stage) {
-            if (! $stage->isEmpty()) {
-                $data = $this->resolve($id, $stage);
-                goto boot; // RAAAAAAAAAAWRRRRRRRRR!!11111 (c) Dinosaur
-            }
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param int $id
-     * @param Stage $stage
-     * @return mixed
-     */
-    private function resolve(int $id, Stage $stage)
-    {
-        $data = null;
-
-        foreach ($stage->resolve() as $data) {
-            if ($id < self::STATE_INVOCATIONS) {
-                $this->push($id + 1, $data);
-            }
-        }
-
-        return $data;
+        return $result;
     }
 }
