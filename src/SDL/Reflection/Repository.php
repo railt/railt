@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\SDL\Reflection;
+
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Runtime\CallStackInterface;
@@ -53,7 +54,7 @@ class Repository implements Dictionary
      */
     public function get(string $name, TypeDefinition $from = null): TypeDefinition
     {
-        if (!$this->has($name)) {
+        if (! $this->has($name)) {
             $this->throwTypeNotFoundError($name, $from);
         }
 

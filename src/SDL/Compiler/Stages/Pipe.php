@@ -14,5 +14,4 @@ namespace Railt\SDL\Compiler\Stages;
  */
 final class Pipe extends BaseStage
 {
-
 }
