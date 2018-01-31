@@ -14,5 +14,4 @@ namespace Railt\SDL\Reflection;
  */
 class Loader extends Repository
 {
-
 }

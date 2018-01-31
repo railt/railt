@@ -11,6 +11,7 @@ namespace Railt\SDL\Runtime;
 
 use Railt\Events\Observable;
 use Railt\Reflection\Contracts\Definition;
+use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
  * Interface CallStackInterface
@@ -18,16 +19,16 @@ use Railt\Reflection\Contracts\Definition;
 interface CallStackInterface extends \Countable, Observable
 {
     /**
-     * @param Definition[] ...$definitions
+     * @param Record[] ...$records
      * @return CallStackInterface
      */
-    public function push(Definition ...$definitions): self;
+    public function push(Record ...$records): CallStackInterface;
 
     /**
      * @param int $size
      * @return CallStackInterface
      */
-    public function pop(int $size = 1): self;
+    public function pop(int $size = 1): CallStackInterface;
 
     /**
      * @return Definition|null

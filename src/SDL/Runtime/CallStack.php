@@ -11,6 +11,7 @@ namespace Railt\SDL\Runtime;
 
 use Railt\Events\Observer;
 use Railt\Reflection\Contracts\Definition;
+use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
  * Class CallStack
@@ -41,13 +42,13 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     }
 
     /**
-     * @param Definition[] ...$definitions
+     * @param Record[] ...$records
      * @return CallStack|$this|static
      */
-    public function push(Definition ...$definitions): CallStackInterface
+    public function push(Record ...$records): CallStackInterface
     {
-        foreach ($definitions as $definition) {
-            $this->stack->push($this->notify($definition, true));
+        foreach ($records as $record) {
+            $this->stack->push($this->notify($record, true));
         }
 
         return $this;

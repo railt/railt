@@ -11,7 +11,9 @@ namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Io\Readable;
 use Railt\SDL\Compiler\Exceptions\CompilerException;
+use Railt\SDL\Compiler\SymbolTable\CompilableRecord;
 use Railt\SDL\Compiler\SymbolTable\Record;
 use Railt\SDL\Compiler\Type;
 
@@ -34,10 +36,12 @@ class TypeDefinitionExtractor extends BaseExtractor
     ];
 
     /**
+     * @param Readable $input
      * @param RuleInterface $rule
      * @return Record
+     * @throws \Railt\SDL\Compiler\Exceptions\CompilerException
      */
-    public function extract(RuleInterface $rule): Record
+    public function extract(Readable $input, RuleInterface $rule): Record
     {
         $name = $rule->find('T_NAME', 1);
 
@@ -49,7 +53,7 @@ class TypeDefinitionExtractor extends BaseExtractor
         $offset = $this->offsetAt($rule, $name);
         $type   = self::AST_NODES[$rule->getName()];
 
-        return new Record($name->getValue(), $type, $offset, $rule);
+        return new Record($name->getValue(), $type, $offset, $input);
     }
 
     /**

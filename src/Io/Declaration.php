@@ -48,7 +48,7 @@ final class Declaration
      *
      * @return string
      */
-    public function getFile(): string
+    public function getPathname(): string
     {
         return $this->file;
     }

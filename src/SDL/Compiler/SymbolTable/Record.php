@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\SymbolTable;
 
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Io\Readable;
 
 /**
  * Class Record
@@ -32,6 +33,11 @@ class Record
     private $offset;
 
     /**
+     * @var Readable
+     */
+    private $input;
+
+    /**
      * @var RuleInterface
      */
     private $ast;
@@ -41,14 +47,41 @@ class Record
      * @param string $name
      * @param string $type
      * @param int $offset
-     * @param RuleInterface $ast
+     * @param Readable $input
      */
-    public function __construct(string $name, string $type, int $offset, RuleInterface $ast = null)
+    public function __construct(string $name, string $type, int $offset, Readable $input)
     {
         $this->name   = $name;
         $this->type   = $type;
+        $this->input  = $input;
         $this->offset = $offset;
-        $this->ast    = $ast;
+    }
+
+    /**
+     * @return RuleInterface
+     */
+    public function getAst(): RuleInterface
+    {
+        return $this->ast;
+    }
+
+    /**
+     * @param RuleInterface $ast
+     * @return Record
+     */
+    public function setAst(RuleInterface $ast): Record
+    {
+        $this->ast = $ast;
+
+        return $this;
+    }
+
+    /**
+     * @return Readable
+     */
+    public function getInput(): Readable
+    {
+        return $this->input;
     }
 
     /**
@@ -76,14 +109,6 @@ class Record
     }
 
     /**
-     * @return RuleInterface
-     */
-    public function getAst(): RuleInterface
-    {
-        return $this->ast;
-    }
-
-    /**
      * @return array
      */
     public function __debugInfo(): array
@@ -92,6 +117,7 @@ class Record
             'type'   => $this->type,
             'name'   => $this->name,
             'offset' => $this->offset,
+            'file'   => $this->input,
         ];
     }
 }

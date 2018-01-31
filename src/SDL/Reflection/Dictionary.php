@@ -33,7 +33,7 @@ interface Dictionary extends \Traversable, \Countable
      * @param TypeDefinition $type
      * @return Dictionary
      */
-    public function add(TypeDefinition $type): Dictionary;
+    public function add(TypeDefinition $type): self;
 
     /**
      * @return iterable|TypeDefinition[]

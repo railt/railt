@@ -166,12 +166,6 @@ class Generator
                 '->setDefaultId(' . $this->value($defaultNodeId, true) . ');';
         }
 
-        // PP representation.
-        if (($ppRepresentation = $rule->getPPRepresentation()) !== null) {
-            $result .= self::INDENTION . '$this->getRule(' . $arguments['name'] . ')' .
-                '->setPPRepresentation(' . $this->value($ppRepresentation, true) . ');';
-        }
-
         return $result;
     }
 

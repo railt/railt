@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Io\Readable;
 use Railt\SDL\Compiler\Exceptions\CompilerException;
 use Railt\SDL\Compiler\SymbolTable\Record;
 use Railt\SDL\Compiler\Type;
@@ -25,21 +26,24 @@ class ExtensionDefinitionExtractor extends TypeDefinitionExtractor
     protected const EXTEND_KEYWORD_OFFSET = 7;
 
     /**
+     * @param Readable $input
      * @param RuleInterface $rule
      * @return Record
+     * @throws \Railt\SDL\Compiler\Exceptions\CompilerException
      */
-    public function extract(RuleInterface $rule): Record
+    public function extract(Readable $input, RuleInterface $rule): Record
     {
-        $result = parent::extract(\array_first($rule->getChildren()));
+        $result = parent::extract($input, \array_first($rule->getChildren()));
         $offset = $result->getOffset() - self::EXTEND_KEYWORD_OFFSET;
         $type   = $this->getType($result->getType());
 
-        return new Record($result->getName(), $type, $offset, $rule);
+        return new Record($result->getName(), $type, $offset, $input);
     }
 
     /**
      * @param string $innerTypeName
      * @return string
+     * @throws \Railt\SDL\Compiler\Exceptions\CompilerException
      */
     private function getType(string $innerTypeName): string
     {

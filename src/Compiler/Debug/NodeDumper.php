@@ -12,8 +12,7 @@ namespace Railt\Compiler\Debug;
 use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\Compiler\Lexer\Token;
-use Railt\Compiler\Runtime;
+use Railt\Compiler\Parser;
 use Railt\Io\Readable;
 
 /**
@@ -36,9 +35,7 @@ class NodeDumper implements Dumper
      */
     public static function fromSources(Readable $grammar, string $sources): self
     {
-        $ast = (new Runtime($grammar))->parse($sources);
-
-        return new static($ast);
+        return new static(Parser::fromGrammar($grammar)->parse($sources));
     }
 
     /**
@@ -58,11 +55,8 @@ class NodeDumper implements Dumper
     private function renderAsString(NodeInterface $node, int $depth = 0): string
     {
         if ($node instanceof LeafInterface) {
-            $namespace = $node->getNamespace();
-            $prefix    = $namespace === Token::T_DEFAULT_NAMESPACE ? '' : $namespace . ':';
-
             $token = \vsprintf('token(%s, %s)', [
-                $prefix . $node->getName(),
+                $node->getName(),
                 $this->inline($node->getValue()),
             ]);
 
@@ -90,7 +84,6 @@ class NodeDumper implements Dumper
             $token = $root->createElement('Leaf', $ast->getValue());
 
             $token->setAttribute('name', $ast->getName());
-            $token->setAttribute('namespace', $ast->getNamespace());
             $token->setAttribute('offset', (string)$ast->getOffset());
 
             return $token;

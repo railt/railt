@@ -111,30 +111,6 @@ class Token extends Rule
     }
 
     /**
-     * Get token namespace.
-     *
-     * @return  string
-     */
-    public function getNamespace()
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * Set token namespace.
-     *
-     * @param string $namespace Namespace.
-     * @return  string
-     */
-    public function setNamespace($namespace)
-    {
-        $old              = $this->namespace;
-        $this->namespace  = $namespace;
-
-        return $old;
-    }
-
-    /**
      * Set representation.
      *
      * @param string $regex Representation.

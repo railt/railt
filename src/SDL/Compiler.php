@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Compiler\Exception\LexerException;

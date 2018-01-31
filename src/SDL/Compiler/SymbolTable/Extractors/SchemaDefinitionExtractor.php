@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Io\Readable;
 use Railt\SDL\Compiler\SymbolTable\Record;
 use Railt\SDL\Compiler\Type;
 
@@ -24,15 +25,16 @@ class SchemaDefinitionExtractor extends BaseExtractor
     private const DEFAULT_SCHEMA_NAME = 'DefaultSchema';
 
     /**
+     * @param Readable $input
      * @param RuleInterface $rule
      * @return Record
      */
-    public function extract(RuleInterface $rule): Record
+    public function extract(Readable $input, RuleInterface $rule): Record
     {
         $name   = $this->extractSchemaName($rule);
         $offset = \optional($rule->find('T_SCHEMA'))->getOffset() ?? 0;
 
-        return new Record($name, Type::SCHEMA, $offset, $rule);
+        return new Record($name, Type::SCHEMA, $offset, $input);
     }
 
     /**

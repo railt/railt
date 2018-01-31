@@ -47,6 +47,7 @@
 %token T_BOOL_TRUE              true\b
 %token T_BOOL_FALSE             false\b
 %token T_NULL                   null\b
+%token T_NAMESPACE_SEPARATOR    /
 
 //
 // Multiline string
@@ -73,6 +74,7 @@
 %token T_ENUM                   enum\b
 // Union
 %token T_UNION                  union\b
+%token T_INPUT_UNION            inputUnion\b
 // Interface
 %token T_INTERFACE              interface\b
 // Schema
@@ -131,6 +133,8 @@ Definition:
     EnumDefinition()
         |
     UnionDefinition()
+        |
+    InputUnionDefinition()
         |
     SchemaDefinition()
         |
@@ -219,8 +223,13 @@ Word:
         |
     ValueKeyword()
 
+Namespace:
+    (Word() ::T_NAMESPACE_SEPARATOR::)*
+    #Namespace
+
 Name:
-    Word() #Name
+    Namespace() Word()
+    #Name
 
 Key:
     (
@@ -249,19 +258,16 @@ Value:
     ) #Value
 
 ValueDefinition:
-    ValueDefinitionResolver()
-
-ValueDefinitionResolver:
     (ValueListDefinition() <T_NON_NULL>? #List) |
-    (ValueScalarDefinition() <T_NON_NULL>? #Type)
+    (ValueSingularDefinition() <T_NON_NULL>? #Type)
 
 ValueListDefinition:
     ::T_BRACKET_OPEN::
-        (ValueScalarDefinition() <T_NON_NULL>? #Type)
+        (ValueSingularDefinition() <T_NON_NULL>? #Type)
     ::T_BRACKET_CLOSE::
 
-ValueScalarDefinition:
-    Keyword() | Word()
+ValueSingularDefinition:
+    Name()
 
 
 Object:
@@ -523,15 +529,17 @@ DirectiveDefinitionDefaultValue:
 
 #ObjectDefinition:
     Documentation()?
-    ::T_TYPE:: Name() ObjectDefinitionImplements()? Directive()*
+    ::T_TYPE:: Name()
+        ObjectDefinitionImplements()?
+        Directive()*
     ::T_BRACE_OPEN::
         ObjectDefinitionField()*
     ::T_BRACE_CLOSE::
 
 ObjectDefinitionImplements:
-    ::T_TYPE_IMPLEMENTS:: Key()* (
-        ::T_AND:: Key()
-    )? #Implements
+    ::T_TYPE_IMPLEMENTS::
+        Name() (::T_AND:: Name())*
+    #Implements
 
 ObjectDefinitionField:
     Documentation()?
@@ -572,10 +580,17 @@ ObjectDefinitionFieldValue:
 
 #InterfaceDefinition:
     Documentation()?
-    ::T_INTERFACE:: Name() Directive()*
+    ::T_INTERFACE:: Name()
+        InterfaceDefinitionImplements()?
+        Directive()*
     ::T_BRACE_OPEN::
         InterfaceDefinitionBody()*
     ::T_BRACE_CLOSE::
+
+InterfaceDefinitionImplements:
+    ::T_TYPE_IMPLEMENTS::
+        Name() (::T_AND:: Name())*
+    #Implements
 
 InterfaceDefinitionBody:
     (
@@ -614,7 +629,8 @@ InterfaceDefinitionFieldKey:
 
 #EnumDefinition:
     Documentation()?
-    ::T_ENUM:: Name() Directive()*
+    ::T_ENUM:: Name()
+        Directive()*
     ::T_BRACE_OPEN::
         EnumField()*
     ::T_BRACE_CLOSE::
@@ -678,13 +694,40 @@ EnumValue:
 
 #UnionDefinition:
     Documentation()?
-    ::T_UNION:: Name() Directive()*
-        ::T_EQUAL:: UnionBody()
+    ::T_UNION:: Name()
+        Directive()*
+    ::T_EQUAL:: UnionBody()
 
 UnionBody:
     ::T_OR::? UnionUnitesList()+ #Relations
 
 UnionUnitesList:
+    Name() (::T_OR:: Name())*
+
+//
+// --------------------------------------------------------------------------
+//  GraphQL Input Union Definitions
+// --------------------------------------------------------------------------
+//
+//  <code>
+//      inputUnion SearchResult = User | Post | Category
+//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//  </code>
+//
+//  @see https://github.com/facebook/graphql/pull/395
+//
+
+#InputUnionDefinition:
+    Documentation()?
+    ::T_INPUT_UNION:: Name()
+        Directive()*
+    ::T_EQUAL::
+        InputUnionBody()
+
+InputUnionBody:
+    ::T_OR::? InputUnionUnitesList()+ #Relations
+
+InputUnionUnitesList:
     Name() (::T_OR:: Name())*
 
 
@@ -746,7 +789,8 @@ ArgumentDefaultValue:
 //
 
 #Directive:
-    ::T_DIRECTIVE_AT:: Name() DirectiveArguments()?
+    ::T_DIRECTIVE_AT:: Name()
+        DirectiveArguments()?
 
 DirectiveArguments:
     ::T_PARENTHESIS_OPEN::

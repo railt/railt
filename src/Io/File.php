@@ -46,11 +46,13 @@ class File implements Writable
     {
         $this->declaration = Declaration::make(Readable::class);
         $this->contents    = $contents;
+        $this->name        = $name ?? 'php://input';
     }
 
     /**
      * @param \SplFileInfo $info
      * @return File
+     * @throws \Railt\Io\Exceptions\NotReadableException
      * @throws \InvalidArgumentException
      */
     public static function fromSplFileInfo(\SplFileInfo $info): Writable
@@ -61,6 +63,7 @@ class File implements Writable
     /**
      * @param string $path
      * @return Writable
+     * @throws \Railt\Io\Exceptions\NotReadableException
      */
     public static function fromPathname(string $path): Writable
     {
@@ -122,35 +125,12 @@ class File implements Writable
     }
 
     /**
-     * @return string
+     * @param int $bytesOffset
+     * @return Position
      */
-    public function getHash(): string
+    public function getPosition(int $bytesOffset): Position
     {
-        if ($this->hash === null) {
-            $this->hash = $this->createHash();
-        }
-
-        return $this->hash;
-    }
-
-    /**
-     * @return string
-     */
-    protected function createHash(): string
-    {
-        if ($this->isFile()) {
-            return \md5_file($this->getPathname());
-        }
-
-        return \md5($this->getContents());
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFile(): bool
-    {
-        return \is_file($this->getPathname());
+        return new Position($this->getContents(), $bytesOffset);
     }
 
     /**
@@ -159,15 +139,6 @@ class File implements Writable
     public function getContents(): string
     {
         return $this->contents;
-    }
-
-    /**
-     * @param int $bytesOffset
-     * @return Position
-     */
-    public function getPosition(int $bytesOffset): Position
-    {
-        return new Position($this->getContents(), $bytesOffset);
     }
 
     /**
@@ -196,5 +167,55 @@ class File implements Writable
             'name',
             'hash',
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        $result = ['hash' => $this->getHash()];
+
+        if (! $this->isFile()) {
+            $result['content'] = $this->getContents();
+        } else {
+            $result['path'] = $this->getPathname();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash(): string
+    {
+        if ($this->hash === null) {
+            $this->hash = $this->createHash();
+        }
+
+        return $this->hash;
+    }
+
+    /**
+     * @return string
+     */
+    protected function createHash(): string
+    {
+        // 1) If is file: Hash of "FILE_PATH:LAST_UPDATE_TIME"
+        // 2) Otherwise:  Hash of sources
+        $target = $this->isFile()
+            ? $this->getPathname() . ':' . \filemtime($this->getPathname())
+            : $this->getContents();
+
+        return \sha1($target);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFile(): bool
+    {
+        return \is_file($this->getPathname());
     }
 }

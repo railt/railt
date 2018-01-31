@@ -25,26 +25,11 @@ class SymbolTable implements \IteratorAggregate
     private $table;
 
     /**
-     * @var Readable
-     */
-    private $input;
-
-    /**
      * Header constructor.
-     * @param Readable $input
      */
-    public function __construct(Readable $input)
+    public function __construct()
     {
         $this->table = new \SplStack();
-        $this->input = $input;
-    }
-
-    /**
-     * @return Readable
-     */
-    public function getInput(): Readable
-    {
-        return $this->input;
     }
 
     /**
@@ -64,7 +49,6 @@ class SymbolTable implements \IteratorAggregate
     public function __debugInfo(): array
     {
         return [
-            'input' => $this->input,
             'table' => $this->table,
         ];
     }

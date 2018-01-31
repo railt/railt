@@ -109,6 +109,7 @@ class Parser
     /**
      * @param Readable $grammar
      * @return Parser
+     * @throws \LogicException
      */
     public static function fromGrammar(Readable $grammar): self
     {
@@ -314,13 +315,9 @@ class Parser
 
             $current = $this->buffer->current();
 
-            $namespace = $current['namespace'];
-            $offset    = $current['offset'];
-
             $zzeRule = clone $zeRule;
             $zzeRule->setValue($value);
-            $zzeRule->setOffset($offset);
-            $zzeRule->setNamespace($namespace);
+            $zzeRule->setOffset($current['offset']);
 
             if (isset($this->tokens[$name])) {
                 $zzeRule->setRepresentation($this->tokens[$name]);
@@ -570,8 +567,7 @@ class Parser
                 $child = new Leaf(
                     $trace->getTokenName(),
                     $trace->getValue(),
-                    $trace->getOffset(),
-                    $trace->getNamespace()
+                    $trace->getOffset()
                 );
 
                 $children[] = $child;

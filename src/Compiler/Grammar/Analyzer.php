@@ -149,7 +149,6 @@ class Analyzer
 
             $zeRule = $this->parsedRules[$rule];
             $zeRule->setName($key);
-            $zeRule->setPPRepresentation($value);
 
             if ($nodeId !== null) {
                 $zeRule->setDefaultId($nodeId);
@@ -246,6 +245,7 @@ class Analyzer
      *
      * @param string|null $pNodeId
      * @return string|int|null
+     * @throws \Railt\Compiler\Exception\Exception
      */
     protected function concatenation(&$pNodeId)
     {

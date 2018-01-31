@@ -221,31 +221,6 @@ abstract class Rule
     }
 
     /**
-     * Set PP representation of the rule.
-     *
-     * @param string $pp PP representation.
-     * @return  string
-     */
-    public function setPPRepresentation($pp)
-    {
-        $old                 = $this->pp;
-        $this->pp            = $pp;
-        $this->transitional  = false;
-
-        return $old;
-    }
-
-    /**
-     * Get PP representation of the rule.
-     *
-     * @return  string
-     */
-    public function getPPRepresentation()
-    {
-        return $this->pp;
-    }
-
-    /**
      * Check whether the rule is transitional or not.
      *
      * @return  bool

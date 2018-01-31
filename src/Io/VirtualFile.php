@@ -29,7 +29,7 @@ class VirtualFile extends File
     public function getHash(): string
     {
         if ($this->hash === null) {
-            $this->hash = \md5($this->getContents());
+            $this->hash = \sha1($this->getContents());
         }
 
         return $this->hash;

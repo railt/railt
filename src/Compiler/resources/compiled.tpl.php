@@ -28,5 +28,6 @@ class <?=$class; ?> extends <?=$base; ?>
         );
 
         <?=$extra; ?>
+
     }
 }

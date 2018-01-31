@@ -17,11 +17,6 @@ interface LeafInterface extends NodeInterface
     /**
      * @return string
      */
-    public function getNamespace(): string;
-
-    /**
-     * @return string
-     */
     public function getValue(): string;
 
     /**

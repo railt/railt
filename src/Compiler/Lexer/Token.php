@@ -15,11 +15,6 @@ namespace Railt\Compiler\Lexer;
 final class Token
 {
     /**
-     * Default token namespace.
-     */
-    public const T_DEFAULT_NAMESPACE = 'default';
-
-    /**
      * End of file token name.
      */
     public const T_EOF_NAME = 'EOF';
@@ -30,7 +25,6 @@ final class Token
     public const T_TOKEN        = 'token';
     public const T_VALUE        = 'value';
     public const T_LENGTH       = 'length';
-    public const T_NAMESPACE    = 'namespace';
     public const T_KEEP         = 'keep';
     public const T_OFFSET       = 'offset';
     /**#@-*/
@@ -45,7 +39,6 @@ final class Token
             static::T_TOKEN     => static::T_EOF_NAME,
             static::T_VALUE     => static::T_EOF_NAME,
             static::T_LENGTH    => 0,
-            static::T_NAMESPACE => static::T_DEFAULT_NAMESPACE,
             static::T_KEEP      => true,
             static::T_OFFSET    => $offset,
         ];

@@ -45,7 +45,7 @@ class TimeLogger implements Tool
      */
     public function listen(string $event, \Closure $then): Listenable
     {
-        $this->notifier->listen($event, function(string $event, array $payload) use ($then) {
+        $this->notifier->listen($event, function (string $event, array $payload) use ($then): void {
             $then($event, $this->boot = \microtime(true) - $this->boot, $payload);
 
             $this->boot = \microtime(true);

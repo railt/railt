@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Debug;
 
 use Railt\Compiler\Lexer;
-use Railt\Compiler\Parser;
 
 /**
  * Class LexerDumper
@@ -18,16 +17,6 @@ use Railt\Compiler\Parser;
 class LexerDumper implements Dumper
 {
     use DumpHelpers;
-
-    /**
-     * @var Parser
-     */
-    private $parser;
-
-    /**
-     * @var string
-     */
-    private $sources;
 
     /**
      * @var int
@@ -39,16 +28,10 @@ class LexerDumper implements Dumper
      */
     private $keepWidth = 4;
 
-
     /**
      * @var int
      */
     private $tokenWidth = 25;
-
-    /**
-     * @var int
-     */
-    private $scopeWidth = 10;
 
     /**
      * @var int
@@ -113,7 +96,6 @@ class LexerDumper implements Dumper
             $result .= \vsprintf($this->template(), [
                 $token[Lexer\Token::T_OFFSET] ?? 0,
                 $token[Lexer\Token::T_KEEP] ? '+' : '-',
-                $this->trim($this->inline($token[Lexer\Token::T_NAMESPACE]), $this->scopeWidth - 2),
                 $this->trim($this->inline($token[Lexer\Token::T_TOKEN]), $this->tokenWidth - 2),
                 $this->trim($this->inline($token[Lexer\Token::T_VALUE]), $this->valueWidth() - 2),
                 $this->trim($length, $this->lengthWidth - 2),
@@ -161,7 +143,6 @@ class LexerDumper implements Dumper
 
         return '| %' . $this->offsetWidth . 's ' .
             '| %-' . $this->keepWidth . 's ' .
-            '| %-' . $this->scopeWidth . 's ' .
             '| %-' . $this->tokenWidth . 's ' .
             '| %-' . $valueWidth . 's ' .
             '| %-' . $this->lengthWidth . 's |' .
@@ -173,7 +154,7 @@ class LexerDumper implements Dumper
      */
     private function valueWidth(): int
     {
-        $columns = 6;
+        $columns = 5;
 
         // "| ... "
         //  ^^   ^ = 3
@@ -186,7 +167,6 @@ class LexerDumper implements Dumper
         return $this->width -
             $this->offsetWidth -
             $this->keepWidth -
-            $this->scopeWidth -
             $this->lengthWidth -
             $this->tokenWidth -
             ($columns * $prefix + $suffix);

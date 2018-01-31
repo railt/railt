@@ -103,7 +103,6 @@ class Lexer implements LexerInterface
                     Token::T_TOKEN     => $name,
                     Token::T_VALUE     => $body,
                     Token::T_LENGTH    => $length,
-                    Token::T_NAMESPACE => Token::T_DEFAULT_NAMESPACE,
                     Token::T_KEEP      => $kept,
                     Token::T_OFFSET    => $offset,
                 ];
@@ -148,6 +147,7 @@ class Lexer implements LexerInterface
     /**
      * @param array $data
      * @return array
+     * @throws \Railt\Compiler\Exception\LexerException
      */
     private function getTokenInfo(array $data): array
     {

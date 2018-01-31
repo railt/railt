@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Ast;
 
-use Railt\Compiler\Lexer\Token;
-
 /**
  * Class Leaf
  */
@@ -27,32 +25,17 @@ class Leaf extends Node implements LeafInterface
     private $offset;
 
     /**
-     * @var string|null
-     */
-    private $namespace;
-
-    /**
      * Leaf constructor.
      * @param string $name
      * @param string $value
      * @param int $offset
-     * @param string $namespace
      */
-    public function __construct(string $name, string $value, int $offset = 0, string $namespace = null)
+    public function __construct(string $name, string $value, int $offset = 0)
     {
         parent::__construct($name);
 
         $this->value     = $value;
         $this->offset    = $offset;
-        $this->namespace = $namespace;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNamespace(): string
-    {
-        return $this->namespace ?? Token::T_DEFAULT_NAMESPACE;
     }
 
     /**

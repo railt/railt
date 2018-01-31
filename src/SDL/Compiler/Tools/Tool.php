@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\Tools;
+
 use Railt\Events\Listenable;
 use Railt\SDL\Compiler;
 
@@ -20,5 +21,5 @@ interface Tool extends Listenable
      * @param Compiler $compiler
      * @return Tool
      */
-    public function observe(Compiler $compiler): Tool;
+    public function observe(Compiler $compiler): self;
 }
