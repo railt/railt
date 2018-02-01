@@ -13,7 +13,6 @@ use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Io\Readable;
 use Railt\SDL\Compiler\Exceptions\CompilerException;
-use Railt\SDL\Compiler\SymbolTable\CompilableRecord;
 use Railt\SDL\Compiler\SymbolTable\Record;
 use Railt\SDL\Compiler\Type;
 

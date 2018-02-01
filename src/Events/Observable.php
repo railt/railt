@@ -19,5 +19,5 @@ interface Observable
      * @param bool $prepend
      * @return Observable
      */
-    public function subscribe(\Closure $observer, bool $prepend = false): Observable;
+    public function subscribe(\Closure $observer, bool $prepend = false): self;
 }

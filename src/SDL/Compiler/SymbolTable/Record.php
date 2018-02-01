@@ -69,7 +69,7 @@ class Record
      * @param RuleInterface $ast
      * @return Record
      */
-    public function setAst(RuleInterface $ast): Record
+    public function setAst(RuleInterface $ast): self
     {
         $this->ast = $ast;
 

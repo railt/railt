@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler;
 
-use Railt\Io\Readable;
 use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
