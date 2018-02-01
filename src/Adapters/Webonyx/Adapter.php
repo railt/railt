@@ -64,7 +64,10 @@ class Adapter implements AdapterInterface
             /** @var ExecutionResult $result */
             $result = $executor();
 
-            return new Response((array)$result->data, $result->errors);
+            $response = new Response((array)$result->data, $result->errors);
+            $response->debug($this->debug);
+
+            return $response;
         } catch (\Throwable $e) {
             if ($this->debug) {
                 throw $e;
