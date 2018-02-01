@@ -58,7 +58,10 @@ class ParamResolver
     public function fromConstructor(string $class, array $additional = []): array
     {
         if (\method_exists($class, '__construct')) {
-            return $this->fromCallable([$class, '__construct'], $additional);
+            $reflection = new \ReflectionClass($class);
+            $instance = $reflection->newInstanceWithoutConstructor();
+
+            return $this->fromCallable([$instance, '__construct'], $additional);
         }
 
         $parent = \get_parent_class($class);
