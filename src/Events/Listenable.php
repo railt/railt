@@ -28,5 +28,5 @@ interface Listenable
      * @param \Closure $callback
      * @return Listenable
      */
-    public function listen(string $event, \Closure $callback): Listenable;
+    public function listen(string $event, \Closure $callback): self;
 }
