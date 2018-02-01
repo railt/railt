@@ -58,13 +58,15 @@ class ErrorFormatter implements Arrayable
         $exception = $this->exception;
         $result    = $this->renderItem($exception);
 
-        while ($exception->getPrevious()) {
-            if (! \array_key_exists('previous', $result)) {
-                $result['previous'] = [];
-            }
+        if ($this->debug) {
+            while ($exception->getPrevious()) {
+                if (! \array_key_exists('previous', $result)) {
+                    $result['previous'] = [];
+                }
 
-            $result['previous'][] = $this->renderItem($exception);
-            $exception            = $exception->getPrevious();
+                $result['previous'][] = $this->renderItem($exception);
+                $exception            = $exception->getPrevious();
+            }
         }
 
         return $result;
@@ -97,6 +99,7 @@ class ErrorFormatter implements Arrayable
             $result['trace'] = $e instanceof SchemaException
                 ? $e->getCompilerTrace()
                 : $e->getTraceAsString();
+            $result['previous'] = $this->renderItem($e->getPrevious());
         }
 
         return $result;
