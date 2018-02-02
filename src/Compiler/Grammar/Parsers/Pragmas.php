@@ -12,6 +12,7 @@ namespace Railt\Compiler\Grammar\Parsers;
 use Railt\Compiler\Exception\InvalidPragmaException;
 use Railt\Compiler\Grammar\Pragmas\Lookahead;
 use Railt\Compiler\Grammar\Pragmas\Pragma;
+use Railt\Compiler\Grammar\Pragmas\Root;
 use Railt\Compiler\Grammar\Pragmas\UnexpectedToken;
 use Railt\Compiler\Grammar\Pragmas\Unicode;
 use Railt\Compiler\Grammar\Pragmas\UnrecognizedToken;
@@ -30,6 +31,7 @@ class Pragmas extends BaseParser
     private static function getAllowedPragmas(): array
     {
         return [
+            Root::class,
             Unicode::class,
             Lookahead::class,
             UnexpectedToken::class,
@@ -40,6 +42,7 @@ class Pragmas extends BaseParser
     /**
      * @param string $line
      * @return iterable
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
     public static function parse(string $line): iterable
     {
@@ -53,6 +56,7 @@ class Pragmas extends BaseParser
     /**
      * @param string $line
      * @return array
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
     protected static function matches(string $line): array
     {
@@ -70,6 +74,7 @@ class Pragmas extends BaseParser
      * @param string $name
      * @param string $value
      * @return mixed
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
     private static function resolve(string $name, string $value)
     {
@@ -80,7 +85,6 @@ class Pragmas extends BaseParser
         }
 
         $error = 'Unrecognized pragma "%s" definition.';
-
         throw new InvalidPragmaException(\sprintf($error, $name));
     }
 

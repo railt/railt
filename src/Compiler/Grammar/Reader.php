@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar;
 
+use Illuminate\Support\Str;
 use Railt\Compiler\Grammar\Parsers\Pragmas;
 use Railt\Compiler\Grammar\Parsers\SkippedTokenDefinitions;
 use Railt\Compiler\Grammar\Parsers\TokenDefinitions;
+use Railt\Io\File;
 use Railt\Io\Readable;
 
 /**
@@ -35,31 +37,39 @@ class Reader
     private $pragmas = [];
 
     /**
+     * @var array|string[]
+     */
+    private $includes;
+
+    /**
      * Parser constructor.
      * @param Readable $readable
+     * @throws \LogicException
      */
     public function __construct(Readable $readable)
     {
-        $this->parse($readable);
+        $this->includes[$readable->getPathname()] = $readable->getContents();
+
+        $this->parse();
     }
 
     /**
-     * @param Readable $grammar
      * @return Reader
+     * @throws \LogicException
      */
-    private function parse(Readable $grammar): self
+    private function parse(): self
     {
         $ruleName  = null;
         $ruleValue = '';
 
-        foreach ($this->read($grammar) as $line) {
+        foreach ($this->read() as $file => $line) {
             switch ($line[0] ?? '') {
                 case '%':
-                    $this->parseDefinition($line);
+                    $this->parseDefinition($file, $line);
                     break;
 
                 case ' ':
-                    $ruleValue .= ' ' . \trim($line);
+                    $ruleValue              .= ' ' . \trim($line);
                     $this->rules[$ruleName] = $ruleValue;
                     break;
 
@@ -75,16 +85,32 @@ class Reader
     }
 
     /**
-     * @param Readable $grammar
      * @return iterable
      */
-    private function read(Readable $grammar): iterable
+    private function read(): iterable
     {
-        foreach (\explode("\n", $grammar->getContents()) as $line) {
-            if ($line && ! $this->isCommentedLine(\ltrim($line))) {
-                yield \rtrim($line);
+        while (\count($this->includes) > 0) {
+            [$path, $content] = $this->first($this->includes);
+            \array_shift($this->includes);
+
+            foreach (\explode("\n", $content) as $line) {
+                if ($line && ! $this->isCommentedLine(\ltrim($line))) {
+                    yield $path => \rtrim($line);
+                }
             }
         }
+    }
+
+    /**
+     * @param array $target
+     * @return array
+     */
+    private function first(array $target): array
+    {
+        \reset($target);
+        $key = \key($target);
+
+        return [$key, \array_shift($target)];
     }
 
     /**
@@ -93,17 +119,24 @@ class Reader
      */
     private function isCommentedLine(string $line): bool
     {
-        return ($line[0] ?? '') === '/' &&
-            ($line[1] ?? '') === '/';
+        [$ch0, $ch1] = [$line[0] ?? '', $line[1] ?? ''];
+
+        return $ch0 === '/' && $ch1 === '/';
     }
 
     /**
+     * @param Readable $grammar
      * @param string $line
-     * @throws \LogicException
+     * @throws \Railt\Io\Exceptions\NotReadableException
+     * @throws \Railt\Compiler\Exception\InvalidPragmaException
      */
-    private function parseDefinition(string $line): void
+    private function parseDefinition(string $file, string $line): void
     {
         switch (true) {
+            case $this->isInclude($line):
+                $this->doInclude($file, \trim(\substr($line, 9)));
+                break;
+
             case Pragmas::match($line):
                 foreach (Pragmas::parse($line) as $name => $value) {
                     $this->pragmas[$name] = $value;
@@ -122,6 +155,27 @@ class Reader
                 }
                 break;
         }
+    }
+
+    /**
+     * @param string $rule
+     * @return bool
+     */
+    private function isInclude(string $rule): bool
+    {
+        return Str::startsWith($rule, '%include');
+    }
+
+    /**
+     * @param Readable $from
+     * @param string $file
+     * @throws \Railt\Io\Exceptions\NotReadableException
+     */
+    private function doInclude(string $from, string $file): void
+    {
+       $include = File::fromPathname(\dirname($from) . '/' . $file);
+
+       $this->includes[$include->getPathname()] = $include->getContents();
     }
 
     /**

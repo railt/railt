@@ -22,13 +22,13 @@ interface CallStackInterface extends \Countable, Observable
      * @param Record[] ...$records
      * @return CallStackInterface
      */
-    public function push(Record ...$records): CallStackInterface;
+    public function push(Record ...$records): self;
 
     /**
      * @param int $size
      * @return CallStackInterface
      */
-    public function pop(int $size = 1): CallStackInterface;
+    public function pop(int $size = 1): self;
 
     /**
      * @return Definition|null

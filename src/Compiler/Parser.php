@@ -21,6 +21,7 @@ use Railt\Compiler\Exception\UnexpectedTokenException;
 use Railt\Compiler\Grammar\Analyzer;
 use Railt\Compiler\Grammar\Parsers\Pragmas;
 use Railt\Compiler\Grammar\Pragmas\Lookahead;
+use Railt\Compiler\Grammar\Pragmas\Root;
 use Railt\Compiler\Grammar\Reader;
 use Railt\Compiler\Lexer\Token as LexicalToken;
 use Railt\Compiler\Rule\Choice;
@@ -225,13 +226,18 @@ class Parser
      */
     public function getRootRule(): string
     {
-        foreach ($this->rules as $rule => $_) {
-            if (\is_string($rule)) {
-                return $rule;
+        $root = Pragmas::get($this->pragmas, Root::class);
+
+        foreach ($this->rules as $rule => $i) {
+            switch (true) {
+                case $root === $rule:
+                    return $rule;
+                case $root === null && \is_string($rule):
+                    return $rule;
             }
         }
 
-        throw new Exception('Invalid grammar root rule (Can not find)');
+        throw new Exception('Can not resolve root rule definition.');
     }
 
     /**

@@ -1,0 +1,12 @@
+namespace Models
+
+type User {
+    id: ID!
+    friends: [User!]!
+    messages: [Message!]!
+}
+
+type Message {
+    id: ID!
+    body: String
+}

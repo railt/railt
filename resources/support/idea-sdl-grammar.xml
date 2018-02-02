@@ -1,0 +1,23 @@
+<filetype binary="false" description="The RL/SDL Language Dialect" name="RL/SDL">
+  <highlighting>
+    <options>
+      <option name="LINE_COMMENT" value="#" />
+      <option name="COMMENT_START" value="&quot;&quot;&quot;" />
+      <option name="COMMENT_END" value="&quot;&quot;&quot;" />
+      <option name="HEX_PREFIX" value="0x" />
+      <option name="NUM_POSTFIXES" value="" />
+      <option name="HAS_BRACES" value="true" />
+      <option name="HAS_BRACKETS" value="true" />
+      <option name="HAS_PARENS" value="true" />
+      <option name="HAS_STRING_ESCAPES" value="true" />
+    </options>
+    <keywords keywords="directive;enum;extend;implements;input;inputUnion;interface;scalar;schema;type;union" ignore_case="false" />
+    <keywords2 keywords="(;);/;{;};@" />
+    <keywords3 keywords="extends;false;from;implements;import;namespace;null;on;true" />
+    <keywords4 keywords="!;$;:;Enum;Input;Interface;Object;Scalar;Union;[;];Any;Boolean;DateTime;Date;Time;Float;ID;Int;String" />
+  </highlighting>
+  <extensionMap>
+    <mapping ext="graphqls" />
+    <mapping ext="sdl" />
+  </extensionMap>
+</filetype>

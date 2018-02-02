@@ -19,6 +19,7 @@ abstract class BasePragma implements Pragma
     /**
      * @param string $value
      * @return bool|null
+     * @throws \Railt\Compiler\Exception\InvalidPragmaValueException
      */
     protected static function parseBoolean(string $value): bool
     {
@@ -38,6 +39,7 @@ abstract class BasePragma implements Pragma
     /**
      * @param string $value
      * @return int
+     * @throws \Railt\Compiler\Exception\InvalidPragmaValueException
      */
     protected static function parseInt(string $value): int
     {
@@ -52,6 +54,7 @@ abstract class BasePragma implements Pragma
     /**
      * @param string $value
      * @return string
+     * @throws \Railt\Compiler\Exception\InvalidPragmaValueException
      */
     protected static function parseClass(string $value): string
     {

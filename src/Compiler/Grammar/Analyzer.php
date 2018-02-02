@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Grammar;
 
 use Hoa\Iterator\Lookahead;
+use Railt\Compiler\Debug\LexerDumper;
 use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Exception\RuleException;
 use Railt\Compiler\Lexer;
@@ -47,7 +48,7 @@ class Analyzer
      * PP lexemes.
      */
     protected const PP_LEXEMES = [
-        self::T_SKIP         => ['\s', false],
+        self::T_SKIP         => ['\s+|\/\/[^\\n]*', false],
         self::T_OR           => ['\|'],
         self::T_ZERO_OR_ONE  => ['\?'],
         self::T_ONE_OR_MORE  => ['\+'],
@@ -144,7 +145,7 @@ class Analyzer
             $rule    = $this->rule($pNodeId);
 
             if ($rule === null) {
-                throw new Exception('Error while parsing rule %s.', 1, $key);
+                throw new Exception('Error while parsing rule "%s".', 1, $key);
             }
 
             $zeRule = $this->parsedRules[$rule];
@@ -170,6 +171,7 @@ class Analyzer
     private function getLookaheadIterator(string $rule): Lookahead
     {
         $lexer = new Lexer($rule, static::PP_LEXEMES);
+        $lexer->keepAll(false);
 
         return new Lookahead($lexer->getIterator());
     }
@@ -190,6 +192,7 @@ class Analyzer
      *
      * @param string|null $pNodeId
      * @return string|int|null
+     * @throws \Railt\Compiler\Exception\Exception
      */
     protected function choice(&$pNodeId)
     {
@@ -394,38 +397,25 @@ class Analyzer
     }
 
     /**
-     * @return int|string|null
-     * @throws \Railt\Compiler\Exception\RuleException
+     * @param int|string|null $pNodeId
+     * @return int|null|string
      */
-    protected function named()
+    protected function group(&$pNodeId)
     {
-        $tokenName = \rtrim($this->lexer->current()[Lexer\Token::T_VALUE], '()');
+        $this->lexer->next();
+        $rule = $this->choice($pNodeId);
 
-        $isEmptyRule = ! \array_key_exists($tokenName, $this->rules) &&
-            ! \array_key_exists('#' . $tokenName, $this->rules);
-
-        if ($isEmptyRule) {
-            $error = \vsprintf('Cannot call rule %s() in rule %s because it does not exist.', [
-                $tokenName,
-                $this->ruleName,
-            ]);
-
-            throw new RuleException($error, 5);
+        if ($rule === null) {
+            return null;
         }
 
-        if (
-            $this->lexer->key() === 0 &&
-            $this->lexer->getNext()[Lexer\Token::T_TOKEN] === Lexer\Token::T_EOF_NAME
-        ) {
-            $name                     = $this->transitionalRuleCounter++;
-            $this->parsedRules[$name] = new Concatenation($name, [$tokenName]);
-        } else {
-            $name = $tokenName;
+        if ($this->lexer->current()[Lexer\Token::T_TOKEN] !== self::T_GROUP_CLOSE) {
+            return null;
         }
 
         $this->lexer->next();
 
-        return $name;
+        return $rule;
     }
 
     /**
@@ -466,24 +456,37 @@ class Analyzer
     }
 
     /**
-     * @param int|string|null $pNodeId
-     * @return int|null|string
+     * @return int|string|null
+     * @throws \Railt\Compiler\Exception\RuleException
      */
-    protected function group(&$pNodeId)
+    protected function named()
     {
-        $this->lexer->next();
-        $rule = $this->choice($pNodeId);
+        $tokenName = \rtrim($this->lexer->current()[Lexer\Token::T_VALUE], '()');
 
-        if ($rule === null) {
-            return null;
+        $isEmptyRule = ! \array_key_exists($tokenName, $this->rules) &&
+            ! \array_key_exists('#' . $tokenName, $this->rules);
+
+        if ($isEmptyRule) {
+            $error = \vsprintf('Cannot call rule %s() in rule %s because it does not exist.', [
+                $tokenName,
+                $this->ruleName,
+            ]);
+
+            throw new RuleException($error, 5);
         }
 
-        if ($this->lexer->current()[Lexer\Token::T_TOKEN] !== self::T_GROUP_CLOSE) {
-            return null;
+        if (
+            $this->lexer->key() === 0 &&
+            $this->lexer->getNext()[Lexer\Token::T_TOKEN] === Lexer\Token::T_EOF_NAME
+        ) {
+            $name                     = $this->transitionalRuleCounter++;
+            $this->parsedRules[$name] = new Concatenation($name, [$tokenName]);
+        } else {
+            $name = $tokenName;
         }
 
         $this->lexer->next();
 
-        return $rule;
+        return $name;
     }
 }
