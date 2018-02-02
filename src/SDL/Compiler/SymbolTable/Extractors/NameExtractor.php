@@ -18,7 +18,7 @@ use Railt\SDL\Compiler\Exceptions\CompilerException;
 class NameExtractor
 {
     public const E_INDEX_NAMESPACE = 0x00;
-    public const E_INDEX_NAME = 0x01;
+    public const E_INDEX_NAME      = 0x01;
 
     /**
      * @param RuleInterface $rule
@@ -56,7 +56,7 @@ class NameExtractor
             if ($child->is('#Name')) {
                 return [
                     self::E_INDEX_NAMESPACE => \implode(Extractor::T_NAMESPACE_SEPARATOR, $namespace),
-                    self::E_INDEX_NAME      => self::readName($child)
+                    self::E_INDEX_NAME      => self::readName($child),
                 ];
             }
         }

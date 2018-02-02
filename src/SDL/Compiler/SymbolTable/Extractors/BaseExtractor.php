@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\NodeInterface;
+
 /**
  * Class BaseExtractor
  */
@@ -27,7 +28,6 @@ abstract class BaseExtractor implements Extractor
      */
     protected function fqn(string $namespace, string $name): string
     {
-
         if ($namespace) {
             return $namespace . self::T_NAMESPACE_SEPARATOR . $name;
         }
