@@ -9,10 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\Compiler\Ast\NodeInterface;
-use Railt\Compiler\Ast\RuleInterface;
 use Railt\Io\Readable;
-use Railt\SDL\Compiler\Parser\Factory;
 use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\SymbolTable\Builder;
 
@@ -21,7 +18,6 @@ use Railt\SDL\Compiler\SymbolTable\Builder;
  */
 class Compiler
 {
-
     /**
      * @param Readable $readable
      * @return SymbolTable

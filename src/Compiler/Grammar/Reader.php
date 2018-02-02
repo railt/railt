@@ -69,7 +69,7 @@ class Reader
                     break;
 
                 case ' ':
-                    $ruleValue              .= ' ' . \trim($line);
+                    $ruleValue .= ' ' . \trim($line);
                     $this->rules[$ruleName] = $ruleValue;
                     break;
 
@@ -173,9 +173,9 @@ class Reader
      */
     private function doInclude(string $from, string $file): void
     {
-       $include = File::fromPathname(\dirname($from) . '/' . $file);
+        $include = File::fromPathname(\dirname($from) . '/' . $file);
 
-       $this->includes[$include->getPathname()] = $include->getContents();
+        $this->includes[$include->getPathname()] = $include->getContents();
     }
 
     /**

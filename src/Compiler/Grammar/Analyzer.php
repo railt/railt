@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Grammar;
 
 use Hoa\Iterator\Lookahead;
-use Railt\Compiler\Debug\LexerDumper;
 use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Exception\RuleException;
 use Railt\Compiler\Lexer;
