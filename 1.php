@@ -3,13 +3,13 @@
 use Railt\Compiler\Debug\NodeDumper;
 use Railt\Io\File;
 use Railt\SDL\Compiler\Parser\Factory;
-use Railt\SDL\Compiler\SymbolTable\Builder;
+use Railt\SDL\Compiler\Pipeline;
 
 require __DIR__ . '/vendor/autoload.php';
 
 $sources = File::fromPathname(__DIR__ . '/gql/schema.graphqls');
 
-$dumper = new NodeDumper((new Factory())->getParser()->parse($sources->getContents()));
-dd($dumper->toXml());
+$pipeline = new Pipeline();
+$r = $pipeline->process($sources);
 
-dd((new Builder())->build($sources));
+dd($r);

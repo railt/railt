@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\Io\Readable;
+use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
@@ -19,15 +20,19 @@ use Railt\SDL\Compiler\SymbolTable\Record;
 interface Extractor
 {
     /**
-     * @param RuleInterface $rule
-     * @return bool
+     * @var string
      */
-    public function match(RuleInterface $rule): bool;
+    public const T_NAMESPACE_SEPARATOR = '/';
 
     /**
-     * @param Readable $input
-     * @param RuleInterface $rule
-     * @return Record
+     * @param NodeInterface $node
+     * @return bool
      */
-    public function extract(Readable $input, RuleInterface $rule): Record;
+    public function match(NodeInterface $node): bool;
+
+    /**
+     * @param RuleInterface $node
+     * @return \Traversable|Record[]
+     */
+    public function extract(SymbolTable $table, RuleInterface $node): \Traversable;
 }

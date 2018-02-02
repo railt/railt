@@ -1,5 +1,5 @@
 
-namespace Api
+namespace Api/Example/Ololo
 
 import User from Models
 
@@ -10,7 +10,6 @@ schema {
 type Query {
     users: Repository(ctx: User)
 }
-
 
 """The Repository of target entries"""
 type Repository ($ctx: Object) {

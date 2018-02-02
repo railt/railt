@@ -20,7 +20,7 @@ class Record
     /**
      * @var string
      */
-    private $name;
+    private $fqn;
 
     /**
      * @var string
@@ -49,9 +49,9 @@ class Record
      * @param int $offset
      * @param Readable $input
      */
-    public function __construct(string $name, string $type, int $offset, Readable $input)
+    public function __construct(string $fqn, string $type, int $offset, Readable $input)
     {
-        $this->name   = $name;
+        $this->fqn    = $fqn;
         $this->type   = $type;
         $this->input  = $input;
         $this->offset = $offset;
@@ -87,9 +87,9 @@ class Record
     /**
      * @return string
      */
-    public function getName(): string
+    public function getFullyQualifiedName(): string
     {
-        return $this->name;
+        return $this->fqn;
     }
 
     /**
@@ -115,7 +115,7 @@ class Record
     {
         return [
             'type'   => $this->type,
-            'name'   => $this->name,
+            'fqn'    => $this->fqn,
             'offset' => $this->offset,
             'file'   => $this->input,
         ];
