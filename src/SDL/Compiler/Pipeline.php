@@ -74,7 +74,7 @@ class Pipeline
      * @param Readable $input
      * @return void
      */
-    public function process(Readable $input)
+    public function process(Readable $input): void
     {
         /**
          * Build an AST
