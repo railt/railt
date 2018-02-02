@@ -99,7 +99,6 @@ class ErrorFormatter implements Arrayable
             $result['trace'] = $e instanceof SchemaException
                 ? $e->getCompilerTrace()
                 : $e->getTraceAsString();
-            $result['previous'] = $this->renderItem($e->getPrevious());
         }
 
         return $result;
