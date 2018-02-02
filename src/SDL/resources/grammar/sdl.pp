@@ -1,6 +1,6 @@
 %pragma root Document
 %pragma lexer.unicode true
-%pragma parser.lookahead 6
+%pragma parser.lookahead 256
 
 //
 // --------------------------------------------------------------------------
@@ -30,6 +30,8 @@
 //  @see http://facebook.github.io/graphql/#sec-Punctuators
 //
 
+%token T_AND                    &
+%token T_OR                     \|
 %token T_PARENTHESIS_OPEN       \(
 %token T_PARENTHESIS_CLOSE      \)
 %token T_BRACKET_OPEN           \[
@@ -41,8 +43,6 @@
 %token T_COLON                  :
 %token T_EQUAL                  =
 %token T_DIRECTIVE_AT           @
-%token T_AND                    \&
-%token T_OR                     \|
 
 //
 // Values
@@ -85,8 +85,8 @@
 %token T_FRAGMENT               fragment\b
 
 // Common
-%token T_VARIABLE               \$[_A-Za-z][_0-9A-Za-z]*
-%token T_NAME                   [_A-Za-z][_0-9A-Za-z]*
+%token T_VARIABLE               (\$[_A-Za-z][_0-9A-Za-z]*)
+%token T_NAME                   ([_A-Za-z][_0-9A-Za-z]*)
 
 //
 // --------------------------------------------------------------------------
@@ -107,7 +107,7 @@
 //
 //
 //                             [ BOM | WHITESPACE | HTAB | LF | CR ]
-%skip T_WHITESPACE             [\xfe\xff|\x20|\x09|\x0a|\x0d]+
+%skip T_WHITESPACE             (\xfe\xff|\x20|\x09|\x0a|\x0d)+
 %skip T_COMMENT                #[^\n]*
 %skip T_COMMA                  ,
 
@@ -117,6 +117,7 @@
 %include names.pp
 %include values.pp
 %include definitions.pp
+%include invocations.pp
 
 // ==========================================================================
 //                                  DOCUMENT
@@ -124,24 +125,16 @@
 
 #Document:
     NamespaceDefinition()?
-    ImportDefinition()*
-    // Directive()*
-    DocumentBody()*
+    DocumentImports()*
+    DocumentDefinitions()*
 
-DocumentBody:
-    // Extension()  |
+DocumentImports:
+    ImportDefinition() |
+    Invocation()
+
+DocumentDefinitions:
+// Extension()     |
     Definition()
-
-Definition:
-    SchemaDefinition()     |
-    ScalarDefinition()     |
-    ObjectDefinition()     |
-    InterfaceDefinition()  |
-    EnumDefinition()       |
-    UnionDefinition()      |
-    InputUnionDefinition() |
-    DirectiveDefinition()
-    // TODO InputDefinition
 
 // Extension:
     // TODO ScalarExtension
@@ -150,6 +143,3 @@ Definition:
     // TODO UnionExtension
     // TODO EnumExtension
     // TODO InputExtension
-
-// Directive:
-    // TODO Directive (invocation)

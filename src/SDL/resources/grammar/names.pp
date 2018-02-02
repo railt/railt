@@ -3,7 +3,7 @@
 //
 NameWithoutReserved:
     <T_NAME>
-    #Name
+        #Name
 
 //
 // Any name includes reserved keywords.
@@ -31,7 +31,8 @@ NameWithReserved:
         <T_INPUT>       |
         <T_EXTEND>      |
         <T_FRAGMENT>
-    ) #Name
+    )
+        #Name
 
 //
 // Any name includes reserved keywords but except values: NULL, TRUE and FALSE.
@@ -56,25 +57,25 @@ NameExceptValues:
             <T_INPUT>       |
             <T_EXTEND>      |
             <T_FRAGMENT>
-    ) #Name
+    )
 
 //
 // Variable
 //
 Variable:
     <T_VARIABLE>
-    #Variable
+        #Variable
 
 //
 // Fully qualified name is an unambiguous name that specifies
 // which object, function, or variable a call refers to without
 // regard to the context of the call.
 //
-TypeName:
-    __namespace()? NameWithReserved() #TypeName
+#TypeName:
+    TypeNamespace()? NameWithReserved()
 
 //
 // FQN Namespace part
 //
-__namespace:
-    (NameWithReserved() ::T_NAMESPACE_SEPARATOR::)+ #TypeNamespace
+#TypeNamespace:
+    (NameWithReserved() ::T_NAMESPACE_SEPARATOR::)+

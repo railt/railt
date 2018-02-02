@@ -69,12 +69,12 @@ class LexerDumper implements Dumper
     }
 
     /**
+     * @param bool $keepAll
      * @return string
-     * @throws \LogicException
      */
-    public function toString(): string
+    public function toString(bool $keepAll = true): string
     {
-        $this->lexer->keepAll();
+        $this->lexer->keepAll($keepAll);
 
         $header =
             $this->delimiter() .

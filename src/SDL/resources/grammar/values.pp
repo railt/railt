@@ -2,42 +2,44 @@
 // Boolean value (true or false)
 //
 Boolean:
-    <T_TRUE> | <T_FALSE>
-    #Boolean
+    <T_FALSE> |
+    <T_TRUE>
+        #Boolean
 
 //
 // Number value
 //
 Number:
     <T_NUMBER>
-    #Number
+        #Number
 
 //
 // String value
 //
 String:
-    <T_STRING> | <T_BLOCK_STRING>
-    #String
+    <T_BLOCK_STRING> |
+    <T_STRING>
+        #String
 
 //
 // Null value
 //
 Null:
     <T_NULL>
-    #Null
+        #Null
 
 //
 // Input value
 //
 Input:
     ::T_BRACE_OPEN::
-        __inputField()*
+        __inputPair()*
     ::T_BRACE_CLOSE::
-    #Input
+        #Input
 
-__inputField:
+__inputPair:
     NameWithReserved() ::T_COLON:: Value()
-    #Pair
+        #Pair
 
 //
 // The list of values
@@ -46,24 +48,19 @@ List:
     ::T_BRACKET_OPEN::
         Value()*
     ::T_BRACKET_CLOSE::
-    #List
+        #List
 
 //
 // Value
 //
 Value:
     (
-        Boolean() |
-        Number()  |
-        String()  |
-        Null()    |
-        Input()   |
-        List()    |
-        NameWithReserved()
-    ) #Value
-
-//
-// The shortcut for default value
-//
-DefaultValue:
-    ::T_EQUAL:: Value()
+        NameWithReserved()  |
+        Boolean()           |
+        Number()            |
+        String()            |
+        Input()             |
+        Null()              |
+        List()
+    )
+        #Value

@@ -1,19 +1,21 @@
 #DirectiveDefinition:
     Documentation()?
-    ::T_DIRECTIVE_AT:: TypeName()
-        __directiveArguments()?
-    ::T_ON:: __directiveLocation()+
+    ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: TypeName()
+    __directiveDefinitionArguments()?
+    ::T_ON:: __directiveDefinitionLocations()
 
-__directiveArguments:
+__directiveDefinitionArguments:
     ::T_PARENTHESIS_OPEN::
-        ArgumentDefinition()*
+        __directiveDefinitionArgument()*
     ::T_PARENTHESIS_CLOSE::
-    #DirectiveArguments
 
-__directiveLocations:
-    __directiveLocation()+
+__directiveDefinitionArgument:
+     ArgumentDefinition()
+     #DirectiveArgument
+
+__directiveDefinitionLocations:
+    ::T_OR::? __directiveDefinitionLocation()+
     #DirectiveLocations
 
-__directiveLocation:
-    NameWithReserved()
-    (::T_OR:: NameWithReserved())*
+__directiveDefinitionLocation:
+    NameWithReserved() (::T_OR:: NameWithReserved())*

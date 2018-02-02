@@ -1,9 +1,10 @@
 #ScalarDefinition:
-    Documentation()?
+        Documentation()?
     ::T_SCALAR:: TypeName()
-    __scalarExtends()?
+        __scalarExtends()?
+        Directive()*
 
 __scalarExtends:
     ::T_EXTENDS:: TypeName()
-    #Extends
+        #Extends
 

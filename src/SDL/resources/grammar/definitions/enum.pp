@@ -1,17 +1,12 @@
 #EnumDefinition:
     Documentation()?
-    ::T_ENUM:: TypeName()
-    __enumValues()
-
-//
-// ========= [ENUM VALUES] =========
-//
-
-__enumValues:
+    ::T_ENUM:: TypeName() Directive()*
     ::T_BRACE_OPEN::
-        __enumValue()+
+        __enumDefinitionValue()+
     ::T_BRACE_CLOSE::
 
-__enumValue:
+__enumDefinitionValue:
     Documentation()?
     NameExceptValues()
+    Directive()*
+    #EnumValue
