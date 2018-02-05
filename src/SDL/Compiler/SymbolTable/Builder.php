@@ -34,11 +34,10 @@ class Builder
      */
     public function __construct()
     {
-        //
         $this->addExtractor(new NamespaceExtractor());
         $this->addExtractor(new ImportExtractor());
 
-        //
+
         $this->addExtractor(new SchemaExtractor());
     }
 
