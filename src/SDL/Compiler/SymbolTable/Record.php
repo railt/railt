@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\SymbolTable;
 
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\Io\Readable;
 
 /**
  * Class Record
