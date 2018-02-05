@@ -10,30 +10,19 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\NodeInterface;
+use Railt\SDL\Compiler\SymbolTable\Extractors\Support\NameExtractor;
+
 /**
  * Class BaseExtractor
  */
 abstract class BaseExtractor implements Extractor
 {
+    use NameExtractor;
+
     /**
      * @return array|string[]
      */
     abstract protected function getNodeNames(): array;
-
-    /**
-     * @param string $namespace
-     * @param string $name
-     * @return string
-     */
-    protected function fqn(string $namespace, string $name): string
-    {
-
-        if ($namespace) {
-            return $namespace . self::T_NAMESPACE_SEPARATOR . $name;
-        }
-
-        return $name;
-    }
 
     /**
      * @param NodeInterface $node

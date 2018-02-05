@@ -11,6 +11,7 @@ namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Io\Readable;
 use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\SymbolTable\Record;
 
@@ -31,6 +32,7 @@ interface Extractor
     public function match(NodeInterface $node): bool;
 
     /**
+     * @param Readable $file
      * @param RuleInterface $node
      * @return \Traversable|Record[]
      */

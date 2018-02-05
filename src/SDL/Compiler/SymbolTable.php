@@ -56,6 +56,14 @@ class SymbolTable implements \IteratorAggregate
     }
 
     /**
+     * @return string
+     */
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    /**
      * @param string $namespace
      * @return $this
      */
@@ -66,14 +74,6 @@ class SymbolTable implements \IteratorAggregate
         $this->namespace = $namespace;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getNamespace(): string
-    {
-        return $this->namespace;
     }
 
     /**
@@ -113,7 +113,10 @@ class SymbolTable implements \IteratorAggregate
     public function __debugInfo(): array
     {
         return [
-            'table' => $this->table,
+            'namespace' => $this->namespace,
+            'imports'   => $this->links,
+            'input'     => $this->input,
+            'table'     => $this->table,
         ];
     }
 

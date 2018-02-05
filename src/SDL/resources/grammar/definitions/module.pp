@@ -5,4 +5,8 @@
     ::T_NAMESPACE:: TypeName()
 
 #ImportDefinition:
-    ::T_IMPORT:: TypeName() ::T_IMPORT_FROM:: TypeName()
+    ::T_IMPORT:: TypeName() __importDefinitionFrom()
+
+__importDefinitionFrom:
+    ::T_IMPORT_FROM:: TypeName()
+    #ImportFrom

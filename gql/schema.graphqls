@@ -1,5 +1,5 @@
 
-namespace Api/Example/Ololo
+namespace Api
 
 import User from Models
 

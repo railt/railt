@@ -15,7 +15,9 @@ use Railt\Io\Readable;
 use Railt\SDL\Compiler\Exceptions\CompilerException;
 use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\SymbolTable\Extractors\Extractor;
+use Railt\SDL\Compiler\SymbolTable\Extractors\ImportExtractor;
 use Railt\SDL\Compiler\SymbolTable\Extractors\NamespaceExtractor;
+use Railt\SDL\Compiler\SymbolTable\Extractors\SchemaExtractor;
 
 /**
  * Class Builder
@@ -32,7 +34,12 @@ class Builder
      */
     public function __construct()
     {
+        //
         $this->addExtractor(new NamespaceExtractor());
+        $this->addExtractor(new ImportExtractor());
+
+        //
+        $this->addExtractor(new SchemaExtractor());
     }
 
     /**

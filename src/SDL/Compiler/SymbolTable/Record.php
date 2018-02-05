@@ -33,11 +33,6 @@ class Record
     private $offset;
 
     /**
-     * @var Readable
-     */
-    private $input;
-
-    /**
      * @var RuleInterface
      */
     private $ast;
@@ -47,13 +42,11 @@ class Record
      * @param string $name
      * @param string $type
      * @param int $offset
-     * @param Readable $input
      */
-    public function __construct(string $fqn, string $type, int $offset, Readable $input)
+    public function __construct(string $fqn, string $type, int $offset)
     {
         $this->fqn    = $fqn;
         $this->type   = $type;
-        $this->input  = $input;
         $this->offset = $offset;
     }
 
@@ -74,14 +67,6 @@ class Record
         $this->ast = $ast;
 
         return $this;
-    }
-
-    /**
-     * @return Readable
-     */
-    public function getInput(): Readable
-    {
-        return $this->input;
     }
 
     /**
@@ -117,7 +102,6 @@ class Record
             'type'   => $this->type,
             'fqn'    => $this->fqn,
             'offset' => $this->offset,
-            'file'   => $this->input,
         ];
     }
 }
