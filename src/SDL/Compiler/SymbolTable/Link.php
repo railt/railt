@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\SymbolTable;
+
 use Railt\Io\Readable;
 
 /**
@@ -38,8 +39,8 @@ class Link
      */
     public function __construct(Readable $from, string $type, string $module)
     {
-        $this->from = $from;
-        $this->type = $type;
+        $this->from   = $from;
+        $this->type   = $type;
         $this->module = $module;
     }
 }

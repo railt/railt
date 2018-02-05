@@ -29,6 +29,5 @@ class Compiler
      */
     public function compile(Readable $readable)
     {
-
     }
 }
