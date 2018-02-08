@@ -67,7 +67,9 @@ class FieldResolver
             $type = $field->getTypeDefinition();
 
             if ($type instanceof ObjectDefinition && ! $field->isList()) {
-                return function () { return []; };
+                return function () {
+                    return [];
+                };
             }
 
             return null;
@@ -105,7 +107,7 @@ class FieldResolver
         /** @var DirectiveInvocation $directive */
         $directive = $field->getDirective(self::DIRECTIVE);
 
-        $urn = (string)$directive->getPassedArgument(self::DIRECTIVE_ACTION);
+        $urn      = (string)$directive->getPassedArgument(self::DIRECTIVE_ACTION);
         $relation = $directive->getPassedArgument(self::DIRECTIVE_RELATION);
 
         $route = $this->router->route($object, $field->getName())

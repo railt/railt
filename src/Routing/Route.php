@@ -100,7 +100,7 @@ class Route
      * @param string $child
      * @return void
      */
-    public function relation(string $parent, string $child)
+    public function relation(string $parent, string $child): void
     {
         $this->parent = $parent;
         $this->child  = $child;
