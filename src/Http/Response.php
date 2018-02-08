@@ -154,6 +154,14 @@ class Response implements ResponseInterface
     }
 
     /**
+     * @return array
+     */
+    public function getNativeErrors(): array
+    {
+        return $this->errors;
+    }
+
+    /**
      * @param mixed $error
      * @param bool $debug
      * @return array
@@ -164,11 +172,11 @@ class Response implements ResponseInterface
             case $error instanceof Arrayable:
                 return $error->toArray();
 
-            case $error instanceof \JsonSerializable:
-                return $error->jsonSerialize();
-
             case $error instanceof \Throwable:
                 return ErrorFormatter::render($error, $debug);
+
+            case $error instanceof \JsonSerializable:
+                return $error->jsonSerialize();
         }
 
         return (array)$error;

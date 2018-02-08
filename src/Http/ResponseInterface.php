@@ -35,6 +35,11 @@ interface ResponseInterface extends Arrayable, Renderable
     public function getErrors(): array;
 
     /**
+     * @return array[]
+     */
+    public function getNativeErrors(): array;
+
+    /**
      * @return void
      */
     public function send(): void;
