@@ -7,7 +7,11 @@ require __DIR__ . '/vendor/autoload.php';
 
 $sources = File::fromPathname(__DIR__ . '/gql/schema.graphqls');
 
-$pipeline = new Pipeline();
-$r        = $pipeline->process($sources);
+try {
+    $pipeline = new Pipeline();
+    $r        = $pipeline->process($sources);
+    dd($r);
+} catch (Throwable $e) {
+    echo $e;
+}
 
-dd($r);

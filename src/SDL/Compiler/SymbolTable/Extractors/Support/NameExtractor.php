@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\SymbolTable\Extractors\Support;
 
+use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\SDL\Compiler\SymbolTable\Extractors\Extractor;
 
 /**
  * Trait NameExtractor
@@ -18,19 +20,35 @@ trait NameExtractor
 {
     /**
      * @param RuleInterface $ast
-     * @return string
+     * @param int|null $index
+     * @return array|string
      */
-    protected function fqn(RuleInterface $ast): string
+    protected function fqn(RuleInterface $ast, int $index = null)
     {
-        return \implode('/', $this->typeName($ast));
+        [$offset, $tokens] = $this->typeName($ast);
+
+        $fqn = \implode('/', $tokens);
+
+        if ($index === null) {
+            return [$offset, $fqn];
+        }
+
+        if ($index === Extractor::I_OFFSET) {
+            return $offset;
+        }
+
+        return $fqn;
     }
 
     /**
      * @param RuleInterface $ast
-     * @return array
+     * @return array [OFFSET, [TOKENS]]
      */
     protected function typeName(RuleInterface $ast): array
     {
+        $offset = null;
+
+        /** @var LeafInterface[] $parts */
         $parts = [];
 
         foreach ($ast->getChildren() as $child) {
@@ -39,11 +57,15 @@ trait NameExtractor
                     $parts += \iterator_to_array($this->readFromNamespace($child));
                     break;
                 case $child->is('#Name'):
-                    $parts[] = $this->readName($child);
+                    /** @var LeafInterface $token */
+                    $token = $child->getChild(0);
+
+                    $offset = $token->getOffset();
+                    $parts[] = $token->getValue();
             }
         }
 
-        return $parts;
+        return [$offset, $parts];
     }
 
     /**
@@ -53,16 +75,7 @@ trait NameExtractor
     private function readFromNamespace(RuleInterface $rule): \Traversable
     {
         foreach ($rule->getChildren() as $name) {
-            yield $this->readName($name);
+            yield $name->getChild(0)->getValue();
         }
-    }
-
-    /**
-     * @param RuleInterface $name
-     * @return string
-     */
-    private function readName(RuleInterface $name): string
-    {
-        return $name->getChild(0)->getValue();
     }
 }

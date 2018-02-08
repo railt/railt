@@ -11,30 +11,24 @@ namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\SDL\Compiler\SymbolTable;
-use Railt\SDL\Compiler\SymbolTable\Record;
+use Railt\SDL\Compiler\SymbolTable\Context;
+use Railt\SDL\Compiler\SymbolTable\Extractors\Support\NameExtractor;
 
 /**
  * Class NamespaceExtractor
  */
-class NamespaceExtractor extends BaseExtractor
+class NamespaceExtractor implements Extractor
 {
+    use NameExtractor;
+
     /**
-     * @param SymbolTable $table
+     * @param Context $ctx
      * @param RuleInterface $node
-     * @return \Traversable|Record[]
      */
-    public function extract(SymbolTable $table, RuleInterface $node): \Traversable
+    public function extract(Context $ctx, RuleInterface $node): void
     {
-        $table->setNamespace($this->fqn($node->getChild(0)));
+        $name = $this->fqn($node->getChild(0), self::I_NAME);
 
-        return new \EmptyIterator();
-    }
-
-    /**
-     * @return array|string[]
-     */
-    protected function getNodeNames(): array
-    {
-        return ['#NamespaceDefinition'];
+        $ctx->setNamespace($name);
     }
 }

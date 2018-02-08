@@ -7,11 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Exception;
+namespace Railt\SDL\Compiler\Exceptions;
 
 /**
- * Class InvalidPragmaException
+ * Error while parsing file
  */
-class InvalidPragmaException extends Exception
+class ParseException extends BaseCompilerException
 {
+
 }

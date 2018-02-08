@@ -7,11 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Exception;
+namespace Railt\SDL\Compiler\Exceptions;
 
 /**
- * Class InvalidPragmaException
+ * Error while linking types
  */
-class InvalidPragmaException extends Exception
+class LinkerException extends BaseCompilerException
 {
+
 }

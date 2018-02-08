@@ -1,7 +1,8 @@
 
 namespace Api
 
-import User from Models
+import User & Message from Models
+import Response from Common
 
 schema {
     query: Query
@@ -14,7 +15,9 @@ type Query {
 """The Repository of target entries"""
 type Repository ($ctx: Object) {
     """Find all entries"""
-    findAll(count: Int! = 10, orderBy: String): [HttpResponse(ctx: $ctx)!]!
+    findAll(count: Int! = 10, orderBy: String): [
+        HttpResponse(ctx: $ctx)!
+    ]!
 
     """Fine one entry by primary key"""
     find(id: ID): HttpResponse(ctx: $ctx)

@@ -9,13 +9,24 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\SymbolTable;
 
+use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
+use Railt\Io\Readable;
+use Railt\SDL\Compiler\SymbolTable;
 
 /**
  * Class Record
  */
 class Record
 {
+    public const TYPE_AST = '#Node';
+    public const TYPE_SCHEMA = 'Schema';
+
+    /**
+     * @var string|null
+     */
+    private $namespace;
+
     /**
      * @var string
      */
@@ -37,16 +48,44 @@ class Record
     private $ast;
 
     /**
-     * TypeRecord constructor.
-     * @param string $name
+     * @var Readable
+     */
+    private $file;
+
+    /**
+     * Record constructor.
+     * @param null|string $fqn
      * @param string $type
      * @param int $offset
+     * @param NodeInterface $ast
      */
-    public function __construct(string $fqn, string $type, int $offset)
+    public function __construct(string $fqn, string $type, int $offset, NodeInterface $ast)
     {
         $this->fqn    = $fqn;
         $this->type   = $type;
         $this->offset = $offset;
+        $this->ast    = $ast;
+    }
+
+    /**
+     * @param Readable $readable
+     * @return Record
+     */
+    public function setFile(Readable $readable): Record
+    {
+        $this->file = $readable;
+
+        return $this;
+    }
+
+    /**
+     * @return Readable
+     */
+    public function getFile(): Readable
+    {
+        \assert($this->file !== null);
+
+        return $this->file;
     }
 
     /**
@@ -58,12 +97,11 @@ class Record
     }
 
     /**
-     * @param RuleInterface $ast
-     * @return Record
+     * @param string $namespace
      */
-    public function setAst(RuleInterface $ast): self
+    public function setNamespace(string $namespace): Record
     {
-        $this->ast = $ast;
+        $this->namespace = $namespace ?: null;
 
         return $this;
     }
@@ -73,6 +111,10 @@ class Record
      */
     public function getFullyQualifiedName(): string
     {
+        if ($this->namespace) {
+            return $this->namespace . '/' . $this->fqn;
+        }
+
         return $this->fqn;
     }
 
@@ -98,8 +140,8 @@ class Record
     public function __debugInfo(): array
     {
         return [
-            'type'   => $this->type,
             'fqn'    => $this->fqn,
+            'type'   => $this->type,
             'offset' => $this->offset,
         ];
     }

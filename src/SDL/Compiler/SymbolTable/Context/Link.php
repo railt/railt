@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\SDL\Compiler\SymbolTable;
+namespace Railt\SDL\Compiler\SymbolTable\Context;
 
 use Railt\Io\Readable;
 
@@ -42,5 +42,29 @@ class Link
         $this->from   = $from;
         $this->type   = $type;
         $this->module = $module;
+    }
+
+    /**
+     * @return Readable
+     */
+    public function getFrom(): Readable
+    {
+        return $this->from;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModule(): string
+    {
+        return $this->module;
     }
 }

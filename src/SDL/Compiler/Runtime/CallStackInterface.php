@@ -7,10 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\SDL\Runtime;
+namespace Railt\SDL\Compiler\Runtime;
 
 use Railt\Events\Observable;
-use Railt\Reflection\Contracts\Definition;
 use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
@@ -26,12 +25,7 @@ interface CallStackInterface extends \Countable, Observable
 
     /**
      * @param int $size
-     * @return CallStackInterface
+     * @return Record|null
      */
-    public function pop(int $size = 1): self;
-
-    /**
-     * @return Definition|null
-     */
-    public function last(): ?Definition;
+    public function pop(): ?Record;
 }

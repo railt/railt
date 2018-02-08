@@ -11,45 +11,32 @@ namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\SDL\Compiler\SymbolTable;
+use Railt\SDL\Compiler\SymbolTable\Context;
+use Railt\SDL\Compiler\SymbolTable\Extractors\Support\NameExtractor;
 
 /**
  * Class ImportExtractor
  */
-class ImportExtractor extends BaseExtractor
+class ImportExtractor implements Extractor
 {
-    /**
-     * @return array|string[]
-     */
-    protected function getNodeNames(): array
-    {
-        return ['#ImportDefinition'];
-    }
+    use NameExtractor;
 
     /**
-     * @param SymbolTable $table
+     * @param Context $ctx
      * @param RuleInterface $node
-     * @return \Traversable
      */
-    public function extract(SymbolTable $table, RuleInterface $node): \Traversable
+    public function extract(Context $ctx, RuleInterface $node): void
     {
-        [$types, $from] = [[], null];
+        $targets = [];
 
-        foreach ($node->getChildren() as $child) {
-            switch (true) {
-                case $child->is('#TypeName'):
-                    $types[] = $this->fqn($child);
-                    break;
-
-                case $child->is('#ImportFrom'):
-                    $from = $this->fqn($child->getChild(0));
-                    break 2;
-            }
+        foreach ($node->find('#ImportTarget', 0)->getChildren() as $target) {
+            $targets[] = $this->fqn($target, self::I_NAME);
         }
 
-        foreach ((array)$types as $type) {
-            $table->addLink($type, $from);
-        }
+        $from = $this->fqn($node->find('#ImportFrom', 0)->getChild(0), self::I_NAME);
 
-        return new \EmptyIterator();
+        foreach ($targets as $target) {
+            $ctx->addLink($target, $from);
+        }
     }
 }

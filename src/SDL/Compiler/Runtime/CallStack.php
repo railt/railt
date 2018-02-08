@@ -7,10 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\SDL\Runtime;
+namespace Railt\SDL\Compiler\Runtime;
 
 use Railt\Events\Observer;
-use Railt\Reflection\Contracts\Definition;
 use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
@@ -21,7 +20,7 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     use Observer;
 
     /**
-     * @var \SplStack|Definition[]
+     * @var \SplStack|Record[]
      */
     protected $stack;
 
@@ -55,24 +54,15 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     }
 
     /**
-     * @param int $size
-     * @return CallStack|$this|static
+     * @return ?Record
      */
-    public function pop(int $size = 1): CallStackInterface
+    public function pop(): ?Record
     {
-        for ($i = 0; $i < $size; ++$i) {
-            $this->notify($this->last());
+        if ($this->count() > 0) {
+            return $this->notify($this->stack->pop());
         }
 
-        return $this;
-    }
-
-    /**
-     * @return Definition|null
-     */
-    public function last(): ?Definition
-    {
-        return $this->stack->count() > 0 ? $this->stack->pop() : null;
+        return null;
     }
 
     /**

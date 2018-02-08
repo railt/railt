@@ -1,6 +1,6 @@
 %pragma root Document
 %pragma lexer.unicode true
-%pragma parser.lookahead 256
+%pragma parser.lookahead 4
 
 //
 // --------------------------------------------------------------------------

@@ -9,9 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\Exceptions;
 
+use Railt\SDL\Compiler\Runtime\CallStackInterface;
+
 /**
- * An internal compiler error exception.
+ * Interface CompilerException
  */
-class CompilerException extends \RuntimeException
+interface CompilerException extends \Throwable
 {
+    /**
+     * SchemaException constructor.
+     * @param string $message
+     * @param CallStackInterface $stack
+     * @param \Throwable|null $previous
+     */
+    public function __construct(string $message, CallStackInterface $stack, \Throwable $previous = null);
+
+    /**
+     * @return int
+     */
+    public function getColumn(): int;
 }

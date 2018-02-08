@@ -7,11 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Exception;
+namespace Railt\SDL\Compiler\Exceptions;
 
 /**
- * Class InvalidPragmaException
+ * Class TypeException
  */
-class InvalidPragmaException extends Exception
+class TypeException extends BaseCompilerException
 {
+
 }
