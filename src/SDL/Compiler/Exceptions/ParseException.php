@@ -14,5 +14,4 @@ namespace Railt\SDL\Compiler\Exceptions;
  */
 class ParseException extends BaseCompilerException
 {
-
 }

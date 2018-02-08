@@ -60,7 +60,7 @@ trait NameExtractor
                     /** @var LeafInterface $token */
                     $token = $child->getChild(0);
 
-                    $offset = $token->getOffset();
+                    $offset  = $token->getOffset();
                     $parts[] = $token->getValue();
             }
         }

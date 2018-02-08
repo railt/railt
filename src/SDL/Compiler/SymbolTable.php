@@ -11,7 +11,6 @@ namespace Railt\SDL\Compiler;
 
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Io\Readable;
-use Railt\SDL\Compiler\Exceptions\LinkerException;
 use Railt\SDL\Compiler\Exceptions\TypeConflictException;
 use Railt\SDL\Compiler\Runtime\CallStackInterface;
 use Railt\SDL\Compiler\SymbolTable\Context;
@@ -21,7 +20,6 @@ use Railt\SDL\Compiler\SymbolTable\Extractors\InterfaceExtractor;
 use Railt\SDL\Compiler\SymbolTable\Extractors\NamespaceExtractor;
 use Railt\SDL\Compiler\SymbolTable\Extractors\ObjectExtractor;
 use Railt\SDL\Compiler\SymbolTable\Extractors\SchemaExtractor;
-use Railt\SDL\Compiler\SymbolTable\Record;
 
 /**
  * The Symbol Table contains a list of all type

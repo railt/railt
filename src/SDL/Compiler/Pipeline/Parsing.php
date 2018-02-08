@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\Pipeline;
 
-use Railt\Io\Readable;
+use Railt\Compiler\Exception\Exception;
 use Railt\Compiler\Parser;
+use Railt\Io\Readable;
 use Railt\SDL\Compiler\Exceptions\ParseException;
 use Railt\SDL\Compiler\Parser\Factory;
 use Railt\SDL\Compiler\Runtime\CallStackInterface;
-use Railt\Compiler\Exception\Exception;
 
 /**
  * Class Parsing
@@ -40,7 +40,7 @@ class Parsing implements Stage
     public function __construct(CallStackInterface $stack, Parser $parser = null)
     {
         $this->parser = $parser ?? (new Factory())->getParser();
-        $this->stack = $stack;
+        $this->stack  = $stack;
     }
 
     /**
