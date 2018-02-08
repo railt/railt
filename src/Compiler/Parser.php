@@ -191,11 +191,9 @@ class Parser
             }
 
             if ($this->backtrack() === false) {
-                $token = $this->errorToken;
-
-                if ($this->errorToken === null) {
-                    $token = $this->buffer->current();
-                }
+                $token = (function() {
+                    return $this->_buffer->top()[1];
+                })->call($this->buffer);
 
                 $error = \vsprintf('Unexpected token "%s" (%s)', [
                     $token[LexicalToken::T_VALUE],
