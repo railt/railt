@@ -41,8 +41,8 @@ abstract class BaseCompilerException extends \DomainException implements Compile
 
         $latest = $this->renderer->getLastRenderer();
 
-        $this->file = $latest->getFile();
-        $this->line = $latest->getLine();
+        $this->file   = $latest->getFile();
+        $this->line   = $latest->getLine();
         $this->column = $latest->getColumn();
     }
 
@@ -62,7 +62,7 @@ abstract class BaseCompilerException extends \DomainException implements Compile
         return \vsprintf('%s: %s %s', [
             static::class,
             $this->getMessage(),
-            $this->renderer->getLastRenderer()->toMessageString()
+            $this->renderer->getLastRenderer()->toMessageString(),
         ]);
     }
 

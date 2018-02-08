@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\SymbolTable\Extractors;
 
-use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\SymbolTable\Context;
 use Railt\SDL\Compiler\SymbolTable\Extractors\Support\NameExtractor;
 use Railt\SDL\Compiler\SymbolTable\Record;

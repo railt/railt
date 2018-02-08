@@ -29,11 +29,11 @@ class RecordTraceRenderer extends BaseTraceRenderer
     {
         $this->record   = $record;
 
-        $file = $record->getFile();
+        $file     = $record->getFile();
         $position = $file->getPosition($record->getOffset());
 
-        $this->file = $file->getPathname();
-        $this->line = $position->getLine();
+        $this->file   = $file->getPathname();
+        $this->line   = $position->getLine();
         $this->column = $position->getColumn();
     }
 

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Pipeline;
 
 use Railt\Io\Readable;
-use Railt\SDL\Compiler\SymbolTable;
 use Railt\SDL\Compiler\Runtime\CallStackInterface;
+use Railt\SDL\Compiler\SymbolTable;
 
 /**
  * Class Linking
