@@ -12,14 +12,13 @@ namespace Railt\SDL\Compiler\SymbolTable;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Io\Readable;
-use Railt\SDL\Compiler\SymbolTable;
 
 /**
  * Class Record
  */
 class Record
 {
-    public const TYPE_AST = '#Node';
+    public const TYPE_AST    = '#Node';
     public const TYPE_SCHEMA = 'Schema';
 
     /**
@@ -71,7 +70,7 @@ class Record
      * @param Readable $readable
      * @return Record
      */
-    public function setFile(Readable $readable): Record
+    public function setFile(Readable $readable): self
     {
         $this->file = $readable;
 
@@ -99,7 +98,7 @@ class Record
     /**
      * @param string $namespace
      */
-    public function setNamespace(string $namespace): Record
+    public function setNamespace(string $namespace): self
     {
         $this->namespace = $namespace ?: null;
 

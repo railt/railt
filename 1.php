@@ -14,4 +14,3 @@ try {
 } catch (Throwable $e) {
     echo $e;
 }
-

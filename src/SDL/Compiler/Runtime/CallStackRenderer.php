@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\Runtime;
+
 use Railt\SDL\Compiler\Runtime\CallStackRenderer\PhpTraceRenderer;
 use Railt\SDL\Compiler\Runtime\CallStackRenderer\RecordTraceRenderer;
 use Railt\SDL\Compiler\Runtime\CallStackRenderer\TraceRenderer;
@@ -44,7 +45,7 @@ class CallStackRenderer
     private function add(TraceRenderer $renderer): void
     {
         if ($this->last === null) {
-             $this->last = $renderer;
+            $this->last = $renderer;
         } else {
             $this->trace[] = $renderer;
         }
