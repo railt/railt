@@ -57,6 +57,6 @@ class RouterServiceProvider extends BaseServiceProvider
      */
     private function getRouteDirective(): Readable
     {
-        return File::fromPathname(__DIR__.'/graphql/route.graphqls');
+        return File::fromPathname(__DIR__ . '/graphql/route.graphqls');
     }
 }
