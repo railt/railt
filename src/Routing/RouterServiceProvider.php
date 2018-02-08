@@ -7,11 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\ServiceProviders;
+namespace Railt\Routing;
 
+use Railt\Foundation\ServiceProviders\BaseServiceProvider;
+use Railt\Io\File;
+use Railt\Io\Readable;
+use Railt\Routing\Contracts\RegistryInterface;
 use Railt\Routing\Contracts\RouterInterface;
-use Railt\Routing\GraphQL\RouterDocument;
-use Railt\Routing\Router;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**
@@ -30,6 +32,11 @@ class RouterServiceProvider extends BaseServiceProvider
     private $router;
 
     /**
+     * @var RegistryInterface
+     */
+    private $registry;
+
+    /**
      * @param CompilerInterface $compiler
      * @return void
      */
@@ -37,9 +44,19 @@ class RouterServiceProvider extends BaseServiceProvider
     {
         $this->compiler = $compiler;
         $this->router   = new Router($this->getContainer());
+        $this->registry = new Registry();
 
         $this->instance(RouterInterface::class, $this->router);
+        $this->instance(RegistryInterface::class, $this->registry);
 
-        $compiler->add(new RouterDocument($compiler->getDictionary()));
+        $compiler->compile($this->getRouteDirective());
+    }
+
+    /**
+     * @return Readable
+     */
+    private function getRouteDirective(): Readable
+    {
+        return File::fromPathname(__DIR__.'/graphql/route.graphqls');
     }
 }

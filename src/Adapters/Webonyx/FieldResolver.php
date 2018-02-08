@@ -18,7 +18,6 @@ use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Routing\Contracts\InputInterface;
 use Railt\Routing\Contracts\RouterInterface;
-use Railt\Routing\GraphQL\RouteDirective;
 use Railt\Routing\Route;
 
 /**
@@ -26,9 +25,10 @@ use Railt\Routing\Route;
  */
 class FieldResolver
 {
-    private const DIRECTIVE           = RouteDirective::DIRECTIVE_NAME;
-    private const DIRECTIVE_ACTION    = RouteDirective\ActionArgument::ARGUMENT_NAME;
-    private const DIRECTIVE_OPERATION = RouteDirective\OperationArgument::ARGUMENT_NAME;
+    private const DIRECTIVE           = 'route';
+    private const DIRECTIVE_ACTION    = 'action';
+    private const DIRECTIVE_OPERATION = 'operation';
+    private const DIRECTIVE_RELATION  = 'relation';
 
     /**
      * @var ContainerInterface
@@ -64,6 +64,12 @@ class FieldResolver
 
 
         if (! $this->router->has($object)) {
+            $type = $field->getTypeDefinition();
+
+            if ($type instanceof ObjectDefinition && ! $field->isList()) {
+                return function () { return []; };
+            }
+
             return null;
         }
 
@@ -100,9 +106,14 @@ class FieldResolver
         $directive = $field->getDirective(self::DIRECTIVE);
 
         $urn = (string)$directive->getPassedArgument(self::DIRECTIVE_ACTION);
+        $relation = $directive->getPassedArgument(self::DIRECTIVE_RELATION);
 
-        $this->router->route($object, $field->getName())
+        $route = $this->router->route($object, $field->getName())
             ->then($this->createCallback($urn));
+
+        if ($relation['parent'] && $relation['child']) {
+            $route->relation($relation['parent'], $relation['child']);
+        }
 
         // TODO Add operations
         // TODO Add method
