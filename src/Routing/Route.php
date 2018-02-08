@@ -11,6 +11,8 @@ namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Routing\Contracts\InputInterface;
+use Railt\Routing\Contracts\RegistryInterface;
 
 /**
  * Class Route
@@ -35,6 +37,11 @@ class Route
     private $container;
 
     /**
+     * @var RegistryInterface
+     */
+    private $registry;
+
+    /**
      * @var string
      */
     private $field = self::FIELD_ANY;
@@ -45,6 +52,16 @@ class Route
     private $operations = [];
 
     /**
+     * @var String
+     */
+    private $parent;
+
+    /**
+     * @var String
+     */
+    private $child;
+
+    /**
      * Route constructor.
      * @param ContainerInterface $container
      * @param TypeDefinition $type
@@ -53,6 +70,7 @@ class Route
     {
         $this->type      = $type;
         $this->container = $container;
+        $this->registry  = $container->make(RegistryInterface::class);
     }
 
     /**
@@ -75,6 +93,17 @@ class Route
         $this->operations = \array_merge($this->operations, $operations);
 
         return $this;
+    }
+
+    /**
+     * @param string $parent
+     * @param string $child
+     * @return void
+     */
+    public function relation(string $parent, string $child): void
+    {
+        $this->parent = $parent;
+        $this->child  = $child;
     }
 
     /**
@@ -127,6 +156,67 @@ class Route
      */
     public function call(array $params = [])
     {
-        return $this->container->call($this->getAction(), $params);
+        $path = $params[InputInterface::class]->getPath();
+
+        if ($this->isOneCallPerParent()) {
+            return $this->oneCallPerParent($path, $params);
+        }
+
+        return $this->oneCallPerItem($path, $params);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isOneCallPerParent(): bool
+    {
+        return $this->parent && $this->child;
+    }
+
+    /**
+     * @param string $path
+     * @param array $params
+     * @return mixed
+     */
+    private function oneCallPerItem(string $path, array $params)
+    {
+        $this->registry->set($path, $this->container->call($this->getAction(), $params));
+
+        return $this->registry->get($path);
+    }
+
+    /**
+     * @param $path
+     * @param $params
+     * @return array
+     */
+    private function oneCallPerParent($path, $params)
+    {
+        if (! $this->registry->has($path)) {
+            $this->oneCallPerItem($path, \array_merge($params, [
+                'parent' => $this->registry->get($this->getParentPath($path)),
+            ]));
+        }
+
+        $data = [];
+        foreach ($this->registry->get($path) as $child) {
+            if ($child[$this->child] === $params['parent'][$this->parent]) {
+                $data[] = $child;
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    private function getParentPath(string $path): string
+    {
+        $parts = \explode('.', $path);
+        \array_pop($parts);
+
+        return \implode('.', $parts);
     }
 }
