@@ -191,7 +191,7 @@ class Parser
             }
 
             if ($this->backtrack() === false) {
-                $token = (function() {
+                $token = (function () {
                     return $this->_buffer->top()[1];
                 })->call($this->buffer);
 
