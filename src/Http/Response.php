@@ -146,8 +146,8 @@ class Response implements ResponseInterface
     {
         $result = [];
 
-        foreach ($this->errors as $error) {
-            $result[] = $this->formatError($error, $this->debug);
+        foreach ($this->errors as $key => $error) {
+            $result[] = [$key => $this->formatError($error, $this->debug)];
         }
 
         return $result;
@@ -164,9 +164,9 @@ class Response implements ResponseInterface
     /**
      * @param mixed $error
      * @param bool $debug
-     * @return array
+     * @return mixed
      */
-    private function formatError($error, bool $debug = false): array
+    private function formatError($error, bool $debug = false)
     {
         switch (true) {
             case $error instanceof Arrayable:
@@ -179,7 +179,7 @@ class Response implements ResponseInterface
                 return $error->jsonSerialize();
         }
 
-        return (array)$error;
+        return $error;
     }
 
     /**
