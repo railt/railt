@@ -26,6 +26,7 @@ class Registry
         Definitions\InterfaceDefinition::class => Builders\InterfaceBuilder::class,
         Definitions\DirectiveDefinition::class => Builders\DirectiveBuilder::class,
         Definitions\ScalarDefinition::class    => Builders\ScalarBuilder::class,
+        Definitions\EnumDefinition::class      => Builders\EnumBuilder::class,
     ];
 
     /**
