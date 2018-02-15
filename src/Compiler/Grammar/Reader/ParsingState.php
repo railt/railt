@@ -24,9 +24,9 @@ class ParsingState implements State
     /**@#+
      * Rule body info
      */
-    public const I_RULE_FILE = 0x00;
+    public const I_RULE_FILE   = 0x00;
     public const I_RULE_OFFSET = 0x01;
-    public const I_RULE_BODY = 0x02;
+    public const I_RULE_BODY   = 0x02;
     /**@#-*/
 
     /**

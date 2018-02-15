@@ -53,7 +53,7 @@ final class Position
 
         foreach (\explode("\n", $sources) as $line => $text) {
             $previous = $current;
-            $current  += \strlen($text) + 1;
+            $current += \strlen($text) + 1;
 
             if ($current > $bytesOffset) {
                 return [$line + 1, $bytesOffset - $previous, $bytesOffset];

@@ -55,7 +55,7 @@ class File implements Readable
      * @throws \Railt\Io\Exceptions\NotReadableException
      * @throws \InvalidArgumentException
      */
-    public static function fromSplFileInfo(\SplFileInfo $info): File
+    public static function fromSplFileInfo(\SplFileInfo $info): self
     {
         return static::fromPathname($info->getPathname());
     }
@@ -65,7 +65,7 @@ class File implements Readable
      * @return File|Readable
      * @throws \Railt\Io\Exceptions\NotReadableException
      */
-    public static function fromPathname(string $path): File
+    public static function fromPathname(string $path): self
     {
         if (! \is_file($path)) {
             throw NotFoundException::fromFilePath($path);

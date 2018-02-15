@@ -16,5 +16,4 @@ use Railt\Tests\AbstractTestCase;
  */
 abstract class AbstractIoTestCase extends AbstractTestCase
 {
-
 }

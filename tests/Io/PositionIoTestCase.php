@@ -28,9 +28,9 @@ class PositionIoTestCase extends AbstractIoTestCase
 
             $position = $b->getPosition($i);
 
-            $this->assertEquals($i, $position->getOffset(), 'Invalid offset');
-            $this->assertEquals(\count($lines), $position->getLine(), 'Invalid line');
-            $this->assertEquals(\strlen($lines[\count($lines) - 1]), $position->getColumn(), 'Invalid column');
+            $this->assertSame($i, $position->getOffset(), 'Invalid offset');
+            $this->assertSame(\count($lines), $position->getLine(), 'Invalid line');
+            $this->assertSame(\strlen($lines[\count($lines) - 1]), $position->getColumn(), 'Invalid column');
         }
     }
 
@@ -45,8 +45,8 @@ class PositionIoTestCase extends AbstractIoTestCase
 
         $position = $b->getPosition(\PHP_INT_MAX);
 
-        $this->assertEquals(\strlen($b->getContents()), $position->getOffset(), 'Invalid offset');
-        $this->assertEquals($lines, $position->getLine(), 'Invalid line');
-        $this->assertEquals(0, $position->getColumn(), 'Invalid column');
+        $this->assertSame(\strlen($b->getContents()), $position->getOffset(), 'Invalid offset');
+        $this->assertSame($lines, $position->getLine(), 'Invalid line');
+        $this->assertSame(0, $position->getColumn(), 'Invalid column');
     }
 }

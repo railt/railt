@@ -14,5 +14,4 @@ namespace Railt\Compiler\Grammar\Exceptions;
  */
 class InvalidRuleException extends GrammarException
 {
-
 }
