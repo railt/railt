@@ -14,5 +14,4 @@ namespace Railt\Compiler\Grammar\Exceptions;
  */
 class InvalidInclusionException extends GrammarException
 {
-
 }

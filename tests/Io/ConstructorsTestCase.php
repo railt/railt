@@ -25,8 +25,8 @@ class ConstructorsTestCase extends TestCase
         $a = File::fromPathname(__DIR__ . '/.resources/b.txt');
         $b = File::fromReadable($a);
 
-        $this->assertEquals($a->getContents(), $b->getContents());
-        $this->assertEquals($a->getHash(), $b->getHash());
+        $this->assertSame($a->getContents(), $b->getContents());
+        $this->assertSame($a->getHash(), $b->getHash());
     }
 
     /**
@@ -37,6 +37,6 @@ class ConstructorsTestCase extends TestCase
         $a = File::fromPathname(__DIR__ . '/.resources/b.txt');
         $b = File::fromSplFileInfo(new \SplFileInfo(__DIR__ . '/.resources/b.txt'));
 
-        $this->assertEquals($a->getContents(), $b->getContents());
+        $this->assertSame($a->getContents(), $b->getContents());
     }
 }

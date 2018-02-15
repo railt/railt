@@ -25,8 +25,8 @@ class DeclarationIoTestCase extends AbstractIoTestCase
 
         $declaration = $a->getDeclaration();
 
-        $this->assertEquals(__LINE__ - 4, $declaration->getLine());
-        $this->assertEquals(__FILE__, $declaration->getPathname());
-        $this->assertEquals(__CLASS__, $declaration->getClass());
+        $this->assertSame(__LINE__ - 4, $declaration->getLine());
+        $this->assertSame(__FILE__, $declaration->getPathname());
+        $this->assertSame(__CLASS__, $declaration->getClass());
     }
 }

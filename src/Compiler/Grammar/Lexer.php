@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar;
 
-use Railt\Lexer\Lexer as BaseLexer;
 use Railt\Lexer\Configuration;
+use Railt\Lexer\Lexer as BaseLexer;
 use Railt\Lexer\Tokens\Channel;
 
 /**

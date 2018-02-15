@@ -14,5 +14,4 @@ namespace Railt\Compiler\Exceptions;
  */
 class UnexpectedTokenException extends ParserException
 {
-
 }

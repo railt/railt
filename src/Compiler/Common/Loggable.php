@@ -59,7 +59,7 @@ trait Loggable
     protected function loggerDepthIn(): bool
     {
         if ($this->logger !== null) {
-            $this->logger->depth++;
+            ++$this->logger->depth;
         }
 
         return true;
@@ -71,7 +71,7 @@ trait Loggable
     protected function loggerDepthOut(): bool
     {
         if ($this->logger !== null) {
-            $this->logger->depth--;
+            --$this->logger->depth;
         }
 
         return true;

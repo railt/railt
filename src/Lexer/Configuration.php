@@ -14,13 +14,13 @@ use Railt\Lexer\Exceptions\UnrecognizedTokenException;
 
 /**
  * Class Configuration
- * @property-read bool $verifyUnrecognizedTokens
- * @property-read string|LexerException $unrecognizedTokenException
- * @property-read bool $addEndOfFileToken
- * @property-read bool $modeIsUnicode
- * @property-read bool $modeMultiline
- * @property-read bool $modeDotAll
- * @property-read bool $pcreJit
+ * @property bool $verifyUnrecognizedTokens
+ * @property string|LexerException $unrecognizedTokenException
+ * @property bool $addEndOfFileToken
+ * @property bool $modeIsUnicode
+ * @property bool $modeMultiline
+ * @property bool $modeDotAll
+ * @property bool $pcreJit
  */
 final class Configuration
 {
@@ -74,7 +74,7 @@ final class Configuration
      * @param iterable $options
      * @return static|Configuration
      */
-    public static function new(iterable $options = []): Configuration
+    public static function new(iterable $options = []): self
     {
         return new static($options);
     }
@@ -93,7 +93,7 @@ final class Configuration
      * @param $value
      * @throws \LogicException
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, $value): void
     {
         if ($this->__isset($name)) {
             throw new \LogicException('Could not update already configured value "' . $name . '"');

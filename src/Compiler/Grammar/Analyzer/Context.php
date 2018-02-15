@@ -128,6 +128,5 @@ class Context
 
     public function reduce(): void
     {
-
     }
 }
