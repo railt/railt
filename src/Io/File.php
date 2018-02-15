@@ -15,7 +15,7 @@ use Railt\Io\Exceptions\NotReadableException;
 /**
  * Class File
  */
-class File implements Writable
+class File implements Readable
 {
     /**
      * @var string
@@ -39,40 +39,36 @@ class File implements Writable
 
     /**
      * File constructor.
-     * @param string $contents
-     * @param string $name
+     * @param string|null $contents
+     * @param string|null $name
      */
-    public function __construct(string $contents, string $name = null)
+    public function __construct(string $contents = null, string $name = null)
     {
         $this->declaration = Declaration::make(Readable::class);
-        $this->contents    = $contents;
+        $this->contents    = $this->contents ?? $contents ?? '';
         $this->name        = $name ?? 'php://input';
     }
 
     /**
      * @param \SplFileInfo $info
-     * @return File
+     * @return File|Readable
      * @throws \Railt\Io\Exceptions\NotReadableException
      * @throws \InvalidArgumentException
      */
-    public static function fromSplFileInfo(\SplFileInfo $info): Writable
+    public static function fromSplFileInfo(\SplFileInfo $info): File
     {
         return static::fromPathname($info->getPathname());
     }
 
     /**
      * @param string $path
-     * @return Writable
+     * @return File|Readable
      * @throws \Railt\Io\Exceptions\NotReadableException
      */
-    public static function fromPathname(string $path): Writable
+    public static function fromPathname(string $path): File
     {
         if (! \is_file($path)) {
             throw NotFoundException::fromFilePath($path);
-        }
-
-        if (! \is_readable($path)) {
-            throw NotReadableException::fromFilePath(\realpath($path));
         }
 
         $contents = \file_get_contents($path);
@@ -103,17 +99,6 @@ class File implements Writable
         $class = $readable->isFile() ? static::class : VirtualFile::class;
 
         return new $class($readable->getContents(), $readable->getPathname());
-    }
-
-    /**
-     * @param string $content
-     * @return Writable
-     */
-    public function update(string $content): Writable
-    {
-        \file_put_contents($this->getPathname(), $content);
-
-        return new static($content, $this->name);
     }
 
     /**

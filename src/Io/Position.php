@@ -14,10 +14,6 @@ namespace Railt\Io;
  */
 final class Position
 {
-    private const INDEX_LINE            = 0x00;
-    private const INDEX_COLUMN          = 0x01;
-    private const INDEX_AFFECTED_SOURCE = 0x02;
-
     /**
      * @var int
      */
@@ -34,22 +30,13 @@ final class Position
     private $offset = 0;
 
     /**
-     * @var string
-     */
-    private $affectedSourceLine = '';
-
-    /**
      * Position constructor.
      * @param string $sources
      * @param int $offset
      */
     public function __construct(string $sources, int $offset)
     {
-        [
-            self::INDEX_LINE            => $this->line,
-            self::INDEX_COLUMN          => $this->column,
-            self::INDEX_AFFECTED_SOURCE => $this->affectedSourceLine,
-        ] = $this->getInformation($sources, $offset);
+        [$this->line, $this->column, $this->offset] = $this->getInformation($sources, $offset);
     }
 
     /**
@@ -61,63 +48,19 @@ final class Position
      */
     private function getInformation(string $sources, int $bytesOffset): array
     {
-        $trace  = [];
-        $result = [
-            self::INDEX_LINE            => 1,
-            self::INDEX_COLUMN          => 0,
-            self::INDEX_AFFECTED_SOURCE => '',
-        ];
-
-        $current = 0;
+        $line     = 0;
+        $current  = 0;
 
         foreach (\explode("\n", $sources) as $line => $text) {
             $previous = $current;
-            $current += \strlen($text) + 1;
-            $trace[]  = $text;
+            $current  += \strlen($text) + 1;
 
             if ($current > $bytesOffset) {
-                return [
-                    self::INDEX_LINE            => $line + 1,
-                    self::INDEX_COLUMN          => $bytesOffset - $previous,
-                    self::INDEX_AFFECTED_SOURCE => $this->parseAffectedSourceLine($trace),
-                ];
+                return [$line + 1, $bytesOffset - $previous, $bytesOffset];
             }
         }
 
-        return $result;
-    }
-
-    /**
-     * Returns the last line with an error. If the error occurred on
-     * the line where there is no visible part, before complements
-     * it with the previous ones.
-     *
-     * @param array|string[] $textLines List of text lines
-     * @return string
-     */
-    private function parseAffectedSourceLine(array $textLines): string
-    {
-        $result = '';
-        $i      = 0;
-
-        while (\count($textLines) && ++$i) {
-            $textLine = \array_pop($textLines);
-            $result   = $textLine . ($i > 1 ? "\n" . $result : '');
-
-            if (\trim($textLine)) {
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAffectedSourceLine(): string
-    {
-        return $this->affectedSourceLine;
+        return [$line, 0, $current - 1];
     }
 
     /**

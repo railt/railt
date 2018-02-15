@@ -158,10 +158,6 @@ class Generator
 
         // Resolve default node ID.
         if (($defaultNodeId = $rule->getDefaultId()) !== null) {
-            if ($rule->getDefaultOptions()) {
-                $defaultNodeId .= ':' . \implode('', $rule->getDefaultOptions());
-            }
-
             $result .= self::INDENTION . '$this->getRule(' . $arguments['name'] . ')' .
                 '->setDefaultId(' . $this->value($defaultNodeId, true) . ');';
         }

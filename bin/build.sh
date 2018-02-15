@@ -2,6 +2,7 @@
 git subsplit init git@github.com:railt/railt.git
 git subsplit publish --heads="master 1.x" --no-tags src/SDL:git@github.com:railt/sdl.git
 git subsplit publish --heads="master 1.x" --no-tags src/Compiler:git@github.com:railt/compiler.git
+git subsplit publish --heads="master 1.x" --no-tags src/Lexer:git@github.com:railt/lexer.git
 git subsplit publish --heads="master 1.x" --no-tags src/Reflection:git@github.com:railt/reflection.git
 git subsplit publish --heads="master 1.x" --no-tags src/Container:git@github.com:railt/container.git
 git subsplit publish --heads="master 1.x" --no-tags src/Http:git@github.com:railt/http.git

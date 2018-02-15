@@ -15,15 +15,6 @@ namespace Railt\Io;
 class VirtualFile extends File
 {
     /**
-     * @param string $content
-     * @return Writable
-     */
-    public function update(string $content): Writable
-    {
-        return new static($content, $this->getPathname());
-    }
-
-    /**
      * @return string
      */
     public function getHash(): string

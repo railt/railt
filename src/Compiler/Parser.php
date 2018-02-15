@@ -16,37 +16,31 @@ use Railt\Compiler\Ast\Node;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\Rule as AstRule;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\Compiler\Exception\Exception;
-use Railt\Compiler\Exception\UnexpectedTokenException;
-use Railt\Compiler\Grammar\Analyzer;
-use Railt\Compiler\Grammar\Parsers\Pragmas;
-use Railt\Compiler\Grammar\Pragmas\Lookahead;
-use Railt\Compiler\Grammar\Pragmas\Root;
+use Railt\Compiler\Exceptions\ParserException;
+use Railt\Compiler\Exceptions\UnexpectedTokenException;
+use Railt\Compiler\Grammar\Exceptions\InvalidPragmaException;
+use Railt\Compiler\Grammar\Lexer;
 use Railt\Compiler\Grammar\Reader;
-use Railt\Compiler\Lexer\Token as LexicalToken;
-use Railt\Compiler\Rule\Choice;
-use Railt\Compiler\Rule\Concatenation;
-use Railt\Compiler\Rule\Ekzit;
-use Railt\Compiler\Rule\Entry;
-use Railt\Compiler\Rule\Repetition;
-use Railt\Compiler\Rule\Rule;
-use Railt\Compiler\Rule\Token;
+use Railt\Compiler\Grammar\Rule\Choice;
+use Railt\Compiler\Grammar\Rule\Concatenation;
+use Railt\Compiler\Grammar\Rule\Ekzit;
+use Railt\Compiler\Grammar\Rule\Entry;
+use Railt\Compiler\Grammar\Rule\Repetition;
+use Railt\Compiler\Grammar\Rule\Rule;
+use Railt\Compiler\Grammar\Rule\Token;
+use Railt\Compiler\Pragma\ParserLookahead;
+use Railt\Compiler\Pragma\ParserRootRule;
 use Railt\Io\Readable;
 
 /**
- * Class \Railt\Compiler\Parser.
- *
- * LL(k) parser.
- *
- * @copyright Copyright © 2007-2017 Hoa community
- * @license New BSD License
+ * Class Parser
  */
 class Parser
 {
     /**
      * List of pragmas.
      *
-     * @var array
+     * @var Pragma
      */
     protected $pragmas;
 
@@ -56,14 +50,6 @@ class Parser
      * @var array
      */
     protected $skip;
-
-    /**
-     * Associative array (token name => token regex), to be defined in
-     * precedence order.
-     *
-     * @var array|array[]
-     */
-    protected $tokens;
 
     /**
      * Rules, to be defined as associative array, name => Rule object.
@@ -94,8 +80,6 @@ class Parser
     protected $trace = [];
 
     /**
-     * Stack of todo list.
-     *
      * @var array
      */
     protected $todo;
@@ -108,69 +92,51 @@ class Parser
     protected $depth = -1;
 
     /**
-     * @param Readable $grammar
-     * @return Parser
-     * @throws \LogicException
+     * @var Lexer
      */
-    public static function fromGrammar(Readable $grammar): self
-    {
-        $parser   = new Reader($grammar);
-        $analyzer = new Analyzer($parser->getTokens());
-
-        $rules = $analyzer->analyzeRules($parser->getRules());
-
-        return new static($parser->getTokens(), $rules, $parser->getPragmas());
-    }
+    private $lexer;
 
     /**
      * Construct the parser.
      *
-     * @param array $tokens Tokens.
+     * @param Lexer $lexer
      * @param array $rules Rules.
-     * @param array $pragmas Pragmas.
+     * @param Pragma|array $pragmas Pragma Pragmas.
+     * @throws \Railt\Compiler\Grammar\Exceptions\InvalidPragmaException
      */
-    public function __construct(array $tokens = [], array $rules = [], array $pragmas = [])
+    public function __construct(Lexer $lexer, array $rules, $pragmas)
     {
-        $this->tokens  = $tokens;
+        $this->lexer   = $lexer;
         $this->rules   = $rules;
-        $this->pragmas = $pragmas;
+        $this->pragmas = \is_array($pragmas) ? new Pragma($pragmas) : $pragmas;
     }
 
     /**
-     * @param array $pragmas
-     * @return int
+     * @param Readable $grammar
+     * @return Parser
+     * @throws \Railt\Compiler\Grammar\Exceptions\InvalidPragmaException
+     * @throws \Railt\Compiler\Grammar\Exceptions\GrammarException
      */
-    private function getLookahead(array $pragmas): int
+    public static function fromGrammar(Readable $grammar): self
     {
-        return Pragmas::get($pragmas, Lookahead::class);
-    }
+        $parser  = new Reader($grammar);
+        $pragmas = $parser->getPragmaDefinitions();
+        $lexer   = new Lexer($parser->getTokenDefinitions(), $pragmas->lexerConfiguration());
 
-    /**
-     * @param string $input
-     * @return Buffer
-     * @throws \Railt\Compiler\Exception\LexerException
-     * @throws \Railt\Compiler\Exception\InvalidPragmaException
-     */
-    private function getBuffer(string $input): Buffer
-    {
-        $lexer = new Lexer($input, $this->tokens, $this->pragmas);
-
-        return new Buffer($lexer->getIterator(), $this->getLookahead($this->pragmas));
+        return new static($lexer, $parser->getRuleDefinitions(), $pragmas);
     }
 
     /**
      * Parse :-).
      *
-     * @param string $text Text to parse.
+     * @param Readable $input Text to parse.
      * @return RuleInterface|LeafInterface|NodeInterface
-     * @throws \Railt\Compiler\Exception\LexerException
-     * @throws \Railt\Compiler\Exception\InvalidPragmaException
-     * @throws \Railt\Compiler\Exception\Exception
-     * @throws  UnexpectedTokenException
+     * @throws \Railt\Compiler\Exceptions\ParserException
+     * @throws \Railt\Compiler\Grammar\Exceptions\InvalidPragmaException
      */
-    public function parse(string $text): NodeInterface
+    public function parse(Readable $input): NodeInterface
     {
-        $this->buffer = $this->getBuffer($text);
+        $this->buffer = $this->getBuffer($input, $this->pragmas);
         $this->buffer->rewind();
 
         $this->errorToken = null;
@@ -186,56 +152,80 @@ class Parser
         do {
             $out = $this->unfold();
 
-            if ($out !== null && $this->buffer->current()[LexicalToken::T_TOKEN] === LexicalToken::T_EOF_NAME) {
+            if ($out !== null && $this->buffer->current()[Output::I_TOKEN_NAME] === Eof::T_NAME) {
                 break;
             }
 
             if ($this->backtrack() === false) {
                 $token = (function () {
                     return $this->_buffer->top()[1];
-                })->call($this->buffer);
+                })->call($this->buffer) ?: $this->buffer->current();
 
                 $error = \vsprintf('Unexpected token "%s" (%s)', [
-                    $token[LexicalToken::T_VALUE],
-                    $token[LexicalToken::T_TOKEN],
+                    $token[Output::I_TOKEN_BODY],
+                    $token[Output::I_TOKEN_NAME],
                 ]);
 
-                throw new UnexpectedTokenException($error, 0, null, [
-                    'input'  => $text,
-                    'offset' => $token[LexicalToken::T_OFFSET],
-                ]);
+                throw UnexpectedTokenException::fromFile(
+                    $error,
+                    $input,
+                    $input->getPosition($token[Output::I_TOKEN_OFFSET] ?? 0)
+                );
             }
         } while (true);
 
         $ast = $this->buildTree();
 
         if (! ($ast instanceof NodeInterface)) {
-            throw new Exception('Parsing error: cannot build AST, the trace is corrupted.', 1);
+            throw new ParserException('Parsing error: Cannot build AST, the trace is corrupted.', 1);
         }
 
         return $ast;
     }
 
     /**
+     * @param Readable $input
+     * @param Pragma $pragmas
+     * @return Buffer
+     * @throws \Railt\Compiler\Grammar\Exceptions\InvalidPragmaException
+     */
+    protected function getBuffer(Readable $input, Pragma $pragmas): Buffer
+    {
+        /** @var \Iterator $stream */
+        $stream = $this->lexer->read($input)
+            ->exceptChannel(Output::DEFAULT_SKIPPED_CHANNEL_NAME)
+            ->get();
+
+        return new Buffer($stream, $pragmas->get(ParserLookahead::getName()));
+    }
+
+    /**
      * Get root rule.
      *
      * @return string
-     * @throws \Railt\Compiler\Exception\Exception
+     * @throws \Railt\Compiler\Exceptions\ParserException
+     * @throws \Railt\Compiler\Grammar\Exceptions\InvalidPragmaException
      */
     public function getRootRule(): string
     {
-        $root = Pragmas::get($this->pragmas, Root::class);
+        $root = $this->pragmas->get(ParserRootRule::getName());
 
-        foreach ($this->rules as $rule => $i) {
-            switch (true) {
-                case $root === $rule:
+        if ($root === null) {
+            foreach ($this->rules as $rule => $i) {
+                if (\is_string($rule)) {
                     return $rule;
-                case $root === null && \is_string($rule):
-                    return $rule;
+                }
             }
+
+            throw new ParserException('Can not resolve root rule definition');
         }
 
-        throw new Exception('Can not resolve root rule definition.');
+        if (\array_key_exists($root, $this->rules)) {
+            return $root;
+        }
+
+        $error = \sprintf('The production rule "%s" defined by pragma does not exists', $root);
+        throw new InvalidPragmaException($error);
     }
 
     /**
@@ -273,20 +263,20 @@ class Parser
     /**
      * Parse current rule.
      *
-     * @param \Railt\Compiler\Rule\Rule $zeRule Current rule.
+     * @param Rule $zeRule Current rule.
      * @param int $next Next rule index.
      * @return bool
      */
-    protected function parseCurrentRule(Rule $zeRule, $next)
+    protected function parseCurrentRule(Rule $zeRule, $next): bool
     {
         if ($zeRule instanceof Token) {
-            $name = $this->buffer->current()['token'];
+            $name = $this->buffer->current()[Output::I_TOKEN_NAME];
 
             if ($zeRule->getTokenName() !== $name) {
                 return false;
             }
 
-            $value = $this->buffer->current()['value'];
+            $value = $this->buffer->current()[Output::I_TOKEN_BODY];
 
             if (0 <= $unification = $zeRule->getUnificationIndex()) {
                 for ($skip = 0, $i = \count($this->trace) - 1; $i >= 0; --$i) {
@@ -321,26 +311,7 @@ class Parser
 
             $zzeRule = clone $zeRule;
             $zzeRule->setValue($value);
-            $zzeRule->setOffset($current['offset']);
-
-            if (isset($this->tokens[$name])) {
-                $zzeRule->setRepresentation($this->tokens[$name]);
-            } else {
-                /** @var array $token */
-                foreach ($this->tokens as $_name => $token) {
-                    if (($pos = \strpos($_name, ':')) === false) {
-                        continue;
-                    }
-
-                    $_name = \substr($_name, 0, $pos);
-
-                    if ($_name === $name) {
-                        break;
-                    }
-                }
-
-                $zzeRule->setRepresentation($token[Lexer::INPUT_TOKEN_PATTERN]);
-            }
+            $zzeRule->setOffset($current[Output::I_TOKEN_OFFSET]);
 
             \array_pop($this->todo);
             $this->trace[] = $zzeRule;
@@ -349,6 +320,7 @@ class Parser
 
             return true;
         }
+
         if ($zeRule instanceof Concatenation) {
             if ($zeRule->isTransitional() === false) {
                 ++$this->depth;
@@ -370,6 +342,7 @@ class Parser
 
             return true;
         }
+
         if ($zeRule instanceof Choice) {
             $children = $zeRule->getChildren();
 
@@ -393,6 +366,7 @@ class Parser
 
             return true;
         }
+
         if ($zeRule instanceof Repetition) {
             $nextRule = $zeRule->getChildren();
 
@@ -426,7 +400,7 @@ class Parser
             }
             $max = $zeRule->getMax();
 
-            if ($max != -1 && $next > $max) {
+            if ($max !== -1 && $next > $max) {
                 return false;
             }
 
@@ -583,14 +557,48 @@ class Parser
     }
 
     /**
+     * @return iterable|array[]
+     */
+    public function getTokens(): iterable
+    {
+        return $this->tokens;
+    }
+
+    /**
+     * @return array|Rule[]
+     */
+    public function getRules(): iterable
+    {
+        return $this->rules;
+    }
+
+    /**
+     * @return iterable
+     */
+    public function getPragmas(): iterable
+    {
+        return \iterator_to_array($this->pragmas);
+    }
+
+    /**
+     * Get trace.
+     *
+     * @return array
+     */
+    public function getTrace(): array
+    {
+        return $this->trace;
+    }
+
+    /**
      * Try to merge directly children into an existing node.
      *
      * @param array &$children Current children being gathering.
      * @param array &$handle Children of the new node.
      * @param string $cId Node ID.
-     * @return  bool
+     * @return bool
      */
-    protected function mergeTree(&$children, &$handle, $cId)
+    protected function mergeTree(&$children, &$handle, $cId): bool
     {
         \end($children);
         $last = \current($children);
@@ -609,66 +617,5 @@ class Parser
         }
 
         return true;
-    }
-
-    /**
-     * Get trace.
-     *
-     * @return  array
-     */
-    public function getTrace()
-    {
-        return $this->trace;
-    }
-
-    /**
-     * Get pragmas.
-     *
-     * @return  array
-     */
-    public function getPragmas()
-    {
-        return $this->pragmas;
-    }
-
-    /**
-     * Get tokens.
-     *
-     * @return array
-     */
-    public function getTokens(): array
-    {
-        return $this->tokens;
-    }
-
-    /**
-     * Get the lexer iterator.
-     *
-     * @return Buffer
-     */
-    public function getTokenSequence(): Buffer
-    {
-        return $this->buffer;
-    }
-
-    /**
-     * Get rule by name.
-     *
-     * @param $name
-     * @return Rule|null
-     */
-    public function getRule($name): ?Rule
-    {
-        return $this->rules[$name] ?? null;
-    }
-
-    /**
-     * Get rules.
-     *
-     * @return array
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
     }
 }

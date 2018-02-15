@@ -3,13 +3,7 @@
     "type": "library",
     "description": "The Railt Input/Output and Filesystem utils.",
     "license": "MIT",
-    "keywords": [
-        "file",
-        "filesystem",
-        "fso",
-        "input",
-        "output"
-    ],
+    "keywords": ["file", "filesystem", "fso", "input", "output", "utils"],
     "homepage": "http://railt.org",
     "support": {
         "issues": "https://github.com/railt/railt/issues",
@@ -28,5 +22,10 @@
         "psr-4": {
             "Railt\\Io\\": "."
         }
-    }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
