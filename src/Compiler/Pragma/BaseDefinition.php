@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Pragma;
 
 use Railt\Compiler\Grammar\Exceptions\InvalidPragmaException;
-use Railt\Compiler\Pragma;
 
 /**
  * Class BaseDefinition

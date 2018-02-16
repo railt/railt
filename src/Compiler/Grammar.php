@@ -37,9 +37,9 @@ class Grammar implements GrammarDefinition
      * Grammar constructor.
      * @param iterable $tokens
      * @param iterable $rules
-     * @param iterable $pragmas
+     * @param Pragma $pragmas
      */
-    public function __construct(iterable $tokens = [], iterable $rules = [], iterable $pragmas = [])
+    public function __construct(iterable $tokens = [], iterable $rules = [], Pragma $pragmas)
     {
         $this->tokens  = $tokens;
         $this->rules   = $rules;
@@ -47,14 +47,13 @@ class Grammar implements GrammarDefinition
     }
 
     /**
-     * @param Readable $schema
+     * @param Readable $grammar
      * @return static
-     * @throws \Railt\Compiler\Lexer\Exceptions\LexerException
      * @throws \Railt\Compiler\Grammar\Exceptions\GrammarException
      */
-    public static function read(Readable $schema)
+    public static function read(Readable $grammar)
     {
-        $reader = new Reader($schema);
+        $reader = new Reader($grammar);
 
         return new static(
             $reader->getTokenDefinitions(),
@@ -80,9 +79,9 @@ class Grammar implements GrammarDefinition
     }
 
     /**
-     * @return iterable
+     * @return Pragma
      */
-    public function getPragmaDefinitions(): iterable
+    public function getPragmaDefinitions(): Pragma
     {
         return $this->pragmas;
     }

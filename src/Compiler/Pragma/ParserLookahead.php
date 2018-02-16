@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Pragma;
 
+use Railt\Runtime\Parser;
+
 /**
  * Class ParserLookahead
  */
@@ -19,7 +21,7 @@ class ParserLookahead extends BaseDefinition
      */
     public static function getName(): string
     {
-        return 'parser.lookahead';
+        return Parser::PRAGMA_LOOKAHEAD;
     }
 
     /**

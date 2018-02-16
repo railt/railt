@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Pragma;
 
+use Railt\Runtime\Parser;
+
 /**
  * Class ParserRootRule
  */
@@ -19,7 +21,7 @@ class ParserRootRule extends BaseDefinition
      */
     public static function getName(): string
     {
-        return 'parser.entry';
+        return Parser::PRAGMA_ROOT_RULE;
     }
 
     /**

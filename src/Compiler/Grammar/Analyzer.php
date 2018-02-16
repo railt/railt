@@ -12,9 +12,9 @@ namespace Railt\Compiler\Grammar;
 use Railt\Compiler\Grammar\Analyzer\Context;
 use Railt\Compiler\Grammar\Exceptions\InvalidRuleException;
 use Railt\Compiler\Grammar\Reader\ParsingState;
-use Railt\Compiler\Grammar\Rule\Rule;
-use Railt\Compiler\Lexer\Tokens\Eof;
-use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Lexer\Tokens\Eof;
+use Railt\Lexer\Tokens\Output;
+use Railt\Runtime\Rule\Rule;
 
 /**
  * Class Analyser
@@ -105,7 +105,7 @@ class Analyzer
     private function getRulesIterator(): \Traversable
     {
         foreach ($this->rules as $name => $rule) {
-            /** @var \SplStack $stack */
+            /** @var \SplQueue $stack */
             $stack = $rule[ParsingState::I_RULE_BODY];
 
             if ($stack->count() === 0) {
