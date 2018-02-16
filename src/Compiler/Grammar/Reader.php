@@ -27,9 +27,9 @@ class Reader implements GrammarDefinition
      * Current states list
      */
     private const STATE_CONFIGURE = 0x00;
-    private const STATE_LEXING = 0x01;
-    private const STATE_PARSING = 0x02;
-    private const STATE_INCLUDE = 0x04;
+    private const STATE_LEXING    = 0x01;
+    private const STATE_PARSING   = 0x02;
+    private const STATE_INCLUDE   = 0x04;
     /**@#-*/
 
     /**

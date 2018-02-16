@@ -22,7 +22,7 @@ class FileIoTestCase extends AbstractIoTestCase
     public function testPathname(): void
     {
         $a = File::fromPathname(__DIR__ . '/.resources/a.txt');
-        $this->assertEquals('a.txt', \basename($a->getPathname()));
+        $this->assertSame('a.txt', \basename($a->getPathname()));
     }
 
     /**
@@ -31,7 +31,7 @@ class FileIoTestCase extends AbstractIoTestCase
     public function testContents(): void
     {
         $a = File::fromPathname(__DIR__ . '/.resources/a.txt');
-        $this->assertEquals('example', \trim($a->getContents()));
+        $this->assertSame('example', \trim($a->getContents()));
     }
 
     /**
@@ -62,7 +62,7 @@ class FileIoTestCase extends AbstractIoTestCase
         $a = File::fromSources('');
         $b = File::fromSources('');
 
-        $this->assertEquals($a->getHash(), $b->getHash());
+        $this->assertSame($a->getHash(), $b->getHash());
     }
 
     /**
@@ -73,6 +73,6 @@ class FileIoTestCase extends AbstractIoTestCase
         $a = File::fromPathname(__DIR__ . '/.resources/b.txt');
         $b = File::fromPathname(__DIR__ . '/.resources/b.txt');
 
-        $this->assertEquals($a->getHash(), $b->getHash());
+        $this->assertSame($a->getHash(), $b->getHash());
     }
 }

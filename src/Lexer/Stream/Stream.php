@@ -18,31 +18,31 @@ interface Stream extends \IteratorAggregate
      * @param string[] ...$names
      * @return Stream
      */
-    public function channel(string ...$names): Stream;
+    public function channel(string ...$names): self;
 
     /**
      * @param string[] ...$names
      * @return Stream
      */
-    public function exceptChannel(string ...$names): Stream;
+    public function exceptChannel(string ...$names): self;
 
     /**
      * @param string[] ...$names
      * @return Stream
      */
-    public function token(string ...$names): Stream;
+    public function token(string ...$names): self;
 
     /**
      * @param string[] ...$names
      * @return Stream
      */
-    public function exceptToken(string ...$names): Stream;
+    public function exceptToken(string ...$names): self;
 
     /**
      * @param \Closure $filter
      * @return Stream
      */
-    public function filter(\Closure $filter): Stream;
+    public function filter(\Closure $filter): self;
 
     /**
      * @return \Traversable

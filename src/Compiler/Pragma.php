@@ -55,7 +55,7 @@ class Pragma implements \IteratorAggregate
      * @return Pragma
      * @throws \Railt\Compiler\Grammar\Exceptions\InvalidPragmaException
      */
-    public function add(string $name, string $value): Pragma
+    public function add(string $name, string $value): self
     {
         $class = $this->getClassDefinition($name);
 

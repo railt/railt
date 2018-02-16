@@ -14,5 +14,4 @@ namespace Railt\Lexer\Exceptions;
  */
 class UnrecognizedTokenException extends LexerException
 {
-
 }

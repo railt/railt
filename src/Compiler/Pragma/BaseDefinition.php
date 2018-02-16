@@ -101,5 +101,4 @@ abstract class BaseDefinition implements Definition
         $error = 'The value of "%s" pragma must be a valid class name, but %s given';
         throw new InvalidPragmaException(\sprintf($error, $this->getName(), $this->value));
     }
-
 }
