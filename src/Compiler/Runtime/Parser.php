@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Runtime;
 
 use Hoa\Iterator\Buffer;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Stream\Stream;
 use Railt\Compiler\Lexer\Tokens\Eof;
 use Railt\Compiler\Lexer\Tokens\Output;
@@ -29,6 +28,7 @@ use Railt\Compiler\Runtime\Rule\Entry;
 use Railt\Compiler\Runtime\Rule\Repetition;
 use Railt\Compiler\Runtime\Rule\Rule;
 use Railt\Compiler\Runtime\Rule\Token;
+use Railt\Io\Readable;
 
 /**
  * Class Parser

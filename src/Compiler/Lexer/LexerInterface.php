@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Lexer;
 
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Stream\Stream;
+use Railt\Io\Readable;
 
 /**
  * Interface LexerInterface

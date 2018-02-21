@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Lexer;
 
-use Railt\Io\Position;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Exceptions\LexerException;
 use Railt\Compiler\Lexer\Tokens\Channel;
 use Railt\Compiler\Lexer\Tokens\Eof;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Position;
+use Railt\Io\Readable;
 
 /**
  * Class Context

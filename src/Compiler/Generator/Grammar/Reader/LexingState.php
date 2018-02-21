@@ -11,8 +11,8 @@ namespace Railt\Compiler\Generator\Grammar\Reader;
 
 use Railt\Compiler\Generator\Grammar\Exceptions\InvalidTokenException;
 use Railt\Compiler\Generator\Grammar\Lexer;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
  * Class Lex
