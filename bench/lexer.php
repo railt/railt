@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-use Railt\Compiler\Grammar\Reader;
+use Railt\Compiler\Generator\Grammar\Reader;
 use Railt\Io\File;
-use Railt\Lexer\Lexer;
-use Railt\Lexer\Tokens\Channel;
-use Railt\Lexer\Tokens\Output as T;
+use Railt\Compiler\Lexer\Lexer;
+use Railt\Compiler\Lexer\Tokens\Channel;
+use Railt\Compiler\Lexer\Tokens\Output as T;
 
 require __DIR__ . '/../vendor/autoload.php';
 

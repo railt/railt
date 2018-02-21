@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-use Railt\Compiler\Grammar\Reader;
+use Railt\Compiler\Generator\Grammar\Reader;
 use Railt\Io\File;
 
 require __DIR__ . '/../vendor/autoload.php';
