@@ -164,22 +164,22 @@ class Response implements ResponseInterface
     /**
      * @param mixed $error
      * @param bool $debug
-     * @return array
+     * @return mixed
      */
-    private function formatError($error, bool $debug = false): array
+    private function formatError($error, bool $debug = false)
     {
         switch (true) {
-            case $error instanceof Arrayable:
-                return $error->toArray();
-
             case $error instanceof \Throwable:
                 return ErrorFormatter::render($error, $debug);
+
+            case $error instanceof Arrayable:
+                return $error->toArray();
 
             case $error instanceof \JsonSerializable:
                 return $error->jsonSerialize();
         }
 
-        return (array)$error;
+        return $error;
     }
 
     /**
