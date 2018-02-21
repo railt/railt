@@ -13,8 +13,8 @@ use Railt\Compiler\Generator\Grammar\Analyzer;
 use Railt\Compiler\Generator\Grammar\Exceptions\GrammarException;
 use Railt\Compiler\Generator\Grammar\Exceptions\InvalidRuleException;
 use Railt\Compiler\Generator\Grammar\Lexer;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
  * Class ParsingState

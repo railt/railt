@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Compiler\Generator\Grammar\Reader;
 
 use Railt\Compiler\Generator\Pragma;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
  * Class ConfigureState

@@ -15,8 +15,8 @@ use Railt\Compiler\Generator\Grammar\Reader\IncludeState;
 use Railt\Compiler\Generator\Grammar\Reader\LexingState;
 use Railt\Compiler\Generator\Grammar\Reader\ParsingState;
 use Railt\Compiler\Generator\Pragma;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
  * Class Reader

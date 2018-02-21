@@ -11,10 +11,10 @@ namespace Railt\Compiler\Generator\Grammar\Reader;
 
 use Psr\Log\LoggerInterface;
 use Railt\Compiler\Generator\Grammar\Exceptions\InvalidInclusionException;
+use Railt\Compiler\Lexer\Tokens\Output;
 use Railt\Io\Exceptions\NotReadableException;
 use Railt\Io\File;
 use Railt\Io\Readable;
-use Railt\Compiler\Lexer\Tokens\Output;
 
 /**
  * Class IncludeState

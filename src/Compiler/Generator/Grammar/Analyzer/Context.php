@@ -12,8 +12,8 @@ namespace Railt\Compiler\Generator\Grammar\Analyzer;
 use Hoa\Iterator\Lookahead;
 use Railt\Compiler\Generator\Grammar\Analyzer;
 use Railt\Compiler\Generator\Grammar\Reader\ParsingState;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
  * Class Context
