@@ -98,7 +98,7 @@ class ErrorFormatter implements Arrayable
             $result['in']    = $e->getFile() . ':' . $e->getLine();
             $result['trace'] = $e instanceof SchemaException
                 ? $e->getCompilerTrace()
-                : $e->getTraceAsString();
+                : \explode("\n", $e->getTraceAsString());
         }
 
         return $result;
