@@ -206,6 +206,7 @@ class Compiler implements CompilerInterface, Configuration
     /**
      * @param Readable $readable
      * @return Document
+     * @throws \OutOfBoundsException
      * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
      * @throws CompilerException

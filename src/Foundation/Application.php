@@ -15,6 +15,7 @@ use Railt\Adapters\Webonyx\Adapter;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\ServiceProviders\Pipeline;
+use Railt\Foundation\ServiceProviders\ServiceProvider;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
@@ -79,6 +80,17 @@ class Application
         $this->pipeline = $this->createPipeline($container);
 
         return $container;
+    }
+
+    /**
+     * @param string|ServiceProvider $provider
+     * @return Application
+     */
+    public function extend(string $provider): Application
+    {
+        $this->pipeline->add($provider);
+
+        return $this;
     }
 
     /**
