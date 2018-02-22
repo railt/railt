@@ -306,15 +306,6 @@ trait Compiler
     }
 
     /**
-     * @param NodeInterface $ast
-     * @return string
-     */
-    protected function dump(NodeInterface $ast): string
-    {
-        return $this->getCompiler()->getParser()->dump($ast);
-    }
-
-    /**
      * @param string $keyword
      * @return int
      */
