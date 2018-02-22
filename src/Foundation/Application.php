@@ -86,7 +86,7 @@ class Application
      * @param string|ServiceProvider $provider
      * @return Application
      */
-    public function extend(string $provider): Application
+    public function extend(string $provider): self
     {
         $this->pipeline->add($provider);
 
