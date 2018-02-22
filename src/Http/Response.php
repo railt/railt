@@ -147,7 +147,7 @@ class Response implements ResponseInterface
         $result = [];
 
         foreach ($this->errors as $error) {
-            $result[] = $this->formatError($error, $this->debug);
+            $result += $this->formatError($error, $this->debug);
         }
 
         return $result;
