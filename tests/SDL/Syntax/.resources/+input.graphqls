@@ -15,6 +15,10 @@ input InputType {
     Description of "answer" field
     """
     answer: Int = 42
+    
+    field: String = "Default"
+    
+    field2: String = ""
 }
 
 """
