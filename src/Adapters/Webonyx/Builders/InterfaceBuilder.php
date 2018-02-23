@@ -28,7 +28,8 @@ class InterfaceBuilder extends TypeBuilder
             'description' => $this->reflection->getDescription(),
             'fields'      => FieldBuilder::buildFields($this->reflection, $this->getRegistry()),
             // TODO Resolve Type
-            'resolveType' => function (): Type {},
+            'resolveType' => function (): Type {
+            },
         ]);
     }
 }
