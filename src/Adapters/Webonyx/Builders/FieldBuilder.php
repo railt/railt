@@ -50,7 +50,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             'type'        => $this->buildType(),
             'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
             'resolve'     => $this->getResolver(),
-            // complexity
+            // TODO complexity
         ];
 
         if ($this->reflection->isDeprecated()) {

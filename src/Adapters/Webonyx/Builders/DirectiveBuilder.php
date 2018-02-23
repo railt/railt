@@ -11,6 +11,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\DirectiveLocation;
+use GraphQL\Type\Definition\FieldArgument;
 use Railt\Reflection\Contracts\Definitions\Directive\Location;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 
@@ -38,18 +39,20 @@ class DirectiveBuilder extends TypeBuilder
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
             'locations'   => $this->getLocations(),
-            'args'        => [],
+            'args'        => $this->getArguments(),
         ]);
     }
 
     /**
-     * TODO Arguments resolve
-     *
      * @return array
      */
     private function getArguments(): array
     {
-        return [];
+        $arguments = ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry());
+
+        return \array_map(function ($argument): FieldArgument {
+            return new FieldArgument($argument);
+        }, $arguments);
     }
 
     /**

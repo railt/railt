@@ -27,10 +27,16 @@ class EnumBuilder extends TypeBuilder
         $values = [];
 
         foreach ($this->reflection->getValues() as $value) {
-            $values[$value->getName()] = [
-                'value'       => $value->getValue(),
+            $config = [
                 'description' => $value->getDescription(),
+                'value'       => $value->getValue(),
             ];
+
+            if ($value->isDeprecated()) {
+                $config['deprecationReason'] = $value->getDeprecationReason();
+            }
+
+            $values[$value->getName()] = $config;
         }
 
         return new EnumType([

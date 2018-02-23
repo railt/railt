@@ -9,24 +9,33 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Webonyx\Builders;
 
-use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\Type;
-use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use GraphQL\Type\Definition\UnionType;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 
 /**
- * @property InterfaceDefinition $reflection
+ * @property UnionDefinition $reflection
  */
-class InterfaceBuilder extends TypeBuilder
+class UnionBuilder extends TypeBuilder
 {
     /**
      * @return Type
+     * @throws \InvalidArgumentException
      */
     public function build(): Type
     {
-        return new InterfaceType([
+        $types = [];
+
+        /** @var TypeDefinition $type */
+        foreach ($this->reflection->getTypes() as $type) {
+            $types[] = $this->load($type);
+        }
+
+        return new UnionType([
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
-            'fields'      => FieldBuilder::buildFields($this->reflection, $this->getRegistry()),
+            'types'       => $types,
             // TODO Resolve Type
             'resolveType' => function (): Type {},
         ]);
