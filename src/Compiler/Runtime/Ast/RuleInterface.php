@@ -20,6 +20,11 @@ interface RuleInterface extends NodeInterface, \Countable, \IteratorAggregate
     public function getChildren(): array;
 
     /**
+     * @return bool
+     */
+    public function hasChildren(): bool;
+
+    /**
      * @param int $index
      * @return null|NodeInterface|RuleInterface|LeafInterface
      */
@@ -29,6 +34,11 @@ interface RuleInterface extends NodeInterface, \Countable, \IteratorAggregate
      * @param NodeInterface $node
      */
     public function append(NodeInterface $node): void;
+
+    /**
+     * @return null|NodeInterface
+     */
+    public function pop(): ?NodeInterface;
 
     /**
      * @param string $name

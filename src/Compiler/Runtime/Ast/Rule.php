@@ -17,14 +17,14 @@ class Rule extends Node implements RuleInterface
     /**
      * @var array|iterable|\Traversable
      */
-    private $children;
+    protected $children;
 
     /**
      * Rule constructor.
      * @param string $name
      * @param iterable $children
      */
-    public function __construct(string $name, iterable $children)
+    public function __construct(string $name, iterable $children = [])
     {
         parent::__construct($name);
         $this->children = $children;
@@ -67,6 +67,14 @@ class Rule extends Node implements RuleInterface
         $this->getChildren();
 
         $this->children[] = $node;
+    }
+
+    /**
+     * @return null|NodeInterface
+     */
+    public function pop(): ?NodeInterface
+    {
+        return \count($this->children) ? \array_pop($this->children) : null;
     }
 
     /**

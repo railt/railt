@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Lexer;
 
-use Railt\Io\Position;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Exceptions\LexerException;
 use Railt\Compiler\Lexer\Tokens\Channel;
 use Railt\Compiler\Lexer\Tokens\Eof;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Position;
+use Railt\Io\Readable;
 
 /**
  * Class Context
@@ -193,12 +193,12 @@ class Context implements \IteratorAggregate
             $channel       = $this->channels[$realTokenName] ?? Channel::DEFAULT;
 
             $this->result[] = [
-                Output::I_TOKEN_NAME    => $realTokenName,
-                Output::I_TOKEN_BODY    => $body,
-                Output::I_TOKEN_LENGTH  => $length,
-                Output::I_TOKEN_OFFSET  => $this->bytesOffset,
-                Output::I_TOKEN_CONTEXT => $context,
-                Output::I_TOKEN_CHANNEL => $channel,
+                Output::T_NAME    => $realTokenName,
+                Output::T_VALUE    => $body,
+                Output::T_LENGTH  => $length,
+                Output::T_OFFSET  => $this->bytesOffset,
+                Output::T_CONTEXT => $context,
+                Output::T_CHANNEL => $channel,
             ];
 
             $this->bytesOffset += $length;

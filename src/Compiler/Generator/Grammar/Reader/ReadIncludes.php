@@ -11,15 +11,15 @@ namespace Railt\Compiler\Generator\Grammar\Reader;
 
 use Psr\Log\LoggerInterface;
 use Railt\Compiler\Generator\Grammar\Exceptions\InvalidInclusionException;
+use Railt\Compiler\Lexer\Tokens\Output;
 use Railt\Io\Exceptions\NotReadableException;
 use Railt\Io\File;
 use Railt\Io\Readable;
-use Railt\Compiler\Lexer\Tokens\Output;
 
 /**
- * Class IncludeState
+ * Class ReadIncludes
  */
-class IncludeState implements State
+class ReadIncludes implements State
 {
     /**
      * @var \SplStack
@@ -42,8 +42,8 @@ class IncludeState implements State
      */
     public function resolve(Readable $grammar, array $token): void
     {
-        $name   = \reset($token[Output::I_TOKEN_CONTEXT]);
-        $offset = $token[Output::I_TOKEN_OFFSET];
+        $name   = \reset($token[Output::T_CONTEXT]);
+        $offset = $token[Output::T_OFFSET];
 
         /**
          * TODO Check and make sure that the path is unique and the file has not been previously connected

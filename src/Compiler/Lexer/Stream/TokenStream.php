@@ -50,7 +50,7 @@ class TokenStream implements Stream
     public function channel(string ...$names): Stream
     {
         return $this->filter(function (array $token) use ($names): bool {
-            return \in_array($token[Output::I_TOKEN_CHANNEL], $names, true);
+            return \in_array($token[Output::T_CHANNEL], $names, true);
         });
     }
 
@@ -72,7 +72,7 @@ class TokenStream implements Stream
     public function exceptChannel(string ...$names): Stream
     {
         return $this->filter(function (array $token) use ($names): bool {
-            return ! \in_array($token[Output::I_TOKEN_CHANNEL], $names, true);
+            return ! \in_array($token[Output::T_CHANNEL], $names, true);
         });
     }
 
@@ -83,7 +83,7 @@ class TokenStream implements Stream
     public function token(string ...$names): Stream
     {
         return $this->filter(function (array $token) use ($names): bool {
-            return \in_array($token[Output::I_TOKEN_NAME], $names, true);
+            return \in_array($token[Output::T_NAME], $names, true);
         });
     }
 
@@ -94,7 +94,7 @@ class TokenStream implements Stream
     public function exceptToken(string ...$names): Stream
     {
         return $this->filter(function (array $token) use ($names): bool {
-            return ! \in_array($token[Output::I_TOKEN_NAME], $names, true);
+            return ! \in_array($token[Output::T_NAME], $names, true);
         });
     }
 

@@ -9,17 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Generator\Grammar\Reader;
 
-use Railt\Compiler\Generator\Grammar\Analyzer;
 use Railt\Compiler\Generator\Grammar\Exceptions\GrammarException;
 use Railt\Compiler\Generator\Grammar\Exceptions\InvalidRuleException;
 use Railt\Compiler\Generator\Grammar\Lexer;
-use Railt\Io\Readable;
+use Railt\Compiler\Generator\Grammar\Reader\Productions\Context;
+use Railt\Compiler\Generator\Grammar\Reader\Productions\InputRule;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
  * Class ParsingState
  */
-class ParsingState implements State
+class ReadProductions implements State
 {
     /**@#+
      * Rule body info
@@ -40,15 +41,15 @@ class ParsingState implements State
     private $lastRule;
 
     /**
-     * @var LexingState
+     * @var ReadTokens
      */
     private $tokens;
 
     /**
      * ParsingState constructor.
-     * @param LexingState $tokens
+     * @param ReadTokens $tokens
      */
-    public function __construct(LexingState $tokens)
+    public function __construct(ReadTokens $tokens)
     {
         $this->tokens = $tokens;
     }
@@ -60,7 +61,7 @@ class ParsingState implements State
      */
     public function resolve(Readable $grammar, array $rule): void
     {
-        if ($rule[Output::I_TOKEN_NAME] === Lexer::T_NODE_DEFINITION) {
+        if ($rule[Output::T_NAME] === Lexer::T_NODE_DEFINITION) {
             $this->createRule($grammar, $rule);
 
             return;
@@ -75,12 +76,12 @@ class ParsingState implements State
      */
     private function createRule(Readable $grammar, array $rule): void
     {
-        $this->lastRule = \trim($rule[Output::I_TOKEN_BODY], " :\t\n\r\0\x0B");
+        $this->lastRule = \trim($rule[Output::T_VALUE], " :\t\n\r\0\x0B");
 
         $this->rules[$this->lastRule] = [
             self::I_RULE_FILE   => $grammar,
-            self::I_RULE_OFFSET => $rule[Output::I_TOKEN_OFFSET],
-            self::I_RULE_BODY   => new \SplQueue(),
+            self::I_RULE_OFFSET => $rule[Output::T_OFFSET],
+            self::I_RULE_BODY   => [],
         ];
     }
 
@@ -93,15 +94,13 @@ class ParsingState implements State
     {
         if ($this->lastRule === null) {
             $error    = 'Before determining a non-terminal symbol "%s", it must be declared';
-            $error    = \sprintf($error, $rule[Output::I_TOKEN_BODY]);
-            $position = $grammar->getPosition($rule[Output::I_TOKEN_OFFSET]);
+            $error    = \sprintf($error, $rule[Output::T_VALUE]);
+            $position = $grammar->getPosition($rule[Output::T_OFFSET]);
 
             throw InvalidRuleException::fromFile($error, $grammar, $position);
         }
 
-        /** @var \SplStack $stack */
-        $stack = $this->rules[$this->lastRule][self::I_RULE_BODY];
-        $stack->push($rule);
+        $this->rules[$this->lastRule][self::I_RULE_BODY][] = $rule;
     }
 
     /**
@@ -114,8 +113,14 @@ class ParsingState implements State
             throw new GrammarException('Grammar file must contain more than one rule');
         }
 
-        $analyzer = new Analyzer($this->tokens->getData(), $this->rules);
+        foreach ($this->rules as $name => $data) {
+            $ctx = new Context($data[self::I_RULE_FILE], $name, $data[self::I_RULE_OFFSET]);
 
-        return $analyzer->getRules();
+            \array_walk($data[self::I_RULE_BODY], function (array $rule) use ($ctx) {
+                $ctx->collect(new InputRule($rule, $ctx));
+            });
+
+            yield from $ctx->reduce();
+        }
     }
 }

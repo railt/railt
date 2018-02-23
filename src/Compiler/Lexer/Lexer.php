@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler\Lexer;
 
 use Psr\Log\LoggerInterface;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Stream\Stream;
 use Railt\Compiler\Lexer\Stream\TokenStream;
+use Railt\Io\Readable;
 
 /**
  * Class Lexer

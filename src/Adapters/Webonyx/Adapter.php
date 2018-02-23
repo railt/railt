@@ -70,10 +70,13 @@ class Adapter implements AdapterInterface
             return $response;
         } catch (\Throwable $e) {
             if ($this->debug) {
-                throw $e;
+                $error = Response::error($e);
+                $error->debug($this->debug);
+
+                return $error;
             }
 
-            return Response::error($e);
+            throw $e;
         }
     }
 

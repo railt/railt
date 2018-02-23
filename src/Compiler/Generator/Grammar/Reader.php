@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Compiler\Generator\Grammar;
 
 use Railt\Compiler\Generator\Grammar\Exceptions\GrammarException;
-use Railt\Compiler\Generator\Grammar\Reader\ConfigureState;
-use Railt\Compiler\Generator\Grammar\Reader\IncludeState;
-use Railt\Compiler\Generator\Grammar\Reader\LexingState;
-use Railt\Compiler\Generator\Grammar\Reader\ParsingState;
+use Railt\Compiler\Generator\Grammar\Reader\ReadPragmas;
+use Railt\Compiler\Generator\Grammar\Reader\ReadIncludes;
+use Railt\Compiler\Generator\Grammar\Reader\ReadTokens;
+use Railt\Compiler\Generator\Grammar\Reader\ReadProductions;
 use Railt\Compiler\Generator\Pragma;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
  * Class Reader
@@ -103,22 +103,22 @@ class Reader implements GrammarDefinition
     private $state = self::STATE_CONFIGURE;
 
     /**
-     * @var array|LexingState
+     * @var array|ReadTokens
      */
     private $tokens;
 
     /**
-     * @var array|ConfigureState
+     * @var array|ReadPragmas
      */
     private $pragma;
 
     /**
-     * @var array|ParsingState
+     * @var array|ReadProductions
      */
     private $rules;
 
     /**
-     * @var array|IncludeState
+     * @var array|ReadIncludes
      */
     private $includes;
 
@@ -137,10 +137,10 @@ class Reader implements GrammarDefinition
     {
         $this->lexer = new Lexer();
 
-        $this->includes = new IncludeState();
-        $this->pragma   = new ConfigureState();
-        $this->tokens   = new LexingState();
-        $this->rules    = new ParsingState($this->tokens);
+        $this->includes = new ReadIncludes();
+        $this->pragma   = new ReadPragmas();
+        $this->tokens   = new ReadTokens();
+        $this->rules    = new ReadProductions($this->tokens);
 
         $this->read($grammar);
     }
@@ -158,8 +158,8 @@ class Reader implements GrammarDefinition
         foreach ($stream as $token) {
             $this->checkIncludes();
 
-            if (\array_key_exists($token[Output::I_TOKEN_NAME], self::STATE_JUMPS)) {
-                $this->state = self::STATE_JUMPS[$token[Output::I_TOKEN_NAME]];
+            if (\array_key_exists($token[Output::T_NAME], self::STATE_JUMPS)) {
+                $this->state = self::STATE_JUMPS[$token[Output::T_NAME]];
             }
 
             $this->verifyTokenState($grammar, $token);
@@ -193,11 +193,11 @@ class Reader implements GrammarDefinition
     {
         $allowed = self::STATE_CONTEXT[$this->state];
 
-        if (! \in_array($token[Output::I_TOKEN_NAME], $allowed, true)) {
+        if (! \in_array($token[Output::T_NAME], $allowed, true)) {
             throw GrammarException::fromFile(
                 $this->invalidTokenStateMessage($token),
                 $grammar,
-                $grammar->getPosition($token[Output::I_TOKEN_OFFSET])
+                $grammar->getPosition($token[Output::T_OFFSET])
             );
         }
 
@@ -211,11 +211,11 @@ class Reader implements GrammarDefinition
     private function invalidTokenStateMessage(array $token): string
     {
         $message = 'The "%s" (%s) is not available for use during the state of %s grammar analysis';
-        $body    = \trim(\str_replace(["\r", "\n"], '', $token[Output::I_TOKEN_BODY]));
+        $body    = \trim(\str_replace(["\r", "\n"], '', $token[Output::T_VALUE]));
 
         return \vsprintf($message, [
             $body,
-            Lexer::getTokenName($token[Output::I_TOKEN_NAME]),
+            Lexer::getTokenName($token[Output::T_NAME]),
             self::STATE_DESCRIPTIONS[$this->state],
         ]);
     }

@@ -11,13 +11,13 @@ namespace Railt\Compiler\Generator\Grammar\Reader;
 
 use Railt\Compiler\Generator\Grammar\Exceptions\InvalidTokenException;
 use Railt\Compiler\Generator\Grammar\Lexer;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
- * Class Lex
+ * Class ReadTokens
  */
-class LexingState implements State
+class ReadTokens implements State
 {
     /**
      * @var array
@@ -44,9 +44,9 @@ class LexingState implements State
     private function tokenInfo(array $token): array
     {
         return [
-            $token[Output::I_TOKEN_CONTEXT][0],
-            $token[Output::I_TOKEN_CONTEXT][1],
-            $token[Output::I_TOKEN_CONTEXT][2] ?? Lexer::CHANNEL_TOKENS,
+            $token[Output::T_CONTEXT][0],
+            $token[Output::T_CONTEXT][1],
+            $token[Output::T_CONTEXT][2] ?? Lexer::CHANNEL_TOKENS,
         ];
     }
 
@@ -57,10 +57,10 @@ class LexingState implements State
      */
     private function checkTokenRedefinition(Readable $grammar, array $token): void
     {
-        [$name, $value] = $token[Output::I_TOKEN_CONTEXT];
+        [$name, $value] = $token[Output::T_CONTEXT];
 
         if (\array_key_exists($name, $this->tokens)) {
-            $offset   = $token[Output::I_TOKEN_OFFSET];
+            $offset   = $token[Output::T_OFFSET];
             $error    = 'Can not define token "%s" (%s) because token already defined.';
             $position = $grammar->getPosition($offset);
 

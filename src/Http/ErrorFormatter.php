@@ -55,17 +55,13 @@ class ErrorFormatter implements Arrayable
      */
     public function toArray(): array
     {
-        $exception = $this->exception;
-        $result    = $this->renderItem($exception);
+        $current = $this->exception;
+        $result  = [$this->renderItem($current)];
 
         if ($this->debug) {
-            while ($exception->getPrevious()) {
-                if (! \array_key_exists('previous', $result)) {
-                    $result['previous'] = [];
-                }
-
-                $result['previous'][] = $this->renderItem($exception);
-                $exception            = $exception->getPrevious();
+            while ($current->getPrevious()) {
+                $result[] = $this->renderItem($current);
+                $current  = $current->getPrevious();
             }
         }
 
@@ -98,7 +94,7 @@ class ErrorFormatter implements Arrayable
             $result['in']    = $e->getFile() . ':' . $e->getLine();
             $result['trace'] = $e instanceof SchemaException
                 ? $e->getCompilerTrace()
-                : $e->getTraceAsString();
+                : \explode("\n", $e->getTraceAsString());
         }
 
         return $result;

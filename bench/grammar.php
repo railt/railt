@@ -12,8 +12,13 @@ use Railt\Io\File;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$reader = new Reader(File::fromPathname(__DIR__ . '/grammar/sdl.pp'));
+try {
+    $reader = new Reader(File::fromPathname(__DIR__ . '/grammar/sdl.pp'));
 
-foreach ($reader->getRuleDefinitions() as $i => $obj) {
-    echo \sprintf('%20s | %s ', $i, \get_class($obj)) . "\n";
+    foreach ($reader->getRuleDefinitions() as $i => $obj) {
+        echo $obj . "\n\n";
+    }
+
+} catch (\Throwable $e) {
+    echo $e;
 }

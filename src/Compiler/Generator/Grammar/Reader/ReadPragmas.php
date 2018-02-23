@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Compiler\Generator\Grammar\Reader;
 
 use Railt\Compiler\Generator\Pragma;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Tokens\Output;
+use Railt\Io\Readable;
 
 /**
- * Class ConfigureState
+ * Class ReadPragmas
  */
-class ConfigureState implements State
+class ReadPragmas implements State
 {
     /**
      * @var Pragma
@@ -39,7 +39,7 @@ class ConfigureState implements State
      */
     public function resolve(Readable $grammar, array $token): void
     {
-        $this->pragma->add(...$token[Output::I_TOKEN_CONTEXT]);
+        $this->pragma->add(...$token[Output::T_CONTEXT]);
     }
 
     /**

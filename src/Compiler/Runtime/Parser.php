@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Runtime;
 
 use Hoa\Iterator\Buffer;
-use Railt\Io\Readable;
 use Railt\Compiler\Lexer\Stream\Stream;
 use Railt\Compiler\Lexer\Tokens\Eof;
 use Railt\Compiler\Lexer\Tokens\Output;
@@ -29,6 +28,7 @@ use Railt\Compiler\Runtime\Rule\Entry;
 use Railt\Compiler\Runtime\Rule\Repetition;
 use Railt\Compiler\Runtime\Rule\Rule;
 use Railt\Compiler\Runtime\Rule\Token;
+use Railt\Io\Readable;
 
 /**
  * Class Parser
@@ -128,7 +128,7 @@ abstract class Parser
         do {
             $out = $this->unfold();
 
-            if ($out !== null && $this->buffer->current()[Output::I_TOKEN_NAME] === Eof::T_NAME) {
+            if ($out !== null && $this->buffer->current()[Output::T_NAME] === Eof::T_NAME) {
                 break;
             }
 
@@ -138,14 +138,14 @@ abstract class Parser
                 })->call($this->buffer) ?: $this->buffer->current();
 
                 $error = \vsprintf('Unexpected token "%s" (%s)', [
-                    $token[Output::I_TOKEN_BODY],
-                    $token[Output::I_TOKEN_NAME],
+                    $token[Output::T_VALUE],
+                    $token[Output::T_NAME],
                 ]);
 
                 throw UnexpectedTokenException::fromFile(
                     $error,
                     $input,
-                    $input->getPosition($token[Output::I_TOKEN_OFFSET] ?? 0)
+                    $input->getPosition($token[Output::T_OFFSET] ?? 0)
                 );
             }
         } while (true);
@@ -248,13 +248,13 @@ abstract class Parser
     protected function parseCurrentRule(Rule $zeRule, $next): bool
     {
         if ($zeRule instanceof Token) {
-            $name = $this->buffer->current()[Output::I_TOKEN_NAME];
+            $name = $this->buffer->current()[Output::T_NAME];
 
             if ($zeRule->getTokenName() !== $name) {
                 return false;
             }
 
-            $value = $this->buffer->current()[Output::I_TOKEN_BODY];
+            $value = $this->buffer->current()[Output::T_VALUE];
 
             if (0 <= $unification = $zeRule->getUnificationIndex()) {
                 for ($skip = 0, $i = \count($this->trace) - 1; $i >= 0; --$i) {
@@ -289,7 +289,7 @@ abstract class Parser
 
             $zzeRule = clone $zeRule;
             $zzeRule->setValue($value);
-            $zzeRule->setOffset($current[Output::I_TOKEN_OFFSET]);
+            $zzeRule->setOffset($current[Output::T_OFFSET]);
 
             \array_pop($this->todo);
             $this->trace[] = $zzeRule;
