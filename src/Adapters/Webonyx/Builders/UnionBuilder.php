@@ -37,7 +37,8 @@ class UnionBuilder extends TypeBuilder
             'description' => $this->reflection->getDescription(),
             'types'       => $types,
             // TODO Resolve Type
-            'resolveType' => function (): Type {},
+            'resolveType' => function (): Type {
+            },
         ]);
     }
 }
