@@ -193,12 +193,12 @@ class Context implements \IteratorAggregate
             $channel       = $this->channels[$realTokenName] ?? Channel::DEFAULT;
 
             $this->result[] = [
-                Output::T_NAME    => $realTokenName,
+                Output::T_NAME     => $realTokenName,
                 Output::T_VALUE    => $body,
-                Output::T_LENGTH  => $length,
-                Output::T_OFFSET  => $this->bytesOffset,
-                Output::T_CONTEXT => $context,
-                Output::T_CHANNEL => $channel,
+                Output::T_LENGTH   => $length,
+                Output::T_OFFSET   => $this->bytesOffset,
+                Output::T_CONTEXT  => $context,
+                Output::T_CHANNEL  => $channel,
             ];
 
             $this->bytesOffset += $length;

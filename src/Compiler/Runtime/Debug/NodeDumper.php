@@ -12,7 +12,6 @@ namespace Railt\Compiler\Runtime\Debug;
 use Railt\Compiler\Runtime\Ast\LeafInterface;
 use Railt\Compiler\Runtime\Ast\NodeInterface;
 use Railt\Compiler\Runtime\Ast\RuleInterface;
-use Railt\Io\Readable;
 
 /**
  * Class NodeDumper
