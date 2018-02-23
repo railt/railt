@@ -18,7 +18,6 @@ try {
     foreach ($reader->getRuleDefinitions() as $i => $obj) {
         echo $obj . "\n\n";
     }
-
 } catch (\Throwable $e) {
     echo $e;
 }

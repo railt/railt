@@ -116,7 +116,7 @@ class ReadProductions implements State
         foreach ($this->rules as $name => $data) {
             $ctx = new Context($data[self::I_RULE_FILE], $name, $data[self::I_RULE_OFFSET]);
 
-            \array_walk($data[self::I_RULE_BODY], function (array $rule) use ($ctx) {
+            \array_walk($data[self::I_RULE_BODY], function (array $rule) use ($ctx): void {
                 $ctx->collect(new InputRule($rule, $ctx));
             });
 

@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Compiler\Generator\Grammar;
 
 use Railt\Compiler\Generator\Grammar\Exceptions\GrammarException;
-use Railt\Compiler\Generator\Grammar\Reader\ReadPragmas;
 use Railt\Compiler\Generator\Grammar\Reader\ReadIncludes;
-use Railt\Compiler\Generator\Grammar\Reader\ReadTokens;
+use Railt\Compiler\Generator\Grammar\Reader\ReadPragmas;
 use Railt\Compiler\Generator\Grammar\Reader\ReadProductions;
+use Railt\Compiler\Generator\Grammar\Reader\ReadTokens;
 use Railt\Compiler\Generator\Pragma;
 use Railt\Compiler\Lexer\Tokens\Output;
 use Railt\Io\Readable;

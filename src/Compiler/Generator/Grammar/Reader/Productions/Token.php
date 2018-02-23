@@ -38,6 +38,6 @@ class Token extends Leaf
     public function __toString(): string
     {
         return \class_basename($this) . ': "' .
-            $this->getValue() . '"' . ($this->keep ? ' -> ' : '') ;
+            $this->getValue() . '"' . ($this->keep ? ' -> ' : '');
     }
 }

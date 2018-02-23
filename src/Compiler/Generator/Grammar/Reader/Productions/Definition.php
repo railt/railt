@@ -16,9 +16,6 @@ use Railt\Compiler\Runtime\Ast\Rule;
  */
 class Definition extends Rule
 {
-    /**
-     *
-     */
     protected const DEFAULT_RULE = 'Anonymous';
 
     /**

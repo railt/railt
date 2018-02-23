@@ -26,12 +26,12 @@ final class Eof
     public static function create(int $offset): array
     {
         return [
-            Output::T_NAME    => self::T_NAME,
+            Output::T_NAME     => self::T_NAME,
             Output::T_VALUE    => "\0",
-            Output::T_LENGTH  => 0,
-            Output::T_OFFSET  => $offset,
-            Output::T_CONTEXT => [],
-            Output::T_CHANNEL => Channel::SYSTEM,
+            Output::T_LENGTH   => 0,
+            Output::T_OFFSET   => $offset,
+            Output::T_CONTEXT  => [],
+            Output::T_CHANNEL  => Channel::SYSTEM,
         ];
     }
 }

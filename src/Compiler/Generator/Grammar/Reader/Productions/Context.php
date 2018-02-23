@@ -13,7 +13,6 @@ use Railt\Compiler\Generator\Grammar\Exceptions\InvalidRuleException;
 use Railt\Compiler\Generator\Grammar\Lexer as T;
 use Railt\Compiler\Runtime\Ast\Leaf;
 use Railt\Compiler\Runtime\Ast\LeafInterface;
-use Railt\Compiler\Runtime\Ast\RuleInterface;
 use Railt\Io\Readable;
 
 /**
@@ -84,7 +83,7 @@ class Context
         return $this->file;
     }
 
-    public function collect(InputRule $rule)
+    public function collect(InputRule $rule): void
     {
         switch (true) {
             case $rule->is(T::T_KEPT):
@@ -133,6 +132,5 @@ class Context
      */
     private function complete(): void
     {
-
     }
 }

@@ -17,11 +17,11 @@ final class Output
     /**@#+
      * An indexes list of the output array with token information.
      */
-    public const T_NAME    = 0x00;
+    public const T_NAME     = 0x00;
     public const T_VALUE    = 0x01;
-    public const T_LENGTH  = 0x02;
-    public const T_OFFSET  = 0x03;
-    public const T_CONTEXT = 0x04;
-    public const T_CHANNEL = 0x05;
+    public const T_LENGTH   = 0x02;
+    public const T_OFFSET   = 0x03;
+    public const T_CONTEXT  = 0x04;
+    public const T_CHANNEL  = 0x05;
     /**@#-*/
 }
