@@ -66,7 +66,7 @@ class FieldResolver
         if (! $this->router->has($object)) {
             $type = $field->getTypeDefinition();
 
-            if ($type instanceof ObjectDefinition && ! $field->isList()) {
+            if ($type instanceof ObjectDefinition && ! $field->isList() && ! $field->isNonNull()) {
                 return function () {
                     return [];
                 };
@@ -94,11 +94,11 @@ class FieldResolver
     }
 
     /**
-     * @param ObjectDefinition $object
+     * @param TypeDefinition $object
      * @param FieldDefinition $field
      * @return void
      */
-    private function loadRouteDirective(ObjectDefinition $object, FieldDefinition $field): void
+    private function loadRouteDirective(TypeDefinition $object, FieldDefinition $field): void
     {
         if (! $field->hasDirective(self::DIRECTIVE)) {
             return;

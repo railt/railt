@@ -28,6 +28,7 @@ class Registry
         Definitions\ScalarDefinition::class    => Builders\ScalarBuilder::class,
         Definitions\EnumDefinition::class      => Builders\EnumBuilder::class,
         Definitions\InputDefinition::class     => Builders\InputBuilder::class,
+        Definitions\UnionDefinition::class     => Builders\UnionBuilder::class,
     ];
 
     /**

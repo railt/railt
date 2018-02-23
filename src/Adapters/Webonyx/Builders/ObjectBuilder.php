@@ -27,7 +27,9 @@ class ObjectBuilder extends TypeBuilder
         return new ObjectType([
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
-            'fields'      => FieldBuilder::buildFields($this->reflection, $this->getRegistry()),
+            'fields'      => function (): array {
+                return FieldBuilder::buildFields($this->reflection, $this->getRegistry());
+            },
             'interfaces'  => $this->buildInterfaces(),
         ]);
     }
