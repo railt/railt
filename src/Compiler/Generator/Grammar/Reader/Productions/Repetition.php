@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Compiler\Generator\Grammar\Reader\Productions;
+
 use Railt\Compiler\Generator\Grammar\Lexer;
 use Railt\Compiler\Generator\Grammar\Reader\Context\Item;
 
@@ -47,7 +48,7 @@ class Repetition extends Group
      * @param Item $item
      * @return Repetition
      */
-    public static function make(Group $parent, Item $item): Repetition
+    public static function make(Group $parent, Item $item): self
     {
         return new static($parent, ...self::interval($item));
     }

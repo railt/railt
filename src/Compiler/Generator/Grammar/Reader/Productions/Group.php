@@ -29,9 +29,9 @@ class Group extends Rule implements \IteratorAggregate
      * @param Group|null $parent
      * @param string|null $name
      */
-    public function __construct(?Group $parent, string $name = null)
+    public function __construct(?self $parent, string $name = null)
     {
-        $this->parent = $parent;
+        $this->parent   = $parent;
         $this->children = new \SplQueue();
 
         if ($name) {
@@ -42,7 +42,7 @@ class Group extends Rule implements \IteratorAggregate
     /**
      * @return Group
      */
-    public function parent(): Group
+    public function parent(): self
     {
         return $this->parent;
     }
@@ -90,7 +90,7 @@ class Group extends Rule implements \IteratorAggregate
     public function __debugInfo(): array
     {
         return \array_merge(parent::__debugInfo(), [
-            'children' => \iterator_to_array($this->children)
+            'children' => \iterator_to_array($this->children),
         ]);
     }
 }

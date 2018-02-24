@@ -14,5 +14,4 @@ namespace Railt\Compiler\Generator\Grammar\Reader\Productions;
  */
 class Alternation extends Group
 {
-
 }
