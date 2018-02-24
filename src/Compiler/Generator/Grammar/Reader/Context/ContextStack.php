@@ -42,8 +42,8 @@ class ContextStack
      */
     public function __construct(Group $root)
     {
-        $this->groups = new \SplStack();
-        $this->closed = new \SplStack();
+        $this->groups  = new \SplStack();
+        $this->closed  = new \SplStack();
         $this->context = new \SplStack();
 
         $this->groups->push($root);

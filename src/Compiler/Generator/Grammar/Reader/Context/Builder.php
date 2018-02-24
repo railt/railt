@@ -52,9 +52,9 @@ class Builder
      */
     public function __construct(Readable $file, string $name, int $offset)
     {
-        $this->file   = $file;
-        $this->name   = $name;
-        $this->offset = $offset;
+        $this->file    = $file;
+        $this->name    = $name;
+        $this->offset  = $offset;
         $this->context = new ContextStack(new Group(null, $this->name));
     }
 
@@ -232,7 +232,7 @@ class Builder
          * Just check that there is an unclosed group.
          */
         if ($this->context->groups() > 1) {
-            $error = \sprintf('The production rule "%s" has an unclosed group', $this->name);
+            $error    = \sprintf('The production rule "%s" has an unclosed group', $this->name);
             $position = $this->file->getPosition($this->getRuleOffset());
             throw InvalidRuleException::fromFile($error, $this->file, $position);
         }
