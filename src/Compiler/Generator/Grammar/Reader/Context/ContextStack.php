@@ -28,6 +28,16 @@ class ContextStack
     private $closed;
 
     /**
+     * @var \SplStack|Group[]
+     */
+    private $context;
+
+    /**
+     * @var Group
+     */
+    private $root;
+
+    /**
      * ContextStack constructor.
      * @param Group $root
      */
@@ -35,8 +45,28 @@ class ContextStack
     {
         $this->groups = new \SplStack();
         $this->closed = new \SplStack();
+        $this->context = new \SplStack();
 
-        $this->push($root);
+        $this->groups->push($root);
+        $this->context->push($root);
+        $this->root = $root;
+    }
+
+    /**
+     * @param string $type
+     * @return bool
+     */
+    public function is(string $type): bool
+    {
+        return $this->current()->is($type);
+    }
+
+    /**
+     * @return Group
+     */
+    public function root(): Group
+    {
+        return $this->root;
     }
 
     /**
@@ -44,24 +74,25 @@ class ContextStack
      */
     public function push(Group $group): void
     {
-        $this->groups->push($group);
+        $this->context->push($group);
+
+        if ($group->is(Group::class)) {
+            $this->groups->push($group);
+        }
     }
 
     /**
      * @return Group
      */
-    public function pop(): Group
+    public function current(): Group
     {
-        $head = $this->groups->pop();
-        $this->closed->push($head);
-
-        return $head;
+        return $this->context->top();
     }
 
     /**
      * @return Group
      */
-    public function top(): Group
+    public function group(): Group
     {
         return $this->groups->top();
     }
@@ -69,7 +100,38 @@ class ContextStack
     /**
      * @return Group
      */
-    public function previous(): Group
+    public function popContext(): Group
+    {
+        $group = $this->context->pop();
+
+        if ($group->is(Group::class)) {
+            $this->groups->pop();
+            $this->closed->push($group);
+        }
+
+        return $group;
+    }
+
+    /**
+     * @return Group
+     * @throws \OutOfBoundsException
+     */
+    public function popGroup(): Group
+    {
+        while ($this->context->count() > 0) {
+            if (($ctx = $this->popContext())->is(Group::class)) {
+                $this->closed->push($ctx);
+                return $ctx;
+            }
+        }
+
+        throw new \OutOfBoundsException('Context is empty');
+    }
+
+    /**
+     * @return Group
+     */
+    public function previousGroup(): Group
     {
         return $this->closed->top();
     }

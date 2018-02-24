@@ -40,19 +40,9 @@ class Builder
     private $offset;
 
     /**
-     * @var Group
-     */
-    private $ast;
-
-    /**
-     * @var \SplStack
-     */
-    private $context;
-
-    /**
      * @var ContextStack
      */
-    private $groups;
+    private $context;
 
     /**
      * Context constructor.
@@ -65,13 +55,7 @@ class Builder
         $this->file   = $file;
         $this->name   = $name;
         $this->offset = $offset;
-
-        $this->ast = new Group(null, $this->name);
-
-        $this->context      = new \SplStack();
-        $this->context->push($this->ast);
-
-        $this->groups       = new ContextStack($this->ast);
+        $this->context = new ContextStack(new Group(null, $this->name));
     }
 
     /**
@@ -100,6 +84,7 @@ class Builder
 
     /**
      * @param Item $item
+     * @throws \OutOfBoundsException
      */
     public function collect(Item $item): void
     {
@@ -108,9 +93,9 @@ class Builder
         // but the record rule is a link to a token or rule (concatenable),
         // then we must initialize the Concatenation rule.
         //
-        if ($item->isConcatenable() && ! $this->rule()->is(Concatenation::class)) {
-            $concat = new Concatenation($this->rule());
-            $this->rule()->push($concat);
+        if ($item->isConcatenable() && ! $this->context->is(Concatenation::class)) {
+            $concat = new Concatenation($this->context->current());
+            $this->context->current()->push($concat);
             $this->context->push($concat);
         }
 
@@ -119,34 +104,33 @@ class Builder
         //
         switch (true) {
             case $item->is(T::T_KEPT):
-                $this->rule()->push(new TokenRule($item->context(0), true));
+                $this->context->current()->push(new TokenRule($item->context(0), true));
                 break;
 
             case $item->is(T::T_SKIPPED):
-                $this->rule()->push(new TokenRule($item->context(0), false));
+                $this->context->current()->push(new TokenRule($item->context(0), false));
                 break;
 
             case $item->is(T::T_NAMED):
-                $this->rule()->push(new Invocation($item->context(0)));
+                $this->context->current()->push(new Invocation($item->context(0)));
                 break;
 
-/*
             case $item->is(T::T_OR):
-                if (! $this->rule()->is(Alternation::class)) {
-                    if ($this->rule()->isEmpty()) {
+                if (! $this->context->is(Alternation::class)) {
+                    if ($this->context->current()->isEmpty()) {
                         $error = 'The alternation is a binary operation and is performed on two operations, ' .
-                            'but current context ' . $this->rule() . ' is empty';
+                            'but current context ' . $this->context->current() . ' is empty';
                         throw InvalidRuleException::fromFile($error, $this->file, $item->position());
                     }
 
-                    $alter = new Alternation($this->rule());
-                    $alter->push($this->rule()->pop());
-                    $this->rule()->push($alter);
+                    $alter = new Alternation($this->context->current());
+                    $alter->push($this->context->current()->pop());
+                    $this->context->current()->push($alter);
                     $this->context->push($alter);
+                    break;
                 }
-                break;
-*/
 
+                break;
 
             case $item->is(T::T_NODE):
                 /**
@@ -159,7 +143,7 @@ class Builder
                  *  (::TOKEN:: Call() #NewName)
                  * </code>
                  */
-                $this->groups->top()->rename((string)$item->context(0));
+                $this->context->group()->rename((string)$item->context(0));
                 break;
 
             case $item->is(T::T_EXACTLY_N):    // [N … N]
@@ -169,7 +153,7 @@ class Builder
             case $item->is(T::T_N_OR_MORE):    // [N … Inf]
             case $item->is(T::T_ZERO_OR_MORE): // [0 … Inf]
             case $item->is(T::T_ONE_OR_MORE):  // [1 … Inf]
-                $repeat = Repetition::make($this->rule(), $item);
+                $repeat = Repetition::make($this->context->current(), $item);
 
                 /**
                  * If repetition modifier is located immediately
@@ -182,57 +166,51 @@ class Builder
                  */
                 if ($item->previous()->is(T::T_GROUP_CLOSE)) {
                     // Select the last closed group
-                    $group = $this->groups->previous();
+                    $group = $this->context->previousGroup();
 
                     // Append this group to repetition
                     $repeat->push($group);
 
-                    // Select the parent group
+                    // Select the parent context
                     $parent = $group->parent();
 
                     // And now we must replace the $group to the $repeat
                     $parent->pop();
                     $parent->push($repeat);
 
-                    /**
-                     * Otherwise we wrap last rule definition:
-                     * <code>
-                     *  ::TOKEN:: Call()* // from: Skip, Invoke, Repeat
-                     *                    // - Select last token and wrap it with "Repeat"
-                     *                    // to:   Skip, Repeat { Invoke }
-                     * </code>
-                     */
+                /**
+                 * Otherwise we wrap last rule definition:
+                 * <code>
+                 *  ::TOKEN:: Call()* // from: Skip, Invoke, Repeat
+                 *                    // - Select last token and wrap it with "Repeat"
+                 *                    // to:   Skip, Repeat { Invoke }
+                 * </code>
+                 */
                 } else {
-                    $repeat->push($this->rule()->pop());
-                    $this->rule()->push($repeat);
+                    // Select last used token
+                    $token = $this->context->current()->pop();
+
+                    // Append this token to repetition
+                    $repeat->push($token);
+
+                    // And now we must append the repetition to the current context.
+                    $this->context->current()->push($repeat);
                 }
                 break;
 
-            // Invalid grouping
             case $item->is(T::T_GROUP_OPEN):
-                $group = new Group($this->rule());
-                $this->rule()->push($group);
+                $group = new Group($this->context->current());
+                $this->context->current()->push($group);
                 $this->context->push($group);
-                $this->groups->push($group);
                 break;
 
             case $item->is(T::T_GROUP_CLOSE):
-                $this->context->pop();
-                $this->groups->pop();
+                $this->context->popGroup();
                 break;
 
             default:
-                echo $item->name() . ' -> ' . $item->value() . "\n";
-            //$this->context->append(new Leaf($item->name(), $item->value()));
+                throw new \OutOfBoundsException('Invalid rule definition ' . $item->name());
         }
-    }
-
-    /**
-     * @return Group
-     */
-    private function rule(): Group
-    {
-        return $this->context->top();
     }
 
     /**
@@ -242,7 +220,7 @@ class Builder
     {
         $this->complete();
 
-        return $this->ast;
+        return $this->context->root();
     }
 
     /**
@@ -250,7 +228,6 @@ class Builder
      */
     private function complete(): void
     {
-        echo "\n\n" . $this->ast;
-        die;
+        echo "\n\n" . $this->context->root();
     }
 }
