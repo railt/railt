@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Generator\Grammar\Reader\Context;
 
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Group;
-use Railt\Compiler\Generator\Grammar\Reader\Productions\Rule;
 
 /**
  * Class ContextStack

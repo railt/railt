@@ -16,8 +16,8 @@ use Railt\Compiler\Generator\Grammar\Reader\Productions\Concatenation;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Group;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Invocation;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Repetition;
-use Railt\Io\Readable;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Token as TokenRule;
+use Railt\Io\Readable;
 
 /**
  * Class Builder
@@ -194,14 +194,14 @@ class Builder
                     $parent->pop();
                     $parent->push($repeat);
 
-                    /**
-                     * Otherwise we wrap last rule definition:
-                     * <code>
-                     *  ::TOKEN:: Call()* // from: Skip, Invoke, Repeat
-                     *                    // - Select last token and wrap it with "Repeat"
-                     *                    // to:   Skip, Repeat { Invoke }
-                     * </code>
-                     */
+                /**
+                 * Otherwise we wrap last rule definition:
+                 * <code>
+                 *  ::TOKEN:: Call()* // from: Skip, Invoke, Repeat
+                 *                    // - Select last token and wrap it with "Repeat"
+                 *                    // to:   Skip, Repeat { Invoke }
+                 * </code>
+                 */
                 } else {
                     $repeat->push($this->rule()->pop());
                     $this->rule()->push($repeat);
