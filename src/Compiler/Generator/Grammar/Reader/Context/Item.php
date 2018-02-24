@@ -39,7 +39,7 @@ final class Item implements \ArrayAccess
      * @param Builder $ctx
      * @param Item|null $prev
      */
-    public function __construct(array $rule, Builder $ctx, ?Item $prev)
+    public function __construct(array $rule, Builder $ctx, ?self $prev)
     {
         $this->rule = $rule;
         $this->ctx  = $ctx;
@@ -49,7 +49,7 @@ final class Item implements \ArrayAccess
     /**
      * @return null|Item
      */
-    public function previous(): ?Item
+    public function previous(): ?self
     {
         return $this->prev;
     }
@@ -67,7 +67,7 @@ final class Item implements \ArrayAccess
         return \in_array($this->rule[Output::T_NAME], [
             Lexer::T_KEPT,
             Lexer::T_SKIPPED,
-            Lexer::T_NAMED
+            Lexer::T_NAMED,
         ], true);
     }
 

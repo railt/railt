@@ -48,7 +48,7 @@ class Rule
         $result = [];
 
         foreach ($props as $prop) {
-            $name = $prop->getName();
+            $name          = $prop->getName();
             $result[$name] = $this->$name;
         }
 

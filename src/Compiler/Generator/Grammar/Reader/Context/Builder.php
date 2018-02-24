@@ -16,8 +16,8 @@ use Railt\Compiler\Generator\Grammar\Reader\Productions\Concatenation;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Group;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Invocation;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Repetition;
-use Railt\Io\Readable;
 use Railt\Compiler\Generator\Grammar\Reader\Productions\Token as TokenRule;
+use Railt\Io\Readable;
 
 /**
  * Class Builder
