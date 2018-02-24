@@ -228,6 +228,18 @@ class Builder
      */
     private function complete(): void
     {
-        echo "\n\n" . $this->context->root();
+        /**
+         * Just check that there is an unclosed group.
+         */
+        if ($this->context->groups() > 1) {
+            $error = \sprintf('The production rule "%s" has an unclosed group', $this->name);
+            $position = $this->file->getPosition($this->getRuleOffset());
+            throw InvalidRuleException::fromFile($error, $this->file, $position);
+        }
+
+        //
+        // The rest of the status checks (then I'll think of something).
+        // ...
+        //
     }
 }

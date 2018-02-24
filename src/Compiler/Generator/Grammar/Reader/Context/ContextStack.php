@@ -98,6 +98,14 @@ class ContextStack
     }
 
     /**
+     * @return int
+     */
+    public function groups(): int
+    {
+        return $this->groups->count();
+    }
+
+    /**
      * @return Group
      */
     public function popContext(): Group
