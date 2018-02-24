@@ -12,13 +12,7 @@ namespace Railt\Compiler\Generator\Grammar\Reader\Productions;
 /**
  * Class Concatenation
  */
-class Concatenation extends Definition
+class Concatenation extends Group
 {
-    /**
-     * Concatenation constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct(self::DEFAULT_RULE);
-    }
+
 }

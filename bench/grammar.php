@@ -16,7 +16,7 @@ try {
     $reader = new Reader(File::fromPathname(__DIR__ . '/grammar/sdl.pp'));
 
     foreach ($reader->getRuleDefinitions() as $i => $obj) {
-        echo $obj . "\n\n";
+        //echo $obj . "\n\n";
     }
 } catch (\Throwable $e) {
     echo $e;

@@ -12,6 +12,7 @@ namespace Railt\Compiler\Generator\Grammar\Reader\Productions;
 /**
  * Class Alternation
  */
-class Alternation extends Concatenation
+class Alternation extends Group
 {
+
 }

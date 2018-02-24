@@ -12,8 +12,8 @@ namespace Railt\Compiler\Generator\Grammar\Reader;
 use Railt\Compiler\Generator\Grammar\Exceptions\GrammarException;
 use Railt\Compiler\Generator\Grammar\Exceptions\InvalidRuleException;
 use Railt\Compiler\Generator\Grammar\Lexer;
-use Railt\Compiler\Generator\Grammar\Reader\Productions\Context;
-use Railt\Compiler\Generator\Grammar\Reader\Productions\InputRule;
+use Railt\Compiler\Generator\Grammar\Reader\Context\Builder;
+use Railt\Compiler\Generator\Grammar\Reader\Context\Item;
 use Railt\Compiler\Lexer\Tokens\Output;
 use Railt\Io\Readable;
 
@@ -25,9 +25,9 @@ class ReadProductions implements State
     /**@#+
      * Rule body info
      */
-    public const I_RULE_FILE   = 0x00;
+    public const I_RULE_FILE = 0x00;
     public const I_RULE_OFFSET = 0x01;
-    public const I_RULE_BODY   = 0x02;
+    public const I_RULE_BODY = 0x02;
     /**@#-*/
 
     /**
@@ -113,12 +113,16 @@ class ReadProductions implements State
             throw new GrammarException('Grammar file must contain more than one rule');
         }
 
-        foreach ($this->rules as $name => $data) {
-            $ctx = new Context($data[self::I_RULE_FILE], $name, $data[self::I_RULE_OFFSET]);
+        $previous = null;
 
-            \array_walk($data[self::I_RULE_BODY], function (array $rule) use ($ctx): void {
-                $ctx->collect(new InputRule($rule, $ctx));
-            });
+        foreach ($this->rules as $name => $data) {
+            $ctx = new Builder($data[self::I_RULE_FILE], $name, $data[self::I_RULE_OFFSET]);
+
+            foreach ((array)$data[self::I_RULE_BODY] as $rule) {
+                $item = new Item($rule, $ctx, $previous);
+                $ctx->collect($item);
+                $previous = $item;
+            }
 
             yield from $ctx->reduce();
         }

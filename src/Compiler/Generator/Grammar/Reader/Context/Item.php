@@ -7,16 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler\Generator\Grammar\Reader\Productions;
+namespace Railt\Compiler\Generator\Grammar\Reader\Context;
 
 use Railt\Compiler\Generator\Grammar\Lexer;
 use Railt\Compiler\Lexer\Tokens\Output;
 use Railt\Io\Position;
 
 /**
- * Class InputRule
+ * Class Item
  */
-final class InputRule implements \ArrayAccess
+final class Item implements \ArrayAccess
 {
     /**
      * @var array
@@ -24,19 +24,51 @@ final class InputRule implements \ArrayAccess
     private $rule;
 
     /**
-     * @var Context
+     * @var Builder
      */
     private $ctx;
 
     /**
+     * @var null|Item
+     */
+    private $prev;
+
+    /**
      * InputRule constructor.
      * @param array $rule
-     * @param Context $ctx
+     * @param Builder $ctx
+     * @param Item|null $prev
      */
-    public function __construct(array $rule, Context $ctx)
+    public function __construct(array $rule, Builder $ctx, ?Item $prev)
     {
         $this->rule = $rule;
         $this->ctx  = $ctx;
+        $this->prev = $prev;
+    }
+
+    /**
+     * @return null|Item
+     */
+    public function previous(): ?Item
+    {
+        return $this->prev;
+    }
+
+    /**
+     * Is the current rule is a:
+     * 1) Kept token    - <TOKEN>
+     * 2) Skipped token - ::TOKEN::
+     * 3) Rule link     - Rule()
+     *
+     * @return bool
+     */
+    public function isConcatenable(): bool
+    {
+        return \in_array($this->rule[Output::T_NAME], [
+            Lexer::T_KEPT,
+            Lexer::T_SKIPPED,
+            Lexer::T_NAMED
+        ], true);
     }
 
     /**
@@ -78,7 +110,7 @@ final class InputRule implements \ArrayAccess
 
     /**
      * @param int|null $index
-     * @return mixed|null
+     * @return string|array
      */
     public function context(int $index = null)
     {

@@ -10,23 +10,16 @@ declare(strict_types=1);
 namespace Railt\Compiler\Generator\Grammar\Reader\Productions;
 
 /**
- * Class Token
+ * Class Invocation
  */
-class Token extends Rule
+class Invocation extends Rule
 {
     /**
-     * @var bool
+     * Invocation constructor.
+     * @param string $rule
      */
-    protected $keep;
-
-    /**
-     * Token constructor.
-     * @param string $name
-     * @param bool $keep
-     */
-    public function __construct(string $name, bool $keep)
+    public function __construct(string $rule)
     {
-        $this->name = $name;
-        $this->keep = $keep;
+        $this->name = $rule;
     }
 }
