@@ -133,13 +133,13 @@ class Response implements ResponseInterface
      */
     public function toArray(): array
     {
-        return [
-            static::FIELD_DATA   => $this->getData(),
-            static::FIELD_ERRORS => $this->getErrors(),
-        ];
+        return \array_filter([
+            static::FIELD_DATA   => $this->getData() ?: null,
+            static::FIELD_ERRORS => $this->getErrors() ?: null,
+        ]);
     }
 
-    /**
+        /**
      * @return array[]
      */
     public function getErrors(): array
@@ -147,7 +147,11 @@ class Response implements ResponseInterface
         $result = [];
 
         foreach ($this->errors as $error) {
-            $result += $this->formatError($error, $this->debug);
+            if (\is_object($error)) {
+                $result += $this->formatError($error, $this->debug);
+            } else {
+                $result[] = $error;
+            }
         }
 
         return $result;
@@ -166,7 +170,7 @@ class Response implements ResponseInterface
      * @param bool $debug
      * @return mixed
      */
-    private function formatError($error, bool $debug = false)
+    private function formatError($error, bool $debug = false): array
     {
         switch (true) {
             case $error instanceof \Throwable:
@@ -179,7 +183,7 @@ class Response implements ResponseInterface
                 return $error->jsonSerialize();
         }
 
-        return $error;
+        return (array)$error;
     }
 
     /**
