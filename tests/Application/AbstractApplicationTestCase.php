@@ -13,6 +13,7 @@ use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
+use Railt\Routing\RouterExtension;
 use Railt\Tests\AbstractTestCase;
 use Railt\Tests\Http\Mocks\Request;
 use Railt\Tests\SDL\Helpers\CompilerStubs;
@@ -53,7 +54,10 @@ abstract class AbstractApplicationTestCase extends AbstractTestCase
     protected function getApplications(): \Traversable
     {
         foreach ($this->getCompilers() as $compiler) {
-            yield new Application($compiler);
+            $app = new Application($compiler);
+            $app->extend(RouterExtension::class);
+
+            yield $app;
         }
     }
 
