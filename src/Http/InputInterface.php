@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Routing\Contracts;
+namespace Railt\Http;
 
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 

@@ -11,12 +11,12 @@ namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Railt\Container\ContainerInterface;
+use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Routing\Contracts\InputInterface;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Route;
 
@@ -25,10 +25,10 @@ use Railt\Routing\Route;
  */
 class FieldResolver
 {
-    private const DIRECTIVE           = 'route';
-    private const DIRECTIVE_ACTION    = 'action';
+    private const DIRECTIVE = 'route';
+    private const DIRECTIVE_ACTION = 'action';
     private const DIRECTIVE_OPERATION = 'operation';
-    private const DIRECTIVE_RELATION  = 'relation';
+    private const DIRECTIVE_RELATION = 'relation';
 
     /**
      * @var ContainerInterface

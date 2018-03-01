@@ -14,14 +14,13 @@ use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Adapter;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
-use Railt\Foundation\ServiceProviders\Pipeline;
-use Railt\Foundation\ServiceProviders\ServiceProvider;
+use Railt\Foundation\Extensions\Extension;
+use Railt\Foundation\Extensions\Repository;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Routing\RouterServiceProvider;
 use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Schema\CompilerInterface;
@@ -44,9 +43,9 @@ class Application
     private $debug;
 
     /**
-     * @var Pipeline
+     * @var Repository
      */
-    private $pipeline;
+    private $extensions;
 
     /**
      * @var ContainerInterface
@@ -61,9 +60,10 @@ class Application
      */
     public function __construct(CompilerInterface $compiler, PSRContainer $container = null, bool $debug = false)
     {
-        $this->debug     = $debug;
-        $this->compiler  = $compiler;
-        $this->container = $this->bootApplication($compiler, $container);
+        $this->debug      = $debug;
+        $this->compiler   = $compiler;
+        $this->container  = $this->bootApplication($compiler, $container);
+        $this->extensions = new Repository($this->container);
     }
 
     /**
@@ -77,20 +77,7 @@ class Application
 
         $this->registerCompiler($compiler, $container);
 
-        $this->pipeline = $this->createPipeline($container);
-
         return $container;
-    }
-
-    /**
-     * @param string|ServiceProvider $provider
-     * @return Application
-     */
-    public function extend(string $provider): self
-    {
-        $this->pipeline->add($provider);
-
-        return $this;
     }
 
     /**
@@ -121,16 +108,14 @@ class Application
     }
 
     /**
-     * @param ContainerInterface $container
-     * @return Pipeline
+     * @param string|Extension $extension
+     * @return Application
      */
-    private function createPipeline(ContainerInterface $container): Pipeline
+    public function extend(string $extension): self
     {
-        $pipeline = new Pipeline($container);
+        $this->extensions->add($extension);
 
-        $pipeline->add(RouterServiceProvider::class);
-
-        return $pipeline;
+        return $this;
     }
 
     /**
@@ -142,7 +127,7 @@ class Application
      */
     public function request(Readable $sdl, RequestInterface $request): ResponseInterface
     {
-        $this->pipeline->boot();
+        $this->extensions->boot();
 
         $document = $this->getDocument($sdl);
 
@@ -153,7 +138,7 @@ class Application
             return $adapter->request($schema, $request);
         };
 
-        return $this->pipeline->handle($request, $pipeline);
+        return $this->extensions->handle($request, $pipeline);
     }
 
     /**

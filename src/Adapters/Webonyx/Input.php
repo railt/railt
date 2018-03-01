@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
+use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Routing\Contracts\InputInterface;
 
 /**
  * Class Input
@@ -64,14 +64,6 @@ class Input implements InputInterface
     }
 
     /**
-     * @return mixed|null
-     */
-    public function getParentValue()
-    {
-        return $this->parent;
-    }
-
-    /**
      * @param HasArguments $reflection
      * @param array $input
      * @return array
@@ -105,6 +97,14 @@ class Input implements InputInterface
         }
 
         return $result;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getParentValue()
+    {
+        return $this->parent;
     }
 
     /**

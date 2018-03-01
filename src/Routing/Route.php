@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
+use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Routing\Contracts\InputInterface;
 use Railt\Routing\Contracts\RegistryInterface;
 
 /**

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\ServiceProviders;
+namespace Railt\Foundation\Extensions;
 
 use Railt\Container\ContainerInterface;
 use Railt\Http\RequestInterface;
@@ -16,7 +16,7 @@ use Railt\Http\ResponseInterface;
 /**
  * Class BaseServiceProvider
  */
-abstract class BaseServiceProvider implements ServiceProvider
+abstract class BaseExtension implements Extension
 {
     /**
      * @var ContainerInterface

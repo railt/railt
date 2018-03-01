@@ -7,21 +7,21 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\ServiceProviders;
+namespace Railt\Foundation\Extensions;
 
 use Railt\Container\ContainerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 
 /**
- * Class Pipeline
+ * Class Repository
  */
-class Pipeline
+class Repository
 {
     /**
-     * @var array|ServiceProvider[]
+     * @var array|Extension[]
      */
-    private $providers = [];
+    private $extensions = [];
 
     /**
      * @var ContainerInterface
@@ -48,7 +48,7 @@ class Pipeline
      */
     public function add(string $provider): void
     {
-        $this->providers[] = new $provider($this->container);
+        $this->extensions[] = $this->container->make($provider);
     }
 
     /**
@@ -57,9 +57,9 @@ class Pipeline
     public function boot(): void
     {
         if ($this->booted === false) {
-            foreach ($this->providers as $provider) {
-                if (\method_exists($provider, 'boot')) {
-                    $this->container->call([$provider, 'boot']);
+            foreach ($this->extensions as $extension) {
+                if (\method_exists($extension, 'boot')) {
+                    $this->container->call([$extension, 'boot']);
                 }
             }
 
@@ -76,9 +76,9 @@ class Pipeline
     {
         $then = $response;
 
-        foreach ($this->providers as $provider) {
-            $then = function (RequestInterface $request) use ($provider, $then) {
-                return $provider->handle($request, $then);
+        foreach ($this->extensions as $extension) {
+            $then = function (RequestInterface $request) use ($extension, $then) {
+                return $extension->handle($request, $then);
             };
         }
 

@@ -1,7 +1,0 @@
-input Relation {
-    parent: String!
-    child: String!
-}
-
-directive @route(action: String! operations: [String!]! = [], relation: Relation! = { parent: null child: null })
-    on FIELD_DEFINITION

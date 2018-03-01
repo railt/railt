@@ -1,0 +1,12 @@
+input __relation
+    @deprecated(reason: "This is an internal private schema type. Do not use it in your queries.")
+{
+    parent: String!
+    child: String!
+}
+
+directive @route(
+    action: String!
+    operations: [String!]! = []
+    relation: __relation! = {parent: null, child: null}
+) on FIELD_DEFINITION

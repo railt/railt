@@ -7,17 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\ServiceProviders;
+namespace Railt\Foundation\Extensions;
 
-use Railt\Container\Autowireable;
-use Railt\Container\Registrable;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 
 /**
- * Interface ServiceProvider
+ * Interface Extension
  */
-interface ServiceProvider extends Registrable, Autowireable
+interface Extension
 {
     /**
      * @param RequestInterface $request
