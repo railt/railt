@@ -8,8 +8,8 @@
  */
 declare(strict_types=1);
 
-use Railt\Console\CompilerClearCommand;
-use Railt\Console\CompilerRebuildCommand;
+use Railt\Foundation\Console\CompilerClearCommand;
+use Railt\Foundation\Console\CompilerRebuildCommand;
 use Symfony\Component\Console\Application;
 
 \define('RAILT_START', \microtime(true));
@@ -28,6 +28,7 @@ use Symfony\Component\Console\Application;
 
 $loaders = [
     __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
 ];
 
 foreach ($loaders as $loader) {
