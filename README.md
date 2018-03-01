@@ -32,25 +32,42 @@ thereby solving problems such as:
 
 ## Quick start
 
-The documentation is in the process of writing, therefore, in order to understand how it works, a quick start.
+The documentation is in the process of writing, therefore, 
+in order to understand how it works, a quick start.
 
-> `index.php`
+### `index.php`
+
+This is the main file that handles all requests to the application. 
+With the same success this role can be performed by any controller 
+in the MVP (MVC with passive models) application, for example on 
+the basis of a Symfony or Laravel.
 
 ```php
 use Railt\Io\File;
 use Railt\SDL\Compiler;
 use Railt\Http\Request;
 use Railt\Foundation\Application;
+use Railt\Routing\RouterExtension;
 
+// Creating a new application
 $app = new Application(new Compiler());
 
+// Add support for routing (Like the @route directive)
+$app->extend(RouterExtension::class);
+
+// Link to the main SDL of the our application
 $schema = File::fromPathname(__DIR__ . '/schema.graphqls');
 
+// Processing of HTTP request
 $response = $app->request($schema, new Request());
+
+// And sending a Response
 $response->send();
 ```
 
-> `schema.graphqls`
+### `schema.graphqls`
+
+This is our main GraphQL application schema.
 
 ```graphql
 schema {
@@ -63,10 +80,12 @@ type Example {
 }
 ```
 
-> `ExampleController.php`
+### `ExampleController.php`
+
+The GraphQL request `query { say }` handler indicated in the `@route` directive
 
 ```php
-use Railt\Routing\Contracts\InputInterface as Input;
+use Railt\Http\InputInterface as Input;
 
 class ExampleController
 {
@@ -77,7 +96,9 @@ class ExampleController
 }
 ```
 
-> GraphQL
+### Example GraphQL query
+
+**Request:**
 
 ```graphql
 # Request
@@ -86,13 +107,13 @@ class ExampleController
 }
 ```
 
+**Response:**
+
 ```json
-// Response
 {
     "say": "Something is awesome!"
 }
 ```
-
 
 ## Learning Railt
 
