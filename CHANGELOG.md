@@ -35,3 +35,4 @@
 - Correction of the exception position in the source code from a variable (not from a file).
 - Fix error message with recursive autoload (An attempt to load an invalid type that contains a non-existent type).
 - Correcting validation of arguments of directives and objects.
+- Fix unexpected string lexemes while a string value an empty.
