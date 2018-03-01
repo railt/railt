@@ -25,10 +25,10 @@ use Railt\Routing\Route;
  */
 class FieldResolver
 {
-    private const DIRECTIVE = 'route';
-    private const DIRECTIVE_ACTION = 'action';
+    private const DIRECTIVE           = 'route';
+    private const DIRECTIVE_ACTION    = 'action';
     private const DIRECTIVE_OPERATION = 'operation';
-    private const DIRECTIVE_RELATION = 'relation';
+    private const DIRECTIVE_RELATION  = 'relation';
 
     /**
      * @var ContainerInterface
