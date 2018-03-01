@@ -51,12 +51,12 @@
 //
 // Multiline string
 //
-%token T_MULTILINE_STRING      """(?:\\"""|(?!""").|\s)+"""
+%token T_MULTILINE_STRING      """(?:\\"""|(?!""").|\s)*"""
 
 //
 // Inline string
 //
-%token T_STRING                 "[^"\\]+(\\.[^"\\]*)*"
+%token T_STRING                 "[^"\\]*(\\.[^"\\]*)*"
 
 //
 // --------------------------------------------------------------------------
