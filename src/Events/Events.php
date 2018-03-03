@@ -108,7 +108,7 @@ class Events implements Dispatcher, Observable
         $result = null;
 
         foreach ($this->find($name) as $listener) {
-            $output = $listener($name, $payload);
+            $output = $listener($name, $payload, $result ?? $payload);
 
             if ($output !== null) {
                 $result = $output;
