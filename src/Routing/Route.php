@@ -256,7 +256,9 @@ class Route
     {
         $parts = \explode(self::PATH_DELIMITER, $path);
 
-        return \implode(self::PATH_DELIMITER, \array_slice($parts, -1));
+        \array_pop($parts);
+
+        return \implode(self::PATH_DELIMITER, $parts);
     }
 
     /**
