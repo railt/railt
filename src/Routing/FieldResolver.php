@@ -11,11 +11,9 @@ namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
 use Railt\Http\InputInterface;
-use Railt\Http\RequestInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Routing\Contracts\RouterInterface;
 
 /**
@@ -94,7 +92,7 @@ class FieldResolver
 
         $parameters = \array_merge($input->all(), [
             InputInterface::class => $input,
-            TypeDefinition::class => $field
+            TypeDefinition::class => $field,
         ]);
 
         return $route->call($input, $input->getParentValue(), $parameters);

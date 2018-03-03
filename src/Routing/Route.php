@@ -21,7 +21,7 @@ class Route
 {
     private const PARENT_ARGUMENT_NAME = 'parent';
 
-    public const FIELD_ANY = '*';
+    public const FIELD_ANY      = '*';
     public const PATH_DELIMITER = '.';
 
     /**

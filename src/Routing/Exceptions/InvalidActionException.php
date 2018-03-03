@@ -14,5 +14,4 @@ namespace Railt\Routing\Exceptions;
  */
 class InvalidActionException extends \InvalidArgumentException
 {
-
 }
