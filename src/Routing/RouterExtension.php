@@ -55,7 +55,7 @@ class RouterExtension extends BaseExtension
     {
         $resolver = new FieldResolver($this->getContainer(), $router);
 
-        $events->listen('resolver:*', function(string $event, array $params) use ($resolver) {
+        $events->listen('resolver:*', function (string $event, array $params) use ($resolver) {
             return $resolver->handle(...$params);
         });
     }
