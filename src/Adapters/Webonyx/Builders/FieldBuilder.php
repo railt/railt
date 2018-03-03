@@ -83,7 +83,7 @@ class FieldBuilder extends DependentDefinitionBuilder
      */
     private function getInputResolver(): \Closure
     {
-        return function($parent, array $args, RequestInterface $http, ResolveInfo $info): InputInterface {
+        return function ($parent, array $args, RequestInterface $http, ResolveInfo $info): InputInterface {
             return new WebonyxInput($this->reflection, $info, $args, $parent);
         };
     }
