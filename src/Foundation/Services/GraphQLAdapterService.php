@@ -30,7 +30,7 @@ final class GraphQLAdapterService implements Service
     public function register(ContainerInterface $container, bool $debug): void
     {
         if (! $container->has(AdapterInterface::class)) {
-            $container->register(AdapterInterface::class, function(ContainerInterface $container) use ($debug) {
+            $container->register(AdapterInterface::class, function (ContainerInterface $container) use ($debug) {
                 $class = $this->factory();
 
                 return new $class($container, $debug);
