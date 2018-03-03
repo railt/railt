@@ -32,7 +32,13 @@ interface RouterInterface
 
     /**
      * @param TypeDefinition $type
-     * @return Route|null
+     * @return Route[]|iterable
      */
-    public function get(TypeDefinition $type): ?Route;
+    public function get(TypeDefinition $type): iterable;
+
+    /**
+     * @param Route $route
+     * @return Route
+     */
+    public function add(Route $route): Route;
 }

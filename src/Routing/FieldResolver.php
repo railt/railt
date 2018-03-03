@@ -24,9 +24,6 @@ use Railt\Routing\Contracts\RouterInterface;
 class FieldResolver
 {
     private const DIRECTIVE = 'route';
-    private const DIRECTIVE_ACTION = 'action';
-    private const DIRECTIVE_OPERATION = 'operation';
-    private const DIRECTIVE_RELATION = 'relation';
 
     /**
      * @var ContainerInterface
@@ -51,81 +48,69 @@ class FieldResolver
 
     /**
      * @param FieldDefinition $field
-     * @param RequestInterface $request
      * @param \Closure $inputResolver
      * @return \Closure|null
+     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
-    public function handle(FieldDefinition $field, RequestInterface $request, \Closure $inputResolver): ?\Closure
+    public function handle(FieldDefinition $field, \Closure $inputResolver): ?\Closure
     {
         /** @var ObjectDefinition $parent */
         $parent = $field->getParent();
 
-        $this->loadRouteDirective($parent, $field);
+        $this->loadRouteDirectives($parent, $field);
 
         if (! $this->router->has($parent)) {
             return $this->getDefaultResult($field);
         }
 
-        $route = $this->router->get($parent);
-
-        // TODO Match operation
-        // $request->getOperation()
-
-        // TODO Match method
-        // $request->getMethod()
-
-        return function (...$args) use ($route, $field, $inputResolver) {
+        return function (...$args) use ($field, $inputResolver, $parent) {
             /** @var InputInterface $input */
             $input = $inputResolver(...$args);
 
-            return $route->call([
-                InputInterface::class => $input,
-                TypeDefinition::class => $field,
-                'parent'              => $input->getParentValue(),
-            ]);
+            foreach ($this->router->get($parent) as $route) {
+                if (! $route->matchOperation($input->getOperation())) {
+                    continue;
+                }
+
+                // TODO Add ability to call of multiple routes.
+                return $this->call($route, $input, $field);
+            }
+
+            $default = $this->getDefaultResult($field);
+
+            return $default instanceof \Closure ? $default() : $default;
         };
+    }
+
+    /**
+     * @param Route $route
+     * @param InputInterface $input
+     * @param FieldDefinition $field
+     * @return mixed
+     */
+    private function call(Route $route, InputInterface $input, FieldDefinition $field)
+    {
+        // TODO Add ability to customize action arguments
+
+        $parameters = \array_merge($input->all(), [
+            InputInterface::class => $input,
+            TypeDefinition::class => $field
+        ]);
+
+        return $route->call($input, $input->getParentValue(), $parameters);
     }
 
     /**
      * @param TypeDefinition $object
      * @param FieldDefinition $field
      * @return void
+     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
-    private function loadRouteDirective(TypeDefinition $object, FieldDefinition $field): void
+    private function loadRouteDirectives(TypeDefinition $object, FieldDefinition $field): void
     {
-        if (! $field->hasDirective(self::DIRECTIVE)) {
-            return;
+        foreach ($field->getDirectives(self::DIRECTIVE) as $directive) {
+            $this->router->add(new DirectiveRoute($this->container, $object, $directive));
         }
-
-        /** @var DirectiveInvocation $directive */
-        $directive = $field->getDirective(self::DIRECTIVE);
-
-        $urn      = (string)$directive->getPassedArgument(self::DIRECTIVE_ACTION);
-        $relation = $directive->getPassedArgument(self::DIRECTIVE_RELATION);
-
-        $route = $this->router->route($object, $field->getName())
-            ->then($this->createCallback($urn));
-
-        if ($relation['parent'] && $relation['child']) {
-            $route->relation($relation['parent'], $relation['child']);
-        }
-
-        // TODO Add operations
-        // TODO Add method
-    }
-
-    /**
-     * @param string $urn
-     * @return \Closure
-     */
-    private function createCallback(string $urn): \Closure
-    {
-        [$controller, $action] = \explode('@', $urn);
-
-        return \Closure::fromCallable([
-            $this->container->make($controller),
-            $action,
-        ]);
     }
 
     /**

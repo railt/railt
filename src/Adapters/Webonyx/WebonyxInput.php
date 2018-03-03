@@ -119,7 +119,7 @@ class WebonyxInput implements InputInterface
     /**
      * @return string
      */
-    public function getQueryType(): string
+    public function getOperation(): string
     {
         return $this->info->operation->operation;
     }

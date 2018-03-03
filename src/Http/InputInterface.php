@@ -37,7 +37,7 @@ interface InputInterface
     /**
      * @return string
      */
-    public function getQueryType(): string;
+    public function getOperation(): string;
 
     /**
      * @return string

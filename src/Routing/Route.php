@@ -19,48 +19,50 @@ use Railt\Routing\Contracts\RegistryInterface;
  */
 class Route
 {
-    public const FIELD_ANY      = '*';
+    private const PARENT_ARGUMENT_NAME = 'parent';
+
+    public const FIELD_ANY = '*';
     public const PATH_DELIMITER = '.';
 
     /**
      * @var TypeDefinition
      */
-    private $type;
+    protected $type;
 
     /**
      * @var \Closure|null
      */
-    private $action;
+    protected $action;
 
     /**
      * @var ContainerInterface
      */
-    private $container;
+    protected $container;
 
     /**
      * @var RegistryInterface
      */
-    private $registry;
+    protected $registry;
 
     /**
      * @var string
      */
-    private $field = self::FIELD_ANY;
+    protected $field = self::FIELD_ANY;
 
     /**
      * @var array|string[]
      */
-    private $operations = [];
+    protected $operations = [];
 
     /**
      * @var String
      */
-    private $parent;
+    protected $parent;
 
     /**
      * @var String
      */
-    private $child;
+    protected $child;
 
     /**
      * Route constructor.
@@ -127,6 +129,19 @@ class Route
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public function matchOperation(string $name): bool
+    {
+        if ($this->operations === []) {
+            return true;
+        }
+
+        return \in_array(\mb_strtolower($name), $this->operations, true);
+    }
+
+    /**
      * @return TypeDefinition
      */
     public function getTypeDefinition(): TypeDefinition
@@ -143,15 +158,21 @@ class Route
     }
 
     /**
+     * TODO Add ability to customize the serialization mechanism (decorators?).
+     *
+     * @param InputInterface $input
+     * @param array $parent
      * @param array $params
      * @return mixed
      */
-    public function call(array $params = [])
+    public function call(InputInterface $input, ?array $parent, array $params = [])
     {
-        $path = $params[InputInterface::class]->getPath();
+        $params[self::PARENT_ARGUMENT_NAME] = $parent;
+
+        $path = $input->getPath();
 
         if ($this->isSingularInvocation()) {
-            return $this->invokeSingularAction($path, $params);
+            return $this->invokeSingularAction($path, $parent, $params);
         }
 
         return $this->invokeDividedAction($path, $params);
@@ -167,25 +188,40 @@ class Route
 
     /**
      * @param string $path
+     * @param array $parent
      * @param array $params
      * @return array
      */
-    private function invokeSingularAction(string $path, array $params): array
+    private function invokeSingularAction(string $path, ?array $parent, array $params): array
     {
         $this->prepareSingularInvocation($path, $params);
-
-        $data = [];
 
         /** @var iterable $stored */
         $stored = $this->registry->get($path);
 
-        foreach ($stored as $child) {
-            if ($child[$this->child] === $params['parent'][$this->parent]) {
-                $data[] = $child;
+        return \iterator_to_array($this->join($stored, $parent));
+    }
+
+    /**
+     * @param array $data
+     * @param array|null $parent
+     * @return \Traversable|array[]
+     */
+    private function join(array $data, ?array $parent): \Traversable
+    {
+        foreach ($data as $child) {
+            if (! \is_array($child) || ! \array_key_exists($this->child, $child)) {
+                continue;
+            }
+
+            if (! \is_array($parent) || ! \array_key_exists($this->parent, $parent)) {
+                continue;
+            }
+
+            if ($child[$this->child] === $parent[$this->parent]) {
+                yield $child;
             }
         }
-
-        return $data;
     }
 
     /**
@@ -196,7 +232,7 @@ class Route
     {
         if (! $this->isFirstInvocation($path)) {
             $params = \array_merge($params, [
-                'parent' => $this->registry->get($this->getParentPath($path)),
+                self::PARENT_ARGUMENT_NAME => $this->registry->get($this->getParentPath($path)),
             ]);
 
             $this->invokeDividedAction($path, $params);

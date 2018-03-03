@@ -72,7 +72,7 @@ class FieldBuilder extends DependentDefinitionBuilder
     {
         $event = $this->getEventName();
 
-        $args  = [$this->reflection, $this->make(RequestInterface::class), $this->getInputResolver()];
+        $args  = [$this->reflection, $this->getInputResolver()];
 
         return $this->make(Dispatcher::class)->dispatch($event, $args);
     }

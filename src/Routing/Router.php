@@ -24,7 +24,7 @@ class Router implements RouterInterface
     private $container;
 
     /**
-     * @var array|Route[]
+     * @var array|Route[]|\SplStack[]
      */
     private $routes = [];
 
@@ -50,7 +50,7 @@ class Router implements RouterInterface
             $route->when($field);
         }
 
-        return $this->routes[$this->key($type)] = $route;
+        return $this->add($route);
     }
 
     /**
@@ -59,7 +59,7 @@ class Router implements RouterInterface
      */
     private function key(TypeDefinition $type): string
     {
-        return (string)$type;
+        return $type->getUniqueId();
     }
 
     /**
@@ -73,10 +73,27 @@ class Router implements RouterInterface
 
     /**
      * @param TypeDefinition $type
-     * @return null|Route
+     * @return iterable|Route[]
      */
-    public function get(TypeDefinition $type): ?Route
+    public function get(TypeDefinition $type): iterable
     {
-        return $this->routes[$this->key($type)] ?? null;
+        return $this->routes[$this->key($type)] ?? [];
+    }
+
+    /**
+     * @param Route $route
+     * @return Route
+     */
+    public function add(Route $route): Route
+    {
+        $index = $this->key($route->getTypeDefinition());
+
+        if (! \array_key_exists($index, $this->routes)) {
+            $this->routes[$index] = new \SplQueue();
+        }
+
+        $this->routes[$index]->push($route);
+
+        return $route;
     }
 }

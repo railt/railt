@@ -19,12 +19,12 @@
 
 directive @route(
     action: String!
-    operations: [__routeOperation!]! = []
-    relation: __routeRelation! = {parent: null, child: null}
+    operations: [__routeOperation!]
+    relation: __routeRelation
 ) on FIELD_DEFINITION
 
 input __routeRelation {
-    parent: String!
+    parent: String! = "id"
     child: String!
 }
 
