@@ -85,13 +85,11 @@ type Example {
 The GraphQL request `query { say }` handler indicated in the `@route` directive
 
 ```php
-use Railt\Http\InputInterface as Input;
-
 class ExampleController
 {
-    public function say(Input $input): string
+    public function say(string $message): string
     {
-        return $input->get('message');
+        return $message;
     }
 }
 ```
