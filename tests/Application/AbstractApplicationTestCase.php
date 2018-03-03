@@ -9,11 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Application;
 
+use Psr\Container\ContainerInterface;
+use Railt\Container\Container;
 use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
 use Railt\Routing\RouterExtension;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\Tests\AbstractTestCase;
 use Railt\Tests\Http\Mocks\Request;
 use Railt\Tests\SDL\Helpers\CompilerStubs;
@@ -54,7 +57,10 @@ abstract class AbstractApplicationTestCase extends AbstractTestCase
     protected function getApplications(): \Traversable
     {
         foreach ($this->getCompilers() as $compiler) {
-            $app = new Application($compiler);
+            $container = new Container();
+            $container->instance(CompilerInterface::class, $compiler);
+
+            $app = new Application($container);
             $app->extend(RouterExtension::class);
 
             yield $app;
