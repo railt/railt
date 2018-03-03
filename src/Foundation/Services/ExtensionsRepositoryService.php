@@ -24,7 +24,7 @@ final class ExtensionsRepositoryService implements Service
     public function register(ContainerInterface $container, bool $debug): void
     {
         if (! $container->has(Repository::class)) {
-            $container->register(Repository::class, function(ContainerInterface $container) {
+            $container->register(Repository::class, function (ContainerInterface $container) {
                 return new Repository($container);
             });
         }

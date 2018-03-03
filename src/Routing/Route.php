@@ -19,7 +19,7 @@ use Railt\Routing\Contracts\RegistryInterface;
  */
 class Route
 {
-    public const FIELD_ANY = '*';
+    public const FIELD_ANY      = '*';
     public const PATH_DELIMITER = '.';
 
     /**

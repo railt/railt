@@ -13,7 +13,6 @@ use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface as PSRContainer;
 use Psr\Container\NotFoundExceptionInterface;
 use Railt\Adapters\AdapterInterface;
-use Railt\Adapters\Webonyx\Adapter;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Extensions\Extension;

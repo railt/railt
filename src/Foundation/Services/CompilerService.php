@@ -28,7 +28,7 @@ final class CompilerService implements Service
     public function register(ContainerInterface $container, bool $debug): void
     {
         if (! $container->has(CompilerInterface::class)) {
-            $container->register(CompilerInterface::class, function(Persister $cache) {
+            $container->register(CompilerInterface::class, function (Persister $cache) {
                 return new Compiler($cache);
             });
 
