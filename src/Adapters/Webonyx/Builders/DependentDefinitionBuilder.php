@@ -19,7 +19,7 @@ abstract class DependentDefinitionBuilder extends TypeBuilder
 {
     /**
      * @return Type
-     * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     protected function buildType(): Type
     {

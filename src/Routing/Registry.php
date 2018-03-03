@@ -12,7 +12,7 @@ namespace Railt\Routing;
 use Railt\Routing\Contracts\RegistryInterface;
 
 /**
- * Class DataResolver
+ * Class Registry
  */
 class Registry implements RegistryInterface
 {
@@ -23,21 +23,23 @@ class Registry implements RegistryInterface
 
     /**
      * @param string $key
-     * @param $data
-     * @return void
+     * @param mixed $data
+     * @return array|iterable|mixed
      */
-    public function set(string $key, $data): void
+    public function set(string $key, $data)
     {
-        if ($data instanceof \Generator) {
+        if ($data instanceof \Traversable) {
             $data = \iterator_to_array($data);
         }
 
         $this->data[$key] = $data;
+
+        return $data;
     }
 
     /**
      * @param string $key
-     * @param null $default
+     * @param mixed|null $default
      * @return mixed|null
      */
     public function get(string $key, $default = null)

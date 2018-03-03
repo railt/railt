@@ -50,7 +50,7 @@ use Railt\Foundation\Application;
 use Railt\Routing\RouterExtension;
 
 // Creating a new application
-$app = new Application(new Compiler());
+$app = new Application();
 
 // Add support for routing (Like the @route directive)
 $app->extend(RouterExtension::class);

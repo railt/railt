@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface as PSRContainer;
+use Psr\Container\NotFoundExceptionInterface;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Adapter;
 use Railt\Container\Container;
@@ -21,31 +23,18 @@ use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class Application
  */
-class Application
+class Application implements PSRContainer
 {
-    private const DEFAULT_GRAPHQL_ADAPTER = Adapter::class;
-
-    /**
-     * @var Compiler
-     */
-    private $compiler;
-
     /**
      * @var bool
      */
     private $debug;
-
-    /**
-     * @var Repository
-     */
-    private $extensions;
 
     /**
      * @var ContainerInterface
@@ -54,57 +43,66 @@ class Application
 
     /**
      * Application constructor.
-     * @param CompilerInterface $compiler
      * @param PSRContainer|null $container
      * @param bool $debug
      */
-    public function __construct(CompilerInterface $compiler, PSRContainer $container = null, bool $debug = false)
+    public function __construct(PSRContainer $container = null, bool $debug = false)
     {
-        $this->debug      = $debug;
-        $this->compiler   = $compiler;
-        $this->container  = $this->bootApplication($compiler, $container);
-        $this->extensions = new Repository($this->container);
+        $this->debug     = $debug;
+        $this->container = $this->bootContainer($container);
+
+        $this->boot();
     }
 
     /**
-     * @param CompilerInterface $compiler
-     * @param null|PSRContainer $container
-     * @return ContainerInterface
+     * @param string $id
+     * @return mixed
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
-    private function bootApplication(CompilerInterface $compiler, ?PSRContainer $container): ContainerInterface
+    public function get($id)
     {
-        $container = $this->createContainer($container);
+        return $this->container->get($id);
+    }
 
-        $this->registerCompiler($compiler, $container);
-
-        return $container;
+    /**
+     * @param string $id
+     * @return bool
+     */
+    public function has($id): bool
+    {
+        return $this->container->has($id);
     }
 
     /**
      * @param PSRContainer|null $container
-     * @return Container
+     * @return ContainerInterface
      */
-    private function createContainer(?PSRContainer $container): Container
+    private function bootContainer(PSRContainer $container = null): ContainerInterface
     {
-        if ($container instanceof Container) {
-            return $container;
-        }
-
-        return new Container($container);
+        return $container instanceof Container ? $container : new Container($container);
     }
 
     /**
-     * @param CompilerInterface $compiler
-     * @param ContainerInterface $container
      * @return void
      */
-    private function registerCompiler(CompilerInterface $compiler, ContainerInterface $container): void
+    private function boot(): void
     {
-        if (! $container->has(CompilerInterface::class)) {
-            $container->register(CompilerInterface::class, function () use ($compiler) {
-                return $compiler;
-            });
+        foreach ($this->getApplicationServices() as $service) {
+            $service->register($this->container, $this->debug);
         }
+    }
+
+    /**
+     * @return iterable|Services\Service[]
+     */
+    private function getApplicationServices(): iterable
+    {
+        yield new Services\CacheService();
+        yield new Services\CompilerService();
+        yield new Services\GraphQLAdapterService();
+        yield new Services\ExtensionsRepositoryService();
+        yield new Services\EventsService();
     }
 
     /**
@@ -113,7 +111,7 @@ class Application
      */
     public function extend(string $extension): self
     {
-        $this->extensions->add($extension);
+        $this->container->make(Repository::class)->add($extension);
 
         return $this;
     }
@@ -127,28 +125,16 @@ class Application
      */
     public function request(Readable $sdl, RequestInterface $request): ResponseInterface
     {
-        $this->extensions->boot();
+        $this->container->make(Repository::class)->boot();
 
-        $document = $this->getDocument($sdl);
+        $document = $this->container->make(CompilerInterface::class)->compile($sdl);
+        $adapter  = $this->container->make(AdapterInterface::class);
 
-        $schema  = $this->getSchema($document);
-        $adapter = $this->getAdapter($this->debug);
-
-        $pipeline = function (RequestInterface $request) use ($adapter, $schema): ResponseInterface {
-            return $adapter->request($schema, $request);
+        $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
+            return $adapter->request($this->getSchema($document), $request);
         };
 
-        return $this->extensions->handle($request, $pipeline);
-    }
-
-    /**
-     * @param Readable $sdl
-     * @return Document
-     * @throws \Railt\SDL\Exceptions\CompilerException
-     */
-    private function getDocument(Readable $sdl): Document
-    {
-        return $this->compiler->compile($sdl);
+        return $this->container->make(Repository::class)->handle($request, $pipeline);
     }
 
     /**
@@ -161,21 +147,12 @@ class Application
         $schema = $document->getSchema();
 
         if ($schema === null) {
+            $compiler = $this->container->make(ContainerInterface::class);
+
             $error = \sprintf('The document %s must contain a schema definition', $document->getFileName());
-            throw new TypeNotFoundException($error, $this->compiler->getCallStack());
+            throw new TypeNotFoundException($error, $compiler->getCallStack());
         }
 
         return $schema;
-    }
-
-    /**
-     * @param bool $debug
-     * @return AdapterInterface
-     */
-    protected function getAdapter(bool $debug): AdapterInterface
-    {
-        $adapter = self::DEFAULT_GRAPHQL_ADAPTER;
-
-        return new $adapter($this->container, $debug);
     }
 }

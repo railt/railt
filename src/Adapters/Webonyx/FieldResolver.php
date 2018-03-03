@@ -54,6 +54,7 @@ class FieldResolver
      * @param RequestInterface $request
      * @param FieldDefinition $field
      * @return \Closure|null
+     * @throws \InvalidArgumentException
      */
     public function getCallback(RequestInterface $request, FieldDefinition $field): ?\Closure
     {
@@ -86,7 +87,7 @@ class FieldResolver
 
         return function ($parent, array $arguments = [], $ctx, ResolveInfo $info) use ($route, $field) {
             return $route->call([
-                InputInterface::class => new Input($field, $info, $arguments, $parent),
+                InputInterface::class => new WebonyxInput($field, $info, $arguments, $parent),
                 TypeDefinition::class => $field,
                 'parent'              => $parent,
             ]);

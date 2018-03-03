@@ -11,7 +11,6 @@ namespace Railt\Routing;
 
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
-use Railt\Io\Readable;
 use Railt\Routing\Contracts\RegistryInterface;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\SDL\Schema\CompilerInterface;
@@ -21,7 +20,15 @@ use Railt\SDL\Schema\CompilerInterface;
  */
 class RouterExtension extends BaseExtension
 {
-    private const SCHEMA_FILE = __DIR__ . '/resources/graphql/route.graphqls';
+    /**
+     * @var string
+     */
+    private const SCHEMA_ROUTE_FILE = __DIR__ . '/resources/graphql/route.graphqls';
+
+    /**
+     * @var string
+     */
+    private const SCHEMA_USE_FILE = __DIR__ . '/resources/graphql/use.graphqls';
 
     /**
      * @param CompilerInterface $compiler
@@ -32,14 +39,17 @@ class RouterExtension extends BaseExtension
         $this->instance(RouterInterface::class, new Router($this->getContainer()));
         $this->instance(RegistryInterface::class, new Registry());
 
-        $compiler->compile($this->getRouteDirective());
+        foreach ($this->getSchemaFiles() as $schema) {
+            $compiler->compile(File::fromPathname($schema));
+        }
     }
 
     /**
-     * @return Readable
+     * @return iterable|string[]
      */
-    private function getRouteDirective(): Readable
+    private function getSchemaFiles(): iterable
     {
-        return File::fromPathname(self::SCHEMA_FILE);
+        yield self::SCHEMA_USE_FILE;
+        yield self::SCHEMA_ROUTE_FILE;
     }
 }

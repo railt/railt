@@ -42,8 +42,8 @@ class Adapter implements AdapterInterface
      */
     public function __construct(ContainerInterface $container, bool $debug = false)
     {
-        $this->debug      = $debug;
-        $this->registry   = new Registry($container);
+        $this->debug    = $debug;
+        $this->registry = new Registry($container);
         $container->instance(FieldResolver::class, new FieldResolver($container));
     }
 
@@ -102,7 +102,7 @@ class Adapter implements AdapterInterface
                 $reflection,
                 $request->getVariables(),
                 $request->getOperation(),
-                null /** Validations */
+                null/** Validations */
             );
         };
     }

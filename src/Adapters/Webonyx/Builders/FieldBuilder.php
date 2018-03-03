@@ -66,10 +66,10 @@ class FieldBuilder extends DependentDefinitionBuilder
     private function getResolver(): ?\Closure
     {
         /** @var RequestInterface $request */
-        $request = $this->resolve(RequestInterface::class);
+        $request = $this->make(RequestInterface::class);
 
         /** @var FieldResolver $resolver */
-        $resolver = $this->resolve(FieldResolver::class);
+        $resolver = $this->make(FieldResolver::class);
 
         return $resolver->getCallback($request, $this->reflection);
     }

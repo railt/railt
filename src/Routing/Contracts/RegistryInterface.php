@@ -17,14 +17,14 @@ interface RegistryInterface
     /**
      * @param string $key
      * @param $data
-     * @return void
+     * @return mixed|iterable
      */
-    public function set(string $key, $data): void;
+    public function set(string $key, $data);
 
     /**
      * @param string $key
      * @param null $default
-     * @return mixed
+     * @return mixed|iterable
      */
     public function get(string $key, $default = null);
 

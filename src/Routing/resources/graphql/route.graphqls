@@ -1,12 +1,35 @@
-input __relation
-    @deprecated(reason: "This is an internal private schema type. Do not use it in your queries.")
-{
+
+#
+# -----------------------------------------------------------------
+#  The Route Directive
+# -----------------------------------------------------------------
+#
+# This directive is used to specify the resolver for type fields.
+#
+# "action" argument must contain a reference to the class and
+#   method in the format "Namespace\\Class@action".
+#
+# "operations" argument indicates a list of valid request types,
+#   like "query", "mutation" or "subscription".
+#
+# "relation" argument indicates that all child types and their
+#   result will be "merged" with the parent according to the
+#   specified criteria (parent field + child field).
+#
+
+directive @route(
+    action: String!
+    operations: [__routeOperation!]! = []
+    relation: __routeRelation! = {parent: null, child: null}
+) on FIELD_DEFINITION
+
+input __routeRelation {
     parent: String!
     child: String!
 }
 
-directive @route(
-    action: String!
-    operations: [String!]! = []
-    relation: __relation! = {parent: null, child: null}
-) on FIELD_DEFINITION
+enum __routeOperation {
+    QUERY
+    MUTATION
+    SUBSCRIPTION
+}

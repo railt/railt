@@ -17,9 +17,9 @@ use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
- * Class Input
+ * Class WebonyxInput
  */
-class Input implements InputInterface
+class WebonyxInput implements InputInterface
 {
     public const DEPTH_DELIMITER = '.';
 
@@ -54,6 +54,7 @@ class Input implements InputInterface
      * @param ResolveInfo $info
      * @param array $arguments
      * @param mixed|null $parent
+     * @throws \InvalidArgumentException
      */
     public function __construct(FieldDefinition $field, ResolveInfo $info, array $arguments = [], $parent = null)
     {

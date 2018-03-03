@@ -160,6 +160,8 @@ class Container implements ContainerInterface
     /**
      * @param string $id
      * @return mixed|object
+     * @throws \Railt\Container\Exceptions\ContainerResolutionException
+     * @throws \ReflectionException
      */
     private function resolve(string $id)
     {
@@ -180,6 +182,7 @@ class Container implements ContainerInterface
      * @param callable $callable
      * @param array $params
      * @return mixed
+     * @throws \ReflectionException
      */
     public function call(callable $callable, array $params = [])
     {
@@ -198,6 +201,7 @@ class Container implements ContainerInterface
      * @return mixed|object
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \ReflectionException
      */
     public function make(string $class, array $params = [])
     {

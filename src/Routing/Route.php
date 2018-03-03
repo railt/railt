@@ -19,7 +19,8 @@ use Railt\Routing\Contracts\RegistryInterface;
  */
 class Route
 {
-    private const FIELD_ANY = '*';
+    public const FIELD_ANY = '*';
+    public const PATH_DELIMITER = '.';
 
     /**
      * @var TypeDefinition
@@ -142,15 +143,6 @@ class Route
     }
 
     /**
-     * @return \Closure
-     */
-    public function getAction(): \Closure
-    {
-        return $this->action ?? function (): void {
-        };
-    }
-
-    /**
      * @param array $params
      * @return mixed
      */
@@ -158,17 +150,17 @@ class Route
     {
         $path = $params[InputInterface::class]->getPath();
 
-        if ($this->isOneCallPerParent()) {
-            return $this->oneCallPerParent($path, $params);
+        if ($this->isSingularInvocation()) {
+            return $this->invokeSingularAction($path, $params);
         }
 
-        return $this->oneCallPerItem($path, $params);
+        return $this->invokeDividedAction($path, $params);
     }
 
     /**
      * @return bool
      */
-    private function isOneCallPerParent(): bool
+    private function isSingularInvocation(): bool
     {
         return $this->parent && $this->child;
     }
@@ -176,30 +168,18 @@ class Route
     /**
      * @param string $path
      * @param array $params
-     * @return mixed
-     */
-    private function oneCallPerItem(string $path, array $params)
-    {
-        $this->registry->set($path, $this->container->call($this->getAction(), $params));
-
-        return $this->registry->get($path);
-    }
-
-    /**
-     * @param $path
-     * @param $params
      * @return array
      */
-    private function oneCallPerParent($path, $params)
+    private function invokeSingularAction(string $path, array $params): array
     {
-        if (! $this->registry->has($path)) {
-            $this->oneCallPerItem($path, \array_merge($params, [
-                'parent' => $this->registry->get($this->getParentPath($path)),
-            ]));
-        }
+        $this->prepareSingularInvocation($path, $params);
 
         $data = [];
-        foreach ($this->registry->get($path) as $child) {
+
+        /** @var iterable $stored */
+        $stored = $this->registry->get($path);
+
+        foreach ($stored as $child) {
             if ($child[$this->child] === $params['parent'][$this->parent]) {
                 $data[] = $child;
             }
@@ -210,13 +190,57 @@ class Route
 
     /**
      * @param string $path
+     * @param array $params
+     */
+    private function prepareSingularInvocation(string $path, array $params): void
+    {
+        if (! $this->isFirstInvocation($path)) {
+            $params = \array_merge($params, [
+                'parent' => $this->registry->get($this->getParentPath($path)),
+            ]);
+
+            $this->invokeDividedAction($path, $params);
+        }
+    }
+
+    /**
+     * @param string $path
+     * @return bool
+     */
+    private function isFirstInvocation(string $path): bool
+    {
+        return $this->registry->has($path);
+    }
+
+    /**
+     * @param string $path
      * @return string
      */
     private function getParentPath(string $path): string
     {
-        $parts = \explode('.', $path);
-        \array_pop($parts);
+        $parts = \explode(self::PATH_DELIMITER, $path);
 
-        return \implode('.', $parts);
+        return \implode(self::PATH_DELIMITER, \array_slice($parts, -1));
+    }
+
+    /**
+     * @param string $path
+     * @param array $params
+     * @return mixed
+     */
+    private function invokeDividedAction(string $path, array $params)
+    {
+        return $this->registry->set($path, $this->container->call($this->getAction(), $params));
+    }
+
+    /**
+     * @return \Closure
+     */
+    public function getAction(): \Closure
+    {
+        return $this->action ??
+            function (): void {
+                // Otherwise do nothing
+            };
     }
 }

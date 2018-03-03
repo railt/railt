@@ -52,7 +52,7 @@ abstract class TypeBuilder
      * @param string $service
      * @return mixed|object
      */
-    protected function resolve(string $service)
+    protected function make(string $service)
     {
         return $this->registry->getContainer()->make($service);
     }

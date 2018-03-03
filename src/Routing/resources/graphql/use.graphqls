@@ -1,0 +1,5 @@
+#
+#
+#
+
+directive @use(class: String!, as: String) on DOCUMENT
