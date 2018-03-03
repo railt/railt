@@ -10,8 +10,11 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\FieldDefinition;
-use Railt\Adapters\Webonyx\FieldResolver;
+use GraphQL\Type\Definition\ResolveInfo;
 use Railt\Adapters\Webonyx\Registry;
+use Railt\Adapters\Webonyx\WebonyxInput;
+use Railt\Events\Dispatcher;
+use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition as ReflectionField;
@@ -26,6 +29,7 @@ class FieldBuilder extends DependentDefinitionBuilder
      * @param Registry $registry
      * @return array
      * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     public static function buildFields(HasFields $type, Registry $registry): array
     {
@@ -41,6 +45,7 @@ class FieldBuilder extends DependentDefinitionBuilder
     /**
      * @return FieldDefinition
      * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     public function build(): FieldDefinition
     {
@@ -49,8 +54,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             'description' => $this->reflection->getDescription(),
             'type'        => $this->buildType(),
             'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
-            'resolve'     => $this->getResolver(),
-            // TODO complexity
+            'resolve'     => $this->getFieldResolver(),
         ];
 
         if ($this->reflection->isDeprecated()) {
@@ -62,15 +66,35 @@ class FieldBuilder extends DependentDefinitionBuilder
 
     /**
      * @return \Closure|null
+     * @throws \InvalidArgumentException
      */
-    private function getResolver(): ?\Closure
+    private function getFieldResolver(): ?\Closure
     {
-        /** @var RequestInterface $request */
-        $request = $this->make(RequestInterface::class);
+        $event = $this->getEventName();
 
-        /** @var FieldResolver $resolver */
-        $resolver = $this->make(FieldResolver::class);
+        $args  = [$this->reflection, $this->make(RequestInterface::class), $this->getInputResolver()];
 
-        return $resolver->getCallback($request, $this->reflection);
+        return $this->make(Dispatcher::class)->dispatch($event, $args);
+    }
+
+    /**
+     * @return \Closure
+     * @throws \InvalidArgumentException
+     */
+    private function getInputResolver(): \Closure
+    {
+        return function($parent, array $args, RequestInterface $http, ResolveInfo $info): InputInterface {
+            return new WebonyxInput($this->reflection, $info, $args, $parent);
+        };
+    }
+
+    /**
+     * @return string
+     */
+    private function getEventName(): string
+    {
+        $parent = $this->reflection->getParent();
+
+        return 'resolver:' . $parent->getName() . ':' . $this->reflection->getName();
     }
 }

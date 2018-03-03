@@ -13,24 +13,8 @@ namespace Railt\Events;
  * The Dispatcher is an elementary event system often
  * used as a mediator within the project.
  */
-interface Dispatcher
+interface Dispatcher extends Listenable
 {
-    /**
-     * Subscribe to a specific event type. The `*` symbol
-     * means any text in the event name.
-     *
-     * If the "\Closure" returns something other than `null` (void),
-     * then further subscribers will not be called. That is, if two
-     * listeners (subscribers) were created and the closure of the first
-     * returns, for example, falsity, then the second subscriber will
-     * not be called.
-     *
-     * @param string $event
-     * @param \Closure $then
-     * @return Dispatcher
-     */
-    public function listen(string $event, \Closure $then): self;
-
     /**
      * Calling a specific event (subscribers to an event)
      * with a strictly defined name.

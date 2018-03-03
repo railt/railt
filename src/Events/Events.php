@@ -12,8 +12,13 @@ namespace Railt\Events;
 /**
  * Class Events
  */
-class Events implements Dispatcher
+class Events implements Dispatcher, Observable
 {
+    /**
+     * @var string Any name
+     */
+    private const T_ANY = '*';
+
     /**
      * @var array|\Closure[][]
      */
@@ -47,7 +52,7 @@ class Events implements Dispatcher
     {
         if (! \array_key_exists($name, $this->keys)) {
             $regex = '/^' . \preg_quote($name, '/') . '$/isu';
-            $regex = \str_replace('\\*', '.+?', $regex);
+            $regex = \str_replace(\preg_quote(self::T_ANY, '/'), '.+?', $regex);
 
             $this->keys[$name] = $regex;
         }
@@ -68,9 +73,9 @@ class Events implements Dispatcher
     /**
      * @param string $name
      * @param \Closure $then
-     * @return Dispatcher|Events
+     * @return Events
      */
-    public function listen(string $name, \Closure $then): Dispatcher
+    public function listen(string $name, \Closure $then): Listenable
     {
         $key = $this->key($name);
 
@@ -82,23 +87,35 @@ class Events implements Dispatcher
     }
 
     /**
-     * Fire
+     * @param \Closure $observer
+     * @param bool $prepend
+     * @return Observable
+     */
+    public function subscribe(\Closure $observer, bool $prepend = false): Observable
+    {
+        return $this->listen(self::T_ANY, $observer);
+    }
+
+    /**
+     * Fire an event.
      *
      * @param string $name
      * @param mixed $payload
-     * @return mixed
+     * @return mixed|null
      */
     public function dispatch(string $name, $payload)
     {
-        foreach ($this->find($name) as $listener) {
-            $result = $listener($name, $payload);
+        $result = null;
 
-            if ($result !== null) {
-                $payload = $result;
+        foreach ($this->find($name) as $listener) {
+            $output = $listener($name, $payload);
+
+            if ($output !== null) {
+                $result = $output;
             }
         }
 
-        return $payload;
+        return $result;
     }
 
     /**

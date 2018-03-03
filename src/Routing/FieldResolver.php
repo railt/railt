@@ -7,9 +7,8 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Adapters\Webonyx;
+namespace Railt\Routing;
 
-use GraphQL\Type\Definition\ResolveInfo;
 use Railt\Container\ContainerInterface;
 use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
@@ -18,17 +17,16 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Routing\Contracts\RouterInterface;
-use Railt\Routing\Route;
 
 /**
  * Class FieldResolver
  */
 class FieldResolver
 {
-    private const DIRECTIVE           = 'route';
-    private const DIRECTIVE_ACTION    = 'action';
+    private const DIRECTIVE = 'route';
+    private const DIRECTIVE_ACTION = 'action';
     private const DIRECTIVE_OPERATION = 'operation';
-    private const DIRECTIVE_RELATION  = 'relation';
+    private const DIRECTIVE_RELATION = 'relation';
 
     /**
      * @var ContainerInterface
@@ -43,41 +41,32 @@ class FieldResolver
     /**
      * FieldResolver constructor.
      * @param ContainerInterface $container
+     * @param RouterInterface $router
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, RouterInterface $router)
     {
         $this->container = $container;
-        $this->router    = $container->make(RouterInterface::class);
+        $this->router    = $router;
     }
 
     /**
-     * @param RequestInterface $request
      * @param FieldDefinition $field
+     * @param RequestInterface $request
+     * @param \Closure $inputResolver
      * @return \Closure|null
-     * @throws \InvalidArgumentException
      */
-    public function getCallback(RequestInterface $request, FieldDefinition $field): ?\Closure
+    public function handle(FieldDefinition $field, RequestInterface $request, \Closure $inputResolver): ?\Closure
     {
-        /** @var ObjectDefinition $object */
-        $object = $field->getParent();
+        /** @var ObjectDefinition $parent */
+        $parent = $field->getParent();
 
-        $this->loadRouteDirective($object, $field);
+        $this->loadRouteDirective($parent, $field);
 
-
-        if (! $this->router->has($object)) {
-            $type = $field->getTypeDefinition();
-
-            if ($type instanceof ObjectDefinition && ! $field->isList() && ! $field->isNonNull()) {
-                return function () {
-                    return [];
-                };
-            }
-
-            return null;
+        if (! $this->router->has($parent)) {
+            return $this->getDefaultResult($field);
         }
 
-        /** @var Route $route */
-        $route = $this->router->get($object);
+        $route = $this->router->get($parent);
 
         // TODO Match operation
         // $request->getOperation()
@@ -85,11 +74,14 @@ class FieldResolver
         // TODO Match method
         // $request->getMethod()
 
-        return function ($parent, array $arguments = [], $ctx, ResolveInfo $info) use ($route, $field) {
+        return function (...$args) use ($route, $field, $inputResolver) {
+            /** @var InputInterface $input */
+            $input = $inputResolver(...$args);
+
             return $route->call([
-                InputInterface::class => new WebonyxInput($field, $info, $arguments, $parent),
+                InputInterface::class => $input,
                 TypeDefinition::class => $field,
-                'parent'              => $parent,
+                'parent'              => $input->getParentValue(),
             ]);
         };
     }
@@ -134,5 +126,22 @@ class FieldResolver
             $this->container->make($controller),
             $action,
         ]);
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @return \Closure|null
+     */
+    private function getDefaultResult(FieldDefinition $field): ?\Closure
+    {
+        $type = $field->getTypeDefinition();
+
+        if ($type instanceof ObjectDefinition && ! $field->isList() && ! $field->isNonNull()) {
+            return function (): array {
+                return [];
+            };
+        }
+
+        return null;
     }
 }

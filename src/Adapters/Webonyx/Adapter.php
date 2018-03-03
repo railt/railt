@@ -44,7 +44,6 @@ class Adapter implements AdapterInterface
     {
         $this->debug    = $debug;
         $this->registry = new Registry($container);
-        $container->instance(FieldResolver::class, new FieldResolver($container));
     }
 
     /**
@@ -62,7 +61,7 @@ class Adapter implements AdapterInterface
             $executor = $this->buildExecutor($schema, $request);
 
             /** @var ExecutionResult $result */
-            $result = $executor();
+            $result = $executor(null, $request);
 
             $response = new Response((array)$result->data, $result->errors);
             $response->debug($this->debug);
@@ -94,12 +93,12 @@ class Adapter implements AdapterInterface
             $schema->assertValid();
         }
 
-        return function ($rootValue = null, $context = null) use ($reflection, $schema, $request): ExecutionResult {
+        return function ($rootValue = null, $context = null) use ($schema, $request): ExecutionResult {
             return GraphQL::executeQuery(
                 $schema,
                 $request->getQuery(),
                 $rootValue,
-                $reflection,
+                $context,
                 $request->getVariables(),
                 $request->getOperation(),
                 null/** Validations */
