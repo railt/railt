@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Application;
 
-use Psr\Container\ContainerInterface;
 use Railt\Container\Container;
 use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
