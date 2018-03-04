@@ -35,8 +35,8 @@ use Railt\SDL\Runtime\CallStackInterface;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
 use Railt\Storage\Drivers\ArrayStorage;
-use Railt\Storage\Storage;
 use Railt\Storage\Proxy;
+use Railt\Storage\Storage;
 
 /**
  * Class Compiler

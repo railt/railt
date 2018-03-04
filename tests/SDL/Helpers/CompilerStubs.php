@@ -21,9 +21,9 @@ use Railt\SDL\Schema\CompilerInterface;
 use Railt\Storage\Drivers\ArrayStorage;
 use Railt\Storage\Drivers\EmulatingStorage;
 use Railt\Storage\Drivers\NullableStorage;
-use Railt\Storage\Storage;
 use Railt\Storage\Drivers\Psr16Storage;
 use Railt\Storage\Drivers\Psr6Storage;
+use Railt\Storage\Storage;
 
 /**
  * Trait CompilerStubs
