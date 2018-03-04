@@ -34,6 +34,5 @@ class SerializeExtension extends BaseExtension
      */
     private function bootFieldResolver(Dispatcher $events): void
     {
-
     }
 }
