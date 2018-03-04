@@ -28,7 +28,9 @@ class Registry implements RegistryInterface
      */
     public function set(string $key, $data)
     {
+        //
         // TODO Add ability to customize serializations
+        //
         if ($data instanceof \Traversable) {
             $data = \iterator_to_array($data);
         }

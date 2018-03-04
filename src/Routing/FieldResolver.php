@@ -15,6 +15,8 @@ use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
+use Railt\Routing\Route\Directive;
+use Railt\Runtime\Contracts\ClassLoader;
 
 /**
  * Class FieldResolver
@@ -79,33 +81,17 @@ class FieldResolver
     }
 
     /**
-     * @param Route $route
-     * @param InputInterface $input
-     * @param FieldDefinition $field
-     * @return mixed
-     */
-    private function call(Route $route, InputInterface $input, FieldDefinition $field)
-    {
-        // TODO Add ability to customize action arguments
-
-        $parameters = \array_merge($input->all(), [
-            InputInterface::class => $input,
-            TypeDefinition::class => $field,
-        ]);
-
-        return $route->call($input, $input->getParentValue(), $parameters);
-    }
-
-    /**
      * @param FieldDefinition $field
      * @return void
      * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
     private function loadRouteDirectives(FieldDefinition $field): void
     {
+        $loader = $this->container->make(ClassLoader::class);
+
         foreach (['route', 'query', 'mutation', 'subscription'] as $route) {
             foreach ($field->getDirectives($route) as $directive) {
-                $this->router->add(new DirectiveRoute($this->container, $field, $directive));
+                $this->router->add(new Directive($this->container, $directive, $loader));
             }
         }
     }
@@ -125,5 +111,23 @@ class FieldResolver
         }
 
         return null;
+    }
+
+    /**
+     * @param Route $route
+     * @param InputInterface $input
+     * @param FieldDefinition $field
+     * @return mixed
+     */
+    private function call(Route $route, InputInterface $input, FieldDefinition $field)
+    {
+        // TODO Add ability to customize action arguments
+
+        $parameters = \array_merge($input->all(), [
+            InputInterface::class => $input,
+            TypeDefinition::class => $field,
+        ]);
+
+        return $route->call($input, $input->getParentValue(), $parameters);
     }
 }

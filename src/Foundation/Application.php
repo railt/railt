@@ -22,6 +22,7 @@ use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\Runtime\RuntimeExtension;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Schema\CompilerInterface;
 
@@ -51,6 +52,8 @@ class Application implements PSRContainer
         $this->container = $this->bootContainer($container);
 
         $this->boot();
+
+        $this->extend(RuntimeExtension::class);
     }
 
     /**

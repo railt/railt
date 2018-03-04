@@ -1,14 +1,5 @@
 #
 # -----------------------------------------------------------------
-#  The Use Directive
-# -----------------------------------------------------------------
-#
-
-directive @use(class: String!, as: String) on DOCUMENT
-
-
-#
-# -----------------------------------------------------------------
 #  The Route Directive
 # -----------------------------------------------------------------
 #
@@ -22,13 +13,13 @@ directive @use(class: String!, as: String) on DOCUMENT
 #   specified criteria (parent field + child field).
 #
 
-directive @route(action: String!, relation: __routeRelation) on FIELD_DEFINITION
+directive @route(action: String!, relation: __relation) on FIELD_DEFINITION
 
-directive @query(action: String!, relation: __routeRelation) on FIELD_DEFINITION
-directive @mutation(action: String!, relation: __routeRelation) on FIELD_DEFINITION
-directive @subscription(action: String!, relation: __routeRelation) on FIELD_DEFINITION
+directive @query(action: String!, relation: __relation) on FIELD_DEFINITION
+directive @mutation(action: String!, relation: __relation) on FIELD_DEFINITION
+directive @subscription(action: String!, relation: __relation) on FIELD_DEFINITION
 
-input __routeRelation {
+input __relation {
     parent: String! = "id"
     child: String!
 }
