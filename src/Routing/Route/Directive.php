@@ -77,7 +77,6 @@ class Directive extends Route
         $this->then(\Closure::fromCallable([$instance, $action]));
     }
 
-
     /**
      * @param InputInvocation $relation
      */

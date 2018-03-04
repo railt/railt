@@ -91,7 +91,7 @@ class DirectiveLoader implements ClassLoader
     {
         return [
             $directive->getPassedArgument('class'),
-            $directive->getPassedArgument('as')
+            $directive->getPassedArgument('as'),
         ];
     }
 }
