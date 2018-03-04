@@ -22,7 +22,6 @@ use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\Runtime\RuntimeExtension;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Schema\CompilerInterface;
 
@@ -42,6 +41,35 @@ class Application implements PSRContainer
     private $container;
 
     /**
+     * @var bool
+     */
+    private $booted = false;
+
+    /**
+     * Application extensions list.
+     *
+     * @var array
+     */
+    private $extensions = [
+        \Railt\Runtime\RuntimeExtension::class,
+        \Railt\Routing\RouterExtension::class,
+        \Railt\Serialize\SerializeExtension::class,
+    ];
+
+    /**
+     * Application services list.
+     *
+     * @var array
+     */
+    private $services = [
+        \Railt\Foundation\Services\CacheService::class,
+        \Railt\Foundation\Services\CompilerService::class,
+        \Railt\Foundation\Services\GraphQLAdapterService::class,
+        \Railt\Foundation\Services\ExtensionsRepositoryService::class,
+        \Railt\Foundation\Services\EventsService::class,
+    ];
+
+    /**
      * Application constructor.
      * @param PSRContainer|null $container
      * @param bool $debug
@@ -50,10 +78,15 @@ class Application implements PSRContainer
     {
         $this->debug     = $debug;
         $this->container = $this->bootContainer($container);
+    }
 
-        $this->boot();
-
-        $this->extend(RuntimeExtension::class);
+    /**
+     * @param PSRContainer|null $container
+     * @return ContainerInterface
+     */
+    private function bootContainer(PSRContainer $container = null): ContainerInterface
+    {
+        return $container instanceof Container ? $container : new Container($container);
     }
 
     /**
@@ -77,12 +110,37 @@ class Application implements PSRContainer
     }
 
     /**
-     * @param PSRContainer|null $container
-     * @return ContainerInterface
+     * @param Readable $sdl
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
+     * @throws \Railt\SDL\Exceptions\CompilerException
      */
-    private function bootContainer(PSRContainer $container = null): ContainerInterface
+    public function request(Readable $sdl, RequestInterface $request): ResponseInterface
     {
-        return $container instanceof Container ? $container : new Container($container);
+        $this->bootIfNotBooted();
+
+        $this->container->make(Repository::class)->boot();
+
+        $document = $this->container->make(CompilerInterface::class)->compile($sdl);
+        $adapter  = $this->container->make(AdapterInterface::class);
+
+        $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
+            return $adapter->request($this->getSchema($document), $request);
+        };
+
+        return $this->container->make(Repository::class)->handle($request, $pipeline);
+    }
+
+    /**
+     * @return void
+     */
+    private function bootIfNotBooted(): void
+    {
+        if ($this->booted === false) {
+            $this->boot();
+            $this->booted = true;
+        }
     }
 
     /**
@@ -90,21 +148,24 @@ class Application implements PSRContainer
      */
     private function boot(): void
     {
-        foreach ($this->getApplicationServices() as $service) {
-            $service->register($this->container, $this->debug);
+        foreach ($this->services as $service) {
+            $this->service($service);
+        }
+
+        foreach ($this->extensions as $extension) {
+            $this->extend($extension);
         }
     }
 
     /**
-     * @return iterable|Services\Service[]
+     * @param string $service
+     * @return Application
      */
-    private function getApplicationServices(): iterable
+    public function service(string $service): self
     {
-        yield new Services\CacheService();
-        yield new Services\CompilerService();
-        yield new Services\GraphQLAdapterService();
-        yield new Services\ExtensionsRepositoryService();
-        yield new Services\EventsService();
+        $this->container->make($service)->register($this->container, $this->debug);
+
+        return $this;
     }
 
     /**
@@ -116,27 +177,6 @@ class Application implements PSRContainer
         $this->container->make(Repository::class)->add($extension);
 
         return $this;
-    }
-
-    /**
-     * @param Readable $sdl
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
-     * @throws \Railt\SDL\Exceptions\CompilerException
-     */
-    public function request(Readable $sdl, RequestInterface $request): ResponseInterface
-    {
-        $this->container->make(Repository::class)->boot();
-
-        $document = $this->container->make(CompilerInterface::class)->compile($sdl);
-        $adapter  = $this->container->make(AdapterInterface::class);
-
-        $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
-            return $adapter->request($this->getSchema($document), $request);
-        };
-
-        return $this->container->make(Repository::class)->handle($request, $pipeline);
     }
 
     /**
