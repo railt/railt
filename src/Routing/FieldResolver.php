@@ -36,14 +36,21 @@ class FieldResolver
     private $router;
 
     /**
+     * @var Dispatcher
+     */
+    private $events;
+
+    /**
      * FieldResolver constructor.
      * @param ContainerInterface $container
      * @param RouterInterface $router
+     * @param Dispatcher $events
      */
-    public function __construct(ContainerInterface $container, RouterInterface $router)
+    public function __construct(ContainerInterface $container, RouterInterface $router, Dispatcher $events)
     {
         $this->container = $container;
         $this->router    = $router;
+        $this->events = $events;
     }
 
     /**
@@ -123,13 +130,35 @@ class FieldResolver
      */
     private function call(Route $route, InputInterface $input, FieldDefinition $field)
     {
-        // TODO Add ability to customize action arguments
-
-        $parameters = \array_merge($input->all(), [
+        $parameters = $this->resolving($field, \array_merge($input->all(), [
             InputInterface::class => $input,
             TypeDefinition::class => $field,
-        ]);
+        ]));
 
-        return $route->call($input, $input->getParentValue(), $parameters);
+        return $this->resolved($field, $route->call($input, $input->getParentValue(), $parameters));
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @param array $parameters
+     * @return mixed
+     */
+    private function resolving(FieldDefinition $field, array $parameters)
+    {
+        $event = $field->getParent()->getName() . ':' . $field->getName();
+
+        return $this->events->dispatch(Event::RESOLVING . ':' . $event, [$field, $parameters]) ?? $parameters;
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @param mixed $data
+     * @return mixed
+     */
+    private function resolved(FieldDefinition $field, $data)
+    {
+        $event = $field->getTypeDefinition()->getName();
+
+        return $this->events->dispatch(Event::RESOLVED . ':' . $event, [$field, $data]) ?? $data;
     }
 }

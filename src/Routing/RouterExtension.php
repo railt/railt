@@ -49,9 +49,9 @@ class RouterExtension extends BaseExtension
      */
     private function bootFieldResolver(RouterInterface $router, Dispatcher $events): void
     {
-        $resolver = new FieldResolver($this->getContainer(), $router);
+        $resolver = new FieldResolver($this->getContainer(), $router, $events);
 
-        $events->listen(Event::RESOLVING . ':*', function (string $event, array $params) use ($resolver) {
+        $events->listen(Event::DISPATCHING . ':*', function (string $event, array $params) use ($resolver) {
             return $resolver->handle(...$params);
         });
     }

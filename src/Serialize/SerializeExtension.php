@@ -9,9 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Serialize;
 
+use Railt\Adapters\Event;
 use Railt\Events\Dispatcher;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**
@@ -26,7 +31,7 @@ class SerializeExtension extends BaseExtension
     {
         $compiler->compile(File::fromPathname(__DIR__ . '/resources/serializer.graphqls'));
 
-        $this->call(\Closure::fromCallable([$this, 'bootFieldResolver']));
+        $this->bootFieldResolver($this->make(Dispatcher::class));
     }
 
     /**
@@ -34,6 +39,20 @@ class SerializeExtension extends BaseExtension
      */
     private function bootFieldResolver(Dispatcher $events): void
     {
+        $serializer = $this->make(Serializer::class);
 
+        $events->listen(Event::RESOLVED . ':*', function(string $event, array $payload) use ($serializer) {
+            /** @var FieldDefinition $field */
+            [$field, $result] = $payload;
+
+            /** @var ObjectDefinition|ScalarDefinition|InterfaceDefinition $type */
+            $type = $field->getTypeDefinition();
+
+            foreach ($type->getDirectives('serializer') as $directive) {
+                $result = $serializer->serialize($type, $directive, $result);
+            }
+
+            return $result;
+        });
     }
 }

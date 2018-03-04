@@ -75,6 +75,7 @@ class DirectiveLoader implements ClassLoader
      * @param Document $document
      * @param string $needle
      * @return null|string
+     * @throws \Railt\Runtime\Exceptions\UnknownClassException
      */
     private function loadFromDirective(Document $document, string $needle): ?string
     {
@@ -84,7 +85,7 @@ class DirectiveLoader implements ClassLoader
             switch (true) {
                 case $this->compareAlias($needle, $alias):
                     return $class;
-                case $this->compareNamespace($class, $alias):
+                case $this->compareNamespace($needle, $class):
                     return $class;
             }
         }
@@ -116,11 +117,19 @@ class DirectiveLoader implements ClassLoader
 
     /**
      * @param string $class
-     * @param string $alias
+     * @param string $needle
      * @return bool
+     * @throws \Railt\Runtime\Exceptions\UnknownClassException
      */
-    private function compareNamespace(string $class, ?string $alias): bool
+    private function compareNamespace(string $needle, string $class): bool
     {
-        return Str::endsWith($class, '\\' . $alias) && \class_exists($class);
+        $isMatched = Str::endsWith($class, '\\' . $needle);
+
+        if ($isMatched && ! \class_exists($class)) {
+            $error = 'The match to the class "%s" was found, but the class itself is not defined';
+            throw new UnknownClassException(\sprintf($error, $class));
+        }
+
+        return $isMatched;
     }
 }

@@ -96,6 +96,6 @@ class FieldBuilder extends DependentDefinitionBuilder
     {
         $parent = $this->reflection->getParent();
 
-        return Event::RESOLVING . ':' . $parent->getName() . ':' . $this->reflection->getName();
+        return Event::DISPATCHING . ':' . $parent->getName() . ':' . $this->reflection->getName();
     }
 }
