@@ -65,7 +65,7 @@ class DirectiveRoute extends Route
      */
     private function exportAction(Document $document, string $urn): void
     {
-        [$controller, $action] = \tap(\explode('@', $urn), function (array $parts) use ($urn) {
+        [$controller, $action] = \tap(\explode('@', $urn), function (array $parts) use ($urn): void {
             if (\count($parts) !== 2) {
                 $error = 'The action route argument must contain an urn in the format "Class@action", but "%s" given';
                 throw new InvalidActionException(\sprintf($error, $urn));
