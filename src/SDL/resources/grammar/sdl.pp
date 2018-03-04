@@ -190,6 +190,8 @@ Keyword:
         |
     <T_SCHEMA_MUTATION>
         |
+    <T_SCHEMA_SUBSCRIPTION>
+        |
     <T_SCALAR>
         |
     <T_DIRECTIVE>
@@ -219,8 +221,14 @@ Word:
         |
     ValueKeyword()
 
-Name:
-    Word() #Name
+#Name:
+    <T_SCHEMA_QUERY>
+        |
+    <T_SCHEMA_MUTATION>
+        |
+    <T_SCHEMA_SUBSCRIPTION>
+        |
+    Word()
 
 Key:
     (
