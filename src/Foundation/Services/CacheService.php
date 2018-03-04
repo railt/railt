@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Foundation\Services;
 
 use Railt\Container\ContainerInterface;
-use Railt\Storage\ArrayPersister;
-use Railt\Storage\Persister;
+use Railt\Storage\Drivers\ArrayStorage;
+use Railt\Storage\Storage;
 
 /**
  * Class CacheService
@@ -24,9 +24,9 @@ final class CacheService implements Service
      */
     public function register(ContainerInterface $container, bool $debug): void
     {
-        if (! $container->has(Persister::class)) {
-            $container->register(Persister::class, function () {
-                return new ArrayPersister();
+        if (! $container->has(Storage::class)) {
+            $container->register(Storage::class, function () {
+                return new ArrayStorage();
             });
         }
     }

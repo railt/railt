@@ -15,24 +15,24 @@ use Railt\Reflection\Contracts\Document;
 /**
  * Class Proxy
  */
-class Proxy implements Persister
+class Proxy implements Storage
 {
     /**
-     * @var Persister
+     * @var Storage
      */
     private $front;
 
     /**
-     * @var Persister
+     * @var Storage
      */
     private $fallback;
 
     /**
      * Proxy constructor.
-     * @param Persister $front
-     * @param Persister $fallback
+     * @param Storage $front
+     * @param Storage $fallback
      */
-    public function __construct(Persister $front, Persister $fallback)
+    public function __construct(Storage $front, Storage $fallback)
     {
         $this->front    = $front;
         $this->fallback = $fallback;

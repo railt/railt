@@ -34,8 +34,8 @@ use Railt\SDL\Runtime\CallStack;
 use Railt\SDL\Runtime\CallStackInterface;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use Railt\Storage\ArrayPersister;
-use Railt\Storage\Persister;
+use Railt\Storage\Drivers\ArrayStorage;
+use Railt\Storage\Storage;
 use Railt\Storage\Proxy;
 
 /**
@@ -56,9 +56,9 @@ class Compiler implements CompilerInterface, Configuration
     private $parser;
 
     /**
-     * @var Persister|ArrayPersister
+     * @var Storage|ArrayStorage
      */
-    private $persister;
+    private $storage;
 
     /**
      * @var Validator
@@ -77,11 +77,11 @@ class Compiler implements CompilerInterface, Configuration
 
     /**
      * Compiler constructor.
-     * @param Persister|null $persister
+     * @param Storage|null $storage
      * @throws \OutOfBoundsException
      * @throws CompilerException
      */
-    public function __construct(Persister $persister = null)
+    public function __construct(Storage $storage = null)
     {
         $this->stack         = new CallStack();
         $this->parser        = (new ParserFactory())->getParser();
@@ -89,7 +89,7 @@ class Compiler implements CompilerInterface, Configuration
         $this->typeValidator = new Validator($this->stack);
         $this->typeCoercion  = new Factory();
 
-        $this->persister = $this->bootPersister($persister);
+        $this->storage = $this->bootStorage($storage);
 
         $this->add($this->getStandardLibrary());
     }
@@ -111,20 +111,20 @@ class Compiler implements CompilerInterface, Configuration
     }
 
     /**
-     * @param null|Persister $persister
-     * @return Persister
+     * @param null|Storage $storage
+     * @return Storage
      */
-    private function bootPersister(?Persister $persister): Persister
+    private function bootStorage(?Storage $storage): Storage
     {
-        if ($persister === null) {
-            return new ArrayPersister();
+        if ($storage === null) {
+            return new ArrayStorage();
         }
 
-        if ($persister instanceof Proxy || $persister instanceof ArrayPersister) {
-            return $persister;
+        if ($storage instanceof Proxy || $storage instanceof ArrayStorage) {
+            return $storage;
         }
 
-        return new Proxy(new ArrayPersister(), $persister);
+        return new Proxy(new ArrayStorage(), $storage);
     }
 
     /**
@@ -214,7 +214,7 @@ class Compiler implements CompilerInterface, Configuration
     public function compile(Readable $readable): Document
     {
         /** @var DocumentBuilder $document */
-        $document = $this->persister->remember($readable, $this->onCompile());
+        $document = $this->storage->remember($readable, $this->onCompile());
 
         return $document->withCompiler($this);
     }
@@ -262,11 +262,20 @@ class Compiler implements CompilerInterface, Configuration
     }
 
     /**
-     * @return Persister
+     * @return Storage
+     * @deprecated Since 1.2: Use getStorage() method instead.
      */
-    public function getPersister(): Persister
+    public function getPersister(): Storage
     {
-        return $this->persister;
+        return $this->getStorage();
+    }
+
+    /**
+     * @return Storage
+     */
+    public function getStorage(): Storage
+    {
+        return $this->storage;
     }
 
     /**

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Storage;
+namespace Railt\Storage\Drivers;
 
 use Psr\Cache\CacheException;
 use Psr\Cache\CacheItemInterface;
@@ -16,11 +16,12 @@ use Psr\Log\InvalidArgumentException;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Exceptions\CompilerException;
+use Railt\Storage\Storage;
 
 /**
- * Class Psr6Persister
+ * Class Psr6Storage
  */
-class Psr6Persister implements Persister
+class Psr6Storage implements Storage
 {
     private const DEFAULT_REMEMBER_TIME = 60 * 5;
 
@@ -40,7 +41,7 @@ class Psr6Persister implements Persister
     private $persist;
 
     /**
-     * PsrCachePersister constructor.
+     * Psr6Storage constructor.
      * @param CacheItemPoolInterface $pool
      * @param \Closure $persist
      * @param int $timeout
@@ -49,7 +50,8 @@ class Psr6Persister implements Persister
         CacheItemPoolInterface $pool,
         \Closure $persist,
         int $timeout = self::DEFAULT_REMEMBER_TIME
-    ) {
+    )
+    {
         $this->pool    = $pool;
         $this->persist = $persist;
         $this->timeout = $timeout;

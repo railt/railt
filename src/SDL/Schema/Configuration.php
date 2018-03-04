@@ -14,7 +14,7 @@ use Railt\SDL\Reflection\Coercion\TypeCoercion;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
 use Railt\SDL\Runtime\CallStackInterface;
-use Railt\Storage\Persister;
+use Railt\Storage\Storage;
 
 /**
  * Interface Configuration
@@ -48,7 +48,7 @@ interface Configuration
     public function getDictionary(): Dictionary;
 
     /**
-     * @return Persister
+     * @return Storage
      */
-    public function getPersister(): Persister;
+    public function getStorage(): Storage;
 }

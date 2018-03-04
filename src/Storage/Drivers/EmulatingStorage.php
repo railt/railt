@@ -7,16 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Storage;
+namespace Railt\Storage\Drivers;
 
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
 use Railt\SDL\Exceptions\CompilerException;
+use Railt\Storage\Storage;
 
 /**
- * Class EmulatingPersister
+ * Class EmulatingStorage
  */
-class EmulatingPersister implements Persister
+class EmulatingStorage implements Storage
 {
     /**
      * @var array|string[]

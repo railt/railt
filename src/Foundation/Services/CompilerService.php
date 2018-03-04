@@ -12,7 +12,7 @@ namespace Railt\Foundation\Services;
 use Railt\Container\ContainerInterface;
 use Railt\SDL\Compiler;
 use Railt\SDL\Schema\CompilerInterface;
-use Railt\Storage\Persister;
+use Railt\Storage\Storage;
 
 /**
  * Class CompilerService
@@ -28,7 +28,7 @@ final class CompilerService implements Service
     public function register(ContainerInterface $container, bool $debug): void
     {
         if (! $container->has(CompilerInterface::class)) {
-            $container->register(CompilerInterface::class, function (Persister $cache) {
+            $container->register(CompilerInterface::class, function (Storage $cache) {
                 return new Compiler($cache);
             });
 

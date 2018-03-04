@@ -7,15 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Storage;
+namespace Railt\Storage\Drivers;
 
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Document;
+use Railt\Storage\Storage;
 
 /**
- * Class ArrayPersister
+ * Class ArrayStorage
  */
-class ArrayPersister implements Persister
+class ArrayStorage implements Storage
 {
     /**
      * @var array|Document[]

@@ -7,19 +7,24 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Storage;
+namespace Railt\Storage\Drivers;
 
 use Railt\Io\Readable;
+use Railt\Reflection\Contracts\Document;
+use Railt\Storage\Storage;
 
 /**
- * Interface Persister
+ * Class NullableStorage
  */
-interface Persister
+class NullableStorage implements Storage
 {
     /**
      * @param Readable $readable
      * @param \Closure $then
-     * @return object|\Railt\Reflection\Contracts\Document
+     * @return Document
      */
-    public function remember(Readable $readable, \Closure $then);
+    public function remember(Readable $readable, \Closure $then): Document
+    {
+        return $then($readable);
+    }
 }

@@ -10,20 +10,16 @@ declare(strict_types=1);
 namespace Railt\Storage;
 
 use Railt\Io\Readable;
-use Railt\Reflection\Contracts\Document;
 
 /**
- * Class NullablePersister
+ * Interface Storage
  */
-class NullablePersister implements Persister
+interface Storage
 {
     /**
      * @param Readable $readable
      * @param \Closure $then
-     * @return Document
+     * @return object|\Railt\Reflection\Contracts\Document
      */
-    public function remember(Readable $readable, \Closure $then): Document
-    {
-        return $then($readable);
-    }
+    public function remember(Readable $readable, \Closure $then);
 }

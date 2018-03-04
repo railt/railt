@@ -57,7 +57,10 @@
     "autoload": {
         "psr-4": {
             "Railt\\": "src/"
-        }
+        },
+        "files": [
+            "src/Storage/polyfill.php"
+        ]
     },
     "require-dev": {
         "phpunit/phpunit": "~6.1",
