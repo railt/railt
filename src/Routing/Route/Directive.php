@@ -14,7 +14,6 @@ use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
-use Railt\Routing\Exceptions\InvalidActionException;
 use Railt\Routing\Route;
 use Railt\Runtime\Contracts\ClassLoader;
 
