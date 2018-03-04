@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
+use Illuminate\Support\Str;
 use Railt\Container\ContainerInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\Routing\Exceptions\InvalidActionException;
@@ -35,7 +37,7 @@ class DirectiveRoute extends Route
         //
         // @route( action: "Controller@action" )
         //
-        $this->exportAction($directive->getPassedArgument('action'));
+        $this->exportAction($directive->getDocument(), $directive->getPassedArgument('action'));
 
         //
         // @route( relation: {parent: "key", child: "key"} )
@@ -57,30 +59,51 @@ class DirectiveRoute extends Route
     }
 
     /**
+     * @param Document $document
      * @param string $urn
      * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
-    private function exportAction(string $urn): void
+    private function exportAction(Document $document, string $urn): void
     {
-        $parts = \explode('@', $urn);
+        [$controller, $action] = \tap(\explode('@', $urn), function (array $parts) use ($urn) {
+            if (\count($parts) !== 2) {
+                $error = 'The action route argument must contain an urn in the format "Class@action", but "%s" given';
+                throw new InvalidActionException(\sprintf($error, $urn));
+            }
+        });
 
-        if (\count($parts) !== 2) {
-            $error = 'The action route argument must contain an urn in the format "Class@action", but "%s" given';
-            throw new InvalidActionException(\sprintf($error, $urn));
-        }
-
-        [$controller, $action] = $parts;
-
-        // TODO Add @use directive support
-
-        if (! \class_exists($controller)) {
-            $error = 'Class "%s" does not exists defined in route action argument';
-            throw new InvalidActionException(\sprintf($error, $controller));
-        }
-
-        $instance = $this->container->make($controller);
+        $instance = $this->container->make($this->loadControllerClass($document, $controller));
 
         $this->then(\Closure::fromCallable([$instance, $action]));
+    }
+
+    /**
+     * @param Document $document
+     * @param string $controller
+     * @return string
+     * @throws \Railt\Routing\Exceptions\InvalidActionException
+     */
+    private function loadControllerClass(Document $document, string $controller): string
+    {
+        if (\class_exists($controller)) {
+            return $controller;
+        }
+
+        foreach ($document->getDirectives('use') as $directive) {
+            $class = $directive->getPassedArgument('class');
+            $alias = $directive->getPassedArgument('as');
+
+            if ($alias === $controller) {
+                return $class;
+            }
+
+            if (Str::endsWith($class, '\\' . $alias) && \class_exists($class)) {
+                return $class;
+            }
+        }
+
+        $error = 'Class "%s" is not found in the definition of route action argument';
+        throw new InvalidActionException(\sprintf($error, $controller));
     }
 
     /**
