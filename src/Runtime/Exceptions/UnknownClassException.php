@@ -14,5 +14,4 @@ namespace Railt\Runtime\Exceptions;
  */
 class UnknownClassException extends \InvalidArgumentException
 {
-
 }
