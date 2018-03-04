@@ -50,11 +50,7 @@ class DirectiveRoute extends Route
         //
         // @route( operations: [OperationName] )
         //
-        $operations = $directive->getPassedArgument('operations');
-
-        if ($operations) {
-            $this->exportOperations($directive->getPassedArgument('operations'));
-        }
+        $this->exportOperations($directive);
     }
 
     /**
@@ -119,10 +115,20 @@ class DirectiveRoute extends Route
     }
 
     /**
-     * @param array $operations
+     * @param DirectiveInvocation $directive
      */
-    private function exportOperations(array $operations): void
+    private function exportOperations(DirectiveInvocation $directive): void
     {
-        $this->on(...\array_map('\\mb_strtolower', $operations));
+        switch ($directive->getName()) {
+            case 'query':
+                $this->on('query');
+                break;
+            case 'mutation':
+                $this->on('mutation');
+                break;
+            case 'subscription':
+                $this->on('subscription');
+                break;
+        }
     }
 }

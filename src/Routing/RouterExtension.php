@@ -24,12 +24,7 @@ class RouterExtension extends BaseExtension
     /**
      * @var string
      */
-    private const SCHEMA_ROUTE_FILE = __DIR__ . '/resources/graphql/route.graphqls';
-
-    /**
-     * @var string
-     */
-    private const SCHEMA_USE_FILE = __DIR__ . '/resources/graphql/use.graphqls';
+    private const SCHEMA_ROUTE_FILE = __DIR__ . '/resources/route.graphqls';
 
     /**
      * @param CompilerInterface $compiler
@@ -41,9 +36,7 @@ class RouterExtension extends BaseExtension
         $this->instance(RouterInterface::class, new Router($this->getContainer()));
         $this->instance(RegistryInterface::class, new Registry());
 
-        foreach ($this->getSchemaFiles() as $schema) {
-            $compiler->compile(File::fromPathname($schema));
-        }
+        $compiler->compile(File::fromPathname(self::SCHEMA_ROUTE_FILE));
 
         $this->bootFieldResolver($this->make(RouterInterface::class), $this->make(Dispatcher::class));
     }
@@ -60,14 +53,5 @@ class RouterExtension extends BaseExtension
         $events->listen('resolver:*', function (string $event, array $params) use ($resolver) {
             return $resolver->handle(...$params);
         });
-    }
-
-    /**
-     * @return iterable|string[]
-     */
-    private function getSchemaFiles(): iterable
-    {
-        yield self::SCHEMA_USE_FILE;
-        yield self::SCHEMA_ROUTE_FILE;
     }
 }

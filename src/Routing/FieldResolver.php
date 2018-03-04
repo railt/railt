@@ -21,8 +21,6 @@ use Railt\Routing\Contracts\RouterInterface;
  */
 class FieldResolver
 {
-    private const DIRECTIVE = 'route';
-
     /**
      * @var ContainerInterface
      */
@@ -105,8 +103,10 @@ class FieldResolver
      */
     private function loadRouteDirectives(FieldDefinition $field): void
     {
-        foreach ($field->getDirectives(self::DIRECTIVE) as $directive) {
-            $this->router->add(new DirectiveRoute($this->container, $field, $directive));
+        foreach (['route', 'query', 'mutation', 'subscription'] as $route) {
+            foreach ($field->getDirectives($route) as $directive) {
+                $this->router->add(new DirectiveRoute($this->container, $field, $directive));
+            }
         }
     }
 

@@ -1,3 +1,11 @@
+#
+# -----------------------------------------------------------------
+#  The Use Directive
+# -----------------------------------------------------------------
+#
+
+directive @use(class: String!, as: String) on DOCUMENT
+
 
 #
 # -----------------------------------------------------------------
@@ -9,27 +17,18 @@
 # "action" argument must contain a reference to the class and
 #   method in the format "Namespace\\Class@action".
 #
-# "operations" argument indicates a list of valid request types,
-#   like "query", "mutation" or "subscription".
-#
 # "relation" argument indicates that all child types and their
 #   result will be "merged" with the parent according to the
 #   specified criteria (parent field + child field).
 #
 
-directive @route(
-    action: String!
-    operations: [__routeOperation!]
-    relation: __routeRelation
-) on FIELD_DEFINITION
+directive @route(action: String!, relation: __routeRelation) on FIELD_DEFINITION
+
+directive @query(action: String!, relation: __routeRelation) on FIELD_DEFINITION
+directive @mutation(action: String!, relation: __routeRelation) on FIELD_DEFINITION
+directive @subscription(action: String!, relation: __routeRelation) on FIELD_DEFINITION
 
 input __routeRelation {
     parent: String! = "id"
     child: String!
-}
-
-enum __routeOperation {
-    QUERY
-    MUTATION
-    SUBSCRIPTION
 }
