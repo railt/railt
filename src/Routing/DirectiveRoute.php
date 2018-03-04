@@ -11,7 +11,6 @@ namespace Railt\Routing;
 
 use Illuminate\Support\Str;
 use Railt\Container\ContainerInterface;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
