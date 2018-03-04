@@ -59,22 +59,17 @@ class Directive extends Route
 
     /**
      * @param Document $document
-     * @param string $urn
+     * @param string $action
      * @param ClassLoader $loader
      * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
-    private function exportAction(Document $document, string $urn, ClassLoader $loader): void
+    private function exportAction(Document $document, string $action, ClassLoader $loader): void
     {
-        [$controller, $action] = \tap(\explode('@', $urn), function (array $parts) use ($urn): void {
-            if (\count($parts) !== 2) {
-                $error = 'The action route argument must contain an urn in the format "Class@action", but "%s" given';
-                throw new InvalidActionException(\sprintf($error, $urn));
-            }
-        });
+        [$controller, $method] = $loader->action($document, $action);
 
-        $instance = $this->container->make($loader->load($document, $controller));
+        $instance = $this->container->make($controller);
 
-        $this->then(\Closure::fromCallable([$instance, $action]));
+        $this->then(\Closure::fromCallable([$instance, $method]));
     }
 
     /**

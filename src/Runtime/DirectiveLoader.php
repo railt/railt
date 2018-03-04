@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Runtime\Contracts\ClassLoader;
+use Railt\Runtime\Exceptions\InvalidActionException;
 use Railt\Runtime\Exceptions\UnknownClassException;
 
 /**
@@ -20,6 +21,34 @@ use Railt\Runtime\Exceptions\UnknownClassException;
  */
 class DirectiveLoader implements ClassLoader
 {
+    private const ACTION_DELIMITER = '@';
+
+    /**
+     * @param Document $document
+     * @param string $action
+     * @return array
+     * @throws \Railt\Runtime\Exceptions\UnknownClassException
+     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     */
+    public function action(Document $document, string $action): array
+    {
+        [$class, $method] = \tap(\explode(self::ACTION_DELIMITER, $action), function (array $parts) use ($action): void {
+            if (\count($parts) !== 2) {
+                $error = 'The action route argument must contain an urn in the format "Class%saction", but "%s" given';
+                throw new InvalidActionException(\sprintf($error, self::ACTION_DELIMITER, $action));
+            }
+        });
+
+        $class = $this->load($document, $class);
+
+        if (! \method_exists($class, $method) && ! \method_exists($class, '__call')) {
+            $error = 'In the action "%s" in the indicated class "%s" there is no method "%s"';
+            throw new InvalidActionException(\sprintf($error, $action, $class, $method));
+        }
+
+        return [$class, $method];
+    }
+
     /**
      * @param Document $document
      * @param string $class
@@ -64,6 +93,18 @@ class DirectiveLoader implements ClassLoader
     }
 
     /**
+     * @param DirectiveInvocation $directive
+     * @return array
+     */
+    private function getDirectiveArguments(DirectiveInvocation $directive): array
+    {
+        return [
+            $directive->getPassedArgument('class'),
+            $directive->getPassedArgument('as'),
+        ];
+    }
+
+    /**
      * @param string $class
      * @param string $alias
      * @return bool
@@ -81,17 +122,5 @@ class DirectiveLoader implements ClassLoader
     private function compareNamespace(string $class, ?string $alias): bool
     {
         return Str::endsWith($class, '\\' . $alias) && \class_exists($class);
-    }
-
-    /**
-     * @param DirectiveInvocation $directive
-     * @return array
-     */
-    private function getDirectiveArguments(DirectiveInvocation $directive): array
-    {
-        return [
-            $directive->getPassedArgument('class'),
-            $directive->getPassedArgument('as'),
-        ];
     }
 }

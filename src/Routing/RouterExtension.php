@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
+use Railt\Adapters\Event;
 use Railt\Events\Dispatcher;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
@@ -38,7 +39,7 @@ class RouterExtension extends BaseExtension
 
         $compiler->compile(File::fromPathname(self::SCHEMA_ROUTE_FILE));
 
-        $this->bootFieldResolver($this->make(RouterInterface::class), $this->make(Dispatcher::class));
+        $this->call(\Closure::fromCallable([$this, 'bootFieldResolver']));
     }
 
     /**
@@ -50,7 +51,7 @@ class RouterExtension extends BaseExtension
     {
         $resolver = new FieldResolver($this->getContainer(), $router);
 
-        $events->listen('resolver:*', function (string $event, array $params) use ($resolver) {
+        $events->listen(Event::RESOLVING . ':*', function (string $event, array $params) use ($resolver) {
             return $resolver->handle(...$params);
         });
     }

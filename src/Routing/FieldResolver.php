@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
+use Railt\Adapters\Event;
 use Railt\Container\ContainerInterface;
+use Railt\Events\Dispatcher;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

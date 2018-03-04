@@ -11,6 +11,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\ResolveInfo;
+use Railt\Adapters\Event;
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Adapters\Webonyx\WebonyxInput;
 use Railt\Events\Dispatcher;
@@ -95,6 +96,6 @@ class FieldBuilder extends DependentDefinitionBuilder
     {
         $parent = $this->reflection->getParent();
 
-        return 'resolver:' . $parent->getName() . ':' . $this->reflection->getName();
+        return Event::RESOLVING . ':' . $parent->getName() . ':' . $this->reflection->getName();
     }
 }

@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Serialize;
 
+use Railt\Events\Dispatcher;
 use Railt\Foundation\Extensions\BaseExtension;
+use Railt\Io\File;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**
@@ -17,8 +19,21 @@ use Railt\SDL\Schema\CompilerInterface;
  */
 class SerializeExtension extends BaseExtension
 {
+    /**
+     * @param CompilerInterface $compiler
+     */
     public function boot(CompilerInterface $compiler): void
     {
-        // TODO
+        $compiler->compile(File::fromPathname(__DIR__ . '/resources/serializer.graphqls'));
+
+        $this->call(\Closure::fromCallable([$this, 'bootFieldResolver']));
+    }
+
+    /**
+     * @param Dispatcher $events
+     */
+    private function bootFieldResolver(Dispatcher $events): void
+    {
+
     }
 }

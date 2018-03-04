@@ -18,6 +18,13 @@ interface ClassLoader
 {
     /**
      * @param Document $document
+     * @param string $action
+     * @return array
+     */
+    public function action(Document $document, string $action): array;
+
+    /**
+     * @param Document $document
      * @param string $class
      * @return string
      */
