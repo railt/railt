@@ -15,6 +15,6 @@ namespace Railt\Adapters;
 interface Event
 {
     public const DISPATCHING = 'dispatching';
-    public const RESOLVING = 'resolving';
-    public const RESOLVED = 'resolved';
+    public const RESOLVING   = 'resolving';
+    public const RESOLVED    = 'resolved';
 }
