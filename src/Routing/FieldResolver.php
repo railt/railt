@@ -49,7 +49,7 @@ class FieldResolver
     {
         $this->container = $container;
         $this->router    = $router;
-        $this->events = $events;
+        $this->events    = $events;
     }
 
     /**
