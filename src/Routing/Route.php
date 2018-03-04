@@ -11,7 +11,6 @@ namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
 use Railt\Http\InputInterface;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RegistryInterface;
 
@@ -22,7 +21,7 @@ class Route
 {
     private const PARENT_ARGUMENT_NAME = 'parent';
 
-    public const FIELD_ANY = '*';
+    public const FIELD_ANY      = '*';
     public const PATH_DELIMITER = '.';
 
     /**
