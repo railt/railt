@@ -26,13 +26,13 @@ class DirectiveRoute extends Route
     /**
      * DirectiveRoute constructor.
      * @param ContainerInterface $container
-     * @param TypeDefinition $type
+     * @param FieldDefinition $field
      * @param DirectiveInvocation $directive
      * @throws InvalidActionException
      */
-    public function __construct(ContainerInterface $container, TypeDefinition $type, DirectiveInvocation $directive)
+    public function __construct(ContainerInterface $container, FieldDefinition $field, DirectiveInvocation $directive)
     {
-        parent::__construct($container, $type);
+        parent::__construct($container, $field);
 
         //
         // @route( action: "Controller@action" )
@@ -45,7 +45,7 @@ class DirectiveRoute extends Route
         $relation = $directive->getPassedArgument('relation');
 
         if ($relation) {
-            $this->exportRelation($relation, $directive->getParent());
+            $this->exportRelation($relation);
         }
 
         //
@@ -72,7 +72,9 @@ class DirectiveRoute extends Route
             }
         });
 
-        $instance = $this->container->make($this->loadControllerClass($document, $controller));
+        $class = $this->loadControllerClass($document, $controller);
+
+        $instance = $this->container->make($class);
 
         $this->then(\Closure::fromCallable([$instance, $action]));
     }
@@ -108,9 +110,8 @@ class DirectiveRoute extends Route
 
     /**
      * @param InputInvocation $relation
-     * @param FieldDefinition|TypeDefinition $field
      */
-    private function exportRelation(InputInvocation $relation, FieldDefinition $field): void
+    private function exportRelation(InputInvocation $relation): void
     {
         $parent = $relation->getPassedArgument('parent');
         $child  = $relation->getPassedArgument('child');

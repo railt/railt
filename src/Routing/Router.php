@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 
 /**
@@ -24,7 +24,7 @@ class Router implements RouterInterface
     private $container;
 
     /**
-     * @var array|Route[]|\SplStack[]
+     * @var array|Route[]
      */
     private $routes = [];
 
@@ -38,11 +38,11 @@ class Router implements RouterInterface
     }
 
     /**
-     * @param TypeDefinition $type
+     * @param FieldDefinition $type
      * @param string $field
      * @return Route
      */
-    public function route(TypeDefinition $type, string $field = null): Route
+    public function route(FieldDefinition $type, string $field = null): Route
     {
         $route = new Route($this->container, $type);
 
@@ -54,33 +54,6 @@ class Router implements RouterInterface
     }
 
     /**
-     * @param TypeDefinition $type
-     * @return string
-     */
-    private function key(TypeDefinition $type): string
-    {
-        return $type->getUniqueId();
-    }
-
-    /**
-     * @param TypeDefinition $type
-     * @return bool
-     */
-    public function has(TypeDefinition $type): bool
-    {
-        return \array_key_exists($this->key($type), $this->routes);
-    }
-
-    /**
-     * @param TypeDefinition $type
-     * @return iterable|Route[]
-     */
-    public function get(TypeDefinition $type): iterable
-    {
-        return $this->routes[$this->key($type)] ?? [];
-    }
-
-    /**
      * @param Route $route
      * @return Route
      */
@@ -89,11 +62,56 @@ class Router implements RouterInterface
         $index = $this->key($route->getTypeDefinition());
 
         if (! \array_key_exists($index, $this->routes)) {
-            $this->routes[$index] = new \SplQueue();
+            $this->routes[$index] = [];
         }
 
-        $this->routes[$index]->push($route);
+        $this->routes[$index][] = $route;
 
         return $route;
+    }
+
+    /**
+     * @param FieldDefinition $type
+     * @return string
+     */
+    private function key(FieldDefinition $type): string
+    {
+        return $type->getUniqueId();
+    }
+
+    /**
+     * @param FieldDefinition $type
+     * @return bool
+     */
+    public function has(FieldDefinition $type): bool
+    {
+        return \array_key_exists($this->key($type), $this->routes);
+    }
+
+    /**
+     * @param FieldDefinition $type
+     * @return iterable|Route[]
+     */
+    public function get(FieldDefinition $type): iterable
+    {
+        return $this->routes[$this->key($type)] ?? [];
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        $routes = [];
+
+        foreach ($this->routes as $queue) {
+            foreach ((array)$queue as $route) {
+                $routes[] = $route;
+            }
+        }
+
+        return [
+            'routes' => $routes,
+        ];
     }
 }

@@ -55,9 +55,9 @@ class FieldResolver
         /** @var ObjectDefinition $parent */
         $parent = $field->getParent();
 
-        $this->loadRouteDirectives($parent, $field);
+        $this->loadRouteDirectives($field);
 
-        if (! $this->router->has($parent)) {
+        if (! $this->router->has($field)) {
             return $this->getDefaultResult($field);
         }
 
@@ -65,7 +65,7 @@ class FieldResolver
             /** @var InputInterface $input */
             $input = $inputResolver(...$args);
 
-            foreach ($this->router->get($parent) as $route) {
+            foreach ($this->router->get($field) as $route) {
                 if (! $route->matchOperation($input->getOperation())) {
                     continue;
                 }
@@ -99,15 +99,14 @@ class FieldResolver
     }
 
     /**
-     * @param TypeDefinition $object
      * @param FieldDefinition $field
      * @return void
      * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
-    private function loadRouteDirectives(TypeDefinition $object, FieldDefinition $field): void
+    private function loadRouteDirectives(FieldDefinition $field): void
     {
         foreach ($field->getDirectives(self::DIRECTIVE) as $directive) {
-            $this->router->add(new DirectiveRoute($this->container, $object, $directive));
+            $this->router->add(new DirectiveRoute($this->container, $field, $directive));
         }
     }
 
@@ -119,7 +118,7 @@ class FieldResolver
     {
         $type = $field->getTypeDefinition();
 
-        if ($type instanceof ObjectDefinition && ! $field->isList() && ! $field->isNonNull()) {
+        if ($type instanceof ObjectDefinition && ! $field->isList() && $field->isNonNull()) {
             return function (): array {
                 return [];
             };

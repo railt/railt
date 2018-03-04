@@ -12,6 +12,7 @@ namespace Railt\Routing;
 use Railt\Container\ContainerInterface;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RegistryInterface;
 
 /**
@@ -21,11 +22,11 @@ class Route
 {
     private const PARENT_ARGUMENT_NAME = 'parent';
 
-    public const FIELD_ANY      = '*';
+    public const FIELD_ANY = '*';
     public const PATH_DELIMITER = '.';
 
     /**
-     * @var TypeDefinition
+     * @var FieldDefinition
      */
     protected $type;
 
@@ -67,9 +68,9 @@ class Route
     /**
      * Route constructor.
      * @param ContainerInterface $container
-     * @param TypeDefinition $type
+     * @param FieldDefinition $type
      */
-    public function __construct(ContainerInterface $container, TypeDefinition $type)
+    public function __construct(ContainerInterface $container, FieldDefinition $type)
     {
         $this->type      = $type;
         $this->container = $container;
@@ -142,9 +143,9 @@ class Route
     }
 
     /**
-     * @return TypeDefinition
+     * @return FieldDefinition
      */
-    public function getTypeDefinition(): TypeDefinition
+    public function getTypeDefinition(): FieldDefinition
     {
         return $this->type;
     }
@@ -203,28 +204,6 @@ class Route
     }
 
     /**
-     * @param array $data
-     * @param array|null $parent
-     * @return \Traversable|array[]
-     */
-    private function join(array $data, ?array $parent): \Traversable
-    {
-        foreach ($data as $child) {
-            if (! \is_array($child) || ! \array_key_exists($this->child, $child)) {
-                continue;
-            }
-
-            if (! \is_array($parent) || ! \array_key_exists($this->parent, $parent)) {
-                continue;
-            }
-
-            if ($child[$this->child] === $parent[$this->parent]) {
-                yield $child;
-            }
-        }
-    }
-
-    /**
      * @param string $path
      * @param array $params
      */
@@ -280,5 +259,40 @@ class Route
             function (): void {
                 // Otherwise do nothing
             };
+    }
+
+    /**
+     * @param array $data
+     * @param array|null $parent
+     * @return \Traversable|array[]
+     */
+    private function join(array $data, ?array $parent): \Traversable
+    {
+        foreach ($data as $child) {
+            if (! \is_array($child) || ! \array_key_exists($this->child, $child)) {
+                continue;
+            }
+
+            if (! \is_array($parent) || ! \array_key_exists($this->parent, $parent)) {
+                continue;
+            }
+
+            if ($child[$this->child] === $parent[$this->parent]) {
+                yield $child;
+            }
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'relation'   => ['parent' => $this->parent, 'child' => $this->child],
+            'type'       => $this->type->getParent() . $this->type,
+            'field'      => $this->field,
+            'operations' => $this->operations,
+        ];
     }
 }
