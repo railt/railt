@@ -11,7 +11,6 @@ namespace Railt\Mapper;
 
 use Railt\Container\ContainerInterface;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Runtime\Contracts\ClassLoader;
@@ -53,7 +52,7 @@ class Serializer
      */
     public function __construct(ClassLoader $loader, ContainerInterface $container)
     {
-        $this->loader = $loader;
+        $this->loader    = $loader;
         $this->container = $container;
     }
 
