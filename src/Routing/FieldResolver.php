@@ -57,7 +57,6 @@ class FieldResolver
      * @param FieldDefinition $field
      * @param \Closure $inputResolver
      * @return \Closure|null
-     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
     public function handle(FieldDefinition $field, \Closure $inputResolver): ?\Closure
     {
@@ -92,7 +91,6 @@ class FieldResolver
     /**
      * @param FieldDefinition $field
      * @return void
-     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
     private function loadRouteDirectives(FieldDefinition $field): void
     {

@@ -36,6 +36,8 @@ class MapperExtension extends BaseExtension
 
     /**
      * @param Dispatcher $events
+     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      */
     private function bootFieldResolver(Dispatcher $events): void
     {
@@ -49,7 +51,7 @@ class MapperExtension extends BaseExtension
             $type = $field->getTypeDefinition();
 
             foreach ($type->getDirectives('out') as $directive) {
-                $result = $serializer->serialize($type, $directive, $result);
+                $result = $serializer->serialize($field, $directive, $result);
             }
 
             return $result;

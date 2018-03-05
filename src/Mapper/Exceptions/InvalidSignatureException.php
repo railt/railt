@@ -7,11 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Routing\Exceptions;
+namespace Railt\Mapper\Exceptions;
 
 /**
- * Class InvalidActionException
+ * Class InvalidSignatureException
  */
-class InvalidActionException extends \InvalidArgumentException
+class InvalidSignatureException extends \InvalidArgumentException
 {
+
 }

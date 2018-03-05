@@ -27,7 +27,6 @@ class Directive extends Route
      * @param ContainerInterface $container
      * @param DirectiveInvocation $directive
      * @param ClassLoader $loader
-     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
     public function __construct(ContainerInterface $container, DirectiveInvocation $directive, ClassLoader $loader)
     {
@@ -60,7 +59,6 @@ class Directive extends Route
      * @param Document $document
      * @param string $action
      * @param ClassLoader $loader
-     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
     private function exportAction(Document $document, string $action, ClassLoader $loader): void
     {

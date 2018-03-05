@@ -30,7 +30,6 @@ class RouterExtension extends BaseExtension
     /**
      * @param CompilerInterface $compiler
      * @return void
-     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
     public function boot(CompilerInterface $compiler): void
     {
@@ -45,7 +44,6 @@ class RouterExtension extends BaseExtension
     /**
      * @param RouterInterface $router
      * @param Dispatcher $events
-     * @throws \Railt\Routing\Exceptions\InvalidActionException
      */
     private function bootFieldResolver(RouterInterface $router, Dispatcher $events): void
     {

@@ -9,9 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Mapper;
 
+use Railt\Container\ContainerInterface;
+use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Runtime\Contracts\ClassLoader;
+use Railt\Runtime\Exceptions\InvalidActionException;
 
 /**
  * Class Serializer
@@ -24,38 +28,178 @@ class Serializer
     private $loader;
 
     /**
+     * - If the value is defined as a string, then this is an indication of type.
+     * - If the value is defined as a ReflectionNamedType, then this is the indication of the class.
+     * - If the value is NULL, then the argument can take anything.
+     *
+     * @var array|string[]|\ReflectionNamedType[]|null[]
+     */
+    private $signatures = [];
+
+    /**
+     * @var array|object[]
+     */
+    private $instances = [];
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * Serializer constructor.
      * @param ClassLoader $loader
+     * @param ContainerInterface $container
      */
-    public function __construct(ClassLoader $loader)
+    public function __construct(ClassLoader $loader, ContainerInterface $container)
     {
         $this->loader = $loader;
+        $this->container = $container;
     }
 
     /**
-     * @param TypeDefinition $type
+     * @param FieldDefinition $field
      * @param DirectiveInvocation $directive
      * @param $result
      * @return iterable
+     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      */
-    public function serialize(TypeDefinition $type, DirectiveInvocation $directive, $result): iterable
+    public function serialize(FieldDefinition $field, DirectiveInvocation $directive, $result)
     {
         [$class, $method] = $this->loader->action(
             $directive->getDocument(),
             $directive->getPassedArgument('action')
         );
 
-        /**
-         * Need to implement:
-         * - Obtaining an argument from a $method (its type is needed)
-         * - Check that the argument of the $method is only one.
-         * - If the return type is a list, then you need to check that the result is also an iterator.
-         * - If the return type is, then the following steps need to be done for each of the elements:
-         * - Verify that the return type matches what is required in the serializer $method.
-         * - If not, then return the $result
-         * - Otherwise, call the serialization method and return its result.
-         */
+        $requiredType = $this->getSignature($class, $method);
+
+        return $this->resolveMap($field, $requiredType, $result, $class, $method);
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @param null|string|\ReflectionNamedType $requiredType
+     * @param iterable|array|mixed $result
+     * @param string $class
+     * @param string $method
+     * @return array|mixed
+     */
+    private function resolveMap(FieldDefinition $field, $requiredType, $result, string $class, string $method)
+    {
+        if ($field->isList()) {
+            $out = [];
+
+            foreach ($result as $item) {
+                $out[] = $this->map($class, $method, $requiredType, $item);
+            }
+
+            return $out;
+        }
+
+        return $this->map($class, $method, $requiredType, $result);
+    }
+
+    /**
+     * @param string $class
+     * @return mixed|object
+     */
+    private function instance(string $class)
+    {
+        if (\array_key_exists($class, $this->instances)) {
+            return $this->instances[$class];
+        }
+
+        return $this->instances[$class] = $this->container->make($class);
+    }
+
+    /**
+     * @param string $class
+     * @param string $method
+     * @param string|null|\ReflectionNamedType $requiredType
+     * @param mixed $result
+     * @return mixed
+     */
+    private function map(string $class, string $method, $requiredType, $result)
+    {
+        if ($this->matchType($requiredType, $result)) {
+            return $this->instance($class)->$method($result);
+        }
 
         return $result;
+    }
+
+    /**
+     * @param string|null|\ReflectionNamedType $requiredType
+     * @param $value
+     * @return bool
+     */
+    private function matchType($requiredType, $value): bool
+    {
+        if ($requiredType === null) {
+            return true;
+        }
+
+        if (\is_string($requiredType) && \strtolower(\gettype($value)) === $requiredType) {
+            return true;
+        }
+
+        if ($requiredType instanceof \ReflectionNamedType) {
+            $class = $requiredType->getName();
+            return $value instanceof $class;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $class
+     * @param string $method
+     * @return string|null|\ReflectionClass
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     */
+    private function getSignature(string $class, string $method)
+    {
+        $key = $class . '@' . $method;
+
+        if (! \array_key_exists($key, $this->signatures)) {
+            $parameters = $this->extractMethod($class, $method)->getParameters();
+
+            if (\count($parameters) !== 1) {
+                $error = 'For an action "%s@%s", only one argument is required, but %d given';
+                throw new InvalidSignatureException(\sprintf($error, $class, $method, \count($parameters)));
+            }
+
+            /** @var \ReflectionParameter $parameter */
+            $parameter = \reset($parameters);
+
+            $this->signatures[$key] = $parameter->getType() ?? $parameter->getClass();
+        }
+
+        return $this->signatures[$key];
+    }
+
+    /**
+     * @param string $class
+     * @param string $method
+     * @return \ReflectionMethod
+     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     */
+    private function extractMethod(string $class, string $method): \ReflectionMethod
+    {
+        try {
+            $reflection = new \ReflectionClass($class);
+
+            if ($reflection->hasMethod($method)) {
+                return $reflection->getMethod($method);
+            }
+
+            $error = 'In class "%s" there is no required method "%s"';
+            throw new InvalidActionException(\sprintf($error, $class, $method));
+        } catch (\ReflectionException $e) {
+            $error = 'Error while extracting the action "%s@%s": %s';
+            throw new InvalidActionException(\sprintf($error, $class, $method, $e->getMessage()));
+        }
     }
 }
