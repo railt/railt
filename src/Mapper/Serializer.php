@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Serialize;
+namespace Railt\Mapper;
 
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;

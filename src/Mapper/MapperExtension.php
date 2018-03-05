@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Serialize;
+namespace Railt\Mapper;
 
 use Railt\Adapters\Event;
 use Railt\Events\Dispatcher;
@@ -20,16 +20,16 @@ use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**
- * Class SerializeExtension
+ * Class MapperExtension
  */
-class SerializeExtension extends BaseExtension
+class MapperExtension extends BaseExtension
 {
     /**
      * @param CompilerInterface $compiler
      */
     public function boot(CompilerInterface $compiler): void
     {
-        $compiler->compile(File::fromPathname(__DIR__ . '/resources/serializer.graphqls'));
+        $compiler->compile(File::fromPathname(__DIR__ . '/resources/mappings.graphqls'));
 
         $this->bootFieldResolver($this->make(Dispatcher::class));
     }
@@ -48,7 +48,7 @@ class SerializeExtension extends BaseExtension
             /** @var ObjectDefinition|ScalarDefinition|InterfaceDefinition $type */
             $type = $field->getTypeDefinition();
 
-            foreach ($type->getDirectives('serializer') as $directive) {
+            foreach ($type->getDirectives('out') as $directive) {
                 $result = $serializer->serialize($type, $directive, $result);
             }
 

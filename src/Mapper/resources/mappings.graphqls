@@ -1,6 +1,6 @@
 #
 # -----------------------------------------------------------------
-#  The Serializer Directive
+#  The Output Directive
 # -----------------------------------------------------------------
 #
-directive @serializer(action: String!) on OBJECT
+directive @out(action: String!) on OBJECT
