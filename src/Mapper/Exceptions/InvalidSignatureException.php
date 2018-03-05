@@ -14,5 +14,4 @@ namespace Railt\Mapper\Exceptions;
  */
 class InvalidSignatureException extends \InvalidArgumentException
 {
-
 }
