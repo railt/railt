@@ -15,8 +15,6 @@ use Railt\Adapters\Event;
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Adapters\Webonyx\WebonyxInput;
 use Railt\Events\Dispatcher;
-use Railt\Http\InputInterface;
-use Railt\Http\RequestInterface;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition as ReflectionField;
 
@@ -55,7 +53,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             'description' => $this->reflection->getDescription(),
             'type'        => $this->buildType(),
             'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
-            'resolve'     => function($parent, array $arguments, $context, ResolveInfo $info) {
+            'resolve'     => function ($parent, array $arguments, $context, ResolveInfo $info) {
                 $input = new WebonyxInput($this->reflection, $info, $arguments, $parent);
 
                 return $this->getFieldResolver()($parent, $input);
@@ -77,11 +75,10 @@ class FieldBuilder extends DependentDefinitionBuilder
     {
         $event = $this->getEventName();
 
-        return $this->make(Dispatcher::class)->dispatch($event, $this->reflection) ?? function() {
+        return $this->make(Dispatcher::class)->dispatch($event, $this->reflection) ?? function () {
             return [];
         };
     }
-
 
     /**
      * @return string

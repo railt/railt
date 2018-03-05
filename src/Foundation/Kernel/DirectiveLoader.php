@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Foundation\Kernel;
 
 use Illuminate\Support\Str;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Foundation\Kernel\Exceptions\UnknownClassException;
+use Railt\Reflection\Contracts\Document;
+use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 
 /**
  * Class DirectiveLoader

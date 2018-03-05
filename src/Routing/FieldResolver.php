@@ -12,13 +12,13 @@ namespace Railt\Routing;
 use Railt\Adapters\Event;
 use Railt\Container\ContainerInterface;
 use Railt\Events\Dispatcher;
+use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Route\Directive;
-use Railt\Foundation\Kernel\Contracts\ClassLoader;
 
 /**
  * Class FieldResolver
