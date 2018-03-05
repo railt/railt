@@ -145,7 +145,7 @@ class GrammarTestCase extends AbstractParserTestCase
         $file   = $this->getGrammarFile();
         $parser = new Reader(File::fromPathname($file));
 
-        $this->assertEquals(self::EXPECTED_RULES, $parser->getRules());
+        $this->assertSame(self::EXPECTED_RULES, $parser->getRules());
     }
 
     /**
