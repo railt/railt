@@ -64,13 +64,13 @@ class GrammarTestCase extends AbstractParserTestCase
         '#Document'                       => ' Directive()* Definition()*',
         'Definition'                      => ' ObjectDefinition() | InterfaceDefinition() | EnumDefinition() | UnionDefinition() | SchemaDefinition() | ScalarDefinition() | InputDefinition() | ExtendDefinition() | DirectiveDefinition()',
         'ValueKeyword'                    => ' <T_BOOL_TRUE> | <T_BOOL_FALSE> | <T_NULL>',
-        'Keyword'                         => ' <T_ON> | <T_TYPE> | <T_TYPE_IMPLEMENTS> | <T_ENUM> | <T_UNION> | <T_INTERFACE> | <T_SCHEMA> | <T_SCHEMA_QUERY> | <T_SCHEMA_MUTATION> | <T_SCALAR> | <T_DIRECTIVE> | <T_INPUT> | <T_EXTEND>',
+        'Keyword'                         => ' <T_ON> | <T_TYPE> | <T_TYPE_IMPLEMENTS> | <T_ENUM> | <T_UNION> | <T_INTERFACE> | <T_SCHEMA> | <T_SCHEMA_QUERY> | <T_SCHEMA_MUTATION> | <T_SCHEMA_SUBSCRIPTION> | <T_SCALAR> | <T_DIRECTIVE> | <T_INPUT> | <T_EXTEND>',
         'Number'                          => ' <T_NUMBER_VALUE>',
         'Nullable'                        => ' <T_NULL>',
         'Boolean'                         => ' <T_BOOL_TRUE> | <T_BOOL_FALSE>',
         'String'                          => ' <T_MULTILINE_STRING> | <T_STRING>',
         'Word'                            => ' <T_NAME> | ValueKeyword()',
-        'Name'                            => ' Word() #Name',
+        '#Name'                           => ' <T_SCHEMA_QUERY> | <T_SCHEMA_MUTATION> | <T_SCHEMA_SUBSCRIPTION> | Word()',
         'Key'                             => ' ( String() | Word() | Keyword() ) #Name',
         'Value'                           => ' ( String() | Number() | Nullable() | Keyword() | Object() | List() | Word() ) #Value',
         'ValueDefinition'                 => ' ValueDefinitionResolver()',
@@ -145,7 +145,7 @@ class GrammarTestCase extends AbstractParserTestCase
         $file   = $this->getGrammarFile();
         $parser = new Reader(File::fromPathname($file));
 
-        $this->assertSame(self::EXPECTED_RULES, $parser->getRules());
+        $this->assertEquals(self::EXPECTED_RULES, $parser->getRules());
     }
 
     /**
