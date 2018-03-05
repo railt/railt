@@ -12,6 +12,7 @@ namespace Railt\Mapper;
 use Railt\Container\ContainerInterface;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
@@ -58,18 +59,15 @@ class Serializer
 
     /**
      * @param FieldDefinition $field
-     * @param DirectiveInvocation $directive
-     * @param $result
+     * @param string $action
+     * @param mixed $result
      * @return iterable
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
-    public function serialize(FieldDefinition $field, DirectiveInvocation $directive, $result)
+    public function serialize(FieldDefinition $field, string $action, $result)
     {
-        [$class, $method] = $this->loader->action(
-            $directive->getDocument(),
-            $directive->getPassedArgument('action')
-        );
+        [$class, $method] = $this->loader->action($field->getDocument(), $action);
 
         $requiredType = $this->getSignature($class, $method);
 

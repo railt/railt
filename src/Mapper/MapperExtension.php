@@ -51,7 +51,17 @@ class MapperExtension extends BaseExtension
             $type = $field->getTypeDefinition();
 
             foreach ($type->getDirectives('out') as $directive) {
-                $result = $serializer->serialize($field, $directive, $result);
+                $action = $directive->getPassedArgument('action');
+
+                $result = $serializer->serialize($field, $action, $result);
+            }
+
+            foreach ($type->getDirectives('map') as $directive) {
+                $output = $directive->getPassedArgument('out');
+
+                if ($output !== null) {
+                    $result = $serializer->serialize($field, $output, $result);
+                }
             }
 
             return $result;

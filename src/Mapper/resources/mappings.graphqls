@@ -1,6 +1,13 @@
 #
 # -----------------------------------------------------------------
-#  The Output Directive
+#  The Mappings Directive
 # -----------------------------------------------------------------
 #
+
 directive @out(action: String!) on OBJECT
+# TODO directive @in(action: String!) on OBJECT
+
+directive @map(
+    output: String,
+    # TODO input: String
+) on OBJECT
