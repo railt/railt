@@ -13,6 +13,7 @@ use Railt\Adapters\Event;
 use Railt\Events\Dispatcher;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RegistryInterface;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\SDL\Schema\CompilerInterface;
@@ -44,13 +45,14 @@ class RouterExtension extends BaseExtension
     /**
      * @param RouterInterface $router
      * @param Dispatcher $events
+     * @throws \InvalidArgumentException
      */
     private function bootFieldResolver(RouterInterface $router, Dispatcher $events): void
     {
         $resolver = new FieldResolver($this->getContainer(), $router, $events);
 
-        $events->listen(Event::DISPATCHING . ':*', function (string $event, array $params) use ($resolver) {
-            return $resolver->handle(...$params);
+        $events->listen(Event::DISPATCHING . ':*', function (string $event, FieldDefinition $field) use ($resolver) {
+            return $resolver->handle($field);
         });
     }
 }

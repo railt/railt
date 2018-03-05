@@ -13,8 +13,8 @@ use Railt\Container\ContainerInterface;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Runtime\Contracts\ClassLoader;
-use Railt\Runtime\Exceptions\InvalidActionException;
+use Railt\Foundation\Kernel\Contracts\ClassLoader;
+use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 
 /**
  * Class Serializer
@@ -61,7 +61,7 @@ class Serializer
      * @param DirectiveInvocation $directive
      * @param $result
      * @return iterable
-     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      */
     public function serialize(FieldDefinition $field, DirectiveInvocation $directive, $result)
@@ -156,7 +156,7 @@ class Serializer
      * @param string $method
      * @return string|null|\ReflectionClass
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
     private function getSignature(string $class, string $method)
     {
@@ -183,7 +183,7 @@ class Serializer
      * @param string $class
      * @param string $method
      * @return \ReflectionMethod
-     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
     private function extractMethod(string $class, string $method): \ReflectionMethod
     {

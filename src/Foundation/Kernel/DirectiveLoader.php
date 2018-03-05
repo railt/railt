@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Runtime;
+namespace Railt\Foundation\Kernel;
 
 use Illuminate\Support\Str;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Runtime\Contracts\ClassLoader;
-use Railt\Runtime\Exceptions\InvalidActionException;
-use Railt\Runtime\Exceptions\UnknownClassException;
+use Railt\Foundation\Kernel\Contracts\ClassLoader;
+use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
+use Railt\Foundation\Kernel\Exceptions\UnknownClassException;
 
 /**
  * Class DirectiveLoader
@@ -27,8 +27,8 @@ class DirectiveLoader implements ClassLoader
      * @param Document $document
      * @param string $action
      * @return array
-     * @throws \Railt\Runtime\Exceptions\UnknownClassException
-     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
     public function action(Document $document, string $action): array
     {
@@ -53,7 +53,7 @@ class DirectiveLoader implements ClassLoader
      * @param Document $document
      * @param string $class
      * @return string
-     * @throws \Railt\Runtime\Exceptions\UnknownClassException
+     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
      */
     public function load(Document $document, string $class): string
     {
@@ -75,7 +75,7 @@ class DirectiveLoader implements ClassLoader
      * @param Document $document
      * @param string $needle
      * @return null|string
-     * @throws \Railt\Runtime\Exceptions\UnknownClassException
+     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
      */
     private function loadFromDirective(Document $document, string $needle): ?string
     {
@@ -119,7 +119,7 @@ class DirectiveLoader implements ClassLoader
      * @param string $class
      * @param string $needle
      * @return bool
-     * @throws \Railt\Runtime\Exceptions\UnknownClassException
+     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
      */
     private function compareNamespace(string $needle, string $class): bool
     {

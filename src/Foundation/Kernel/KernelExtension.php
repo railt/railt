@@ -7,17 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Runtime;
+namespace Railt\Foundation\Kernel;
 
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
-use Railt\Runtime\Contracts\ClassLoader;
+use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**
- * Class RuntimeExtension
+ * Class KernelExtension
  */
-class RuntimeExtension extends BaseExtension
+class KernelExtension extends BaseExtension
 {
     /**
      * @param CompilerInterface $sdl
@@ -27,6 +27,6 @@ class RuntimeExtension extends BaseExtension
         $this->instance(DirectiveLoader::class, new DirectiveLoader());
         $this->alias(DirectiveLoader::class, ClassLoader::class);
 
-        $sdl->compile(File::fromPathname(__DIR__ . '/resources/use.graphqls'));
+        $sdl->compile(File::fromPathname(__DIR__ . '/resources/types.graphqls'));
     }
 }

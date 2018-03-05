@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Runtime\Contracts;
+namespace Railt\Foundation\Kernel\Contracts;
 
 use Railt\Reflection\Contracts\Document;
 

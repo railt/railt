@@ -36,7 +36,7 @@ class MapperExtension extends BaseExtension
 
     /**
      * @param Dispatcher $events
-     * @throws \Railt\Runtime\Exceptions\InvalidActionException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      */
     private function bootFieldResolver(Dispatcher $events): void

@@ -55,7 +55,11 @@ class FieldBuilder extends DependentDefinitionBuilder
             'description' => $this->reflection->getDescription(),
             'type'        => $this->buildType(),
             'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
-            'resolve'     => $this->getFieldResolver(),
+            'resolve'     => function($parent, array $arguments, $context, ResolveInfo $info) {
+                $input = new WebonyxInput($this->reflection, $info, $arguments, $parent);
+
+                return $this->getFieldResolver()($parent, $input);
+            },
         ];
 
         if ($this->reflection->isDeprecated()) {
@@ -66,28 +70,18 @@ class FieldBuilder extends DependentDefinitionBuilder
     }
 
     /**
-     * @return \Closure|null
-     * @throws \InvalidArgumentException
-     */
-    private function getFieldResolver(): ?\Closure
-    {
-        $event = $this->getEventName();
-
-        $args  = [$this->reflection, $this->getInputResolver()];
-
-        return $this->make(Dispatcher::class)->dispatch($event, $args);
-    }
-
-    /**
      * @return \Closure
      * @throws \InvalidArgumentException
      */
-    private function getInputResolver(): \Closure
+    private function getFieldResolver(): \Closure
     {
-        return function ($parent, array $args, RequestInterface $http, ResolveInfo $info): InputInterface {
-            return new WebonyxInput($this->reflection, $info, $args, $parent);
+        $event = $this->getEventName();
+
+        return $this->make(Dispatcher::class)->dispatch($event, $this->reflection) ?? function() {
+            return [];
         };
     }
+
 
     /**
      * @return string

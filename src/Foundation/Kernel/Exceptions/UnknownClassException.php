@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Runtime\Exceptions;
+namespace Railt\Foundation\Kernel\Exceptions;
 
 /**
  * Class UnknownClassException

@@ -15,7 +15,7 @@ use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\Routing\Route;
-use Railt\Runtime\Contracts\ClassLoader;
+use Railt\Foundation\Kernel\Contracts\ClassLoader;
 
 /**
  * Class Directive

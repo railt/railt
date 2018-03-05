@@ -51,7 +51,7 @@ class Application implements PSRContainer
      * @var array
      */
     private $extensions = [
-        \Railt\Runtime\RuntimeExtension::class,
+        \Railt\Foundation\Kernel\KernelExtension::class,
         \Railt\Routing\RouterExtension::class,
         \Railt\Mapper\MapperExtension::class,
     ];

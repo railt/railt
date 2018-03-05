@@ -18,7 +18,7 @@ use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Route\Directive;
-use Railt\Runtime\Contracts\ClassLoader;
+use Railt\Foundation\Kernel\Contracts\ClassLoader;
 
 /**
  * Class FieldResolver
@@ -55,22 +55,14 @@ class FieldResolver
 
     /**
      * @param FieldDefinition $field
-     * @param \Closure $inputResolver
-     * @return \Closure|null
+     * @return \Closure
+     * @throws \InvalidArgumentException
      */
-    public function handle(FieldDefinition $field, \Closure $inputResolver): ?\Closure
+    public function handle(FieldDefinition $field): \Closure
     {
-        /** @var ObjectDefinition $parent */
-        $parent = $field->getParent();
-
         $this->loadRouteDirectives($field);
 
-        return function (...$args) use ($field, $inputResolver, $parent) {
-            $parent = $args[0]; // TODO
-
-            /** @var InputInterface $input */
-            $input = $inputResolver(...$args);
-
+        return function ($parent, InputInterface $input) use ($field) {
             foreach ($this->router->get($field) as $route) {
                 if (! $route->matchOperation($input->getOperation())) {
                     continue;
@@ -81,7 +73,12 @@ class FieldResolver
             }
 
             if (\is_object($parent) && ! ($parent instanceof \ArrayAccess)) {
-                throw new \InvalidArgumentException('Bad parent type (object), but array or scalar required');
+                $error = 'The %s must be serialized to array or an instance of ArrayAccess, but %s class given';
+                throw new \InvalidArgumentException(\sprintf($error, $field->getParent(), \get_class($parent)));
+            }
+
+            if ($parent === null && $field->getTypeDefinition() instanceof ObjectDefinition && $field->isNonNull()) {
+                return [];
             }
 
             return $this->resolved($field, $parent[$field->getName()] ?? null);
