@@ -65,11 +65,9 @@ class FieldResolver
 
         $this->loadRouteDirectives($field);
 
-        if (! $this->router->has($field)) {
-            return $this->getDefaultResult($field);
-        }
-
         return function (...$args) use ($field, $inputResolver, $parent) {
+            $parent = $args[0]; // TODO
+
             /** @var InputInterface $input */
             $input = $inputResolver(...$args);
 
@@ -82,9 +80,11 @@ class FieldResolver
                 return $this->call($route, $input, $field);
             }
 
-            $default = $this->getDefaultResult($field);
+            if (\is_object($parent) && !($parent instanceof \ArrayAccess)) {
+                throw new \InvalidArgumentException('Bad parent type (object), but array or scalar required');
+            }
 
-            return $default instanceof \Closure ? $default() : $default;
+            return $this->resolved($field, $parent[$field->getName()] ?? null);
         };
     }
 
@@ -101,23 +101,6 @@ class FieldResolver
                 $this->router->add(new Directive($this->container, $directive, $loader));
             }
         }
-    }
-
-    /**
-     * @param FieldDefinition $field
-     * @return \Closure|null
-     */
-    private function getDefaultResult(FieldDefinition $field): ?\Closure
-    {
-        $type = $field->getTypeDefinition();
-
-        if ($type instanceof ObjectDefinition && ! $field->isList() && $field->isNonNull()) {
-            return function (): array {
-                return [];
-            };
-        }
-
-        return null;
     }
 
     /**
