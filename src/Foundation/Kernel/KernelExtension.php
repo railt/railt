@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Foundation\Kernel;
 
 use Railt\Foundation\Extensions\BaseExtension;
-use Railt\Io\File;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
+use Railt\Io\File;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**

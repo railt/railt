@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Routing\Route;
 
 use Railt\Container\ContainerInterface;
+use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\Routing\Route;
-use Railt\Foundation\Kernel\Contracts\ClassLoader;
 
 /**
  * Class Directive
