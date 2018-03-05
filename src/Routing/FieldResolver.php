@@ -80,7 +80,7 @@ class FieldResolver
                 return $this->call($route, $input, $field);
             }
 
-            if (\is_object($parent) && !($parent instanceof \ArrayAccess)) {
+            if (\is_object($parent) && ! ($parent instanceof \ArrayAccess)) {
                 throw new \InvalidArgumentException('Bad parent type (object), but array or scalar required');
             }
 
