@@ -9,13 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Adapters\Event;
-use Railt\Events\Dispatcher;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Routing\Contracts\RegistryInterface;
 use Railt\Routing\Contracts\RouterInterface;
 
 /**
@@ -40,7 +37,7 @@ class FieldResolver
      */
     public function __construct(RouterInterface $router, ActionResolver $resolver)
     {
-        $this->router = $router;
+        $this->router   = $router;
         $this->resolver = $resolver;
     }
 

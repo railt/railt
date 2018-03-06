@@ -123,7 +123,7 @@ class WebonyxInput implements InputInterface
      */
     public function updateParent($parent, $parentResponse): void
     {
-        $this->parentValue = $parent;
+        $this->parentValue    = $parent;
         $this->parentResponse = $parentResponse;
     }
 
