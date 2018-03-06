@@ -15,6 +15,7 @@ use Railt\Adapters\Event;
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Adapters\Webonyx\WebonyxInput;
 use Railt\Events\Dispatcher;
+use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition as ReflectionField;
 
@@ -43,6 +44,7 @@ class FieldBuilder extends DependentDefinitionBuilder
 
     /**
      * @return FieldDefinition
+     * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
@@ -53,11 +55,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             'description' => $this->reflection->getDescription(),
             'type'        => $this->buildType(),
             'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
-            'resolve'     => function ($parent, array $arguments, $context, ResolveInfo $info) {
-                $input = new WebonyxInput($this->reflection, $info, $arguments, $parent);
-
-                return $this->getFieldResolver()($parent, $input);
-            },
+            'resolve'     => $this->getFieldResolver(),
         ];
 
         if ($this->reflection->isDeprecated()) {
@@ -69,14 +67,19 @@ class FieldBuilder extends DependentDefinitionBuilder
 
     /**
      * @return \Closure
+     * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
     private function getFieldResolver(): \Closure
     {
         $event = $this->getEventName();
 
-        return $this->make(Dispatcher::class)->dispatch($event, $this->reflection) ?? function () {
-            return [];
+        return function ($parent, array $arguments, $context, ResolveInfo $info) use ($event) {
+            $input = new WebonyxInput($this->reflection, $info, $arguments, $parent);
+
+            $result = $this->dispatching($parent, $this->reflection, $input);
+
+            return $this->dispatched($result, $this->reflection, $input);
         };
     }
 
@@ -87,6 +90,36 @@ class FieldBuilder extends DependentDefinitionBuilder
     {
         $parent = $this->reflection->getParent();
 
-        return Event::DISPATCHING . ':' . $parent->getName() . ':' . $this->reflection->getName();
+        return ':' . $parent->getName() . ':' . $this->reflection->getName();
+    }
+
+    /**
+     * @param mixed $parent
+     * @param ReflectionField $field
+     * @param InputInterface $input
+     * @return mixed
+     */
+    private function dispatching($parent, ReflectionField $field, InputInterface $input)
+    {
+        $event = $this->getEventName();
+
+        $args = [$parent, $field, $input];
+
+        return $this->make(Dispatcher::class)->dispatch(Event::DISPATCHING . $event, $args);
+    }
+
+    /**
+     * @param $result
+     * @param ReflectionField $field
+     * @param InputInterface $input
+     * @return mixed
+     */
+    private function dispatched($result, ReflectionField $field, InputInterface $input)
+    {
+        $event = $this->getEventName();
+
+        $args = [$result, $field, $input];
+
+        return $this->make(Dispatcher::class)->dispatch(Event::DISPATCHED . $event, $args) ?? $result;
     }
 }

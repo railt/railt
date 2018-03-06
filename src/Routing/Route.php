@@ -163,14 +163,12 @@ class Route
     }
 
     /**
-     * TODO Add ability to customize the serialization mechanism (decorators?).
-     *
      * @param InputInterface $input
-     * @param array $parent
+     * @param mixed $parent
      * @param array $params
      * @return mixed
      */
-    public function call(InputInterface $input, ?array $parent, array $params = [])
+    public function call(InputInterface $input, $parent, array $params = [])
     {
         $this->parentValue = $parent;
 

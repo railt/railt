@@ -13,6 +13,7 @@ use GraphQL\Type\Schema;
 use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Schema\CompilerInterface;
+use Railt\SDL\Schema\Configuration;
 
 /**
  * Class SchemaBuilder
@@ -22,6 +23,7 @@ class SchemaBuilder extends TypeBuilder
 {
     /**
      * @return Schema
+     * @throws \InvalidArgumentException
      */
     public function build(): Schema
     {
@@ -37,6 +39,7 @@ class SchemaBuilder extends TypeBuilder
 
     /**
      * @return array
+     * @throws \InvalidArgumentException
      */
     private function buildQuery(): array
     {
@@ -49,6 +52,7 @@ class SchemaBuilder extends TypeBuilder
 
     /**
      * @return array
+     * @throws \InvalidArgumentException
      */
     private function buildMutation(): array
     {
@@ -65,6 +69,7 @@ class SchemaBuilder extends TypeBuilder
 
     /**
      * @return array
+     * @throws \InvalidArgumentException
      */
     private function buildSubscription(): array
     {
@@ -84,7 +89,7 @@ class SchemaBuilder extends TypeBuilder
      */
     private function buildDirectives(): array
     {
-        /** @var CompilerInterface $compiler */
+        /** @var CompilerInterface|Configuration $compiler */
         $compiler = $this->getRegistry()->getContainer()->make(CompilerInterface::class);
 
         $result = [];

@@ -82,7 +82,7 @@ class Serializer
      */
     private function resolveMap(FieldDefinition $field, $requiredType, $result, string $class, string $method)
     {
-        if ($field->isList()) {
+        if ($field->isList() && \is_iterable($result)) {
             $out = [];
 
             foreach ($result as $item) {

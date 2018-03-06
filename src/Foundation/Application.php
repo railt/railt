@@ -125,6 +125,7 @@ class Application implements PSRContainer
         $document = $this->container->make(CompilerInterface::class)->compile($sdl);
         $adapter  = $this->container->make(AdapterInterface::class);
 
+
         $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
             return $adapter->request($this->getSchema($document), $request);
         };

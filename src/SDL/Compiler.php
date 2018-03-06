@@ -267,6 +267,11 @@ class Compiler implements CompilerInterface, Configuration
      */
     public function getPersister(): Storage
     {
+        \trigger_error(
+            __METHOD__ . ' was renamed to getStorage and will be deleted on next release',
+            \E_USER_DEPRECATED
+        );
+
         return $this->getStorage();
     }
 

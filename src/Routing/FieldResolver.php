@@ -54,35 +54,31 @@ class FieldResolver
     }
 
     /**
+     * @param $parent
      * @param FieldDefinition $field
-     * @return \Closure
+     * @param InputInterface $input
+     * @return array|mixed
+     * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
-    public function handle(FieldDefinition $field): \Closure
+    public function handle($parent, FieldDefinition $field, InputInterface $input)
     {
         $this->loadRouteDirectives($field);
 
-        return function ($parent, InputInterface $input) use ($field) {
-            foreach ($this->router->get($field) as $route) {
-                if (! $route->matchOperation($input->getOperation())) {
-                    continue;
-                }
-
-                // TODO Add ability to call of multiple routes.
-                return $this->call($route, $input, $field);
+        foreach ($this->router->get($field) as $route) {
+            if (! $route->matchOperation($input->getOperation())) {
+                continue;
             }
 
-            if (\is_object($parent) && ! ($parent instanceof \ArrayAccess)) {
-                $error = 'The %s must be serialized to array or an instance of ArrayAccess, but %s class given';
-                throw new \InvalidArgumentException(\sprintf($error, $field->getParent(), \get_class($parent)));
-            }
+            // TODO Add ability to call of multiple routes.
+            return $this->resolved($field, $this->call($route, $input, $field));
+        }
 
-            if ($parent === null && $field->getTypeDefinition() instanceof ObjectDefinition && $field->isNonNull()) {
-                return [];
-            }
+        if ($parent === null && $field->getTypeDefinition() instanceof ObjectDefinition && $field->isNonNull()) {
+            return [];
+        }
 
-            return $this->resolved($field, $parent[$field->getName()] ?? null);
-        };
+        return $this->resolved($field, $parent[$field->getName()] ?? null);
     }
 
     /**
@@ -101,6 +97,38 @@ class FieldResolver
     }
 
     /**
+     * @param FieldDefinition $field
+     * @param mixed $data
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    private function resolved(FieldDefinition $field, $data)
+    {
+        $this->verifyResult($field, $data);
+
+        $event = $field->getTypeDefinition()->getName();
+
+        return $this->events->dispatch(Event::RESOLVED . ':' . $event, [$field, $data]) ?? $data;
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @param mixed $data
+     * @throws \RuntimeException
+     */
+    private function verifyResult(FieldDefinition $field, $data): void
+    {
+        $valid = $field->isList() ? (\is_array($data) || \is_iterable($data)) : \is_scalar($data);
+
+        if (! $valid) {
+            $type = \mb_strtolower(\gettype($data));
+            $args = [$field, $field->isList() ? 'iterable' : 'scalar', $type];
+
+            throw new \RuntimeException(\vsprintf('Response type of %s must be %s, but %s given', $args));
+        }
+    }
+
+    /**
      * @param Route $route
      * @param InputInterface $input
      * @param FieldDefinition $field
@@ -113,7 +141,7 @@ class FieldResolver
             TypeDefinition::class => $field,
         ]));
 
-        return $this->resolved($field, $route->call($input, $input->getParentValue(), $parameters));
+        return $route->call($input, $input->getParentValue(), $parameters);
     }
 
     /**
@@ -126,17 +154,5 @@ class FieldResolver
         $event = $field->getParent()->getName() . ':' . $field->getName();
 
         return $this->events->dispatch(Event::RESOLVING . ':' . $event, [$field, $parameters]) ?? $parameters;
-    }
-
-    /**
-     * @param FieldDefinition $field
-     * @param mixed $data
-     * @return mixed
-     */
-    private function resolved(FieldDefinition $field, $data)
-    {
-        $event = $field->getTypeDefinition()->getName();
-
-        return $this->events->dispatch(Event::RESOLVED . ':' . $event, [$field, $data]) ?? $data;
     }
 }

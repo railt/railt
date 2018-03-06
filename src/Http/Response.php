@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Illuminate\Contracts\Support\Arrayable;
-
 /**
  * Class Response
  */
 class Response implements ResponseInterface
 {
+    private const SERVER_ERROR_MESSAGE = 'Internal Server Error';
+
     /**
      * Data field name
      */
@@ -32,7 +32,7 @@ class Response implements ResponseInterface
     private $data;
 
     /**
-     * @var array
+     * @var array|\Throwable[]
      */
     private $errors;
 
@@ -40,6 +40,11 @@ class Response implements ResponseInterface
      * @var bool
      */
     private $debug = false;
+
+    /**
+     * @var int
+     */
+    private $statusCode;
 
     /**
      * Response constructor.
@@ -50,6 +55,44 @@ class Response implements ResponseInterface
     {
         $this->data   = $data;
         $this->errors = $errors;
+
+        $this->statusCode = $this->isSuccessful() ? 200 : 500;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSuccessful(): bool
+    {
+        return ! $this->hasErrors();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasErrors(): bool
+    {
+        return \count($this->errors) > 0;
+    }
+
+    /**
+     * @param \Throwable[] ...$errors
+     * @return Response|static
+     */
+    public static function error(\Throwable ...$errors): self
+    {
+        return new static([], $errors);
+    }
+
+    /**
+     * @param int $code
+     * @return ResponseInterface
+     */
+    public function withStatusCode(int $code): ResponseInterface
+    {
+        $this->statusCode = $code;
+
+        return $this;
     }
 
     /**
@@ -61,15 +104,6 @@ class Response implements ResponseInterface
         $this->debug = $enabled;
 
         return $this;
-    }
-
-    /**
-     * @param \Throwable[] ...$errors
-     * @return Response|static
-     */
-    public static function error(\Throwable ...$errors): self
-    {
-        return new static([], $errors);
     }
 
     /**
@@ -105,11 +139,20 @@ class Response implements ResponseInterface
             throw new \RuntimeException(\sprintf($error, __METHOD__, 'render'));
         }
 
+        \http_response_code($this->getStatusCode());
         \header('Content-Type: application/json');
 
         echo $this->render();
 
         \flush();
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
     }
 
     /**
@@ -140,49 +183,6 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @return array[]
-     */
-    public function getErrors(): array
-    {
-        $result = [];
-
-        foreach ($this->errors as $error) {
-            $result += $this->formatError($error, $this->debug);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return array
-     */
-    public function getNativeErrors(): array
-    {
-        return $this->errors;
-    }
-
-    /**
-     * @param mixed $error
-     * @param bool $debug
-     * @return mixed
-     */
-    private function formatError($error, bool $debug = false)
-    {
-        switch (true) {
-            case $error instanceof \Throwable:
-                return ErrorFormatter::render($error, $debug);
-
-            case $error instanceof Arrayable:
-                return $error->toArray();
-
-            case $error instanceof \JsonSerializable:
-                return $error->jsonSerialize();
-        }
-
-        return $error;
-    }
-
-    /**
      * @return array
      */
     public function getData(): array
@@ -191,18 +191,90 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @return bool
+     * @return array[]
      */
-    public function hasErrors(): bool
+    public function getErrors(): array
     {
-        return \count($this->errors) > 0;
+        $result = [];
+
+        foreach ($this->errors as $error) {
+            foreach ($this->errorsToArray($error) as $sub) {
+                $result[] = $sub;
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * @return bool
+     * @param \Throwable $error
+     * @return array
      */
-    public function isSuccessful(): bool
+    private function errorsToArray(\Throwable $error): array
     {
-        return ! $this->hasErrors();
+        $result = [];
+
+        do {
+            $result[] = $this->errorToArray($error);
+        } while ($error = $error->getPrevious());
+
+        return $result;
+    }
+
+    /**
+     * @param \Throwable $error
+     * @return array
+     */
+    private function errorToArray(\Throwable $error): array
+    {
+        $result = ['message' => $this->getErrorMessage($error)];
+
+        if ($error instanceof GraphQLException) {
+            $result['locations'] = $this->getErrorLocations($error);
+            $result['path']      = $error->getPath();
+        } elseif ($this->debug) {
+            $result['in'] = $error->getFile() . ':' . $error->getLine();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Throwable $error
+     * @return string
+     */
+    private function getErrorMessage(\Throwable $error): string
+    {
+        if ($error instanceof GraphQLException || $this->debug) {
+            return $error->getMessage();
+        }
+
+        return self::SERVER_ERROR_MESSAGE;
+    }
+
+    /**
+     * @param GraphQLException $error
+     * @return array
+     */
+    private function getErrorLocations(GraphQLException $error): array
+    {
+        $result = [];
+
+        foreach ($error->getLocations() as $location) {
+            $result[] = [
+                'line'   => $location->getLine(),
+                'column' => $location->getColumn(),
+            ];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array|\Throwable[]
+     */
+    public function getExceptions(): iterable
+    {
+        return $this->errors;
     }
 }

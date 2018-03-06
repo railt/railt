@@ -25,6 +25,11 @@ interface ResponseInterface extends Arrayable, Renderable
     public function __construct(array $data, array $errors = []);
 
     /**
+     * @return int
+     */
+    public function getStatusCode(): int;
+
+    /**
      * @return array
      */
     public function getData(): array;
@@ -35,9 +40,9 @@ interface ResponseInterface extends Arrayable, Renderable
     public function getErrors(): array;
 
     /**
-     * @return array[]
+     * @return \Traversable|\Throwable[]
      */
-    public function getNativeErrors(): array;
+    public function getExceptions(): iterable;
 
     /**
      * @return void

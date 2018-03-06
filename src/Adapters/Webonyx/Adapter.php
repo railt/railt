@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Webonyx;
 
+use GraphQL\Error\Error;
 use GraphQL\Executor\ExecutionResult;
+use GraphQL\Executor\Executor;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 use Railt\Adapters\AdapterInterface;
@@ -50,6 +52,7 @@ class Adapter implements AdapterInterface
      * @param SchemaDefinition $schema
      * @param RequestInterface $request
      * @return ResponseInterface
+     * @throws \InvalidArgumentException
      * @throws \GraphQL\Error\InvariantViolation
      * @throws \Throwable
      */
@@ -57,32 +60,46 @@ class Adapter implements AdapterInterface
     {
         $this->registry->getContainer()->instance(RequestInterface::class, $request);
 
-        try {
-            $executor = $this->buildExecutor($schema, $request);
+        $executor = $this->buildExecutor($schema, $request);
 
-            /** @var ExecutionResult $result */
-            $result = $executor(null, $request);
+        /** @var ExecutionResult $result */
+        $result = $executor($request->getQuery(), $request->getVariables(), $request->getOperation());
 
-            $response = new Response((array)$result->data, $result->errors);
-            $response->debug($this->debug);
+        $response = new Response((array)$result->data, $this->parseGraphQLErrors($result->errors));
+        $response->debug($this->debug);
 
-            return $response;
-        } catch (\Throwable $e) {
-            if ($this->debug) {
-                $error = Response::error($e);
-                $error->debug($this->debug);
+        return $response;
+    }
 
-                return $error;
+    /**
+     * @param array $errors
+     * @return array|\Throwable
+     */
+    private function parseGraphQLErrors(array $errors): array
+    {
+        $result = [];
+
+        foreach ($errors as $error) {
+            if ($error instanceof Error) {
+                if ($error->getCategory() === Error::CATEGORY_GRAPHQL) {
+                    $result[] = new GraphQLException($error);
+                    continue;
+                }
+
+                $error = $error->getPrevious();
             }
 
-            throw $e;
+            $result[] = $error;
         }
+
+        return $result;
     }
 
     /**
      * @param SchemaDefinition $reflection
      * @param RequestInterface $request
      * @return \Closure
+     * @throws \InvalidArgumentException
      * @throws \GraphQL\Error\InvariantViolation
      */
     private function buildExecutor(SchemaDefinition $reflection, RequestInterface $request): \Closure
@@ -93,22 +110,26 @@ class Adapter implements AdapterInterface
             $schema->assertValid();
         }
 
-        return function ($rootValue = null, $context = null) use ($schema, $request): ExecutionResult {
-            return GraphQL::executeQuery(
-                $schema,
-                $request->getQuery(),
-                $rootValue,
-                $context,
-                $request->getVariables(),
-                $request->getOperation(),
-                null/** Validations */
-            );
+        return $this->prepare($schema, null, $request);
+    }
+
+    /**
+     * @param Schema $schema
+     * @param mixed $rootValue
+     * @param mixed $context
+     * @return \Closure
+     */
+    private function prepare(Schema $schema, $rootValue, $context): \Closure
+    {
+        return function($query, $variables, $operation) use ($schema, $rootValue, $context) {
+            return GraphQL::executeQuery($schema, $query, $rootValue, $context, $variables, $operation);
         };
     }
 
     /**
      * @param SchemaDefinition $schema
      * @return Schema
+     * @throws \InvalidArgumentException
      */
     protected function buildSchema(SchemaDefinition $schema): Schema
     {

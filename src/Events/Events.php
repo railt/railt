@@ -87,6 +87,18 @@ class Events implements Dispatcher, Observable
     }
 
     /**
+     * @param string $name
+     * @param callable $delegator
+     * @return Listenable
+     */
+    public function delegate(string $name, callable $delegator): Listenable
+    {
+        return $this->listen($name, function(string $event, array $args) use ($delegator) {
+            return \call_user_func_array($delegator, $args);
+        });
+    }
+
+    /**
      * @param \Closure $observer
      * @param bool $prepend
      * @return Observable

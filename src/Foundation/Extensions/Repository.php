@@ -43,12 +43,12 @@ class Repository
     }
 
     /**
-     * @param string $provider
+     * @param string $extension
      * @return void
      */
-    public function add(string $provider): void
+    public function add(string $extension): void
     {
-        $this->extensions[] = $this->container->make($provider);
+        $this->extensions[] = $this->container->make($extension);
     }
 
     /**

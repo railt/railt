@@ -14,7 +14,23 @@ namespace Railt\Adapters;
  */
 interface Event
 {
+    /**
+     * Field resolver.
+     */
     public const DISPATCHING = 'dispatching';
-    public const RESOLVING   = 'resolving';
-    public const RESOLVED    = 'resolved';
+
+    /**
+     * Call the controller action.
+     */
+    public const RESOLVING = 'resolving';
+
+    /**
+     * Response of a controller action.
+     */
+    public const RESOLVED = 'resolved';
+
+    /**
+     * Response of the field resolver.
+     */
+    public const DISPATCHED = 'dispatched';
 }
