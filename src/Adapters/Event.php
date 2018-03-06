@@ -15,7 +15,7 @@ namespace Railt\Adapters;
 interface Event
 {
     /**
-     * Build the arguments.
+     * Type building.
      */
     public const BUILDING = 'building:';
 
