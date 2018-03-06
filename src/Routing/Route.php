@@ -65,6 +65,11 @@ class Route
     protected $child;
 
     /**
+     * @var mixed|null
+     */
+    protected $parentValue;
+
+    /**
      * Route constructor.
      * @param ContainerInterface $container
      * @param FieldDefinition $type
@@ -167,15 +172,13 @@ class Route
      */
     public function call(InputInterface $input, ?array $parent, array $params = [])
     {
-        $params[self::PARENT_ARGUMENT_NAME] = $parent;
-
-        $path = $input->getPath();
+        $this->parentValue = $parent;
 
         if ($this->isSingularInvocation()) {
-            return $this->invokeSingularAction($path, $parent, $params);
+            return $this->invokeSingularAction($input, $parent, $params);
         }
 
-        return $this->invokeDividedAction($path, $params);
+        return $this->invokeDividedAction($input, $params);
     }
 
     /**
@@ -187,33 +190,31 @@ class Route
     }
 
     /**
-     * @param string $path
+     * @param InputInterface $input
      * @param array $parent
      * @param array $params
      * @return array
      */
-    private function invokeSingularAction(string $path, ?array $parent, array $params): array
+    private function invokeSingularAction(InputInterface $input, ?array $parent, array $params): array
     {
-        $this->prepareSingularInvocation($path, $params);
+        $this->prepareSingularInvocation($input, $params);
 
         /** @var iterable $stored */
-        $stored = $this->registry->get($path);
+        $stored = $this->registry->get($input->getPath());
 
         return \iterator_to_array($this->join($stored, $parent));
     }
 
     /**
-     * @param string $path
+     * @param InputInterface $input
      * @param array $params
      */
-    private function prepareSingularInvocation(string $path, array $params): void
+    private function prepareSingularInvocation(InputInterface $input, array $params): void
     {
-        if (! $this->isFirstInvocation($path)) {
-            $params = \array_merge($params, [
-                self::PARENT_ARGUMENT_NAME => $this->registry->get($this->getParentPath($path)),
-            ]);
+        if (! $this->isFirstInvocation($input->getPath())) {
+            $this->parentValue = $this->registry->get($this->getParentPath($input->getPath()));
 
-            $this->invokeDividedAction($path, $params);
+            $this->invokeDividedAction($input, $params);
         }
     }
 
@@ -240,13 +241,26 @@ class Route
     }
 
     /**
-     * @param string $path
+     * @param InputInterface $input
      * @param array $params
      * @return mixed
      */
-    private function invokeDividedAction(string $path, array $params)
+    private function invokeDividedAction(InputInterface $input, array $params)
     {
-        return $this->registry->set($path, $this->container->call($this->getAction(), $params));
+        return $this->registry->set($input->getPath(), $this->callAction($input, $params));
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param array $params
+     * @return mixed
+     */
+    private function callAction(InputInterface $input, array $params)
+    {
+        $params = \array_merge($params, [self::PARENT_ARGUMENT_NAME => $this->parentValue]);
+        $input->updateParentValue($this->parentValue);
+
+        return $this->container->call($this->getAction(), $params);
     }
 
     /**

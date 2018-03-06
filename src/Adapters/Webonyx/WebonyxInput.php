@@ -109,6 +109,14 @@ class WebonyxInput implements InputInterface
     }
 
     /**
+     * @param mixed $parent
+     */
+    public function updateParentValue($parent): void
+    {
+        $this->parent = $parent;
+    }
+
+    /**
      * @return FieldDefinition
      */
     public function getFieldDefinition(): FieldDefinition

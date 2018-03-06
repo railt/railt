@@ -68,4 +68,10 @@ interface InputInterface
      * @return mixed
      */
     public function getParentValue();
+
+    /**
+     * @param mixed $parent
+     * @return void
+     */
+    public function updateParentValue($parent): void;
 }
