@@ -21,6 +21,13 @@ use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
  */
 class DirectiveLoader implements ClassLoader
 {
+    /**
+     * A list of global directives.
+     *
+     * @var array
+     */
+    private $directives = [];
+
     private const ACTION_DELIMITER = '@';
 
     /**
@@ -79,7 +86,7 @@ class DirectiveLoader implements ClassLoader
      */
     private function loadFromDirective(Document $document, string $needle): ?string
     {
-        foreach ($document->getDirectives('use') as $directive) {
+        foreach ($this->getDirectives($document) as $directive) {
             [$class, $alias] = $this->getDirectiveArguments($directive);
 
             switch (true) {
@@ -91,6 +98,25 @@ class DirectiveLoader implements ClassLoader
         }
 
         return null;
+    }
+
+    /**
+     * @param Document $document
+     * @return iterable|DirectiveInvocation[]
+     */
+    private function getDirectives(Document $document): iterable
+    {
+        foreach ($this->directives as $directive) {
+            yield $directive;
+        }
+
+        foreach ($document->getDirectives('use') as $directive) {
+            if ($directive->getPassedArgument('scope') === 'GLOBAL') {
+                $this->directives[] = $directive;
+            }
+
+            yield $directive;
+        }
     }
 
     /**

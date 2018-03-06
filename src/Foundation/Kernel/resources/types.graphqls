@@ -14,5 +14,5 @@ directive @use(class: String!, as: String, scope: Scope = DOCUMENT) on DOCUMENT
 
 enum Scope {
     DOCUMENT,
-    PROGRAM
+    GLOBAL
 }
