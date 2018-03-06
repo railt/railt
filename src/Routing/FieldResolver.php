@@ -29,11 +29,6 @@ class FieldResolver
     private $router;
 
     /**
-     * @var Dispatcher
-     */
-    private $events;
-
-    /**
      * @var ActionResolver
      */
     private $resolver;
@@ -41,13 +36,11 @@ class FieldResolver
     /**
      * FieldResolver constructor.
      * @param RouterInterface $router
-     * @param Dispatcher $events
      * @param ActionResolver $resolver
      */
-    public function __construct(RouterInterface $router, Dispatcher $events, ActionResolver $resolver)
+    public function __construct(RouterInterface $router, ActionResolver $resolver)
     {
         $this->router = $router;
-        $this->events = $events;
         $this->resolver = $resolver;
     }
 
@@ -71,7 +64,7 @@ class FieldResolver
                 TypeDefinition::class => $field,
             ]);
 
-            return $this->resolver->call($field, $route, $input, $parameters);
+            return $this->resolver->call($field, $route, $input, $parameters, $parent);
         }
 
         if ($parent === null && $field->getTypeDefinition() instanceof ObjectDefinition && $field->isNonNull()) {

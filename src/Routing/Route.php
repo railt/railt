@@ -173,7 +173,7 @@ class Route
     }
 
     /**
-     * @return iterable
+     * @return iterable|Relation[]
      */
     public function getRelations(): iterable
     {

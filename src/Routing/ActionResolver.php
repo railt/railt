@@ -13,6 +13,7 @@ use Railt\Adapters\Event;
 use Railt\Events\Dispatcher;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Routing\Route\Relation;
 
 /**
  * Class ActionResolver
@@ -55,22 +56,112 @@ class ActionResolver
      * @param Route $route
      * @param InputInterface $input
      * @param array $parameters
+     * @param $parent
      * @return mixed Response data
      * @throws \RuntimeException
      */
-    public function call(FieldDefinition $field, Route $route, InputInterface $input, array $parameters)
+    public function call(FieldDefinition $field, Route $route, InputInterface $input, array $parameters, $parent)
     {
-        $this->withParentValue($input);
+        if ($route->hasRelations()) {
+            return $this->callSingularAction($field, $route, $input, $parameters, $parent);
+        }
+
+        return $this->callDividedAction($field, $route, $input, $parameters);
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @param Route $route
+     * @param InputInterface $input
+     * @param array $parameters
+     * @param mixed $parent
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    private function callSingularAction(
+        FieldDefinition $field,
+        Route $route,
+        InputInterface $input,
+        array $parameters,
+        $parent
+    )
+    {
+        $current = $this->isFirstInvocation($input)
+            ? $this->callDividedAction($field, $route, $input, $parameters)
+            : $this->responseStore->get($this->getCurrentPath($input));
+
+        $result = [];
+
+        foreach ($route->getRelations() as $relation) {
+            foreach ($current as $item) {
+                if ($this->matched($relation, $parent, $item)) {
+                    $result[] = $item;
+                }
+            }
+        }
+
+        if (\count($result) === 0 && ! $field->isNonNull()) {
+            return null;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param Relation $relation
+     * @param array $parentItem
+     * @param array $currentItem
+     * @return bool
+     */
+    private function matched(Relation $relation, $parentItem, $currentItem): bool
+    {
+        if (! \is_array($parentItem) || ! \array_key_exists($relation->getParentFieldName(), $parentItem)) {
+            return false;
+        }
+
+        if (! \is_array($currentItem) || ! \array_key_exists($relation->getChildFieldName(), $currentItem)) {
+            return false;
+        }
+
+        return $parentItem[$relation->getParentFieldName()] === $currentItem[$relation->getChildFieldName()];
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return bool
+     */
+    private function isFirstInvocation(InputInterface $input): bool
+    {
+        return ! $this->responseStore->has($this->getCurrentPath($input));
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return string
+     */
+    private function getCurrentPath(InputInterface $input): string
+    {
+        return $input->getPath();
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @param Route $route
+     * @param InputInterface $input
+     * @param array $parameters
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    private function callDividedAction(FieldDefinition $field, Route $route, InputInterface $input, array $parameters)
+    {
+        // Prepare input and parameters
+        $parameters = $this->withParentValue($input, $parameters);
 
         // Update action parameters
         $parameters = $this->resolving($field, $route, $parameters);
 
-        // Before serializing
-        $result = $route->call($parameters);
-
-        if ($result instanceof \Traversable) {
-            $result = \iterator_to_array($result);
-        }
+        // Call the action
+        $result = $this->callAction($route, $parameters);
 
         // Cache original action result
         $this->resultStore->set($this->getCurrentPath($input), $result);
@@ -86,8 +177,10 @@ class ActionResolver
 
     /**
      * @param InputInterface $input
+     * @param array $parameters
+     * @return array
      */
-    private function withParentValue(InputInterface $input): void
+    private function withParentValue(InputInterface $input, array $parameters): array
     {
         $parent = $this->getParentPath($input);
 
@@ -95,6 +188,8 @@ class ActionResolver
         $parentResponse = $this->responseStore->get($parent);
 
         $input->updateParent($parentResult, $parentResponse);
+
+        return $parameters;
     }
 
     /**
@@ -124,12 +219,20 @@ class ActionResolver
     }
 
     /**
-     * @param InputInterface $input
-     * @return string
+     * @param Route $route
+     * @param array $parameters
+     * @return array|mixed
      */
-    private function getCurrentPath(InputInterface $input): string
+    private function callAction(Route $route, array $parameters)
     {
-        return $input->getPath();
+        // Before serializing
+        $result = $route->call($parameters);
+
+        if ($result instanceof \Traversable) {
+            $result = \iterator_to_array($result);
+        }
+
+        return $result;
     }
 
     /**

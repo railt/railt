@@ -77,7 +77,7 @@ class Directive extends Route
         $parent = $relation->getPassedArgument('parent');
         $child  = $relation->getPassedArgument('child');
 
-        $this->relation($parent, $child);
+        $this->relation($child, $parent);
     }
 
     /**
