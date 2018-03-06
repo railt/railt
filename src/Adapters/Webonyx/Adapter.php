@@ -50,7 +50,7 @@ class Adapter implements AdapterInterface
     public function __construct(ContainerInterface $container, bool $debug = false)
     {
         $this->debug    = $debug;
-        $this->events = $container->make(Dispatcher::class);
+        $this->events   = $container->make(Dispatcher::class);
         $this->registry = new Registry($container, $this->events);
     }
 
