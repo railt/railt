@@ -14,8 +14,6 @@ use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 
 /**
  * Class Serializer
