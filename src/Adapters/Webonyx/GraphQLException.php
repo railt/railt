@@ -43,8 +43,7 @@ class GraphQLException extends \InvalidArgumentException implements GraphQLExcep
     public function getLocations(): iterable
     {
         foreach ($this->error->getLocations() as $location) {
-            yield new class($location->line, $location->column) implements GraphQLExceptionLocation
-            {
+            yield new class($location->line, $location->column) implements GraphQLExceptionLocation {
                 /**
                  * @var int
                  */
@@ -80,7 +79,6 @@ class GraphQLException extends \InvalidArgumentException implements GraphQLExcep
                 {
                     return $this->column;
                 }
-
             };
         }
     }
@@ -93,5 +91,3 @@ class GraphQLException extends \InvalidArgumentException implements GraphQLExcep
         return $this->error->getPath() ?? [];
     }
 }
-
-

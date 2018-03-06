@@ -11,7 +11,6 @@ namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Error\Error;
 use GraphQL\Executor\ExecutionResult;
-use GraphQL\Executor\Executor;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 use Railt\Adapters\AdapterInterface;
@@ -121,7 +120,7 @@ class Adapter implements AdapterInterface
      */
     private function prepare(Schema $schema, $rootValue, $context): \Closure
     {
-        return function($query, $variables, $operation) use ($schema, $rootValue, $context) {
+        return function ($query, $variables, $operation) use ($schema, $rootValue, $context) {
             return GraphQL::executeQuery($schema, $query, $rootValue, $context, $variables, $operation);
         };
     }
