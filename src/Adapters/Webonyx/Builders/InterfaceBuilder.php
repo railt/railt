@@ -20,13 +20,14 @@ class InterfaceBuilder extends TypeBuilder
 {
     /**
      * @return Type
+     * @throws \Exception
      */
     public function build(): Type
     {
         return new InterfaceType([
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
-            'fields'      => FieldBuilder::buildFields($this->reflection, $this->getRegistry()),
+            'fields'      => FieldBuilder::buildFields($this->reflection, $this->getRegistry(), $this->events),
             // TODO Resolve Type
             'resolveType' => function (): Type {
             },

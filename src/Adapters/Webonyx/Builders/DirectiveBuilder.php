@@ -32,6 +32,7 @@ class DirectiveBuilder extends TypeBuilder
 
     /**
      * @return Directive
+     * @throws \Exception
      */
     public function build(): Directive
     {
@@ -45,10 +46,11 @@ class DirectiveBuilder extends TypeBuilder
 
     /**
      * @return array
+     * @throws \Exception
      */
     private function getArguments(): array
     {
-        $arguments = ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry());
+        $arguments = ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry(), $this->events);
 
         return \array_map(function ($argument): FieldArgument {
             return new FieldArgument($argument);

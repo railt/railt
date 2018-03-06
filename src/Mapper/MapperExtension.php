@@ -43,7 +43,7 @@ class MapperExtension extends BaseExtension
     {
         $serializer = $this->make(Serializer::class);
 
-        $events->listen(Event::RESOLVED . ':*', function (string $event, array $payload) use ($serializer) {
+        $events->listen(Event::ACTION_RESOLVED . '*', function (string $event, array $payload) use ($serializer) {
             /** @var FieldDefinition $field */
             [$field, $result] = $payload;
 

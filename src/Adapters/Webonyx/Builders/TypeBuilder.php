@@ -12,6 +12,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use Railt\Adapters\Webonyx\Registry;
+use Railt\Events\Dispatcher;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 
 /**
@@ -25,6 +26,11 @@ abstract class TypeBuilder
     protected $reflection;
 
     /**
+     * @var Dispatcher
+     */
+    protected $events;
+
+    /**
      * @var Registry
      */
     private $registry;
@@ -33,12 +39,19 @@ abstract class TypeBuilder
      * TypeBuilder constructor.
      * @param TypeDefinition $type
      * @param Registry $registry
+     * @param Dispatcher $events
      */
-    public function __construct(TypeDefinition $type, Registry $registry)
+    public function __construct(TypeDefinition $type, Registry $registry, Dispatcher $events)
     {
         $this->reflection = $type;
         $this->registry   = $registry;
+        $this->events     = $events;
     }
+
+    /**
+     * @return mixed|Type
+     */
+    abstract public function build();
 
     /**
      * @return Registry
@@ -66,9 +79,4 @@ abstract class TypeBuilder
     {
         return $this->registry->get($type);
     }
-
-    /**
-     * @return mixed|Type
-     */
-    abstract public function build();
 }

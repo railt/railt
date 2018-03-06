@@ -60,7 +60,11 @@ class RouterExtension extends BaseExtension
             return $resolver->handle($parent, $field, $input);
         };
 
-        $events->listen(Event::DISPATCHING . ':*', $callback);
+        $events->listen(Event::ROUTE_DISPATCHING . '*', $callback);
+
+        $events->listen('*', function(string $event) {
+            \Log::info($event);
+        });
     }
 
     /**

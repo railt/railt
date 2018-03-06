@@ -15,22 +15,27 @@ namespace Railt\Adapters;
 interface Event
 {
     /**
+     * Build the arguments.
+     */
+    public const BUILDING = 'building:';
+
+    /**
      * Field resolver.
      */
-    public const DISPATCHING = 'dispatching';
-
-    /**
-     * Call the controller action.
-     */
-    public const RESOLVING = 'resolving';
-
-    /**
-     * Response of a controller action.
-     */
-    public const RESOLVED = 'resolved';
+    public const ROUTE_DISPATCHING = 'route:dispatching:';
 
     /**
      * Response of the field resolver.
      */
-    public const DISPATCHED = 'dispatched';
+    public const ROUTE_DISPATCHED = 'route:dispatched:';
+
+    /**
+     * Call the controller action.
+     */
+    public const ACTION_RESOLVING = 'action:resolving:';
+
+    /**
+     * Response of a controller action.
+     */
+    public const ACTION_RESOLVED = 'action:resolved:';
 }

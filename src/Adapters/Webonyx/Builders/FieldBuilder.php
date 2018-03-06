@@ -27,16 +27,18 @@ class FieldBuilder extends DependentDefinitionBuilder
     /**
      * @param HasFields $type
      * @param Registry $registry
+     * @param Dispatcher $dispatcher
      * @return array
-     * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public static function buildFields(HasFields $type, Registry $registry): array
+    public static function buildFields(HasFields $type, Registry $registry, Dispatcher $dispatcher): array
     {
         $result = [];
 
         foreach ($type->getFields() as $field) {
-            $result[$field->getName()] = (new static($field, $registry))->build();
+            if (Registry::canBuild($field, $dispatcher)) {
+                $result[$field->getName()] = (new static($field, $registry, $dispatcher))->build();
+            }
         }
 
         return $result;
@@ -54,7 +56,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
             'type'        => $this->buildType(),
-            'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
+            'args'        => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry(), $this->events),
             'resolve'     => $this->getFieldResolver(),
         ];
 
@@ -75,7 +77,7 @@ class FieldBuilder extends DependentDefinitionBuilder
         $event = $this->getEventName();
 
         return function ($parent, array $arguments, $context, ResolveInfo $info) use ($event) {
-            $input = new WebonyxInput($this->reflection, $info, $arguments, $parent);
+            $input = new WebonyxInput($this->reflection, $info, $arguments);
 
             $result = $this->dispatching($parent, $this->reflection, $input);
 
@@ -90,7 +92,7 @@ class FieldBuilder extends DependentDefinitionBuilder
     {
         $parent = $this->reflection->getParent();
 
-        return ':' . $parent->getName() . ':' . $this->reflection->getName();
+        return $parent->getName() . ':' . $this->reflection->getName();
     }
 
     /**
@@ -105,7 +107,7 @@ class FieldBuilder extends DependentDefinitionBuilder
 
         $args = [$parent, $field, $input];
 
-        return $this->make(Dispatcher::class)->dispatch(Event::DISPATCHING . $event, $args);
+        return $this->make(Dispatcher::class)->dispatch(Event::ROUTE_DISPATCHING . $event, $args);
     }
 
     /**
@@ -120,6 +122,7 @@ class FieldBuilder extends DependentDefinitionBuilder
 
         $args = [$result, $field, $input];
 
-        return $this->make(Dispatcher::class)->dispatch(Event::DISPATCHED . $event, $args) ?? $result;
+        return $this->make(Dispatcher::class)
+                ->dispatch(Event::ROUTE_DISPATCHED . $event, $args) ?? $result;
     }
 }

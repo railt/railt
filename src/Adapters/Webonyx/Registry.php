@@ -11,10 +11,13 @@ namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
+use Railt\Adapters\Event;
 use Railt\Adapters\Webonyx\Builders\TypeBuilder;
 use Railt\Container\ContainerInterface;
+use Railt\Events\Dispatcher;
 use Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 
 /**
  * Class Registry
@@ -42,12 +45,35 @@ class Registry
     private $container;
 
     /**
+     * @var Dispatcher
+     */
+    private $events;
+
+    /**
      * Registry constructor.
      * @param ContainerInterface $container
+     * @param Dispatcher $events
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, Dispatcher $events)
     {
         $this->container = $container;
+        $this->events = $events;
+    }
+
+    /**
+     * @param TypeDefinition $type
+     * @param Dispatcher $events
+     * @return bool
+     */
+    public static function canBuild(TypeDefinition $type, Dispatcher $events): bool
+    {
+        $event = $type->getName();
+
+        if ($type instanceof DependentDefinition) {
+            $event = $type->getParent()->getName() . ':' . $event;
+        }
+
+        return $events->dispatch(Event::BUILDING . $event, $type) !== false;
     }
 
     /**
@@ -77,11 +103,17 @@ class Registry
     /**
      * @param TypeDefinition $definition
      * @return Type|Directive
+     * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
     private function build(TypeDefinition $definition)
     {
-        return $this->getBuilder($definition)->build();
+        if (self::canBuild($definition, $this->events)) {
+            return $this->getBuilder($definition)->build();
+        }
+
+        $error = 'Can not build a type %s, because This type was not found or it was excluded by the building event';
+        throw new \RuntimeException(\sprintf($error, $definition));
     }
 
     /**
@@ -94,7 +126,7 @@ class Registry
         /** @var TypeBuilder $builder */
         $builder = $this->getMapping($definition);
 
-        return new $builder($definition, $this);
+        return new $builder($definition, $this, $this->events);
     }
 
     /**

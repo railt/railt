@@ -215,7 +215,7 @@ class ActionResolver
     {
         $event = $field->getParent()->getName() . ':' . $field->getName();
 
-        return $this->events->dispatch(Event::RESOLVING . ':' . $event, [$field, $parameters]) ?? $parameters;
+        return $this->events->dispatch(Event::ACTION_RESOLVING . $event, [$field, $parameters]) ?? $parameters;
     }
 
     /**
@@ -247,7 +247,7 @@ class ActionResolver
 
         $event = $field->getTypeDefinition()->getName();
 
-        return $this->events->dispatch(Event::RESOLVED . ':' . $event, [$field, $data]) ?? $data;
+        return $this->events->dispatch(Event::ACTION_RESOLVED . $event, [$field, $data]) ?? $data;
     }
 
     /**

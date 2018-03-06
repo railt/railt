@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx\Builders;
 
 use Railt\Adapters\Webonyx\Registry;
+use Railt\Events\Dispatcher;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition as ReflectionArgument;
 
@@ -21,15 +22,19 @@ class ArgumentBuilder extends DependentDefinitionBuilder
     /**
      * @param HasArguments $type
      * @param Registry $registry
+     * @param Dispatcher $dispatcher
      * @return array
      * @throws \InvalidArgumentException
+     * @throws \Exception
      */
-    public static function buildArguments(HasArguments $type, Registry $registry): array
+    public static function buildArguments(HasArguments $type, Registry $registry, Dispatcher $dispatcher): array
     {
         $result = [];
 
         foreach ($type->getArguments() as $argument) {
-            $result[$argument->getName()] = (new static($argument, $registry))->build();
+            if (Registry::canBuild($argument, $dispatcher)) {
+                $result[$argument->getName()] = (new static($argument, $registry, $dispatcher))->build();
+            }
         }
 
         return $result;
@@ -38,6 +43,7 @@ class ArgumentBuilder extends DependentDefinitionBuilder
     /**
      * @return array
      * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     public function build(): array
     {

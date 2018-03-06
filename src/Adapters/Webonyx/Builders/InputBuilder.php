@@ -21,13 +21,14 @@ class InputBuilder extends TypeBuilder
     /**
      * @return Type
      * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     public function build(): Type
     {
         return new InputObjectType([
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
-            'fields'      => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry()),
+            'fields'      => ArgumentBuilder::buildArguments($this->reflection, $this->getRegistry(), $this->events),
         ]);
     }
 }

@@ -16,6 +16,7 @@ use GraphQL\Type\Schema;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Builders\SchemaBuilder;
 use Railt\Container\ContainerInterface;
+use Railt\Events\Dispatcher;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
@@ -37,6 +38,11 @@ class Adapter implements AdapterInterface
     private $debug;
 
     /**
+     * @var Dispatcher
+     */
+    private $events;
+
+    /**
      * Adapter constructor.
      * @param ContainerInterface $container
      * @param bool $debug
@@ -44,7 +50,8 @@ class Adapter implements AdapterInterface
     public function __construct(ContainerInterface $container, bool $debug = false)
     {
         $this->debug    = $debug;
-        $this->registry = new Registry($container);
+        $this->events = $container->make(Dispatcher::class);
+        $this->registry = new Registry($container, $this->events);
     }
 
     /**
@@ -132,7 +139,7 @@ class Adapter implements AdapterInterface
      */
     protected function buildSchema(SchemaDefinition $schema): Schema
     {
-        $builder = new SchemaBuilder($schema, $this->registry);
+        $builder = new SchemaBuilder($schema, $this->registry, $this->events);
 
         return $builder->build();
     }

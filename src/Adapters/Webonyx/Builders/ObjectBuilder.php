@@ -20,6 +20,7 @@ class ObjectBuilder extends TypeBuilder
 {
     /**
      * @return Type
+     * @throws \Exception
      * @throws \InvalidArgumentException
      */
     public function build(): Type
@@ -28,7 +29,7 @@ class ObjectBuilder extends TypeBuilder
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
             'fields'      => function (): array {
-                return FieldBuilder::buildFields($this->reflection, $this->getRegistry());
+                return FieldBuilder::buildFields($this->reflection, $this->getRegistry(), $this->events);
             },
             'interfaces'  => $this->buildInterfaces(),
         ]);
