@@ -60,7 +60,7 @@ class RouterExtension extends BaseExtension
 
         $events->listen(Event::ROUTE_DISPATCHING . '*', $callback);
 
-        $events->listen('*', function(string $event) {
+        $events->listen('*', function (string $event): void {
             \Log::info($event);
         });
     }

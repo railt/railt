@@ -57,7 +57,7 @@ class Registry
     public function __construct(ContainerInterface $container, Dispatcher $events)
     {
         $this->container = $container;
-        $this->events = $events;
+        $this->events    = $events;
     }
 
     /**
