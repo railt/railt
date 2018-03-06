@@ -11,12 +11,10 @@ namespace Railt\Routing;
 
 use Railt\Adapters\Event;
 use Railt\Events\Dispatcher;
-use Railt\Events\Events;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Routing\Contracts\RegistryInterface;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Route\Directive;
 use Railt\SDL\Schema\CompilerInterface;
@@ -52,7 +50,7 @@ class RouterExtension extends BaseExtension
     {
         $resolver = new FieldResolver($router, new ActionResolver($events));
 
-        $callback = function(string $event, array $args) use ($resolver, $loader, $router) {
+        $callback = function (string $event, array $args) use ($resolver, $loader, $router) {
             [$parent, $field, $input] = $args;
 
             $this->loadRouteDirectives($field, $loader, $router);

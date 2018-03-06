@@ -84,8 +84,7 @@ class ActionResolver
         InputInterface $input,
         array $parameters,
         $parent
-    )
-    {
+    ) {
         $current = $this->isFirstInvocation($input)
             ? $this->callDividedAction($field, $route, $input, $parameters)
             : $this->responseStore->get($this->getCurrentPath($input));

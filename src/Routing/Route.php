@@ -18,7 +18,7 @@ use Railt\Routing\Route\Relation;
  */
 class Route
 {
-    public const FIELD_ANY = '*';
+    public const FIELD_ANY      = '*';
     public const PATH_DELIMITER = '.';
 
     /**
