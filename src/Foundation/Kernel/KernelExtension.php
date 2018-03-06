@@ -24,8 +24,8 @@ class KernelExtension extends BaseExtension
      */
     public function boot(CompilerInterface $sdl): void
     {
-        $this->instance(DirectiveLoader::class, new DirectiveLoader());
-        $this->alias(DirectiveLoader::class, ClassLoader::class);
+        $this->instance(ClassLoader::class, new DirectiveLoader());
+        $this->alias(ClassLoader::class, DirectiveLoader::class);
 
         $sdl->compile(File::fromPathname(__DIR__ . '/resources/types.graphqls'));
     }

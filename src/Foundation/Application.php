@@ -78,6 +78,8 @@ class Application implements PSRContainer
     {
         $this->debug     = $debug;
         $this->container = $this->bootContainer($container);
+
+        $this->bootIfNotBooted();
     }
 
     /**
@@ -118,8 +120,6 @@ class Application implements PSRContainer
      */
     public function request(Readable $sdl, RequestInterface $request): ResponseInterface
     {
-        $this->bootIfNotBooted();
-
         $this->container->make(Repository::class)->boot();
 
         $document = $this->container->make(CompilerInterface::class)->compile($sdl);

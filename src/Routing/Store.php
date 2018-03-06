@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Routing\Contracts\RegistryInterface;
-
 /**
- * Class Registry
+ * Class Store
  */
-class Registry implements RegistryInterface
+class Store
 {
     /**
      * @var array
@@ -28,13 +26,6 @@ class Registry implements RegistryInterface
      */
     public function set(string $key, $data)
     {
-        //
-        // TODO Add ability to customize serializations
-        //
-        if ($data instanceof \Traversable) {
-            $data = \iterator_to_array($data);
-        }
-
         $this->data[$key] = $data;
 
         return $data;

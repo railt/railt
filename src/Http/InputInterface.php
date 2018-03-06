@@ -16,6 +16,8 @@ use Railt\Reflection\Contracts\Dependent\FieldDefinition;
  */
 interface InputInterface
 {
+    public const DEPTH_DELIMITER = '.';
+
     /**
      * @return array
      */
@@ -67,11 +69,17 @@ interface InputInterface
     /**
      * @return mixed
      */
-    public function getParentValue();
+    public function getParent();
+
+    /**
+     * @return mixed
+     */
+    public function getParentResponse();
 
     /**
      * @param mixed $parent
+     * @param mixed $parentResponse
      * @return void
      */
-    public function updateParentValue($parent): void;
+    public function updateParent($parent, $parentResponse): void;
 }

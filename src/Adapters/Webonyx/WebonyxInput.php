@@ -21,8 +21,6 @@ use Railt\Reflection\Contracts\Dependent\FieldDefinition;
  */
 class WebonyxInput implements InputInterface
 {
-    public const DEPTH_DELIMITER = '.';
-
     /**
      * @var array
      */
@@ -44,24 +42,27 @@ class WebonyxInput implements InputInterface
     private $field;
 
     /**
-     * @var mixed|null
+     * @var mixed
      */
-    private $parent;
+    private $parentValue;
+
+    /**
+     * @var mixed
+     */
+    private $parentResponse;
 
     /**
      * Input constructor.
      * @param FieldDefinition $field
      * @param ResolveInfo $info
      * @param array $arguments
-     * @param mixed|null $parent
      * @throws \InvalidArgumentException
      */
-    public function __construct(FieldDefinition $field, ResolveInfo $info, array $arguments = [], $parent = null)
+    public function __construct(FieldDefinition $field, ResolveInfo $info, array $arguments = [])
     {
         $this->info      = $info;
         $this->field     = $field;
         $this->arguments = $this->resolveArguments($field, $arguments);
-        $this->parent    = $parent;
     }
 
     /**
@@ -101,19 +102,29 @@ class WebonyxInput implements InputInterface
     }
 
     /**
-     * @return mixed|null
+     * @return mixed
      */
-    public function getParentValue()
+    public function getParent()
     {
-        return $this->parent;
+        return $this->parentValue;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParentResponse()
+    {
+        return $this->parentResponse;
     }
 
     /**
      * @param mixed $parent
+     * @param mixed $parentResponse
      */
-    public function updateParentValue($parent): void
+    public function updateParent($parent, $parentResponse): void
     {
-        $this->parent = $parent;
+        $this->parentValue = $parent;
+        $this->parentResponse = $parentResponse;
     }
 
     /**
