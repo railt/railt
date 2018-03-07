@@ -11,13 +11,14 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\ResolveInfo;
-use Railt\Adapters\Event;
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Adapters\Webonyx\WebonyxInput;
-use Railt\Events\Dispatcher;
-use Railt\Http\InputInterface;
+use Railt\Foundation\Events\FieldResolving;
+use Railt\Foundation\Events\TypeBuilding;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Dependent\Field\HasFields;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition as ReflectionField;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
  * @property ReflectionField $reflection
@@ -36,7 +37,7 @@ class FieldBuilder extends DependentDefinitionBuilder
         $result = [];
 
         foreach ($type->getFields() as $field) {
-            if (Registry::canBuild($field, $dispatcher)) {
+            if (TypeBuilding::canBuild($dispatcher, $field)) {
                 $result[$field->getName()] = (new static($field, $registry, $dispatcher))->build();
             }
         }
@@ -74,53 +75,21 @@ class FieldBuilder extends DependentDefinitionBuilder
      */
     private function getFieldResolver(): \Closure
     {
-        $event = $this->getEventName();
+        $events = $this->make(Dispatcher::class);
 
-        return function ($parent, array $arguments, $context, ResolveInfo $info) use ($event) {
+        return function ($parent, array $arguments, $context, ResolveInfo $info) use ($events) {
             $input = new WebonyxInput($this->reflection, $info, $arguments);
 
-            $result = $this->dispatching($parent, $input);
+            $resolving = new FieldResolving($input, $parent);
 
-            return $this->dispatched($result, $input);
+            /** @var FieldResolving $event */
+            $events->dispatch(FieldResolving::class, $resolving);
+
+            if ($resolving->isPropagationStopped()) {
+                return $this->reflection->getTypeDefinition() instanceof ObjectDefinition ? [] : null;
+            }
+
+            return $resolving->getResponse();
         };
-    }
-
-    /**
-     * @return string
-     */
-    private function getEventName(): string
-    {
-        $parent = $this->reflection->getParent();
-
-        return $parent->getName() . ':' . $this->reflection->getName();
-    }
-
-    /**
-     * @param mixed $parent
-     * @param InputInterface $input
-     * @return mixed
-     */
-    private function dispatching($parent, InputInterface $input)
-    {
-        $event = $this->getEventName();
-
-        $args = [$parent, $input];
-
-        return $this->make(Dispatcher::class)->dispatch(Event::ROUTE_DISPATCHING . $event, $args);
-    }
-
-    /**
-     * @param $result
-     * @param InputInterface $input
-     * @return mixed
-     */
-    private function dispatched($result, InputInterface $input)
-    {
-        $event = $this->getEventName();
-
-        $args = [$result, $input];
-
-        return $this->make(Dispatcher::class)
-                ->dispatch(Event::ROUTE_DISPATCHED . $event, $args) ?? $result;
     }
 }

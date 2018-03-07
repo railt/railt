@@ -9,16 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Adapters\Event;
-use Railt\Events\Dispatcher;
+use Railt\Foundation\Events\FieldResolving;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
-use Railt\Http\InputInterface;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Route\Directive;
 use Railt\SDL\Schema\CompilerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
  * Class RouterServiceProvider
@@ -51,18 +50,15 @@ class RouterExtension extends BaseExtension
     {
         $resolver = new FieldResolver($router, new ActionResolver($events));
 
-        $callback = function (string $event, array $args) use ($resolver, $loader, $router) {
-            /** @var InputInterface $input */
-            [$parent, $input] = $args;
-
-            $field = $input->getFieldDefinition();
+        $callback = function (FieldResolving $event) use ($resolver, $loader, $router) {
+            $field = $event->getInput()->getFieldDefinition();
 
             $this->loadRouteDirectives($field, $loader, $router);
 
-            return $resolver->handle($parent, $input);
+            $event->setResponse($resolver->handle($event->getParentValue(), $event->getInput()));
         };
 
-        $events->listen(Event::ROUTE_DISPATCHING . '*', $callback);
+        $events->addListener(FieldResolving::class, $callback);
     }
 
     /**

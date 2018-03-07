@@ -16,11 +16,11 @@ use GraphQL\Type\Schema;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Builders\SchemaBuilder;
 use Railt\Container\ContainerInterface;
-use Railt\Events\Dispatcher;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Adapter
@@ -38,7 +38,7 @@ class Adapter implements AdapterInterface
     private $debug;
 
     /**
-     * @var Dispatcher
+     * @var EventDispatcherInterface
      */
     private $events;
 
@@ -50,7 +50,7 @@ class Adapter implements AdapterInterface
     public function __construct(ContainerInterface $container, bool $debug = false)
     {
         $this->debug    = $debug;
-        $this->events   = $container->make(Dispatcher::class);
+        $this->events   = $container->make(EventDispatcherInterface::class);
         $this->registry = new Registry($container, $this->events);
     }
 

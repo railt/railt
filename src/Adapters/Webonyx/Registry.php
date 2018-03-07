@@ -11,13 +11,12 @@ namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
-use Railt\Adapters\Event;
 use Railt\Adapters\Webonyx\Builders\TypeBuilder;
 use Railt\Container\ContainerInterface;
-use Railt\Events\Dispatcher;
+use Railt\Foundation\Events\TypeBuilding;
 use Railt\Reflection\Contracts\Definitions;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Dependent\DependentDefinition;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Registry
@@ -45,35 +44,19 @@ class Registry
     private $container;
 
     /**
-     * @var Dispatcher
+     * @var EventDispatcherInterface
      */
     private $events;
 
     /**
      * Registry constructor.
      * @param ContainerInterface $container
-     * @param Dispatcher $events
+     * @param EventDispatcherInterface $events
      */
-    public function __construct(ContainerInterface $container, Dispatcher $events)
+    public function __construct(ContainerInterface $container, EventDispatcherInterface $events)
     {
         $this->container = $container;
         $this->events    = $events;
-    }
-
-    /**
-     * @param TypeDefinition $type
-     * @param Dispatcher $events
-     * @return bool
-     */
-    public static function canBuild(TypeDefinition $type, Dispatcher $events): bool
-    {
-        $event = $type->getName();
-
-        if ($type instanceof DependentDefinition) {
-            $event = $type->getParent()->getName() . ':' . $event;
-        }
-
-        return $events->dispatch(Event::BUILDING . $event, $type) !== false;
     }
 
     /**
@@ -108,7 +91,7 @@ class Registry
      */
     private function build(TypeDefinition $definition)
     {
-        if (self::canBuild($definition, $this->events)) {
+        if (TypeBuilding::canBuild($this->events, $definition)) {
             return $this->getBuilder($definition)->build();
         }
 

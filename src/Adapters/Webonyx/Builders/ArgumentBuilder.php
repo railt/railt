@@ -10,9 +10,10 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx\Builders;
 
 use Railt\Adapters\Webonyx\Registry;
-use Railt\Events\Dispatcher;
+use Railt\Foundation\Events\TypeBuilding;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition as ReflectionArgument;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
  * @property ReflectionArgument $reflection
@@ -32,7 +33,7 @@ class ArgumentBuilder extends DependentDefinitionBuilder
         $result = [];
 
         foreach ($type->getArguments() as $argument) {
-            if (Registry::canBuild($argument, $dispatcher)) {
+            if (TypeBuilding::canBuild($dispatcher, $argument)) {
                 $result[$argument->getName()] = (new static($argument, $registry, $dispatcher))->build();
             }
         }

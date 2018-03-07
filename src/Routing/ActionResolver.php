@@ -9,11 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Adapters\Event;
-use Railt\Events\Dispatcher;
+use Railt\Foundation\Events\ActionDispatched;
+use Railt\Foundation\Events\ActionDispatching;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Route\Relation;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
  * Class ActionResolver
@@ -100,25 +101,6 @@ class ActionResolver
     }
 
     /**
-     * @param Relation $relation
-     * @param array $parentItem
-     * @param array $currentItem
-     * @return bool
-     */
-    private function matched(Relation $relation, $parentItem, $currentItem): bool
-    {
-        if (! \is_array($parentItem) || ! \array_key_exists($relation->getParentFieldName(), $parentItem)) {
-            return false;
-        }
-
-        if (! \is_array($currentItem) || ! \array_key_exists($relation->getChildFieldName(), $currentItem)) {
-            return false;
-        }
-
-        return $parentItem[$relation->getParentFieldName()] === $currentItem[$relation->getChildFieldName()];
-    }
-
-    /**
      * @param InputInterface $input
      * @return bool
      */
@@ -145,24 +127,19 @@ class ActionResolver
      */
     private function callDividedAction(Route $route, InputInterface $input, array $parameters)
     {
-        $field = $input->getFieldDefinition();
-
-        // Prepare input and parameters
-        $parameters = $this->withParentValue($input, $parameters);
-
-        // Update action parameters
-        $parameters = $this->resolving($field, $parameters);
+        // Before
+        $dispatching = new ActionDispatching($input, $this->withParentValue($input, $parameters));
+        $this->events->dispatch(ActionDispatching::class, $dispatching);
 
         // Call the action
-        $result = $this->callAction($route, $parameters);
-
-        // Cache original action result
+        $result = $this->callAction($route, $dispatching->getParameters());
         $this->resultStore->set($this->getCurrentPath($input), $result);
 
-        // After serializing
-        $response = $this->resolved($field, $result);
+        // After
+        $dispatched = new ActionDispatched($input, $result);
+        $this->events->dispatch(ActionDispatched::class, $dispatched);
 
-        // Cache formatted resolver result
+        $response = $dispatched->getResponse();
         $this->responseStore->set($this->getCurrentPath($input), $response);
 
         return $response;
@@ -199,18 +176,6 @@ class ActionResolver
     }
 
     /**
-     * @param FieldDefinition $field
-     * @param array $parameters
-     * @return mixed
-     */
-    private function resolving(FieldDefinition $field, array $parameters)
-    {
-        $event = $field->getParent()->getName() . ':' . $field->getName();
-
-        return $this->events->dispatch(Event::ACTION_RESOLVING . $event, [$field, $parameters]) ?? $parameters;
-    }
-
-    /**
      * @param Route $route
      * @param array $parameters
      * @return array|mixed
@@ -228,21 +193,8 @@ class ActionResolver
     }
 
     /**
-     * @param FieldDefinition $field
-     * @param mixed $data
-     * @return mixed
-     * @throws \RuntimeException
-     */
-    private function resolved(FieldDefinition $field, $data)
-    {
-        $this->verifyResult($field, $data);
-
-        $event = $field->getTypeDefinition()->getName();
-
-        return $this->events->dispatch(Event::ACTION_RESOLVED . $event, [$field, $data]) ?? $data;
-    }
-
-    /**
+     * TODO Add verification.
+     *
      * @param FieldDefinition $field
      * @param mixed $data
      * @throws \RuntimeException
@@ -257,5 +209,24 @@ class ActionResolver
 
             throw new \RuntimeException(\vsprintf('Response type of %s must be %s, but %s given', $args));
         }
+    }
+
+    /**
+     * @param Relation $relation
+     * @param array $parentItem
+     * @param array $currentItem
+     * @return bool
+     */
+    private function matched(Relation $relation, $parentItem, $currentItem): bool
+    {
+        if (! \is_array($parentItem) || ! \array_key_exists($relation->getParentFieldName(), $parentItem)) {
+            return false;
+        }
+
+        if (! \is_array($currentItem) || ! \array_key_exists($relation->getChildFieldName(), $currentItem)) {
+            return false;
+        }
+
+        return $parentItem[$relation->getParentFieldName()] === $currentItem[$relation->getChildFieldName()];
     }
 }

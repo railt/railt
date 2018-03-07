@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Events;
+namespace Railt\SDL\Runtime;
 
 /**
  * Trait Observer

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Foundation\Services;
 
 use Railt\Container\ContainerInterface;
-use Railt\Events\Dispatcher;
-use Railt\Events\Events;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class EventsService
@@ -24,9 +24,9 @@ class EventsService implements Service
      */
     public function register(ContainerInterface $container, bool $debug): void
     {
-        if (! $container->has(Dispatcher::class)) {
-            $container->instance(Dispatcher::class, new Events());
-            $container->alias(Dispatcher::class, Events::class);
+        if (! $container->has(EventDispatcherInterface::class)) {
+            $container->instance(EventDispatcherInterface::class, new EventDispatcher());
+            $container->alias(EventDispatcherInterface::class, EventDispatcher::class);
         }
     }
 }

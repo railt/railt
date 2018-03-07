@@ -9,15 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Mapper;
 
-use Railt\Adapters\Event;
-use Railt\Events\Dispatcher;
+use Railt\Foundation\Events\ActionDispatched;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Schema\CompilerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
  * Class MapperExtension
@@ -26,6 +25,8 @@ class MapperExtension extends BaseExtension
 {
     /**
      * @param CompilerInterface $compiler
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
     public function boot(CompilerInterface $compiler): void
     {
@@ -43,28 +44,41 @@ class MapperExtension extends BaseExtension
     {
         $serializer = $this->make(Serializer::class);
 
-        $events->listen(Event::ACTION_RESOLVED . '*', function (string $event, array $payload) use ($serializer) {
+        $events->addListener(ActionDispatched::class, function (ActionDispatched $event) use ($serializer) {
             /** @var FieldDefinition $field */
-            [$field, $result] = $payload;
+            $field = $event->getInput()->getFieldDefinition();
 
-            /** @var ObjectDefinition|ScalarDefinition|InterfaceDefinition $type */
-            $type = $field->getTypeDefinition();
-
-            foreach ($type->getDirectives('out') as $directive) {
-                $action = $directive->getPassedArgument('action');
-
-                $result = $serializer->serialize($field, $action, $result);
-            }
-
-            foreach ($type->getDirectives('map') as $directive) {
-                $output = $directive->getPassedArgument('out');
-
-                if ($output !== null) {
-                    $result = $serializer->serialize($field, $output, $result);
-                }
-            }
-
-            return $result;
+            $event->setResponse($this->serialize($serializer, $field, $event->getResponse()));
         });
+    }
+
+    /**
+     * @param Serializer $serializer
+     * @param FieldDefinition $field
+     * @param $result
+     * @return mixed
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     */
+    private function serialize(Serializer $serializer, FieldDefinition $field, $result)
+    {
+        /** @var ObjectDefinition|InterfaceDefinition $type */
+        $type = $field->getTypeDefinition();
+
+        foreach ($type->getDirectives('out') as $directive) {
+            $action = $directive->getPassedArgument('action');
+
+            $result = $serializer->serialize($field, $action, $result);
+        }
+
+        foreach ($type->getDirectives('map') as $directive) {
+            $output = $directive->getPassedArgument('out');
+
+            if ($output !== null) {
+                $result = $serializer->serialize($field, $output, $result);
+            }
+        }
+
+        return $result;
     }
 }
