@@ -48,15 +48,15 @@ class ScalarBuilder extends TypeBuilder
         }
 
         return new CustomScalarType([
-            'name' => $this->reflection->getName(),
+            'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
-            'serialize' => function($value) {
+            'serialize'   => function ($value) {
                 return $value;
             },
-            'parseValue' => function($value) {
+            'parseValue' => function ($value) {
                 return $value;
             },
-            'parseLiteral' => function($valueNode) {
+            'parseLiteral' => function ($valueNode) {
                 return $valueNode->value;
             },
         ]);
