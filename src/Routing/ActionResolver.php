@@ -76,7 +76,8 @@ class ActionResolver
      * @return mixed
      * @throws \RuntimeException
      */
-    private function callSingularAction(Route $route, InputInterface $input, array $parameters, $parent) {
+    private function callSingularAction(Route $route, InputInterface $input, array $parameters, $parent)
+    {
         $current = $this->isFirstInvocation($input)
             ? $this->callDividedAction($route, $input, $parameters)
             : $this->responseStore->get($this->getCurrentPath($input));
