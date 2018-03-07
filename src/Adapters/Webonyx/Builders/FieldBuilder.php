@@ -79,9 +79,9 @@ class FieldBuilder extends DependentDefinitionBuilder
         return function ($parent, array $arguments, $context, ResolveInfo $info) use ($event) {
             $input = new WebonyxInput($this->reflection, $info, $arguments);
 
-            $result = $this->dispatching($parent, $this->reflection, $input);
+            $result = $this->dispatching($parent, $input);
 
-            return $this->dispatched($result, $this->reflection, $input);
+            return $this->dispatched($result, $input);
         };
     }
 
@@ -97,30 +97,28 @@ class FieldBuilder extends DependentDefinitionBuilder
 
     /**
      * @param mixed $parent
-     * @param ReflectionField $field
      * @param InputInterface $input
      * @return mixed
      */
-    private function dispatching($parent, ReflectionField $field, InputInterface $input)
+    private function dispatching($parent, InputInterface $input)
     {
         $event = $this->getEventName();
 
-        $args = [$parent, $field, $input];
+        $args = [$parent, $input];
 
         return $this->make(Dispatcher::class)->dispatch(Event::ROUTE_DISPATCHING . $event, $args);
     }
 
     /**
      * @param $result
-     * @param ReflectionField $field
      * @param InputInterface $input
      * @return mixed
      */
-    private function dispatched($result, ReflectionField $field, InputInterface $input)
+    private function dispatched($result, InputInterface $input)
     {
         $event = $this->getEventName();
 
-        $args = [$result, $field, $input];
+        $args = [$result, $input];
 
         return $this->make(Dispatcher::class)
                 ->dispatch(Event::ROUTE_DISPATCHED . $event, $args) ?? $result;

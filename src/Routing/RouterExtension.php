@@ -13,6 +13,7 @@ use Railt\Adapters\Event;
 use Railt\Events\Dispatcher;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
+use Railt\Http\InputInterface;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
@@ -51,11 +52,14 @@ class RouterExtension extends BaseExtension
         $resolver = new FieldResolver($router, new ActionResolver($events));
 
         $callback = function (string $event, array $args) use ($resolver, $loader, $router) {
-            [$parent, $field, $input] = $args;
+            /** @var InputInterface $input */
+            [$parent, $input] = $args;
+
+            $field = $input->getFieldDefinition();
 
             $this->loadRouteDirectives($field, $loader, $router);
 
-            return $resolver->handle($parent, $field, $input);
+            return $resolver->handle($parent, $input);
         };
 
         $events->listen(Event::ROUTE_DISPATCHING . '*', $callback);

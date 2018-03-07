@@ -52,7 +52,6 @@ class ActionResolver
     }
 
     /**
-     * @param FieldDefinition $field
      * @param Route $route
      * @param InputInterface $input
      * @param array $parameters
@@ -60,17 +59,16 @@ class ActionResolver
      * @return mixed Response data
      * @throws \RuntimeException
      */
-    public function call(FieldDefinition $field, Route $route, InputInterface $input, array $parameters, $parent)
+    public function call(Route $route, InputInterface $input, array $parameters, $parent)
     {
         if ($route->hasRelations()) {
-            return $this->callSingularAction($field, $route, $input, $parameters, $parent);
+            return $this->callSingularAction($route, $input, $parameters, $parent);
         }
 
-        return $this->callDividedAction($field, $route, $input, $parameters);
+        return $this->callDividedAction($route, $input, $parameters);
     }
 
     /**
-     * @param FieldDefinition $field
      * @param Route $route
      * @param InputInterface $input
      * @param array $parameters
@@ -78,15 +76,9 @@ class ActionResolver
      * @return mixed
      * @throws \RuntimeException
      */
-    private function callSingularAction(
-        FieldDefinition $field,
-        Route $route,
-        InputInterface $input,
-        array $parameters,
-        $parent
-    ) {
+    private function callSingularAction(Route $route, InputInterface $input, array $parameters, $parent) {
         $current = $this->isFirstInvocation($input)
-            ? $this->callDividedAction($field, $route, $input, $parameters)
+            ? $this->callDividedAction($route, $input, $parameters)
             : $this->responseStore->get($this->getCurrentPath($input));
 
         $result = [];
@@ -99,7 +91,7 @@ class ActionResolver
             }
         }
 
-        if (\count($result) === 0 && ! $field->isNonNull()) {
+        if (\count($result) === 0 && ! $input->getFieldDefinition()->isNonNull()) {
             return null;
         }
 
@@ -144,20 +136,21 @@ class ActionResolver
     }
 
     /**
-     * @param FieldDefinition $field
      * @param Route $route
      * @param InputInterface $input
      * @param array $parameters
      * @return mixed
      * @throws \RuntimeException
      */
-    private function callDividedAction(FieldDefinition $field, Route $route, InputInterface $input, array $parameters)
+    private function callDividedAction(Route $route, InputInterface $input, array $parameters)
     {
+        $field = $input->getFieldDefinition();
+
         // Prepare input and parameters
         $parameters = $this->withParentValue($input, $parameters);
 
         // Update action parameters
-        $parameters = $this->resolving($field, $route, $parameters);
+        $parameters = $this->resolving($field, $parameters);
 
         // Call the action
         $result = $this->callAction($route, $parameters);
@@ -206,11 +199,10 @@ class ActionResolver
 
     /**
      * @param FieldDefinition $field
-     * @param Route $route
      * @param array $parameters
      * @return mixed
      */
-    private function resolving(FieldDefinition $field, Route $route, array $parameters)
+    private function resolving(FieldDefinition $field, array $parameters)
     {
         $event = $field->getParent()->getName() . ':' . $field->getName();
 

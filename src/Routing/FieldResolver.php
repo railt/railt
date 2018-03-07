@@ -12,7 +12,6 @@ namespace Railt\Routing;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 
 /**
@@ -43,14 +42,15 @@ class FieldResolver
 
     /**
      * @param $parent
-     * @param FieldDefinition $field
      * @param InputInterface $input
      * @return array|mixed
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
-    public function handle($parent, FieldDefinition $field, InputInterface $input)
+    public function handle($parent, InputInterface $input)
     {
+        $field = $input->getFieldDefinition();
+
         foreach ($this->router->get($field) as $route) {
             if (! $route->matchOperation($input->getOperation())) {
                 continue;
@@ -61,7 +61,7 @@ class FieldResolver
                 TypeDefinition::class => $field,
             ]);
 
-            return $this->resolver->call($field, $route, $input, $parameters, $parent);
+            return $this->resolver->call($route, $input, $parameters, $parent);
         }
 
         if ($parent === null && $field->getTypeDefinition() instanceof ObjectDefinition && $field->isNonNull()) {
