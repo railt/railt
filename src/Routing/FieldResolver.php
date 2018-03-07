@@ -13,6 +13,10 @@ use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Routing\Contracts\RouterInterface;
+use Railt\Routing\Resolvers\Factory;
+use Railt\Routing\Resolvers\Resolver;
+use Railt\Routing\Store\Box;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class FieldResolver
@@ -25,29 +29,29 @@ class FieldResolver
     private $router;
 
     /**
-     * @var ActionResolver
+     * @var Resolver
      */
     private $resolver;
 
     /**
      * FieldResolver constructor.
      * @param RouterInterface $router
-     * @param ActionResolver $resolver
+     * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(RouterInterface $router, ActionResolver $resolver)
+    public function __construct(RouterInterface $router, EventDispatcherInterface $dispatcher)
     {
         $this->router   = $router;
-        $this->resolver = $resolver;
+        $this->resolver = new Factory($dispatcher);
     }
 
     /**
-     * @param $parent
      * @param InputInterface $input
+     * @param Box $parent
      * @return array|mixed
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
-    public function handle($parent, InputInterface $input)
+    public function handle(InputInterface $input, ?Box $parent)
     {
         $field = $input->getFieldDefinition();
 
@@ -56,12 +60,7 @@ class FieldResolver
                 continue;
             }
 
-            $parameters = \array_merge($input->all(), [
-                InputInterface::class => $input,
-                TypeDefinition::class => $field,
-            ]);
-
-            return $this->resolver->call($route, $input, $parameters, $parent);
+            return $this->resolver->call($input, $route, $parent);
         }
 
         if ($parent === null && $field->getTypeDefinition() instanceof ObjectDefinition && $field->isNonNull()) {

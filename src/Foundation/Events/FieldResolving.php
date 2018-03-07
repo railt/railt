@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Events;
 
 use Railt\Http\InputInterface;
+use Railt\Routing\Store\Box;
 
 /**
  * Class FieldResolving
@@ -17,7 +18,7 @@ use Railt\Http\InputInterface;
 class FieldResolving extends BaseFieldResolver
 {
     /**
-     * @var mixed
+     * @var Box|null
      */
     private $parent;
 
@@ -29,18 +30,18 @@ class FieldResolving extends BaseFieldResolver
     /**
      * FieldResolving constructor.
      * @param InputInterface $input
-     * @param mixed $parentValue
+     * @param Box|null $parent
      */
-    public function __construct(InputInterface $input, $parentValue)
+    public function __construct(InputInterface $input, ?Box $parent)
     {
         parent::__construct($input);
-        $this->parent = $parentValue;
+        $this->parent = $parent;
     }
 
     /**
-     * @return mixed
+     * @return Box|null
      */
-    public function getParentValue()
+    public function getParentValue(): ?Box
     {
         return $this->parent;
     }

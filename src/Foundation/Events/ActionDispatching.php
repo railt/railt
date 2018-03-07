@@ -40,4 +40,29 @@ class ActionDispatching extends BaseFieldResolver
     {
         return $this->parameters;
     }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return ActionDispatching
+     */
+    public function addParameter(string $name, $value): ActionDispatching
+    {
+        $this->parameters[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param iterable $parameters
+     * @return ActionDispatching
+     */
+    public function addParameters(iterable $parameters): ActionDispatching
+    {
+        foreach ($parameters as $key => $value) {
+            $this->addParameter($key, $value);
+        }
+
+        return $this;
+    }
 }
