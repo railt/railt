@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Webonyx\Builders;
 
+use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\Type;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Standard\Scalars\BooleanType;
@@ -24,7 +25,6 @@ class ScalarBuilder extends TypeBuilder
 {
     /**
      * @return Type
-     * @throws \InvalidArgumentException
      */
     public function build(): Type
     {
@@ -47,7 +47,18 @@ class ScalarBuilder extends TypeBuilder
                 return Type::float();
         }
 
-        $error = 'Can not build scalar type %s.';
-        throw new \InvalidArgumentException(\sprintf($error, $this->reflection));
+        return new CustomScalarType([
+            'name' => $this->reflection->getName(),
+            'description' => $this->reflection->getDescription(),
+            'serialize' => function($value) {
+                return $value;
+            },
+            'parseValue' => function($value) {
+                return $value;
+            },
+            'parseLiteral' => function($valueNode) {
+                return $valueNode->value;
+            },
+        ]);
     }
 }
