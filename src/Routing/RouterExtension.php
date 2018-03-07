@@ -50,7 +50,7 @@ class RouterExtension extends BaseExtension
     {
         $resolver = new FieldResolver($router, new ActionResolver($events));
 
-        $callback = function (FieldResolving $event) use ($resolver, $loader, $router) {
+        $callback = function (FieldResolving $event) use ($resolver, $loader, $router): void {
             $field = $event->getInput()->getFieldDefinition();
 
             $this->loadRouteDirectives($field, $loader, $router);
