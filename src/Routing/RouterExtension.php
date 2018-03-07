@@ -69,7 +69,7 @@ class RouterExtension extends BaseExtension
      */
     private function bootArgumentsInjector(Dispatcher $events): void
     {
-        $events->addListener(ActionDispatching::class, function(ActionDispatching $event): void {
+        $events->addListener(ActionDispatching::class, function (ActionDispatching $event): void {
             $input = $event->getInput();
 
             $event->addParameter(InputInterface::class, $input);

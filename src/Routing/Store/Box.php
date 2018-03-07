@@ -8,7 +8,6 @@
 declare(strict_types=1);
 
 namespace Railt\Routing\Store;
-use Railt\Http\InputInterface;
 
 /**
  * Class Box
@@ -32,7 +31,7 @@ final class Box implements \ArrayAccess
      */
     public function __construct($data, array $serialized)
     {
-        $this->data = $data;
+        $this->data       = $data;
         $this->serialized = $serialized;
     }
 
@@ -40,14 +39,14 @@ final class Box implements \ArrayAccess
      * @param array $items
      * @return Box
      */
-    public static function restruct(array $items): Box
+    public static function restruct(array $items): self
     {
-        $data = [];
+        $data       = [];
         $serialized = [];
 
         /** @var Box $box */
         foreach ($items as $box) {
-            $data[] = $box->getValue();
+            $data[]       = $box->getValue();
             $serialized[] = $box->toArray();
         }
 

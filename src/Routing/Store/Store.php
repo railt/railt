@@ -55,7 +55,7 @@ class Store
     {
         $index = $this->current($input);
 
-        if (!$this->has($input)) {
+        if (! $this->has($input)) {
             $this->data[$index] = [];
         }
 

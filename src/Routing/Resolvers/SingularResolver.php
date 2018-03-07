@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Routing\Resolvers;
 
-use Railt\Routing\Route;
 use Railt\Http\InputInterface;
+use Railt\Routing\Route;
 use Railt\Routing\Route\Relation;
 use Railt\Routing\Store\Box;
 

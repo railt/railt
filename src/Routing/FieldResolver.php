@@ -11,7 +11,6 @@ namespace Railt\Routing;
 
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Resolvers\Factory;
 use Railt\Routing\Resolvers\Resolver;
