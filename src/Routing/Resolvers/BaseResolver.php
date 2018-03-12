@@ -14,7 +14,6 @@ use Railt\Foundation\Events\ActionDispatching;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Routing\Store\ObjectBox;
-use Railt\Routing\Store\ScalarBox;
 use Railt\Routing\Store\Store;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

@@ -28,5 +28,5 @@ interface Box
      * @param array $collection
      * @return Box
      */
-    public static function rebuild(array $collection): Box;
+    public static function rebuild(array $collection): self;
 }

@@ -238,7 +238,7 @@ class Response implements ResponseInterface
         }
 
         if ($this->debug) {
-            $result['in'] = $error->getFile() . ':' . $error->getLine();
+            $result['in']    = $error->getFile() . ':' . $error->getLine();
             $result['trace'] = \explode("\n", $error->getTraceAsString());
         }
 

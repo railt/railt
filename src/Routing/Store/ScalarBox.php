@@ -28,7 +28,7 @@ final class ScalarBox extends BaseBox
     }
 
     /**
-     * @return int|string|float|double
+     * @return int|string|float|float
      */
     public function getResponse()
     {
