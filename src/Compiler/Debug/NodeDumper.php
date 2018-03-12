@@ -13,8 +13,6 @@ use Railt\Compiler\Ast\LeafInterface;
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
 use Railt\Compiler\Lexer\Token;
-use Railt\Compiler\Runtime;
-use Railt\Io\Readable;
 
 /**
  * Class NodeDumper
@@ -27,19 +25,6 @@ class NodeDumper implements Dumper
      * @var NodeInterface
      */
     private $ast;
-
-    /**
-     * @param Readable $grammar
-     * @param string $sources
-     * @return NodeDumper
-     * @throws \LogicException
-     */
-    public static function fromSources(Readable $grammar, string $sources): self
-    {
-        $ast = (new Runtime($grammar))->parse($sources);
-
-        return new static($ast);
-    }
 
     /**
      * NodeDumper constructor.

@@ -16,6 +16,8 @@ use Railt\Reflection\Contracts\Definitions\Definition;
  */
 class CallStack implements CallStackInterface, \IteratorAggregate
 {
+    use Observer;
+
     /**
      * @var \SplStack|Definition[]
      */
@@ -30,45 +32,38 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     }
 
     /**
-     * @return void
-     */
-    public function __clone()
-    {
-        $this->stack = clone $this->stack;
-    }
-
-    /**
      * @param Definition[] ...$definitions
      * @return CallStack|$this|static
      */
     public function push(Definition ...$definitions): CallStackInterface
     {
         foreach ($definitions as $definition) {
-            $this->stack->push($definition);
+            $this->stack->push($this->notify($definition, true));
         }
 
         return $this;
     }
 
     /**
-     * @param int $size
-     * @return CallStack|$this|static
+     * @return \Traversable
      */
-    public function pop(int $size = 1): CallStackInterface
+    public function getIterator(): \Traversable
     {
-        for ($i = 0; $i < $size; ++$i) {
-            $this->last();
+        while ($this->stack->count() > 0) {
+            yield $this->pop();
         }
-
-        return $this;
     }
 
     /**
      * @return Definition|null
      */
-    public function last(): ?Definition
+    public function pop(): ?Definition
     {
-        return $this->stack->count() > 0 ? $this->stack->pop() : null;
+        if ($this->count() > 0) {
+            return $this->notify($this->stack->pop());
+        }
+
+        return null;
     }
 
     /**
@@ -80,12 +75,10 @@ class CallStack implements CallStackInterface, \IteratorAggregate
     }
 
     /**
-     * @return \Traversable
+     * @return void
      */
-    public function getIterator(): \Traversable
+    public function __clone()
     {
-        while ($this->stack->count() > 0) {
-            yield $this->pop();
-        }
+        $this->stack = clone $this->stack;
     }
 }

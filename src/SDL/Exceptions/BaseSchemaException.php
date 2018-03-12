@@ -16,7 +16,7 @@ use Railt\SDL\Runtime\CallStackRenderer;
 /**
  * Class BaseSchemaException
  */
-abstract class BaseSchemaException extends \LogicException implements SchemaException
+abstract class BaseSchemaException extends \DomainException implements SchemaException
 {
     /**
      * @var int
@@ -38,63 +38,13 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     {
         parent::__construct(Str::ucfirst($message), 0, $previous);
 
-        $this->renderer = new CallStackRenderer($stack);
+        $this->renderer = new CallStackRenderer($stack, \debug_backtrace());
 
-        $this->column = $this->renderer->getColumn();
-        $this->file   = $this->renderer->getFile();
-        $this->line   = $this->renderer->getLine();
-    }
+        $latest = $this->renderer->getLastRenderer();
 
-    /**
-     * @return string
-     */
-    public function getCompilerMessage(): string
-    {
-        return \vsprintf('%s: %s in %s:%d:%d', [
-            \class_basename($this),
-            $this->getMessage(),
-            $this->getFile(),
-            $this->getLine(),
-            $this->getColumn(),
-        ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        $result = $this->getCompilerMessage() . \PHP_EOL .
-            'Stack trace:' . \PHP_EOL;
-
-        if ($this->renderer->hasTrace()) {
-            $result .= $this->getCompilerTraceAsString() . \PHP_EOL;
-        }
-
-        $startAt = \count($this->renderer->getTrace());
-
-        $result .= \preg_replace_callback('/^#(\d+)\h/imu',
-            function (array $matches) use ($startAt): string {
-                return \sprintf('#%d ', $matches[1] + $startAt);
-            }, $this->getTraceAsString());
-
-        return $result;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompilerTrace(): array
-    {
-        return $this->renderer->getTrace();
-    }
-
-    /**
-     * @return string
-     */
-    public function getCompilerTraceAsString(): string
-    {
-        return $this->renderer->getTraceAsString();
+        $this->file   = $latest->getFile();
+        $this->line   = $latest->getLine();
+        $this->column = $latest->getColumn();
     }
 
     /**
@@ -106,15 +56,28 @@ abstract class BaseSchemaException extends \LogicException implements SchemaExce
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function __debugInfo(): array
+    private function getHeader(): string
     {
-        return [
-            'message' => $this->message,
-            'file'    => $this->file,
-            'line'    => $this->line,
-            'column'  => $this->column,
-        ];
+        return \vsprintf('%s: %s %s', [
+            static::class,
+            $this->getMessage(),
+            $this->renderer->getLastRenderer()->toMessageString(),
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $result[] = $this->getHeader();
+
+        foreach ($this->renderer->getTrace() as $i => $item) {
+            $result[] = $item->toTraceString($i);
+        }
+
+        return \implode(\PHP_EOL, $result);
     }
 }

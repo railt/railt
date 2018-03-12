@@ -34,6 +34,8 @@ class ParamResolver
      * @param \Closure $action
      * @param array $additional
      * @return array
+     * @throws \Railt\Container\Exceptions\ParameterResolutionException
+     * @throws \ReflectionException
      */
     public function fromClosure(\Closure $action, array $additional = []): array
     {
@@ -44,6 +46,8 @@ class ParamResolver
      * @param callable $action
      * @param array $additional
      * @return array
+     * @throws \Railt\Container\Exceptions\ParameterResolutionException
+     * @throws \ReflectionException
      */
     public function fromCallable(callable $action, array $additional = []): array
     {
@@ -54,6 +58,8 @@ class ParamResolver
      * @param string $class
      * @param array $additional
      * @return array
+     * @throws \Railt\Container\Exceptions\ParameterResolutionException
+     * @throws \ReflectionException
      */
     public function fromConstructor(string $class, array $additional = []): array
     {
@@ -74,6 +80,7 @@ class ParamResolver
      * @param \ReflectionFunctionAbstract $reflection
      * @param array $additional
      * @return array
+     * @throws \Railt\Container\Exceptions\ParameterResolutionException
      */
     public function resolve(\ReflectionFunctionAbstract $reflection, array $additional = []): array
     {
@@ -90,6 +97,7 @@ class ParamResolver
      * @param \ReflectionParameter $parameter
      * @param array $additional
      * @return mixed
+     * @throws \Railt\Container\Exceptions\ParameterResolutionException
      */
     private function resolveParameter(\ReflectionParameter $parameter, array $additional = [])
     {

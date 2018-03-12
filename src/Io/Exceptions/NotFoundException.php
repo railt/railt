@@ -21,7 +21,7 @@ class NotFoundException extends NotReadableException
      */
     public static function fromFilePath(string $file = '', \Throwable $previous = null): NotReadableException
     {
-        $message = \sprintf('File "%s" not found.', $file);
+        $message = \sprintf('File "%s" not found', $file);
 
         return new static($message, 0, $previous);
     }

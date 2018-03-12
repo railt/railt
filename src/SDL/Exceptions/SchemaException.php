@@ -31,20 +31,4 @@ interface SchemaException extends \Throwable
      */
     public function getColumn(): int;
 
-    /**
-     * @return string
-     */
-    public function getCompilerMessage(): string;
-
-    /**
-     * Returns the GraphQL Compiler stack trace.
-     *
-     * @return array Returns the stack trace as an array.
-     */
-    public function getCompilerTrace(): array;
-
-    /**
-     * @return string
-     */
-    public function getCompilerTraceAsString(): string;
 }

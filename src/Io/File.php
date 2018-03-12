@@ -11,26 +11,21 @@ namespace Railt\Io;
 
 use Railt\Io\Exceptions\NotFoundException;
 use Railt\Io\Exceptions\NotReadableException;
-use Railt\Io\Utils\ErrorHelper;
-use Railt\Io\Utils\TraceHelper;
 
 /**
  * Class File
  */
-class File implements Writable, Traceable
+class File implements Readable
 {
-    use ErrorHelper;
-    use TraceHelper;
+    /**
+     * @var string
+     */
+    protected $contents;
 
     /**
      * @var string
      */
-    private $contents;
-
-    /**
-     * @var string
-     */
-    private $name;
+    protected $name;
 
     /**
      * @var string
@@ -38,40 +33,42 @@ class File implements Writable, Traceable
     protected $hash;
 
     /**
-     * File constructor.
-     * @param string $contents
-     * @param string $name
+     * @var Declaration
      */
-    public function __construct(string $contents, string $name = null)
-    {
-        [$this->definitionFile, $this->definitionLine, $this->definitionClass] = $this->getBacktrace();
+    private $declaration;
 
-        $this->contents = $contents;
-        $this->name     = ($name ?? $this->definitionClass) ?? $this->definitionFile;
+    /**
+     * File constructor.
+     * @param string|null $contents
+     * @param string|null $name
+     */
+    public function __construct(string $contents = null, string $name = null)
+    {
+        $this->declaration = Declaration::make(Readable::class);
+        $this->contents    = $this->contents ?? $contents ?? '';
+        $this->name        = $name ?? 'php://input';
     }
 
     /**
      * @param \SplFileInfo $info
-     * @return File
+     * @return File|Readable
+     * @throws \Railt\Io\Exceptions\NotReadableException
      * @throws \InvalidArgumentException
      */
-    public static function fromSplFileInfo(\SplFileInfo $info): Writable
+    public static function fromSplFileInfo(\SplFileInfo $info): self
     {
         return static::fromPathname($info->getPathname());
     }
 
     /**
      * @param string $path
-     * @return Writable
+     * @return File|Readable
+     * @throws \Railt\Io\Exceptions\NotReadableException
      */
-    public static function fromPathname(string $path): Writable
+    public static function fromPathname(string $path): self
     {
         if (! \is_file($path)) {
             throw NotFoundException::fromFilePath($path);
-        }
-
-        if (! \is_readable($path)) {
-            throw NotReadableException::fromFilePath(\realpath($path));
         }
 
         $contents = \file_get_contents($path);
@@ -107,28 +104,70 @@ class File implements Writable, Traceable
     /**
      * @return string
      */
+    public function getPathname(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param int $bytesOffset
+     * @return Position
+     */
+    public function getPosition(int $bytesOffset): Position
+    {
+        return new Position($this->getContents(), $bytesOffset);
+    }
+
+    /**
+     * @return string
+     */
     public function getContents(): string
     {
         return $this->contents;
     }
 
     /**
-     * @param string $content
-     * @return Writable
+     * @return Declaration
      */
-    public function update(string $content): Writable
+    public function getDeclaration(): Declaration
     {
-        \file_put_contents($this->getPathname(), $content);
-
-        return new static($content, $this->name);
+        return $this->declaration;
     }
 
     /**
-     * @return string
+     * @return void
      */
-    public function getPathname(): string
+    public function __wakeup(): void
     {
-        return $this->name;
+        $this->declaration = Declaration::make(static::class);
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return [
+            'contents',
+            'name',
+            'hash',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        $result = ['hash' => $this->getHash()];
+
+        if (! $this->isFile()) {
+            $result['content'] = $this->getContents();
+        } else {
+            $result['path'] = $this->getPathname();
+        }
+
+        return $result;
     }
 
     /**
@@ -148,11 +187,13 @@ class File implements Writable, Traceable
      */
     protected function createHash(): string
     {
-        if ($this->isFile()) {
-            return \md5_file($this->getPathname());
-        }
+        // 1) If is file: Hash of "FILE_PATH:LAST_UPDATE_TIME"
+        // 2) Otherwise:  Hash of sources
+        $target = $this->isFile()
+            ? $this->getPathname() . ':' . \filemtime($this->getPathname())
+            : $this->getContents();
 
-        return \md5($this->getContents());
+        return \sha1($target);
     }
 
     /**

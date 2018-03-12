@@ -11,145 +11,80 @@ namespace Railt\SDL\Runtime;
 
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Runtime\CallStackRenderer\DefinitionTraceRenderer;
+use Railt\SDL\Runtime\CallStackRenderer\PhpTraceRenderer;
+use Railt\SDL\Runtime\CallStackRenderer\TraceRenderer;
 
 /**
  * Class CallStackRenderer
  */
 class CallStackRenderer
 {
-    public const TRACE_FILE      = 'file';
-    public const TRACE_LINE      = 'line';
-    public const TRACE_COLUMN    = 'column';
-    public const TRACE_TYPE      = 'type';
-    public const TRACE_TYPE_NAME = 'name';
-    public const TRACE_TYPE_DEF  = 'definition';
+    /**
+     * @var array|TraceRenderer[]
+     */
+    private $trace = [];
 
     /**
-     * @var array|TypeDefinition[]
+     * @var TraceRenderer
      */
-    private $stack;
-
-    /**
-     * @var array
-     */
-    private $latest;
+    private $last;
 
     /**
      * CallStackRenderer constructor.
      * @param CallStackInterface $stack
+     * @param array $trace
      */
-    public function __construct(CallStackInterface $stack)
+    public function __construct(CallStackInterface $stack, array $trace)
     {
-        $stack = clone $stack;
-
-        $this->latest = $this->definitionToArray($stack->last());
-        $this->stack  = $this->stackToArray($stack);
+        $this->extractSdlStack($stack);
+        $this->extractPhpStack($trace);
     }
 
     /**
-     * @param Definition $definition
-     * @return array
+     * @param array $trace
      */
-    private function definitionToArray(?Definition $definition): array
+    private function extractPhpStack(array $trace): void
     {
-        if ($definition === null) {
-            return [];
+        foreach ($trace as $item) {
+            $this->add(new PhpTraceRenderer($item));
         }
-
-        $file = $definition->getDocument()->getFile();
-
-        return [
-            self::TRACE_FILE      => $file->isFile() ? $file->getPathname() : $file->getDefinitionFileName(),
-            self::TRACE_LINE      => $definition->getDeclarationLine(),
-            self::TRACE_COLUMN    => $definition->getDeclarationColumn(),
-            self::TRACE_TYPE      => $definition instanceof TypeDefinition
-                ? $definition->getTypeName()
-                : $definition->getName(),
-            self::TRACE_TYPE_NAME => $definition->getName(),
-            self::TRACE_TYPE_DEF  => (string)$definition,
-        ];
     }
-
     /**
      * @param CallStackInterface $stack
-     * @return array
      */
-    private function stackToArray(CallStackInterface $stack): array
+    private function extractSdlStack(CallStackInterface $stack): void
     {
-        $result = [];
-
-        while ($item = $stack->last()) {
-            $result[] = $item;
+        while ($latest = $stack->pop()) {
+            $this->add(new DefinitionTraceRenderer($latest));
         }
-
-        return $result;
     }
 
     /**
-     * @return int
+     * @param TraceRenderer $renderer
      */
-    public function getColumn(): int
+    private function add(TraceRenderer $renderer): void
     {
-        return $this->latest[self::TRACE_COLUMN] ?? 0;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFile(): string
-    {
-        return $this->latest[self::TRACE_FILE] ?? '';
-    }
-
-    /**
-     * @return int
-     */
-    public function getLine(): int
-    {
-        return $this->latest[self::TRACE_LINE] ?? 0;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasTrace(): bool
-    {
-        return \count($this->stack) > 0;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTraceAsString(): string
-    {
-        $result = '';
-
-        foreach ($this->getTrace() as $i => $trace) {
-            $result .= \vsprintf('#%d %s(%d): In %s %s defined as %s %s', [
-                $i,
-                $trace[self::TRACE_FILE],
-                $trace[self::TRACE_LINE],
-                $trace[self::TRACE_TYPE],
-                $trace[self::TRACE_TYPE_NAME],
-                $trace[self::TRACE_TYPE_DEF],
-                \count($this->stack) - 1 > $i ? \PHP_EOL : '',
-            ]);
+        if ($this->last === null) {
+            $this->last = $renderer;
+        } else {
+            $this->trace[] = $renderer;
         }
-
-        return $result;
     }
 
     /**
-     * @return array
+     * @return TraceRenderer
      */
-    public function getTrace(): array
+    public function getLastRenderer(): TraceRenderer
     {
-        $result = [];
+        return $this->last;
+    }
 
-        foreach ($this->stack as $definition) {
-            $result[] = $this->definitionToArray($definition);
-        }
-
-        return $result;
+    /**
+     * @return iterable|TraceRenderer[]
+     */
+    public function getTrace(): iterable
+    {
+        return $this->trace;
     }
 }

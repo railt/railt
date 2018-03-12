@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Compiler\Debug;
 
 use Railt\Compiler\Lexer;
-use Railt\Compiler\Parser;
 
 /**
  * Class LexerDumper
@@ -18,16 +17,6 @@ use Railt\Compiler\Parser;
 class LexerDumper implements Dumper
 {
     use DumpHelpers;
-
-    /**
-     * @var Parser
-     */
-    private $parser;
-
-    /**
-     * @var string
-     */
-    private $sources;
 
     /**
      * @var int
@@ -38,7 +27,6 @@ class LexerDumper implements Dumper
      * @var int
      */
     private $keepWidth = 4;
-
 
     /**
      * @var int

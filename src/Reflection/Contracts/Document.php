@@ -31,11 +31,12 @@ interface Document extends TypeDefinition, HasDirectives
      * for example: "GraphQL Standard Library".
      *
      * @return string The name of file or unique document name.
+     * @deprecated This method is deprecated since 1.2 and will be removed in future. Use getFile() method instead.
      */
     public function getName(): string;
 
     /**
-     * @return Readable|Traceable
+     * @return Readable
      */
     public function getFile(): Readable;
 

@@ -11,7 +11,6 @@ namespace Railt\SDL\Reflection\Builder\Process;
 
 use Railt\Compiler\Ast\NodeInterface;
 use Railt\Compiler\Ast\RuleInterface;
-use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\DependentDefinition;
@@ -145,15 +144,7 @@ trait Compiler
      */
     public function getDeclarationLine(): int
     {
-        return $this->getDeclarationInfo()['line'] ?? 1;
-    }
-
-    /**
-     * @return array
-     */
-    private function getDeclarationInfo(): array
-    {
-        return File::getErrorInfo($this->getDocument()->getContents(), $this->offset);
+        return $this->getDocument()->getFile()->getPosition($this->offset)->getLine();
     }
 
     /**
@@ -161,7 +152,7 @@ trait Compiler
      */
     public function getDeclarationColumn(): int
     {
-        return $this->getDeclarationInfo()['column'] ?? 0;
+        return $this->getDocument()->getFile()->getPosition($this->offset)->getColumn();
     }
 
     /**
@@ -196,6 +187,7 @@ trait Compiler
 
         if ($this instanceof Compilable && $this instanceof Invocable) {
             $this->getDocument()->future($this);
+
             return;
         }
 
@@ -222,17 +214,6 @@ trait Compiler
     }
 
     /**
-     * @param NodeInterface $ast
-     * @param string $type
-     * @param array $path
-     * @return array|float|int|null|string
-     */
-    protected function parseValue(NodeInterface $ast, string $type, array $path = [])
-    {
-        return $this->getDocument()->getValueBuilder()->parse($ast, $type, $path);
-    }
-
-    /**
      * @param string $name
      * @param string $desc
      * @return void
@@ -242,7 +223,7 @@ trait Compiler
         foreach ($this->getAst()->getChildren() as $child) {
             switch ($child->getName()) {
                 case $name:
-                    $node                        = $child->getChild(0);
+                    $node = $child->getChild(0);
                     [$this->name, $this->offset] = [$node->getValue(), $node->getOffset()];
                     break;
 
@@ -267,6 +248,17 @@ trait Compiler
         return $description
             ? \preg_replace('/^\h*#?\h+(.*?)\h*$/imsu', '$1', $description)
             : $description;
+    }
+
+    /**
+     * @param NodeInterface $ast
+     * @param string $type
+     * @param array $path
+     * @return array|float|int|null|string
+     */
+    protected function parseValue(NodeInterface $ast, string $type, array $path = [])
+    {
+        return $this->getDocument()->getValueBuilder()->parse($ast, $type, $path);
     }
 
     /**

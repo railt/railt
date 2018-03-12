@@ -38,7 +38,7 @@ trait DumpHelpers
      * @param int $initial
      * @return $this
      */
-    public function indent(int $depth = 4, int $initial = 0)
+    public function indent(int $depth = 4, int $initial = 0): self
     {
         $this->indention        = $depth;
         $this->initialIndention = $initial;

@@ -23,13 +23,7 @@ interface CallStackInterface extends \Countable
     public function push(Definition ...$definitions): self;
 
     /**
-     * @param int $size
-     * @return CallStackInterface
-     */
-    public function pop(int $size = 1): self;
-
-    /**
      * @return Definition|null
      */
-    public function last(): ?Definition;
+    public function pop(): ?Definition;
 }

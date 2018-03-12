@@ -77,11 +77,7 @@ class DocumentTestCase extends AbstractLanguageTestCase
     public function testDocumentName(Document $document): void
     {
         static::assertNotNull($document->getName());
-
-        $reflection = new \ReflectionClass(parent::class);
-        $reflection->getName();
-
-        static::assertSame($reflection->getName(), $document->getName());
+        static::assertSame('php://input', $document->getName());
     }
 
     /**
