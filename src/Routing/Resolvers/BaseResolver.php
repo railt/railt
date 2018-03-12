@@ -13,7 +13,8 @@ use Railt\Foundation\Events\ActionDispatched;
 use Railt\Foundation\Events\ActionDispatching;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
-use Railt\Routing\Store\Box;
+use Railt\Routing\Store\ObjectBox;
+use Railt\Routing\Store\ScalarBox;
 use Railt\Routing\Store\Store;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -45,9 +46,9 @@ abstract class BaseResolver implements Resolver
 
     /**
      * @param InputInterface $input
-     * @param null|Box $parent
+     * @param null|ObjectBox $parent
      */
-    abstract protected function withParent(InputInterface $input, ?Box $parent): void;
+    abstract protected function withParent(InputInterface $input, ?ObjectBox $parent): void;
 
     /**
      * @param InputInterface $input
@@ -90,13 +91,13 @@ abstract class BaseResolver implements Resolver
     {
         $formatted = $this->dispatched($input, $response);
 
-        $box = new Box($response, $formatted);
-
         if ($input->getFieldDefinition()->getTypeDefinition() instanceof ScalarDefinition) {
-            return $box;
+            return $formatted;
         }
 
-        return $this->store->set($input, $box);
+        $object = new ObjectBox($response, $formatted);
+
+        return $this->store->set($input, $object);
     }
 
     /**

@@ -14,6 +14,9 @@ namespace Railt\Http;
  */
 class Response implements ResponseInterface
 {
+    /**
+     * Default error message.
+     */
     private const SERVER_ERROR_MESSAGE = 'Internal Server Error';
 
     /**
@@ -232,8 +235,11 @@ class Response implements ResponseInterface
         if ($error instanceof GraphQLException) {
             $result['locations'] = $this->getErrorLocations($error);
             $result['path']      = $error->getPath();
-        } elseif ($this->debug) {
+        }
+
+        if ($this->debug) {
             $result['in'] = $error->getFile() . ':' . $error->getLine();
+            $result['trace'] = \explode("\n", $error->getTraceAsString());
         }
 
         return $result;

@@ -11,7 +11,7 @@ namespace Railt\Routing\Resolvers;
 
 use Railt\Http\InputInterface;
 use Railt\Routing\Route;
-use Railt\Routing\Store\Box;
+use Railt\Routing\Store\ObjectBox;
 
 /**
  * Interface Resolver
@@ -21,8 +21,8 @@ interface Resolver
     /**
      * @param InputInterface $input
      * @param Route $route
-     * @param null|Box $parent
+     * @param null|ObjectBox $parent
      * @return mixed
      */
-    public function call(InputInterface $input, Route $route, ?Box $parent);
+    public function call(InputInterface $input, Route $route, ?ObjectBox $parent);
 }

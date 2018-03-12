@@ -11,7 +11,7 @@ namespace Railt\Routing\Resolvers;
 
 use Railt\Http\InputInterface;
 use Railt\Routing\Route;
-use Railt\Routing\Store\Box;
+use Railt\Routing\Store\ObjectBox;
 
 /**
  * Class BasicResolver
@@ -21,10 +21,10 @@ class DividedResolver extends BaseResolver
     /**
      * @param InputInterface $input
      * @param Route $route
-     * @param null|Box $parent
+     * @param null|ObjectBox $parent
      * @return mixed
      */
-    public function call(InputInterface $input, Route $route, ?Box $parent)
+    public function call(InputInterface $input, Route $route, ?ObjectBox $parent)
     {
         $this->withParent($input, $parent);
 
@@ -35,12 +35,12 @@ class DividedResolver extends BaseResolver
 
     /**
      * @param InputInterface $input
-     * @param null|Box $parent
+     * @param null|ObjectBox $parent
      */
-    protected function withParent(InputInterface $input, ?Box $parent): void
+    protected function withParent(InputInterface $input, ?ObjectBox $parent): void
     {
         if ($parent) {
-            $input->updateParent($parent->getValue(), $parent->toArray());
+            $input->updateParent($parent->getValue(), $parent->getResponse());
         }
     }
 }

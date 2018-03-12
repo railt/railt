@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Events;
 
 use Railt\Http\InputInterface;
-use Railt\Routing\Store\Box;
+use Railt\Routing\Store\ObjectBox;
 
 /**
  * Class FieldResolving
@@ -18,7 +18,7 @@ use Railt\Routing\Store\Box;
 class FieldResolving extends BaseFieldResolver
 {
     /**
-     * @var Box|null
+     * @var ObjectBox|null
      */
     private $parent;
 
@@ -30,18 +30,18 @@ class FieldResolving extends BaseFieldResolver
     /**
      * FieldResolving constructor.
      * @param InputInterface $input
-     * @param Box|null $parent
+     * @param ObjectBox|null $parent
      */
-    public function __construct(InputInterface $input, ?Box $parent)
+    public function __construct(InputInterface $input, ?ObjectBox $parent)
     {
         parent::__construct($input);
         $this->parent = $parent;
     }
 
     /**
-     * @return Box|null
+     * @return ObjectBox|null
      */
-    public function getParentValue(): ?Box
+    public function getParentValue(): ?ObjectBox
     {
         return $this->parent;
     }

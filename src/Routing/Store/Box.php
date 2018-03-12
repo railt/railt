@@ -10,97 +10,23 @@ declare(strict_types=1);
 namespace Railt\Routing\Store;
 
 /**
- * Class Box
+ * Interface Box
  */
-final class Box implements \ArrayAccess
+interface Box
 {
     /**
-     * @var mixed
+     * @return mixed
      */
-    private $data;
-
-    /**
-     * @var array
-     */
-    private $serialized;
-
-    /**
-     * Box constructor.
-     * @param $data
-     * @param array $serialized
-     */
-    public function __construct($data, array $serialized)
-    {
-        $this->data       = $data;
-        $this->serialized = $serialized;
-    }
-
-    /**
-     * @param array $items
-     * @return Box
-     */
-    public static function restruct(array $items): self
-    {
-        $data       = [];
-        $serialized = [];
-
-        /** @var Box $box */
-        foreach ($items as $box) {
-            $data[]       = $box->getValue();
-            $serialized[] = $box->toArray();
-        }
-
-        return new static($data, $serialized);
-    }
+    public function getValue();
 
     /**
      * @return mixed
      */
-    public function getValue()
-    {
-        return $this->data;
-    }
+    public function getResponse();
 
     /**
-     * @return array
+     * @param array $collection
+     * @return Box
      */
-    public function toArray(): array
-    {
-        return $this->serialized;
-    }
-
-    /**
-     * @param mixed $offset
-     * @return bool
-     */
-    public function offsetExists($offset): bool
-    {
-        return \array_key_exists($offset, $this->serialized);
-    }
-
-    /**
-     * @param mixed $offset
-     * @return mixed|null
-     */
-    public function offsetGet($offset)
-    {
-        return $this->serialized[$offset] ?? null;
-    }
-
-    /**
-     * @param mixed $offset
-     * @param mixed $value
-     */
-    public function offsetSet($offset, $value): void
-    {
-        $this->serialized[$offset] = $value;
-    }
-
-    /**
-     * @param mixed $offset
-     */
-    public function offsetUnset($offset): void
-    {
-        unset($this->serialized[$offset]);
-    }
+    public static function rebuild(array $collection): Box;
 }

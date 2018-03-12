@@ -89,7 +89,7 @@ class RouterExtension extends BaseExtension
      */
     private function bootFieldResolver(Dispatcher $events, RouterInterface $router, ClassLoader $loader): void
     {
-        $resolver = new FieldResolver($router, $events);
+        $resolver = new FieldResolver($router, $events, $this->getContainer());
 
         $callback = function (FieldResolving $event) use ($resolver, $loader, $router): void {
             $field = $event->getInput()->getFieldDefinition();

@@ -18,16 +18,16 @@ use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 class Store
 {
     /**
-     * @var array|Box[]
+     * @var array|ObjectBox[]
      */
     private $data = [];
 
     /**
      * @param InputInterface $input
-     * @param Box $box
-     * @return Box
+     * @param ObjectBox $box
+     * @return ObjectBox
      */
-    public function set(InputInterface $input, Box $box): Box
+    public function set(InputInterface $input, ObjectBox $box): ObjectBox
     {
         if ($input->getFieldDefinition()->isList()) {
             $this->setList($input, $box);
@@ -49,9 +49,9 @@ class Store
 
     /**
      * @param InputInterface $input
-     * @param Box $box
+     * @param ObjectBox $box
      */
-    private function setList(InputInterface $input, Box $box): void
+    private function setList(InputInterface $input, ObjectBox $box): void
     {
         $index = $this->current($input);
 
@@ -64,9 +64,9 @@ class Store
 
     /**
      * @param InputInterface $input
-     * @param Box $box
+     * @param ObjectBox $box
      */
-    private function setItem(InputInterface $input, Box $box): void
+    private function setItem(InputInterface $input, ObjectBox $box): void
     {
         $this->data[$this->current($input)] = $box;
     }
