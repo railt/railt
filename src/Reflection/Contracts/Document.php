@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Reflection\Contracts;
 
 use Railt\Io\Readable;
-use Railt\Io\Traceable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

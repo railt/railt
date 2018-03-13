@@ -223,7 +223,7 @@ trait Compiler
         foreach ($this->getAst()->getChildren() as $child) {
             switch ($child->getName()) {
                 case $name:
-                    $node = $child->getChild(0);
+                    $node                        = $child->getChild(0);
                     [$this->name, $this->offset] = [$node->getValue(), $node->getOffset()];
                     break;
 

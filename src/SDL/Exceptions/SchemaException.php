@@ -30,5 +30,4 @@ interface SchemaException extends \Throwable
      * @return int Returns the column offset where the error occurred.
      */
     public function getColumn(): int;
-
 }
