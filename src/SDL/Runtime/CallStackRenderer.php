@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
-use Railt\Reflection\Contracts\Definitions\Definition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Runtime\CallStackRenderer\DefinitionTraceRenderer;
 use Railt\SDL\Runtime\CallStackRenderer\PhpTraceRenderer;
 use Railt\SDL\Runtime\CallStackRenderer\TraceRenderer;
@@ -50,6 +48,7 @@ class CallStackRenderer
             $this->add(new PhpTraceRenderer($item));
         }
     }
+
     /**
      * @param CallStackInterface $stack
      */
