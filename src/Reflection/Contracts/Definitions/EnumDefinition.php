@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Reflection\Contracts\Definitions;
 
+use Railt\Reflection\Contracts\Behavior\Inputable;
 use Railt\Reflection\Contracts\Definitions\Enum\ValueDefinition;
+use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 
 /**
  * Interface EnumDefinition
  */
-interface EnumDefinition extends ScalarDefinition
+interface EnumDefinition extends TypeDefinition, HasDirectives, Inputable
 {
     /**
      * @return iterable|ValueDefinition[]
