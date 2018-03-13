@@ -47,7 +47,7 @@ class Route
     protected $operations = [];
 
     /**
-     * @var array
+     * @var array|Relation[]
      */
     private $relations = [];
 
@@ -186,7 +186,7 @@ class Route
     public function __debugInfo(): array
     {
         return [
-            'relation'   => ['parent' => $this->parent, 'child' => $this->child],
+            'relations'  => $this->relations,
             'type'       => (string)$this->type->getParent() . (string)$this->type,
             'field'      => $this->field,
             'operations' => $this->operations,

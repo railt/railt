@@ -12,6 +12,7 @@ namespace Railt\Routing\Resolvers;
 use Railt\Foundation\Events\ActionDispatched;
 use Railt\Foundation\Events\ActionDispatching;
 use Railt\Http\InputInterface;
+use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Routing\Store\ObjectBox;
 use Railt\Routing\Store\Store;
@@ -90,13 +91,24 @@ abstract class BaseResolver implements Resolver
     {
         $formatted = $this->dispatched($input, $response);
 
-        if ($input->getFieldDefinition()->getTypeDefinition() instanceof ScalarDefinition) {
+        if ($this->onScalar($input)) {
             return $formatted;
         }
 
         $object = new ObjectBox($response, $formatted);
 
         return $this->store->set($input, $object);
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return bool
+     */
+    private function onScalar(InputInterface $input): bool
+    {
+        $type = $input->getFieldDefinition()->getTypeDefinition();
+
+        return $type instanceof ScalarDefinition || $type instanceof EnumDefinition;
     }
 
     /**

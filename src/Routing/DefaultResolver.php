@@ -11,6 +11,7 @@ namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
 use Railt\Http\InputInterface;
+use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
@@ -72,15 +73,8 @@ class DefaultResolver
      */
     private function isScalar(FieldDefinition $field): bool
     {
-        return $field->getTypeDefinition() instanceof ScalarDefinition;
-    }
+        $type = $field->getTypeDefinition();
 
-    /**
-     * @param FieldDefinition $field
-     * @return bool
-     */
-    private function isComposite(FieldDefinition $field): bool
-    {
-        return ! $this->isScalar($field);
+        return $type instanceof ScalarDefinition || $type instanceof EnumDefinition;
     }
 }

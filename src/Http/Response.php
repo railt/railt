@@ -179,10 +179,10 @@ class Response implements ResponseInterface
      */
     public function toArray(): array
     {
-        return [
-            static::FIELD_DATA   => $this->getData(),
-            static::FIELD_ERRORS => $this->getErrors(),
-        ];
+        return \array_filter([
+            static::FIELD_DATA   => $this->getData() ?: null,
+            static::FIELD_ERRORS => $this->getErrors() ?: null,
+        ]);
     }
 
     /**

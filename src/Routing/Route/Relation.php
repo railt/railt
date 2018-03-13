@@ -52,4 +52,15 @@ class Relation
     {
         return $this->parent;
     }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'parent' => $this->parent,
+            'child'  => $this->child,
+        ];
+    }
 }

@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace Railt\Routing\Store;
 
 use Railt\Http\InputInterface;
+use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class Store
@@ -97,13 +99,22 @@ class Store
     {
         $field = $input->getFieldDefinition();
 
-        $scalar = $field->getTypeDefinition() instanceof ScalarDefinition;
-
-        if (! $scalar && $field->isNonNull()) {
+        if (! $this->containsScalar($field) && $field->isNonNull()) {
             return [];
         }
 
         return null;
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @return bool
+     */
+    private function containsScalar(FieldDefinition $field): bool
+    {
+        $type = $field->getTypeDefinition();
+
+        return $type instanceof ScalarDefinition || $type instanceof EnumDefinition;
     }
 
     /**
