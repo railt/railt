@@ -14,6 +14,7 @@ use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Document;
 
 /**
  * Class Serializer
@@ -57,15 +58,16 @@ class Serializer
 
     /**
      * @param FieldDefinition $field
+     * @param Document $document
      * @param string $action
      * @param mixed $result
      * @return iterable
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
-    public function serialize(FieldDefinition $field, string $action, $result)
+    public function serialize(FieldDefinition $field, Document $document, string $action, $result)
     {
-        [$class, $method] = $this->loader->action($field->getDocument(), $action);
+        [$class, $method] = $this->loader->action($document, $action);
 
         $requiredType = $this->getSignature($class, $method);
 
