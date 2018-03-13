@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Railt\Routing\Resolvers;
 
 use Railt\Http\InputInterface;
+use Railt\Reflection\Contracts\Definitions\EnumDefinition;
+use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Routing\Route;
 use Railt\Routing\Store\ObjectBox;
 use Railt\Routing\Store\Store;
@@ -50,10 +52,27 @@ class Factory implements Resolver
      */
     public function call(InputInterface $input, Route $route, ?ObjectBox $parent)
     {
-        if ($route->hasRelations()) {
+        if ($route->hasRelations() && $this->validateRelation($input)) {
             return $this->singular->call($input, $route, $parent);
         }
 
         return $this->divided->call($input, $route, $parent);
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return bool
+     * @throws \InvalidArgumentException
+     */
+    private function validateRelation(InputInterface $input): bool
+    {
+        $type = $input->getFieldDefinition()->getTypeDefinition();
+
+        if ($type instanceof EnumDefinition || $type instanceof ScalarDefinition) {
+            $error = 'Specifying a relation for a field %s that returns a scalar value is invalid';
+            throw new \InvalidArgumentException(\sprintf($error, $input->getFieldDefinition()));
+        }
+
+        return true;
     }
 }

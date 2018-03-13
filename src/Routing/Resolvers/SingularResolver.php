@@ -40,6 +40,28 @@ class SingularResolver extends BaseResolver
 
     /**
      * @param InputInterface $input
+     * @param null|ObjectBox $parent
+     */
+    protected function withParent(InputInterface $input, ?ObjectBox $parent): void
+    {
+        if ($parent) {
+            $box = ObjectBox::rebuild($this->store->getParent($input));
+
+            $input->updateParent($box->getValue(), $box->getResponse());
+        }
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return bool
+     */
+    private function isFirstInvocation(InputInterface $input): bool
+    {
+        return ! $this->store->has($input);
+    }
+
+    /**
+     * @param InputInterface $input
      * @param Route $route
      * @param ObjectBox $parent
      * @return array
@@ -61,19 +83,6 @@ class SingularResolver extends BaseResolver
     }
 
     /**
-     * @param InputInterface $input
-     * @param null|ObjectBox $parent
-     */
-    protected function withParent(InputInterface $input, ?ObjectBox $parent): void
-    {
-        if ($parent) {
-            $box = ObjectBox::rebuild($this->store->getParent($input));
-
-            $input->updateParent($box->getValue(), $box->getResponse());
-        }
-    }
-
-    /**
      * @param Relation $relation
      * @param ObjectBox $parent
      * @param ObjectBox $current
@@ -90,14 +99,5 @@ class SingularResolver extends BaseResolver
         }
 
         return $parent[$relation->getParentFieldName()] === $current[$relation->getChildFieldName()];
-    }
-
-    /**
-     * @param InputInterface $input
-     * @return bool
-     */
-    private function isFirstInvocation(InputInterface $input): bool
-    {
-        return ! $this->store->has($input);
     }
 }

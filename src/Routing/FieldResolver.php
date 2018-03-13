@@ -92,6 +92,7 @@ class FieldResolver
      */
     private function getDefault(FieldDefinition $field): Route
     {
-        return (new Route($this->container, $field))->then(DefaultResolver::toClosure($this->container));
+        return (new Route($this->container, $field))
+            ->then(DefaultResolver::toClosure($this->container));
     }
 }
