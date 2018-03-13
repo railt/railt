@@ -16,7 +16,7 @@ use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 /**
  * Interface EnumDefinition
  */
-interface EnumDefinition extends TypeDefinition, HasDirectives, Inputable
+interface EnumDefinition extends ScalarDefinition
 {
     /**
      * @return iterable|ValueDefinition[]

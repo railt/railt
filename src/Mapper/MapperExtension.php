@@ -68,14 +68,14 @@ class MapperExtension extends BaseExtension
         foreach ($type->getDirectives('out') as $directive) {
             $action = $directive->getPassedArgument('action');
 
-            $result = $serializer->serialize($field, $action, $result);
+            $result = $serializer->serialize($field, $directive->getDocument(), $action, $result);
         }
 
         foreach ($type->getDirectives('map') as $directive) {
             $output = $directive->getPassedArgument('out');
 
             if ($output !== null) {
-                $result = $serializer->serialize($field, $output, $result);
+                $result = $serializer->serialize($field, $directive->getDocument(), $output, $result);
             }
         }
 
