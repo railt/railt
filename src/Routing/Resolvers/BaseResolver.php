@@ -91,6 +91,10 @@ abstract class BaseResolver implements Resolver
     {
         $formatted = $this->dispatched($input, $response);
 
+        if ($formatted === null) {
+            return null;
+        }
+
         if ($this->onScalar($input)) {
             return $formatted;
         }
