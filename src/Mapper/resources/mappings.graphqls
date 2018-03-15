@@ -4,10 +4,10 @@
 # -----------------------------------------------------------------
 #
 
-directive @out(action: String!) on OBJECT
-# TODO directive @in(action: String!) on OBJECT
+directive @out(action: String!) on SCALAR | OBJECT
+directive @in(action: String!) on SCALAR | ARGUMENT_DEFINITION
 
 directive @map(
-    output: String,
-    # TODO input: String
-) on OBJECT
+    out: String,
+    in: String
+) on SCALAR | OBJECT

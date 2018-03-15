@@ -10,11 +10,13 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
+use Railt\Foundation\Events\ArgumentResolving;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
  * Class WebonyxInput
@@ -52,17 +54,24 @@ class WebonyxInput implements InputInterface
     private $parentResponse;
 
     /**
+     * @var Dispatcher
+     */
+    private $dispatcher;
+
+    /**
      * Input constructor.
+     * @param Dispatcher $dispatcher
      * @param FieldDefinition $field
      * @param ResolveInfo $info
      * @param array $arguments
      * @throws \InvalidArgumentException
      */
-    public function __construct(FieldDefinition $field, ResolveInfo $info, array $arguments = [])
+    public function __construct(Dispatcher $dispatcher, FieldDefinition $field, ResolveInfo $info, array $arguments = [])
     {
-        $this->info      = $info;
-        $this->field     = $field;
-        $this->arguments = $this->resolveArguments($field, $arguments);
+        $this->dispatcher = $dispatcher;
+        $this->info       = $info;
+        $this->field      = $field;
+        $this->arguments  = $this->resolveArguments($field, $arguments);
     }
 
     /**
@@ -95,6 +104,12 @@ class WebonyxInput implements InputInterface
                 $result[$name] = $input[$name];
             } elseif ($default->hasDefaultValue()) {
                 $result[$name] = $default->getDefaultValue();
+            }
+
+            if (\array_key_exists($name, $result)) {
+                $resolving = new ArgumentResolving($default, $result[$name]);
+                $this->dispatcher->dispatch(ArgumentResolving::class, $resolving);
+                $result[$name] = $resolving->getValue();
             }
         }
 

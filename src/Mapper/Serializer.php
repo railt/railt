@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of railt package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -13,6 +13,8 @@ use Railt\Container\ContainerInterface;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
+use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
 
@@ -75,16 +77,34 @@ class Serializer
     }
 
     /**
-     * @param FieldDefinition $field
+     * @param ArgumentDefinition $type
+     * @param Document $document
+     * @param string $action
+     * @param $value
+     * @return mixed
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     */
+    public function unserialize(ArgumentDefinition $type, Document $document, string $action, $value)
+    {
+        [$class, $method] = $this->loader->action($document, $action);
+
+        $requiredType = $this->getSignature($class, $method);
+
+        return $this->resolveMap($type, $requiredType, $value, $class, $method);
+    }
+
+    /**
+     * @param AllowsTypeIndication $type
      * @param null|string|\ReflectionNamedType $requiredType
      * @param iterable|array|mixed $result
      * @param string $class
      * @param string $method
      * @return array|mixed
      */
-    private function resolveMap(FieldDefinition $field, $requiredType, $result, string $class, string $method)
+    private function resolveMap(AllowsTypeIndication $type, $requiredType, $result, string $class, string $method)
     {
-        if ($field->isList() && \is_iterable($result)) {
+        if ($type->isList() && \is_iterable($result)) {
             $out = [];
 
             foreach ($result as $item) {

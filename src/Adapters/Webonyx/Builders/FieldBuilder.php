@@ -78,7 +78,7 @@ class FieldBuilder extends DependentDefinitionBuilder
         $events = $this->make(Dispatcher::class);
 
         return function ($parent, array $arguments, $context, ResolveInfo $info) use ($events) {
-            $input = new WebonyxInput($this->reflection, $info, $arguments);
+            $input = new WebonyxInput($events, $this->reflection, $info, $arguments);
 
             $resolving = new FieldResolving($input, $parent);
 

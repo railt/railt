@@ -10,10 +10,13 @@ declare(strict_types=1);
 namespace Railt\Mapper;
 
 use Railt\Foundation\Events\ActionDispatched;
+use Railt\Foundation\Events\ArgumentResolving;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Schema\CompilerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
@@ -32,23 +35,42 @@ class MapperExtension extends BaseExtension
     {
         $compiler->compile(File::fromPathname(__DIR__ . '/resources/mappings.graphqls'));
 
-        $this->bootFieldResolver($this->make(Dispatcher::class));
+        $events = $this->make(Dispatcher::class);
+        $serializer = $this->make(Serializer::class);
+
+        $this->bootArgumentResolver($events, $serializer);
+        $this->bootFieldResolver($events, $serializer);
     }
 
     /**
      * @param Dispatcher $events
+     * @param Serializer $serializer
      * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      */
-    private function bootFieldResolver(Dispatcher $events): void
+    private function bootFieldResolver(Dispatcher $events, Serializer $serializer): void
     {
-        $serializer = $this->make(Serializer::class);
-
         $events->addListener(ActionDispatched::class, function (ActionDispatched $event) use ($serializer): void {
             /** @var FieldDefinition $field */
             $field = $event->getInput()->getFieldDefinition();
 
             $event->setResponse($this->serialize($serializer, $field, $event->getResponse()));
+        });
+    }
+
+    /**
+     * @param Dispatcher $events
+     * @param Serializer $serializer
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     */
+    private function bootArgumentResolver(Dispatcher $events, Serializer $serializer): void
+    {
+        $events->addListener(ArgumentResolving::class, function (ArgumentResolving $event) use ($serializer): void {
+            /** @var ArgumentDefinition $argument */
+            $argument = $event->getArgument();
+
+            $event->setValue($this->unserialize($serializer, $argument, $event->getValue()));
         });
     }
 
@@ -62,7 +84,7 @@ class MapperExtension extends BaseExtension
      */
     private function serialize(Serializer $serializer, FieldDefinition $field, $result)
     {
-        /** @var ObjectDefinition|InterfaceDefinition $type */
+        /** @var ObjectDefinition|InterfaceDefinition|ScalarDefinition $type */
         $type = $field->getTypeDefinition();
 
         foreach ($type->getDirectives('out') as $directive) {
@@ -80,5 +102,42 @@ class MapperExtension extends BaseExtension
         }
 
         return $result;
+    }
+
+    /**
+     * @param Serializer $serializer
+     * @param ArgumentDefinition $argument
+     * @param $value
+     * @return mixed
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     */
+    private function unserialize(Serializer $serializer, ArgumentDefinition $argument, $value)
+    {
+        $type = $argument->getTypeDefinition();
+
+        if ($type instanceof ScalarDefinition) {
+            foreach ($type->getDirectives('in') as $directive) {
+                $action = $directive->getPassedArgument('action');
+
+                $value = $serializer->unserialize($argument, $directive->getDocument(), $action, $value);
+            }
+
+            foreach ($type->getDirectives('map') as $directive) {
+                $input = $directive->getPassedArgument('in');
+
+                if ($input !== null) {
+                    $value = $serializer->unserialize($argument, $directive->getDocument(), $input, $value);
+                }
+            }
+        }
+
+        foreach ($argument->getDirectives('in') as $directive) {
+            $action = $directive->getPassedArgument('action');
+
+            $value = $serializer->unserialize($argument, $directive->getDocument(), $action, $value);
+        }
+
+        return $value;
     }
 }
