@@ -84,36 +84,74 @@ class WebonyxInput implements InputInterface
     {
         $result = [];
 
-        /** @var ArgumentDefinition $default */
-        foreach ($reflection->getArguments() as $default) {
-            $name = $default->getName();
-
-            if (
-                ! \array_key_exists($name, $input) && // Empty argument
-                ! $default->hasDefaultValue() &&      // And has no default value
-                $default->isNonNull()                 // And required
-            ) {
-                $message = \sprintf('Argument %s required for field %s',
-                    $name,
-                    $default->getParent()->getName()
-                );
-                throw new \InvalidArgumentException($message);
-            }
-
-            if (\array_key_exists($name, $input)) {
-                $result[$name] = $input[$name];
-            } elseif ($default->hasDefaultValue()) {
-                $result[$name] = $default->getDefaultValue();
-            }
-
-            if (\array_key_exists($name, $result)) {
-                $resolving = new ArgumentResolving($default, $result[$name]);
-                $this->dispatcher->dispatch(ArgumentResolving::class, $resolving);
-                $result[$name] = $resolving->getValue();
-            }
+        /** @var ArgumentDefinition $argument */
+        foreach ($reflection->getArguments() as $argument) {
+            $result[$argument->getName()] = $this->resolveArgument($argument, $input);
         }
 
         return $result;
+    }
+
+    /**
+     * @param ArgumentDefinition $argument
+     * @param array $input
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
+    private function resolveArgument(ArgumentDefinition $argument, array $input)
+    {
+        $name = $argument->getName();
+
+        if ($this->isMissingArgument($argument, $input)) {
+            $parent = $argument->getParent();
+
+            $message = \sprintf('Argument %s is required for %s', $argument, $parent);
+
+            throw new \InvalidArgumentException($message);
+        }
+
+        if ($this->isPassedArgument($argument, $input)) {
+            return $this->formatArgument($argument, $input[$name]);
+        }
+
+        return $this->formatArgument($argument, $argument->getDefaultValue());
+    }
+
+    /**
+     * @param ArgumentDefinition $argument
+     * @param array $input
+     * @return bool
+     */
+    private function isPassedArgument(ArgumentDefinition $argument, array $input): bool
+    {
+        return \array_key_exists($argument->getName(), $input);
+    }
+
+    /**
+     * @param ArgumentDefinition $argument
+     * @param $value
+     * @return mixed
+     */
+    private function formatArgument(ArgumentDefinition $argument, $value)
+    {
+        $resolving = new ArgumentResolving($argument, $value);
+
+        $this->dispatcher->dispatch(ArgumentResolving::class, $resolving);
+
+        return $resolving->getValue();
+    }
+
+    /**
+     * @param ArgumentDefinition $argument
+     * @param array $input
+     * @return bool
+     */
+    private function isMissingArgument(ArgumentDefinition $argument, array $input): bool
+    {
+        $passed = $this->isPassedArgument($argument, $input);
+
+        //  No passed value   No default value                Required (not null)
+        return ! $passed && ! $argument->hasDefaultValue() && $argument->isNonNull();
     }
 
     /**

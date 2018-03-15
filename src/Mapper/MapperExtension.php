@@ -28,34 +28,18 @@ class MapperExtension extends BaseExtension
 {
     /**
      * @param CompilerInterface $compiler
+     * @param Dispatcher $events
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
-    public function boot(CompilerInterface $compiler): void
+    public function boot(CompilerInterface $compiler, Dispatcher $events): void
     {
         $compiler->compile(File::fromPathname(__DIR__ . '/resources/mappings.graphqls'));
 
-        $events     = $this->make(Dispatcher::class);
         $serializer = $this->make(Serializer::class);
 
         $this->bootArgumentResolver($events, $serializer);
         $this->bootFieldResolver($events, $serializer);
-    }
-
-    /**
-     * @param Dispatcher $events
-     * @param Serializer $serializer
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
-     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     */
-    private function bootFieldResolver(Dispatcher $events, Serializer $serializer): void
-    {
-        $events->addListener(ActionDispatched::class, function (ActionDispatched $event) use ($serializer): void {
-            /** @var FieldDefinition $field */
-            $field = $event->getInput()->getFieldDefinition();
-
-            $event->setResponse($this->serialize($serializer, $field, $event->getResponse()));
-        });
     }
 
     /**
@@ -71,6 +55,51 @@ class MapperExtension extends BaseExtension
             $argument = $event->getArgument();
 
             $event->setValue($this->unserialize($serializer, $argument, $event->getValue()));
+        });
+    }
+
+    /**
+     * @param Serializer $serializer
+     * @param ArgumentDefinition $argument
+     * @param $value
+     * @return mixed
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     */
+    private function unserialize(Serializer $serializer, ArgumentDefinition $argument, $value)
+    {
+        $type = $argument->getTypeDefinition();
+
+        if ($type instanceof ScalarDefinition) {
+            foreach ($type->getDirectives('in') as $directive) {
+                $action = $directive->getPassedArgument('action');
+
+                $value = $serializer->unserialize($argument, $directive->getDocument(), $action, $value);
+            }
+        }
+
+        foreach ($argument->getDirectives('in') as $directive) {
+            $action = $directive->getPassedArgument('action');
+
+            $value = $serializer->unserialize($argument, $directive->getDocument(), $action, $value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param Dispatcher $events
+     * @param Serializer $serializer
+     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
+     */
+    private function bootFieldResolver(Dispatcher $events, Serializer $serializer): void
+    {
+        $events->addListener(ActionDispatched::class, function (ActionDispatched $event) use ($serializer): void {
+            /** @var FieldDefinition $field */
+            $field = $event->getInput()->getFieldDefinition();
+
+            $event->setResponse($this->serialize($serializer, $field, $event->getResponse()));
         });
     }
 
@@ -93,51 +122,6 @@ class MapperExtension extends BaseExtension
             $result = $serializer->serialize($field, $directive->getDocument(), $action, $result);
         }
 
-        foreach ($type->getDirectives('map') as $directive) {
-            $output = $directive->getPassedArgument('out');
-
-            if ($output !== null) {
-                $result = $serializer->serialize($field, $directive->getDocument(), $output, $result);
-            }
-        }
-
         return $result;
-    }
-
-    /**
-     * @param Serializer $serializer
-     * @param ArgumentDefinition $argument
-     * @param $value
-     * @return mixed
-     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
-     */
-    private function unserialize(Serializer $serializer, ArgumentDefinition $argument, $value)
-    {
-        $type = $argument->getTypeDefinition();
-
-        if ($type instanceof ScalarDefinition) {
-            foreach ($type->getDirectives('in') as $directive) {
-                $action = $directive->getPassedArgument('action');
-
-                $value = $serializer->unserialize($argument, $directive->getDocument(), $action, $value);
-            }
-
-            foreach ($type->getDirectives('map') as $directive) {
-                $input = $directive->getPassedArgument('in');
-
-                if ($input !== null) {
-                    $value = $serializer->unserialize($argument, $directive->getDocument(), $input, $value);
-                }
-            }
-        }
-
-        foreach ($argument->getDirectives('in') as $directive) {
-            $action = $directive->getPassedArgument('action');
-
-            $value = $serializer->unserialize($argument, $directive->getDocument(), $action, $value);
-        }
-
-        return $value;
     }
 }
