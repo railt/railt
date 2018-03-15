@@ -162,11 +162,30 @@ class Serializer
         }
 
         if ($requiredType instanceof \ReflectionNamedType) {
-            $class = $requiredType->getName();
-            return $value instanceof $class;
+            $name = $requiredType->getName();
+
+            return $requiredType->isBuiltin()
+                ? $this->matchTypeHint($name, $value)
+                : $value instanceof $name;
         }
 
         return false;
+    }
+
+    /**
+     * @param string $hint
+     * @param mixed $value
+     * @return bool
+     */
+    private function matchTypeHint(string $hint, $value): bool
+    {
+        $matcher = '\\is_' . $hint;
+
+        if (\function_exists($matcher)) {
+            return $matcher($value);
+        }
+
+        return \mb_strtolower(\gettype($value)) === $hint;
     }
 
     /**
