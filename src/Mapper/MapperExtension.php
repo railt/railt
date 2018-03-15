@@ -35,7 +35,7 @@ class MapperExtension extends BaseExtension
     {
         $compiler->compile(File::fromPathname(__DIR__ . '/resources/mappings.graphqls'));
 
-        $events = $this->make(Dispatcher::class);
+        $events     = $this->make(Dispatcher::class);
         $serializer = $this->make(Serializer::class);
 
         $this->bootArgumentResolver($events, $serializer);
