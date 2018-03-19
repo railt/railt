@@ -73,7 +73,7 @@ class Lexer extends Runtime
      * @param Definition[] $tokens
      * @return Lexer
      */
-    public function addToken(Definition ...$tokens): Lexer
+    public function addToken(Definition ...$tokens): self
     {
         foreach ($tokens as $token) {
             $this->regex->addToken($token);

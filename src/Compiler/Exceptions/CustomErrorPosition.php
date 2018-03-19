@@ -31,8 +31,8 @@ trait CustomErrorPosition
         if ($readable->isFile()) {
             $position = $readable->getPosition($offset);
 
-            $this->file = $readable->getPathname();
-            $this->line = $position->getLine();
+            $this->file   = $readable->getPathname();
+            $this->line   = $position->getLine();
             $this->column = $position->getColumn();
         }
 

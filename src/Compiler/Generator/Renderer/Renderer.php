@@ -20,7 +20,7 @@ interface Renderer
      * @param string $directory
      * @return Renderer
      */
-    public function in(string $directory): Renderer;
+    public function in(string $directory): self;
 
     /**
      * @param string $template

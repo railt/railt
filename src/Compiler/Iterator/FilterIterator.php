@@ -37,7 +37,7 @@ class FilterIterator implements \IteratorAggregate
      * @param \Closure $filter
      * @return FilterIterator
      */
-    public function where(\Closure $filter): FilterIterator
+    public function where(\Closure $filter): self
     {
         $this->filters[] = function (...$args) use ($filter) {
             return ! $filter(...$args);
@@ -50,7 +50,7 @@ class FilterIterator implements \IteratorAggregate
      * @param \Closure $filter
      * @return FilterIterator
      */
-    public function except(\Closure $filter): FilterIterator
+    public function except(\Closure $filter): self
     {
         $this->filters[] = $filter;
 

@@ -17,8 +17,8 @@ class Regex
     private const REGEX_DELIMITER = '/';
 
     private const F_MULTILINE = 'm';
-    private const F_UNICODE  = 'u';
-    private const F_DOT_ALL  = 's';
+    private const F_UNICODE   = 'u';
+    private const F_DOT_ALL   = 's';
 
     /**
      * @var bool
@@ -55,7 +55,7 @@ class Regex
      * @param Definition $token
      * @return Regex
      */
-    public function addToken(Definition $token): Regex
+    public function addToken(Definition $token): self
     {
         $this->tokens[] = $token;
 
@@ -66,7 +66,7 @@ class Regex
      * @param Definition[] ...$tokens
      * @return Regex
      */
-    public function addTokens(Definition ...$tokens): Regex
+    public function addTokens(Definition ...$tokens): self
     {
         $this->tokens += $tokens;
 
@@ -200,7 +200,7 @@ class Regex
     {
         $d = self::REGEX_DELIMITER;
 
-        return \sprintf( '%s(%s)%1$s%s', $d, $this->render(), $this->flags());
+        return \sprintf('%s(%s)%1$s%s', $d, $this->render(), $this->flags());
     }
 
     /**

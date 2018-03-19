@@ -18,25 +18,25 @@ interface CodeGenerator
      * @param string $name
      * @return CodeGenerator
      */
-    public function namespace(string $name): CodeGenerator;
+    public function namespace(string $name): self;
 
     /**
      * @param string $name
      * @return CodeGenerator
      */
-    public function class(string $name): CodeGenerator;
+    public function class(string $name): self;
 
     /**
      * @param bool $enabled
      * @return CodeGenerator
      */
-    public function strict(bool $enabled): CodeGenerator;
+    public function strict(bool $enabled): self;
 
     /**
      * @param string[] ...$lines
      * @return CodeGenerator
      */
-    public function header(string ...$lines): CodeGenerator;
+    public function header(string ...$lines): self;
 
     /**
      * @return GeneratedResult

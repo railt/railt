@@ -11,18 +11,18 @@ namespace Railt\Compiler\Parser;
 
 use Railt\Compiler\Iterator\BufferedIterator;
 use Railt\Compiler\LexerInterface;
-use Railt\Compiler\ParserInterface;
 use Railt\Compiler\Parser\Ast\Leaf;
 use Railt\Compiler\Parser\Ast\Node;
 use Railt\Compiler\Parser\Ast\NodeInterface;
 use Railt\Compiler\Parser\Ast\Rule as AstRule;
 use Railt\Compiler\Parser\Rule\Choice;
 use Railt\Compiler\Parser\Rule\Concatenation;
-use Railt\Compiler\Parser\Rule\Escape;
 use Railt\Compiler\Parser\Rule\Entry;
+use Railt\Compiler\Parser\Rule\Escape;
 use Railt\Compiler\Parser\Rule\Repetition;
 use Railt\Compiler\Parser\Rule\Rule;
 use Railt\Compiler\Parser\Rule\Terminal;
+use Railt\Compiler\ParserInterface;
 use Railt\Io\Readable;
 
 /**
@@ -79,7 +79,7 @@ class Parser implements ParserInterface
     public function __construct(LexerInterface $lexer, array $rules = [])
     {
         $this->rules   = $rules;
-        $this->lexer = $lexer;
+        $this->lexer   = $lexer;
     }
 
     /**

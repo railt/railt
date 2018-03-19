@@ -127,7 +127,6 @@ class RuleAnalyzer
         yield Token::eof(\end($rules)->offset() + \end($rules)->bytes());
     }
 
-
     /**
      * Implementation of "rule".
      *
