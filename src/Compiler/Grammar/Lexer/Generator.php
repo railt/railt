@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Compiler\Grammar\Lexer;
 
 use Railt\Compiler\Generator\LexerGenerator;
-use Railt\Compiler\Lexer\Lexer;
 use Railt\Compiler\Lexer\Definition;
+use Railt\Compiler\Lexer\Lexer;
 use Railt\Compiler\LexerInterface;
 use Railt\Io\Readable;
 
@@ -70,7 +70,7 @@ abstract class Generator extends GrammarToken
 
         $class = __NAMESPACE__ . '\\' . self::CLASS_NAME;
 
-        return new $class;
+        return new $class();
     }
 
     /**

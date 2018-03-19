@@ -42,7 +42,7 @@ class GeneratedResult
      * @param string $filename
      * @return GeneratedResult
      */
-    public function as(string $filename): GeneratedResult
+    public function as(string $filename): self
     {
         $this->file = $filename;
 

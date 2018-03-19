@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of Lexer package.
- * 
+ *
  * For the full copyright and license information, please view the
  * LICENSE file that was distributed with this source code.
  */
@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar\Lexer;
 
-use Railt\Compiler\Lexer\Token as GrammarLexerToken;
 use Railt\Compiler\Lexer\Runtime as GrammarLexerRuntime;
 
 /**
@@ -30,7 +29,7 @@ final class GrammarLexer extends GrammarLexerRuntime
     public function channels(): array
     {
         return [
-            -1 => 'system',
+            -1  => 'system',
             357 => 'skip',
             'skip',
             'skip',
@@ -40,7 +39,7 @@ final class GrammarLexer extends GrammarLexerRuntime
     public function identifiers(): array
     {
         return [
-            -1 => 'EOF',
+            -1  => 'EOF',
             357 => 17,
             18,
             19,

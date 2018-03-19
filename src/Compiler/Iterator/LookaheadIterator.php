@@ -19,7 +19,7 @@ class LookaheadIterator extends \IteratorIterator
      *
      * @var \Iterator
      */
-    protected $_iterator = null;
+    protected $_iterator;
 
     /**
      * Current key.
@@ -33,7 +33,7 @@ class LookaheadIterator extends \IteratorIterator
      *
      * @var mixed
      */
-    protected $_current = null;
+    protected $_current;
 
     /**
      * Whether the current element is valid or not.

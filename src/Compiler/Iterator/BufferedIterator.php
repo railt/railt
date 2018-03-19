@@ -19,28 +19,28 @@ class BufferedIterator extends \IteratorIterator
      *
      * @const int
      */
-    const BUFFER_KEY = 0;
+    public const BUFFER_KEY = 0;
 
     /**
      * Buffer value index.
      *
      * @const int
      */
-    const BUFFER_VALUE = 1;
+    public const BUFFER_VALUE = 1;
 
     /**
      * Current iterator.
      *
      * @var \Iterator
      */
-    protected $_iterator = null;
+    protected $_iterator;
 
     /**
      * Buffer.
      *
      * @var \SplDoublyLinkedList
      */
-    protected $_buffer = null;
+    protected $_buffer;
 
     /**
      * Maximum buffer size.
@@ -58,7 +58,7 @@ class BufferedIterator extends \IteratorIterator
     public function __construct(\Traversable $iterator, $bufferSize)
     {
         $this->_iterator   = $iterator;
-        $this->_bufferSize = max($bufferSize, 1);
+        $this->_bufferSize = \max($bufferSize, 1);
         $this->_buffer     = new \SplDoublyLinkedList();
     }
 
@@ -97,7 +97,7 @@ class BufferedIterator extends \IteratorIterator
      *
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         $innerIterator = $this->getInnerIterator();
         $buffer        = $this->getBuffer();
@@ -107,7 +107,7 @@ class BufferedIterator extends \IteratorIterator
         // End of the buffer, need a new value.
         if (false === $buffer->valid()) {
             for (
-                $bufferSize = count($buffer),
+                $bufferSize = \count($buffer),
                 $maximumBufferSize = $this->getBufferSize();
                 $bufferSize >= $maximumBufferSize;
                 --$bufferSize
@@ -127,8 +127,6 @@ class BufferedIterator extends \IteratorIterator
             $buffer->rewind();
             $buffer->setIteratorMode($buffer::IT_MODE_FIFO | $buffer::IT_MODE_KEEP);
         }
-
-        return;
     }
 
     /**
@@ -156,11 +154,9 @@ class BufferedIterator extends \IteratorIterator
      *
      * @return void
      */
-    public function previous()
+    public function previous(): void
     {
         $this->getBuffer()->prev();
-
-        return;
     }
 
     /**
@@ -168,7 +164,7 @@ class BufferedIterator extends \IteratorIterator
      *
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $innerIterator = $this->getInnerIterator();
         $buffer        = $this->getBuffer();
@@ -183,8 +179,6 @@ class BufferedIterator extends \IteratorIterator
         }
 
         $buffer->rewind();
-
-        return;
     }
 
     /**

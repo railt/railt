@@ -16,7 +16,7 @@ use Railt\Compiler\TokenInterface;
  */
 final class Token implements TokenInterface
 {
-    public const T_EOF = -0x01;
+    public const T_EOF      = -0x01;
     public const T_EOF_NAME = 'EOF';
 
     /**@#+
@@ -77,10 +77,10 @@ final class Token implements TokenInterface
      * @param int $offset
      * @return Token
      */
-    public static function eof(int $offset): Token
+    public static function eof(int $offset): self
     {
         return (new static(self::T_EOF_NAME, "\0"))
-            ->in(Token::CHANNEL_SYSTEM)
+            ->in(self::CHANNEL_SYSTEM)
             ->at($offset);
     }
 
@@ -88,7 +88,7 @@ final class Token implements TokenInterface
      * @param int $offset
      * @return Token
      */
-    public function at(int $offset): Token
+    public function at(int $offset): self
     {
         $this->offset = $offset;
 
@@ -99,7 +99,7 @@ final class Token implements TokenInterface
      * @param null|string $channel
      * @return Token
      */
-    public function in(?string $channel): Token
+    public function in(?string $channel): self
     {
         $this->channel = $channel;
 
@@ -175,7 +175,7 @@ final class Token implements TokenInterface
      * @param array $context
      * @return Token
      */
-    public function with(array $context): Token
+    public function with(array $context): self
     {
         $this->context = $context;
 

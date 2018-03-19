@@ -94,6 +94,6 @@ class ParsingResult
             $this->parser = new Parser($this->getLexer(), $this->getRules());
         }
 
-       return $this->parser;
+        return $this->parser;
     }
 }

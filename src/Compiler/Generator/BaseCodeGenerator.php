@@ -90,7 +90,7 @@ abstract class BaseCodeGenerator implements CodeGenerator
 
             foreach (\preg_split('/\s+/iu', $line) ?? [] as $word) {
                 if ($length + \mb_strlen($word) > static::HEADER_LENGTH) {
-                    $this->header[] = $text;
+                    $this->header[]  = $text;
                     [$length, $text] = [0, ''];
                 }
 
@@ -98,7 +98,7 @@ abstract class BaseCodeGenerator implements CodeGenerator
                     $text .= ' ';
                 }
 
-                $text   .= $word;
+                $text .= $word;
                 $length += \mb_strlen($word);
             }
 
@@ -125,7 +125,7 @@ abstract class BaseCodeGenerator implements CodeGenerator
      */
     private function getDefaultHeader(): array
     {
-        $package = \basename(str_replace('\\', '/', $this->namespace));
+        $package = \basename(\str_replace('\\', '/', $this->namespace));
 
         return [
             \sprintf('This file is part of %s package.', $package),

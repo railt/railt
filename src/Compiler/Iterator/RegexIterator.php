@@ -14,9 +14,9 @@ namespace Railt\Compiler\Iterator;
  */
 class RegexIterator implements \IteratorAggregate
 {
-    public const MODE_ALL = 0x00;
-    public const MODE_NAMED_GROUPS = 0x01;
-    public const MODE_ALL_GROUPS = 0x02;
+    public const MODE_ALL                 = 0x00;
+    public const MODE_NAMED_GROUPS        = 0x01;
+    public const MODE_ALL_GROUPS          = 0x02;
     public const MODE_STRICT_NAMED_GROUPS = 0x03;
 
     /**
@@ -42,7 +42,7 @@ class RegexIterator implements \IteratorAggregate
      */
     public function __construct(string $pattern, string $subject, int $mode = self::MODE_ALL)
     {
-        $this->mode = $mode;
+        $this->mode    = $mode;
         $this->pattern = $pattern;
         $this->subject = $subject;
     }
@@ -138,7 +138,7 @@ class RegexIterator implements \IteratorAggregate
     {
         $result = new \SplQueue();
 
-        \preg_replace_callback($this->pattern, function (array $matches) use ($result) {
+        \preg_replace_callback($this->pattern, function (array $matches) use ($result): void {
             $result->push($matches);
         }, $this->subject);
 

@@ -18,8 +18,8 @@ class Definition
      * A default token channels.
      */
     public const CHANNEL_DEFAULT = Token::CHANNEL_DEFAULT;
-    public const CHANNEL_SKIP = Token::CHANNEL_SKIP;
-    public const CHANNEL_SYSTEM = Token::CHANNEL_SYSTEM;
+    public const CHANNEL_SKIP    = Token::CHANNEL_SKIP;
+    public const CHANNEL_SYSTEM  = Token::CHANNEL_SYSTEM;
     /**@#-*/
 
     /**
@@ -55,8 +55,8 @@ class Definition
      */
     public function __construct($name, string $value, int $id = null)
     {
-        $this->id = $id ?? self::$lastId++;
-        $this->name = $name;
+        $this->id    = $id ?? self::$lastId++;
+        $this->name  = $name;
         $this->value = $value;
     }
 
@@ -72,7 +72,7 @@ class Definition
      * @param string $channel
      * @return Definition
      */
-    public function in(string $channel): Definition
+    public function in(string $channel): self
     {
         $this->channel = $channel;
 

@@ -95,7 +95,7 @@ class ProductionParser implements Step
         if ($this->currentRule === null) {
             $error = \vsprintf('The production body "%s" (%s) required its definition', [
                 $token->value(),
-                Generator::getName((int)$token->name())
+                Generator::getName((int)$token->name()),
             ]);
 
             throw UnprocessableProductionException::fromFile($error, $file, $token->offset());
@@ -109,7 +109,7 @@ class ProductionParser implements Step
      */
     private function createRule(Token $token): void
     {
-        $this->currentRule = $token->get(0);
+        $this->currentRule               = $token->get(0);
         $this->rules[$this->currentRule] = [];
     }
 
