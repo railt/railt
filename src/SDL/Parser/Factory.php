@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Parser;
 
-use Railt\Compiler\Ast\NodeInterface;
-use Railt\Compiler\Debug\NodeDumper;
-use Railt\Compiler\Generator;
-use Railt\Compiler\Parser;
+use Railt\Compiler\Grammar\Reader;
+use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Compiler\Parser\Debug\NodeDumper;
+use Railt\Compiler\ParserInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
 
@@ -24,14 +24,14 @@ class Factory
     public const GRAMMAR_FILE = __DIR__ . '/../resources/grammar/sdl.pp';
 
     /**
-     * @var Parser|null
+     * @var ParserInterface|null
      */
     private $parser;
 
     /**
-     * @return Parser
+     * @return ParserInterface
      */
-    public function getParser(): Parser
+    public function getParser(): ParserInterface
     {
         if ($this->parser === null) {
             $this->parser = $this->createParser();
@@ -41,10 +41,10 @@ class Factory
     }
 
     /**
-     * @param Parser $parser
+     * @param ParserInterface $parser
      * @return Factory
      */
-    public function setParser(Parser $parser): self
+    public function setParser(ParserInterface $parser): self
     {
         $this->parser = $parser;
 
@@ -52,15 +52,15 @@ class Factory
     }
 
     /**
-     * @return Parser
+     * @return ParserInterface
      */
-    private function createParser(): Parser
+    private function createParser(): ParserInterface
     {
-        if (\class_exists(Compiled::class)) {
-            return new Compiled();
-        }
+        //if (\class_exists(Compiled::class)) {
+        //    return new Compiled();
+        //}
 
-        return Parser::fromGrammar(File::fromPathname(static::GRAMMAR_FILE));
+        return (new Reader())->read(File::fromPathname(static::GRAMMAR_FILE))->getParser();
     }
 
     /**
@@ -69,17 +69,7 @@ class Factory
      */
     public function parse(Readable $sources): NodeInterface
     {
-        return $this->getParser()->parse($sources->getContents());
-    }
-
-    /**
-     * @return void
-     */
-    public function compile(): void
-    {
-        $generator = new Generator($this->getParser());
-        $generator->setNamespace(__NAMESPACE__);
-        $generator->saveTo('Compiled', __DIR__);
+        return $this->getParser()->parse($sources);
     }
 
     /**

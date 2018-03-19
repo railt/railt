@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\Compiler\Parser;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;

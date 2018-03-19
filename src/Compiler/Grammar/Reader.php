@@ -9,144 +9,176 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar;
 
-use Railt\Compiler\Grammar\Parsers\Pragmas;
-use Railt\Compiler\Grammar\Parsers\SkippedTokenDefinitions;
-use Railt\Compiler\Grammar\Parsers\TokenDefinitions;
+use Railt\Compiler\Grammar\Exceptions\UnexpectedInclusionException;
+use Railt\Compiler\Grammar\Exceptions\UnexpectedTokenException;
+use Railt\Compiler\Grammar\Lexer\GrammarLexer;
+use Railt\Compiler\Grammar\Lexer\GrammarToken;
+use Railt\Compiler\Grammar\Reader\PragmaParser;
+use Railt\Compiler\Grammar\Reader\ProductionParser;
+use Railt\Compiler\Grammar\Reader\Step;
+use Railt\Compiler\Grammar\Reader\TokenParser;
+use Railt\Compiler\Lexer\Token;
+use Railt\Compiler\LexerInterface;
+use Railt\Compiler\Loggable;
+use Railt\Io\File;
 use Railt\Io\Readable;
 
 /**
- * Class Grammar
+ * Class Reader
  */
 class Reader
 {
-    /**
-     * @var array
-     */
-    private $tokens = [];
+    use Loggable;
 
     /**
-     * @var array
+     * File extensions list
      */
-    private $rules = [];
+    private const FILE_EXTENSIONS = [
+        '',
+        '.pp',
+        '.pp2',
+    ];
 
     /**
-     * @var array
+     * @var LexerInterface
      */
-    private $pragmas = [];
+    private $lexer;
 
     /**
-     * Parser constructor.
-     * @param Readable $readable
+     * @var array|Step[]
      */
-    public function __construct(Readable $readable)
+    private $steps = [];
+
+    /**
+     * Reader constructor.
+     */
+    public function __construct()
     {
-        $this->parse($readable);
+        $this->lexer = new GrammarLexer();
+        $this->bootReaderSteps();
     }
 
     /**
-     * @param Readable $grammar
-     * @return Reader
+     * @return void
      */
-    private function parse(Readable $grammar): self
+    private function bootReaderSteps(): void
     {
-        $ruleName  = null;
-        $ruleValue = '';
+        $this->steps = [
+            TokenParser::class      => new TokenParser($this),
+            PragmaParser::class     => new PragmaParser($this),
+            ProductionParser::class => new ProductionParser($this),
+        ];
+    }
 
-        foreach ($this->read($grammar) as $line) {
-            switch ($line[0]) {
-                case '%':
-                    $this->parseDefinition($line);
-                    break;
+    /**
+     * @return LexerInterface
+     */
+    public function getLexer(): LexerInterface
+    {
+        return $this->lexer;
+    }
 
-                case ' ':
-                    $ruleValue .= ' ' . \trim($line);
-                    $this->rules[$ruleName] = $ruleValue;
-                    break;
+    /**
+     * @param Readable $input
+     * @return ParsingResult
+     * @throws \Railt\Io\Exceptions\NotReadableException
+     */
+    public function read(Readable $input): ParsingResult
+    {
+        /** @var Readable $file */
+        foreach ($this->lex($input) as $file => $token) {
+            $this->dumpToken($file, $token);
 
-                default:
-                    $ruleName  = \substr($line, 0, -1);
-                    $ruleValue = '';
+            $this->process($file, $token);
+        }
+
+        return new ParsingResult(
+            $this->steps[PragmaParser::class],
+            $this->steps[TokenParser::class],
+            $this->steps[ProductionParser::class]
+        );
+    }
+
+    /**
+     * @param Readable $input
+     * @return \Traversable
+     * @throws \Railt\Io\Exceptions\NotReadableException
+     */
+    private function lex(Readable $input): \Traversable
+    {
+        $this->log('Open grammar file %s', \realpath($input->getPathname()));
+
+        $tokens = $this->lexer->lex($input);
+
+        foreach ($tokens as $token) {
+            if ($token->is(GrammarToken::T_INCLUDE)) {
+                yield from $this->lex($this->include($input, $token));
+                continue;
+            }
+
+            yield $input => $token;
+        }
+    }
+
+    /**
+     * @param Readable $from
+     * @param Token $token
+     * @return Readable
+     * @throws \Railt\Io\Exceptions\NotReadableException
+     */
+    private function include(Readable $from, Token $token): Readable
+    {
+        $path = (string)$token->get(0);
+
+        $this->log('Include "%s" from "%s"', $path, \realpath($from->getPathname()));
+
+        foreach (self::FILE_EXTENSIONS as $extension) {
+            $file = \dirname($from->getPathname()) . '/' . $path . $extension;
+
+            if (\is_file($file)) {
+                return File::fromPathname($file);
             }
         }
 
-        $this->pragmas = Pragmas::withDefaults($this->pragmas);
-
-        return $this;
+        $error = \sprintf('Could not open grammar file "%s" from %s', $path, $from->getPathname());
+        throw UnexpectedInclusionException::fromFile($error, $from, $token->offset());
     }
 
     /**
-     * @param Readable $grammar
-     * @return iterable
+     * @param Readable $from
+     * @param Token $token
      */
-    private function read(Readable $grammar): iterable
+    private function dumpToken(Readable $from, Token $token): void
     {
-        foreach (\explode("\n", $grammar->getContents()) as $line) {
-            if ($line && ! $this->isCommentedLine(\ltrim($line))) {
-                yield \rtrim($line);
-            }
-        }
+        $offset = $token->offset();
+
+        $this->log('%s: %s on line %d at column %d',
+            \basename($from->getPathname()),
+            $token->name(),
+            $from->getPosition($offset)->getLine(),
+            $from->getPosition($offset)->getColumn()
+        );
     }
 
     /**
-     * @param string $line
+     * @param Readable $file
+     * @param Token $token
      * @return bool
      */
-    private function isCommentedLine(string $line): bool
+    private function process(Readable $file, Token $token): bool
     {
-        return $line[0] === '/' && $line[1] === '/';
-    }
-
-    /**
-     * @param string $line
-     * @throws \LogicException
-     */
-    private function parseDefinition(string $line): void
-    {
-        switch (true) {
-            case Pragmas::match($line):
-                foreach (Pragmas::parse($line) as $name => $value) {
-                    $this->pragmas[$name] = $value;
-                }
-                break;
-
-            case TokenDefinitions::match($line):
-                foreach (TokenDefinitions::parse($line) as $name => $value) {
-                    $this->tokens[$name] = $value;
-                }
-                break;
-
-            case SkippedTokenDefinitions::match($line):
-                foreach (SkippedTokenDefinitions::parse($line) as $name => $value) {
-                    $this->tokens[$name] = $value;
-                }
-                break;
+        foreach ($this->steps as $step) {
+            if ($step->match($token)) {
+                $step->parse($file, $token);
+                return true;
+            }
         }
-    }
 
-    /**
-     * @return array
-     * @throws \LogicException
-     */
-    public function getTokens(): array
-    {
-        return $this->tokens;
-    }
+        $error = \vsprintf('Undefined token %s while parsing the grammar file %s', [
+            $token->name(),
+            $file->getPathname(),
+        ]);
 
-    /**
-     * @return array
-     * @throws \LogicException
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
-    }
-
-    /**
-     * @return array
-     * @throws \LogicException
-     */
-    public function getPragmas(): array
-    {
-        return $this->pragmas;
+        throw UnexpectedTokenException::fromFile($error, $file, $token->offset());
     }
 }

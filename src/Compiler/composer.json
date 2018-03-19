@@ -1,33 +1,9 @@
 {
     "name": "railt/compiler",
     "type": "library",
-    "description": "The Railt LL(k) parser based on Hoa\\Compiler library.",
-    "license": "BSD-3-Clause",
-    "keywords": [
-        "library",
-        "compiler",
-        "grammar",
-        "language",
-        "ll1",
-        "llk",
-        "regular",
-        "algebraic",
-        "context-free",
-        "lexer",
-        "parser",
-        "token",
-        "rule",
-        "pp",
-        "ast",
-        "trace",
-        "syntax",
-        "sampler",
-        "isotropic",
-        "random",
-        "uniform",
-        "exhaustive",
-        "coverage"
-    ],
+    "description": "The Railt Compiler Parser-Generator",
+    "license": "MIT",
+    "keywords": ["compiler", "grammar", "language", "pp"],
     "homepage": "http://railt.org",
     "support": {
         "issues": "https://github.com/railt/railt/issues",
@@ -35,27 +11,25 @@
     },
     "authors": [
         {
-            "name": "Ivan Enderlin",
-            "email": "ivan.enderlin@hoa-project.net"
-        },
-        {
-            "name": "Hoa community",
-            "homepage": "https://hoa-project.net/"
-        },
-        {
             "name": "Kirill Nesmeyanov",
             "email": "nesk@xakep.ru"
         }
     ],
     "require": {
-        "php": "^7.1.3",
+        "php": ">=7.1.3",
         "railt/io": "1.2.*|dev-master",
-        "hoa/iterator": "~2.0",
-        "zendframework/zend-code": "~3.0"
+        "twig/twig": "~2.0",
+        "zendframework/zend-code": "~3.0",
+        "psr/log": "~1.0"
     },
     "autoload": {
         "psr-4": {
             "Railt\\Compiler\\": "."
         }
-    }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
