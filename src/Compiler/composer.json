@@ -3,13 +3,26 @@
     "type": "library",
     "description": "The Railt Compiler Parser-Generator",
     "license": "MIT",
-    "keywords": ["compiler", "grammar", "language", "pp"],
+    "keywords": [
+        "compiler",
+        "grammar",
+        "language",
+        "pp"
+    ],
     "homepage": "http://railt.org",
     "support": {
         "issues": "https://github.com/railt/railt/issues",
         "source": "https://github.com/railt/railt"
     },
     "authors": [
+        {
+            "name": "Ivan Enderlin",
+            "email": "ivan.enderlin@hoa-project.net"
+        },
+        {
+            "name": "Hoa community",
+            "homepage": "https://hoa-project.net/"
+        },
         {
             "name": "Kirill Nesmeyanov",
             "email": "nesk@xakep.ru"
