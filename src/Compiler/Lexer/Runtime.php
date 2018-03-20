@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Lexer;
 
+use Railt\Compiler\Lexer\Result\Eof;
+use Railt\Compiler\Lexer\Result\Token;
 use Railt\Compiler\LexerInterface;
-use Railt\Compiler\TokenInterface;
 use Railt\Io\Readable;
 
 /**
@@ -19,53 +20,41 @@ use Railt\Io\Readable;
 abstract class Runtime implements LexerInterface
 {
     /**
-     * @return string
+     * @var array
      */
-    abstract public function pattern(): string;
+    protected $tokens = [];
 
     /**
-     * @return array
+     * @var string
      */
-    abstract public function channels(): array;
-
-    /**
-     * @return array
-     */
-    abstract public function identifiers(): array;
+    protected $pattern;
 
     /**
      * @param Readable $input
-     * @return \Traversable|TokenInterface[]
+     * @return \Traversable|Token[]|TokenStream
      */
     public function lex(Readable $input): \Traversable
     {
-        return new Stream($input, $this);
+        return new TokenStream($input, $this->pattern, $this->tokens);
     }
 
     /**
-     * @param int $id
-     * @return string
+     * @param bool $keep
+     * @return Runtime|$this
      */
-    public function channel(int $id): string
+    public function eof(bool $keep = true): LexerInterface
     {
-        return $this->channels()[$id] ?? Token::CHANNEL_DEFAULT;
+        $this->tokens[Eof::NAME] = $keep;
+
+        return $this;
     }
 
     /**
-     * @param int $id
-     * @return int|mixed|string
-     */
-    public function name(int $id)
-    {
-        return $this->identifiers()[$id] ?? $id;
-    }
-
-    /**
-     * @param int $token
+     * @param string $name
      * @return bool
      */
-    public function has($token): bool
+    public function has(string $name): bool
     {
-        return \in_array($token, $this->identifiers(), true);
+        return \array_key_exists($name, $this->tokens);
     }
 }

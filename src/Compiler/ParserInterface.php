@@ -23,6 +23,11 @@ interface ParserInterface
     public function getLexer(): LexerInterface;
 
     /**
+     * @return array
+     */
+    public function getRules(): array;
+
+    /**
      * @param Readable $input
      * @return \Traversable|NodeInterface
      */

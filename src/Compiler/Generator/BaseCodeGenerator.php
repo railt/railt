@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Generator;
 
 use Railt\Compiler\Generator\Renderer\Renderer;
+use Railt\Compiler\Generator\Renderer\TwigRenderer;
 
 /**
  * Class BaseCodeGenerator
@@ -43,6 +44,16 @@ abstract class BaseCodeGenerator implements CodeGenerator
      * @var string
      */
     protected $class = self::DEFAULT_CLASS_NAME;
+
+    /**
+     * @var string
+     */
+    protected $template;
+
+    /**
+     * @var Renderer
+     */
+    protected $renderer;
 
     /**
      * @param string $name
@@ -109,10 +120,23 @@ abstract class BaseCodeGenerator implements CodeGenerator
     }
 
     /**
+     * @param string $template
+     * @return CodeGenerator
+     */
+    public function using(string $template): CodeGenerator
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
      * @return GeneratedResult
      */
     public function build(): GeneratedResult
     {
+        \assert(\is_string($this->template));
+
         if ($this->header === null) {
             $this->header = $this->getDefaultHeader();
         }
@@ -140,18 +164,20 @@ abstract class BaseCodeGenerator implements CodeGenerator
      */
     private function render(): string
     {
-        return $this->getRenderer()->render($this->getTemplate(), \iterator_to_array($this->getContext()));
+        return $this->getRenderer()->render($this->template, \iterator_to_array($this->getContext()));
     }
 
     /**
      * @return Renderer
      */
-    abstract protected function getRenderer(): Renderer;
+    protected function getRenderer(): Renderer
+    {
+        if ($this->renderer === null) {
+            $this->renderer = new TwigRenderer();
+        }
 
-    /**
-     * @return string
-     */
-    abstract protected function getTemplate(): string;
+        return $this->renderer;
+    }
 
     /**
      * @return \Generator

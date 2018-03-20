@@ -10,10 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler\Grammar\Reader;
 
 use Railt\Compiler\Grammar\Exceptions\UnprocessableProductionException;
-use Railt\Compiler\Grammar\Lexer\Generator;
-use Railt\Compiler\Grammar\Lexer\GrammarToken;
+use Railt\Compiler\Grammar\Lexer\Grammar;
 use Railt\Compiler\Grammar\Reader;
-use Railt\Compiler\Lexer\Token;
+use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Io\Readable;
 
 /**
@@ -22,21 +21,21 @@ use Railt\Io\Readable;
 class ProductionParser implements Step
 {
     private const PRODUCTION_TOKENS = [
-        GrammarToken::T_NODE_DEFINITION,
-        GrammarToken::T_OR,
-        GrammarToken::T_ZERO_OR_ONE,
-        GrammarToken::T_ONE_OR_MORE,
-        GrammarToken::T_ZERO_OR_MORE,
-        GrammarToken::T_N_TO_M,
-        GrammarToken::T_ZERO_TO_M,
-        GrammarToken::T_N_OR_MORE,
-        GrammarToken::T_EXACTLY_N,
-        GrammarToken::T_SKIPPED,
-        GrammarToken::T_KEPT,
-        GrammarToken::T_NAMED,
-        GrammarToken::T_NODE,
-        GrammarToken::T_GROUP_OPEN,
-        GrammarToken::T_GROUP_CLOSE,
+        Grammar::T_NODE_DEFINITION,
+        Grammar::T_OR,
+        Grammar::T_ZERO_OR_ONE,
+        Grammar::T_ONE_OR_MORE,
+        Grammar::T_ZERO_OR_MORE,
+        Grammar::T_N_TO_M,
+        Grammar::T_ZERO_TO_M,
+        Grammar::T_N_OR_MORE,
+        Grammar::T_EXACTLY_N,
+        Grammar::T_SKIPPED,
+        Grammar::T_KEPT,
+        Grammar::T_NAMED,
+        Grammar::T_NODE,
+        Grammar::T_GROUP_OPEN,
+        Grammar::T_GROUP_CLOSE,
     ];
 
     /**
@@ -64,21 +63,21 @@ class ProductionParser implements Step
     }
 
     /**
-     * @param Token $token
+     * @param TokenInterface $token
      * @return bool
      */
-    public function match(Token $token): bool
+    public function match(TokenInterface $token): bool
     {
-        return $token->is(...self::PRODUCTION_TOKENS) || $token->isEof();
+        return $token->is(...self::PRODUCTION_TOKENS);
     }
 
     /**
      * @param Readable $file
-     * @param Token $token
+     * @param TokenInterface $token
      */
-    public function parse(Readable $file, Token $token): void
+    public function parse(Readable $file, TokenInterface $token): void
     {
-        if ($token->is(GrammarToken::T_NODE_DEFINITION)) {
+        if ($token->is(Grammar::T_NODE_DEFINITION)) {
             $this->createRule($token);
             return;
         }
@@ -87,30 +86,26 @@ class ProductionParser implements Step
     }
 
     /**
-     * @param Readable $file
-     * @param Token $token
+     * @param TokenInterface $token
      */
-    private function pushRule(Readable $file, Token $token): void
+    private function createRule(TokenInterface $token): void
+    {
+        $this->currentRule               = $token->value(0);
+        $this->rules[$this->currentRule] = [];
+    }
+
+    /**
+     * @param Readable $file
+     * @param TokenInterface $token
+     */
+    private function pushRule(Readable $file, TokenInterface $token): void
     {
         if ($this->currentRule === null) {
-            $error = \vsprintf('The production body "%s" (%s) required its definition', [
-                $token->value(),
-                Generator::getName((int)$token->name()),
-            ]);
-
+            $error = \sprintf('Syntax error, unprocessable token %s', $token);
             throw UnprocessableProductionException::fromFile($error, $file, $token->offset());
         }
 
         $this->rules[$this->currentRule][] = $token;
-    }
-
-    /**
-     * @param Token $token
-     */
-    private function createRule(Token $token): void
-    {
-        $this->currentRule               = $token->get(0);
-        $this->rules[$this->currentRule] = [];
     }
 
     /**

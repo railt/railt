@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler;
 
+use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Io\Readable;
 
 /**
@@ -23,8 +24,14 @@ interface LexerInterface
     public function lex(Readable $input): \Traversable;
 
     /**
-     * @param int|string $name
+     * @param bool $keep
+     * @return LexerInterface
+     */
+    public function eof(bool $keep = true): LexerInterface;
+
+    /**
+     * @param string $name
      * @return bool
      */
-    public function has($name): bool;
+    public function has(string $name): bool;
 }

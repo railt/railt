@@ -9,23 +9,21 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser\Rule;
 
-use Railt\OldCompiler\Exception\RuleException;
-
 /**
  * Class Repetition
  */
-class Repetition extends Rule
+class Repetition extends Rule implements Renderable
 {
+    public const INF_MAX_VALUE = -1;
+
     /**
-     * Minimum bound.
-     *
+     * Minimum bound
      * @var int
      */
     protected $min = 0;
 
     /**
-     * Maximum bound.
-     *
+     * Maximum bound
      * @var int
      */
     protected $max = 0;
@@ -33,58 +31,77 @@ class Repetition extends Rule
     /**
      * Constructor.
      *
-     * @param string $name Name.
-     * @param int $min Minimum bound.
-     * @param int $max Maximum bound.
-     * @param mixed $children Children.
-     * @param string $nodeId Node ID.
+     * @param string $name Name
+     * @param int $min Minimum bound
+     * @param int $max Maximum bound
+     * @param mixed $children Children
+     * @param string|null $nodeId
+     * @throws \InvalidArgumentException
      */
-    public function __construct($name, $min, $max, $children, $nodeId)
+    public function __construct($name, $min, $max, $children, string $nodeId = null)
     {
         parent::__construct($name, $children, $nodeId);
 
-        $min = \max(0, (int) $min);
-        $max = \max(-1, (int) $max);
+        $this->min = \max(0, (int)$min);
+        $this->max = \max(-1, (int)$max);
 
-        if (-1 !== $max && $min > $max) {
-            throw new RuleException(
-                'Cannot repeat with a min (%d) greater than max (%d).',
-                0,
-                [$min, $max]
-            );
-        }
-
-        $this->min = $min;
-        $this->max = $max;
+        \assert($this->validate($this->min, $this->max));
     }
 
     /**
-     * Get minimum bound.
-     *
-     * @return  int
+     * @param int $min
+     * @param int $max
+     * @return bool
+     * @throws \InvalidArgumentException
      */
-    public function getMin()
+    private function validate(int $min, int $max): bool
+    {
+        if ($max !== self::INF_MAX_VALUE && $min > $max) {
+            $error = \sprintf('Cannot repeat with a min (%d) greater than max (%d).', $min, $max);
+            throw new \InvalidArgumentException($error);
+        }
+
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function args(): array
+    {
+        return [
+            $this->name,
+            $this->min,
+            $this->max,
+            $this->children,
+            $this->nodeId,
+        ];
+    }
+
+    /**
+     * Get minimum bound
+     * @return int
+     */
+    public function getMin(): int
     {
         return $this->min;
     }
 
     /**
-     * Get maximum bound.
-     *
-     * @return  int
+     * Check whether the maximum repetition is unbounded
+     * @return bool
      */
-    public function getMax()
+    public function isInfinite(): bool
     {
-        return $this->max;
+        return $this->getMax() === self::INF_MAX_VALUE;
     }
 
     /**
-     * Check whether the maximum repetition is unbounded.
-     *
-     * @return  bool
+     * Get maximum bound
+     * @return int
      */
-    public function isInfinite()
+    public function getMax(): int
     {
-        return -1 === $this->getMax();
+        return $this->max;
     }
 }

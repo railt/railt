@@ -13,11 +13,11 @@ use Railt\Compiler\Grammar\Reader\PragmaParser;
 use Railt\Compiler\Grammar\Reader\ProductionParser;
 use Railt\Compiler\Grammar\Reader\RuleAnalyzer;
 use Railt\Compiler\Grammar\Reader\TokenParser;
-use Railt\Compiler\Lexer\Lexer;
+use Railt\Compiler\Lexer;
 use Railt\Compiler\Lexer\Runtime as LexerRuntime;
-//use Railt\Compiler\Parser\Runtime as ParserRuntime;
 use Railt\Compiler\LexerInterface;
-use Railt\Compiler\Parser\Parser;
+use Railt\Compiler\Parser;
+use Railt\Compiler\Parser\Runtime as ParserRuntime;
 use Railt\Compiler\ParserInterface;
 
 /**
@@ -64,7 +64,19 @@ class ParsingResult
     }
 
     /**
-     * @return LexerInterface|LexerRuntime
+     * @return ParserInterface|Parser
+     */
+    public function getParser(): ParserInterface
+    {
+        if ($this->parser === null) {
+            $this->parser = new Parser($this->getLexer(), $this->getRules());
+        }
+
+        return $this->parser;
+    }
+
+    /**
+     * @return LexerInterface|Lexer
      */
     public function getLexer(): LexerInterface
     {
@@ -83,17 +95,5 @@ class ParsingResult
         $analyzer = new RuleAnalyzer($this->getLexer());
 
         return $analyzer->analyze($this->productions->getRules());
-    }
-
-    /**
-     * @return ParserInterface|ParserRuntime
-     */
-    public function getParser(): ParserInterface
-    {
-        if ($this->parser === null) {
-            $this->parser = new Parser($this->getLexer(), $this->getRules());
-        }
-
-        return $this->parser;
     }
 }

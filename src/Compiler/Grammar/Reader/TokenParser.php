@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar\Reader;
 
-use Railt\Compiler\Grammar\Lexer\GrammarToken;
+use Railt\Compiler\Grammar\Lexer\Grammar;
 use Railt\Compiler\Grammar\Reader;
 use Railt\Compiler\Lexer\Definition;
-use Railt\Compiler\Lexer\Token;
+use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Io\Readable;
 
 /**
@@ -40,26 +40,24 @@ class TokenParser implements Step
     }
 
     /**
-     * @param Token $token
+     * @param TokenInterface $token
      * @return bool
      */
-    public function match(Token $token): bool
+    public function match(TokenInterface $token): bool
     {
-        return $token->is(GrammarToken::T_TOKEN, GrammarToken::T_SKIP);
+        return $token->is(Grammar::T_TOKEN, Grammar::T_SKIP);
     }
 
     /**
      * @param Readable $file
-     * @param Token $token
+     * @param TokenInterface $token
      */
-    public function parse(Readable $file, Token $token): void
+    public function parse(Readable $file, TokenInterface $token): void
     {
-        $definition = new Definition($token->get(0), $token->get(1));
+        $definition = new Definition($token->value(0), $token->value(1));
 
-        if ($token->is(GrammarToken::T_SKIP)) {
-            $definition->in(Token::CHANNEL_SKIP);
-        } else {
-            $definition->in($token->get(2) ?? Token::CHANNEL_DEFAULT);
+        if ($token->is(Grammar::T_SKIP)) {
+            $definition->skip();
         }
 
         $this->tokens[] = $definition;

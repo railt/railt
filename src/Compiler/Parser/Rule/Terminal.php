@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Parser\Rule;
 
-use Railt\OldCompiler\Ast\NodeInterface;
+use Railt\Compiler\Parser\Ast\NodeInterface;
 
 /**
  * Class Token
@@ -22,13 +22,6 @@ class Terminal extends Rule
      * @var string
      */
     protected $tokenName;
-
-    /**
-     * Namespace.
-     *
-     * @var string
-     */
-    protected $namespace;
 
     /**
      * Token representation.
@@ -75,152 +68,112 @@ class Terminal extends Rule
     /**
      * Constructor.
      *
-     * @param string $name Name.
-     * @param string $tokenName Token name.
+     * @param string|int $index Name.
+     * @param string $name Token name.
      * @param string $nodeId Node ID.
      * @param int $unification Unification index.
      * @param bool $kept Whether the token is kept or not in the AST.
      */
-    public function __construct(
-        $name,
-        $tokenName,
-        $nodeId,
-        $unification,
-        $kept = false
-    ) {
-        parent::__construct($name, null, $nodeId);
+    public function __construct($index, string $name, $nodeId, $unification, $kept = false)
+    {
+        parent::__construct($index, null, $nodeId);
 
-        $this->tokenName   = $tokenName;
+        $this->tokenName   = $name;
         $this->unification = $unification;
         $this->setKept($kept);
     }
 
     /**
-     * Get token name.
-     *
-     * @return  string
+     * @return array
      */
-    public function getTokenName()
+    public function args(): array
+    {
+        return [
+            $this->name,
+            $this->tokenName,
+            $this->nodeId,
+            $this->unification,
+            $this->kept,
+        ];
+    }
+
+    /**
+     * Get token name.
+     * @return string
+     */
+    public function getTokenName(): string
     {
         return $this->tokenName;
     }
 
     /**
-     * Get token namespace.
-     *
-     * @return  string
-     */
-    public function getNamespace()
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * Set token namespace.
-     *
-     * @param string $namespace Namespace.
-     * @return  string
-     */
-    public function setNamespace($namespace)
-    {
-        $old              = $this->namespace;
-        $this->namespace  = $namespace;
-
-        return $old;
-    }
-
-    /**
-     * Set representation.
-     *
-     * @param string $regex Representation.
-     * @return  string
-     */
-    public function setRepresentation($regex)
-    {
-        $old          = $this->regex;
-        $this->regex  = $regex;
-
-        return $old;
-    }
-
-    /**
      * Get token value.
-     *
-     * @return  string
+     * @return string
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
 
     /**
      * Set token value.
-     *
-     * @param string $value Value.
-     * @return  string
+     * @param string $value
+     * @return self|$this
      */
-    public function setValue($value)
+    public function setValue(string $value): self
     {
-        $old          = $this->value;
-        $this->value  = $value;
+        $this->value = $value;
 
-        return $old;
+        return $this;
     }
 
     /**
      * Get token offset.
-     *
      * @return int
      */
-    public function getOffset()
+    public function getOffset(): int
     {
         return $this->offset;
     }
 
     /**
      * Set token offset.
-     *
-     * @param int $offset Offset.
-     * @return  int
+     * @param int $offset
+     * @return self|$this
      */
-    public function setOffset($offset)
+    public function setOffset(int $offset): self
     {
-        $old           = $this->offset;
-        $this->offset  = $offset;
+        $this->offset = $offset;
 
-        return $old;
+        return $this;
     }
 
     /**
      * Check whether the token is kept in the AST or not.
-     *
-     * @return  bool
+     * @return bool
      */
-    public function isKept()
+    public function isKept(): bool
     {
         return $this->kept;
     }
 
     /**
      * Set whether the token is kept or not in the AST.
-     *
      * @param bool $kept Kept.
-     * @return  bool
+     * @return self|$this
      */
-    public function setKept($kept)
+    public function setKept(bool $kept): self
     {
-        $old         = $this->kept;
-        $this->kept  = $kept;
+        $this->kept = $kept;
 
-        return $old;
+        return $this;
     }
 
     /**
      * Get unification index.
-     *
-     * @return  int
+     * @return int
      */
-    public function getUnificationIndex()
+    public function getUnificationIndex(): int
     {
         return $this->unification;
     }

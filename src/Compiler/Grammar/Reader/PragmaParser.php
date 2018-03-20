@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar\Reader;
 
-use Railt\Compiler\Grammar\Lexer\GrammarToken;
+use Railt\Compiler\Grammar\Lexer\Grammar;
 use Railt\Compiler\Grammar\Reader;
-use Railt\Compiler\Lexer\Token;
+use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Io\Readable;
 
 /**
@@ -39,20 +39,20 @@ class PragmaParser implements Step
     }
 
     /**
-     * @param Token $token
+     * @param TokenInterface $token
      * @return bool
      */
-    public function match(Token $token): bool
+    public function match(TokenInterface $token): bool
     {
-        return $token->is(GrammarToken::T_PRAGMA);
+        return $token->is(Grammar::T_PRAGMA);
     }
 
     /**
      * @param Readable $file
-     * @param Token $token
+     * @param TokenInterface $token
      */
-    public function parse(Readable $file, Token $token): void
+    public function parse(Readable $file, TokenInterface $token): void
     {
-        $this->pragmas[$token->get(0)] = $token->get(1);
+        $this->pragmas[$token->value(0)] = $token->value(1);
     }
 }

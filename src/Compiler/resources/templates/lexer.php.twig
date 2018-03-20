@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace {{ namespace }};
 {% endif %}
 
-use Railt\Compiler\Lexer\Token as {{ class }}Token;
 use Railt\Compiler\Lexer\Runtime as {{ class }}Runtime;
 
 /**
@@ -20,23 +19,33 @@ use Railt\Compiler\Lexer\Runtime as {{ class }}Runtime;
  */
 final class {{ class }} extends {{ class }}Runtime
 {
-    public function getBuildingDate(): string
+    /**#@+
+     * List of {{ class }}::class tokens defined as public constants
+     */
+    {% for k, def in tokens %}
+public const {{ def.getName }} = {{ def.getName | string | raw }};
+    {% endfor %}
+/**#@-*/
+
+    /**
+     * @var string The PCRE compiled pattern
+     */
+    protected $pattern = {{ pattern | string | raw }};
+
+    /**
+     * @var array|bool[] List of tokens in format "[ token_name => kept_or_skipped ]"
+     */
+    protected $tokens = [
+        {% for def in tokens %}
+self::{{ def.getName }} => {{ (not def.isSkipped) | boolean | raw }},
+        {% endfor %}
+    ];
+
+    /**
+     * @return string Returns the lexer compilation date and time in RFC3339 format
+     */
+    public function getBuiltDate(): string
     {
         return {{ "now" | date("Y-m-d\TH:i:s.vP") | string | raw }};
-    }
-
-    public function pattern(): string
-    {
-        return {{ pattern | string | raw }};
-    }
-
-    public function channels(): array
-    {
-        return {{ channels | array(2) | raw }};
-    }
-
-    public function identifiers(): array
-    {
-        return {{ identifiers | array(2) | raw }};
     }
 }

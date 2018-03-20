@@ -28,15 +28,8 @@ use Railt\Io\Readable;
 /**
  * Class Parser
  */
-class Parser implements ParserInterface
+abstract class Runtime implements ParserInterface
 {
-    /**
-     * Rules, to be defined as associative array, name => Rule object.
-     *
-     * @var array
-     */
-    protected $rules;
-
     /**
      * Lexer iterator.
      *
@@ -71,6 +64,11 @@ class Parser implements ParserInterface
     private $lexer;
 
     /**
+     * @var array
+     */
+    private $rules;
+
+    /**
      * Construct the parser.
      *
      * @param LexerInterface $lexer
@@ -78,8 +76,8 @@ class Parser implements ParserInterface
      */
     public function __construct(LexerInterface $lexer, array $rules = [])
     {
-        $this->rules   = $rules;
-        $this->lexer   = $lexer;
+        $this->rules = $rules;
+        $this->lexer = $lexer;
     }
 
     /**
@@ -88,25 +86,6 @@ class Parser implements ParserInterface
     public function getLexer(): LexerInterface
     {
         return $this->lexer;
-    }
-
-    /**
-     * @param Readable $input
-     * @return BufferedIterator
-     */
-    private function getBuffer(Readable $input): BufferedIterator
-    {
-        return new BufferedIterator($this->lex($input), 1024);
-    }
-
-    /**
-     * @param Readable $input
-     * @return \Traversable|\Iterator
-     */
-    private function lex(Readable $input): \Traversable
-    {
-        yield from $this->lexer->lex($input);
-        yield \Railt\Compiler\Lexer\Token::eof(0);
     }
 
     /**
@@ -120,8 +99,8 @@ class Parser implements ParserInterface
         $this->buffer = $this->getBuffer($input);
         $this->buffer->rewind();
 
-        $this->trace      = [];
-        $this->todo       = [];
+        $this->trace = [];
+        $this->todo  = [];
 
         $rule = $this->getRootRule();
 
@@ -151,6 +130,24 @@ class Parser implements ParserInterface
         }
 
         return $ast;
+    }
+
+    /**
+     * @param Readable $input
+     * @return BufferedIterator
+     */
+    private function getBuffer(Readable $input): BufferedIterator
+    {
+        return new BufferedIterator($this->lex($input), 1024);
+    }
+
+    /**
+     * @param Readable $input
+     * @return \Traversable
+     */
+    private function lex(Readable $input): \Traversable
+    {
+        yield from $this->getLexer()->lex($input);
     }
 
     /**
@@ -189,7 +186,7 @@ class Parser implements ParserInterface
             } else {
                 $ruleName = $rule->getRule();
                 $next     = $rule->getData();
-                $zeRule   = $this->rules[$ruleName];
+                $zeRule   = $this->getRule($ruleName);
                 $out      = $this->parseCurrentRule($zeRule, $next);
 
                 if ($out === false && $this->backtrack() === false) {
@@ -199,6 +196,25 @@ class Parser implements ParserInterface
         }
 
         return true;
+    }
+
+    /**
+     * Get rule by name.
+     *
+     * @param $name
+     * @return Rule|null
+     */
+    public function getRule($name): ?Rule
+    {
+        return $this->rules[$name] ?? null;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRules(): array
+    {
+        return $this->rules;
     }
 
     /**
@@ -250,7 +266,7 @@ class Parser implements ParserInterface
 
             $current = $this->buffer->current();
 
-            $offset    = $current->offset();
+            $offset = $current->offset();
 
             $zzeRule = clone $zeRule;
             $zzeRule->setValue($value);
@@ -361,10 +377,10 @@ class Parser implements ParserInterface
             $last = \array_pop($this->trace);
 
             if ($last instanceof Entry) {
-                $zeRule = $this->rules[$last->getRule()];
+                $zeRule = $this->getRule($last->getRule());
                 $found  = $zeRule instanceof Choice;
             } elseif ($last instanceof Escape) {
-                $zeRule = $this->rules[$last->getRule()];
+                $zeRule = $this->getRule($last->getRule());
                 $found  = $zeRule instanceof Repetition;
             } elseif ($last instanceof Terminal) {
                 $this->buffer->previous();
@@ -405,7 +421,7 @@ class Parser implements ParserInterface
 
             if ($trace instanceof Entry) {
                 $ruleName  = $trace->getRule();
-                $rule      = $this->rules[$ruleName];
+                $rule      = $this->getRule($ruleName);
                 $isRule    = $trace->isTransitional() === false;
                 $nextTrace = $this->trace[$i + 1];
                 $id        = $rule->getNodeId();
@@ -422,10 +438,7 @@ class Parser implements ParserInterface
                 }
 
                 if ($id !== null) {
-                    $children[] = [
-                        'id'      => $id,
-                        'options' => $rule->getNodeOptions(),
-                    ];
+                    $children[] = ['id' => $id];
                 }
 
                 $i = $this->buildTree($i + 1, $children);
@@ -487,6 +500,16 @@ class Parser implements ParserInterface
     }
 
     /**
+     * Get trace.
+     *
+     * @return  array
+     */
+    public function getTrace()
+    {
+        return $this->trace;
+    }
+
+    /**
      * Try to merge directly children into an existing node.
      *
      * @param array &$children Current children being gathering.
@@ -513,36 +536,5 @@ class Parser implements ParserInterface
         }
 
         return true;
-    }
-
-    /**
-     * Get trace.
-     *
-     * @return  array
-     */
-    public function getTrace()
-    {
-        return $this->trace;
-    }
-
-    /**
-     * Get rule by name.
-     *
-     * @param $name
-     * @return Rule|null
-     */
-    public function getRule($name): ?Rule
-    {
-        return $this->rules[$name] ?? null;
-    }
-
-    /**
-     * Get rules.
-     *
-     * @return array
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
     }
 }

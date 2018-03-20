@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Compiler\Parser\Debug;
 
 /**
- * Trait DumpHelpers
+ * Class BaseDumper
  */
-trait DumpHelpers
+abstract class BaseDumper implements Dumper
 {
     /**
      * @var int
@@ -38,7 +38,7 @@ trait DumpHelpers
      * @param int $initial
      * @return $this
      */
-    public function indent(int $depth = 4, int $initial = 0)
+    protected function setIndention(int $depth = 4, int $initial = 0): self
     {
         $this->indention        = $depth;
         $this->initialIndention = $initial;
@@ -57,6 +57,6 @@ trait DumpHelpers
             $this->initialIndention + $this->indention
         ));
 
-        return $prefix . $line . "\n";
+        return $prefix . $line . \PHP_EOL;
     }
 }

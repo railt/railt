@@ -12,9 +12,9 @@ namespace Railt\Compiler\Grammar\Exceptions;
 use Railt\Compiler\Exceptions\CustomErrorPosition;
 
 /**
- * Class UnexpectedInclusionException
+ * Class InclusionException
  */
-class UnexpectedInclusionException extends \LogicException
+class GrammarException extends \LogicException
 {
     use CustomErrorPosition;
 }

@@ -16,9 +16,10 @@ use Railt\Compiler\Parser\Ast\RuleInterface;
 /**
  * Class NodeDumper
  */
-class NodeDumper implements Dumper
+class NodeDumper extends BaseDumper
 {
-    use DumpHelpers;
+    private const OUTPUT_CHARSET = 'UTF-8';
+    private const OUTPUT_XML_VERSION = '1.1';
 
     /**
      * @var NodeInterface
@@ -35,29 +36,26 @@ class NodeDumper implements Dumper
     }
 
     /**
-     * @param NodeInterface|LeafInterface|RuleInterface $node
-     * @param int $depth
      * @return string
      */
-    private function renderAsString(NodeInterface $node, int $depth = 0): string
+    public function __toString(): string
     {
-        if ($node instanceof LeafInterface) {
-            $token = \vsprintf('token(%s, %s)', [
-                $node->getName(),
-                $this->inline($node->getValue()),
-            ]);
+        return $this->toString();
+    }
 
-            return $this->depth($token, $depth);
-        }
+    /**
+     * @return string
+     */
+    public function toString(): string
+    {
+        $dom = new \DOMDocument(self::OUTPUT_XML_VERSION, self::OUTPUT_CHARSET);
 
+        $dom->formatOutput = true;
 
-        $result = $this->depth($node->getName(), $depth);
+        $root = $dom->createElement(\class_basename($this->ast));
+        $root->appendChild($this->renderAsXml($dom, $this->ast));
 
-        foreach ($node->getChildren() as $child) {
-            $result .= $this->renderAsString($child, $depth + 1);
-        }
-
-        return $result;
+        return $dom->saveXML($root);
     }
 
     /**
@@ -70,14 +68,11 @@ class NodeDumper implements Dumper
         if ($ast instanceof LeafInterface) {
             $token = $root->createElement(\class_basename($ast), $ast->getValue());
 
-            $token->setAttribute('name', $ast->getName());
-            $token->setAttribute('offset', (string)$ast->getOffset());
-
-            return $token;
+            return $this->extractAttributes($ast, $token);
         }
 
         $node = $root->createElement(\class_basename($ast));
-        $node->setAttribute('name', \ltrim($ast->getName(), '#'));
+        $node = $this->extractAttributes($ast, $node);
 
         /** @var NodeInterface $child */
         foreach ($ast->getChildren() as $child) {
@@ -88,32 +83,44 @@ class NodeDumper implements Dumper
     }
 
     /**
-     * @return string
+     * @param NodeInterface $node
+     * @param \DOMElement $dom
+     * @return \DOMElement
      */
-    public function toXml(): string
+    private function extractAttributes(NodeInterface $node, \DOMElement $dom): \DOMElement
     {
-        $dom               = new \DOMDocument('1.1', 'UTF-8');
-        $dom->formatOutput = true;
+        $reflection = new \ReflectionObject($node);
 
-        $root = $dom->createElement(\class_basename($this->ast));
-        $root->appendChild($this->renderAsXml($dom, $this->ast));
+        foreach ($this->properties($reflection, $node) as $name => $value) {
+            if (\in_array($name, ['value', 'children'], true)) {
+                continue;
+            }
 
-        return $dom->saveXML($root);
+            if (\is_array($value) || \is_object($value)) {
+                $value = @\json_encode($value);
+            }
+
+            $dom->setAttribute($name, (string)$value);
+        }
+
+        return $dom;
     }
 
     /**
-     * @return string
+     * @param \ReflectionClass $object
+     * @param NodeInterface $node
+     * @return \Traversable
      */
-    public function toString(): string
+    private function properties(\ReflectionClass $object, NodeInterface $node): \Traversable
     {
-        return \trim($this->renderAsString($this->ast));
-    }
+        foreach ($object->getProperties() as $property) {
+            $property->setAccessible(true);
 
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->toString();
+            yield $property->getName() => $property->getValue($node);
+        }
+
+        if ($object->getParentClass()) {
+            yield from $this->properties($object->getParentClass(), $node);
+        }
     }
 }

@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar\Reader;
 
-use Railt\Compiler\Grammar\Lexer\GrammarToken as T;
+use Railt\Compiler\Grammar\Lexer\Grammar as T;
 use Railt\Compiler\Iterator\LookaheadIterator;
-use Railt\Compiler\Lexer\Token;
+use Railt\Compiler\Lexer\Result\Eof;
+use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Compiler\LexerInterface;
 use Railt\Compiler\Parser\Rule\Choice;
 use Railt\Compiler\Parser\Rule\Concatenation;
@@ -124,7 +125,7 @@ class RuleAnalyzer
     private function ruleTokens(array $rules): \Traversable
     {
         yield from $rules;
-        yield Token::eof(\end($rules)->offset() + \end($rules)->bytes());
+        yield new Eof(\end($rules)->offset() + \end($rules)->bytes());
     }
 
     /**

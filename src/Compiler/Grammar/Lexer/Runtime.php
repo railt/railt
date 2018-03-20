@@ -10,17 +10,44 @@ declare(strict_types=1);
 namespace Railt\Compiler\Grammar\Lexer;
 
 use Railt\Compiler\Generator\LexerGenerator;
+use Railt\Compiler\Lexer;
 use Railt\Compiler\Lexer\Definition;
-use Railt\Compiler\Lexer\Lexer;
 use Railt\Compiler\LexerInterface;
 use Railt\Io\Readable;
 
 /**
- * Class Generator
+ * Class Runtime
  */
-abstract class Generator extends GrammarToken
+abstract class Runtime
 {
-    private const CLASS_NAME = 'GrammarLexer';
+    private const CLASS_NAME = 'Grammar';
+
+    /**@#+
+     * List of tokens used inside grammar files.
+     */
+    public const T_WHITESPACE      = 'T_WHITESPACE';
+    public const T_COMMENT         = 'T_COMMENT';
+    public const T_BLOCK_COMMENT   = 'T_BLOCK_COMMENT';
+    public const T_PRAGMA          = 'T_PRAGMA';
+    public const T_TOKEN           = 'T_TOKEN';
+    public const T_SKIP            = 'T_SKIP';
+    public const T_INCLUDE         = 'T_INCLUDE';
+    public const T_NODE_DEFINITION = 'T_NODE_DEFINITION';
+    public const T_OR              = 'T_OR';
+    public const T_ZERO_OR_ONE     = 'T_ZERO_OR_ONE';
+    public const T_ONE_OR_MORE     = 'T_ONE_OR_MORE';
+    public const T_ZERO_OR_MORE    = 'T_ZERO_OR_MORE';
+    public const T_N_TO_M          = 'T_N_TO_M';
+    public const T_ZERO_TO_M       = 'T_ZERO_TO_M';
+    public const T_N_OR_MORE       = 'T_N_OR_MORE';
+    public const T_EXACTLY_N       = 'T_EXACTLY_N';
+    public const T_SKIPPED         = 'T_SKIPPED';
+    public const T_KEPT            = 'T_KEPT';
+    public const T_NAMED           = 'T_NAMED';
+    public const T_NODE            = 'T_NODE';
+    public const T_GROUP_OPEN      = 'T_GROUP_OPEN';
+    public const T_GROUP_CLOSE     = 'T_GROUP_CLOSE';
+    /**#@-*/
 
     /**
      * @var array|string[] Tokens list
@@ -60,30 +87,13 @@ abstract class Generator extends GrammarToken
     ];
 
     /**
-     * @return LexerInterface
-     * @throws \Railt\Io\Exceptions\NotReadableException
-     * @throws \RuntimeException
-     */
-    public static function fresh(): LexerInterface
-    {
-        static::build();
-
-        $class = __NAMESPACE__ . '\\' . self::CLASS_NAME;
-
-        return new $class();
-    }
-
-    /**
      * @return Readable
      * @throws \Railt\Io\Exceptions\NotReadableException
      * @throws \RuntimeException
      */
     public static function build(): Readable
     {
-        $runtime = new Lexer(\iterator_to_array(static::getTokenDefinitions()));
-        $runtime->dotAll(true);
-
-        $generator = new LexerGenerator($runtime);
+        $generator = new LexerGenerator(static::new());
         $generator->namespace(__NAMESPACE__);
         $generator->class(self::CLASS_NAME);
 
@@ -91,18 +101,29 @@ abstract class Generator extends GrammarToken
     }
 
     /**
-     * @return \Traversable|GrammarToken[]|iterable
+     * @return LexerInterface|Lexer
+     */
+    public static function new(): LexerInterface
+    {
+        $runtime = new Lexer(static::getTokenDefinitions());
+        $runtime->dotAll(true);
+
+        return $runtime;
+    }
+
+    /**
+     * @return \Traversable|Definition[]
      */
     public static function getTokenDefinitions(): \Traversable
     {
         foreach (self::TOKENS_LIST as $id => $value) {
-            $token = new Definition($id, $value);
+            $def = new Definition($id, $value);
 
             if (\in_array($id, self::TOKENS_SKIP, true)) {
-                $token->in(Definition::CHANNEL_SKIP);
+                $def->skip();
             }
 
-            yield $token;
+            yield $def;
         }
     }
 }

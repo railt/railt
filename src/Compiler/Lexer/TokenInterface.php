@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Compiler;
+namespace Railt\Compiler\Lexer;
 
 /**
  * Interface TokenInterface
@@ -15,14 +15,9 @@ namespace Railt\Compiler;
 interface TokenInterface
 {
     /**
-     * @return string|int
-     */
-    public function name();
-
-    /**
      * @return string
      */
-    public function channel(): string;
+    public function name(): string;
 
     /**
      * @return int
@@ -30,15 +25,10 @@ interface TokenInterface
     public function offset(): int;
 
     /**
+     * @param int|null $offset
      * @return string
      */
-    public function value(): string;
-
-    /**
-     * @param int $offset
-     * @return null|string
-     */
-    public function get(int $offset): ?string;
+    public function value(int $offset = null): string;
 
     /**
      * @return int
@@ -51,23 +41,13 @@ interface TokenInterface
     public function length(): int;
 
     /**
+     * @param string[] ...$names
+     * @return bool
+     */
+    public function is(string ...$names): bool;
+
+    /**
      * @return bool
      */
     public function isEof(): bool;
-
-    /**
-     * @return bool
-     */
-    public function isSystem(): bool;
-
-    /**
-     * @return bool
-     */
-    public function isSkipped(): bool;
-
-    /**
-     * @param array|string[]|int[] ...$names
-     * @return bool
-     */
-    public function is(...$names): bool;
 }

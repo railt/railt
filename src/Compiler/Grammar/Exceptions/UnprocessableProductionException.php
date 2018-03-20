@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar\Exceptions;
 
-use Railt\Compiler\Exceptions\CustomErrorPosition;
-
 /**
  * Class UnprocessableProductionException
  */
-class UnprocessableProductionException extends \LogicException
+class UnprocessableProductionException extends GrammarException
 {
-    use CustomErrorPosition;
+
 }

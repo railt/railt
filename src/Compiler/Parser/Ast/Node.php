@@ -19,7 +19,7 @@ abstract class Node implements NodeInterface
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * Node constructor.
@@ -52,6 +52,6 @@ abstract class Node implements NodeInterface
      */
     public function __toString(): string
     {
-        return (new NodeDumper($this))->toXml();
+        return (new NodeDumper($this))->toString();
     }
 }

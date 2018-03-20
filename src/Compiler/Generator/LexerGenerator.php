@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Generator;
 
-use Railt\Compiler\Generator\Renderer\Renderer;
-use Railt\Compiler\Generator\Renderer\TwigRenderer;
-use Railt\Compiler\Lexer\Runtime;
+use Railt\Compiler\Lexer;
 use Railt\Compiler\LexerInterface;
 
 /**
@@ -20,33 +18,22 @@ use Railt\Compiler\LexerInterface;
 class LexerGenerator extends BaseCodeGenerator
 {
     /**
+     * @var string
+     */
+    protected $template = 'lexer.php.twig';
+
+    /**
      * @var LexerInterface
      */
     private $lexer;
 
     /**
      * LexerGenerator constructor.
-     * @param LexerInterface|Runtime $lexer
+     * @param Lexer $lexer
      */
-    public function __construct(Runtime $lexer)
+    public function __construct(Lexer $lexer)
     {
         $this->lexer = $lexer;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTemplate(): string
-    {
-        return 'lexer.php.twig';
-    }
-
-    /**
-     * @return Renderer
-     */
-    protected function getRenderer(): Renderer
-    {
-        return new TwigRenderer();
     }
 
     /**
@@ -57,8 +44,9 @@ class LexerGenerator extends BaseCodeGenerator
     {
         yield from parent::getContext();
 
-        yield 'pattern' => $this->lexer->pattern();
-        yield 'identifiers' => $this->lexer->identifiers();
-        yield 'channels' => $this->lexer->channels();
+        $c = $this->lexer->getCompiler();
+
+        yield 'pattern' => $c->compile();
+        yield 'tokens' => $c->getTokens();
     }
 }

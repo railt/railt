@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Grammar\Reader;
 
 use Railt\Compiler\Grammar\Reader;
-use Railt\Compiler\Lexer\Token;
+use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Io\Readable;
 
 /**
@@ -25,14 +25,14 @@ interface Step
     public function __construct(Reader $reader);
 
     /**
-     * @param Token $token
+     * @param TokenInterface $token
      * @return bool
      */
-    public function match(Token $token): bool;
+    public function match(TokenInterface $token): bool;
 
     /**
      * @param Readable $file
-     * @param Token $token
+     * @param TokenInterface $token
      */
-    public function parse(Readable $file, Token $token): void;
+    public function parse(Readable $file, TokenInterface $token): void;
 }

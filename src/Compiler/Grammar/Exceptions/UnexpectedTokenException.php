@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar\Exceptions;
 
-use Railt\Compiler\Exceptions\CustomErrorPosition;
-
 /**
  * Class UnexpectedTokenException
  */
-class UnexpectedTokenException extends \LogicException
+class UnexpectedTokenException extends GrammarException
 {
-    use CustomErrorPosition;
+
 }

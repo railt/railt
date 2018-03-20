@@ -107,7 +107,7 @@ abstract class Invocation
      * @param int $depth Depth.
      * @return  int
      */
-    public function setDepth($depth)
+    public function setDepth($depth): int
     {
         $old          = $this->depth;
         $this->depth  = $depth;
@@ -120,7 +120,7 @@ abstract class Invocation
      *
      * @return  int
      */
-    public function getDepth()
+    public function getDepth(): int
     {
         return $this->depth;
     }
@@ -130,7 +130,7 @@ abstract class Invocation
      *
      * @return  bool
      */
-    public function isTransitional()
+    public function isTransitional(): bool
     {
         return $this->transitional;
     }

@@ -14,24 +14,6 @@ namespace Railt\Compiler\Lexer;
  */
 class Definition
 {
-    /**@#+
-     * A default token channels.
-     */
-    public const CHANNEL_DEFAULT = Token::CHANNEL_DEFAULT;
-    public const CHANNEL_SKIP    = Token::CHANNEL_SKIP;
-    public const CHANNEL_SYSTEM  = Token::CHANNEL_SYSTEM;
-    /**@#-*/
-
-    /**
-     * @var int
-     */
-    private static $lastId = 0xff;
-
-    /**
-     * @var int
-     */
-    private $id;
-
     /**
      * @var string
      */
@@ -40,41 +22,38 @@ class Definition
     /**
      * @var string
      */
-    private $channel = self::CHANNEL_DEFAULT;
-
-    /**
-     * @var string|int
-     */
     private $name;
 
     /**
-     * Token constructor.
-     * @param string|int $name
-     * @param string $value
-     * @param int|null $id
+     * @var bool
      */
-    public function __construct($name, string $value, int $id = null)
+    private $skip = false;
+
+    /**
+     * Token constructor.
+     * @param string $name
+     * @param string $value
+     */
+    public function __construct(string $name, string $value)
     {
-        $this->id    = $id ?? self::$lastId++;
         $this->name  = $name;
         $this->value = $value;
     }
 
     /**
-     * @return string|int
+     * @return bool
      */
-    public function getName()
+    public function isSkipped(): bool
     {
-        return $this->name;
+        return $this->skip;
     }
 
     /**
-     * @param string $channel
      * @return Definition
      */
-    public function in(string $channel): self
+    public function skip(): Definition
     {
-        $this->channel = $channel;
+        $this->skip = true;
 
         return $this;
     }
@@ -82,25 +61,9 @@ class Definition
     /**
      * @return string
      */
-    public function getChannel(): string
+    public function getName(): string
     {
-        return $this->channel;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isHidden(): bool
-    {
-        return $this->channel === self::CHANNEL_SKIP;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
+        return $this->name;
     }
 
     /**

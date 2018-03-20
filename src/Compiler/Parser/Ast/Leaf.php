@@ -17,12 +17,12 @@ class Leaf extends Node implements LeafInterface
     /**
      * @var string
      */
-    private $value;
+    protected $value;
 
     /**
      * @var int
      */
-    private $offset;
+    protected $offset;
 
     /**
      * Leaf constructor.

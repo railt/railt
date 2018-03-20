@@ -9,15 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Compiler\Grammar;
 
-use Railt\Compiler\Grammar\Exceptions\UnexpectedInclusionException;
+use Railt\Compiler\Grammar\Exceptions\GrammarException;
 use Railt\Compiler\Grammar\Exceptions\UnexpectedTokenException;
-use Railt\Compiler\Grammar\Lexer\GrammarLexer;
-use Railt\Compiler\Grammar\Lexer\GrammarToken;
+use Railt\Compiler\Grammar\Lexer\Grammar;
 use Railt\Compiler\Grammar\Reader\PragmaParser;
 use Railt\Compiler\Grammar\Reader\ProductionParser;
 use Railt\Compiler\Grammar\Reader\Step;
 use Railt\Compiler\Grammar\Reader\TokenParser;
-use Railt\Compiler\Lexer\Token;
+use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Compiler\LexerInterface;
 use Railt\Compiler\Loggable;
 use Railt\Io\File;
@@ -54,7 +53,7 @@ class Reader
      */
     public function __construct()
     {
-        $this->lexer = new GrammarLexer();
+        $this->lexer = new Grammar();
         $this->bootReaderSteps();
     }
 
@@ -111,7 +110,11 @@ class Reader
         $tokens = $this->lexer->lex($input);
 
         foreach ($tokens as $token) {
-            if ($token->is(GrammarToken::T_INCLUDE)) {
+            if ($token->isEof()) {
+                continue;
+            }
+
+            if ($token->is(Grammar::T_INCLUDE)) {
                 yield from $this->lex($this->include($input, $token));
                 continue;
             }
@@ -122,13 +125,13 @@ class Reader
 
     /**
      * @param Readable $from
-     * @param Token $token
+     * @param TokenInterface $token
      * @return Readable
      * @throws \Railt\Io\Exceptions\NotReadableException
      */
-    private function include(Readable $from, Token $token): Readable
+    private function include(Readable $from, TokenInterface $token): Readable
     {
-        $path = (string)$token->get(0);
+        $path = $token->value(0);
 
         $this->log('Include "%s" from "%s"', $path, \realpath($from->getPathname()));
 
@@ -140,15 +143,15 @@ class Reader
             }
         }
 
-        $error = \sprintf('Could not open grammar file "%s" from %s', $path, $from->getPathname());
-        throw UnexpectedInclusionException::fromFile($error, $from, $token->offset());
+        $error = \sprintf('Could not read external grammar file "%s"', $path);
+        throw GrammarException::fromFile($error, $from, $token->offset());
     }
 
     /**
      * @param Readable $from
-     * @param Token $token
+     * @param TokenInterface $token
      */
-    private function dumpToken(Readable $from, Token $token): void
+    private function dumpToken(Readable $from, TokenInterface $token): void
     {
         $offset = $token->offset();
 
@@ -162,10 +165,10 @@ class Reader
 
     /**
      * @param Readable $file
-     * @param Token $token
+     * @param TokenInterface $token
      * @return bool
      */
-    private function process(Readable $file, Token $token): bool
+    private function process(Readable $file, TokenInterface $token): bool
     {
         foreach ($this->steps as $step) {
             if ($step->match($token)) {
@@ -174,11 +177,7 @@ class Reader
             }
         }
 
-        $error = \vsprintf('Undefined token %s while parsing the grammar file %s', [
-            $token->name(),
-            $file->getPathname(),
-        ]);
-
+        $error = \sprintf('Grammar semantic error, invalid token %s', $token);
         throw UnexpectedTokenException::fromFile($error, $file, $token->offset());
     }
 }

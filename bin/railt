@@ -8,7 +8,6 @@
  */
 declare(strict_types=1);
 
-use Railt\Foundation\Console\CompilerClearCommand;
 use Railt\Foundation\Console\CompilerRebuildCommand;
 use Symfony\Component\Console\Application;
 
@@ -57,7 +56,6 @@ if (! \class_exists(Application::class)) {
 $cli = new Application();
 
 $cli->add(new CompilerRebuildCommand());
-$cli->add(new CompilerClearCommand());
 
 try {
     $code = $cli->run();

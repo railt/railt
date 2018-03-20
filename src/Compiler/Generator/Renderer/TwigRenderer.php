@@ -55,12 +55,30 @@ class TwigRenderer implements Renderer
             return $generator->generate();
         });
 
+        yield new TwigFilter('boolean', function (string $string): string {
+            $generator = new ValueGenerator($string, ValueGenerator::TYPE_BOOL);
+
+            return $generator->generate();
+        });
+
         yield new TwigFilter('array', function (array $items, int $depth = 0): string {
             $generator = new ValueGenerator($items, ValueGenerator::TYPE_ARRAY_SHORT);
 
             $generator->setArrayDepth($depth);
 
             return $generator->generate();
+        });
+
+        yield new TwigFilter('class', function ($object): string {
+            if (\is_object($object)) {
+                return \get_class($object);
+            }
+
+            return \json_encode($object);
+        });
+
+        yield new TwigFilter('value', function ($value): string {
+            return (new ValueGenerator($value))->generate();
         });
     }
 

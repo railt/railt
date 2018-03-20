@@ -39,6 +39,12 @@ interface CodeGenerator
     public function header(string ...$lines): self;
 
     /**
+     * @param string $template
+     * @return CodeGenerator
+     */
+    public function using(string $template): self;
+
+    /**
      * @return GeneratedResult
      */
     public function build(): GeneratedResult;
