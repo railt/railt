@@ -18,6 +18,3 @@ $parser = new SchemaParser();
 $result = $parser->parse($schema);
 
 echo $result;
-
-
-

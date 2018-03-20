@@ -18,7 +18,7 @@ use Railt\Compiler\Parser\Ast\RuleInterface;
  */
 class NodeDumper extends BaseDumper
 {
-    private const OUTPUT_CHARSET = 'UTF-8';
+    private const OUTPUT_CHARSET     = 'UTF-8';
     private const OUTPUT_XML_VERSION = '1.1';
 
     /**

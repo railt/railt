@@ -12,7 +12,6 @@ namespace Railt\Compiler\Grammar\Reader;
 use Railt\Compiler\Grammar\Lexer\Grammar as T;
 use Railt\Compiler\Iterator\LookaheadIterator;
 use Railt\Compiler\Lexer\Result\Eof;
-use Railt\Compiler\Lexer\TokenInterface;
 use Railt\Compiler\LexerInterface;
 use Railt\Compiler\Parser\Rule\Choice;
 use Railt\Compiler\Parser\Rule\Concatenation;

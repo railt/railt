@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Compiler\Lexer;
+
 use Railt\Compiler\Lexer\Result\Eof;
 
 /**

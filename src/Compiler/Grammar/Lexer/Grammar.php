@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of Lexer package.
- * 
+ *
  * For the full copyright and license information, please view the
  * LICENSE file that was distributed with this source code.
  */
@@ -19,29 +19,29 @@ final class Grammar extends GrammarRuntime
     /**#@+
      * List of Grammar::class tokens defined as public constants
      */
-    public const T_WHITESPACE = 'T_WHITESPACE';
-    public const T_COMMENT = 'T_COMMENT';
-    public const T_BLOCK_COMMENT = 'T_BLOCK_COMMENT';
-    public const T_PRAGMA = 'T_PRAGMA';
-    public const T_TOKEN = 'T_TOKEN';
-    public const T_SKIP = 'T_SKIP';
-    public const T_INCLUDE = 'T_INCLUDE';
+    public const T_WHITESPACE      = 'T_WHITESPACE';
+    public const T_COMMENT         = 'T_COMMENT';
+    public const T_BLOCK_COMMENT   = 'T_BLOCK_COMMENT';
+    public const T_PRAGMA          = 'T_PRAGMA';
+    public const T_TOKEN           = 'T_TOKEN';
+    public const T_SKIP            = 'T_SKIP';
+    public const T_INCLUDE         = 'T_INCLUDE';
     public const T_NODE_DEFINITION = 'T_NODE_DEFINITION';
-    public const T_OR = 'T_OR';
-    public const T_ZERO_OR_ONE = 'T_ZERO_OR_ONE';
-    public const T_ONE_OR_MORE = 'T_ONE_OR_MORE';
-    public const T_ZERO_OR_MORE = 'T_ZERO_OR_MORE';
-    public const T_N_TO_M = 'T_N_TO_M';
-    public const T_ZERO_TO_M = 'T_ZERO_TO_M';
-    public const T_N_OR_MORE = 'T_N_OR_MORE';
-    public const T_EXACTLY_N = 'T_EXACTLY_N';
-    public const T_SKIPPED = 'T_SKIPPED';
-    public const T_KEPT = 'T_KEPT';
-    public const T_NAMED = 'T_NAMED';
-    public const T_NODE = 'T_NODE';
-    public const T_GROUP_OPEN = 'T_GROUP_OPEN';
-    public const T_GROUP_CLOSE = 'T_GROUP_CLOSE';
-    public const T_EOF = 'T_EOF';
+    public const T_OR              = 'T_OR';
+    public const T_ZERO_OR_ONE     = 'T_ZERO_OR_ONE';
+    public const T_ONE_OR_MORE     = 'T_ONE_OR_MORE';
+    public const T_ZERO_OR_MORE    = 'T_ZERO_OR_MORE';
+    public const T_N_TO_M          = 'T_N_TO_M';
+    public const T_ZERO_TO_M       = 'T_ZERO_TO_M';
+    public const T_N_OR_MORE       = 'T_N_OR_MORE';
+    public const T_EXACTLY_N       = 'T_EXACTLY_N';
+    public const T_SKIPPED         = 'T_SKIPPED';
+    public const T_KEPT            = 'T_KEPT';
+    public const T_NAMED           = 'T_NAMED';
+    public const T_NODE            = 'T_NODE';
+    public const T_GROUP_OPEN      = 'T_GROUP_OPEN';
+    public const T_GROUP_CLOSE     = 'T_GROUP_CLOSE';
+    public const T_EOF             = 'T_EOF';
     /**#@-*/
 
     /**
@@ -53,29 +53,29 @@ final class Grammar extends GrammarRuntime
      * @var array|bool[] List of tokens in format "[ token_name => kept_or_skipped ]"
      */
     protected $tokens = [
-        self::T_WHITESPACE => false,
-        self::T_COMMENT => false,
-        self::T_BLOCK_COMMENT => false,
-        self::T_PRAGMA => true,
-        self::T_TOKEN => true,
-        self::T_SKIP => true,
-        self::T_INCLUDE => true,
+        self::T_WHITESPACE      => false,
+        self::T_COMMENT         => false,
+        self::T_BLOCK_COMMENT   => false,
+        self::T_PRAGMA          => true,
+        self::T_TOKEN           => true,
+        self::T_SKIP            => true,
+        self::T_INCLUDE         => true,
         self::T_NODE_DEFINITION => true,
-        self::T_OR => true,
-        self::T_ZERO_OR_ONE => true,
-        self::T_ONE_OR_MORE => true,
-        self::T_ZERO_OR_MORE => true,
-        self::T_N_TO_M => true,
-        self::T_ZERO_TO_M => true,
-        self::T_N_OR_MORE => true,
-        self::T_EXACTLY_N => true,
-        self::T_SKIPPED => true,
-        self::T_KEPT => true,
-        self::T_NAMED => true,
-        self::T_NODE => true,
-        self::T_GROUP_OPEN => true,
-        self::T_GROUP_CLOSE => true,
-        self::T_EOF => true,
+        self::T_OR              => true,
+        self::T_ZERO_OR_ONE     => true,
+        self::T_ONE_OR_MORE     => true,
+        self::T_ZERO_OR_MORE    => true,
+        self::T_N_TO_M          => true,
+        self::T_ZERO_TO_M       => true,
+        self::T_N_OR_MORE       => true,
+        self::T_EXACTLY_N       => true,
+        self::T_SKIPPED         => true,
+        self::T_KEPT            => true,
+        self::T_NAMED           => true,
+        self::T_NODE            => true,
+        self::T_GROUP_OPEN      => true,
+        self::T_GROUP_CLOSE     => true,
+        self::T_EOF             => true,
             ];
 
     /**

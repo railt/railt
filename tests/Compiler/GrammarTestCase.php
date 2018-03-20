@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Compiler;
 
-use Railt\Compiler\Parser;
-use Railt\Compiler\Parser\Ast\NodeInterface;
 use Railt\Io\File;
 
 /**
@@ -18,5 +16,4 @@ use Railt\Io\File;
  */
 class GrammarTestCase extends AbstractParserTestCase
 {
-
 }

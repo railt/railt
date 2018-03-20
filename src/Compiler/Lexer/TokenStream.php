@@ -55,7 +55,7 @@ class TokenStream implements \IteratorAggregate
      */
     public function __construct(Readable $input, string $pattern, array $skip)
     {
-        $this->skip = $skip;
+        $this->skip    = $skip;
         $this->input   = $input;
         $this->body    = $input->getContents();
         $this->pattern = $pattern;
@@ -118,4 +118,3 @@ class TokenStream implements \IteratorAggregate
         }
     }
 }
-

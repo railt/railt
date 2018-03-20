@@ -27,7 +27,7 @@ interface LexerInterface
      * @param bool $keep
      * @return LexerInterface
      */
-    public function eof(bool $keep = true): LexerInterface;
+    public function eof(bool $keep = true): self;
 
     /**
      * @param string $name

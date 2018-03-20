@@ -61,7 +61,7 @@ class Token implements TokenInterface
      * @param array $context
      * @return Token
      */
-    public function with(array $context): Token
+    public function with(array $context): self
     {
         $this->context = $context;
 
@@ -72,7 +72,7 @@ class Token implements TokenInterface
      * @param int $offset
      * @return Token
      */
-    public function at(int $offset): Token
+    public function at(int $offset): self
     {
         $this->offset = $offset;
 
@@ -137,7 +137,7 @@ class Token implements TokenInterface
      */
     public function __toString(): string
     {
-        $format = function(string $value) {
+        $format = function (string $value) {
             $value = (string)(\preg_replace('/\s+/iu', ' ', $value) ?? $value);
             $value = \addcslashes($value, '"');
 

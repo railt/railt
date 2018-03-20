@@ -51,7 +51,7 @@ class Definition
     /**
      * @return Definition
      */
-    public function skip(): Definition
+    public function skip(): self
     {
         $this->skip = true;
 

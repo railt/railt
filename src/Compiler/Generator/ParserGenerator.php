@@ -38,7 +38,7 @@ class ParserGenerator extends BaseCodeGenerator
      */
     public function __construct(Parser $parser, string $lexer)
     {
-        $this->parser = $parser;
+        $this->parser     = $parser;
         $this->lexerClass = $lexer;
     }
 

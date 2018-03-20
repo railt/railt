@@ -76,7 +76,7 @@ class RegexIterator implements \IteratorAggregate
 
         if ($status === null) {
             $parts = \explode(':', \error_get_last()['message'] ?? '');
-            $error = \sprintf('%s, %s', self::PREG_PARSING_ERROR, trim(\end($parts)));
+            $error = \sprintf('%s, %s', self::PREG_PARSING_ERROR, \trim(\end($parts)));
             throw new \InvalidArgumentException($error);
         }
     }
