@@ -33,12 +33,6 @@ abstract class Rule
     protected $nodeId;
 
     /**
-     * Default ID.
-     * @var string|null
-     */
-    protected $defaultId;
-
-    /**
      * Rule constructor.
      * @param int|string $name
      * @param string|array $children
@@ -126,27 +120,6 @@ abstract class Rule
     public function setNodeId(string $nodeId): self
     {
         $this->nodeId = $nodeId;
-
-        return $this;
-    }
-
-    /**
-     * Get default ID.
-     * @return string|null
-     */
-    public function getDefaultId(): ?string
-    {
-        return $this->defaultId;
-    }
-
-    /**
-     * Set default ID.
-     * @param string $defaultId Default ID.
-     * @return $this|self
-     */
-    public function setDefaultId(string $defaultId): self
-    {
-        $this->defaultId = $defaultId;
 
         return $this;
     }

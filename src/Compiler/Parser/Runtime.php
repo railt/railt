@@ -463,10 +463,6 @@ abstract class Runtime implements ParserInterface
                 } while ($pop !== null);
 
                 if ($cId === null) {
-                    $cId = $rule->getDefaultId();
-                }
-
-                if ($cId === null) {
                     for ($j = \count($handle) - 1; $j >= 0; --$j) {
                         $children[] = $handle[$j];
                     }
@@ -474,7 +470,7 @@ abstract class Runtime implements ParserInterface
                     continue;
                 }
 
-                $cTree      = new AstRule((string)($id ?: $cId), \array_reverse($handle));
+                $cTree      = new AstRule(\trim((string)($id ?: $cId), '#'), \array_reverse($handle));
                 $children[] = $cTree;
             } elseif ($trace instanceof Escape) {
                 return $i + 1;

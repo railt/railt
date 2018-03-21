@@ -106,10 +106,6 @@ class RuleAnalyzer
             $zeRule = $this->parsedRules[$rule];
             $zeRule->setName($key);
 
-            if ($nodeId !== null) {
-                $zeRule->setDefaultId($nodeId);
-            }
-
             unset($this->parsedRules[$rule]);
             $this->parsedRules[$key] = $zeRule;
         }

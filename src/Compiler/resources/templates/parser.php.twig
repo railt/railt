@@ -24,11 +24,6 @@ final class {{ class }} extends {{ class }}Runtime
         $lexer = new {{ lexer }}();
 
         parent::__construct($lexer, $this->getRules());
-
-        {% for name, def in rules %}{% if def.getDefaultId %}
-$this->getRule({{ name|string|raw }})->setDefaultId({{ def.getDefaultId | string | raw }});
-        {% endif %}{% endfor %}
-
     }
 
     /**
