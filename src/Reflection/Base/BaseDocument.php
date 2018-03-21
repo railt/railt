@@ -148,7 +148,7 @@ abstract class BaseDocument extends BaseDefinition implements Document
             'definitions',
 
             // instanceof DirectiveDefinition
-            'directives'
+            'directives',
         ]);
     }
 
