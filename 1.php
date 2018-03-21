@@ -7,7 +7,6 @@
  */
 declare(strict_types=1);
 
-use Railt\Compiler\Grammar\Reader;
 use Railt\Io\File;
 use Railt\SDL\Parser\SchemaParser;
 
