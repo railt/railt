@@ -10,19 +10,19 @@ type A implements B & C {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="5">A</Leaf>
-      </Node>
-      <Node name="Implements">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="18">B</Leaf>
-        </Node>
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="22">C</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="5">A</Leaf>
+      </Rule>
+      <Rule name="Implements">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="18">B</Leaf>
+        </Rule>
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="22">C</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

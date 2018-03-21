@@ -52,10 +52,19 @@ class NodeDumper extends BaseDumper
 
         $dom->formatOutput = true;
 
-        $root = $dom->createElement(\class_basename($this->ast));
+        $root = $dom->createElement('Ast');
         $root->appendChild($this->renderAsXml($dom, $this->ast));
 
         return $dom->saveXML($root);
+    }
+
+    /**
+     * @return string
+     * @deprecated Use toString method instead
+     */
+    public function toXml(): string
+    {
+        return $this->toString();
     }
 
     /**
@@ -68,11 +77,14 @@ class NodeDumper extends BaseDumper
         if ($ast instanceof LeafInterface) {
             $token = $root->createElement(\class_basename($ast), $ast->getValue());
 
-            return $this->extractAttributes($ast, $token);
+            $token->setAttribute('name', $ast->getName());
+            $token->setAttribute('offset', (string)$ast->getOffset());
+
+            return $token;
         }
 
         $node = $root->createElement(\class_basename($ast));
-        $node = $this->extractAttributes($ast, $node);
+        $node->setAttribute('name', \ltrim($ast->getName(), '#'));
 
         /** @var NodeInterface $child */
         foreach ($ast->getChildren() as $child) {
@@ -80,47 +92,5 @@ class NodeDumper extends BaseDumper
         }
 
         return $node;
-    }
-
-    /**
-     * @param NodeInterface $node
-     * @param \DOMElement $dom
-     * @return \DOMElement
-     */
-    private function extractAttributes(NodeInterface $node, \DOMElement $dom): \DOMElement
-    {
-        $reflection = new \ReflectionObject($node);
-
-        foreach ($this->properties($reflection, $node) as $name => $value) {
-            if (\in_array($name, ['value', 'children'], true)) {
-                continue;
-            }
-
-            if (\is_array($value) || \is_object($value)) {
-                $value = @\json_encode($value);
-            }
-
-            $dom->setAttribute($name, (string)$value);
-        }
-
-        return $dom;
-    }
-
-    /**
-     * @param \ReflectionClass $object
-     * @param NodeInterface $node
-     * @return \Traversable
-     */
-    private function properties(\ReflectionClass $object, NodeInterface $node): \Traversable
-    {
-        foreach ($object->getProperties() as $property) {
-            $property->setAccessible(true);
-
-            yield $property->getName() => $property->getValue($node);
-        }
-
-        if ($object->getParentClass()) {
-            yield from $this->properties($object->getParentClass(), $node);
-        }
     }
 }

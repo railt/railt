@@ -15,71 +15,71 @@ type A {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="5">A</Leaf>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="13">fieldA</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="21">Value</Leaf>
-        </Node>
-        <Node name="Directive">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="36">DirectiveB</Leaf>
-          </Node>
-          <Node name="Argument">
-            <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="47">key</Leaf>
-            </Node>
-            <Node name="Value">
-              <Leaf name="T_NAME" namespace="default" offset="52">value</Leaf>
-            </Node>
-          </Node>
-        </Node>
-        <Node name="Directive">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="68">DirectiveC</Leaf>
-          </Node>
-          <Node name="Argument">
-            <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="79">key</Leaf>
-            </Node>
-            <Node name="Value">
-              <Leaf name="T_NAME" namespace="default" offset="84">value</Leaf>
-            </Node>
-          </Node>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="96">fieldB</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="104">ID</Leaf>
-        </Node>
-        <Node name="Directive">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="108">DirectiveD</Leaf>
-          </Node>
-          <Node name="Argument">
-            <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="119">key</Leaf>
-            </Node>
-            <Node name="Value">
-              <Leaf name="T_NAME" namespace="default" offset="124">value</Leaf>
-            </Node>
-          </Node>
-        </Node>
-        <Node name="Directive">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="132">DirectiveE</Leaf>
-          </Node>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="5">A</Leaf>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="13">fieldA</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="21">Value</Leaf>
+        </Rule>
+        <Rule name="Directive">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="36">DirectiveB</Leaf>
+          </Rule>
+          <Rule name="Argument">
+            <Rule name="Name">
+              <Leaf name="T_NAME" offset="47">key</Leaf>
+            </Rule>
+            <Rule name="Value">
+              <Leaf name="T_NAME" offset="52">value</Leaf>
+            </Rule>
+          </Rule>
+        </Rule>
+        <Rule name="Directive">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="68">DirectiveC</Leaf>
+          </Rule>
+          <Rule name="Argument">
+            <Rule name="Name">
+              <Leaf name="T_NAME" offset="79">key</Leaf>
+            </Rule>
+            <Rule name="Value">
+              <Leaf name="T_NAME" offset="84">value</Leaf>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="96">fieldB</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="104">ID</Leaf>
+        </Rule>
+        <Rule name="Directive">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="108">DirectiveD</Leaf>
+          </Rule>
+          <Rule name="Argument">
+            <Rule name="Name">
+              <Leaf name="T_NAME" offset="119">key</Leaf>
+            </Rule>
+            <Rule name="Value">
+              <Leaf name="T_NAME" offset="124">value</Leaf>
+            </Rule>
+          </Rule>
+        </Rule>
+        <Rule name="Directive">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="132">DirectiveE</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

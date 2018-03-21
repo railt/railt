@@ -13,6 +13,7 @@ use Railt\Compiler\Parser;
 use Railt\Io\File;
 use Railt\SDL\Parser\Compiled;
 use Railt\SDL\Parser\Factory;
+use Railt\SDL\Parser\SchemaParser;
 
 /**
  * Trait ParserStubs
@@ -24,7 +25,7 @@ trait ParserStubs
      */
     protected function getParsers(): \Traversable
     {
-        yield (new Factory())->setParser(new Compiled());
+        //yield (new Factory())->setParser(new SchemaParser());
 
         yield (new Factory())->setParser(
             Parser::fromGrammar(File::fromPathname(Factory::GRAMMAR_FILE))

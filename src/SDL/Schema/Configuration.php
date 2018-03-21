@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Schema;
 
 use Railt\Compiler\Parser;
+use Railt\Compiler\ParserInterface;
 use Railt\SDL\Reflection\Coercion\TypeCoercion;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;
@@ -38,9 +39,9 @@ interface Configuration
     public function getTypeCoercion(): TypeCoercion;
 
     /**
-     * @return Parser
+     * @return ParserInterface
      */
-    public function getParser(): Parser;
+    public function getParser(): ParserInterface;
 
     /**
      * @return Dictionary

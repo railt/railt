@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\AST;
 
-use Railt\Compiler\Debug\NodeDumper;
+use Railt\Compiler\Parser\Debug\NodeDumper;
 use Railt\Io\File;
 use Railt\SDL\Parser\Factory;
 use Symfony\Component\Finder\Finder;
@@ -56,6 +56,6 @@ class SpecTestCase extends AbstractASTTestCase
     {
         $ast = $parser->parse(File::fromSources($code));
 
-        $this->assertSame($expected, (new NodeDumper($ast))->toXml(), $title);
+        $this->assertSame($expected, (new NodeDumper($ast))->toString(), $title);
     }
 }

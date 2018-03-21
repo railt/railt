@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Compiler\Parser\Rule;
 
 /**
- * Class Escape
+ * Class Ekzit
  */
 class Escape extends Invocation
 {

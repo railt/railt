@@ -10,11 +10,11 @@ type A {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="5">A</Leaf>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="5">A</Leaf>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

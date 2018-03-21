@@ -23,19 +23,19 @@ schema {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="SchemaDefinition">
-      <Leaf name="T_SCHEMA" namespace="default" offset="31">schema</Leaf>
-      <Node name="Query">
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="73">TestQuery</Leaf>
-        </Node>
-      </Node>
-      <Node name="Mutation">
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="156">TestMutation</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="SchemaDefinition">
+      <Leaf name="T_SCHEMA" offset="31">schema</Leaf>
+      <Rule name="Query">
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="73">TestQuery</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Mutation">
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="156">TestMutation</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

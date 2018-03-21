@@ -1,0 +1,8 @@
+<Ast>
+  <Rule name="Rule">
+    <Rule name="Sum">
+      <Leaf name="T_NUM" offset="0">10</Leaf>
+      <Leaf name="T_NUM" offset="5">2</Leaf>
+    </Rule>
+  </Rule>
+</Ast>

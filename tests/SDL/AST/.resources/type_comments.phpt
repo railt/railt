@@ -47,48 +47,48 @@ type TestMutation {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="39">TestQuery</Leaf>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="77">field</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="84">TestQuery</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="153">field2</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="161">TestMutation</Leaf>
-        </Node>
-      </Node>
-    </Node>
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="240">TestMutation</Leaf>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="342">field3</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="350">TestQuery</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="429">field4</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="437">TestMutation</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="39">TestQuery</Leaf>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="77">field</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="84">TestQuery</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="153">field2</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="161">TestMutation</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="240">TestMutation</Leaf>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="342">field3</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="350">TestQuery</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="429">field4</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="437">TestMutation</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

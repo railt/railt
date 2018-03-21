@@ -197,35 +197,6 @@ abstract class Runtime implements ParserInterface
 
             $value = $buffer->current()->value();
 
-            if (0 <= $unification = $rule->getUnificationIndex()) {
-                for ($skip = 0, $i = \count($this->trace) - 1; $i >= 0; --$i) {
-                    $trace = $this->trace[$i];
-
-                    if ($trace instanceof Entry) {
-                        if ($trace->isTransitional() === false) {
-                            if ($trace->getDepth() <= $this->depth) {
-                                break;
-                            }
-
-                            --$skip;
-                        }
-                    } elseif ($trace instanceof Escape &&
-                        $trace->isTransitional() === false) {
-                        $skip += $trace->getDepth() > $this->depth;
-                    }
-
-                    if (0 < $skip) {
-                        continue;
-                    }
-
-                    if ($trace instanceof Terminal &&
-                        $unification === $trace->getUnificationIndex() &&
-                        $value !== $trace->getValue()) {
-                        return false;
-                    }
-                }
-            }
-
             $current = $buffer->current();
 
             $offset = $current->offset();
@@ -369,9 +340,10 @@ abstract class Runtime implements ParserInterface
 
             if ($trace instanceof Entry) {
                 $ruleName  = $trace->getRule();
+                $rule      = $this->rules[$ruleName];
                 $isRule    = $trace->isTransitional() === false;
                 $nextTrace = $this->trace[$i + 1];
-                $id        = $this->getRule($ruleName)->getNodeId();
+                $id        = $rule->getNodeId();
 
                 // Optimization: Skip empty trace sequence.
                 if ($nextTrace instanceof Escape && $ruleName === $nextTrace->getRule()) {
@@ -385,7 +357,9 @@ abstract class Runtime implements ParserInterface
                 }
 
                 if ($id !== null) {
-                    $children[] = $id;
+                    $children[] = [
+                        'id'      => $id,
+                    ];
                 }
 
                 $i = $this->buildTree($i + 1, $children);
@@ -402,8 +376,8 @@ abstract class Runtime implements ParserInterface
 
                     if (\is_object($pop) === true) {
                         $handle[] = $pop;
-                    } elseif (\is_scalar($pop) === true && $cId === null) {
-                        $cId = $pop[0];
+                    } elseif (\is_array($pop) === true && $cId === null) {
+                        $cId = $pop['id'];
                     } elseif ($ruleName === $pop) {
                         break;
                     }
@@ -417,7 +391,7 @@ abstract class Runtime implements ParserInterface
                     continue;
                 }
 
-                $cTree      = new AstRule(\substr((string)($id ?: $cId), 1), \array_reverse($handle));
+                $cTree      = new AstRule((string)($id ?: $cId), \array_reverse($handle));
                 $children[] = $cTree;
             } elseif ($trace instanceof Escape) {
                 return $i + 1;
@@ -434,13 +408,5 @@ abstract class Runtime implements ParserInterface
         }
 
         return $children[0];
-    }
-
-    /**
-     * @return array
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
     }
 }

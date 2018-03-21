@@ -24,21 +24,21 @@ enum Colour {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="EnumDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="34">Colour</Leaf>
-      </Node>
-      <Node name="Value">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="65">Red</Leaf>
-        </Node>
-      </Node>
-      <Node name="Value">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="118">Green</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="EnumDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="34">Colour</Leaf>
+      </Rule>
+      <Rule name="Value">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="65">Red</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Value">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="118">Green</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

@@ -25,43 +25,43 @@ extend type Foo2 @onType { # Skip
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ExtendDefinition">
-      <Node name="ObjectDefinition">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="40">Foo</Leaf>
-        </Node>
-        <Node name="Field">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="95">seven</Leaf>
-          </Node>
-          <Node name="Argument">
-            <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="101">argument</Leaf>
-            </Node>
-            <Node name="List">
-              <Node name="Type">
-                <Leaf name="T_NAME" namespace="default" offset="112">String</Leaf>
-              </Node>
-            </Node>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="122">Type</Leaf>
-          </Node>
-        </Node>
-      </Node>
-    </Node>
-    <Node name="ExtendDefinition">
-      <Node name="ObjectDefinition">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="191">Foo2</Leaf>
-        </Node>
-        <Node name="Directive">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="197">onType</Leaf>
-          </Node>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ExtendDefinition">
+      <Rule name="ObjectDefinition">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="40">Foo</Leaf>
+        </Rule>
+        <Rule name="Field">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="95">seven</Leaf>
+          </Rule>
+          <Rule name="Argument">
+            <Rule name="Name">
+              <Leaf name="T_NAME" offset="101">argument</Leaf>
+            </Rule>
+            <Rule name="List">
+              <Rule name="Type">
+                <Leaf name="T_NAME" offset="112">String</Leaf>
+              </Rule>
+            </Rule>
+          </Rule>
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="122">Type</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+    <Rule name="ExtendDefinition">
+      <Rule name="ObjectDefinition">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="191">Foo2</Leaf>
+        </Rule>
+        <Rule name="Directive">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="197">onType</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

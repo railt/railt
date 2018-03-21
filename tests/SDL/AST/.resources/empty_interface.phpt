@@ -10,11 +10,11 @@ interface InterfaceName {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="InterfaceDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="10">InterfaceName</Leaf>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="InterfaceDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="10">InterfaceName</Leaf>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

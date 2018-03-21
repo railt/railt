@@ -16,67 +16,67 @@ type User {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="5">User</Leaf>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="16">name</Leaf>
-        </Node>
-        <Node name="Argument">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="30">firstName</Leaf>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="41">Boolean</Leaf>
-          </Node>
-          <Node name="Value">
-            <Leaf name="T_BOOL_FALSE" namespace="default" offset="51">false</Leaf>
-          </Node>
-        </Node>
-        <Node name="Argument">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="66">lastName</Leaf>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="76">Boolean</Leaf>
-          </Node>
-          <Node name="Directive">
-            <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="97">lastNameDirective</Leaf>
-            </Node>
-            <Node name="Argument">
-              <Node name="Name">
-                <Leaf name="T_NAME" namespace="default" offset="115">test</Leaf>
-              </Node>
-              <Node name="Value">
-                <Leaf name="T_NUMBER_VALUE" namespace="default" offset="121">23</Leaf>
-              </Node>
-            </Node>
-          </Node>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="133">String</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="140">!</Leaf>
-        </Node>
-        <Node name="Directive">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="151">fieldDirective</Leaf>
-          </Node>
-          <Node name="Argument">
-            <Node name="Name">
-              <Leaf name="T_NAME" namespace="default" offset="166">test</Leaf>
-            </Node>
-            <Node name="Value">
-              <Leaf name="T_BOOL_TRUE" namespace="default" offset="172">true</Leaf>
-            </Node>
-          </Node>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="5">User</Leaf>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="16">name</Leaf>
+        </Rule>
+        <Rule name="Argument">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="30">firstName</Leaf>
+          </Rule>
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="41">Boolean</Leaf>
+          </Rule>
+          <Rule name="Value">
+            <Leaf name="T_BOOL_FALSE" offset="51">false</Leaf>
+          </Rule>
+        </Rule>
+        <Rule name="Argument">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="66">lastName</Leaf>
+          </Rule>
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="76">Boolean</Leaf>
+          </Rule>
+          <Rule name="Directive">
+            <Rule name="Name">
+              <Leaf name="T_NAME" offset="97">lastNameDirective</Leaf>
+            </Rule>
+            <Rule name="Argument">
+              <Rule name="Name">
+                <Leaf name="T_NAME" offset="115">test</Leaf>
+              </Rule>
+              <Rule name="Value">
+                <Leaf name="T_NUMBER_VALUE" offset="121">23</Leaf>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="133">String</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="140">!</Leaf>
+        </Rule>
+        <Rule name="Directive">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="151">fieldDirective</Leaf>
+          </Rule>
+          <Rule name="Argument">
+            <Rule name="Name">
+              <Leaf name="T_NAME" offset="166">test</Leaf>
+            </Rule>
+            <Rule name="Value">
+              <Leaf name="T_BOOL_TRUE" offset="172">true</Leaf>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

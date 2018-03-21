@@ -13,40 +13,40 @@ interface HasTimestamps {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="InterfaceDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="10">HasTimestamps</Leaf>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="30">createdAt</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="41">String</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="47">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="53">updatedAt</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="64">String</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="75">timestamps</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="88">String</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="94">!</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="96">!</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="InterfaceDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="10">HasTimestamps</Leaf>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="30">createdAt</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="41">String</Leaf>
+          <Leaf name="T_NON_NULL" offset="47">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="53">updatedAt</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="64">String</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="75">timestamps</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="88">String</Leaf>
+            <Leaf name="T_NON_NULL" offset="94">!</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="96">!</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

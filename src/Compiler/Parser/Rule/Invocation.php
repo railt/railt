@@ -15,56 +15,66 @@ namespace Railt\Compiler\Parser\Rule;
 abstract class Invocation
 {
     /**
-     * Rule
-     * @var string|int
+     * Rule.
+     *
+     * @var string
      */
     protected $rule;
 
     /**
-     * Data
+     * Data.
+     *
      * @var mixed
      */
     protected $data;
 
     /**
-     * Piece of future sequence
+     * Piece of todo sequence.
+     *
      * @var array
      */
-    protected $future;
+    protected $todo;
 
     /**
-     * Depth in the trace
+     * Depth in the trace.
+     *
      * @var int
      */
-    protected $depth = -1;
+    protected $depth        = -1;
 
     /**
      * Whether the rule is transitional or not (i.e. not declared in the grammar
      * but created by the analyzer).
+     *
      * @var bool
      */
-    protected $transitional;
+    protected $transitional = false;
 
     /**
      * Constructor.
      *
-     * @param string|int $rule
-     * @param mixed $data
-     * @param array $future
-     * @param int $depth
+     * @param string $rule Rule name.
+     * @param mixed $data Data.
+     * @param array $todo Todo.
+     * @param int $depth Depth.
      */
-    public function __construct($rule, $data, array $future = null, $depth = -1)
-    {
+    public function __construct(
+        $rule,
+        $data,
+        array $todo = null,
+        $depth      = -1
+    ) {
         $this->rule         = $rule;
         $this->data         = $data;
-        $this->future       = $future ?? [];
+        $this->todo         = $todo;
         $this->depth        = $depth;
         $this->transitional = \is_int($rule);
     }
 
     /**
      * Get rule name.
-     * @return string|int
+     *
+     * @return  string
      */
     public function getRule()
     {
@@ -73,7 +83,8 @@ abstract class Invocation
 
     /**
      * Get data.
-     * @return mixed
+     *
+     * @return  mixed
      */
     public function getData()
     {
@@ -81,40 +92,45 @@ abstract class Invocation
     }
 
     /**
-     * Get future sequence.
-     * @return array
+     * Get todo sequence.
+     *
+     * @return  array
      */
-    public function getTodo(): array
+    public function getTodo()
     {
-        return $this->future;
+        return $this->todo;
+    }
+
+    /**
+     * Set depth in trace.
+     *
+     * @param int $depth Depth.
+     * @return  int
+     */
+    public function setDepth($depth)
+    {
+        $old          = $this->depth;
+        $this->depth  = $depth;
+
+        return $old;
     }
 
     /**
      * Get depth in trace.
-     * @return int
+     *
+     * @return  int
      */
-    public function getDepth(): int
+    public function getDepth()
     {
         return $this->depth;
     }
 
     /**
-     * Set depth in trace.
-     * @param int $depth Depth.
-     * @return self|$this
-     */
-    public function setDepth(int $depth): self
-    {
-        $this->depth = $depth;
-
-        return $this;
-    }
-
-    /**
      * Check whether the rule is transitional or not.
-     * @return bool
+     *
+     * @return  bool
      */
-    public function isTransitional(): bool
+    public function isTransitional()
     {
         return $this->transitional;
     }

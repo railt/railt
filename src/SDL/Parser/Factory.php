@@ -56,9 +56,9 @@ class Factory
      */
     private function createParser(): ParserInterface
     {
-        //if (\class_exists(Compiled::class)) {
-        //    return new Compiled();
-        //}
+        if (\class_exists(SchemaParser::class)) {
+            return new SchemaParser();
+        }
 
         return (new Reader())->read(File::fromPathname(static::GRAMMAR_FILE))->getParser();
     }

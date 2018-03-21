@@ -45,311 +45,311 @@ type A {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="5">A</Leaf>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="13">id</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="17">ID</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="24">idList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="33">ID</Leaf>
-          </Node>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="41">idNonNull</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="52">ID</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="54">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="60">idNonNullList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="76">ID</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="79">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="85">idListOfNonNulls</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="104">ID</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="106">!</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="108">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="115">int</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="120">Int</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="128">intList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="138">Int</Leaf>
-          </Node>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="147">intNonNull</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="159">Int</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="162">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="168">intNonNullList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="185">Int</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="189">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="195">intListOfNonNulls</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="215">Int</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="218">!</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="220">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="227">float</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="234">Float</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="244">floatList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="256">Float</Leaf>
-          </Node>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="267">floatNonNull</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="281">Float</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="286">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="292">floatNonNullList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="311">Float</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="317">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="323">floatListOfNonNulls</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="345">Float</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="350">!</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="352">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="359">string</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="367">String</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="378">stringList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="391">String</Leaf>
-          </Node>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="403">stringNonNull</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="418">String</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="424">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="430">stringNonNullList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="450">String</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="457">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="463">stringListOfNonNulls</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="486">String</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="492">!</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="494">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="501">boolean</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="510">Boolean</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="522">booleanList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="536">Boolean</Leaf>
-          </Node>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="549">booleanNonNull</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="565">Boolean</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="572">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="578">booleanNonNullList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="599">Boolean</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="607">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="613">booleanListOfNonNulls</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="637">Boolean</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="644">!</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="646">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="653">relation</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="663">Relation</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="676">relationList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="691">Relation</Leaf>
-          </Node>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="705">relationNonNull</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="722">Relation</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="730">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="736">relationNonNullList</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="758">Relation</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="767">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="773">relationListOfNonNulls</Leaf>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="798">Relation</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="806">!</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="808">!</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="5">A</Leaf>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="13">id</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="17">ID</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="24">idList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="33">ID</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="41">idNonNull</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="52">ID</Leaf>
+          <Leaf name="T_NON_NULL" offset="54">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="60">idNonNullList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="76">ID</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="79">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="85">idListOfNonNulls</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="104">ID</Leaf>
+            <Leaf name="T_NON_NULL" offset="106">!</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="108">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="115">int</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="120">Int</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="128">intList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="138">Int</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="147">intNonNull</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="159">Int</Leaf>
+          <Leaf name="T_NON_NULL" offset="162">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="168">intNonNullList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="185">Int</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="189">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="195">intListOfNonNulls</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="215">Int</Leaf>
+            <Leaf name="T_NON_NULL" offset="218">!</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="220">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="227">float</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="234">Float</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="244">floatList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="256">Float</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="267">floatNonNull</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="281">Float</Leaf>
+          <Leaf name="T_NON_NULL" offset="286">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="292">floatNonNullList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="311">Float</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="317">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="323">floatListOfNonNulls</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="345">Float</Leaf>
+            <Leaf name="T_NON_NULL" offset="350">!</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="352">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="359">string</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="367">String</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="378">stringList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="391">String</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="403">stringNonNull</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="418">String</Leaf>
+          <Leaf name="T_NON_NULL" offset="424">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="430">stringNonNullList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="450">String</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="457">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="463">stringListOfNonNulls</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="486">String</Leaf>
+            <Leaf name="T_NON_NULL" offset="492">!</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="494">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="501">boolean</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="510">Boolean</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="522">booleanList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="536">Boolean</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="549">booleanNonNull</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="565">Boolean</Leaf>
+          <Leaf name="T_NON_NULL" offset="572">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="578">booleanNonNullList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="599">Boolean</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="607">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="613">booleanListOfNonNulls</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="637">Boolean</Leaf>
+            <Leaf name="T_NON_NULL" offset="644">!</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="646">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="653">relation</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="663">Relation</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="676">relationList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="691">Relation</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="705">relationNonNull</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="722">Relation</Leaf>
+          <Leaf name="T_NON_NULL" offset="730">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="736">relationNonNullList</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="758">Relation</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="767">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="773">relationListOfNonNulls</Leaf>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="798">Relation</Leaf>
+            <Leaf name="T_NON_NULL" offset="806">!</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="808">!</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

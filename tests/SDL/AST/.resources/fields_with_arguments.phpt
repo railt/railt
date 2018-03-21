@@ -14,75 +14,75 @@ type User {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ObjectDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="5">User</Leaf>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="16">id</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="20">ID</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="22">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="28">name</Leaf>
-        </Node>
-        <Node name="Argument">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="33">firstName</Leaf>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="44">Boolean</Leaf>
-          </Node>
-        </Node>
-        <Node name="Argument">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="53">lastName</Leaf>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="63">Boolean</Leaf>
-          </Node>
-        </Node>
-        <Node name="List">
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="74">String</Leaf>
-          </Node>
-          <Leaf name="T_NON_NULL" namespace="default" offset="81">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="87">email</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="94">String</Leaf>
-        </Node>
-      </Node>
-      <Node name="Field">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="105">createdAt</Leaf>
-        </Node>
-        <Node name="Argument">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="115">dateFormat</Leaf>
-          </Node>
-          <Node name="Type">
-            <Leaf name="T_NAME" namespace="default" offset="127">String</Leaf>
-            <Leaf name="T_NON_NULL" namespace="default" offset="133">!</Leaf>
-          </Node>
-          <Node name="Value">
-            <Leaf name="T_STRING" namespace="default" offset="137">"Some"</Leaf>
-          </Node>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="146">String</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ObjectDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="5">User</Leaf>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="16">id</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="20">ID</Leaf>
+          <Leaf name="T_NON_NULL" offset="22">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="28">name</Leaf>
+        </Rule>
+        <Rule name="Argument">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="33">firstName</Leaf>
+          </Rule>
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="44">Boolean</Leaf>
+          </Rule>
+        </Rule>
+        <Rule name="Argument">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="53">lastName</Leaf>
+          </Rule>
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="63">Boolean</Leaf>
+          </Rule>
+        </Rule>
+        <Rule name="List">
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="74">String</Leaf>
+          </Rule>
+          <Leaf name="T_NON_NULL" offset="81">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="87">email</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="94">String</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Field">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="105">createdAt</Leaf>
+        </Rule>
+        <Rule name="Argument">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="115">dateFormat</Leaf>
+          </Rule>
+          <Rule name="Type">
+            <Leaf name="T_NAME" offset="127">String</Leaf>
+            <Leaf name="T_NON_NULL" offset="133">!</Leaf>
+          </Rule>
+          <Rule name="Value">
+            <Leaf name="T_STRING" offset="137">"Some"</Leaf>
+          </Rule>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="146">String</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

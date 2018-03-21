@@ -34,7 +34,7 @@ final class {{ class }} extends {{ class }}Runtime
         return [
             {% for key, rule in rules %}
 {{ key | value | raw }} =>
-new \{{ rule|class}}({%for a in rule.args%}{{a|value|replace({"\n":""," ":""})|raw}}{%if not loop.last%}, {%endif%}
+new \{{ rule|class}}({%for a in rule.toArray%}{{a|value|replace({"\n":""," ":""})|raw}}{%if not loop.last%}, {%endif%}
 {% endfor %}),
             {% endfor %}
         ];

@@ -20,21 +20,21 @@ scalar Test2 @Directive # Skip
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="ScalarDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="36">Test</Leaf>
-      </Node>
-    </Node>
-    <Node name="ScalarDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="85">Test2</Leaf>
-      </Node>
-      <Node name="Directive">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="92">Directive</Leaf>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="ScalarDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="36">Test</Leaf>
+      </Rule>
+    </Rule>
+    <Rule name="ScalarDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="85">Test2</Leaf>
+      </Rule>
+      <Rule name="Directive">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="92">Directive</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>

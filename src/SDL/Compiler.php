@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Railt\Compiler\ParserInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\Definition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
@@ -228,7 +229,7 @@ class Compiler implements CompilerInterface, Configuration
     private function onCompile(): \Closure
     {
         return function (Readable $readable): Document {
-            $ast = $this->parser->parse($readable->getContents());
+            $ast = $this->parser->parse($readable);
 
             return $this->complete(new DocumentBuilder($ast, $readable, $this));
         };
@@ -245,9 +246,9 @@ class Compiler implements CompilerInterface, Configuration
     }
 
     /**
-     * @return Parser
+     * @return ParserInterface
      */
-    public function getParser(): Parser
+    public function getParser(): ParserInterface
     {
         return $this->parser;
     }

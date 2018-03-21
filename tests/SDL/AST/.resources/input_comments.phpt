@@ -31,54 +31,54 @@ input AnnotatedInput @onInputObjectType {
 --EXPECTF--
 
 <Ast>
-  <Node name="Document">
-    <Node name="InputDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="40">InputType</Leaf>
-      </Node>
-      <Node name="Argument">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="97">key</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="102">String</Leaf>
-          <Leaf name="T_NON_NULL" namespace="default" offset="108">!</Leaf>
-        </Node>
-      </Node>
-      <Node name="Argument">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="165">answer</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="173">Int</Leaf>
-        </Node>
-        <Node name="Value">
-          <Leaf name="T_NUMBER_VALUE" namespace="default" offset="179">42</Leaf>
-        </Node>
-      </Node>
-    </Node>
-    <Node name="InputDefinition">
-      <Node name="Name">
-        <Leaf name="T_NAME" namespace="default" offset="236">AnnotatedInput</Leaf>
-      </Node>
-      <Node name="Directive">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="252">onInputObjectType</Leaf>
-        </Node>
-      </Node>
-      <Node name="Argument">
-        <Node name="Name">
-          <Leaf name="T_NAME" namespace="default" offset="339">annotatedField</Leaf>
-        </Node>
-        <Node name="Type">
-          <Leaf name="T_NAME" namespace="default" offset="355">Type</Leaf>
-        </Node>
-        <Node name="Directive">
-          <Node name="Name">
-            <Leaf name="T_NAME" namespace="default" offset="361">onField</Leaf>
-          </Node>
-        </Node>
-      </Node>
-    </Node>
-  </Node>
+  <Rule name="Document">
+    <Rule name="InputDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="40">InputType</Leaf>
+      </Rule>
+      <Rule name="Argument">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="97">key</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="102">String</Leaf>
+          <Leaf name="T_NON_NULL" offset="108">!</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Argument">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="165">answer</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="173">Int</Leaf>
+        </Rule>
+        <Rule name="Value">
+          <Leaf name="T_NUMBER_VALUE" offset="179">42</Leaf>
+        </Rule>
+      </Rule>
+    </Rule>
+    <Rule name="InputDefinition">
+      <Rule name="Name">
+        <Leaf name="T_NAME" offset="236">AnnotatedInput</Leaf>
+      </Rule>
+      <Rule name="Directive">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="252">onInputObjectType</Leaf>
+        </Rule>
+      </Rule>
+      <Rule name="Argument">
+        <Rule name="Name">
+          <Leaf name="T_NAME" offset="339">annotatedField</Leaf>
+        </Rule>
+        <Rule name="Type">
+          <Leaf name="T_NAME" offset="355">Type</Leaf>
+        </Rule>
+        <Rule name="Directive">
+          <Rule name="Name">
+            <Leaf name="T_NAME" offset="361">onField</Leaf>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
 </Ast>
