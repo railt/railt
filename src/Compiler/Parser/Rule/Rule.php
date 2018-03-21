@@ -24,7 +24,7 @@ abstract class Rule
     /**
      * Rule's children. Can be an array of names or a single name.
      *
-     * @var mixed
+     * @var array|int|null
      */
     protected $children;
 
@@ -50,11 +50,13 @@ abstract class Rule
     }
 
     /**
-     * @param $nodeId
+     * Get rule name.
+     *
+     * @return  string
      */
-    public function setNodeId($nodeId): void
+    public function getName()
     {
-        $this->nodeId = $nodeId;
+        return $this->name;
     }
 
     /**
@@ -66,23 +68,16 @@ abstract class Rule
     }
 
     /**
-     * Get rule name.
-     *
-     * @return  string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get rule's children.
-     *
-     * @return  mixed
+     * @return array
      */
     public function getChildren()
     {
         return $this->children;
+    }
+
+    public function setChildrent($items)
+    {
+        $this->children = $items;
     }
 
     /**
@@ -93,5 +88,23 @@ abstract class Rule
     public function getNodeId()
     {
         return $this->nodeId;
+    }
+
+    /**
+     * @param $nodeId
+     */
+    public function setNodeId($nodeId): void
+    {
+        $this->nodeId = $nodeId;
+    }
+
+    /**
+     * @return array
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'goto' => $this->children,
+        ];
     }
 }

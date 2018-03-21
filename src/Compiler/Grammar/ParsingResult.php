@@ -93,7 +93,9 @@ class ParsingResult
     public function getRules(): array
     {
         $analyzer = new RuleAnalyzer($this->getLexer());
+        
+        $result = $analyzer->analyze($this->productions->getRules());
 
-        return $analyzer->analyze($this->productions->getRules());
+        return $result instanceof \Traversable ? \iterator_to_array($result) : $result;
     }
 }
