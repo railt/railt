@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Behavior;
 
-use Railt\Compiler\Ast\NodeInterface;
-use Railt\Compiler\Ast\RuleInterface;
+use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Compiler\Parser\Ast\RuleInterface;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 
 /**

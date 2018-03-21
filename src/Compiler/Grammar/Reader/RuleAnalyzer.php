@@ -11,7 +11,6 @@ namespace Railt\Compiler\Grammar\Reader;
 
 use Railt\Compiler\Grammar\Reader\Analyzer\Analyzer;
 use Railt\Compiler\Grammar\Reader\Analyzer\GrammarAnalyzer;
-use Railt\Compiler\Grammar\Reader\Analyzer\TokensSimplifier;
 use Railt\Compiler\LexerInterface;
 
 /**
@@ -39,7 +38,7 @@ class RuleAnalyzer implements Analyzer
      */
     private function boot(LexerInterface $lexer): \Traversable
     {
-        $analyzers = [GrammarAnalyzer::class, TokensSimplifier::class];
+        $analyzers = [GrammarAnalyzer::class];
 
         foreach ($analyzers as $analyzer) {
             yield new $analyzer($lexer);

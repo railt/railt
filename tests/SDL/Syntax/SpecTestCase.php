@@ -81,7 +81,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
      */
     public function testNegativeParserSpecs(Factory $parser, string $expected): void
     {
-        $this->expectException(UnexpectedTokenException::class);
+        $this->expectException(\RuntimeException::class);
 
         $parser->parse(File::fromSources($expected));
     }

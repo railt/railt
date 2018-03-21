@@ -276,6 +276,14 @@ abstract class Runtime implements ParserInterface
     }
 
     /**
+     * @return array
+     */
+    public function getRules(): array
+    {
+        return $this->rules;
+    }
+
+    /**
      * Get rule by name.
      *
      * @param $name

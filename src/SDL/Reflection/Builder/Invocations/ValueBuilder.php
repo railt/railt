@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Invocations;
 
-use Railt\Compiler\Ast\LeafInterface;
-use Railt\Compiler\Ast\NodeInterface;
-use Railt\Compiler\Ast\RuleInterface;
+use Railt\Compiler\Parser\Ast\LeafInterface;
+use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Compiler\Parser\Ast\RuleInterface;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;

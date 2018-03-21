@@ -59,6 +59,20 @@ class Repetition extends Rule
     }
 
     /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            $this->name,
+            $this->min,
+            $this->max,
+            $this->children,
+            $this->nodeId,
+        ];
+    }
+
+    /**
      * Get minimum bound.
      *
      * @return  int

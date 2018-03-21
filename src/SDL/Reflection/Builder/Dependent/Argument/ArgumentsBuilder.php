@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Dependent\Argument;
 
-use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Parser\Ast\NodeInterface;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Reflection\Builder\Dependent\ArgumentBuilder;
 

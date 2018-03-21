@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions\Enum;
 
-use Railt\Compiler\Ast\NodeInterface;
+use Railt\Compiler\Parser\Ast\NodeInterface;
 use Railt\Reflection\Base\Definitions\Enum\BaseValue;
 use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;

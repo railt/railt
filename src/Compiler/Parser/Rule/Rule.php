@@ -12,7 +12,7 @@ namespace Railt\Compiler\Parser\Rule;
 /**
  * Class Rule
  */
-abstract class Rule
+abstract class Rule implements Arrayable
 {
     /**
      * Rule name.
@@ -47,6 +47,18 @@ abstract class Rule
         $this->name     = $name;
         $this->children = $children;
         $this->nodeId   = $nodeId;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            $this->name,
+            $this->children,
+            $this->nodeId,
+        ];
     }
 
     /**
@@ -96,15 +108,5 @@ abstract class Rule
     public function setNodeId($nodeId): void
     {
         $this->nodeId = $nodeId;
-    }
-
-    /**
-     * @return array
-     */
-    public function __debugInfo(): array
-    {
-        return [
-            'goto' => $this->children,
-        ];
     }
 }

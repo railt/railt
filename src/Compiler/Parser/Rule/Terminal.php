@@ -59,6 +59,19 @@ class Terminal extends Rule
     }
 
     /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            $this->name,
+            $this->tokenName,
+            $this->nodeId,
+            $this->kept,
+        ];
+    }
+
+    /**
      * Get token name.
      *
      * @return  string

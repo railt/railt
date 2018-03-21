@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\Ast\NodeInterface;
-use Railt\Compiler\Ast\RuleInterface;
+use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Compiler\Parser\Ast\RuleInterface;
 use Railt\Reflection\Base\Definitions\BaseDirective;
 use Railt\SDL\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
