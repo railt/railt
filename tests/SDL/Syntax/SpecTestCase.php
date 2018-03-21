@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Syntax;
 
-use Railt\Compiler\Exception\UnexpectedTokenException;
 use Railt\Io\File;
 use Railt\SDL\Parser\Factory;
 use Symfony\Component\Finder\Finder;

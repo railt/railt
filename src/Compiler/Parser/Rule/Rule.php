@@ -87,7 +87,7 @@ abstract class Rule implements Arrayable
         return $this->children;
     }
 
-    public function setChildrent($items)
+    public function setChildrent($items): void
     {
         $this->children = $items;
     }
