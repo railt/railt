@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of Parser package.
- * 
+ *
  * For the full copyright and license information, please view the
  * LICENSE file that was distributed with this source code.
  */
@@ -19,47 +19,47 @@ final class SchemaLexer extends SchemaLexerRuntime
     /**#@+
      * List of SchemaLexer::class tokens defined as public constants
      */
-    public const T_NON_NULL = 'T_NON_NULL';
-    public const T_VAR = 'T_VAR';
-    public const T_PARENTHESIS_OPEN = 'T_PARENTHESIS_OPEN';
-    public const T_PARENTHESIS_CLOSE = 'T_PARENTHESIS_CLOSE';
-    public const T_THREE_DOTS = 'T_THREE_DOTS';
-    public const T_COLON = 'T_COLON';
-    public const T_EQUAL = 'T_EQUAL';
-    public const T_DIRECTIVE_AT = 'T_DIRECTIVE_AT';
-    public const T_BRACKET_OPEN = 'T_BRACKET_OPEN';
-    public const T_BRACKET_CLOSE = 'T_BRACKET_CLOSE';
-    public const T_BRACE_OPEN = 'T_BRACE_OPEN';
-    public const T_BRACE_CLOSE = 'T_BRACE_CLOSE';
-    public const T_OR = 'T_OR';
-    public const T_AND = 'T_AND';
-    public const T_NUMBER_VALUE = 'T_NUMBER_VALUE';
-    public const T_BOOL_TRUE = 'T_BOOL_TRUE';
-    public const T_BOOL_FALSE = 'T_BOOL_FALSE';
-    public const T_NULL = 'T_NULL';
-    public const T_MULTILINE_STRING = 'T_MULTILINE_STRING';
-    public const T_STRING = 'T_STRING';
-    public const T_EXTENDS = 'T_EXTENDS';
-    public const T_TYPE_IMPLEMENTS = 'T_TYPE_IMPLEMENTS';
-    public const T_ON = 'T_ON';
-    public const T_TYPE = 'T_TYPE';
-    public const T_ENUM = 'T_ENUM';
-    public const T_UNION = 'T_UNION';
-    public const T_INTERFACE = 'T_INTERFACE';
-    public const T_SCHEMA = 'T_SCHEMA';
-    public const T_SCHEMA_QUERY = 'T_SCHEMA_QUERY';
-    public const T_SCHEMA_MUTATION = 'T_SCHEMA_MUTATION';
+    public const T_NON_NULL            = 'T_NON_NULL';
+    public const T_VAR                 = 'T_VAR';
+    public const T_PARENTHESIS_OPEN    = 'T_PARENTHESIS_OPEN';
+    public const T_PARENTHESIS_CLOSE   = 'T_PARENTHESIS_CLOSE';
+    public const T_THREE_DOTS          = 'T_THREE_DOTS';
+    public const T_COLON               = 'T_COLON';
+    public const T_EQUAL               = 'T_EQUAL';
+    public const T_DIRECTIVE_AT        = 'T_DIRECTIVE_AT';
+    public const T_BRACKET_OPEN        = 'T_BRACKET_OPEN';
+    public const T_BRACKET_CLOSE       = 'T_BRACKET_CLOSE';
+    public const T_BRACE_OPEN          = 'T_BRACE_OPEN';
+    public const T_BRACE_CLOSE         = 'T_BRACE_CLOSE';
+    public const T_OR                  = 'T_OR';
+    public const T_AND                 = 'T_AND';
+    public const T_NUMBER_VALUE        = 'T_NUMBER_VALUE';
+    public const T_BOOL_TRUE           = 'T_BOOL_TRUE';
+    public const T_BOOL_FALSE          = 'T_BOOL_FALSE';
+    public const T_NULL                = 'T_NULL';
+    public const T_MULTILINE_STRING    = 'T_MULTILINE_STRING';
+    public const T_STRING              = 'T_STRING';
+    public const T_EXTENDS             = 'T_EXTENDS';
+    public const T_TYPE_IMPLEMENTS     = 'T_TYPE_IMPLEMENTS';
+    public const T_ON                  = 'T_ON';
+    public const T_TYPE                = 'T_TYPE';
+    public const T_ENUM                = 'T_ENUM';
+    public const T_UNION               = 'T_UNION';
+    public const T_INTERFACE           = 'T_INTERFACE';
+    public const T_SCHEMA              = 'T_SCHEMA';
+    public const T_SCHEMA_QUERY        = 'T_SCHEMA_QUERY';
+    public const T_SCHEMA_MUTATION     = 'T_SCHEMA_MUTATION';
     public const T_SCHEMA_SUBSCRIPTION = 'T_SCHEMA_SUBSCRIPTION';
-    public const T_SCALAR = 'T_SCALAR';
-    public const T_DIRECTIVE = 'T_DIRECTIVE';
-    public const T_INPUT = 'T_INPUT';
-    public const T_EXTEND = 'T_EXTEND';
-    public const T_NAME = 'T_NAME';
-    public const T_VARIABLE = 'T_VARIABLE';
-    public const T_WHITESPACE = 'T_WHITESPACE';
-    public const T_COMMENT = 'T_COMMENT';
-    public const T_COMMA = 'T_COMMA';
-    public const T_EOF = 'T_EOF';
+    public const T_SCALAR              = 'T_SCALAR';
+    public const T_DIRECTIVE           = 'T_DIRECTIVE';
+    public const T_INPUT               = 'T_INPUT';
+    public const T_EXTEND              = 'T_EXTEND';
+    public const T_NAME                = 'T_NAME';
+    public const T_VARIABLE            = 'T_VARIABLE';
+    public const T_WHITESPACE          = 'T_WHITESPACE';
+    public const T_COMMENT             = 'T_COMMENT';
+    public const T_COMMA               = 'T_COMMA';
+    public const T_EOF                 = 'T_EOF';
     /**#@-*/
 
     /**
@@ -71,47 +71,47 @@ final class SchemaLexer extends SchemaLexerRuntime
      * @var array|bool[] List of tokens in format "[ token_name => kept_or_skipped ]"
      */
     protected $tokens = [
-        self::T_NON_NULL => true,
-        self::T_VAR => true,
-        self::T_PARENTHESIS_OPEN => true,
-        self::T_PARENTHESIS_CLOSE => true,
-        self::T_THREE_DOTS => true,
-        self::T_COLON => true,
-        self::T_EQUAL => true,
-        self::T_DIRECTIVE_AT => true,
-        self::T_BRACKET_OPEN => true,
-        self::T_BRACKET_CLOSE => true,
-        self::T_BRACE_OPEN => true,
-        self::T_BRACE_CLOSE => true,
-        self::T_OR => true,
-        self::T_AND => true,
-        self::T_NUMBER_VALUE => true,
-        self::T_BOOL_TRUE => true,
-        self::T_BOOL_FALSE => true,
-        self::T_NULL => true,
-        self::T_MULTILINE_STRING => true,
-        self::T_STRING => true,
-        self::T_EXTENDS => true,
-        self::T_TYPE_IMPLEMENTS => true,
-        self::T_ON => true,
-        self::T_TYPE => true,
-        self::T_ENUM => true,
-        self::T_UNION => true,
-        self::T_INTERFACE => true,
-        self::T_SCHEMA => true,
-        self::T_SCHEMA_QUERY => true,
-        self::T_SCHEMA_MUTATION => true,
+        self::T_NON_NULL            => true,
+        self::T_VAR                 => true,
+        self::T_PARENTHESIS_OPEN    => true,
+        self::T_PARENTHESIS_CLOSE   => true,
+        self::T_THREE_DOTS          => true,
+        self::T_COLON               => true,
+        self::T_EQUAL               => true,
+        self::T_DIRECTIVE_AT        => true,
+        self::T_BRACKET_OPEN        => true,
+        self::T_BRACKET_CLOSE       => true,
+        self::T_BRACE_OPEN          => true,
+        self::T_BRACE_CLOSE         => true,
+        self::T_OR                  => true,
+        self::T_AND                 => true,
+        self::T_NUMBER_VALUE        => true,
+        self::T_BOOL_TRUE           => true,
+        self::T_BOOL_FALSE          => true,
+        self::T_NULL                => true,
+        self::T_MULTILINE_STRING    => true,
+        self::T_STRING              => true,
+        self::T_EXTENDS             => true,
+        self::T_TYPE_IMPLEMENTS     => true,
+        self::T_ON                  => true,
+        self::T_TYPE                => true,
+        self::T_ENUM                => true,
+        self::T_UNION               => true,
+        self::T_INTERFACE           => true,
+        self::T_SCHEMA              => true,
+        self::T_SCHEMA_QUERY        => true,
+        self::T_SCHEMA_MUTATION     => true,
         self::T_SCHEMA_SUBSCRIPTION => true,
-        self::T_SCALAR => true,
-        self::T_DIRECTIVE => true,
-        self::T_INPUT => true,
-        self::T_EXTEND => true,
-        self::T_NAME => true,
-        self::T_VARIABLE => true,
-        self::T_WHITESPACE => false,
-        self::T_COMMENT => false,
-        self::T_COMMA => false,
-        self::T_EOF => true,
+        self::T_SCALAR              => true,
+        self::T_DIRECTIVE           => true,
+        self::T_INPUT               => true,
+        self::T_EXTEND              => true,
+        self::T_NAME                => true,
+        self::T_VARIABLE            => true,
+        self::T_WHITESPACE          => false,
+        self::T_COMMENT             => false,
+        self::T_COMMA               => false,
+        self::T_EOF                 => true,
             ];
 
     /**
