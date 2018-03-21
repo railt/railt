@@ -13,12 +13,12 @@ use Railt\SDL\Parser\SchemaParser;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$grammar = File::fromPathname(__DIR__ . '/src/SDL/resources/grammar/sdl.pp2');
-
 $schema = File::fromPathname(__DIR__ . '/tests/Compiler/.resources/test.graphqls');
 
-//$parser = new SchemaParser();
-$parser = \Railt\Compiler\Parser::fromGrammar($grammar);
+$time = \microtime(true);
+
+$parser = new SchemaParser();
 $result = $parser->parse($schema);
 
-echo $result;
+echo \number_format(\microtime(true) - $time, 5) . 'ms' . "\n";
+echo \number_format(\memory_get_usage() / 1000 / 1000, 2) . 'mb';
