@@ -44,15 +44,15 @@ abstract class Rule
      */
     public function __construct($name, $children, $nodeId = null)
     {
-        $this->name = $name;
+        $this->name     = $name;
         $this->children = $children;
-        $this->nodeId = $nodeId;
+        $this->nodeId   = $nodeId;
     }
 
     /**
      * @param $nodeId
      */
-    public function setNodeId($nodeId)
+    public function setNodeId($nodeId): void
     {
         $this->nodeId = $nodeId;
     }
@@ -60,7 +60,7 @@ abstract class Rule
     /**
      * @param $name
      */
-    public function setName($name)
+    public function setName($name): void
     {
         $this->name = $name;
     }

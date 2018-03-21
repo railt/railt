@@ -12,7 +12,6 @@ namespace Railt\Compiler\Grammar;
 use Railt\Compiler\Grammar\Reader\PragmaParser;
 use Railt\Compiler\Grammar\Reader\ProductionParser;
 use Railt\Compiler\Grammar\Reader\RuleAnalyzer;
-use Railt\Compiler\Grammar\Reader\RuleSimplifier;
 use Railt\Compiler\Grammar\Reader\TokenParser;
 use Railt\Compiler\Lexer;
 use Railt\Compiler\Lexer\Runtime as LexerRuntime;

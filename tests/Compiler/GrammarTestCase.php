@@ -54,6 +54,6 @@ class GrammarTestCase extends AbstractParserTestCase
 
         $nodes = $reader->getParser()->parse(File::fromPathname($sources));
 
-        $this->assertEquals($ast, (string)$nodes);
+        $this->assertSame($ast, (string)$nodes);
     }
 }

@@ -102,7 +102,7 @@ class Terminal extends Rule
     /**
      * @param $offset
      */
-    public function setOffset($offset)
+    public function setOffset($offset): void
     {
         $this->offset = $offset;
     }
@@ -119,7 +119,7 @@ class Terminal extends Rule
     /**
      * @param $kept
      */
-    public function setKept($kept)
+    public function setKept($kept): void
     {
         $this->kept = $kept;
     }

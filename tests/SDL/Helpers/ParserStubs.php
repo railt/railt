@@ -11,7 +11,6 @@ namespace Railt\Tests\SDL\Helpers;
 
 use Railt\Compiler\Parser;
 use Railt\Io\File;
-use Railt\SDL\Parser\Compiled;
 use Railt\SDL\Parser\Factory;
 use Railt\SDL\Parser\SchemaParser;
 
