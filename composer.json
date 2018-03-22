@@ -55,8 +55,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\": "src/",
-            "OldRailt\\": "old/"
+            "Railt\\": "src/"
         },
         "files": [
             "src/Storage/polyfill.php"
@@ -70,7 +69,8 @@
         "symfony/var-dumper": "~4.0",
         "symfony/dependency-injection": "3.*|4.*",
         "illuminate/container": "~5.5",
-        "zendframework/zend-code": "~3.0"
+        "zendframework/zend-code": "~3.0",
+        "codedungeon/phpunit-result-printer": "~0.6"
     },
     "autoload-dev": {
         "psr-4": {
