@@ -16,18 +16,17 @@ use Railt\Compiler\Iterator\BufferedIterator;
  */
 class IteratorsTestCase extends AbstractCompilerTestCase
 {
-
     /**
      * @return void
      */
     public function testIterable(): void
     {
         foreach ($this->bufferOverGenerator(10) as $i => $item) {
-            $this->assertEquals($i, $item);
+            $this->assertSame($i, $item);
         }
 
         foreach ($this->bufferOverRewindable(10) as $i => $item) {
-            $this->assertEquals($i, $item);
+            $this->assertSame($i, $item);
         }
     }
 
@@ -61,11 +60,11 @@ class IteratorsTestCase extends AbstractCompilerTestCase
     public function testIterableOverCrowdedBuffer(): void
     {
         foreach ($this->bufferOverGenerator(10, 1) as $i => $item) {
-            $this->assertEquals($i, $item);
+            $this->assertSame($i, $item);
         }
 
         foreach ($this->bufferOverRewindable(10, 1) as $i => $item) {
-            $this->assertEquals($i, $item);
+            $this->assertSame($i, $item);
         }
     }
 
@@ -80,15 +79,15 @@ class IteratorsTestCase extends AbstractCompilerTestCase
             $iterator = $this->bufferOverGenerator(1000, $size);
 
             foreach ($iterator as $i => $item) {
-                $this->assertEquals($i, $item);
-                $this->assertEquals($size, $iterator->getBufferSize());
+                $this->assertSame($i, $item);
+                $this->assertSame($size, $iterator->getBufferSize());
             }
 
             $iterator2 = $this->bufferOverRewindable(1000, $size);
 
             foreach ($iterator2 as $i => $item) {
-                $this->assertEquals($i, $item);
-                $this->assertEquals($size, $iterator->getBufferSize());
+                $this->assertSame($i, $item);
+                $this->assertSame($size, $iterator->getBufferSize());
             }
         }
     }
@@ -103,7 +102,7 @@ class IteratorsTestCase extends AbstractCompilerTestCase
         foreach ($iterator as $item) {
             if ($item > 10) {
                 $iterator->rewind();
-                $this->assertEquals(0, $iterator->current());
+                $this->assertSame(0, $iterator->current());
                 break;
             }
         }
@@ -111,7 +110,7 @@ class IteratorsTestCase extends AbstractCompilerTestCase
         foreach ($iterator as $item) {
             if ($item > 20) {
                 $iterator->rewind();
-                $this->assertEquals(0, $iterator->current());
+                $this->assertSame(0, $iterator->current());
                 break;
             }
         }
@@ -119,7 +118,7 @@ class IteratorsTestCase extends AbstractCompilerTestCase
         foreach ($iterator as $item) {
             if ($item > 70) {
                 $iterator->rewind();
-                $this->assertEquals(0, $iterator->current());
+                $this->assertSame(0, $iterator->current());
                 break;
             }
         }
@@ -127,7 +126,7 @@ class IteratorsTestCase extends AbstractCompilerTestCase
         foreach ($iterator as $item) {
             if ($item > 99) {
                 $iterator->rewind();
-                $this->assertEquals(0, $iterator->current());
+                $this->assertSame(0, $iterator->current());
                 break;
             }
         }
@@ -141,7 +140,7 @@ class IteratorsTestCase extends AbstractCompilerTestCase
     {
         $max   = 1000;
         $sizes = [];
-        for ($i = 0; $i < $max; $i++) {
+        for ($i = 0; $i < $max; ++$i) {
             if (\random_int(0, 100) === 0) {
                 $sizes[] = \random_int(1, $max - 1);
             }
@@ -153,7 +152,7 @@ class IteratorsTestCase extends AbstractCompilerTestCase
             foreach ($iterator as $item) {
                 if ($item >= $size) {
                     $iterator->rewind();
-                    $this->assertEquals($item - $size + 1, $iterator->current());
+                    $this->assertSame($item - $size + 1, $iterator->current());
                     break;
                 }
             }
