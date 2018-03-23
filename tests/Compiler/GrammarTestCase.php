@@ -16,7 +16,7 @@ use Symfony\Component\Finder\Finder;
 /**
  * Class GrammarTestCase
  */
-class GrammarTestCase extends AbstractParserTestCase
+class GrammarTestCase extends AbstractCompilerTestCase
 {
     /**
      * @return array

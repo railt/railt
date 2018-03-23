@@ -13,9 +13,9 @@ use Railt\SDL\Parser\Factory;
 use Railt\Tests\AbstractTestCase;
 
 /**
- * Class AbstractParserTest
+ * Class AbstractCompilerTestCase
  */
-abstract class AbstractParserTestCase extends AbstractTestCase
+abstract class AbstractCompilerTestCase extends AbstractTestCase
 {
     /**
      * @return string
