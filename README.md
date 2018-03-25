@@ -53,9 +53,6 @@ use Railt\Routing\RouterExtension;
 // Creating a new application
 $app = new Application();
 
-// Add support for routing (Like the @route directive)
-$app->extend(RouterExtension::class);
-
 // Link to the main SDL of the our application
 $schema = File::fromPathname(__DIR__ . '/schema.graphqls');
 
