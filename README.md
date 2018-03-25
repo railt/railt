@@ -36,33 +36,6 @@ thereby solving problems such as:
 The documentation is in the process of writing, therefore, 
 in order to understand how it works, a quick start.
 
-### `index.php`
-
-This is the main file that handles all requests to the application. 
-With the same success this role can be performed by any controller 
-in the MVP (MVC with passive models) application, for example on 
-the basis of a Symfony or Laravel.
-
-```php
-use Railt\Io\File;
-use Railt\SDL\Compiler;
-use Railt\Http\Request;
-use Railt\Foundation\Application;
-use Railt\Routing\RouterExtension;
-
-// Creating a new application
-$app = new Application();
-
-// Link to the main SDL of the our application
-$schema = File::fromPathname(__DIR__ . '/schema.graphqls');
-
-// Processing of HTTP request
-$response = $app->request($schema, new Request());
-
-// And sending a Response
-$response->send();
-```
-
 ### `schema.graphqls`
 
 This is our main GraphQL application schema.
@@ -90,6 +63,33 @@ class ExampleController
         return $message;
     }
 }
+```
+
+### `index.php`
+
+This is the main file that handles all requests to the application. 
+With the same success this role can be performed by any controller 
+in the MVP (MVC with passive models) application, for example on 
+the basis of a Symfony or Laravel.
+
+```php
+use Railt\Io\File;
+use Railt\SDL\Compiler;
+use Railt\Http\Request;
+use Railt\Foundation\Application;
+use Railt\Routing\RouterExtension;
+
+// Creating a new application
+$app = new Application();
+
+// Link to the main SDL of the our application
+$schema = File::fromPathname(__DIR__ . '/schema.graphqls');
+
+// Processing of HTTP request
+$response = $app->request($schema, new Request());
+
+// And sending a Response
+$response->send();
 ```
 
 ### Example GraphQL query
