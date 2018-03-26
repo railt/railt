@@ -53,7 +53,7 @@
     },
     "require-dev": {
         "twig/twig": "~2.0",
-        "phpunit/phpunit": "~6.0",
+        "phpunit/phpunit": "6.*",
         "symfony/finder": "~4.0",
         "cache/filesystem-adapter": "~1.0",
         "symfony/var-dumper": "~4.0",
