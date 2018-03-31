@@ -43,7 +43,7 @@ class DefaultResolver
         if (! $field->isNonNull()) {
             return null;
         }
-        
+
         return $this->fromParent($input) ?? [];
     }
 
