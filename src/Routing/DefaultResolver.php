@@ -40,6 +40,10 @@ class DefaultResolver
             return $this->getScalarResponse($input);
         }
 
+        if (! $field->isNonNull()) {
+            return null;
+        }
+        
         return $this->fromParent($input) ?? [];
     }
 
