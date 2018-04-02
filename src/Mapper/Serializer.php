@@ -107,8 +107,8 @@ class Serializer
         if ($type->isList() && \is_iterable($result)) {
             $out = [];
 
-            foreach ($result as $item) {
-                $out[] = $this->map($class, $method, $requiredType, $item);
+            foreach ($result as $i => $item) {
+                $out[$i] = $this->map($class, $method, $requiredType, $item);
             }
 
             return $out;
