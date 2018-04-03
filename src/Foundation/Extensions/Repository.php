@@ -48,7 +48,11 @@ class Repository
      */
     public function add(string $extension): void
     {
-        $this->extensions[] = $this->container->make($extension);
+        if (\array_key_exists($extension, $this->extensions)) {
+            throw new \InvalidArgumentException('Can not redeclare already registered extension ' . $extension);
+        }
+
+        $this->extensions[$extension] = $this->container->make($extension);
     }
 
     /**
