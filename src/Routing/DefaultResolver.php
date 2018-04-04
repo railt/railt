@@ -64,8 +64,8 @@ class DefaultResolver
     {
         $parent = $input->getParentResponse();
 
-        if ($parent) {
-            return $parent[$input->getFieldName()] ?? [];
+        if ($parent && \array_key_exists($input->getFieldName(), $parent)) {
+            return $parent[$input->getFieldName()];
         }
 
         return null;
