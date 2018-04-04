@@ -21,9 +21,11 @@ final class ObjectBox extends BaseBox implements \ArrayAccess
      */
     public function __construct($data, $serialized)
     {
-        \assert(\is_array($serialized));
+        \assert(\is_iterable($serialized));
 
-        // TODO Add $serialized validation
+        if ($serialized instanceof \Traversable) {
+            $serialized = \iterator_to_array($serialized);
+        }
 
         parent::__construct($data, $serialized);
     }
