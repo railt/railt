@@ -104,16 +104,6 @@ class Serializer
      */
     private function resolveMap(AllowsTypeIndication $type, $requiredType, $result, string $class, string $method)
     {
-        if ($type->isList() && \is_iterable($result)) {
-            $out = [];
-
-            foreach ($result as $i => $item) {
-                $out[$i] = $this->map($class, $method, $requiredType, $item);
-            }
-
-            return $out;
-        }
-
         return $this->map($class, $method, $requiredType, $result);
     }
 
