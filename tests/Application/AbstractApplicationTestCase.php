@@ -14,7 +14,6 @@ use Railt\Foundation\Application;
 use Railt\Http\RequestInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
-use Railt\Routing\RouterExtension;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\Tests\AbstractTestCase;
 use Railt\Tests\Http\Mocks\Request;
