@@ -298,6 +298,7 @@ GraphQL
      *
      * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
     public function testInvalidArgumentIntoDirective(CompilerInterface $compiler): void
     {
@@ -317,6 +318,7 @@ GraphQL
      *
      * @param CompilerInterface $compiler
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
     public function testMissingArgumentIntoDirective(CompilerInterface $compiler): void
     {
