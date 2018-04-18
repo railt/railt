@@ -264,9 +264,9 @@ GraphQL
 
         static::assertInstanceOf(ArgumentDefinition::class, $arg);
 
-        static::assertEquals(1, $arg->getNumberOfDirectives());
+        static::assertSame(1, $arg->getNumberOfDirectives());
         static::assertCount(1, $arg->getDirectives());
-        static::assertEquals('deprecated', $arg->getDirective('deprecated')->getName());
+        static::assertSame('deprecated', $arg->getDirective('deprecated')->getName());
         static::assertTrue($arg->isDeprecated());
     }
 }

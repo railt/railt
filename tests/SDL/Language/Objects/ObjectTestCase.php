@@ -69,9 +69,9 @@ class ObjectTestCase extends AbstractLanguageTestCase
         static::assertCount(1, $type->getDirectives());
 
         foreach ($type->getDirectives() as $directive) {
-            static::assertEquals('deprecated', $directive->getName());
+            static::assertSame('deprecated', $directive->getName());
 
-            static::assertEquals('Because', $directive->getPassedArgument('reason'));
+            static::assertSame('Because', $directive->getPassedArgument('reason'));
             static::assertNull($directive->getPassedArgument('not-exists'));
 
             static::assertTrue($directive->hasPassedArgument('reason'));
@@ -169,19 +169,19 @@ class ObjectTestCase extends AbstractLanguageTestCase
         static::assertNull($type->getField('test'));
         static::assertNotNull($field);
 
-        static::assertEquals('id', $field->getName());
+        static::assertSame('id', $field->getName());
         static::assertCount(0, $field->getArguments());
         static::assertCount(0, $field->getDirectives());
-        static::assertEquals(0, $field->getNumberOfArguments());
-        static::assertEquals(0, $field->getNumberOfDirectives());
-        static::assertEquals(0, $field->getNumberOfOptionalArguments());
-        static::assertEquals(0, $field->getNumberOfRequiredArguments());
-        static::assertEquals('', $field->getDeprecationReason());
+        static::assertSame(0, $field->getNumberOfArguments());
+        static::assertSame(0, $field->getNumberOfDirectives());
+        static::assertSame(0, $field->getNumberOfOptionalArguments());
+        static::assertSame(0, $field->getNumberOfRequiredArguments());
+        static::assertSame('', $field->getDeprecationReason());
         static::assertFalse($field->isDeprecated());
         static::assertTrue($field->isNonNull());
         static::assertFalse($field->isList());
         static::assertFalse($field->isListOfNonNulls());
-        static::assertEquals('ID', $field->getTypeDefinition()->getName());
+        static::assertSame('ID', $field->getTypeDefinition()->getName());
     }
 
     /**
@@ -206,7 +206,7 @@ class ObjectTestCase extends AbstractLanguageTestCase
     {
         static::assertCount(1, $type->getInterfaces());
         foreach ($type->getInterfaces() as $interface) {
-            static::assertEquals('Identifiable', $interface->getName());
+            static::assertSame('Identifiable', $interface->getName());
         }
     }
 
@@ -254,6 +254,6 @@ class ObjectTestCase extends AbstractLanguageTestCase
      */
     public function testTypeName(ObjectDefinition $type): void
     {
-        static::assertEquals('Object', $type->getTypeName());
+        static::assertSame('Object', $type->getTypeName());
     }
 }
