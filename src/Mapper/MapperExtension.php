@@ -31,6 +31,7 @@ class MapperExtension extends BaseExtension
      * @param Dispatcher $events
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Io\Exceptions\NotReadableException
      */
     public function boot(CompilerInterface $compiler, Dispatcher $events): void
     {
@@ -45,8 +46,6 @@ class MapperExtension extends BaseExtension
     /**
      * @param Dispatcher $events
      * @param Serializer $serializer
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
-     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      */
     private function bootArgumentResolver(Dispatcher $events, Serializer $serializer): void
     {
@@ -90,8 +89,6 @@ class MapperExtension extends BaseExtension
     /**
      * @param Dispatcher $events
      * @param Serializer $serializer
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
-     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      */
     private function bootFieldResolver(Dispatcher $events, Serializer $serializer): void
     {
