@@ -46,10 +46,10 @@ class UnionTestCase extends AbstractLanguageTestCase
         $union = $document->getTypeDefinition('Person');
         static::assertNotNull($union);
 
-        static::assertEquals('Person', $union->getName());
-        static::assertEquals('This is an example union', $union->getDescription());
+        static::assertSame('Person', $union->getName());
+        static::assertSame('This is an example union', $union->getDescription());
 
-        static::assertEquals('Union', $union->getTypeName());
+        static::assertSame('Union', $union->getTypeName());
 
         static::assertFalse($union->isDeprecated());
         static::assertSame('', $union->getDeprecationReason());

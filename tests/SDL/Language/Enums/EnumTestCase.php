@@ -54,7 +54,7 @@ GraphQL;
         $enum = $document->getTypeDefinition('Colour');
         static::assertNotNull($enum);
 
-        static::assertEquals('Colour', $enum->getName());
+        static::assertSame('Colour', $enum->getName());
     }
 
     /**
@@ -69,7 +69,7 @@ GraphQL;
         $enum = $document->getTypeDefinition('Colour');
         static::assertNotNull($enum);
 
-        static::assertEquals('This is an example ENUM', $enum->getDescription());
+        static::assertSame('This is an example ENUM', $enum->getDescription());
     }
 
     /**

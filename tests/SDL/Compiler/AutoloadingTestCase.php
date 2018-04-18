@@ -67,7 +67,7 @@ class AutoloadingTestCase extends AbstractCompilerTestCase
         $query = $document->getSchema()->getQuery();
 
         static::assertNotNull($query);
-        static::assertEquals('ExistingType', $query->getName());
-        static::assertNotEquals($document->getUniqueId(), $query->getDocument()->getUniqueId());
+        static::assertSame('ExistingType', $query->getName());
+        static::assertNotSame($document->getUniqueId(), $query->getDocument()->getUniqueId());
     }
 }

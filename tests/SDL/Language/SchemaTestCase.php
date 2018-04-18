@@ -82,7 +82,7 @@ GraphQL;
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
 
-        static::assertEquals('MyQuery', $schema->getQuery()->getName());
+        static::assertSame('MyQuery', $schema->getQuery()->getName());
     }
 
     /**
@@ -118,7 +118,7 @@ GraphQL;
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
 
-        static::assertEquals('MyMutation', $schema->getMutation()->getName());
+        static::assertSame('MyMutation', $schema->getMutation()->getName());
     }
 
     /**
@@ -154,7 +154,7 @@ GraphQL;
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
 
-        static::assertEquals('MySubscription', $schema->getSubscription()->getName());
+        static::assertSame('MySubscription', $schema->getSubscription()->getName());
     }
 
     /**
@@ -171,7 +171,7 @@ GraphQL;
         $schema = $document->getSchema();
         static::assertInstanceOf(SchemaDefinition::class, $schema);
 
-        static::assertEquals('Schema', $schema->getTypeName());
+        static::assertSame('Schema', $schema->getTypeName());
     }
 
     /**

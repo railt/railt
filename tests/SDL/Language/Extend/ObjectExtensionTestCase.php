@@ -57,7 +57,7 @@ GraphQL;
         static::assertNotNull($type);
         static::assertNotNull($type->getField('id'));
 
-        static::assertEquals(4, $type->getNumberOfFields());
+        static::assertSame(4, $type->getNumberOfFields());
         static::assertCount(4, $type->getFields());
     }
 
@@ -120,10 +120,10 @@ GraphQL;
         $field = $type->getField('field');
         static::assertNotNull($field);
         static::assertTrue($field->isNonNull());
-        static::assertEquals('ID', $field->getTypeDefinition()->getName());
+        static::assertSame('ID', $field->getTypeDefinition()->getName());
 
         static::assertTrue($field->hasArgument('id'));
         static::assertFalse($field->getArgument('id')->isNonNull());
-        static::assertEquals('String', $field->getArgument('id')->getTypeDefinition()->getName());
+        static::assertSame('String', $field->getArgument('id')->getTypeDefinition()->getName());
     }
 }

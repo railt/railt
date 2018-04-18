@@ -65,7 +65,7 @@ class DocumentTestCase extends AbstractLanguageTestCase
         $pattern = '/^' . self::DOCUMENT_ID_PATTERN . '$/u';
 
         static::assertTrue((bool)\preg_match($pattern, $document->getUniqueId()));
-        static::assertEquals($document->getUniqueId(), $document->getUniqueId());
+        static::assertSame($document->getUniqueId(), $document->getUniqueId());
     }
 
     /**

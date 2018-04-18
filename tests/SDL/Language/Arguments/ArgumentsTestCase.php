@@ -183,9 +183,9 @@ GraphQL
         static::assertArrayHasKey('op', $default);
         static::assertArrayHasKey('eq', $default); // Resolved from Input
 
-        static::assertEquals('id', $default['field'] ?? null);
-        static::assertEquals('=', $default['op'] ?? null);
-        static::assertEquals(42, $default['eq'] ?? null);
+        static::assertSame('id', $default['field'] ?? null);
+        static::assertSame('=', $default['op'] ?? null);
+        static::assertSame(42, $default['eq'] ?? null);
     }
 
     /**
@@ -224,9 +224,9 @@ GraphQL
             static::assertArrayHasKey('op', $item);
             static::assertArrayHasKey('eq', $item); // Resolved from Input
 
-            static::assertEquals('id', $item['field'] ?? null);
-            static::assertEquals('=', $item['op'] ?? null);
-            static::assertEquals(42, $item['eq'] ?? null);
+            static::assertSame('id', $item['field'] ?? null);
+            static::assertSame('=', $item['op'] ?? null);
+            static::assertSame(42, $item['eq'] ?? null);
         }
     }
 
@@ -265,9 +265,9 @@ GraphQL
             static::assertArrayHasKey('op', $item);
             static::assertArrayHasKey('eq', $item); // Resolved from Input
 
-            static::assertEquals('id', $item['field'] ?? null);
-            static::assertEquals('<>', $item['op'] ?? null);
-            static::assertEquals(42, $item['eq'] ?? null);
+            static::assertSame('id', $item['field'] ?? null);
+            static::assertSame('<>', $item['op'] ?? null);
+            static::assertSame(42, $item['eq'] ?? null);
         }
     }
 
