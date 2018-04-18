@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GrammarBuildCommand extends Command
 {
-    private const DEFAULT_PATH = __DIR__ . '/../../SDL/Parser';
+    private const DEFAULT_PATH              = __DIR__ . '/../../SDL/Parser';
     private const DEFAULT_PARSER_CLASS_NAME = '\\Railt\\SDL\\Parser\\SchemaParser';
 
     /**
