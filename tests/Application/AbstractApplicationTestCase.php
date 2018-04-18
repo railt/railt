@@ -60,7 +60,6 @@ abstract class AbstractApplicationTestCase extends AbstractTestCase
             $container->instance(CompilerInterface::class, $compiler);
 
             $app = new Application($container);
-            $app->extend(RouterExtension::class);
 
             yield $app;
         }
