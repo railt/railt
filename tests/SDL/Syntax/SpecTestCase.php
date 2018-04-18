@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Syntax;
 
+use Railt\Compiler\Exception\UnexpectedTokenException;
 use Railt\Io\File;
 use Railt\SDL\Parser\Factory;
 use Symfony\Component\Finder\Finder;
@@ -21,6 +22,10 @@ class SpecTestCase extends AbstractSyntaxTestCase
 {
     /**
      * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \Railt\Io\Exceptions\NotReadableException
+     * @throws \RuntimeException
      */
     public function positiveProvider(): array
     {
@@ -40,6 +45,10 @@ class SpecTestCase extends AbstractSyntaxTestCase
 
     /**
      * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \Railt\Io\Exceptions\NotReadableException
+     * @throws \RuntimeException
      */
     public function negativeProvider(): array
     {
@@ -63,6 +72,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @param Factory $parser
      * @param string $expected
      * @return void
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testPositiveParserSpecs(Factory $parser, string $expected): void
     {
@@ -77,10 +87,12 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @param Factory $parser
      * @param string $expected
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
     public function testNegativeParserSpecs(Factory $parser, string $expected): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(UnexpectedTokenException::class);
+        $this->expectExceptionMessage('Unexpected token "broken" (T_NAME)');
 
         $parser->parse(File::fromSources($expected));
     }

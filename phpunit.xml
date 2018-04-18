@@ -11,9 +11,6 @@
          stopOnFailure="false"
          syntaxCheck="true">
     <testsuites>
-        <testsuite name="Compiler Tests">
-            <directory suffix="TestCase.php">./tests/Compiler</directory>
-        </testsuite>
         <testsuite name="GraphQL SDL Tests">
             <directory suffix="TestCase.php">./tests/SDL</directory>
         </testsuite>

@@ -1,5 +1,0 @@
-<Ast>
-  <Rule name="Ololo">
-    <Leaf name="T_TYPE" offset="0">type</Leaf>
-  </Rule>
-</Ast>
