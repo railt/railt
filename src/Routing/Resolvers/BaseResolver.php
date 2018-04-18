@@ -54,13 +54,23 @@ abstract class BaseResolver implements Resolver
      * @param InputInterface $input
      * @param mixed $response
      * @return mixed
+     * @throws \RuntimeException
      */
     protected function response(InputInterface $input, $response)
     {
         $field = $input->getFieldDefinition();
 
         if ($field->isList()) {
-            return $this->formatList($input, \is_iterable($response) ? $response : [$response]);
+            if (\is_iterable($response)) {
+                return $this->formatList($input, $response);
+            }
+
+            if ($response === null) {
+                return null;
+            }
+
+            $error = 'Return type of %s list should be an iterable, but %s returns';
+            throw new \RuntimeException(\sprintf($error, $input->getFieldName(), \strtolower(\gettype($response))));
         }
 
         return $this->format($input, $response);
