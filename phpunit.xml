@@ -17,9 +17,6 @@
         <testsuite name="Container Tests">
             <directory suffix="TestCase.php">./tests/Container</directory>
         </testsuite>
-        <testsuite name="Http Kernel Tests">
-            <directory suffix="TestCase.php">./tests/Http</directory>
-        </testsuite>
         <testsuite name="Routing Tests">
             <directory suffix="TestCase.php">./tests/Routing</directory>
         </testsuite>

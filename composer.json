@@ -31,11 +31,11 @@
         "symfony/console": "3.*|4.*",
         "symfony/event-dispatcher": "3.*|4.*",
         "railt/compiler": "1.2.*|dev-master",
-        "railt/io": "1.2.*|dev-master"
+        "railt/io": "1.2.*|dev-master",
+        "railt/http": "1.2.*|dev-master"
     },
     "replace": {
         "railt/sdl": "self.version",
-        "railt/http": "self.version",
         "railt/storage": "self.version",
         "railt/container": "self.version",
         "railt/reflection": "self.version",

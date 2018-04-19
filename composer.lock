@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0951dde5b5d453b8e47c3a7afca1ecd",
+    "content-hash": "bab8ddfc809b857d49c312e111c9b986",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -475,6 +475,58 @@
                 "pp"
             ],
             "time": "2018-04-19T00:35:03+00:00"
+        },
+        {
+            "name": "railt/http",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/http.git",
+                "reference": "53fec96eb1c8affb6723bd9c2572508fb99351d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/http/zipball/53fec96eb1c8affb6723bd9c2572508fb99351d0",
+                "reference": "53fec96eb1c8affb6723bd9c2572508fb99351d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "suggest": {
+                "illuminate/http": "Laravel HTTP Driver (>=5.1).",
+                "symfony/http-foundation": "Symfony HTTP Driver (~2.8|3.*|4.*)."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Railt\\Http\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "description": "The Railt HTTP component provides objects to build GraphQL requests from the client.",
+            "homepage": "http://railt.org",
+            "keywords": [
+                "graphql",
+                "http",
+                "http request",
+                "http response",
+                "request",
+                "response"
+            ],
+            "time": "2018-04-19T01:34:54+00:00"
         },
         {
             "name": "railt/io",
@@ -3234,7 +3286,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "railt/compiler": 20,
-        "railt/io": 20
+        "railt/io": 20,
+        "railt/http": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
