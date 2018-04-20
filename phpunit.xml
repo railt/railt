@@ -20,9 +20,6 @@
         <testsuite name="Routing Tests">
             <directory suffix="TestCase.php">./tests/Routing</directory>
         </testsuite>
-        <testsuite name="Application Tests">
-            <directory suffix="TestCase.php">./tests/Application</directory>
-        </testsuite>
     </testsuites>
     <filter>
         <whitelist>
