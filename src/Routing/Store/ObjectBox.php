@@ -18,16 +18,30 @@ final class ObjectBox extends BaseBox implements \ArrayAccess
      * Box constructor.
      * @param mixed $data
      * @param array $serialized
+     * @throws \LogicException
      */
     public function __construct($data, $serialized)
     {
-        \assert(\is_iterable($serialized));
+        $this->verifyResponse($serialized);
 
         if ($serialized instanceof \Traversable) {
             $serialized = \iterator_to_array($serialized);
         }
 
         parent::__construct($data, $serialized);
+    }
+
+    /**
+     * @param $serialized
+     * @throws \LogicException
+     */
+    private function verifyResponse($serialized): void
+    {
+        if (! \is_iterable($serialized)) {
+            $error = 'Response type for GraphQL Object type should be an iterable (array or Traversable), but %s given';
+            $type  = \is_object($serialized) ? \get_class($serialized) : \strtolower(\gettype($serialized));
+            throw new \LogicException(\sprintf($error, $type));
+        }
     }
 
     /**
