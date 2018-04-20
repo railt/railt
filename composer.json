@@ -41,11 +41,11 @@
         "railt/compiler": "1.2.*|dev-master",
         "railt/io": "1.2.*|dev-master",
         "railt/http": "1.2.*|dev-master",
+        "railt/container": "1.2.*|dev-master",
         "railt/storage": "1.2.*|dev-master"
     },
     "replace": {
         "railt/sdl": "self.version",
-        "railt/container": "self.version",
         "railt/reflection": "self.version"
     },
     "autoload": {
@@ -60,8 +60,6 @@
         "symfony/finder": "~4.0",
         "cache/filesystem-adapter": "~1.0",
         "symfony/var-dumper": "~4.0",
-        "symfony/dependency-injection": "~4.0",
-        "illuminate/container": "~5.5",
         "codedungeon/phpunit-result-printer": "~0.6"
     },
     "autoload-dev": {

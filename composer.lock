@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "48901381dfd73ca968970958be47e2a1",
+    "content-hash": "377fa2acb6d46df10d80e5aa70933e0b",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -477,6 +477,58 @@
             "time": "2018-04-19T00:35:03+00:00"
         },
         {
+            "name": "railt/container",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/container.git",
+                "reference": "214d008d97b98d18600e016bbe06cbf233615a40"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/container/zipball/214d008d97b98d18600e016bbe06cbf233615a40",
+                "reference": "214d008d97b98d18600e016bbe06cbf233615a40",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "psr/container": "~1.0"
+            },
+            "provide": {
+                "psr/container": "~1.0"
+            },
+            "require-dev": {
+                "illuminate/container": "~5.1",
+                "phpunit/phpunit": "~6.0",
+                "symfony/dependency-injection": "~3.0|~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Railt\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "description": "Simple Dependency Injection Container",
+            "homepage": "http://railt.org",
+            "keywords": [
+                "container",
+                "dependency injection",
+                "di",
+                "ioc"
+            ],
+            "time": "2018-04-20T23:36:08+00:00"
+        },
+        {
             "name": "railt/http",
             "version": "dev-master",
             "source": {
@@ -583,12 +635,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/storage.git",
-                "reference": "c3556db055f073995e73807d3e57ce2557886ed4"
+                "reference": "09b2f6f42a40e12fd49f8dfbfe28b93aa385f421"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/storage/zipball/c3556db055f073995e73807d3e57ce2557886ed4",
-                "reference": "c3556db055f073995e73807d3e57ce2557886ed4",
+                "url": "https://api.github.com/repos/railt/storage/zipball/09b2f6f42a40e12fd49f8dfbfe28b93aa385f421",
+                "reference": "09b2f6f42a40e12fd49f8dfbfe28b93aa385f421",
                 "shasum": ""
             },
             "require": {
@@ -636,7 +688,7 @@
                 "psr-6",
                 "storage"
             ],
-            "time": "2018-04-20T23:07:48+00:00"
+            "time": "2018-04-20T23:32:02+00:00"
         },
         {
             "name": "symfony/console",
@@ -1335,50 +1387,6 @@
                 "yml"
             ],
             "time": "2016-02-11T16:21:17+00:00"
-        },
-        {
-            "name": "illuminate/container",
-            "version": "v5.6.17",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/container.git",
-                "reference": "4a42d667a05ec6d31f05b532cdac7e8e68e5ea2a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/4a42d667a05ec6d31f05b532cdac7e8e68e5ea2a",
-                "reference": "4a42d667a05ec6d31f05b532cdac7e8e68e5ea2a",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "5.6.*",
-                "php": "^7.1.3",
-                "psr/container": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Container\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The Illuminate Container package.",
-            "homepage": "https://laravel.com",
-            "time": "2018-01-21T02:13:38+00:00"
         },
         {
             "name": "league/flysystem",
@@ -2778,77 +2786,6 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
-            "name": "symfony/dependency-injection",
-            "version": "v4.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "9f1cea656afc5512c6f5e58d61fcea12acee113e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/9f1cea656afc5512c6f5e58d61fcea12acee113e",
-                "reference": "9f1cea656afc5512c6f5e58d61fcea12acee113e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "psr/container": "^1.0"
-            },
-            "conflict": {
-                "symfony/config": "<3.4",
-                "symfony/finder": "<3.4",
-                "symfony/proxy-manager-bridge": "<3.4",
-                "symfony/yaml": "<3.4"
-            },
-            "provide": {
-                "psr/container-implementation": "1.0"
-            },
-            "require-dev": {
-                "symfony/config": "~3.4|~4.0",
-                "symfony/expression-language": "~3.4|~4.0",
-                "symfony/yaml": "~3.4|~4.0"
-            },
-            "suggest": {
-                "symfony/config": "",
-                "symfony/expression-language": "For using expressions in service container configuration",
-                "symfony/finder": "For using double-star glob patterns or when GLOB_BRACE portability is required",
-                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
-                "symfony/yaml": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\DependencyInjection\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony DependencyInjection Component",
-            "homepage": "https://symfony.com",
-            "time": "2018-04-02T09:52:41+00:00"
-        },
-        {
             "name": "symfony/finder",
             "version": "v4.0.8",
             "source": {
@@ -3349,6 +3286,7 @@
         "railt/compiler": 20,
         "railt/io": 20,
         "railt/http": 20,
+        "railt/container": 20,
         "railt/storage": 20
     },
     "prefer-stable": true,
