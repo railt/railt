@@ -158,5 +158,4 @@ under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 | `railt/container`         | ![Latest Stable Version](https://poser.pugx.org/railt/container/version)         |
 | `railt/events`            | ![Latest Stable Version](https://poser.pugx.org/railt/events/version)            |
 | `railt/http`              | ![Latest Stable Version](https://poser.pugx.org/railt/http/version)              |
-| `railt/webonyx-adapter`   | ![Latest Stable Version](https://poser.pugx.org/railt/webonyx-adapter/version)   |
-| `railt/youshido-adapter`  | *Not planned yet :3*  |
+| `railt/io`                | ![Latest Stable Version](https://poser.pugx.org/railt/io/version)                |
