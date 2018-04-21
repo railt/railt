@@ -51,7 +51,7 @@
         "zendframework/zend-code": "~3.0",
         "symfony/var-dumper": "~4.0",
         "phpunit/phpunit": "^6.2",
-        "codedungeon/phpunit-result-printer": "~0.16"
+        "codedungeon/phpunit-result-printer": ">=0.16.1"
     },
     "autoload-dev": {
         "psr-4": {
