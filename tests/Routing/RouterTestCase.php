@@ -12,26 +12,28 @@ namespace Railt\Tests\Routing;
 use Railt\Container\Container;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Router;
-use Railt\Tests\AbstractTestCase;
+use Railt\Tests\TestCase;
 
 /**
  * Class RouterTestCase
  */
-class RouterTestCase extends AbstractTestCase
+class RouterTestCase extends TestCase
 {
+    /**
+     * @return void
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testRouteInterface(): void
+    {
+        $this->assertInstanceOf(RouterInterface::class, $this->mock());
+    }
+
     /**
      * @return RouterInterface
      */
     private function mock(): RouterInterface
     {
         return new Router(new Container());
-    }
-
-    /**
-     * @return void
-     */
-    public function testRouteInterface(): void
-    {
-        $this->assertInstanceOf(RouterInterface::class, $this->mock());
     }
 }
