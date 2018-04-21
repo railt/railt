@@ -38,15 +38,15 @@
         "webonyx/graphql-php": "~0.10",
         "symfony/console": "3.*|4.*",
         "symfony/event-dispatcher": "3.*|4.*",
-        "railt/compiler": "1.2.*|dev-master",
         "railt/io": "1.2.*|dev-master",
         "railt/http": "1.2.*|dev-master",
+        "railt/storage": "1.2.*|dev-master",
+        "railt/compiler": "1.2.*|dev-master",
         "railt/container": "1.2.*|dev-master",
-        "railt/storage": "1.2.*|dev-master"
+        "railt/reflection": "1.2.*|dev-master"
     },
     "replace": {
-        "railt/sdl": "self.version",
-        "railt/reflection": "self.version"
+        "railt/sdl": "self.version"
     },
     "autoload": {
         "psr-4": {
