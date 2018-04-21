@@ -1,7 +1,0 @@
-type TAny implements IBoolean {
-    field(arg: Boolean): Any
-}
-
-interface IBoolean {
-    field(arg: Any): Any
-}

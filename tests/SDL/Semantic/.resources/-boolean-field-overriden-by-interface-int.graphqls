@@ -1,7 +1,0 @@
-type TBoolean implements IInt {
-    field: Boolean
-}
-
-interface IInt {
-  field: Int
-}

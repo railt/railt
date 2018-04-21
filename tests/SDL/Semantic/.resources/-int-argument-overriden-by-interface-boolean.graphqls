@@ -1,7 +1,0 @@
-type TInt implements IBoolean {
-    field(arg: Boolean): Int
-}
-
-interface IBoolean {
-    field(arg: Int): Int
-}

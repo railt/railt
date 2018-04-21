@@ -1,7 +1,0 @@
-type TAny implements IID {
-    field(arg: ID): Any
-}
-
-interface IID {
-    field(arg: Any): Any
-}

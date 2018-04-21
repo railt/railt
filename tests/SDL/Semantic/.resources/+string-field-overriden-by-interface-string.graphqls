@@ -1,7 +1,0 @@
-type TString implements IString {
-    field: String
-}
-
-interface IString {
-  field: String
-}
