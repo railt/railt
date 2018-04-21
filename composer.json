@@ -50,11 +50,22 @@
         "twig/twig": "~2.0",
         "zendframework/zend-code": "~3.0",
         "symfony/var-dumper": "~4.0",
-        "phpunit/phpunit": "^6.5"
+        "phpunit/phpunit": "^6.5",
+        "symfony/finder": "~3.4|~4.0",
+        "symfony/dependency-injection": "~3.4|~4.0",
+        "cache/filesystem-adapter": "~1.0",
+        "illuminate/container": "~5.5"
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Tests\\": "tests"
+            "Railt\\Tests\\": "tests",
+            "Railt\\Tests\\Compiler\\": "vendor/railt/compiler/tests",
+            "Railt\\Tests\\Container\\": "vendor/railt/container/tests",
+            "Railt\\Tests\\Http\\": "vendor/railt/http/tests",
+            "Railt\\Tests\\Io\\": "vendor/railt/io/tests",
+            "Railt\\Tests\\Reflection\\": "vendor/railt/reflection/tests",
+            "Railt\\Tests\\SDL\\": "vendor/railt/sdl/tests",
+            "Railt\\Tests\\Storage\\": "vendor/railt/storage/tests"
         }
     },
     "suggest": {

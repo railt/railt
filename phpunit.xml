@@ -10,15 +10,13 @@
          stopOnFailure="false"
          syntaxCheck="true">
     <testsuites>
-        <testsuite name="GraphQL SDL Tests">
-            <directory suffix="TestCase.php">./tests/SDL</directory>
+        <testsuite name="Application Test Suite">
+            <directory suffix="TestCase.php">./tests</directory>
         </testsuite>
-        <testsuite name="Container Tests">
-            <directory suffix="TestCase.php">./tests/Container</directory>
+        <testsuite name="Components Test Suite">
+            <directory suffix="TestCase.php">./vendor/railt/*/tests</directory>
         </testsuite>
-        <testsuite name="Routing Tests">
-            <directory suffix="TestCase.php">./tests/Routing</directory>
-        </testsuite>
+
     </testsuites>
     <filter>
         <whitelist>
