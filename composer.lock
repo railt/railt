@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "377fa2acb6d46df10d80e5aa70933e0b",
+    "content-hash": "c5bee8f1633e1be2a2f9dd8a57382487",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -418,12 +418,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/compiler.git",
-                "reference": "fe67c6953f34d1aa517e8157ecd084e6100c9f4b"
+                "reference": "3fe7f496ed5eccf2c3876efe1343e4415faad92f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/compiler/zipball/fe67c6953f34d1aa517e8157ecd084e6100c9f4b",
-                "reference": "fe67c6953f34d1aa517e8157ecd084e6100c9f4b",
+                "url": "https://api.github.com/repos/railt/compiler/zipball/3fe7f496ed5eccf2c3876efe1343e4415faad92f",
+                "reference": "3fe7f496ed5eccf2c3876efe1343e4415faad92f",
                 "shasum": ""
             },
             "require": {
@@ -441,7 +441,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Railt\\Compiler\\": "src/"
+                    "Railt\\Compiler\\": "src"
                 },
                 "files": [
                     "src/helpers.php"
@@ -474,7 +474,7 @@
                 "language",
                 "pp"
             ],
-            "time": "2018-04-19T00:35:03+00:00"
+            "time": "2018-04-21T00:59:53+00:00"
         },
         {
             "name": "railt/container",
@@ -482,12 +482,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/container.git",
-                "reference": "214d008d97b98d18600e016bbe06cbf233615a40"
+                "reference": "0b7d47f6a687f1781f71bb8bfbfd09ba610b7f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/container/zipball/214d008d97b98d18600e016bbe06cbf233615a40",
-                "reference": "214d008d97b98d18600e016bbe06cbf233615a40",
+                "url": "https://api.github.com/repos/railt/container/zipball/0b7d47f6a687f1781f71bb8bfbfd09ba610b7f0e",
+                "reference": "0b7d47f6a687f1781f71bb8bfbfd09ba610b7f0e",
                 "shasum": ""
             },
             "require": {
@@ -498,9 +498,9 @@
                 "psr/container": "~1.0"
             },
             "require-dev": {
-                "illuminate/container": "~5.1",
+                "illuminate/container": "~5.5",
                 "phpunit/phpunit": "~6.0",
-                "symfony/dependency-injection": "~3.0|~4.0"
+                "symfony/dependency-injection": "~3.3|~4.0"
             },
             "type": "library",
             "autoload": {
@@ -526,7 +526,7 @@
                 "di",
                 "ioc"
             ],
-            "time": "2018-04-20T23:36:08+00:00"
+            "time": "2018-04-20T23:50:57+00:00"
         },
         {
             "name": "railt/http",
@@ -534,12 +534,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/http.git",
-                "reference": "53fec96eb1c8affb6723bd9c2572508fb99351d0"
+                "reference": "329b0c36aeccc8891ae1492a3e86e2ca73d4beae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/http/zipball/53fec96eb1c8affb6723bd9c2572508fb99351d0",
-                "reference": "53fec96eb1c8affb6723bd9c2572508fb99351d0",
+                "url": "https://api.github.com/repos/railt/http/zipball/329b0c36aeccc8891ae1492a3e86e2ca73d4beae",
+                "reference": "329b0c36aeccc8891ae1492a3e86e2ca73d4beae",
                 "shasum": ""
             },
             "require": {
@@ -549,8 +549,8 @@
                 "phpunit/phpunit": "~6.0"
             },
             "suggest": {
-                "illuminate/http": "Laravel HTTP Driver (>=5.1).",
-                "symfony/http-foundation": "Symfony HTTP Driver (~2.8|3.*|4.*)."
+                "illuminate/http": "Laravel HTTP Kernel (>=5.5)",
+                "symfony/http-foundation": "Symfony HTTP Kernel (>=3.3)"
             },
             "type": "library",
             "autoload": {
@@ -578,7 +578,7 @@
                 "request",
                 "response"
             ],
-            "time": "2018-04-19T01:34:54+00:00"
+            "time": "2018-04-21T00:59:53+00:00"
         },
         {
             "name": "railt/io",
@@ -586,12 +586,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/io.git",
-                "reference": "f18f2bc8fbe26d381b984a4ffbdae091034b23e2"
+                "reference": "79b2ed625b3dd0d60daec0fd7e3fe39a36c772ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/io/zipball/f18f2bc8fbe26d381b984a4ffbdae091034b23e2",
-                "reference": "f18f2bc8fbe26d381b984a4ffbdae091034b23e2",
+                "url": "https://api.github.com/repos/railt/io/zipball/79b2ed625b3dd0d60daec0fd7e3fe39a36c772ed",
+                "reference": "79b2ed625b3dd0d60daec0fd7e3fe39a36c772ed",
                 "shasum": ""
             },
             "require": {
@@ -627,7 +627,118 @@
                 "output",
                 "utils"
             ],
-            "time": "2018-04-19T00:38:27+00:00"
+            "time": "2018-04-21T00:59:53+00:00"
+        },
+        {
+            "name": "railt/reflection",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/reflection.git",
+                "reference": "f0eb982b6251e41cb3aa02efb26ef3be45847f06"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/reflection/zipball/f0eb982b6251e41cb3aa02efb26ef3be45847f06",
+                "reference": "f0eb982b6251e41cb3aa02efb26ef3be45847f06",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.5",
+                "php": "^7.1.3",
+                "railt/io": "1.2.*|dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "suggest": {
+                "psr/cache-implementation": "PSR-6 Cache Implementation",
+                "psr/simple-cache-implementation": "PSR-16 Cache Implementation"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Railt\\Reflection\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "description": "The Railt Reflection provides Reflection API to read and parse GraphQL SDL",
+            "homepage": "http://railt.org",
+            "keywords": [
+                "ast",
+                "graphql",
+                "idl",
+                "introspection",
+                "llk",
+                "otd",
+                "parser",
+                "reader",
+                "reflection"
+            ],
+            "time": "2018-04-21T00:59:53+00:00"
+        },
+        {
+            "name": "railt/sdl",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/sdl.git",
+                "reference": "891d344cf4b79e92da1b232d4680e034b37dfa3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/sdl/zipball/891d344cf4b79e92da1b232d4680e034b37dfa3f",
+                "reference": "891d344cf4b79e92da1b232d4680e034b37dfa3f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.5",
+                "php": "^7.1.3",
+                "railt/compiler": "1.2.*|dev-master",
+                "railt/io": "1.2.*|dev-master",
+                "railt/reflection": "1.2.*|dev-master",
+                "railt/storage": "1.2.*|dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Railt\\SDL\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "description": "The GraphQL RL/SDL grammar and compiler",
+            "homepage": "http://railt.org",
+            "keywords": [
+                "ast",
+                "compiler",
+                "graphql",
+                "idl",
+                "otd",
+                "reflection",
+                "sdl"
+            ],
+            "time": "2018-04-21T01:24:03+00:00"
         },
         {
             "name": "railt/storage",
@@ -635,12 +746,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/storage.git",
-                "reference": "09b2f6f42a40e12fd49f8dfbfe28b93aa385f421"
+                "reference": "836d2866b8a9c5f6f4dafd8462de013678ea3340"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/storage/zipball/09b2f6f42a40e12fd49f8dfbfe28b93aa385f421",
-                "reference": "09b2f6f42a40e12fd49f8dfbfe28b93aa385f421",
+                "url": "https://api.github.com/repos/railt/storage/zipball/836d2866b8a9c5f6f4dafd8462de013678ea3340",
+                "reference": "836d2866b8a9c5f6f4dafd8462de013678ea3340",
                 "shasum": ""
             },
             "require": {
@@ -663,10 +774,10 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Railt\\Storage\\": "src/"
+                    "Railt\\Storage\\": "src"
                 },
                 "files": [
-                    "./src/polyfill.php"
+                    "src/polyfill.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -688,7 +799,7 @@
                 "psr-6",
                 "storage"
             ],
-            "time": "2018-04-20T23:32:02+00:00"
+            "time": "2018-04-21T00:59:53+00:00"
         },
         {
             "name": "symfony/console",
@@ -3283,11 +3394,13 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "railt/compiler": 20,
         "railt/io": 20,
+        "railt/sdl": 20,
         "railt/http": 20,
+        "railt/storage": 20,
+        "railt/compiler": 20,
         "railt/container": 20,
-        "railt/storage": 20
+        "railt/reflection": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

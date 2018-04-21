@@ -58,7 +58,7 @@
         "symfony/finder": "~4.0",
         "cache/filesystem-adapter": "~1.0",
         "symfony/var-dumper": "~4.0",
-        "codedungeon/phpunit-result-printer": "~0.6"
+        "codedungeon/phpunit-result-printer": "~0.16"
     },
     "autoload-dev": {
         "psr-4": {
