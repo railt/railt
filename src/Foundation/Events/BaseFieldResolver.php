@@ -23,7 +23,7 @@ abstract class BaseFieldResolver extends Event
     private $input;
 
     /**
-     * FieldResolved constructor.
+     * BaseFieldResolver constructor.
      * @param InputInterface $input
      */
     public function __construct(InputInterface $input)

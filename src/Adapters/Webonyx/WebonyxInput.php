@@ -59,7 +59,7 @@ class WebonyxInput implements InputInterface
     private $dispatcher;
 
     /**
-     * Input constructor.
+     * WebonyxInput constructor.
      * @param Dispatcher $dispatcher
      * @param FieldDefinition $field
      * @param ResolveInfo $info

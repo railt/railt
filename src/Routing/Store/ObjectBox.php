@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Routing\Store;
 
 /**
- * Class Box
+ * Class ObjectBox
  */
 final class ObjectBox extends BaseBox implements \ArrayAccess
 {
     /**
-     * Box constructor.
+     * ObjectBox constructor.
      * @param mixed $data
      * @param array $serialized
      * @throws \LogicException

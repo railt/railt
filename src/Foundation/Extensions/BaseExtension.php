@@ -14,7 +14,7 @@ use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 
 /**
- * Class BaseServiceProvider
+ * Class BaseExtension
  */
 abstract class BaseExtension implements Extension
 {
@@ -24,7 +24,7 @@ abstract class BaseExtension implements Extension
     private $container;
 
     /**
-     * BaseServiceProvider constructor.
+     * BaseExtension constructor.
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
