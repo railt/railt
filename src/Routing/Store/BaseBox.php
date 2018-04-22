@@ -25,7 +25,7 @@ abstract class BaseBox implements Box
     protected $serialized;
 
     /**
-     * Box constructor.
+     * BaseBox constructor.
      * @param mixed $data
      * @param mixed $serialized
      */

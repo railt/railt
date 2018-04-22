@@ -23,7 +23,7 @@ use Railt\Routing\Route;
 class Directive extends Route
 {
     /**
-     * DirectiveRoute constructor.
+     * Directive constructor.
      * @param ContainerInterface $container
      * @param DirectiveInvocation $directive
      * @param ClassLoader $loader

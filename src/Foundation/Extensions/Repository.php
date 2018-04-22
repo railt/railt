@@ -34,7 +34,7 @@ class Repository
     private $booted = false;
 
     /**
-     * Pipeline constructor.
+     * Repository constructor.
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
