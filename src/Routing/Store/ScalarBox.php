@@ -16,7 +16,7 @@ namespace Railt\Routing\Store;
 final class ScalarBox extends BaseBox
 {
     /**
-     * Box constructor.
+     * ScalarBox constructor.
      * @param mixed $data
      * @param array $serialized
      */
