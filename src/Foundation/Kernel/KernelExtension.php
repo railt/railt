@@ -21,6 +21,7 @@ class KernelExtension extends BaseExtension
 {
     /**
      * @param CompilerInterface $sdl
+     * @throws \Railt\Io\Exception\NotReadableException
      */
     public function boot(CompilerInterface $sdl): void
     {

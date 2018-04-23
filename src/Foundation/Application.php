@@ -22,7 +22,6 @@ use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
-use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Schema\CompilerInterface;
 
@@ -74,6 +73,7 @@ class Application implements PSRContainer
      * Application constructor.
      * @param PSRContainer|null $container
      * @param bool $debug
+     * @throws \InvalidArgumentException
      */
     public function __construct(PSRContainer $container = null, bool $debug = false)
     {
@@ -93,49 +93,8 @@ class Application implements PSRContainer
     }
 
     /**
-     * @param string $id
-     * @return mixed
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function get($id)
-    {
-        return $this->container->get($id);
-    }
-
-    /**
-     * @param string $id
-     * @return bool
-     */
-    public function has($id): bool
-    {
-        return $this->container->has($id);
-    }
-
-    /**
-     * @param Readable $sdl
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
-     * @throws \Railt\SDL\Exceptions\CompilerException
-     */
-    public function request(Readable $sdl, RequestInterface $request): ResponseInterface
-    {
-        $this->container->make(Repository::class)->boot();
-
-        $document = $this->container->make(CompilerInterface::class)->compile($sdl);
-        $adapter  = $this->container->make(AdapterInterface::class);
-
-
-        $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
-            return $adapter->request($this->getSchema($document), $request);
-        };
-
-        return $this->container->make(Repository::class)->handle($request, $pipeline);
-    }
-
-    /**
      * @return void
+     * @throws \InvalidArgumentException
      */
     private function bootIfNotBooted(): void
     {
@@ -147,6 +106,7 @@ class Application implements PSRContainer
 
     /**
      * @return void
+     * @throws \InvalidArgumentException
      */
     private function boot(): void
     {
@@ -173,12 +133,53 @@ class Application implements PSRContainer
     /**
      * @param string|Extension $extension
      * @return Application
+     * @throws \InvalidArgumentException
      */
     public function extend(string $extension): self
     {
         $this->container->make(Repository::class)->add($extension);
 
         return $this;
+    }
+
+    /**
+     * @param string $id
+     * @return mixed
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function get($id)
+    {
+        return $this->container->get($id);
+    }
+
+    /**
+     * @param string $id
+     * @return bool
+     */
+    public function has($id): bool
+    {
+        return $this->container->has($id);
+    }
+
+    /**
+     * @param Readable $sdl
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     */
+    public function request(Readable $sdl, RequestInterface $request): ResponseInterface
+    {
+        $this->container->make(Repository::class)->boot();
+
+        $document = $this->container->make(CompilerInterface::class)->compile($sdl);
+        $adapter  = $this->container->make(AdapterInterface::class);
+
+
+        $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
+            return $adapter->request($this->getSchema($document), $request);
+        };
+
+        return $this->container->make(Repository::class)->handle($request, $pipeline);
     }
 
     /**
@@ -191,7 +192,7 @@ class Application implements PSRContainer
         $schema = $document->getSchema();
 
         if ($schema === null) {
-            $compiler = $this->container->make(Compiler::class);
+            $compiler = $this->container->make(CompilerInterface::class);
 
             $error = \sprintf('The document %s must contain a schema definition', $document->getFileName());
             throw new TypeNotFoundException($error, $compiler->getCallStack());
