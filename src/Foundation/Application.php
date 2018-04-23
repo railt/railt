@@ -22,6 +22,7 @@ use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Schema\CompilerInterface;
 
@@ -190,7 +191,7 @@ class Application implements PSRContainer
         $schema = $document->getSchema();
 
         if ($schema === null) {
-            $compiler = $this->container->make(ContainerInterface::class);
+            $compiler = $this->container->make(Compiler::class);
 
             $error = \sprintf('The document %s must contain a schema definition', $document->getFileName());
             throw new TypeNotFoundException($error, $compiler->getCallStack());
