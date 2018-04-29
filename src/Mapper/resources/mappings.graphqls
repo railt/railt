@@ -24,4 +24,5 @@ directive @out(action: String!) on SCALAR | OBJECT
 # The input mapping directive provides the ability to map
 # input arguments to custom structure
 """
-directive @in(action: String!) on SCALAR | ARGUMENT_DEFINITION
+directive @in(action: String!) on ARGUMENT_DEFINITION
+    | SCALAR | ENUM | INPUT_OBJECT

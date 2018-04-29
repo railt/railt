@@ -13,11 +13,15 @@ use Railt\Foundation\Events\ActionDispatched;
 use Railt\Foundation\Events\ArgumentResolving;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
+use Railt\Reflection\Contracts\Definitions\EnumDefinition;
+use Railt\Reflection\Contracts\Definitions\InputDefinition;
 use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
 use Railt\SDL\Schema\CompilerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
@@ -67,9 +71,10 @@ class MapperExtension extends BaseExtension
      */
     private function unserialize(Serializer $serializer, ArgumentDefinition $argument, $value)
     {
+        /** @var HasDirectives|TypeDefinition $type */
         $type = $argument->getTypeDefinition();
 
-        if ($type instanceof ScalarDefinition) {
+        if ($this->isTypeDefinition($type)) {
             foreach ($type->getDirectives('in') as $directive) {
                 $action = $directive->getPassedArgument('action');
 
@@ -84,6 +89,18 @@ class MapperExtension extends BaseExtension
         }
 
         return $value;
+    }
+
+    /**
+     * @param TypeDefinition $type
+     * @return bool
+     */
+    private function isTypeDefinition(TypeDefinition $type): bool
+    {
+        return
+            $type instanceof ScalarDefinition ||
+            $type instanceof EnumDefinition ||
+            $type instanceof InputDefinition;
     }
 
     /**
