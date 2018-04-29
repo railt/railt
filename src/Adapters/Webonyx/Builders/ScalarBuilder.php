@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Adapters\Webonyx\Builders;
 
+use GraphQL\Language\AST\ObjectValueNode;
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\Type;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
@@ -25,6 +26,8 @@ class ScalarBuilder extends TypeBuilder
 {
     /**
      * @return Type
+     * @throws \GraphQL\Error\InvariantViolation
+     * @throws \ReflectionException
      */
     public function build(): Type
     {
@@ -48,16 +51,21 @@ class ScalarBuilder extends TypeBuilder
         }
 
         return new CustomScalarType([
-            'name'        => $this->reflection->getName(),
-            'description' => $this->reflection->getDescription(),
-            'serialize'   => function ($value) {
+            'name'         => $this->reflection->getName(),
+            'description'  => $this->reflection->getDescription(),
+            'serialize'    => function ($value) {
                 return $value;
             },
-            'parseValue' => function ($value) {
+            'parseValue'   => function ($value) {
                 return $value;
             },
             'parseLiteral' => function ($valueNode) {
-                return $valueNode->value;
+                if (\property_exists($valueNode, 'value')) {
+                    return $valueNode->value;
+                }
+
+                // TODO Add ObjectValueNode support
+                return $valueNode;
             },
         ]);
     }
