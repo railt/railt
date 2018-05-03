@@ -14,7 +14,9 @@ use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
@@ -61,21 +63,19 @@ class Serializer
     }
 
     /**
-     * @param FieldDefinition $field
+     * @param TypeDefinition $type
      * @param Document $document
      * @param string $action
      * @param mixed $result
      * @return iterable
-     * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
      */
-    public function serialize(FieldDefinition $field, Document $document, string $action, $result)
+    public function serialize(TypeDefinition $type, Document $document, string $action, $result)
     {
         [$class, $method] = $this->loader->action($document, $action);
 
         $requiredType = $this->getSignature($class, $method);
 
-        return $this->resolveMap($field, $requiredType, $result, $class, $method);
+        return $this->resolveMap($type, $requiredType, $result, $class, $method);
     }
 
     /**
@@ -93,18 +93,18 @@ class Serializer
 
         $requiredType = $this->getSignature($class, $method);
 
-        return $this->resolveMap($type, $requiredType, $value, $class, $method);
+        return $this->resolveMap($type->getTypeDefinition(), $requiredType, $value, $class, $method);
     }
 
     /**
-     * @param AllowsTypeIndication $type
+     * @param TypeDefinition $type
      * @param null|string|\ReflectionNamedType $requiredType
      * @param iterable|array|mixed $result
      * @param string $class
      * @param string $method
      * @return array|mixed
      */
-    private function resolveMap(AllowsTypeIndication $type, $requiredType, $result, string $class, string $method)
+    private function resolveMap(TypeDefinition $type, $requiredType, $result, string $class, string $method)
     {
         $result = $this->map($class, $method, $requiredType, $result);
 
@@ -113,7 +113,7 @@ class Serializer
         }
 
         if (! $this->isPolymorphic($type) && $this->shouldProvideTypeName($result)) {
-            $result['__typename'] = $type->getTypeDefinition()->getName();
+            $result['__typename'] = $type->getName();
         }
 
         return $result;
@@ -129,14 +129,12 @@ class Serializer
     }
 
     /**
-     * @param AllowsTypeIndication $field
+     * @param TypeDefinition $type
      * @return bool
      */
-    private function isPolymorphic(AllowsTypeIndication $field): bool
+    private function isPolymorphic(TypeDefinition $type): bool
     {
-        $type = $field->getTypeDefinition();
-
-        return $type instanceof UnionDefinition || $type instanceof ObjectDefinition;
+        return $type instanceof UnionDefinition || $type instanceof InterfaceDefinition;
     }
 
     /**

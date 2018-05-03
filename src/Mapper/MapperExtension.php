@@ -19,8 +19,10 @@ use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
+use Railt\Reflection\Contracts\Dependent\DependentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
+use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
 use Railt\SDL\Schema\CompilerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
@@ -73,7 +75,7 @@ class MapperExtension extends BaseExtension
         /** @var HasDirectives|TypeDefinition $type */
         $type = $argument->getTypeDefinition();
 
-        if ($this->isTypeDefinition($type)) {
+        if ($this->isRootTypeDefinition($type)) {
             foreach ($type->getDirectives('in') as $directive) {
                 $action = $directive->getPassedArgument('action');
 
@@ -94,12 +96,9 @@ class MapperExtension extends BaseExtension
      * @param TypeDefinition $type
      * @return bool
      */
-    private function isTypeDefinition(TypeDefinition $type): bool
+    private function isRootTypeDefinition(TypeDefinition $type): bool
     {
-        return
-            $type instanceof ScalarDefinition ||
-            $type instanceof EnumDefinition ||
-            $type instanceof InputDefinition;
+        return ! $type instanceof DependentDefinition;
     }
 
     /**
@@ -126,8 +125,12 @@ class MapperExtension extends BaseExtension
      */
     private function serialize(Serializer $serializer, FieldDefinition $field, $result)
     {
-        foreach ($this->actions($field->getTypeDefinition()) as $document => $action) {
-            $result = $serializer->serialize($field, $document, $action, $result);
+        foreach ($this->actions($field->getTypeDefinition()) as $directive) {
+            $type = $directive->getParent();
+            $document = $directive->getDocument();
+            $action = $directive->getPassedArgument('action');
+
+            $result = $serializer->serialize($type, $document, $action, $result);
         }
 
         return $result;
@@ -135,12 +138,12 @@ class MapperExtension extends BaseExtension
 
     /**
      * @param TypeDefinition|HasDirectives $type
-     * @return iterable|string[]
+     * @return iterable|DirectiveInvocation[]
      */
     private function actions(TypeDefinition $type)
     {
         foreach ($type->getDirectives('out') as $directive) {
-            yield $directive->getDocument() => $directive->getPassedArgument('action');
+            yield $directive;
         }
 
         if ($type instanceof UnionDefinition) {
