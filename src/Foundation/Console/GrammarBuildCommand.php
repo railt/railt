@@ -32,7 +32,7 @@ class GrammarBuildCommand extends Command
      * @param OutputInterface $out
      * @return int|null|void
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
-     * @throws \Railt\Io\Exceptions\NotReadableException
+     * @throws \Railt\Io\Exception\NotReadableException
      * @throws \LogicException
      */
     public function execute(InputInterface $in, OutputInterface $out)
@@ -47,7 +47,7 @@ class GrammarBuildCommand extends Command
     /**
      * @param InputInterface $in
      * @param ParsingResult $reader
-     * @throws \Railt\Io\Exceptions\NotReadableException
+     * @throws \Railt\Io\Exception\NotReadableException
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     private function buildParser(InputInterface $in, ParsingResult $reader): void
