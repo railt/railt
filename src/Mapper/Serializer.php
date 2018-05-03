@@ -115,7 +115,6 @@ class Serializer
         }
 
         if (! $this->isPolymorphic($type) && $this->shouldProvideTypeName($result)) {
-            \var_dump($type->getTypeDefinition()->getName());
             $result['__typename'] = $type->getTypeDefinition()->getName();
         }
 
