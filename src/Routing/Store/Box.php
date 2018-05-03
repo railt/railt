@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Routing\Store;
+
 use Railt\Routing\Route;
 
 /**

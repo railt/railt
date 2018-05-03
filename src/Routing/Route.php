@@ -59,7 +59,7 @@ class Route
     public function __construct(ContainerInterface $container, FieldDefinition $field)
     {
         $this->field      = $field;
-        $this->container = $container;
+        $this->container  = $container;
     }
 
     /**
@@ -186,7 +186,7 @@ class Route
     public function __debugInfo(): array
     {
         return [
-            'field'      =>  (string)$this->field->getParent() . (string)$this->field,
+            'field'      => (string)$this->field->getParent() . (string)$this->field,
             'type'       => $this->type,
             'relations'  => $this->relations,
             'operations' => $this->operations,

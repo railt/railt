@@ -17,7 +17,6 @@ use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use function Sabre\Event\Loop\instance;
 
 /**
  * Class SchemaBuilder

@@ -19,7 +19,6 @@ use Railt\Routing\Resolvers\Factory;
 use Railt\Routing\Resolvers\Resolver;
 use Railt\Routing\Store\ObjectBox;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\ExpressionLanguage\Tests\Node\Obj;
 
 /**
  * Class FieldResolver
@@ -127,7 +126,7 @@ class FieldResolver
      */
     private function routes(InputInterface $input): \Traversable
     {
-        $field = $input->getFieldDefinition();
+        $field  = $input->getFieldDefinition();
         $exists = false;
 
         foreach ($this->router->get($field) as $route) {
