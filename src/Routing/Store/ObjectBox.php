@@ -69,13 +69,15 @@ final class ObjectBox extends BaseBox implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
-        if ($offset === '__typename') {
-            return $this->getRoute()->getType()
-                ? $this->getRoute()->getType()->getName()
-                : null;
+        if (\array_key_exists($offset, $this->serialized)) {
+            return $this->serialized[$offset];
         }
 
-        return $this->serialized[$offset] ?? null;
+        if ($offset === '__typename' && $this->getRoute()->getType()) {
+            return $this->getRoute()->getType()->getName();
+        }
+
+        return null;
     }
 
     /**

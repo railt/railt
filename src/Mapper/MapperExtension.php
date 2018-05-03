@@ -19,6 +19,7 @@ use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
 use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Invocations\Directive\HasDirectives;
@@ -35,7 +36,7 @@ class MapperExtension extends BaseExtension
      * @param Dispatcher $events
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
      * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
-     * @throws \Railt\Io\Exceptions\NotReadableException
+     * @throws \Railt\Io\Exception\NotReadableException
      */
     public function boot(CompilerInterface $compiler, Dispatcher $events): void
     {
@@ -127,15 +128,27 @@ class MapperExtension extends BaseExtension
      */
     private function serialize(Serializer $serializer, FieldDefinition $field, $result)
     {
-        /** @var ObjectDefinition|InterfaceDefinition|ScalarDefinition $type */
-        $type = $field->getTypeDefinition();
-
-        foreach ($type->getDirectives('out') as $directive) {
-            $action = $directive->getPassedArgument('action');
-
-            $result = $serializer->serialize($field, $directive->getDocument(), $action, $result);
+        foreach ($this->actions($field->getTypeDefinition()) as $document => $action) {
+            $result = $serializer->serialize($field, $document, $action, $result);
         }
 
         return $result;
+    }
+
+    /**
+     * @param TypeDefinition|HasDirectives $type
+     * @return iterable|string[]
+     */
+    private function actions(TypeDefinition $type)
+    {
+        foreach ($type->getDirectives('out') as $directive) {
+            yield $directive->getDocument() => $directive->getPassedArgument('action');
+        }
+
+        if ($type instanceof UnionDefinition) {
+            foreach ($type->getTypes() as $provides) {
+                yield from $this->actions($provides);
+            }
+        }
     }
 }

@@ -104,7 +104,17 @@ class Serializer
      */
     private function resolveMap(AllowsTypeIndication $type, $requiredType, $result, string $class, string $method)
     {
-        return $this->map($class, $method, $requiredType, $result);
+        $result = $this->map($class, $method, $requiredType, $result);
+
+        if ($result instanceof \Traversable) {
+            $result = \iterator_to_array($result);
+        }
+
+        if (\is_array($result) && ! \array_key_exists('__typename', $result)) {
+            $result['__typename'] = $type->getTypeDefinition()->getName();
+        }
+
+        return $result;
     }
 
     /**
