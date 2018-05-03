@@ -112,9 +112,9 @@ class FieldResolver
         foreach ($this->routes($input) as $route) {
             $response = $this->call($route, $input, $parent);
 
-            $parent = $parent
-                ? new ObjectBox($route, $response, $parent->getResponse())
-                : new ObjectBox($route, $response, []);
+            if ($response) {
+                break;
+            }
         }
 
         return $response;
