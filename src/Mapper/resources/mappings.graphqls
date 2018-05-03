@@ -18,11 +18,18 @@
 #
 # ```
 """
-directive @out(action: String!) on SCALAR | OBJECT
+directive @out(action: String!) on
+    | SCALAR
+    | OBJECT
+    | UNION
+    | INTERFACE
 
 """
 # The input mapping directive provides the ability to map
 # input arguments to custom structure
 """
-directive @in(action: String!) on ARGUMENT_DEFINITION
-    | SCALAR | ENUM | INPUT_OBJECT
+directive @in(action: String!) on
+    | ARGUMENT_DEFINITION
+    | SCALAR
+    | ENUM
+    | INPUT_OBJECT

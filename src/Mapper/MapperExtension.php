@@ -15,8 +15,6 @@ use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
-use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Definitions\UnionDefinition;

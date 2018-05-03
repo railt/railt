@@ -14,6 +14,10 @@ use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
@@ -110,11 +114,32 @@ class Serializer
             $result = \iterator_to_array($result);
         }
 
-        if (\is_array($result) && ! \array_key_exists('__typename', $result)) {
+        if (! $this->isPolymorphic($type) && $this->shouldProvideTypeName($result)) {
+            \var_dump($type->getTypeDefinition()->getName());
             $result['__typename'] = $type->getTypeDefinition()->getName();
         }
 
         return $result;
+    }
+
+    /**
+     * @param mixed $result
+     * @return bool
+     */
+    private function shouldProvideTypeName($result): bool
+    {
+        return \is_array($result) && ! \array_key_exists('__typename', $result);
+    }
+
+    /**
+     * @param AllowsTypeIndication $field
+     * @return bool
+     */
+    private function isPolymorphic(AllowsTypeIndication $field): bool
+    {
+        $type = $field->getTypeDefinition();
+
+        return $type instanceof UnionDefinition || $type instanceof ObjectDefinition;
     }
 
     /**
