@@ -13,9 +13,6 @@ use Railt\Foundation\Events\ActionDispatched;
 use Railt\Foundation\Events\ArgumentResolving;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
-use Railt\Reflection\Contracts\Definitions\EnumDefinition;
-use Railt\Reflection\Contracts\Definitions\InputDefinition;
-use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
@@ -126,9 +123,9 @@ class MapperExtension extends BaseExtension
     private function serialize(Serializer $serializer, FieldDefinition $field, $result)
     {
         foreach ($this->actions($field->getTypeDefinition()) as $directive) {
-            $type = $directive->getParent();
+            $type     = $directive->getParent();
             $document = $directive->getDocument();
-            $action = $directive->getPassedArgument('action');
+            $action   = $directive->getPassedArgument('action');
 
             $result = $serializer->serialize($type, $document, $action, $result);
         }
