@@ -109,9 +109,18 @@ class RouterExtension extends BaseExtension
      */
     private function loadRouteDirectives(FieldDefinition $field, ClassLoader $loader, RouterInterface $router): void
     {
-        foreach (['route', 'query', 'mutation', 'subscription'] as $route) {
-            foreach ($field->getDirectives($route) as $directive) {
-                $router->add(new Directive($this->getContainer(), $directive, $loader));
+        foreach (['route', 'query', 'mutation', 'subscription'] as $directiveName) {
+            foreach ($field->getDirectives($directiveName) as $directive) {
+                $action = new Directive($this->getContainer(), $directive, $loader);
+
+                foreach ($field->getDirectives('relation') as $join) {
+                    $action->relation(
+                        (string)$join->getPassedArgument('child'),
+                        (string)$join->getPassedArgument('parent')
+                    );
+                }
+
+                $router->add($action);
             }
         }
     }

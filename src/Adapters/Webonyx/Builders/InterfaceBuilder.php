@@ -27,9 +27,17 @@ class InterfaceBuilder extends TypeBuilder
         return new InterfaceType([
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
-            'fields'      => FieldBuilder::buildFields($this->reflection, $this->getRegistry(), $this->events),
-            // TODO Resolve Type
-            'resolveType' => function (): Type {
+            'fields'      => function (): array {
+                return FieldBuilder::buildFields($this->reflection, $this->getRegistry(), $this->events);
+            },
+            'resolveType' => function ($value): ?Type {
+                $type = $value['__typename'];
+
+                if (! $type) {
+                    throw new \LogicException('Interface response should provide the __typename field');
+                }
+
+                return $this->load($this->definition($type));
             },
         ]);
     }

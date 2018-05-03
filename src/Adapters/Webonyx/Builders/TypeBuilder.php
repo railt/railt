@@ -13,6 +13,7 @@ use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Schema\CompilerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
@@ -71,6 +72,17 @@ abstract class TypeBuilder
     }
 
     /**
+     * @param string $typeName
+     * @return TypeDefinition
+     */
+    protected function definition(string $typeName): TypeDefinition
+    {
+        return $this->make(CompilerInterface::class)
+            ->getDictionary()
+            ->get($typeName, $this->reflection);
+    }
+
+    /**
      * @param TypeDefinition $type
      * @return Type|Directive
      * @throws \InvalidArgumentException
@@ -78,5 +90,14 @@ abstract class TypeBuilder
     protected function load(TypeDefinition $type)
     {
         return $this->registry->get($type);
+    }
+
+    /**
+     * @param TypeDefinition $type
+     * @return bool
+     */
+    protected function registered(TypeDefinition $type): bool
+    {
+        return $this->registry->has($type);
     }
 }

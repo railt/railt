@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
+use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Route\Relation;
 
@@ -18,13 +19,12 @@ use Railt\Routing\Route\Relation;
  */
 class Route
 {
-    public const FIELD_ANY      = '*';
     public const PATH_DELIMITER = '.';
 
     /**
      * @var FieldDefinition
      */
-    protected $type;
+    protected $field;
 
     /**
      * @var \Closure|null
@@ -37,11 +37,6 @@ class Route
     protected $container;
 
     /**
-     * @var string
-     */
-    protected $field = self::FIELD_ANY;
-
-    /**
      * @var array|string[]
      */
     protected $operations = [];
@@ -52,34 +47,39 @@ class Route
     private $relations = [];
 
     /**
+     * @var TypeDefinition|null
+     */
+    private $type;
+
+    /**
      * Route constructor.
      * @param ContainerInterface $container
-     * @param FieldDefinition $type
+     * @param FieldDefinition $field
      */
-    public function __construct(ContainerInterface $container, FieldDefinition $type)
+    public function __construct(ContainerInterface $container, FieldDefinition $field)
     {
-        $this->type      = $type;
+        $this->field      = $field;
         $this->container = $container;
     }
 
     /**
-     * @param string $field
-     * @return Route
-     */
-    public function when(string $field): self
-    {
-        $this->field = $field;
-
-        return $this;
-    }
-
-    /**
-     * @param string[] ...$operations
+     * @param string ...$operations
      * @return Route
      */
     public function on(string ...$operations): self
     {
         $this->operations = \array_merge($this->operations, $operations);
+
+        return $this;
+    }
+
+    /**
+     * @param TypeDefinition $definition
+     * @return Route
+     */
+    public function wants(TypeDefinition $definition): self
+    {
+        $this->type = $definition;
 
         return $this;
     }
@@ -131,17 +131,17 @@ class Route
     /**
      * @return FieldDefinition
      */
-    public function getTypeDefinition(): FieldDefinition
+    public function getField(): FieldDefinition
     {
-        return $this->type;
+        return $this->field;
     }
 
     /**
-     * @return string
+     * @return null|TypeDefinition
      */
-    public function getFieldName(): string
+    public function getType(): ?TypeDefinition
     {
-        return $this->field;
+        return $this->type;
     }
 
     /**
@@ -186,9 +186,9 @@ class Route
     public function __debugInfo(): array
     {
         return [
+            'field'      =>  (string)$this->field->getParent() . (string)$this->field,
+            'type'       => $this->type,
             'relations'  => $this->relations,
-            'type'       => (string)$this->type->getParent() . (string)$this->type,
-            'field'      => $this->field,
             'operations' => $this->operations,
         ];
     }

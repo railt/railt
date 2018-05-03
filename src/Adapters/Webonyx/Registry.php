@@ -69,6 +69,15 @@ class Registry
 
     /**
      * @param TypeDefinition $definition
+     * @return bool
+     */
+    public function has(TypeDefinition $definition): bool
+    {
+        return  \array_key_exists($definition->getName(), $this->types);
+    }
+
+    /**
+     * @param TypeDefinition $definition
      * @return Type|Directive
      * @throws \InvalidArgumentException
      */

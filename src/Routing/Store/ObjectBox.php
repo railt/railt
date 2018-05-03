@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Routing\Store;
 
+use Railt\Routing\Route;
+
 /**
  * Class ObjectBox
  */
@@ -16,11 +18,11 @@ final class ObjectBox extends BaseBox implements \ArrayAccess
 {
     /**
      * ObjectBox constructor.
+     * @param Route $route
      * @param mixed $data
      * @param array $serialized
-     * @throws \LogicException
      */
-    public function __construct($data, $serialized)
+    public function __construct(Route $route, $data, $serialized)
     {
         $this->verifyResponse($serialized);
 
@@ -28,7 +30,7 @@ final class ObjectBox extends BaseBox implements \ArrayAccess
             $serialized = \iterator_to_array($serialized);
         }
 
-        parent::__construct($data, $serialized);
+        parent::__construct($route, $data, $serialized);
     }
 
     /**
@@ -67,6 +69,12 @@ final class ObjectBox extends BaseBox implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
+        if ($offset === '__typename') {
+            return $this->getRoute()->getType()
+                ? $this->getRoute()->getType()->getName()
+                : null;
+        }
+
         return $this->serialized[$offset] ?? null;
     }
 

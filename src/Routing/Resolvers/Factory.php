@@ -45,18 +45,18 @@ class Factory implements Resolver
     }
 
     /**
-     * @param InputInterface $input
      * @param Route $route
+     * @param InputInterface $input
      * @param null|ObjectBox $parent
      * @return mixed
      */
-    public function call(InputInterface $input, Route $route, ?ObjectBox $parent)
+    public function call(Route $route, InputInterface $input, ?ObjectBox $parent)
     {
         if ($route->hasRelations() && $this->validateRelation($input)) {
-            return $this->singular->call($input, $route, $parent);
+            return $this->singular->call($route, $input, $parent);
         }
 
-        return $this->divided->call($input, $route, $parent);
+        return $this->divided->call($route, $input, $parent);
     }
 
     /**

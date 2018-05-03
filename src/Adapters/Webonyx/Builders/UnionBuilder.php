@@ -36,8 +36,14 @@ class UnionBuilder extends TypeBuilder
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
             'types'       => $types,
-            // TODO Resolve Type
-            'resolveType' => function (): Type {
+            'resolveType' => function ($value): ?Type {
+                $type = $value['__typename'];
+
+                if (! $type) {
+                    throw new \LogicException('Union response should provide the __typename field');
+                }
+
+                return $this->load($this->definition($type));
             },
         ]);
     }

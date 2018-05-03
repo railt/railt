@@ -14,8 +14,9 @@ use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Reflection\Contracts\Document;
 use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
-use Railt\Reflection\Contracts\Invocations\InputInvocation;
 use Railt\Routing\Route;
+use Railt\SDL\Reflection\Dictionary;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class Directive
@@ -41,16 +42,12 @@ class Directive extends Route
         $this->exportAction($directive->getDocument(), $directive->getPassedArgument('action'), $loader);
 
         //
-        // @route( relation: {parent: "key", child: "key"} )
+        // @route( type: "TypeName" )
         //
-        $relation = $directive->getPassedArgument('relation');
-
-        if ($relation) {
-            $this->exportRelation($relation);
-        }
+        $this->exportTypeDefinition($directive, $this->container->get(CompilerInterface::class)->getDictionary());
 
         //
-        // @route( operations: [OperationName] )
+        // @[OperationName]( ... )
         //
         $this->exportOperations($directive);
     }
@@ -70,14 +67,16 @@ class Directive extends Route
     }
 
     /**
-     * @param InputInvocation $relation
+     * @param DirectiveInvocation $directive
+     * @param Dictionary $dictionary
      */
-    private function exportRelation(InputInvocation $relation): void
+    private function exportTypeDefinition(DirectiveInvocation $directive, Dictionary $dictionary): void
     {
-        $parent = $relation->getPassedArgument('parent');
-        $child  = $relation->getPassedArgument('child');
+        $argument = $directive->getPassedArgument('type');
 
-        $this->relation($child, $parent);
+        if ($argument) {
+            $this->wants($dictionary->get($argument));
+        }
     }
 
     /**

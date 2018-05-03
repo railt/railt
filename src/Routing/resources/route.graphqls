@@ -1,25 +1,104 @@
 #
 # -----------------------------------------------------------------
-#  The Route Directive
+#  The Route Directives
 # -----------------------------------------------------------------
 #
+
+"""
 # This directive is used to specify the resolver for type fields.
-#
-# "action" argument must contain a reference to the class and
-#   method in the format "Namespace\\Class@action".
-#
-# "relation" argument indicates that all child types and their
-#   result will be "merged" with the parent according to the
-#   specified criteria (parent field + child field).
-#
+"""
+directive @route(
+    """
+    # Argument must contain a reference to the class and
+    #   method in the format `action: "Namespace\\Class@action"`.
+    """
+    action: String!
 
-directive @route(action: String!, relation: __relation) on FIELD_DEFINITION
+    """
+    # Argument indicates in what type of case it is necessary
+    # to react to the routing for this action.
+    #
+    # This argument will be needed when using Union and Interface types
+    # as field type definitions.
+    #
+    # Unions:
+    #
+    # ```
+    # union ExampleUnion = A | B | C
+    #
+    # type ExampleType {
+    #     field: ExampleUnion!
+    #         @route(type: "A", action: "Namespace\\Class@findA")
+    #         @route(type: "B", action: "Namespace\\Class@findB")
+    #         @route(type: "C", action: "Namespace\\Class@findC")
+    # }
+    # ```
+    #
+    # Interfaces:
+    #
+    # ```
+    # interface ExampleInterface {}
+    #
+    # type A implements ExampleInterface {}
+    # type B implements ExampleInterface {}
+    # type C implements ExampleInterface {}
+    #
+    # type ExampleType {
+    #     field: ExampleInterface!
+    #         @route(type: "A", action: "Namespace\\Class@findA")
+    #         @route(type: "B", action: "Namespace\\Class@findB")
+    #         @route(type: "C", action: "Namespace\\Class@findC")
+    # }
+    # ```
+    """
+    type: String
+) on FIELD_DEFINITION
 
-directive @query(action: String!, relation: __relation) on FIELD_DEFINITION
-directive @mutation(action: String!, relation: __relation) on FIELD_DEFINITION
-directive @subscription(action: String!, relation: __relation) on FIELD_DEFINITION
+"""
+# Alias on the `@route` directive, except that it adds a
+# response rule to only query requests.
+"""
+directive @query(action: String!, type: String) on FIELD_DEFINITION
 
-input __relation {
-    parent: String! = "id"
+"""
+# Alias on the `@route` directive, except that it adds a
+# response rule to only mutation requests.
+"""
+directive @mutation(action: String!, type: String) on FIELD_DEFINITION
+
+"""
+# Alias on the `@route` directive, except that it adds a
+# response rule to only subscription requests.
+"""
+directive @subscription(action: String!, type: String) on FIELD_DEFINITION
+
+
+"""
+# Directive indicates that all child types and their
+# result will be "merged" with the parent according to the
+# specified criteria (parent field + child field).
+#
+# Switches the routing operation mode so that the action
+# is executed once for all requests.
+#
+# Example:
+#
+# ```
+# type Item {
+#     id: ID!
+#     parentId: ID! # Optional: The indication in the SDL is not necessary
+#     items: [Item!]! @join(parent: "id", child: "parentId")
+# }
+# ```
+"""
+directive @relation(
+    """
+    # A reference to the descendant field (i.e., the current route field).
+    """
     child: String!
-}
+
+    """
+    # A reference to the descendant field (i.e., the current route field).
+    """
+    parent: String! = "id"
+) on FIELD_DEFINITION

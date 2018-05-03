@@ -59,7 +59,7 @@ class Router implements RouterInterface
      */
     public function add(Route $route): Route
     {
-        $index = $this->key($route->getTypeDefinition());
+        $index = $this->key($route->getField());
 
         if (! \array_key_exists($index, $this->routes)) {
             $this->routes[$index] = [];

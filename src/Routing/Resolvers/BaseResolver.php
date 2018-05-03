@@ -14,6 +14,7 @@ use Railt\Foundation\Events\ActionDispatching;
 use Railt\Http\InputInterface;
 use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
+use Railt\Routing\Route;
 use Railt\Routing\Store\ObjectBox;
 use Railt\Routing\Store\Store;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -45,24 +46,25 @@ abstract class BaseResolver implements Resolver
     }
 
     /**
+     * @param Route $route
      * @param InputInterface $input
      * @param null|ObjectBox $parent
      */
-    abstract protected function withParent(InputInterface $input, ?ObjectBox $parent): void;
+    abstract protected function withParent(Route $route, InputInterface $input, ?ObjectBox $parent): void;
 
     /**
+     * @param Route $route
      * @param InputInterface $input
      * @param mixed $response
      * @return mixed
-     * @throws \RuntimeException
      */
-    protected function response(InputInterface $input, $response)
+    protected function response(Route $route, InputInterface $input, $response)
     {
         $field = $input->getFieldDefinition();
 
         if ($field->isList()) {
             if (\is_iterable($response)) {
-                return $this->formatList($input, $response);
+                return $this->formatList($route, $input, $response);
             }
 
             if ($response === null) {
@@ -73,31 +75,33 @@ abstract class BaseResolver implements Resolver
             throw new \RuntimeException(\sprintf($error, $input->getFieldName(), \strtolower(\gettype($response))));
         }
 
-        return $this->format($input, $response);
+        return $this->format($route, $input, $response);
     }
 
     /**
+     * @param Route $route
      * @param InputInterface $input
      * @param iterable $response
      * @return array
      */
-    private function formatList(InputInterface $input, iterable $response): array
+    private function formatList(Route $route, InputInterface $input, iterable $response): array
     {
         $result = [];
 
         foreach ($response as $item) {
-            $result[] = $this->format($input, $item);
+            $result[] = $this->format($route, $input, $item);
         }
 
         return $result;
     }
 
     /**
+     * @param Route $route
      * @param InputInterface $input
      * @param mixed $response
      * @return mixed
      */
-    private function format(InputInterface $input, $response)
+    private function format(Route $route, InputInterface $input, $response)
     {
         $formatted = $this->dispatched($input, $response);
 
@@ -109,7 +113,7 @@ abstract class BaseResolver implements Resolver
             return $formatted;
         }
 
-        $object = new ObjectBox($response, $formatted);
+        $object = new ObjectBox($route, $response, $formatted);
 
         return $this->store->set($input, $object);
     }

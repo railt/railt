@@ -8,6 +8,7 @@
 declare(strict_types=1);
 
 namespace Railt\Routing\Store;
+use Railt\Routing\Route;
 
 /**
  * Interface Box
@@ -25,8 +26,9 @@ interface Box
     public function getResponse();
 
     /**
+     * @param Route $route
      * @param array $collection
      * @return Box
      */
-    public static function rebuild(array $collection): self;
+    public static function rebuild(Route $route, array $collection): self;
 }

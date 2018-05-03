@@ -14,7 +14,7 @@ use Railt\Routing\Route;
 use Railt\Routing\Store\ObjectBox;
 
 /**
- * Class BasicResolver
+ * Class DividedResolver
  */
 class DividedResolver extends BaseResolver
 {
@@ -24,20 +24,21 @@ class DividedResolver extends BaseResolver
      * @param null|ObjectBox $parent
      * @return mixed
      */
-    public function call(InputInterface $input, Route $route, ?ObjectBox $parent)
+    public function call(Route $route, InputInterface $input, ?ObjectBox $parent)
     {
-        $this->withParent($input, $parent);
+        $this->withParent($route, $input, $parent);
 
         $actionResult = $route->call($this->getParameters($input));
 
-        return $this->response($input, $actionResult);
+        return $this->response($route, $input, $actionResult);
     }
 
     /**
+     * @param Route $route
      * @param InputInterface $input
      * @param null|ObjectBox $parent
      */
-    protected function withParent(InputInterface $input, ?ObjectBox $parent): void
+    protected function withParent(Route $route, InputInterface $input, ?ObjectBox $parent): void
     {
         if ($parent) {
             $input->updateParent($parent->getValue(), $parent->getResponse());

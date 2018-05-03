@@ -19,10 +19,10 @@ use Railt\Routing\Store\ObjectBox;
 interface Resolver
 {
     /**
-     * @param InputInterface $input
      * @param Route $route
+     * @param InputInterface $input
      * @param null|ObjectBox $parent
      * @return mixed
      */
-    public function call(InputInterface $input, Route $route, ?ObjectBox $parent);
+    public function call(Route $route, InputInterface $input, ?ObjectBox $parent);
 }

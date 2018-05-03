@@ -11,12 +11,15 @@ namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface as Container;
 use Railt\Http\InputInterface;
+use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\Reflection\Contracts\Definitions\UnionDefinition;
 use Railt\Reflection\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Resolvers\Factory;
 use Railt\Routing\Resolvers\Resolver;
 use Railt\Routing\Store\ObjectBox;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\ExpressionLanguage\Tests\Node\Obj;
 
 /**
  * Class FieldResolver
@@ -61,17 +64,85 @@ class FieldResolver
      */
     public function handle(InputInterface $input, ?ObjectBox $parent)
     {
+        $type = $input->getFieldDefinition()->getTypeDefinition();
+
+        switch (true) {
+            case $type instanceof UnionDefinition:
+            case $type instanceof InterfaceDefinition:
+                return $this->handleGeneralType($input, $parent);
+            default:
+                return $this->handleObject($input, $parent);
+        }
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param null|ObjectBox $parent
+     * @return mixed|null
+     */
+    private function handleGeneralType(InputInterface $input, ?ObjectBox $parent)
+    {
+        $result = [];
+
+        foreach ($this->routes($input) as $route) {
+            if ($response = $this->call($route, $input, $parent)) {
+                if (! $input->getFieldDefinition()->isList()) {
+                    return $response;
+                }
+
+                if ($response instanceof \Traversable) {
+                    $response = \iterator_to_array($response);
+                }
+
+                $result = \array_merge($result, $response);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param null|ObjectBox $parent
+     * @return mixed
+     */
+    private function handleObject(InputInterface $input, ?ObjectBox $parent)
+    {
+        $response = null;
+
+        foreach ($this->routes($input) as $route) {
+            $response = $this->call($route, $input, $parent);
+
+            $parent = $parent
+                ? new ObjectBox($route, $response, $parent->getResponse())
+                : new ObjectBox($route, $response, []);
+        }
+
+        return $response;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return \Traversable|Route[]
+     */
+    private function routes(InputInterface $input): \Traversable
+    {
         $field = $input->getFieldDefinition();
+        $exists = false;
 
         foreach ($this->router->get($field) as $route) {
             if (! $route->matchOperation($input->getOperation())) {
                 continue;
             }
 
-            return $this->call($input, $route, $parent);
+            $exists = true;
+
+            yield $route;
         }
 
-        return $this->call($input, $this->getDefault($field), $parent);
+        if (! $exists) {
+            yield $this->getDefault($field);
+        }
     }
 
     /**
@@ -81,9 +152,9 @@ class FieldResolver
      * @return mixed
      * @throws \TypeError
      */
-    private function call(InputInterface $input, Route $route, ?ObjectBox $parent)
+    private function call(Route $route, InputInterface $input, ?ObjectBox $parent)
     {
-        return $this->resolver->call($input, $route, $parent);
+        return $this->resolver->call($route, $input, $parent);
     }
 
     /**

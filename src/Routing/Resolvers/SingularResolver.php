@@ -20,32 +20,33 @@ use Railt\Routing\Store\ObjectBox;
 class SingularResolver extends BaseResolver
 {
     /**
-     * @param InputInterface $input
      * @param Route $route
+     * @param InputInterface $input
      * @param null|ObjectBox $parent
-     * @return mixed
+     * @return array|mixed
      */
-    public function call(InputInterface $input, Route $route, ?ObjectBox $parent)
+    public function call(Route $route, InputInterface $input, ?ObjectBox $parent)
     {
-        $this->withParent($input, $parent);
+        $this->withParent($route, $input, $parent);
 
         if (! $parent || $this->isFirstInvocation($input)) {
             $actionResult = $route->call($this->getParameters($input));
 
-            $this->response($input, $actionResult);
+            $this->response($route, $input, $actionResult);
         }
 
         return $this->extract($input, $route, $parent);
     }
 
     /**
+     * @param Route $route
      * @param InputInterface $input
      * @param null|ObjectBox $parent
      */
-    protected function withParent(InputInterface $input, ?ObjectBox $parent): void
+    protected function withParent(Route $route, InputInterface $input, ?ObjectBox $parent): void
     {
         if ($parent) {
-            $box = ObjectBox::rebuild($this->store->getParent($input));
+            $box = ObjectBox::rebuild($route, $this->store->getParent($input));
 
             $input->updateParent($box->getValue(), $box->getResponse());
         }
