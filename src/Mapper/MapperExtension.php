@@ -15,6 +15,7 @@ use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Io\File;
 use Railt\Reflection\Contracts\Definitions\EnumDefinition;
 use Railt\Reflection\Contracts\Definitions\InputDefinition;
+use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
 use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
 use Railt\Reflection\Contracts\Definitions\TypeDefinition;
 use Railt\Reflection\Contracts\Definitions\UnionDefinition;
@@ -149,6 +150,12 @@ class MapperExtension extends BaseExtension
         if ($type instanceof UnionDefinition) {
             foreach ($type->getTypes() as $provides) {
                 yield from $this->actions($provides);
+            }
+        }
+
+        if ($type instanceof ObjectDefinition) {
+            foreach ($type->getInterfaces() as $interface) {
+                yield from $this->actions($interface);
             }
         }
     }
