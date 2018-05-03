@@ -124,9 +124,9 @@ class MapperExtension extends BaseExtension
     private function serialize(Serializer $serializer, FieldDefinition $field, $result)
     {
         foreach ($this->actions($field->getTypeDefinition()) as $directive) {
-            $type = $directive->getParent();
+            $type     = $directive->getParent();
             $document = $directive->getDocument();
-            $action = $directive->getPassedArgument('action');
+            $action   = $directive->getPassedArgument('action');
 
             $result = $serializer->serialize($type, $document, $action, $result);
         }
