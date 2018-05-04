@@ -104,7 +104,7 @@ class TestValue
     /**
      * @return TestValue
      */
-    public function errors(): TestValue
+    public function errors(): self
     {
         return $this->response->errors();
     }
