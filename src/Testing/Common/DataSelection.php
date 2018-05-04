@@ -23,7 +23,7 @@ trait DataSelection
     {
         $exists = true;
 
-        $result = \data_get($value, $name, function() use (&$exists) {
+        $result = \data_get($value, $name, function () use (&$exists) {
             $exists = false;
 
             return null;
