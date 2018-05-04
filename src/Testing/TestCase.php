@@ -7,14 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests;
+namespace Railt\Testing;
 
-use Railt\Testing\TestCase as BaseTestCase;
+use PHPUnit\Framework\TestCase as BaseTestCase;
+use Railt\Testing\Common\MethodsAccess;
 
 /**
  * Class TestCase
  */
 abstract class TestCase extends BaseTestCase
 {
-
+    use MethodsAccess;
+    use Feature\InteractWithServer;
 }

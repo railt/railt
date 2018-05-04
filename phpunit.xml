@@ -13,10 +13,6 @@
         <testsuite name="Application Test Suite">
             <directory suffix="TestCase.php">./tests</directory>
         </testsuite>
-        <testsuite name="Components Test Suite">
-            <directory suffix="TestCase.php">./vendor/railt/*/tests</directory>
-        </testsuite>
-
     </testsuites>
     <filter>
         <whitelist>
