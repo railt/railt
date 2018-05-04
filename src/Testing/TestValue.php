@@ -102,6 +102,14 @@ class TestValue
     }
 
     /**
+     * @return TestValue
+     */
+    public function errors(): TestValue
+    {
+        return $this->response->errors();
+    }
+
+    /**
      * @param string $name
      * @return TestValue
      */

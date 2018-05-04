@@ -25,8 +25,10 @@ class BasicRequestsTestCase extends TestCase
     {
         $this->schema('type Query { field: Int! }')
             ->requestRaisesErrors('{ field }')
-            ->where('field')
+            ->response('field')
                 ->notExists()
+            ->where('errors')
+                ->count(1)
             ->error()
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
@@ -34,8 +36,10 @@ class BasicRequestsTestCase extends TestCase
 
         $this->production->schema('type Query { field: Int! }')
             ->requestRaisesErrors('{ field }')
-            ->where('field')
+            ->response('field')
                 ->notExists()
+            ->where('errors')
+                ->count(1)
             ->error()
                 ->field('message')
                     ->equals('Internal Server Error')
@@ -51,8 +55,10 @@ class BasicRequestsTestCase extends TestCase
     {
         $this->schema('type Query { field: [Int]! }')
             ->requestRaisesErrors('{ field }')
-            ->where('field')
+            ->response('field')
                 ->notExists()
+            ->where('errors')
+                ->count(1)
             ->error()
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
@@ -60,8 +66,10 @@ class BasicRequestsTestCase extends TestCase
 
         $this->production->schema('type Query { field: [Int]! }')
             ->requestRaisesErrors('{ field }')
-            ->where('field')
+            ->response('field')
                 ->notExists()
+            ->where('errors')
+                ->count(1)
             ->error()
                 ->field('message')
                     ->equals('Internal Server Error')
@@ -77,8 +85,10 @@ class BasicRequestsTestCase extends TestCase
     {
         $this->schema('type Query { field: [Int!]! }')
             ->requestRaisesErrors('{ field }')
-            ->where('field')
+            ->response('field')
                 ->notExists()
+            ->where('errors')
+                ->count(1)
             ->error()
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
@@ -86,8 +96,10 @@ class BasicRequestsTestCase extends TestCase
 
         $this->production->schema('type Query { field: [Int!]! }')
             ->requestRaisesErrors('{ field }')
-            ->where('field')
+            ->response('field')
                 ->notExists()
+            ->where('errors')
+                ->count(1)
             ->error()
                 ->field('message')
                     ->equals('Internal Server Error')
@@ -103,11 +115,10 @@ class BasicRequestsTestCase extends TestCase
     {
         $this->schema('type Query { field: Int }')
             ->requestSucceeded('{ field }')
-            ->where('field')
+            ->response('field')
                 ->exists()
                 ->null()
-            ->error()
-                ->count(0)
+            ->errors()
                 ->notExists()
         ;
     }
@@ -121,11 +132,10 @@ class BasicRequestsTestCase extends TestCase
     {
         $this->schema('type Query { field: [Int] }')
             ->requestSucceeded('{ field }')
-            ->where('field')
+            ->response('field')
                 ->exists()
                 ->null()
-            ->error()
-                ->count(0)
+            ->errors()
                 ->notExists()
         ;
     }
@@ -139,11 +149,10 @@ class BasicRequestsTestCase extends TestCase
     {
         $this->schema('type Query { field: [Int!] }')
             ->requestSucceeded('{ field }')
-            ->where('field')
+            ->response('field')
                 ->exists()
                 ->null()
-            ->error()
-                ->count(0)
+            ->errors()
                 ->notExists()
         ;
     }

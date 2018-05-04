@@ -110,6 +110,17 @@ class TestResponse extends TestValue
      */
     public function where(string $name): TestValue
     {
+        [$result, $exists] = $this->get($name, $this->response->toArray());
+
+        return new TestValue($name, $result, $this, $exists);
+    }
+
+    /**
+     * @param string $name
+     * @return TestValue
+     */
+    public function response(string $name): TestValue
+    {
         [$result, $exists] = $this->get($name, $this->response->getData());
 
         return new TestValue($name, $result, $this, $exists);
@@ -126,6 +137,14 @@ class TestResponse extends TestValue
         [$result, $exists] = $this->get($name, $this->response->getErrors());
 
         return new TestValue($name, $result, $this, $exists);
+    }
+
+    /**
+     * @return TestValue
+     */
+    public function errors(): TestValue
+    {
+        return $this->where('errors');
     }
 
     /**
