@@ -70,11 +70,13 @@ class Serializer
     {
         [$class, $method] = $this->loader->action($document, $action);
 
+        $result = $this->resolveMap($type, $this->getSignature($class, $method), $result, $class, $method);
+
         if (! $this->isPolymorphic($type) && $this->shouldProvideTypeName($result)) {
             $result['__typename'] = $type->getName();
         }
 
-        return $this->resolveMap($type, $this->getSignature($class, $method), $result, $class, $method);
+        return $result;
     }
 
     /**
