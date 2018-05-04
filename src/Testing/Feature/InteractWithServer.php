@@ -34,7 +34,7 @@ trait InteractWithServer
     protected function schema(string $schema, bool $debug = null): TestServer
     {
         $schema = \sprintf('schema { query: Query } %s', $schema);
-        $class = $this->serverClass();
+        $class  = $this->serverClass();
 
         return new $class($schema, $debug ?? $this->isDebug);
     }

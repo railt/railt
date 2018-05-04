@@ -17,23 +17,23 @@ use Railt\Testing\Common\MethodsAccess;
 /**
  * Class TestValue
  *
- * @property-read TestResponse $and
- * @property-read TestResponse $exists
- * @property-read TestResponse $notExists
- * @property-read TestResponse $empty
- * @property-read TestResponse $notEmpty
- * @property-read TestResponse $true
- * @property-read TestResponse $notTrue
- * @property-read TestResponse $false
- * @property-read TestResponse $notFalse
- * @property-read TestResponse $null
- * @property-read TestResponse $notNull
- * @property-read TestResponse $finite
- * @property-read TestResponse $infinite
- * @property-read TestResponse $nan
- * @property-read TestResponse $json
+ * @property TestResponse $and
+ * @property TestResponse $exists
+ * @property TestResponse $notExists
+ * @property TestResponse $empty
+ * @property TestResponse $notEmpty
+ * @property TestResponse $true
+ * @property TestResponse $notTrue
+ * @property TestResponse $false
+ * @property TestResponse $notFalse
+ * @property TestResponse $null
+ * @property TestResponse $notNull
+ * @property TestResponse $finite
+ * @property TestResponse $infinite
+ * @property TestResponse $nan
+ * @property TestResponse $json
  *
- * @property-read void $dump
+ * @property void $dump
  */
 class TestValue
 {
@@ -69,8 +69,8 @@ class TestValue
      */
     public function __construct(string $field, $value, TestResponse $response, bool $exists = false)
     {
-        $this->field = $field;
-        $this->value = $value;
+        $this->field    = $field;
+        $this->value    = $value;
         $this->response = $response;
         $this->isExists = $exists;
     }
@@ -87,7 +87,7 @@ class TestValue
      * @param string $field
      * @return TestValue
      */
-    public function where(string $field): TestValue
+    public function where(string $field): self
     {
         return $this->response->where($field);
     }
@@ -96,7 +96,7 @@ class TestValue
      * @param int $number
      * @return TestValue
      */
-    public function error(int $number = 0): TestValue
+    public function error(int $number = 0): self
     {
         return $this->response->error($number);
     }
@@ -105,7 +105,7 @@ class TestValue
      * @param string $name
      * @return TestValue
      */
-    public function field(string $name): TestValue
+    public function field(string $name): self
     {
         return $this->andWhere($name);
     }
@@ -114,11 +114,11 @@ class TestValue
      * @param string $name
      * @return TestValue
      */
-    public function andWhere(string $name): TestValue
+    public function andWhere(string $name): self
     {
         [$result, $exists] = $this->get($name, $this->value);
 
-        return new TestValue($name, $result, $this->response, $exists);
+        return new self($name, $result, $this->response, $exists);
     }
 
     /**
@@ -132,7 +132,7 @@ class TestValue
             $this->isExists ? 'non-existent ' : '',
             $this->field,
             \json_encode($this->value),
-            $this->response->exceptionsMessage()
+            $this->response->exceptionsMessage(),
         ]);
     }
 
@@ -717,5 +717,3 @@ class TestValue
         return $this;
     }
 }
-
-

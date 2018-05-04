@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Testing;
 
+use Psr\Container\ContainerInterface as PSRContainer;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Application;
@@ -17,7 +18,6 @@ use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Io\File;
 use Railt\Io\Readable;
-use Psr\Container\ContainerInterface as PSRContainer;
 
 /**
  * Class TestServer
@@ -46,9 +46,9 @@ class TestServer
      */
     public function __construct(string $schema, bool $debug = false)
     {
-        $this->schema = $this->createSchema($schema);
+        $this->schema    = $this->createSchema($schema);
         $this->container = new Container();
-        $this->debug = $debug;
+        $this->debug     = $debug;
     }
 
     /**
@@ -105,9 +105,9 @@ class TestServer
             public function __construct(string $query, array $variables, ?string $operation)
             {
                 $this->data = [
-                    $this->getQueryArgument() => $query,
+                    $this->getQueryArgument()     => $query,
                     $this->getVariablesArgument() => $variables,
-                    $this->getOperationArgument() => $operation
+                    $this->getOperationArgument() => $operation,
                 ];
             }
         };

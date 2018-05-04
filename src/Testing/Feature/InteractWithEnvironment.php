@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Testing\Feature;
 
 /**
- * @property-read $this $debug
- * @property-read $this $production
+ * @property $this $debug
+ * @property $this $production
  */
 trait InteractWithEnvironment
 {

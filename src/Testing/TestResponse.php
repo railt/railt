@@ -14,8 +14,8 @@ use Railt\Http\GraphQLException;
 use Railt\Http\ResponseInterface;
 
 /**
- * @property-read TestResponse $successful
- * @property-read TestResponse $hasErrors
+ * @property TestResponse $successful
+ * @property TestResponse $hasErrors
  */
 class TestResponse extends TestValue
 {
@@ -25,8 +25,8 @@ class TestResponse extends TestValue
      */
     final public function __construct(ResponseInterface $response)
     {
-        $this->field = '<response>';
-        $this->value = $response->toArray();
+        $this->field    = '<response>';
+        $this->value    = $response->toArray();
         $this->response = $response;
         $this->isExists = true;
     }
@@ -88,19 +88,19 @@ class TestResponse extends TestValue
     {
         $exceptions = $this->response->getExceptions();
 
-        $errors = \array_map(function(\Throwable $e): string {
+        $errors = \array_map(function (\Throwable $e): string {
             return \vsprintf(' - [%s] %s with message "%s" in %s:%d', [
                 $e instanceof GraphQLException ? 'public' : 'internal',
                 \get_class($e),
                 $e->getMessage(),
                 $e->getFile(),
-                $e->getLine()
+                $e->getLine(),
             ]);
         }, $exceptions);
 
         return \vsprintf(' and returns a set of errors (%d): %s', [
             \count($errors),
-            \PHP_EOL . \implode(\PHP_EOL, $errors)
+            \PHP_EOL . \implode(\PHP_EOL, $errors),
         ]);
     }
 
