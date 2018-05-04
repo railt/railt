@@ -8,7 +8,7 @@
  */
 declare(strict_types=1);
 
-use Railt\Foundation\Console\GrammarBuildCommand;
+use Railt\SDL\Console\ParserCompileCommand;
 use Symfony\Component\Console\Application;
 
 \define('RAILT_START', \microtime(true));
@@ -55,7 +55,7 @@ if (! \class_exists(Application::class)) {
 
 $cli = new Application();
 
-$cli->add(new GrammarBuildCommand());
+$cli->add(new ParserCompileCommand());
 
 try {
     $code = $cli->run();
