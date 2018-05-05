@@ -30,6 +30,8 @@ class BasicRequestsTestCase extends TestCase
             ->errors()
                 ->count(1)
             ->error()
+                ->hasFields('message', 'in', 'trace')
+                ->count(3)
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
         ;
@@ -41,6 +43,9 @@ class BasicRequestsTestCase extends TestCase
             ->errors()
                 ->count(1)
             ->error()
+                ->hasField('message')
+                ->notHasFields( 'in', 'trace')
+                ->count(1)
                 ->field('message')
                     ->equals('Internal Server Error')
         ;
@@ -60,6 +65,8 @@ class BasicRequestsTestCase extends TestCase
             ->errors()
                 ->count(1)
             ->error()
+                ->hasFields('message', 'in', 'trace')
+                ->count(3)
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
         ;
@@ -71,6 +78,9 @@ class BasicRequestsTestCase extends TestCase
             ->errors()
                 ->count(1)
             ->error()
+                ->hasField('message')
+                ->notHasFields( 'in', 'trace')
+                ->count(1)
                 ->field('message')
                     ->equals('Internal Server Error')
         ;
@@ -90,6 +100,8 @@ class BasicRequestsTestCase extends TestCase
             ->errors()
                 ->count(1)
             ->error()
+                ->hasFields('message', 'in', 'trace')
+                ->count(3)
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
         ;
@@ -101,6 +113,9 @@ class BasicRequestsTestCase extends TestCase
             ->errors()
                 ->count(1)
             ->error()
+                ->hasField('message')
+                ->notHasFields( 'in', 'trace')
+                ->count(1)
                 ->field('message')
                     ->equals('Internal Server Error')
         ;

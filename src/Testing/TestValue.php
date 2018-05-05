@@ -175,14 +175,29 @@ class TestValue
     }
 
     /**
-     * @param mixed $key
+     * @param int|string $field
      * @return TestValue
      * @throws \PHPUnit\Framework\Exception
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public function hasKey($key): self
+    public function hasField($field): self
     {
-        Assert::assertArrayHasKey($key, $this->value, $this->message(__FUNCTION__));
+        Assert::assertArrayHasKey($field, $this->value, $this->message(__FUNCTION__));
+
+        return $this;
+    }
+
+    /**
+     * @param int[]|string[] ...$fields
+     * @return TestValue
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function hasFields(...$fields): self
+    {
+        foreach ($fields as $field) {
+            $this->hasField($field);
+        }
 
         return $this;
     }
@@ -202,14 +217,29 @@ class TestValue
     }
 
     /**
-     * @param mixed $key
+     * @param int|string $field
      * @return TestValue
      * @throws \PHPUnit\Framework\Exception
      * @throws \PHPUnit\Framework\ExpectationFailedException
      */
-    public function notHasKey($key): self
+    public function notHasField($field): self
     {
-        Assert::assertArrayNotHasKey($key, $this->value, $this->message(__FUNCTION__));
+        Assert::assertArrayNotHasKey($field, $this->value, $this->message(__FUNCTION__));
+
+        return $this;
+    }
+
+    /**
+     * @param int[]|string[] $fields
+     * @return TestValue
+     * @throws \PHPUnit\Framework\Exception
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function notHasFields(...$fields): self
+    {
+        foreach ($fields as $field) {
+            $this->notHasField($field);
+        }
 
         return $this;
     }
