@@ -20,6 +20,11 @@ use Railt\Http\ResponseInterface;
 class TestResponse extends TestValue
 {
     /**
+     * @var ResponseInterface
+     */
+    protected $response;
+
+    /**
      * Response constructor.
      * @param ResponseInterface $response
      */

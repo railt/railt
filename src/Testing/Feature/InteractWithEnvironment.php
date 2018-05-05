@@ -21,7 +21,7 @@ trait InteractWithEnvironment
     private $isDebug = true;
 
     /**
-     * @return InteractWithEnvironment|$this
+     * @return $this
      */
     protected function debug(): self
     {
@@ -31,7 +31,7 @@ trait InteractWithEnvironment
     }
 
     /**
-     * @return InteractWithEnvironment|$this
+     * @return $this
      */
     protected function production(): self
     {
