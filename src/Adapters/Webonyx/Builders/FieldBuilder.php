@@ -15,9 +15,9 @@ use Railt\Adapters\Webonyx\Registry;
 use Railt\Adapters\Webonyx\WebonyxInput;
 use Railt\Foundation\Events\FieldResolving;
 use Railt\Foundation\Events\TypeBuilding;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Dependent\Field\HasFields;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition as ReflectionField;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\SDL\Contracts\Dependent\Field\HasFields;
+use Railt\SDL\Contracts\Dependent\FieldDefinition as ReflectionField;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**

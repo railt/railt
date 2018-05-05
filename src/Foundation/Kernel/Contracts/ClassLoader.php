@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Kernel\Contracts;
 
-use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Contracts\Document;
 
 /**
  * Interface ClassLoader

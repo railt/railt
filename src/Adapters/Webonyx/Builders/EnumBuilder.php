@@ -11,7 +11,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\Type;
-use Railt\Reflection\Contracts\Definitions\EnumDefinition;
+use Railt\SDL\Contracts\Definitions\EnumDefinition;
 
 /**
  * @property EnumDefinition $reflection

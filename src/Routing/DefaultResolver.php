@@ -11,9 +11,9 @@ namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
 use Railt\Http\InputInterface;
-use Railt\Reflection\Contracts\Definitions\EnumDefinition;
-use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Definitions\EnumDefinition;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class DefaultResolver

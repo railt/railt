@@ -11,9 +11,9 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
-use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
-use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Contracts\Definitions\DirectiveDefinition;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;

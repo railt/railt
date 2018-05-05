@@ -11,8 +11,8 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use Railt\Adapters\Webonyx\Registry;
 use Railt\Foundation\Events\TypeBuilding;
-use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
-use Railt\Reflection\Contracts\Dependent\ArgumentDefinition as ReflectionArgument;
+use Railt\SDL\Contracts\Dependent\Argument\HasArguments;
+use Railt\SDL\Contracts\Dependent\ArgumentDefinition as ReflectionArgument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**

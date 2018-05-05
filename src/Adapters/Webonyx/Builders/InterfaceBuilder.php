@@ -11,7 +11,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\Type;
-use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
+use Railt\SDL\Contracts\Definitions\InterfaceDefinition;
 
 /**
  * @property InterfaceDefinition $reflection

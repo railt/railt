@@ -11,7 +11,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use Railt\Reflection\Contracts\Definitions\ObjectDefinition;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 
 /**
  * @property ObjectDefinition $reflection

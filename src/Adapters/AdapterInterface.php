@@ -12,7 +12,7 @@ namespace Railt\Adapters;
 use Railt\Container\ContainerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 
 /**
  * Interface AdapterInterface

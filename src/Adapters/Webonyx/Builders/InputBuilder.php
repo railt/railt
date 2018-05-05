@@ -11,7 +11,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\Type;
-use Railt\Reflection\Contracts\Definitions\InputDefinition;
+use Railt\SDL\Contracts\Definitions\InputDefinition;
 
 /**
  * @property InputDefinition $reflection

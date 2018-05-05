@@ -13,8 +13,8 @@ use Illuminate\Support\Str;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Foundation\Kernel\Exceptions\UnknownClassException;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\SDL\Contracts\Document;
+use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
 
 /**
  * Class DirectiveLoader

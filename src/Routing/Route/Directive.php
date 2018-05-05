@@ -11,9 +11,9 @@ namespace Railt\Routing\Route;
 
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
-use Railt\Reflection\Contracts\Document;
-use Railt\Reflection\Contracts\Invocations\DirectiveInvocation;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Document;
+use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
 use Railt\Routing\Route;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;

@@ -20,8 +20,8 @@ use Railt\Foundation\Extensions\Repository;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
-use Railt\Reflection\Contracts\Definitions\SchemaDefinition;
-use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Contracts\Document;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 use Railt\SDL\Schema\CompilerInterface;
 

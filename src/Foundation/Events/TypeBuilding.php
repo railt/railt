@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Events;
 
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

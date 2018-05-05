@@ -38,8 +38,7 @@
         "railt/http": "1.2.*|dev-master",
         "railt/storage": "1.2.*|dev-master",
         "railt/compiler": "1.2.*|dev-master",
-        "railt/container": "1.2.*|dev-master",
-        "railt/reflection": "1.2.*|dev-master"
+        "railt/container": "1.2.*|dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -63,7 +62,6 @@
             "Railt\\Tests\\Container\\": "vendor/railt/container/tests",
             "Railt\\Tests\\Http\\": "vendor/railt/http/tests",
             "Railt\\Tests\\Io\\": "vendor/railt/io/tests",
-            "Railt\\Tests\\Reflection\\": "vendor/railt/reflection/tests",
             "Railt\\Tests\\SDL\\": "vendor/railt/sdl/tests",
             "Railt\\Tests\\Storage\\": "vendor/railt/storage/tests"
         }

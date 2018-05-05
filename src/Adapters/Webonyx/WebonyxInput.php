@@ -12,10 +12,10 @@ namespace Railt\Adapters\Webonyx;
 use GraphQL\Type\Definition\ResolveInfo;
 use Railt\Foundation\Events\ArgumentResolving;
 use Railt\Http\InputInterface;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Dependent\Argument\HasArguments;
-use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Dependent\Argument\HasArguments;
+use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**

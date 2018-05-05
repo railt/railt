@@ -13,11 +13,11 @@ use Railt\Container\ContainerInterface;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
-use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Definitions\UnionDefinition;
-use Railt\Reflection\Contracts\Dependent\ArgumentDefinition;
-use Railt\Reflection\Contracts\Document;
+use Railt\SDL\Contracts\Definitions\InterfaceDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions\UnionDefinition;
+use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
+use Railt\SDL\Contracts\Document;
 
 /**
  * Class Serializer

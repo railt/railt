@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Routing\Contracts;
 
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Route;
 
 /**

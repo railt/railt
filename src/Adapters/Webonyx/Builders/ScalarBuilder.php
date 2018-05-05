@@ -12,12 +12,12 @@ namespace Railt\Adapters\Webonyx\Builders;
 use GraphQL\Language\AST\ObjectValueNode;
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\Type;
-use Railt\Reflection\Contracts\Definitions\ScalarDefinition;
-use Railt\Reflection\Standard\Scalars\BooleanType;
-use Railt\Reflection\Standard\Scalars\FloatType;
-use Railt\Reflection\Standard\Scalars\IDType;
-use Railt\Reflection\Standard\Scalars\IntType;
-use Railt\Reflection\Standard\Scalars\StringType;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\SDL\Standard\Scalars\BooleanType;
+use Railt\SDL\Standard\Scalars\FloatType;
+use Railt\SDL\Standard\Scalars\IDType;
+use Railt\SDL\Standard\Scalars\IntType;
+use Railt\SDL\Standard\Scalars\StringType;
 
 /**
  * @property ScalarDefinition $reflection

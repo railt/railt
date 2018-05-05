@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\Type;
-use Railt\Reflection\Contracts\Behavior\AllowsTypeIndication;
+use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 
 /**
  * @property AllowsTypeIndication $reflection

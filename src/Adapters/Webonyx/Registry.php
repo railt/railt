@@ -14,8 +14,8 @@ use GraphQL\Type\Definition\Type;
 use Railt\Adapters\Webonyx\Builders\TypeBuilder;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Events\TypeBuilding;
-use Railt\Reflection\Contracts\Definitions;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

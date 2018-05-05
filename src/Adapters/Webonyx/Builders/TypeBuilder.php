@@ -12,7 +12,7 @@ namespace Railt\Adapters\Webonyx\Builders;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use Railt\Adapters\Webonyx\Registry;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Schema\CompilerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 

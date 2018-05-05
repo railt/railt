@@ -12,8 +12,8 @@ namespace Railt\Adapters\Webonyx\Builders;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\DirectiveLocation;
 use GraphQL\Type\Definition\FieldArgument;
-use Railt\Reflection\Contracts\Definitions\Directive\Location;
-use Railt\Reflection\Contracts\Definitions\DirectiveDefinition;
+use Railt\SDL\Contracts\Definitions\Directive\Location;
+use Railt\SDL\Contracts\Definitions\DirectiveDefinition;
 
 /**
  * @property DirectiveDefinition $reflection

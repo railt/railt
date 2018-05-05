@@ -11,9 +11,9 @@ namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface as Container;
 use Railt\Http\InputInterface;
-use Railt\Reflection\Contracts\Definitions\InterfaceDefinition;
-use Railt\Reflection\Contracts\Definitions\UnionDefinition;
-use Railt\Reflection\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Definitions\InterfaceDefinition;
+use Railt\SDL\Contracts\Definitions\UnionDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Resolvers\Factory;
 use Railt\Routing\Resolvers\Resolver;

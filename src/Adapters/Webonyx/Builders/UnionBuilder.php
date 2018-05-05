@@ -11,8 +11,8 @@ namespace Railt\Adapters\Webonyx\Builders;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\UnionType;
-use Railt\Reflection\Contracts\Definitions\TypeDefinition;
-use Railt\Reflection\Contracts\Definitions\UnionDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions\UnionDefinition;
 
 /**
  * @property UnionDefinition $reflection
