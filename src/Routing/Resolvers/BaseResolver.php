@@ -12,11 +12,11 @@ namespace Railt\Routing\Resolvers;
 use Railt\Foundation\Events\ActionDispatched;
 use Railt\Foundation\Events\ActionDispatching;
 use Railt\Http\InputInterface;
-use Railt\SDL\Contracts\Definitions\EnumDefinition;
-use Railt\SDL\Contracts\Definitions\ScalarDefinition;
 use Railt\Routing\Route;
 use Railt\Routing\Store\ObjectBox;
 use Railt\Routing\Store\Store;
+use Railt\SDL\Contracts\Definitions\EnumDefinition;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

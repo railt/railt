@@ -15,10 +15,10 @@ use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Foundation\Kernel\Contracts\ClassLoader;
 use Railt\Http\InputInterface;
 use Railt\Io\File;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Route\Directive;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Schema\CompilerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
