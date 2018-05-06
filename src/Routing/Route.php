@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Routing;
 
 use Railt\Container\ContainerInterface;
+use Railt\Routing\Route\Relation;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
-use Railt\Routing\Route\Relation;
 
 /**
  * Class Route

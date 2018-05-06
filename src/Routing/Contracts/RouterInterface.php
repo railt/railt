@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Routing\Contracts;
 
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Routing\Route;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Interface RouterInterface
