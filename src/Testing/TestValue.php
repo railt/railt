@@ -131,7 +131,7 @@ class TestValue
     /**
      * @return TestValue
      */
-    public function dump(): TestValue
+    public function dump(): self
     {
         \dump($this->value);
 

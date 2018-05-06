@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Railt\Testing;
 
 use PHPUnit\Framework\Assert;
-use Railt\Http\ResponseInterface;
 use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Http\ResponseInterface;
 
 /**
- * @property-read TestResponse $successful
- * @property-read TestResponse $hasErrors
- * @property-read TestResponse $dump
- * @property-read void $dd
+ * @property TestResponse $successful
+ * @property TestResponse $hasErrors
+ * @property TestResponse $dump
+ * @property void $dd
  */
 class TestResponse extends TestValue
 {

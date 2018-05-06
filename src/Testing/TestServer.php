@@ -49,8 +49,8 @@ class TestServer
      */
     public function __construct(Readable $schema, bool $debug = true)
     {
-        $this->debug = $debug;
-        $this->schema = $schema;
+        $this->debug   = $debug;
+        $this->schema  = $schema;
         $this->request = new Request();
     }
 
@@ -60,7 +60,7 @@ class TestServer
      * @param string|null $operationName
      * @return TestServer
      */
-    public function query(string $query, array $variables = [], string $operationName = null): TestServer
+    public function query(string $query, array $variables = [], string $operationName = null): self
     {
         return $this->addQuery(new Query($query, $variables, $operationName));
     }
@@ -69,7 +69,7 @@ class TestServer
      * @param QueryInterface $query
      * @return TestServer
      */
-    public function addQuery(QueryInterface $query): TestServer
+    public function addQuery(QueryInterface $query): self
     {
         $this->request->addQuery($query);
 
@@ -80,7 +80,7 @@ class TestServer
      * @param ContainerInterface $container
      * @return TestServer
      */
-    public function through(ContainerInterface $container): TestServer
+    public function through(ContainerInterface $container): self
     {
         $this->container = $container;
 

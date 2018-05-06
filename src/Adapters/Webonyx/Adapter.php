@@ -17,11 +17,11 @@ use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Builders\SchemaBuilder;
 use Railt\Container\ContainerInterface;
 use Railt\Http\Exception\GraphQLException;
+use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\Http\Message;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
-use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
