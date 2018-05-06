@@ -11,6 +11,7 @@ namespace Railt\Testing;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Railt\Testing\Common\MethodsAccess;
+use Railt\Testing\Feature\InteractWithServer;
 
 /**
  * Class TestCase
@@ -18,5 +19,5 @@ use Railt\Testing\Common\MethodsAccess;
 abstract class TestCase extends BaseTestCase
 {
     use MethodsAccess;
-    use Feature\InteractWithServer;
+    use InteractWithServer;
 }

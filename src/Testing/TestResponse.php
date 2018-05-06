@@ -10,12 +10,14 @@ declare(strict_types=1);
 namespace Railt\Testing;
 
 use PHPUnit\Framework\Assert;
-use Railt\Http\GraphQLException;
 use Railt\Http\ResponseInterface;
+use Railt\Http\Exception\GraphQLExceptionInterface;
 
 /**
- * @property TestResponse $successful
- * @property TestResponse $hasErrors
+ * @property-read TestResponse $successful
+ * @property-read TestResponse $hasErrors
+ * @property-read TestResponse $dump
+ * @property-read void $dd
  */
 class TestResponse extends TestValue
 {
@@ -95,13 +97,13 @@ class TestResponse extends TestValue
 
         $errors = \array_map(function (\Throwable $e): string {
             return \vsprintf(' - [%s] %s with message "%s" in %s:%d', [
-                $e instanceof GraphQLException ? 'public' : 'internal',
+                $e instanceof GraphQLExceptionInterface ? 'public' : 'internal',
                 \get_class($e),
                 $e->getMessage(),
                 $e->getFile(),
                 $e->getLine(),
             ]);
-        }, $exceptions);
+        }, \iterator_to_array($exceptions));
 
         return \vsprintf(' and returns a set of errors (%d): %s', [
             \count($errors),
@@ -121,42 +123,12 @@ class TestResponse extends TestValue
     }
 
     /**
-     * @param string $name
-     * @return TestValue
+     * @return $this|TestValue
      */
-    public function response(string $name): TestValue
-    {
-        [$result, $exists] = $this->get($name, $this->response->getData());
-
-        return new TestValue($name, $result, $this, $exists);
-    }
-
-    /**
-     * @param int $number
-     * @return TestValue
-     */
-    public function error(int $number = 0): TestValue
-    {
-        $name = (string)$number;
-
-        [$result, $exists] = $this->get($name, $this->response->getErrors());
-
-        return new TestValue($name, $result, $this, $exists);
-    }
-
-    /**
-     * @return TestValue
-     */
-    public function errors(): TestValue
-    {
-        return $this->where('errors');
-    }
-
-    /**
-     * @return void
-     */
-    public function dump(): void
+    public function dump(): TestValue
     {
         echo $this->response->render();
+
+        return $this;
     }
 }

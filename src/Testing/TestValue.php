@@ -33,7 +33,8 @@ use Railt\Testing\Common\MethodsAccess;
  * @property TestResponse $nan
  * @property TestResponse $json
  *
- * @property void $dump
+ * @property TestValue $dump
+ * @property void $dd
  */
 class TestValue
 {
@@ -93,23 +94,6 @@ class TestValue
     }
 
     /**
-     * @param int $number
-     * @return TestValue
-     */
-    public function error(int $number = 0): self
-    {
-        return $this->response->error($number);
-    }
-
-    /**
-     * @return TestValue
-     */
-    public function errors(): self
-    {
-        return $this->response->errors();
-    }
-
-    /**
      * @param string $name
      * @return TestValue
      */
@@ -145,16 +129,26 @@ class TestValue
     }
 
     /**
+     * @return TestValue
+     */
+    public function dump(): TestValue
+    {
+        \dump($this->value);
+
+        return $this;
+    }
+
+    /**
      * @return void
      */
-    public function dump(): void
+    public function dd(): void
     {
-        $this->response->dump();
+        $this->dump();
+        die(-1);
     }
 
     /**
      * @return TestValue
-     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function exists(): self
     {
@@ -182,7 +176,7 @@ class TestValue
      */
     public function hasField($field): self
     {
-        Assert::assertArrayHasKey($field, $this->value, $this->message(__FUNCTION__));
+        Assert::assertArrayHasKey($field, (array)$this->value, $this->message(__FUNCTION__));
 
         return $this;
     }
@@ -211,7 +205,7 @@ class TestValue
      */
     public function subset($subset, bool $strict = false): self
     {
-        Assert::assertArraySubset($subset, $this->value, $strict, $this->message(__FUNCTION__));
+        Assert::assertArraySubset($subset, (array)$this->value, $strict, $this->message(__FUNCTION__));
 
         return $this;
     }
@@ -224,7 +218,7 @@ class TestValue
      */
     public function notHasField($field): self
     {
-        Assert::assertArrayNotHasKey($field, $this->value, $this->message(__FUNCTION__));
+        Assert::assertArrayNotHasKey($field, (array)$this->value, $this->message(__FUNCTION__));
 
         return $this;
     }

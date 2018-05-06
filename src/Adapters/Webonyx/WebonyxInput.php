@@ -273,7 +273,6 @@ class WebonyxInput implements InputInterface
 
     /**
      * @return bool
-     * @throws \LogicException
      */
     public function hasAlias(): bool
     {
@@ -282,7 +281,6 @@ class WebonyxInput implements InputInterface
 
     /**
      * @return string
-     * @throws \LogicException
      */
     public function getAlias(): string
     {

@@ -16,9 +16,12 @@ use GraphQL\Type\Schema;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Builders\SchemaBuilder;
 use Railt\Container\ContainerInterface;
+use Railt\Http\Exception\GraphQLException;
+use Railt\Http\Message;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
+use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -68,37 +71,17 @@ class Adapter implements AdapterInterface
 
         $executor = $this->buildExecutor($schema, $request);
 
-        /** @var ExecutionResult $result */
-        $result = $executor($request->getQuery(), $request->getVariables(), $request->getOperation());
-
-        $response = new Response((array)$result->data, $this->parseGraphQLErrors($result->errors));
+        $response = new Response();
         $response->debug($this->debug);
 
-        return $response;
-    }
+        foreach ($request->getQueries() as $query) {
+            /** @var ExecutionResult $result */
+            $result = $executor($query->getQuery(), $query->getVariables(), $query->getOperationName());
 
-    /**
-     * @param array $errors
-     * @return array|\Throwable
-     */
-    private function parseGraphQLErrors(array $errors): array
-    {
-        $result = [];
-
-        foreach ($errors as $error) {
-            if ($error instanceof Error) {
-                if ($error->getCategory() === Error::CATEGORY_GRAPHQL) {
-                    $result[] = new GraphQLException($error);
-                    continue;
-                }
-
-                $error = $error->getPrevious();
-            }
-
-            $result[] = $error;
+            $response->addMessage(new Message((array)$result->data, $this->parseGraphQLErrors($result->errors)));
         }
 
-        return $result;
+        return $response;
     }
 
     /**
@@ -120,6 +103,18 @@ class Adapter implements AdapterInterface
     }
 
     /**
+     * @param SchemaDefinition $schema
+     * @return Schema
+     * @throws \InvalidArgumentException
+     */
+    protected function buildSchema(SchemaDefinition $schema): Schema
+    {
+        $builder = new SchemaBuilder($schema, $this->registry, $this->events);
+
+        return $builder->build();
+    }
+
+    /**
      * @param Schema $schema
      * @param mixed $rootValue
      * @param mixed $context
@@ -133,14 +128,35 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * @param SchemaDefinition $schema
-     * @return Schema
-     * @throws \InvalidArgumentException
+     * @param array $errors
+     * @return array|\Throwable
      */
-    protected function buildSchema(SchemaDefinition $schema): Schema
+    private function parseGraphQLErrors(array $errors): array
     {
-        $builder = new SchemaBuilder($schema, $this->registry, $this->events);
+        $result = [];
 
-        return $builder->build();
+        foreach ($errors as $error) {
+            if ($error instanceof Error) {
+                $bridge = new GraphQLException($error->getMessage(), $error->getCode(), $error->getPrevious());
+
+                if ($this->debug || $error->getCategory() === Error::CATEGORY_GRAPHQL) {
+                    $bridge->makePublic();
+                }
+
+                foreach ($error->getLocations() as $location) {
+                    $bridge->addLocation(new GraphQLExceptionLocation($location->line, $location->column));
+                }
+
+                foreach ((array)$error->getPath() as $chunk) {
+                    $bridge->addPath($chunk);
+                }
+
+                $error = $bridge;
+            }
+
+            $result[] = $error;
+        }
+
+        return $result;
     }
 }

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Testing\Feature;
 
+use Railt\Io\File;
 use Railt\Testing\TestServer;
 
 /**
@@ -36,6 +37,6 @@ trait InteractWithServer
         $schema = \sprintf('schema { query: Query } %s', $schema);
         $class  = $this->serverClass();
 
-        return new $class($schema, $debug ?? $this->isDebug);
+        return new $class(File::fromSources($schema), $debug ?? $this->isDebug);
     }
 }

@@ -9,21 +9,29 @@ declare(strict_types=1);
 
 namespace Railt\Testing;
 
-use Psr\Container\ContainerInterface as PSRContainer;
-use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Application;
+use Railt\Http\Query;
+use Railt\Http\QueryInterface;
 use Railt\Http\Request;
 use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\Io\File;
 use Railt\Io\Readable;
 
 /**
- * Class TestServer
+ * Class Server
  */
 class TestServer
 {
+    /**
+     * @var RequestInterface
+     */
+    private $request;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
     /**
      * @var bool
      */
@@ -35,27 +43,44 @@ class TestServer
     private $schema;
 
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
      * Server constructor.
-     * @param string $schema
+     * @param Readable $schema
      * @param bool $debug
      */
-    public function __construct(string $schema, bool $debug = false)
+    public function __construct(Readable $schema, bool $debug = true)
     {
-        $this->schema    = $this->createSchema($schema);
-        $this->container = new Container();
-        $this->debug     = $debug;
+        $this->debug = $debug;
+        $this->schema = $schema;
+        $this->request = new Request();
     }
 
     /**
-     * @param PSRContainer $container
+     * @param string $query
+     * @param array $variables
+     * @param string|null $operationName
      * @return TestServer
      */
-    public function through(PSRContainer $container): self
+    public function query(string $query, array $variables = [], string $operationName = null): TestServer
+    {
+        return $this->addQuery(new Query($query, $variables, $operationName));
+    }
+
+    /**
+     * @param QueryInterface $query
+     * @return TestServer
+     */
+    public function addQuery(QueryInterface $query): TestServer
+    {
+        $this->request->addQuery($query);
+
+        return $this;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return TestServer
+     */
+    public function through(ContainerInterface $container): TestServer
     {
         $this->container = $container;
 
@@ -63,88 +88,15 @@ class TestServer
     }
 
     /**
-     * @param string $schema
-     * @return Readable
-     */
-    private function createSchema(string $schema): Readable
-    {
-        return File::fromSources($schema);
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function container(): ContainerInterface
-    {
-        return $this->container;
-    }
-
-    /**
-     * @param string $query
-     * @param array $variables
-     * @param string|null $operation
-     * @return ResponseInterface
+     * @return TestResponse
      * @throws \InvalidArgumentException
      */
-    public function handleRequest(string $query, array $variables = [], string $operation = null): ResponseInterface
+    public function send(): TestResponse
     {
         $app = new Application($this->container, $this->debug);
 
-        return $app->request($this->schema, $this->createRequest($query, $variables, $operation));
-    }
+        $response = $app->request($this->schema, $this->request);
 
-    /**
-     * @param string $query
-     * @param array $variables
-     * @param string|null $operation
-     * @return RequestInterface
-     */
-    private function createRequest(string $query, array $variables = [], ?string $operation): RequestInterface
-    {
-        return new class($query, $variables, $operation) extends Request {
-            public function __construct(string $query, array $variables, ?string $operation)
-            {
-                $this->data = [
-                    $this->getQueryArgument()     => $query,
-                    $this->getVariablesArgument() => $variables,
-                    $this->getOperationArgument() => $operation,
-                ];
-            }
-        };
-    }
-
-    /**
-     * @param string $query
-     * @param array $variables
-     * @return TestResponse
-     * @throws \InvalidArgumentException
-     */
-    public function request(string $query, array $variables = []): TestResponse
-    {
-        return new TestResponse($this->handleRequest($query, $variables));
-    }
-
-    /**
-     * @param string $query
-     * @param array $variables
-     * @return TestResponse
-     * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     */
-    public function requestSucceeded(string $query, array $variables = []): TestResponse
-    {
-        return $this->request($query, $variables)->successful();
-    }
-
-    /**
-     * @param string $query
-     * @param array $variables
-     * @return TestResponse
-     * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     */
-    public function requestRaisesErrors(string $query, array $variables = []): TestResponse
-    {
-        return $this->request($query, $variables)->hasErrors();
+        return new TestResponse($response);
     }
 }
