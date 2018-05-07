@@ -16,6 +16,7 @@ use GraphQL\Type\Schema;
 use Railt\Adapters\AdapterInterface;
 use Railt\Adapters\Webonyx\Builders\SchemaBuilder;
 use Railt\Container\ContainerInterface;
+use Railt\Http\Exception\Extension\DebugExtension;
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\Http\Message;
@@ -69,16 +70,20 @@ class Adapter implements AdapterInterface
     {
         $this->registry->getContainer()->instance(RequestInterface::class, $request);
 
-        $executor = $this->buildExecutor($schema, $request);
-
         $response = new Response();
         $response->debug($this->debug);
 
-        foreach ($request->getQueries() as $query) {
-            /** @var ExecutionResult $result */
-            $result = $executor($query->getQuery(), $query->getVariables(), $query->getOperationName());
+        try {
+            $executor = $this->buildExecutor($schema, $request);
 
-            $response->addMessage(new Message((array)$result->data, $this->parseGraphQLErrors($result->errors)));
+            foreach ($request->getQueries() as $query) {
+                /** @var ExecutionResult $result */
+                $result = $executor($query->getQuery(), $query->getVariables(), $query->getOperationName());
+
+                $response->addMessage(new Message((array)$result->data, $this->parseGraphQLErrors($result->errors)));
+            }
+        } catch (\Throwable $fatal) {
+            $response->addMessage(new Message([], $this->parseGraphQLErrors([$fatal])));
         }
 
         return $response;
@@ -136,10 +141,15 @@ class Adapter implements AdapterInterface
         $result = [];
 
         foreach ($errors as $error) {
-            if ($error instanceof Error) {
-                $bridge = new GraphQLException($error->getMessage(), $error->getCode(), $error->getPrevious());
+            $bridge = new GraphQLException($error->getMessage(), $error->getCode(), $error->getPrevious());
 
-                if ($this->debug || $error->getCategory() === Error::CATEGORY_GRAPHQL) {
+            if ($this->debug) {
+                $bridge->makePublic();
+                $bridge->addExtension('debug', new DebugExtension($error));
+            }
+
+            if ($error instanceof Error) {
+                if ($error->getCategory() === Error::CATEGORY_GRAPHQL) {
                     $bridge->makePublic();
                 }
 
@@ -150,11 +160,9 @@ class Adapter implements AdapterInterface
                 foreach ((array)$error->getPath() as $chunk) {
                     $bridge->addPath($chunk);
                 }
-
-                $error = $bridge;
             }
 
-            $result[] = $error;
+            $result[] = $bridge;
         }
 
         return $result;
