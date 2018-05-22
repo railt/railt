@@ -89,6 +89,17 @@ class WebonyxInput implements InputInterface
     }
 
     /**
+     * @param string $field
+     * @return bool
+     */
+    public function hasRelation(string $field): bool
+    {
+        $selection = $this->info->getFieldSelection(\substr_count($field, '.'));
+
+        return (bool)\array_get($selection, $field, false);
+    }
+
+    /**
      * @param HasArguments $reflection
      * @param array $input
      * @return array
