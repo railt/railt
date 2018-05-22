@@ -263,7 +263,7 @@ class WebonyxInput implements InputInterface
      */
     public function get(string $argument, $default = null)
     {
-        return $this->arguments[$argument] ?? $default;
+        return \array_get($this->arguments, $argument, $default);
     }
 
     /**
@@ -272,7 +272,7 @@ class WebonyxInput implements InputInterface
      */
     public function has(string $argument): bool
     {
-        return \array_key_exists($argument, $this->arguments);
+        return $this->get($argument) !== null;
     }
 
     /**
