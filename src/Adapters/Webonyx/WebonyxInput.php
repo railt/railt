@@ -111,7 +111,7 @@ class WebonyxInput implements InputInterface
      */
     private function analyzeRelationDepth(string ...$fields): int
     {
-        $map = function(string $field): int {
+        $map = function (string $field): int {
             return \substr_count($field, '.');
         };
 
