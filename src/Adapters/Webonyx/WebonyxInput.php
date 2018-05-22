@@ -15,6 +15,7 @@ use Railt\Http\InputInterface;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\Argument\HasArguments;
 use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
+use Railt\SDL\Contracts\Dependent\Field\HasFields;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
@@ -72,6 +73,19 @@ class WebonyxInput implements InputInterface
         $this->info       = $info;
         $this->field      = $field;
         $this->arguments  = $this->resolveArguments($field, $arguments);
+    }
+
+    /**
+     * @return iterable|FieldDefinition[]
+     */
+    public function getRelations(): iterable
+    {
+        /** @var HasFields $object */
+        $object = $this->field->getTypeDefinition();
+
+        foreach ($this->info->getFieldSelection() as $selection => $true) {
+            yield $object->getField($selection);
+        }
     }
 
     /**
