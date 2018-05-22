@@ -89,14 +89,33 @@ class WebonyxInput implements InputInterface
     }
 
     /**
-     * @param string $field
+     * @param string[] $fields
      * @return bool
      */
-    public function hasRelation(string $field): bool
+    public function hasRelation(string ...$fields): bool
     {
-        $selection = $this->info->getFieldSelection(\substr_count($field, '.'));
+        $selection = $this->info->getFieldSelection($this->analyzeRelationDepth(...$fields));
 
-        return (bool)\array_get($selection, $field, false);
+        foreach ($fields as $field) {
+            if ((bool)\array_get($selection, $field, false)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string[] $fields
+     * @return int
+     */
+    private function analyzeRelationDepth(string ...$fields): int
+    {
+        $map = function(string $field): int {
+            return \substr_count($field, '.');
+        };
+
+        return \max(0, ...\array_map($map, $fields));
     }
 
     /**
