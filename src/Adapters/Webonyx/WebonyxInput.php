@@ -76,16 +76,55 @@ class WebonyxInput implements InputInterface
     }
 
     /**
+     * @param int $depth
      * @return iterable|FieldDefinition[]
      */
-    public function getRelations(): iterable
+    public function getRelations(int $depth = 0): iterable
     {
-        /** @var HasFields $object */
-        $object = $this->field->getTypeDefinition();
+        /** @var HasFields $context */
+        $context = $this->field->getTypeDefinition();
 
-        foreach ($this->info->getFieldSelection() as $selection => $true) {
-            yield $object->getField($selection);
+        $selection = $this->info->getFieldSelection($depth);
+
+        yield from $this->getFlatRelations($selection, $context);
+    }
+
+    /**
+     * @param array $fields
+     * @param HasFields|TypeDefinition $context
+     * @param string|null $root
+     * @return iterable
+     */
+    private function getFlatRelations(array $fields, HasFields $context, string $root = null): iterable
+    {
+        foreach ($fields as $name => $sub) {
+            /** @var FieldDefinition $field */
+            $field = $context->getField($name);
+            $relation = $this->getRelationName($name, $root);
+
+            switch (true) {
+                case $sub === true:
+                    yield $relation => $field;
+                    break;
+
+                case \is_array($sub):
+                    yield from $this->getFlatRelations($sub, $field->getTypeDefinition(), $relation);
+                    break;
+
+                default:
+                    throw new \InvalidArgumentException('Bad relation type');
+            }
         }
+    }
+
+    /**
+     * @param string $name
+     * @param string|null $root
+     * @return string
+     */
+    private function getRelationName(string $name, string $root = null): string
+    {
+        return $root ? \implode('.', [$root, $name]) : $name;
     }
 
     /**
