@@ -1,7 +1,0 @@
-type TAny implements IInt {
-    field(arg: Int): Any
-}
-
-interface IInt {
-    field(arg: Any): Any
-}

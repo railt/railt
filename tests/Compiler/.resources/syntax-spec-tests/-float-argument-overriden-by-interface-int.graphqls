@@ -1,7 +1,0 @@
-type TFloat implements IInt {
-    field(arg: Int): Float
-}
-
-interface IInt {
-    field(arg: Float): Float
-}

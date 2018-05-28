@@ -5,17 +5,15 @@
 <p align="center">
     <a href="https://travis-ci.org/railt/railt"><img src="https://travis-ci.org/railt/railt.svg?branch=master" alt="Travis CI" /></a>
     <a href="https://scrutinizer-ci.com/g/railt/railt/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/railt/badges/coverage.png?b=master" alt="Code coverage" /></a>
-    <a href="https://styleci.io/repos/91753282?branch=master"><img src="https://styleci.io/repos/91753282/shield?b=master" alt="StyleCI" /></a>
     <a href="https://scrutinizer-ci.com/g/railt/railt/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/railt/badges/quality-score.png?b=master" alt="Scrutinizer CI" /></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/version" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/v/unstable" alt="Latest Unstable Version"></a>
-    <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
+    <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE.md"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
 </p>
 
 ## Introduction
 
 This is a pure PHP realization of the **GraphQL** protocol based on the 
-[youshido/graphql](https://github.com/Youshido/GraphQL) and/or 
 [webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields) 
 implementations of the official GraphQL Specification 
 located on [Facebook GitHub](http://facebook.github.io/graphql/).
@@ -33,25 +31,12 @@ thereby solving problems such as:
 
 ## Quick start
 
-The documentation is in the process of writing, therefore, in order to understand how it works, a quick start.
+The documentation is in the process of writing, therefore, 
+in order to understand how it works, a quick start.
 
-> `index.php`
+### `schema.graphqls`
 
-```php
-use Railt\Http\Request;
-use Railt\Compiler\Compiler;
-use Railt\Foundation\Application;
-use Railt\Reflection\Filesystem\File;
-
-$app = new Application(new Compiler());
-
-$schema = File::fromFile(__DIR__ . '/schema.graphqls');
-
-$response = $app->request(new Request(), $schema);
-$response->send();
-```
-
-> `schema.graphqls`
+This is our main GraphQL application schema.
 
 ```graphql
 schema {
@@ -64,21 +49,50 @@ type Example {
 }
 ```
 
-> `ExampleController.php`
+### `ExampleController.php`
+
+The GraphQL request `query { say }` handler indicated in the `@route` directive
 
 ```php
-use Railt\Routing\Contracts\InputInterface as Input;
-
 class ExampleController
 {
-    public function say(Input $input): string
+    public function say(string $message): string
     {
-        return $input->get('message');
+        return $message;
     }
 }
 ```
 
-> GraphQL
+### `index.php`
+
+This is the main file that handles all requests to the application. 
+With the same success this role can be performed by any controller 
+in the MVP (MVC with passive models) application, for example on 
+the basis of a Symfony or Laravel.
+
+```php
+use Railt\Io\File;
+use Railt\SDL\Compiler;
+use Railt\Http\Request;
+use Railt\Foundation\Application;
+use Railt\Routing\RouterExtension;
+
+// Creating a new application
+$app = new Application();
+
+// Link to the main SDL of the our application
+$schema = File::fromPathname(__DIR__ . '/schema.graphqls');
+
+// Processing of HTTP request
+$response = $app->request($schema, new Request());
+
+// And sending a Response
+$response->send();
+```
+
+### Example GraphQL query
+
+**Request:**
 
 ```graphql
 # Request
@@ -87,13 +101,13 @@ class ExampleController
 }
 ```
 
+**Response:**
+
 ```json
-// Response
 {
     "say": "Something is awesome!"
 }
 ```
-
 
 ## Learning Railt
 
@@ -117,27 +131,29 @@ at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
 The Railt Framework is open-sourced software licensed under 
 the [MIT license](https://opensource.org/licenses/MIT).
 
-The Railt\Parser, which is part of the Railt Framework re-distribute 
+The Railt\Compiler, which is part of the Railt Framework re-distribute 
 under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 
-## Production ready
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frailt%2Frailt.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frailt%2Frailt?ref=badge_large)
+
+## Development Status
 
 > Not ready for real world usage yet :bomb: :scream:
 
-| Package                   | Release                                                                          |
-|---------------------------|----------------------------------------------------------------------------------|
-| `railt/railt`             | ![Latest Stable Version](https://poser.pugx.org/railt/railt/version)             |
-| `railt/webonyx-adapter`   | ![Latest Stable Version](https://poser.pugx.org/railt/webonyx-adapter/version)   |
-| `railt/youshido-adapter`  | ![Latest Stable Version](https://poser.pugx.org/railt/youshido-adapter/version)  |
-| `railt/laravel-provider`  | ![Latest Stable Version](https://poser.pugx.org/railt/laravel-provider/version)  |
-| `railt/symfony-bundle`    | ![Latest Stable Version](https://poser.pugx.org/railt/symfony-bundle/version)    |
+| Packages                                                               | Release                                                                                                                                  | CI Status                                                                                                                     | Coverage                                                                                                                                                            |
+|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`railt/railt`](https://github.com/railt/railt)                        | [![Latest Stable Version](https://poser.pugx.org/railt/railt/version)](https://packagist.org/packages/railt/railt)                       | [![Travis CI](https://travis-ci.org/railt/railt.svg?branch=master)](https://travis-ci.org/railt/railt)                        | [![Coverage](https://scrutinizer-ci.com/g/railt/railt/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/railt/?branch=master)                       |
+| [`railt/laravel-provider`](https://github.com/railt/laravel-provider)  | [![Latest Stable Version](https://poser.pugx.org/railt/laravel-provider/version)](https://packagist.org/packages/railt/laravel-provider) | [![Travis CI](https://travis-ci.org/railt/laravel-provider.svg?branch=master)](https://travis-ci.org/railt/laravel-provider)  | [![Coverage](https://scrutinizer-ci.com/g/railt/laravel-provider/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/laravel-provider/?branch=master) |
+| [`railt/symfony-bundle`](https://github.com/railt/symfony-bundle)      | [![Latest Stable Version](https://poser.pugx.org/railt/symfony-bundle/version)](https://packagist.org/packages/railt/symfony-bundle)     | [![Travis CI](https://travis-ci.org/railt/symfony-bundle.svg?branch=master)](https://travis-ci.org/railt/symfony-bundle)      | [![Coverage](https://scrutinizer-ci.com/g/railt/symfony-bundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/symfony-bundle/?branch=master)     |
+| [`railt/carbon-extension`](https://github.com/railt/carbon-extension)  | [![Latest Stable Version](https://poser.pugx.org/railt/carbon-extension/version)](https://packagist.org/packages/railt/carbon-extension) | [![Travis CI](https://travis-ci.org/railt/carbon-extension.svg?branch=master)](https://travis-ci.org/railt/carbon-extension)  | [![Coverage](https://scrutinizer-ci.com/g/railt/carbon-extension/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/carbon-extension/?branch=master) |
 
-| Component                 | Release                                                                          |
-|---------------------------|----------------------------------------------------------------------------------|
-| `railt/parser`            | ![Latest Stable Version](https://poser.pugx.org/railt/parser/version)            |
-| `railt/compiler`          | ![Latest Stable Version](https://poser.pugx.org/railt/compiler/version)          |
-| `railt/reflection`        | ![Latest Stable Version](https://poser.pugx.org/railt/reflection/version)        |
-| `railt/container`         | ![Latest Stable Version](https://poser.pugx.org/railt/container/version)         |
-| `railt/events`            | ![Latest Stable Version](https://poser.pugx.org/railt/events/version)            |
-| `railt/http`              | ![Latest Stable Version](https://poser.pugx.org/railt/http/version)              |
-| `railt/routing`           | ![Latest Stable Version](https://poser.pugx.org/railt/routing/version)           |
+| Components                                                             | Release                                                                                                                                  | CI Status                                                                                                                     | Coverage                                                                                                                                                            |
+|------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`railt/compiler`](https://github.com/railt/compiler)                  | [![Latest Stable Version](https://poser.pugx.org/railt/compiler/version)](https://packagist.org/packages/railt/compiler)                 | [![Travis CI](https://travis-ci.org/railt/compiler.svg?branch=master)](https://travis-ci.org/railt/compiler)                  | [![Coverage](https://scrutinizer-ci.com/g/railt/compiler/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/compiler/?branch=master)                 |
+| [`railt/container`](https://github.com/railt/container)                | [![Latest Stable Version](https://poser.pugx.org/railt/container/version)](https://packagist.org/packages/railt/container)               | [![Travis CI](https://travis-ci.org/railt/container.svg?branch=master)](https://travis-ci.org/railt/container)                | [![Coverage](https://scrutinizer-ci.com/g/railt/container/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/container/?branch=master)               |
+| [`railt/http`](https://github.com/railt/http)                          | [![Latest Stable Version](https://poser.pugx.org/railt/http/version)](https://packagist.org/packages/railt/http)                         | [![Travis CI](https://travis-ci.org/railt/http.svg?branch=master)](https://travis-ci.org/railt/http)                          | [![Coverage](https://scrutinizer-ci.com/g/railt/http/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/http/?branch=master)                         |
+| [`railt/io`](https://github.com/railt/io)                              | [![Latest Stable Version](https://poser.pugx.org/railt/io/version)](https://packagist.org/packages/railt/io)                             | [![Travis CI](https://travis-ci.org/railt/io.svg?branch=master)](https://travis-ci.org/railt/io)                              | [![Coverage](https://scrutinizer-ci.com/g/railt/io/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/io/?branch=master)                             |
+| [`railt/reflection`](https://github.com/railt/reflection)              | [![Latest Stable Version](https://poser.pugx.org/railt/reflection/version)](https://packagist.org/packages/railt/reflection)             | [![Travis CI](https://travis-ci.org/railt/reflection.svg?branch=master)](https://travis-ci.org/railt/reflection)              | [![Coverage](https://scrutinizer-ci.com/g/railt/reflection/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/reflection/?branch=master)             |
+| [`railt/sdl`](https://github.com/railt/sdl)                            | [![Latest Stable Version](https://poser.pugx.org/railt/sdl/version)](https://packagist.org/packages/railt/sdl)                           | [![Travis CI](https://travis-ci.org/railt/sdl.svg?branch=master)](https://travis-ci.org/railt/sdl)                            | [![Coverage](https://scrutinizer-ci.com/g/railt/sdl/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/sdl/?branch=master)                           |
+| [`railt/storage`](https://github.com/railt/storage)                    | [![Latest Stable Version](https://poser.pugx.org/railt/storage/version)](https://packagist.org/packages/railt/storage)                   | [![Travis CI](https://travis-ci.org/railt/storage.svg?branch=master)](https://travis-ci.org/railt/storage)                    | [![Coverage](https://scrutinizer-ci.com/g/railt/storage/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/railt/storage/?branch=master)                   |

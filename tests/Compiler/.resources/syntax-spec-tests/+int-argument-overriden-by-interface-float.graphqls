@@ -1,7 +1,0 @@
-type TInt implements IFloat {
-    field(arg: Float): Int
-}
-
-interface IFloat {
-    field(arg: Int): Int
-}

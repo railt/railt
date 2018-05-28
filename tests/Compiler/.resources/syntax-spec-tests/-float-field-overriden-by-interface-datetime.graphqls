@@ -1,7 +1,0 @@
-type TFloat implements IDateTime {
-    field: Float
-}
-
-interface IDateTime {
-  field: DateTime
-}

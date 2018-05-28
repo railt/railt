@@ -1,21 +1,20 @@
 language: php
 
-env:
-  global:
-    - setup=stable
-
 matrix:
   fast_finish: true
   include:
     - php: 7.1
+      env: setup=lowest
     - php: 7.1
-      env: setup=unstable
+      env: setup=highest
     - php: 7.2
+      env: setup=lowest
     - php: 7.2
-      env: setup=unstable
+      env: setup=highest
     - php: nightly
+      env: setup=lowest
     - php: nightly
-      env: setup=unstable
+      env: setup=highest
   allow_failures:
     - php: nightly
 
@@ -25,8 +24,10 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-install:
-  - if [[ $setup = 'stable' ]]; then travis_retry composer install --no-interaction --prefer-dist --no-suggest; fi
-  - if [[ $setup = 'unstable' ]]; then travis_retry composer update --no-interaction --prefer-dist --no-suggest; fi
+before_script:
+    - composer self-update -q
+    - if [ -z "$setup" ]; then composer install; fi;
+    - if [ "$setup" = "lowest" ]; then composer update --prefer-lowest --no-interaction --prefer-dist --no-suggest; fi;
+    - if [ "$setup" = "highest" ]; then composer update --no-interaction --prefer-dist --no-suggest; fi;
 
 script: vendor/bin/phpunit

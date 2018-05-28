@@ -1,7 +1,0 @@
-type TFloat implements IAny {
-    field: Float
-}
-
-interface IAny {
-  field: Any
-}

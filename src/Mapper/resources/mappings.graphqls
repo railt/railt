@@ -1,0 +1,27 @@
+#
+# -----------------------------------------------------------------
+#  The Mappings Directive
+# -----------------------------------------------------------------
+#
+
+"""
+# The output mapping directive provides the ability to serialize
+# the variadic structures to array-compatible result.
+#
+# ```graphql
+#
+#   # Definition on object
+#   type User @out(action: "UserMapper@toArray") { ... }
+#
+#   # Definition on scalar
+#   scalar DateTime @out(action: "DateTimeMapper@toString") { ... }
+#
+# ```
+"""
+directive @out(action: String!) on SCALAR | OBJECT | ENUM | UNION | INTERFACE
+
+"""
+# The input mapping directive provides the ability to map
+# input arguments to custom structure
+"""
+directive @in(action: String!) on ARGUMENT_DEFINITION | SCALAR | ENUM | INPUT_OBJECT
