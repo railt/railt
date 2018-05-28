@@ -108,6 +108,7 @@ class WebonyxInput implements InputInterface
                     break;
 
                 case \is_array($sub):
+                    yield $relation => $field;
                     yield from $this->getFlatRelations($sub, $field->getTypeDefinition(), $relation);
                     break;
 
