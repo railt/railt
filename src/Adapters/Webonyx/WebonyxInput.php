@@ -99,7 +99,7 @@ class WebonyxInput implements InputInterface
     {
         foreach ($fields as $name => $sub) {
             /** @var FieldDefinition $field */
-            $field = $context->getField($name);
+            $field    = $context->getField($name);
             $relation = $this->getRelationName($name, $root);
 
             switch (true) {
