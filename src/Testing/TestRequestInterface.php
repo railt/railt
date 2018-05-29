@@ -28,7 +28,7 @@ interface TestRequestInterface
      * @param QueryInterface $query
      * @return TestRequestInterface
      */
-    public function addQuery(QueryInterface $query): TestRequestInterface;
+    public function addQuery(QueryInterface $query): self;
 
     /**
      * @return TestResponse
