@@ -81,6 +81,7 @@ class Application implements PSRContainer
         $this->container = $this->bootContainer($container);
 
         $this->bootIfNotBooted();
+        $this->container->instance(static::class, $this);
     }
 
     /**
