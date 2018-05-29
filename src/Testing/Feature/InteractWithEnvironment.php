@@ -47,4 +47,14 @@ trait InteractWithEnvironment
     {
         return $this->isDebug;
     }
+
+    /**
+     * @param string $param
+     * @param mixed|null $default
+     * @return mixed
+     */
+    public function env(string $param, $default = null)
+    {
+        return \array_get((array)$_ENV, $param, $default);
+    }
 }

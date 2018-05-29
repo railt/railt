@@ -9,8 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Testing\Feature;
 
+use Railt\Foundation\Application;
 use Railt\Io\File;
-use Railt\Testing\TestServer;
+use Railt\Io\Readable;
+use Railt\Testing\TestApplicationRequest;
+use Railt\Testing\TestEmptyRequest;
+use Railt\Testing\TestRequestInterface;
 
 /**
  * Trait InteractWithServer
@@ -20,23 +24,46 @@ trait InteractWithServer
     use InteractWithEnvironment;
 
     /**
-     * @return string
+     * @param string $schema
+     * @param bool $debug
+     * @return TestRequestInterface|TestEmptyRequest
      */
-    protected function serverClass(): string
+    protected function schema(string $schema, bool $debug = null): TestRequestInterface
     {
-        return TestServer::class;
+        return new TestEmptyRequest(File::fromSources($schema), $debug ?? $this->isDebug);
     }
 
     /**
      * @param string $schema
-     * @param bool $debug
-     * @return TestServer
+     * @param bool|null $debug
+     * @return TestRequestInterface
      */
-    protected function schema(string $schema, bool $debug = null): TestServer
+    protected function basicQuerySchema(string $schema, bool $debug = null): TestRequestInterface
     {
         $schema = \sprintf('schema { query: Query } %s', $schema);
-        $class  = $this->serverClass();
 
-        return new $class(File::fromSources($schema), $debug ?? $this->isDebug);
+        return new TestEmptyRequest(File::fromSources($schema), $debug ?? $this->isDebug);
+    }
+
+    /**
+     * @param string $schema
+     * @param bool|null $debug
+     * @return TestRequestInterface
+     */
+    protected function basicMutationSchema(string $schema, bool $debug = null): TestRequestInterface
+    {
+        $schema = \sprintf('schema { query: Query, mutation: Mutation } type Query { empty: Any } %s', $schema);
+
+        return new TestEmptyRequest(File::fromSources($schema), $debug ?? $this->isDebug);
+    }
+
+    /**
+     * @param Readable $schema
+     * @param Application $app
+     * @return TestRequestInterface
+     */
+    protected function appSchema(Readable $schema, Application $app): TestRequestInterface
+    {
+        return new TestApplicationRequest($schema, $app);
     }
 }

@@ -23,8 +23,8 @@ class BasicRequestsTestCase extends TestCase
      */
     public function testNotNull(): void
     {
-        $this->schema('type Query { field: Int! }')
-            ->query('{ field }')->send()
+        $this->basicQuerySchema('type Query { field: Int! }')
+            ->query('{ field }')
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -32,14 +32,14 @@ class BasicRequestsTestCase extends TestCase
             ->where('errors')
                 ->count(1)
             ->where('errors.0')
-                ->hasFields('message', 'locations', 'path')
-                ->count(3)
+                ->hasFields('message', 'locations', 'path', 'extensions')
+                ->count(4)
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
         ;
 
-        $this->production->schema('type Query { field: Int! }')
-            ->query('{ field }')->send()
+        $this->production->basicQuerySchema('type Query { field: Int! }')
+            ->query('{ field }')
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -61,8 +61,8 @@ class BasicRequestsTestCase extends TestCase
      */
     public function testNotNullList(): void
     {
-        $this->schema('type Query { field: [Int]! }')
-            ->query('{ field }')->send()
+        $this->basicQuerySchema('type Query { field: [Int]! }')
+            ->query('{ field }')
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -70,14 +70,14 @@ class BasicRequestsTestCase extends TestCase
             ->where('errors')
                 ->count(1)
             ->where('errors.0')
-                ->hasFields('message', 'locations', 'path')
-                ->count(3)
+                ->hasFields('message', 'locations', 'path', 'extensions')
+                ->count(4)
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
         ;
 
-        $this->production->schema('type Query { field: [Int]! }')
-            ->query('{ field }')->send()
+        $this->production->basicQuerySchema('type Query { field: [Int]! }')
+            ->query('{ field }')
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -99,8 +99,8 @@ class BasicRequestsTestCase extends TestCase
      */
     public function testNotNullListOfNotNulls(): void
     {
-        $this->schema('type Query { field: [Int!]! }')
-            ->query('{ field }')->send()
+        $this->basicQuerySchema('type Query { field: [Int!]! }')
+            ->query('{ field }')
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -108,14 +108,14 @@ class BasicRequestsTestCase extends TestCase
             ->where('errors')
                 ->count(1)
             ->where('errors.0')
-                ->hasFields('message', 'locations', 'path')
-                ->count(3)
+                ->hasFields('message', 'locations', 'path', 'extensions')
+                ->count(4)
                 ->field('message')
                     ->equals('Cannot return null for non-nullable field Query.field.')
         ;
 
-        $this->production->schema('type Query { field: [Int!]! }')
-            ->query('{ field }')->send()
+        $this->production->basicQuerySchema('type Query { field: [Int!]! }')
+            ->query('{ field }')
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -137,8 +137,8 @@ class BasicRequestsTestCase extends TestCase
      */
     public function testNull(): void
     {
-        $this->schema('type Query { field: Int }')
-            ->query('{ field }')->send()
+        $this->basicQuerySchema('type Query { field: Int }')
+            ->query('{ field }')
                 ->status(200)
                 ->successful()
             ->where('data.field')
@@ -156,8 +156,8 @@ class BasicRequestsTestCase extends TestCase
      */
     public function testNullableList(): void
     {
-        $this->schema('type Query { field: [Int] }')
-            ->query('{ field }')->send()
+        $this->basicQuerySchema('type Query { field: [Int] }')
+            ->query('{ field }')
                 ->status(200)
                 ->successful()
             ->where('data.field')
@@ -175,8 +175,8 @@ class BasicRequestsTestCase extends TestCase
      */
     public function testNullableListOfNonNulls(): void
     {
-        $this->schema('type Query { field: [Int!] }')
-            ->query('{ field }')->send()
+        $this->basicQuerySchema('type Query { field: [Int!] }')
+            ->query('{ field }')
                 ->status(200)
                 ->successful()
             ->where('data.field')

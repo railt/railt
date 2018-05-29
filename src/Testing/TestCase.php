@@ -11,6 +11,7 @@ namespace Railt\Testing;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Railt\Testing\Common\MethodsAccess;
+use Railt\Testing\Feature\BootableTraits;
 use Railt\Testing\Feature\InteractWithServer;
 
 /**
@@ -19,5 +20,26 @@ use Railt\Testing\Feature\InteractWithServer;
 abstract class TestCase extends BaseTestCase
 {
     use MethodsAccess;
+    use BootableTraits;
     use InteractWithServer;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        $this->setUpTestKernel();
+
+        parent::setUp();
+    }
+
+    /**
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        $this->tearDownTestKernel();
+
+        parent::tearDown();
+    }
 }

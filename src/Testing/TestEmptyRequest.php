@@ -11,22 +11,13 @@ namespace Railt\Testing;
 
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Application;
-use Railt\Http\Query;
-use Railt\Http\QueryInterface;
-use Railt\Http\Request;
-use Railt\Http\RequestInterface;
 use Railt\Io\Readable;
 
 /**
- * Class Server
+ * Class TestEmptyRequest
  */
-class TestServer
+class TestEmptyRequest extends TestRequest
 {
-    /**
-     * @var RequestInterface
-     */
-    private $request;
-
     /**
      * @var ContainerInterface
      */
@@ -49,36 +40,15 @@ class TestServer
      */
     public function __construct(Readable $schema, bool $debug = true)
     {
-        $this->debug   = $debug;
-        $this->schema  = $schema;
-        $this->request = new Request();
-    }
+        $this->debug  = $debug;
+        $this->schema = $schema;
 
-    /**
-     * @param string $query
-     * @param array $variables
-     * @param string|null $operationName
-     * @return TestServer
-     */
-    public function query(string $query, array $variables = [], string $operationName = null): self
-    {
-        return $this->addQuery(new Query($query, $variables, $operationName));
-    }
-
-    /**
-     * @param QueryInterface $query
-     * @return TestServer
-     */
-    public function addQuery(QueryInterface $query): self
-    {
-        $this->request->addQuery($query);
-
-        return $this;
+        parent::__construct();
     }
 
     /**
      * @param ContainerInterface $container
-     * @return TestServer
+     * @return TestEmptyRequest
      */
     public function through(ContainerInterface $container): self
     {
