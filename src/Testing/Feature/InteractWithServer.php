@@ -39,4 +39,16 @@ trait InteractWithServer
 
         return new $class(File::fromSources($schema), $debug ?? $this->isDebug);
     }
+
+    /**
+     * @param string $path
+     * @param bool|null $debug
+     * @return TestServer
+     */
+    protected function schemaFromFile(string $path, bool $debug = null): TestServer
+    {
+        $class  = $this->serverClass();
+
+        return new $class(File::fromPathname($path), $debug ?? $this->isDebug);
+    }
 }
