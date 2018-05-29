@@ -43,6 +43,11 @@ class TestServer
     private $schema;
 
     /**
+     * @var Application
+     */
+    private $app;
+
+    /**
      * Server constructor.
      * @param Readable $schema
      * @param bool $debug
@@ -88,12 +93,23 @@ class TestServer
     }
 
     /**
+     * @param Application $app
+     * @return $this
+     */
+    public function setApplication(Application $app): self
+    {
+        $this->app = $app;
+
+        return $this;
+    }
+
+    /**
      * @return TestResponse
      * @throws \InvalidArgumentException
      */
     public function send(): TestResponse
     {
-        $app = new Application($this->container, $this->debug);
+        $app = $this->app ? $this->app : new Application($this->container, $this->debug);
 
         $response = $app->request($this->schema, $this->request);
 
