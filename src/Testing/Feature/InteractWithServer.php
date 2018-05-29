@@ -24,13 +24,23 @@ trait InteractWithServer
     use InteractWithEnvironment;
 
     /**
-     * @param string $schema
-     * @param bool $debug
-     * @return TestRequestInterface|TestEmptyRequest
+     * @param Readable $schema
+     * @param bool|null $debug
+     * @return TestRequestInterface
      */
-    protected function schema(string $schema, bool $debug = null): TestRequestInterface
+    protected function schema(Readable $schema, bool $debug = null): TestRequestInterface
     {
-        return new TestEmptyRequest(File::fromSources($schema), $debug ?? $this->isDebug);
+        return new TestEmptyRequest($schema, $debug ?? $this->isDebug);
+    }
+
+    /**
+     * @param Readable $schema
+     * @param Application $app
+     * @return TestRequestInterface
+     */
+    protected function appSchema(Readable $schema, Application $app): TestRequestInterface
+    {
+        return new TestApplicationRequest($schema, $app);
     }
 
     /**
@@ -42,7 +52,7 @@ trait InteractWithServer
     {
         $schema = \sprintf('schema { query: Query } %s', $schema);
 
-        return new TestEmptyRequest(File::fromSources($schema), $debug ?? $this->isDebug);
+        return $this->schema(File::fromSources($schema), $debug ?? $this->isDebug);
     }
 
     /**
@@ -54,16 +64,6 @@ trait InteractWithServer
     {
         $schema = \sprintf('schema { query: Query, mutation: Mutation } type Query { empty: Any } %s', $schema);
 
-        return new TestEmptyRequest(File::fromSources($schema), $debug ?? $this->isDebug);
-    }
-
-    /**
-     * @param Readable $schema
-     * @param Application $app
-     * @return TestRequestInterface
-     */
-    protected function appSchema(Readable $schema, Application $app): TestRequestInterface
-    {
-        return new TestApplicationRequest($schema, $app);
+        return $this->schema(File::fromSources($schema), $debug ?? $this->isDebug);
     }
 }
