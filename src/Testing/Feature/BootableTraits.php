@@ -37,7 +37,7 @@ trait BootableTraits
         $traits = [];
 
         $parents = \class_parents(static::class);
-        $class = static::class;
+        $class   = static::class;
 
         while ($class !== null) {
             $traits += \array_values(\class_uses($class));
