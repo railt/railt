@@ -19,8 +19,8 @@ trait BootableTraits
      */
     protected function setUpTestKernel(): void
     {
-        foreach ($this->traits(true) as $trait) {
-            $bootMethod = 'boot' . $trait;
+        foreach ($this->traits() as $trait) {
+            $bootMethod = 'boot' . \class_basename($trait);
 
             if (\method_exists($this, $bootMethod)) {
                 $this->{$bootMethod}();
@@ -29,10 +29,9 @@ trait BootableTraits
     }
 
     /**
-     * @param bool $shortName
      * @return \Traversable
      */
-    private function traits(bool $shortName = true): \Traversable
+    private function traits(): \Traversable
     {
         $traits = [];
 
@@ -53,8 +52,8 @@ trait BootableTraits
      */
     protected function tearDownTestKernel(): void
     {
-        foreach ($this->traits(true) as $trait) {
-            $destroyMethod = 'destroy' . $trait;
+        foreach ($this->traits() as $trait) {
+            $destroyMethod = 'destroy' . \class_basename($trait);
 
             if (\method_exists($this, $destroyMethod)) {
                 $this->{$destroyMethod}();
