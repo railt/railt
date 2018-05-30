@@ -34,11 +34,18 @@ trait BootableTraits
      */
     private function traits(bool $shortName = true): \Traversable
     {
-        $uses = \array_flip(\class_uses_recursive(static::class));
+        $traits = [];
 
-        foreach ($uses as $class) {
-            yield $shortName ? \class_basename($class) : $class;
+        $parents = \class_parents(static::class);
+        $class = static::class;
+
+        while ($class !== null) {
+            $traits += \array_values(\class_uses($class));
+
+            $class = \count($parents) ? \array_shift($parents) : null;
         }
+
+        yield from \array_unique($traits);
     }
 
     /**
