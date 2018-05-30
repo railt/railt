@@ -40,7 +40,7 @@ trait BootableTraits
         $class = static::class;
 
         while ($class !== null) {
-            $traits += \array_values(\class_uses($class));
+            $traits = \array_merge(\array_values(\class_uses($class)), $traits);
 
             $class = \count($parents) ? \array_shift($parents) : null;
         }
