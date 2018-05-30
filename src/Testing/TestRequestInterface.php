@@ -18,11 +18,21 @@ interface TestRequestInterface
 {
     /**
      * @param string $query
-     * @param array $variables
-     * @param string|null $operationName
-     * @return TestResponse
+     * @return TestQuery
      */
-    public function query(string $query, array $variables = [], string $operationName = null): TestResponse;
+    public function query(string $query): TestQuery;
+
+    /**
+     * @param string $query
+     * @return TestQuery
+     */
+    public function mutation(string $query): TestQuery;
+
+    /**
+     * @param string $query
+     * @return TestQuery
+     */
+    public function subscription(string $query): TestQuery;
 
     /**
      * @param QueryInterface $query

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Testing;
 
-use Railt\Http\Query;
 use Railt\Http\QueryInterface;
 use Railt\Http\Request;
 
@@ -33,15 +32,29 @@ abstract class TestRequest implements TestRequestInterface
 
     /**
      * @param string $query
-     * @param array $variables
-     * @param string|null $operationName
-     * @return TestResponse
+     * @return TestQuery
      */
-    public function query(string $query, array $variables = [], string $operationName = null): TestResponse
+    public function query(string $query): TestQuery
     {
-        $this->addQuery(new Query($query, $variables, $operationName));
+        return new TestQuery($this, $query, 'query');
+    }
 
-        return $this->send();
+    /**
+     * @param string $query
+     * @return TestQuery
+     */
+    public function mutation(string $query): TestQuery
+    {
+        return new TestQuery($this, $query, 'mutation');
+    }
+
+    /**
+     * @param string $query
+     * @return TestQuery
+     */
+    public function subscription(string $query): TestQuery
+    {
+        return new TestQuery($this, $query, 'subscription');
     }
 
     /**

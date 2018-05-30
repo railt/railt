@@ -24,7 +24,7 @@ class BasicRequestsTestCase extends TestCase
     public function testNotNull(): void
     {
         $this->basicQuerySchema('type Query { field: Int! }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -39,7 +39,7 @@ class BasicRequestsTestCase extends TestCase
         ;
 
         $this->production->basicQuerySchema('type Query { field: Int! }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -62,7 +62,7 @@ class BasicRequestsTestCase extends TestCase
     public function testNotNullList(): void
     {
         $this->basicQuerySchema('type Query { field: [Int]! }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -77,7 +77,7 @@ class BasicRequestsTestCase extends TestCase
         ;
 
         $this->production->basicQuerySchema('type Query { field: [Int]! }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -100,7 +100,7 @@ class BasicRequestsTestCase extends TestCase
     public function testNotNullListOfNotNulls(): void
     {
         $this->basicQuerySchema('type Query { field: [Int!]! }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -115,7 +115,7 @@ class BasicRequestsTestCase extends TestCase
         ;
 
         $this->production->basicQuerySchema('type Query { field: [Int!]! }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(500)
                 ->hasErrors()
             ->where('data.field')
@@ -138,7 +138,7 @@ class BasicRequestsTestCase extends TestCase
     public function testNull(): void
     {
         $this->basicQuerySchema('type Query { field: Int }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(200)
                 ->successful()
             ->where('data.field')
@@ -157,7 +157,7 @@ class BasicRequestsTestCase extends TestCase
     public function testNullableList(): void
     {
         $this->basicQuerySchema('type Query { field: [Int] }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(200)
                 ->successful()
             ->where('data.field')
@@ -176,7 +176,7 @@ class BasicRequestsTestCase extends TestCase
     public function testNullableListOfNonNulls(): void
     {
         $this->basicQuerySchema('type Query { field: [Int!] }')
-            ->query('{ field }')
+            ->query('{ field }')->send()
                 ->status(200)
                 ->successful()
             ->where('data.field')
