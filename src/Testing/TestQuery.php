@@ -8,13 +8,14 @@
 declare(strict_types=1);
 
 namespace Railt\Testing;
+
 use Railt\Http\Query;
 use Railt\Http\QueryInterface;
 use Railt\Testing\Common\MethodsAccess;
 
 /**
  * Class TestQuery
- * @property-read TestRequestInterface $and
+ * @property TestRequestInterface $and
  */
 class TestQuery
 {
@@ -63,9 +64,9 @@ class TestQuery
      */
     public function __construct(TestRequestInterface $request, string $query, string $operation = 'query')
     {
-        $this->query = $query;
+        $this->query     = $query;
         $this->operation = $operation;
-        $this->request = $request;
+        $this->request   = $request;
     }
 
     /**
@@ -74,10 +75,10 @@ class TestQuery
      * @param mixed $value
      * @return TestQuery
      */
-    public function variable(string $name, string $type, $value): TestQuery
+    public function variable(string $name, string $type, $value): self
     {
         $this->queryVariables[$name] = $type;
-        $this->variables[$name] = $value;
+        $this->variables[$name]      = $value;
 
         return $this;
     }
@@ -86,7 +87,7 @@ class TestQuery
      * @param string $fragment
      * @return TestQuery
      */
-    public function fragment(string $fragment): TestQuery
+    public function fragment(string $fragment): self
     {
         $this->fragments[] = $fragment;
 
