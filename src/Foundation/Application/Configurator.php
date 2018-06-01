@@ -60,11 +60,27 @@ class Configurator
     private $autoloadDirectories = [];
 
     /**
+     * @return PSRContainer
+     */
+    public function getContainer(): PSRContainer
+    {
+        return $this->container;
+    }
+
+    /**
      * @param null|PSRContainer $container
      */
     public function setContainer(?PSRContainer $container): void
     {
         $this->container = $container;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 
     /**
@@ -76,11 +92,35 @@ class Configurator
     }
 
     /**
-     * @param string|Extension ...$extensions
+     * @return array|Extension[]|string[]
      */
-    public function addExtension(string ...$extensions): void
+    public function getExtensions(): iterable
+    {
+        return $this->extensions;
+    }
+
+    /**
+     * @param string|Extension $extension
+     */
+    public function addExtension(string $extension): void
+    {
+        $this->extensions[] = $extension;
+    }
+
+    /**
+     * @param array|string[]|Extension[] $extensions
+     */
+    public function addExtensions(array $extensions): void
     {
         $this->extensions = \array_merge($this->extensions, $extensions);
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getAutoloadFileExtensions(): iterable
+    {
+        return $this->autoloadFileExtensions;
     }
 
     /**
@@ -89,6 +129,14 @@ class Configurator
     public function addAutoloadFileExtension(string $ext): void
     {
         $this->autoloadFileExtensions[] = $ext;
+    }
+
+    /**
+     * @param array|string[] $ext
+     */
+    public function addAutoloadFileExtensions(array $ext): void
+    {
+        $this->autoloadFileExtensions = \array_merge($this->autoloadFileExtensions, $ext);
     }
 
     /**
@@ -108,11 +156,27 @@ class Configurator
     }
 
     /**
+     * @return array|string[]
+     */
+    public function getAutoloadPaths(): iterable
+    {
+        return $this->autoloadDirectories;
+    }
+
+    /**
      * @param string $path
      */
     public function addAutoloadPath(string $path): void
     {
         $this->autoloadDirectories[] = $path;
+    }
+
+    /**
+     * @param array|string[] $paths
+     */
+    public function addAutoloadPaths(array $paths): void
+    {
+        $this->autoloadDirectories = \array_merge($this->autoloadDirectories, $paths);
     }
 
     /**
