@@ -11,8 +11,8 @@ namespace Railt\Kernel;
 
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Foundation\Extensions\Status;
-use Railt\Kernel\Contracts\ClassLoader;
 use Railt\Io\File;
+use Railt\Kernel\Contracts\ClassLoader;
 use Railt\SDL\Schema\CompilerInterface;
 
 /**

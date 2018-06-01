@@ -30,7 +30,6 @@ class DirectiveLoader implements ClassLoader
      */
     private $directives = [];
 
-
     /**
      * @param Document $document
      * @param string $action

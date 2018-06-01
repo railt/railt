@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
-use Railt\Foundation\Application;
 use Psr\Container\ContainerInterface as PSRContainer;
+use Railt\Foundation\Application;
 use Railt\Foundation\Extensions\Extension;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
@@ -185,11 +185,11 @@ class Configurator
      */
     public function reset(): void
     {
-        $this->schema = null;
-        $this->debug = false;
-        $this->extensions = [];
-        $this->container = null;
-        $this->autoloadDirectories = [];
+        $this->schema                 = null;
+        $this->debug                  = false;
+        $this->extensions             = [];
+        $this->container              = null;
+        $this->autoloadDirectories    = [];
         $this->autoloadFileExtensions = self::DEFAULT_AUTOLOAD_FILE_EXTENSIONS;
     }
 }
