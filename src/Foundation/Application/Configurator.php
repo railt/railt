@@ -30,6 +30,11 @@ class Configurator
     ];
 
     /**
+     * @var Configurator|null
+     */
+    protected static $instance;
+
+    /**
      * @var PSRContainer
      */
     private $container;
@@ -58,6 +63,26 @@ class Configurator
      * @var array|string[]
      */
     private $autoloadDirectories = [];
+
+    /**
+     * @return Configurator
+     */
+    public static function getInstance(): Configurator
+    {
+        if (static::$instance === null) {
+            static::setInstance(new static());
+        }
+
+        return static::$instance;
+    }
+
+    /**
+     * @param Configurator $configurator
+     */
+    public static function setInstance(Configurator $configurator): void
+    {
+        static::$instance = $configurator;
+    }
 
     /**
      * @return PSRContainer
@@ -197,8 +222,8 @@ class Configurator
     {
         $app = new Application($this->container, $this->debug);
 
-        $this->bootExtensions($app);
         $this->bootAutoload($app);
+        $this->bootExtensions($app);
 
         return $app;
     }
