@@ -67,7 +67,7 @@ class Configurator
     /**
      * @return Configurator
      */
-    public static function getInstance(): Configurator
+    public static function getInstance(): self
     {
         if (static::$instance === null) {
             static::setInstance(new static());
@@ -79,7 +79,7 @@ class Configurator
     /**
      * @param Configurator $configurator
      */
-    public static function setInstance(Configurator $configurator): void
+    public static function setInstance(self $configurator): void
     {
         static::$instance = $configurator;
     }
