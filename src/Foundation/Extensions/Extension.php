@@ -18,6 +18,26 @@ use Railt\Http\ResponseInterface;
 interface Extension
 {
     /**
+     * @return string
+     */
+    public function getName(): string;
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string;
+
+    /**
+     * @return string
+     */
+    public function getVersion(): string;
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string;
+
+    /**
      * @param RequestInterface $request
      * @param \Closure $then
      * @return ResponseInterface

@@ -12,7 +12,7 @@ namespace Railt\Routing;
 use Railt\Foundation\Events\ActionDispatching;
 use Railt\Foundation\Events\FieldResolving;
 use Railt\Foundation\Extensions\BaseExtension;
-use Railt\Foundation\Kernel\Contracts\ClassLoader;
+use Railt\Kernel\Contracts\ClassLoader;
 use Railt\Http\InputInterface;
 use Railt\Io\File;
 use Railt\Routing\Contracts\RouterInterface;

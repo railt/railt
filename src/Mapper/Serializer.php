@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Mapper;
 
 use Railt\Container\ContainerInterface;
-use Railt\Foundation\Kernel\Contracts\ClassLoader;
-use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
+use Railt\Kernel\Contracts\ClassLoader;
+use Railt\Kernel\Exceptions\InvalidActionException;
 use Railt\Mapper\Exceptions\InvalidSignatureException;
 use Railt\SDL\Contracts\Definitions\InterfaceDefinition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
@@ -86,7 +86,7 @@ class Serializer
      * @param $value
      * @return mixed
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Kernel\Exceptions\InvalidActionException
      */
     public function unserialize(ArgumentDefinition $type, Document $document, string $action, $value)
     {
@@ -210,7 +210,7 @@ class Serializer
      * @param string $method
      * @return string|null|\ReflectionClass
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Kernel\Exceptions\InvalidActionException
      */
     private function getSignature(string $class, string $method)
     {
@@ -237,7 +237,7 @@ class Serializer
      * @param string $class
      * @param string $method
      * @return \ReflectionMethod
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Kernel\Exceptions\InvalidActionException
      */
     private function extractMethod(string $class, string $method): \ReflectionMethod
     {

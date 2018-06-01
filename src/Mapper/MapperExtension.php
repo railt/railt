@@ -33,7 +33,7 @@ class MapperExtension extends BaseExtension
      * @param CompilerInterface $compiler
      * @param Dispatcher $events
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Kernel\Exceptions\InvalidActionException
      * @throws \Railt\Io\Exception\NotReadableException
      */
     public function boot(CompilerInterface $compiler, Dispatcher $events): void
@@ -66,7 +66,7 @@ class MapperExtension extends BaseExtension
      * @param $value
      * @return mixed
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Kernel\Exceptions\InvalidActionException
      */
     private function unserialize(Serializer $serializer, ArgumentDefinition $argument, $value)
     {
@@ -119,7 +119,7 @@ class MapperExtension extends BaseExtension
      * @param $result
      * @return mixed
      * @throws \Railt\Mapper\Exceptions\InvalidSignatureException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Kernel\Exceptions\InvalidActionException
      */
     private function serialize(Serializer $serializer, FieldDefinition $field, $result)
     {

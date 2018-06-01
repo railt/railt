@@ -7,11 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Kernel\Exceptions;
+namespace Railt\Foundation\Extensions;
 
 /**
- * Class UnknownClassException
+ * Class Status
  */
-class UnknownClassException extends \InvalidArgumentException
+final class Status
 {
+    public const STABLE = 'Stable';
+    public const DEPRECATED = 'Deprecated';
+    public const EXPERIMENTAL = 'Experimental';
 }

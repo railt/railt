@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Kernel;
+namespace Railt\Kernel;
 
 use Illuminate\Support\Str;
-use Railt\Foundation\Kernel\Contracts\ClassLoader;
-use Railt\Foundation\Kernel\Exceptions\InvalidActionException;
-use Railt\Foundation\Kernel\Exceptions\UnknownClassException;
+use Railt\Kernel\Contracts\ClassLoader;
+use Railt\Kernel\Exceptions\InvalidActionException;
+use Railt\Kernel\Exceptions\UnknownClassException;
 use Railt\SDL\Contracts\Document;
 use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
 
@@ -21,6 +21,8 @@ use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
  */
 class DirectiveLoader implements ClassLoader
 {
+    private const ACTION_DELIMITER = '@';
+
     /**
      * A list of global directives.
      *
@@ -28,14 +30,13 @@ class DirectiveLoader implements ClassLoader
      */
     private $directives = [];
 
-    private const ACTION_DELIMITER = '@';
 
     /**
      * @param Document $document
      * @param string $action
      * @return array
-     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
-     * @throws \Railt\Foundation\Kernel\Exceptions\InvalidActionException
+     * @throws \Railt\Kernel\Exceptions\UnknownClassException
+     * @throws \Railt\Kernel\Exceptions\InvalidActionException
      */
     public function action(Document $document, string $action): array
     {
@@ -60,7 +61,7 @@ class DirectiveLoader implements ClassLoader
      * @param Document $document
      * @param string $class
      * @return string
-     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
+     * @throws \Railt\Kernel\Exceptions\UnknownClassException
      */
     public function load(Document $document, string $class): string
     {
@@ -82,7 +83,7 @@ class DirectiveLoader implements ClassLoader
      * @param Document $document
      * @param string $needle
      * @return null|string
-     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
+     * @throws \Railt\Kernel\Exceptions\UnknownClassException
      */
     private function loadFromDirective(Document $document, string $needle): ?string
     {
@@ -145,7 +146,7 @@ class DirectiveLoader implements ClassLoader
      * @param string $class
      * @param string $needle
      * @return bool
-     * @throws \Railt\Foundation\Kernel\Exceptions\UnknownClassException
+     * @throws \Railt\Kernel\Exceptions\UnknownClassException
      */
     private function compareNamespace(string $needle, string $class): bool
     {

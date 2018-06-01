@@ -51,8 +51,22 @@ class Application implements PSRContainer
      * @var array
      */
     private $extensions = [
-        \Railt\Foundation\Kernel\KernelExtension::class,
+        /**
+         * An extension that provides the ability to operate
+         * by referring to a PHP code.
+         */
+        \Railt\Kernel\KernelExtension::class,
+
+        /**
+         * An extension that provides the ability to delegate
+         * field resolving to an external PHP code.
+         */
         \Railt\Routing\RouterExtension::class,
+
+        /**
+         * An extension that provides the ability to handle
+         * serialization and deserialization of data.
+         */
         \Railt\Mapper\MapperExtension::class,
     ];
 
@@ -173,7 +187,6 @@ class Application implements PSRContainer
 
         $document = $this->container->make(CompilerInterface::class)->compile($sdl);
         $adapter  = $this->container->make(AdapterInterface::class);
-
 
         $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
             return $adapter->request($this->getSchema($document), $request);

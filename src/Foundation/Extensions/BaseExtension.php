@@ -15,6 +15,7 @@ use Railt\Http\ResponseInterface;
 
 /**
  * Class BaseExtension
+ * @method void boot()
  */
 abstract class BaseExtension implements Extension
 {
@@ -30,6 +31,38 @@ abstract class BaseExtension implements Extension
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return \class_basename(static::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->getName() . ' extension';
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return '1.0.0';
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return Status::EXPERIMENTAL;
     }
 
     /**
