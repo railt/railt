@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://railt.org/img/logo-dark.svg" alt="Railt" />
+    <img src="https://railt.org/images/logo-dark.svg" alt="Railt" />
 </p>
 
 <p align="center">
