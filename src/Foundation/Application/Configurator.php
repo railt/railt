@@ -141,6 +141,14 @@ class Configurator
     }
 
     /**
+     * @param array $extensions
+     */
+    public function setExtensions(array $extensions): void
+    {
+        $this->extensions = $extensions;
+    }
+
+    /**
      * @return array|string[]
      */
     public function getAutoloadFileExtensions(): iterable
@@ -162,6 +170,14 @@ class Configurator
     public function addAutoloadFileExtensions(array $ext): void
     {
         $this->autoloadFileExtensions = \array_merge($this->autoloadFileExtensions, $ext);
+    }
+
+    /**
+     * @param array|string[] $ext
+     */
+    public function setAutoloadFileExtensions(array $ext): void
+    {
+        $this->autoloadFileExtensions = $ext;
     }
 
     /**
@@ -202,6 +218,14 @@ class Configurator
     public function addAutoloadPaths(array $paths): void
     {
         $this->autoloadDirectories = \array_merge($this->autoloadDirectories, $paths);
+    }
+
+    /**
+     * @param array|string[] $paths
+     */
+    public function setAutoloadPaths(array $paths): void
+    {
+        $this->autoloadDirectories = $paths;
     }
 
     /**

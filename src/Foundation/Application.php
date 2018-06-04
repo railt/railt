@@ -46,11 +46,16 @@ class Application implements PSRContainer
     private $booted = false;
 
     /**
+     * @var Repository
+     */
+    private $extensions;
+
+    /**
      * Application extensions list.
      *
      * @var array
      */
-    private $extensions = [
+    private $kernelExtensions = [
         /**
          * An extension that provides the ability to operate
          * by referring to a PHP code.
@@ -79,7 +84,6 @@ class Application implements PSRContainer
         \Railt\Foundation\Services\CacheService::class,
         \Railt\Foundation\Services\CompilerService::class,
         \Railt\Foundation\Services\GraphQLAdapterService::class,
-        \Railt\Foundation\Services\ExtensionsRepositoryService::class,
         \Railt\Foundation\Services\EventsService::class,
     ];
 
@@ -93,6 +97,7 @@ class Application implements PSRContainer
     {
         $this->debug     = $debug;
         $this->container = $this->bootContainer($container);
+        $this->extensions = new Repository($this->container);
 
         $this->bootIfNotBooted();
     }
@@ -128,7 +133,7 @@ class Application implements PSRContainer
             $this->service($service);
         }
 
-        foreach ($this->extensions as $extension) {
+        foreach ($this->kernelExtensions as $extension) {
             $this->extend($extension);
         }
     }
@@ -151,7 +156,7 @@ class Application implements PSRContainer
      */
     public function extend(string $extension): self
     {
-        $this->container->make(Repository::class)->add($extension);
+        $this->extensions->add($extension);
 
         return $this;
     }
@@ -183,7 +188,7 @@ class Application implements PSRContainer
      */
     public function request(Readable $sdl, RequestInterface $request): ResponseInterface
     {
-        $this->container->make(Repository::class)->boot();
+        $this->extensions->boot();
 
         $document = $this->container->make(CompilerInterface::class)->compile($sdl);
         $adapter  = $this->container->make(AdapterInterface::class);
@@ -192,7 +197,7 @@ class Application implements PSRContainer
             return $adapter->request($this->getSchema($document), $request);
         };
 
-        return $this->container->make(Repository::class)->handle($request, $pipeline);
+        return $this->extensions->handle($request, $pipeline);
     }
 
     /**
