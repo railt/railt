@@ -95,8 +95,8 @@ class Application implements PSRContainer
      */
     public function __construct(PSRContainer $container = null, bool $debug = false)
     {
-        $this->debug     = $debug;
-        $this->container = $this->bootContainer($container);
+        $this->debug      = $debug;
+        $this->container  = $this->bootContainer($container);
         $this->extensions = new Repository($this->container);
 
         $this->bootIfNotBooted();
