@@ -14,6 +14,7 @@ use Railt\Foundation\Events\FieldResolving;
 use Railt\Foundation\Extensions\BaseExtension;
 use Railt\Http\InputInterface;
 use Railt\Io\File;
+use Railt\Kernel\Contracts\ClassLoader;
 use Railt\Routing\Contracts\RouterInterface;
 use Railt\Routing\Route\Directive;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
@@ -26,6 +27,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
  */
 class RouterExtension extends BaseExtension
 {
+    /**
+     * @var array
+     */
     private $loadedRoutes = [];
 
     /**
@@ -110,7 +114,7 @@ class RouterExtension extends BaseExtension
      */
     private function loadRouteDirectives(FieldDefinition $field, ClassLoader $loader, RouterInterface $router): void
     {
-        if (isset($this->loadedRoutes[$field->getUniqueId()])) {
+        if (\in_array($field->getUniqueId(), $this->loadedRoutes, true)) {
             return;
         }
 
@@ -129,6 +133,6 @@ class RouterExtension extends BaseExtension
             }
         }
 
-        $this->loadedRoutes[$field->getUniqueId()] = true;
+        $this->loadedRoutes[] = $field->getUniqueId();
     }
 }
