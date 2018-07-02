@@ -28,6 +28,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 class RouterExtension extends BaseExtension
 {
     /**
+     * @var array
+     */
+    private $loadedRoutes = [];
+
+    /**
      * @param CompilerInterface $compiler
      * @param Dispatcher $events
      * @param ClassLoader $loader
@@ -109,6 +114,10 @@ class RouterExtension extends BaseExtension
      */
     private function loadRouteDirectives(FieldDefinition $field, ClassLoader $loader, RouterInterface $router): void
     {
+        if (\in_array($field->getUniqueId(), $this->loadedRoutes, true)) {
+            return;
+        }
+
         foreach (['route', 'query', 'mutation', 'subscription'] as $directiveName) {
             foreach ($field->getDirectives($directiveName) as $directive) {
                 $action = new Directive($this->getContainer(), $directive, $loader);
@@ -123,5 +132,7 @@ class RouterExtension extends BaseExtension
                 $router->add($action);
             }
         }
+
+        $this->loadedRoutes[] = $field->getUniqueId();
     }
 }
