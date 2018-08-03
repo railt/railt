@@ -20,13 +20,6 @@ use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 interface AdapterInterface
 {
     /**
-     * AdapterInterface constructor.
-     * @param ContainerInterface $container
-     * @param bool $debug
-     */
-    public function __construct(ContainerInterface $container, bool $debug = false);
-
-    /**
      * @param SchemaDefinition $schema
      * @param RequestInterface $request
      * @return ResponseInterface
