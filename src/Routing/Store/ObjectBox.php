@@ -47,11 +47,11 @@ final class ObjectBox extends BaseBox implements \ArrayAccess
     }
 
     /**
-     * @return array
+     * @return self
      */
-    public function getResponse(): array
+    public function getResponse()
     {
-        return parent::getResponse();
+        return $this;
     }
 
     /**

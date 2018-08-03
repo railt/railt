@@ -63,8 +63,13 @@ class DefaultResolver
     private function fromParent(InputInterface $input)
     {
         $parent = $input->getParentResponse();
+        $field = $input->getFieldName();
 
-        if ($parent && \array_key_exists($input->getFieldName(), $parent)) {
+        if ($parent && isset($parent[$field])) {
+            if (\is_callable($parent[$field])) {
+                return call_user_func($parent[$field]);
+            }
+
             return $parent[$input->getFieldName()];
         }
 
