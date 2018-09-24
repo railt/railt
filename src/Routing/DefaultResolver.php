@@ -66,7 +66,7 @@ class DefaultResolver
         $field = $input->getFieldName();
 
         if ($parent && isset($parent[$field])) {
-            if (\is_callable($parent[$field])) {
+            if ($parent[$field] instanceof \Closure) {
                 return call_user_func($parent[$field]);
             }
 
