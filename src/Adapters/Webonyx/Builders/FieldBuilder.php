@@ -86,7 +86,7 @@ class FieldBuilder extends DependentDefinitionBuilder
             $events->dispatch(FieldResolving::class, $resolving);
 
             if ($resolving->isPropagationStopped()) {
-                return $this->reflection->getTypeDefinition() instanceof ObjectDefinition ? [] : null;
+                return $resolving->getInput()->getFieldDefinition()->isNonNull() ? [] : null;
             }
 
             return $resolving->getResponse();
