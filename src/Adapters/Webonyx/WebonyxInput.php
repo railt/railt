@@ -109,7 +109,10 @@ class WebonyxInput implements InputInterface
 
                 case \is_array($sub):
                     yield $relation => $field;
-                    yield from $this->getFlatRelations($sub, $field->getTypeDefinition(), $relation);
+
+                    if ($field->getTypeDefinition() instanceof HasFields) {
+                        yield from $this->getFlatRelations($sub, $field->getTypeDefinition(), $relation);
+                    }
                     break;
 
                 default:
