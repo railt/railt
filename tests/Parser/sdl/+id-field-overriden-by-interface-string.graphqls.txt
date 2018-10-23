@@ -1,0 +1,20 @@
+>  Document
+>  >  ObjectDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, TID)
+>  >  >  Implements
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, IString)
+>  >  >  Field
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, field)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, ID)
+>  >  InterfaceDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, IString)
+>  >  >  Field
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, field)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, String)

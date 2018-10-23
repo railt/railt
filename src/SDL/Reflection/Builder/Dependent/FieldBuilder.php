@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Dependent;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Base\Dependent\BaseField;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Reflection\Builder\Behavior\TypeIndicationBuilder;

@@ -35,8 +35,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\SDL\\": "src"
-        }
+            "Railt\\": "src/"
+        },
+        "files": [
+            "./src/SDL/polyfill.php"
+        ]
     },
     "require-dev": {
         "symfony/finder": "~4.0",
@@ -45,7 +48,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Tests\\SDL\\": "tests"
+            "Railt\\Tests\\SDL\\": "tests/"
         }
     },
     "config": {

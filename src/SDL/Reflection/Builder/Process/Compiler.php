@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Process;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\DependentDefinition;
@@ -218,7 +218,7 @@ trait Compiler
      * @param string $desc
      * @return void
      */
-    private function resolveTypeName(string $name = '#Name', string $desc = '#Description'): void
+    private function resolveTypeName(string $name = 'Name', string $desc = 'Description'): void
     {
         foreach ($this->getAst()->getChildren() as $child) {
             switch ($child->getName()) {

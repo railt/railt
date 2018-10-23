@@ -9,15 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\Compiler\ParserInterface;
 use Railt\Io\Readable;
+use Railt\Parser\ParserInterface;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Document;
 use Railt\SDL\Exceptions\CompilerException;
-use Railt\SDL\Exceptions\UnexpectedTokenException;
-use Railt\SDL\Exceptions\UnrecognizedTokenException;
-use Railt\SDL\Parser\Factory as ParserFactory;
+use Railt\SDL\Parser\Parser;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;
 use Railt\SDL\Reflection\Coercion\Factory;
@@ -50,7 +48,7 @@ class Compiler implements CompilerInterface, Configuration
     private $loader;
 
     /**
-     * @var ParserFactory
+     * @var ParserInterface
      */
     private $parser;
 
@@ -77,13 +75,12 @@ class Compiler implements CompilerInterface, Configuration
     /**
      * Compiler constructor.
      * @param Storage|null $storage
-     * @throws \OutOfBoundsException
      * @throws CompilerException
      */
     public function __construct(Storage $storage = null)
     {
+        $this->parser        = new Parser();
         $this->stack         = new CallStack();
-        $this->parser        = (new ParserFactory())->getParser();
         $this->loader        = new Loader($this, $this->stack);
         $this->typeValidator = new Validator($this->stack);
         $this->typeCoercion  = new Factory();
@@ -97,6 +94,7 @@ class Compiler implements CompilerInterface, Configuration
      * @param Document $document
      * @return CompilerInterface
      * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws Exceptions\TypeConflictException
      */
     public function add(Document $document): CompilerInterface
     {
@@ -128,8 +126,7 @@ class Compiler implements CompilerInterface, Configuration
 
     /**
      * @param array $extensions
-     * @return GraphQLDocument|Document
-     * @throws \OutOfBoundsException
+     * @return GraphQLDocument
      */
     private function getStandardLibrary(array $extensions = []): GraphQLDocument
     {
@@ -137,9 +134,9 @@ class Compiler implements CompilerInterface, Configuration
     }
 
     /**
-     * @param Document|DocumentBuilder $document
+     * @param Document $document
      * @return Document
-     * @throws \OutOfBoundsException
+     * @throws Exceptions\TypeConflictException
      */
     private function complete(Document $document): Document
     {
@@ -179,6 +176,7 @@ class Compiler implements CompilerInterface, Configuration
     /**
      * @param Document $document
      * @return Document|DocumentBuilder
+     * @throws Exceptions\TypeConflictException
      */
     private function load(Document $document): Document
     {
@@ -205,10 +203,6 @@ class Compiler implements CompilerInterface, Configuration
     /**
      * @param Readable $readable
      * @return Document
-     * @throws \OutOfBoundsException
-     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
-     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
-     * @throws CompilerException
      */
     public function compile(Readable $readable): Document
     {
@@ -220,10 +214,6 @@ class Compiler implements CompilerInterface, Configuration
 
     /**
      * @return \Closure
-     * @throws \OutOfBoundsException
-     * @throws UnexpectedTokenException
-     * @throws UnrecognizedTokenException
-     * @throws CompilerException
      */
     private function onCompile(): \Closure
     {
@@ -258,20 +248,6 @@ class Compiler implements CompilerInterface, Configuration
     public function getTypeCoercion(): TypeCoercion
     {
         return $this->typeCoercion;
-    }
-
-    /**
-     * @return Storage
-     * @deprecated Since 1.2: Use getStorage() method instead.
-     */
-    public function getPersister(): Storage
-    {
-        \trigger_error(
-            __METHOD__ . ' was renamed to getStorage and will be deleted on next release',
-            \E_USER_DEPRECATED
-        );
-
-        return $this->getStorage();
     }
 
     /**

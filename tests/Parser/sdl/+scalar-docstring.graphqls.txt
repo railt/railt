@@ -1,0 +1,18 @@
+>  Document
+>  >  ScalarDefinition
+>  >  >  Description
+>  >  >  >  token(T_MULTILINE_STRING, """
+Description of "scalar Test" type
+""")
+>  >  >  Name
+>  >  >  >  token(T_NAME, Test)
+>  >  ScalarDefinition
+>  >  >  Description
+>  >  >  >  token(T_MULTILINE_STRING, """
+Description of "scalar Test2" type
+""")
+>  >  >  Name
+>  >  >  >  token(T_NAME, Test2)
+>  >  >  Directive
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Directive)

@@ -1,0 +1,572 @@
+%pragma root Document
+%pragma lexer.unicode true
+%pragma parser.lookahead 1024
+
+%token T_AND                    &
+%token T_OR                     \|
+%token T_PARENTHESIS_OPEN       \(
+%token T_PARENTHESIS_CLOSE      \)
+%token T_BRACKET_OPEN           \[
+%token T_BRACKET_CLOSE          \]
+%token T_BRACE_OPEN             {
+%token T_BRACE_CLOSE            }
+%token T_NON_NULL               !
+%token T_THREE_DOTS             \.\.\.
+%token T_COLON                  :
+%token T_EQUAL                  =
+%token T_DIRECTIVE_AT           @
+
+%token T_NUMBER                 \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b
+%token T_TRUE                   true\b
+%token T_FALSE                  false\b
+%token T_NULL                   null\b
+%token T_BLOCK_STRING           """(?:\\"""|(?!""").|\s)+"""
+%token T_STRING                 "[^"\\]+(\\.[^"\\]*)*"
+
+%token T_NAMESPACE              namespace\b
+%token T_NAMESPACE_SEPARATOR    /
+
+%token T_EXTENDS                extends\b
+%token T_IMPLEMENTS             implements\b
+%token T_ON                     on\b
+
+%token T_TYPE                   type\b
+%token T_ENUM                   enum\b
+%token T_UNION                  union\b
+%token T_INPUT_UNION            inputUnion\b
+%token T_INTERFACE              interface\b
+%token T_SCHEMA                 schema\b
+%token T_SCALAR                 scalar\b
+%token T_DIRECTIVE              directive\b
+%token T_INPUT                  input\b
+%token T_EXTEND                 extend\b
+%token T_FRAGMENT               fragment\b
+
+%token T_VARIABLE               \$[_A-Za-z][_0-9A-Za-z]*
+%token T_NAME                   [_A-Za-z][_0-9A-Za-z]*
+
+//                             [ BOM | WHITESPACE | HTAB | LF | CR ]
+%skip T_WHITESPACE             (\xfe\xff|\x20|\x09|\x0a|\x0d)+
+%skip T_COMMENT                #[^\n]*
+%skip T_COMMA                  ,
+
+
+// ==========================================================================
+//                                  DOCUMENT
+// ==========================================================================
+
+#Document:
+    DocumentImports()*
+    DocumentDefinitions()*
+
+DocumentImports:
+    Directive()
+
+DocumentDefinitions:
+    Extension() |
+    Definition()
+
+
+//
+// Any name without reserved keywords.
+//
+NameWithoutReserved:
+    <T_NAME>
+
+//
+// Any name includes reserved keywords.
+//
+NameWithReserved:
+    (NameExceptValues() | <T_TRUE> | <T_FALSE> | <T_NULL>)
+
+//
+// Any name includes reserved keywords but except values: NULL, TRUE and FALSE.
+//
+NameExceptValues:
+    (
+        NameWithoutReserved() |
+        <T_NAMESPACE>         |
+        <T_EXTENDS>           |
+        <T_IMPLEMENTS>        |
+        <T_ON>                |
+        <T_TYPE>              |
+        <T_ENUM>              |
+        <T_UNION>             |
+        <T_INPUT_UNION>       |
+        <T_INTERFACE>         |
+        <T_SCHEMA>            |
+        <T_SCALAR>            |
+        <T_DIRECTIVE>         |
+        <T_INPUT>             |
+        <T_EXTEND>            |
+        <T_FRAGMENT>
+    )
+
+//
+// Variable
+//
+#Variable:
+    <T_VARIABLE>
+
+//
+// Fully qualified name is an unambiguous name that specifies
+// which object, function, or variable a call refers to without
+// regard to the context of the call.
+//
+#TypeName:
+    GlobalTypeNamespace()?
+    __namespace()
+    NameWithReserved()
+
+__namespace:
+    (
+        NameWithReserved()
+        ::T_NAMESPACE_SEPARATOR::
+    )*
+
+#GlobalTypeNamespace:
+    ::T_NAMESPACE_SEPARATOR::
+
+//
+// Boolean value (true or false)
+//
+#Boolean: <T_FALSE> | <T_TRUE>
+
+//
+// Number value
+//
+#Number: <T_NUMBER>
+
+//
+// String value
+//
+#String: <T_BLOCK_STRING> | <T_STRING>
+
+//
+// Null value
+//
+#Null: <T_NULL>
+
+//
+// Input value
+//
+#Input:
+    ::T_BRACE_OPEN::
+        __inputPair()*
+    ::T_BRACE_CLOSE::
+
+__inputPair:
+    NameWithReserved() ::T_COLON:: Value()
+
+//
+// The list of values
+//
+#List:
+    ::T_BRACKET_OPEN::
+        Value()*
+    ::T_BRACKET_CLOSE::
+
+//
+// Value
+//
+#Value
+    : NameWithReserved()
+    | Boolean()
+    | Number()
+    | String()
+    | Input()
+    | Null()
+    | List()
+
+
+
+//
+// Common definitions and partials
+//
+
+Documentation:
+    String()
+
+TypeDefinitionImplements:
+    ::T_IMPLEMENTS:: TypeInvocation() (::T_AND:: TypeInvocation())*
+
+#TypeArguments:
+    ::T_PARENTHESIS_OPEN::
+        __genericArgumentDefinition()*
+    ::T_PARENTHESIS_CLOSE::
+
+__genericArgumentDefinition:
+    Variable() ::T_COLON:: TypeName()
+
+#TypeHint
+    : __typeHintList() | __typeHintValue()
+
+__typeHintList
+    : ::T_BRACKET_OPEN:: __typeHintValue() ::T_BRACKET_CLOSE::
+        __typeHintNotNull()?
+
+__typeHintValue
+    : TypeInvocation() __typeHintNotNull()?
+
+__typeHintNotNull
+    : ::T_NON_NULL::
+
+
+#ArgumentDefinition:
+    Documentation()?
+    NameWithReserved() ::T_COLON:: TypeHint()
+        __argumentDefinitionDefaultValue()?
+
+__argumentDefinitionDefaultValue:
+    ::T_EQUAL:: Value()
+
+#FieldDefinition:
+    Documentation()?
+    NameWithReserved()
+    __fieldDefinitionArguments()?
+    ::T_COLON:: TypeHint()
+        Directive()*
+
+__fieldDefinitionArguments:
+    ::T_PARENTHESIS_OPEN::
+        __fieldDefinitionArgument()*
+    ::T_PARENTHESIS_CLOSE::
+
+__fieldDefinitionArgument:
+    ArgumentDefinition()
+    Directive()*
+
+//
+// TypeDefinitions
+//
+
+
+//
+// Directive definition
+//
+
+#DirectiveDefinition:
+    Documentation()?
+    DirectiveDefinitionBody()
+
+DirectiveDefinitionBody:
+    ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: TypeName()
+        __directiveDefinitionArguments()?
+    ::T_ON:: __directiveDefinitionLocations()
+
+__directiveDefinitionArguments:
+    ::T_PARENTHESIS_OPEN::
+        __directiveDefinitionArgument()*
+    ::T_PARENTHESIS_CLOSE::
+
+__directiveDefinitionArgument:
+     ArgumentDefinition()
+
+__directiveDefinitionLocations:
+    ::T_OR::? __directiveDefinitionLocation()+
+
+__directiveDefinitionLocation:
+    NameWithReserved() (::T_OR:: NameWithReserved())*
+
+
+//
+// Enum definition
+//
+
+#EnumDefinition:
+    Documentation()?
+    EnumDefinitionHead()
+    EnumDefinitionBody()
+
+EnumDefinitionHead:
+    ::T_ENUM:: TypeName() Directive()*
+
+EnumDefinitionBody:
+    ::T_BRACE_OPEN::
+        __enumDefinitionValue()+
+    ::T_BRACE_CLOSE::
+
+
+__enumDefinitionValue:
+    Documentation()?
+    NameExceptValues()
+    Directive()*
+
+
+//
+// Input definition
+//
+
+#InputDefinition:
+    Documentation()?
+    InputDefinitionHead()
+    InputDefinitionBody()
+
+InputDefinitionHead:
+    ::T_INPUT:: TypeName() Directive()*
+
+InputDefinitionBody:
+    ::T_BRACE_OPEN::
+        __inputDefinitionField()*
+    ::T_BRACE_CLOSE::
+
+__inputDefinitionField:
+    ArgumentDefinition()
+        Directive()*
+
+
+//
+// Interface definition
+//
+
+#InterfaceDefinition:
+    Documentation()?
+    InterfaceDefinitionHead()
+    InterfaceDefinitionBody()
+
+InterfaceDefinitionHead:
+    ::T_INTERFACE:: TypeName()
+        TypeArguments()?
+        TypeDefinitionImplements()?
+        Directive()*
+
+InterfaceDefinitionBody:
+    ::T_BRACE_OPEN::
+        __interfaceFieldDefinitions()?
+        ChildrenDefinitions()?
+    ::T_BRACE_CLOSE::
+
+__interfaceFieldDefinitions:
+    FieldDefinition()*
+
+
+//
+// Object definition
+//
+
+#ObjectDefinition:
+    Documentation()?
+    ObjectDefinitionHead()
+    ObjectDefinitionBody()
+
+ObjectDefinitionHead:
+    ::T_TYPE:: TypeName()
+        TypeArguments()?
+        TypeDefinitionImplements()?
+        Directive()*
+
+ObjectDefinitionBody:
+    ::T_BRACE_OPEN::
+        __objectFieldDefinitions()?
+        ChildrenDefinitions()?
+    ::T_BRACE_CLOSE::
+
+__objectFieldDefinitions:
+    FieldDefinition()*
+
+
+
+//
+// Scalar definition
+//
+
+#ScalarDefinition:
+    Documentation()?
+    ScalarDefinitionBody()
+
+ScalarDefinitionBody:
+    ::T_SCALAR:: TypeName() __scalarExtends()? Directive()*
+
+__scalarExtends:
+    ::T_EXTENDS:: TypeName()
+
+
+
+//
+// Schema definition
+//
+
+#SchemaDefinition:
+    Documentation()?
+    SchemaDefinitionBody()
+
+SchemaDefinitionBody:
+    ::T_SCHEMA:: TypeName()?
+    ::T_BRACE_OPEN::
+        __schemaField()*
+    ::T_BRACE_CLOSE::
+
+__schemaField:
+    NameWithReserved() ::T_COLON:: TypeName()
+
+
+//
+// Union definition
+//
+
+#UnionDefinition:
+    Documentation()?
+    UnionDefinitionBody()
+
+UnionDefinitionBody:
+    ::T_UNION:: TypeName()
+        Directive()*
+    ::T_EQUAL:: ::T_OR::? __unionDefinitionTargets()+
+
+__unionDefinitionTargets:
+    TypeName() (::T_OR:: TypeName())*
+
+
+
+Definition
+    : DirectiveDefinition()
+    | SchemaDefinition()
+    | __typeDefinitions()
+
+
+#ChildrenDefinitions
+    : __typeDefinitions()
+
+
+__typeDefinitions
+    : EnumDefinition()
+    | InputDefinition()
+    | InterfaceDefinition()
+    | ObjectDefinition()
+    | ScalarDefinition()
+    | UnionDefinition()
+
+//
+// Enum extension
+//
+
+#EnumExtension:
+    ::T_EXTEND:: __enumExtensionVariants()
+
+__enumExtensionVariants:
+    EnumDefinitionHead() | (
+        EnumDefinitionHead()
+        EnumDefinitionBody()
+    )
+
+//
+// Input extension
+//
+
+#InputExtension:
+    ::T_EXTEND:: __inputExtensionVariants()
+
+__inputExtensionVariants:
+    InputDefinitionHead() | (
+        InputDefinitionHead()
+        InputDefinitionBody()
+    )
+
+//
+// Interface extension
+//
+
+#InterfaceExtension:
+    ::T_EXTEND:: __interfaceExtensionVariants()
+
+__interfaceExtensionVariants:
+    InterfaceDefinitionHead() | (
+        InterfaceDefinitionHead()
+        InterfaceDefinitionBody()
+    )
+
+//
+// Object extension
+//
+
+#ObjectExtension:
+    ::T_EXTEND:: __objectExtensionVariants()
+
+__objectExtensionVariants:
+    ObjectDefinitionHead() | (
+        ObjectDefinitionHead()
+        ObjectDefinitionBody()
+    )
+
+//
+// Scalar extension
+//
+
+#ScalarExtension:
+    ::T_EXTEND:: ScalarDefinitionBody()
+
+//
+// Schema extension
+//
+
+#SchemaExtension:
+    ::T_EXTEND:: SchemaDefinitionBody()
+
+//
+// Union extension
+//
+
+#UnionExtension:
+    ::T_EXTEND:: UnionDefinitionBody()
+
+
+
+Extension:
+    EnumExtension()      |
+    InputExtension()     |
+    InterfaceExtension() |
+    ObjectExtension()    |
+    ScalarExtension()    |
+    SchemaExtension()    |
+    UnionExtension()
+
+
+
+//
+// Argument invocation
+//
+
+ArgumentInvocation:
+    NameWithReserved() ::T_COLON:: Value()
+
+
+//
+// Directive callee
+//
+
+
+#Directive:
+    ::T_DIRECTIVE_AT:: TypeName()
+        __directiveInvocationArguments()?
+
+__directiveInvocationArguments:
+    ::T_PARENTHESIS_OPEN::
+        __directiveInvocationArgument()*
+    ::T_PARENTHESIS_CLOSE::
+
+__directiveInvocationArgument:
+     ArgumentInvocation()
+
+
+//
+// Type definition:
+// <code>
+//      - Type
+//      - Type(...)
+// </code>
+//
+#TypeInvocation
+    : (TypeName() | Variable()) __typeInvocationDefinitionArguments()? // "Type" (...)
+
+
+__typeInvocationDefinitionArguments
+    : ::T_PARENTHESIS_OPEN:: __typeInvocationDefinitionArgument()* ::T_PARENTHESIS_CLOSE:: // "(" ... ")"
+
+
+__typeInvocationDefinitionArgument:
+    NameWithReserved() ::T_COLON:: TypeInvocation()
+
+
+Invocation:
+    Directive()
+

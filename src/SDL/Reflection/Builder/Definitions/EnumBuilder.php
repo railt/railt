@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Base\Definitions\BaseEnum;
 use Railt\SDL\Reflection\Builder\Definitions\Enum\ValueBuilder;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
@@ -44,7 +44,7 @@ class EnumBuilder extends BaseEnum implements Compilable
      */
     protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->is('#Value')) {
+        if ($ast->is('Value')) {
             $value = new ValueBuilder($ast, $this->getDocument(), $this);
 
             $this->values = $this->unique($this->values, $value);

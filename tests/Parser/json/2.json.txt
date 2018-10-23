@@ -1,0 +1,25 @@
+>  object
+>  >  pair
+>  >  >  token(string, "require")
+>  >  >  object
+>  >  >  >  pair
+>  >  >  >  >  token(string, "hoa/compiler")
+>  >  >  >  >  token(string, "~3.17.08")
+>  >  >  >  pair
+>  >  >  >  >  token(string, "railt/lexer")
+>  >  >  >  >  token(string, "~1.2")
+>  >  pair
+>  >  >  token(string, "require-dev")
+>  >  >  object
+>  >  >  >  pair
+>  >  >  >  >  token(string, "phpunit/phpunit")
+>  >  >  >  >  token(string, "~6.5")
+>  >  pair
+>  >  >  token(string, "autoload")
+>  >  >  object
+>  >  >  >  pair
+>  >  >  >  >  token(string, "psr-4")
+>  >  >  >  >  object
+>  >  >  >  >  >  pair
+>  >  >  >  >  >  >  token(string, "Tests\\")
+>  >  >  >  >  >  >  token(string, "tests")

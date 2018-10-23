@@ -1,0 +1,7 @@
+type TDateTime implements IID {
+    field: DateTime
+}
+
+interface IID {
+  field: ID
+}

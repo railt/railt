@@ -1,9 +1,0 @@
-<Ast>
-  <Rule name="Hello" offset="0">
-    <Leaf name="T_TYPE" offset="0">type</Leaf>
-    <Leaf name="T_TYPE" offset="5">type</Leaf>
-    <Leaf name="T_TYPE" offset="10">type</Leaf>
-    <Leaf name="T_TYPE" offset="15">type</Leaf>
-    <Leaf name="T_TYPE" offset="20">type</Leaf>
-  </Rule>
-</Ast>

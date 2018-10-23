@@ -8,10 +8,8 @@
  */
 declare(strict_types=1);
 
-use Railt\SDL\Console\ParserCompileCommand;
+use Railt\Discovery\Discovery;
 use Symfony\Component\Console\Application;
-
-\define('RAILT_START', \microtime(true));
 
 /*
 |--------------------------------------------------------------------------
@@ -25,14 +23,13 @@ use Symfony\Component\Console\Application;
 |
 */
 
-$loaders = [
+foreach ([
     __DIR__ . '/../vendor/autoload.php',
     __DIR__ . '/../../../autoload.php',
-];
-
-foreach ($loaders as $loader) {
-    if (\is_file($loader) && \is_readable($loader)) {
-        require_once $loader;
+] as $path) {
+    if (\is_file($path) && \is_readable($path)) {
+        /** @var \Composer\Autoload\ClassLoader $classLoader */
+        $classLoader = require_once $path;
         break;
     }
 }
@@ -55,7 +52,11 @@ if (! \class_exists(Application::class)) {
 
 $cli = new Application();
 
-$cli->add(new ParserCompileCommand());
+$loader = Discovery::fromClassLoader($classLoader);
+
+foreach ((array)$loader->get('railt.commands', []) as $command) {
+    $cli->add(new $command());
+}
 
 try {
     $code = $cli->run();

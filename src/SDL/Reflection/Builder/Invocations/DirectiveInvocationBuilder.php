@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Invocations;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Base\Invocations\BaseDirectiveInvocation;
 use Railt\SDL\Contracts\Definitions\DirectiveDefinition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
@@ -48,7 +48,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
      */
     protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->is('#Argument')) {
+        if ($ast->is('Argument')) {
             [$name, $value] = $this->parseArgumentValue($ast);
 
             /** @var DirectiveDefinition $definition */
@@ -82,12 +82,12 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
         [$key, $value] = [null, null];
 
         foreach ($ast->getChildren() as $child) {
-            if ($child->is('#Name')) {
+            if ($child->is('Name')) {
                 $key = $child->getChild(0)->getValue();
                 continue;
             }
 
-            if ($child->is('#Value')) {
+            if ($child->is('Value')) {
                 $value = $child->getChild(0);
                 continue;
             }

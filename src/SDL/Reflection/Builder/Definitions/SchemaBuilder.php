@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\Parser\Ast\LeafInterface;
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\LeafInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Base\Definitions\BaseSchema;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\ObjectDefinition;
@@ -65,17 +65,17 @@ class SchemaBuilder extends BaseSchema implements Compilable
     protected function onCompile(NodeInterface $ast): bool
     {
         switch ($ast->getName()) {
-            case '#Query':
+            case 'Query':
                 $this->query = $this->unique($this->query, $this->fetchType($ast));
 
                 return true;
 
-            case '#Mutation':
+            case 'Mutation':
                 $this->mutation = $this->unique($this->mutation, $this->fetchType($ast));
 
                 return true;
 
-            case '#Subscription':
+            case 'Subscription':
                 $this->subscription = $this->unique($this->subscription, $this->fetchType($ast));
 
                 return true;
@@ -101,7 +101,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
          * </code>
          */
         foreach ($ast->getChildren() as $child) {
-            if ($child->is('#Type')) {
+            if ($child->is('Type')) {
                 return $this->load($child->getChild(0)->getValue());
             }
         }

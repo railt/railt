@@ -1,0 +1,7 @@
+type TString implements IDateTime {
+    field: String
+}
+
+interface IDateTime {
+  field: DateTime
+}

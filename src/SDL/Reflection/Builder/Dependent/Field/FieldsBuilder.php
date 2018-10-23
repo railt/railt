@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Dependent\Field;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\Field\HasFields;
 use Railt\SDL\Exceptions\TypeConflictException;
@@ -31,7 +31,7 @@ trait FieldsBuilder
     protected function compileFieldsBuilder(NodeInterface $ast): bool
     {
         /** @var TypeDefinition|HasFields $this */
-        if ($this instanceof HasFields && $ast->is('#Field')) {
+        if ($this instanceof HasFields && $ast->is('Field')) {
             $field = new FieldBuilder($ast, $this->getDocument(), $this);
 
             $this->fields = $this->unique($this->fields, $field);

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Dependent\Argument;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Reflection\Builder\Dependent\ArgumentBuilder;
 
@@ -27,7 +27,7 @@ trait ArgumentsBuilder
     {
         /** @var TypeDefinition $this */
         switch ($ast->getName()) {
-            case '#Argument':
+            case 'Argument':
                 $argument = new ArgumentBuilder($ast, $this->getDocument(), $this);
 
                 $this->arguments = $this->unique($this->arguments, $argument);

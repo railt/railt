@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Invocations\Directive;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Base\Invocations\Directive\BaseDirectivesContainer;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Reflection\Builder\Invocations\DirectiveInvocationBuilder;
@@ -26,7 +26,7 @@ trait DirectivesBuilder
      */
     protected function compileDirectivesBuilder(NodeInterface $ast): bool
     {
-        if ($ast->is('#Directive')) {
+        if ($ast->is('Directive')) {
             /** @var BaseDirectivesContainer|TypeDefinition $this */
             $directive = new DirectiveInvocationBuilder($ast, $this->getDocument(), $this);
 

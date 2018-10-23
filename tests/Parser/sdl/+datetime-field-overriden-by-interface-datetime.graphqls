@@ -1,0 +1,7 @@
+type TDateTime implements IDateTime {
+    field: DateTime
+}
+
+interface IDateTime {
+  field: DateTime
+}

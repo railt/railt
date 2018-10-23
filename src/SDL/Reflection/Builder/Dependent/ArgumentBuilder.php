@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Dependent;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Base\Dependent\BaseArgument;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Reflection\Builder\Behavior\TypeIndicationBuilder;
@@ -49,7 +49,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
      */
     protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->is('#Value')) {
+        if ($ast->is('Value')) {
             $this->hasDefaultValue = true;
             $this->defaultValue    = $this->parseValue(
                 $ast->getChild(0),

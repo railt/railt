@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Invocations;
 
-use Railt\Compiler\Parser\Ast\LeafInterface;
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\LeafInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Contracts\Document;
 use Railt\SDL\Contracts\Invocations\InputInvocation;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
@@ -21,8 +21,8 @@ use Railt\SDL\Reflection\Builder\DocumentBuilder;
  */
 class ValueBuilder
 {
-    private const AST_ID_ARRAY  = '#List';
-    private const AST_ID_OBJECT = '#Object';
+    private const AST_ID_ARRAY  = 'List';
+    private const AST_ID_OBJECT = 'Object';
 
     private const TOKEN_NULL       = 'T_NULL';
     private const TOKEN_NUMBER     = 'T_NUMBER_VALUE';

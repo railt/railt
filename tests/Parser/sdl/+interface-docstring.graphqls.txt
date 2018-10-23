@@ -1,0 +1,24 @@
+>  Document
+>  >  InterfaceDefinition
+>  >  >  Description
+>  >  >  >  token(T_MULTILINE_STRING, """
+Description of "interface Example" type
+""")
+>  >  >  Name
+>  >  >  >  token(T_NAME, Example)
+>  >  >  Field
+>  >  >  >  Description
+>  >  >  >  >  token(T_MULTILINE_STRING, """
+    Description of "a" field
+    """)
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, a)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, TestQuery)
+>  >  >  Field
+>  >  >  >  Description
+>  >  >  >  >  token(T_MULTILINE_STRING, """Description of "b" field""")
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, b)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, TestMutation)

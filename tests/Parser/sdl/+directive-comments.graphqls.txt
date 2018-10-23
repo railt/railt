@@ -1,0 +1,55 @@
+>  Document
+>  >  DirectiveDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, skip)
+>  >  >  Argument
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, if)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, Boolean)
+>  >  >  >  >  token(T_NON_NULL, !)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, FIELD)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, FRAGMENT_SPREAD)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, INLINE_FRAGMENT)
+>  >  DirectiveDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, include)
+>  >  >  Argument
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, if)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, Boolean)
+>  >  >  >  >  token(T_NON_NULL, !)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, FIELD)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, FRAGMENT_SPREAD)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, INLINE_FRAGMENT)
+>  >  DirectiveDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, include2)
+>  >  >  Argument
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, if)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, Boolean)
+>  >  >  >  >  token(T_NON_NULL, !)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, FIELD)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, FRAGMENT_SPREAD)
+>  >  >  Target
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, INLINE_FRAGMENT)

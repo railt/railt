@@ -1,0 +1,10 @@
+>  Document
+>  >  EnumDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, Colour)
+>  >  >  Value
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Red)
+>  >  >  Value
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Green)

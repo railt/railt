@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Base\Definitions\BaseDirective;
 use Railt\SDL\Reflection\Builder\Dependent\Argument\ArgumentsBuilder;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
@@ -46,7 +46,7 @@ class DirectiveBuilder extends BaseDirective implements Compilable
     protected function onCompile(NodeInterface $ast): bool
     {
         switch ($ast->getName()) {
-            case '#Target':
+            case 'Target':
                 $validator = $this->getValidator(Uniqueness::class);
 
                 foreach ($ast->getChild(0)->getChildren() as $child) {

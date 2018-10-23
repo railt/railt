@@ -1,0 +1,7 @@
+type TInt implements IDateTime {
+    field: Int
+}
+
+interface IDateTime {
+  field: DateTime
+}

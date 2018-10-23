@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Base\Definitions\BaseUnion;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
@@ -45,7 +45,7 @@ class UnionBuilder extends BaseUnion implements Compilable
      */
     protected function onCompile(NodeInterface $ast): bool
     {
-        if ($ast->is('#Relations')) {
+        if ($ast->is('Relations')) {
             foreach ($ast->getChildren() as $relation) {
                 $name = $relation->getChild(0)->getValue();
 

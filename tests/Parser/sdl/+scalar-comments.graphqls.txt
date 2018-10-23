@@ -1,0 +1,10 @@
+>  Document
+>  >  ScalarDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, Test)
+>  >  ScalarDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, Test2)
+>  >  >  Directive
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Directive)

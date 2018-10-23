@@ -1,0 +1,22 @@
+>  Document
+>  >  EnumDefinition
+>  >  >  Description
+>  >  >  >  token(T_MULTILINE_STRING, """
+Colour enum description
+""")
+>  >  >  Name
+>  >  >  >  token(T_NAME, Colour)
+>  >  >  Value
+>  >  >  >  Description
+>  >  >  >  >  token(T_MULTILINE_STRING, """
+    Value "Red" description
+    """)
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Red)
+>  >  >  Value
+>  >  >  >  Description
+>  >  >  >  >  token(T_MULTILINE_STRING, """
+    Value 'Green' description
+    """)
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Green)

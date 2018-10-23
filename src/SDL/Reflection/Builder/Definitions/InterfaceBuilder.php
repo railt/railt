@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Base\Definitions\BaseInterface;
 use Railt\SDL\Reflection\Builder\Dependent\Field\FieldsBuilder;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;

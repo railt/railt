@@ -2,6 +2,7 @@
     "name": "railt/io",
     "type": "library",
     "description": "The Railt filesystem utils",
+    "version": "1.2.0",
     "license": "MIT",
     "keywords": [
         "file",
@@ -28,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\Io\\": "src"
+            "Railt\\": "src/"
         }
     },
     "require-dev": {
@@ -36,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Tests\\Io\\": "tests"
+            "Railt\\Tests\\Io\\": "tests/"
         }
     },
     "config": {

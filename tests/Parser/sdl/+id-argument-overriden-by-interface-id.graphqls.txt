@@ -1,0 +1,30 @@
+>  Document
+>  >  ObjectDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, TID)
+>  >  >  Implements
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, IID)
+>  >  >  Field
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, field)
+>  >  >  >  Argument
+>  >  >  >  >  Name
+>  >  >  >  >  >  token(T_NAME, arg)
+>  >  >  >  >  Type
+>  >  >  >  >  >  token(T_NAME, ID)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, ID)
+>  >  InterfaceDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, IID)
+>  >  >  Field
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, field)
+>  >  >  >  Argument
+>  >  >  >  >  Name
+>  >  >  >  >  >  token(T_NAME, arg)
+>  >  >  >  >  Type
+>  >  >  >  >  >  token(T_NAME, ID)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, ID)

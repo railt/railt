@@ -1,0 +1,6 @@
+
+type Some {
+    field(value: String = """
+        \" Single " quote "
+    """): String
+}

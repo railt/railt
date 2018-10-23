@@ -1,0 +1,18 @@
+#
+# Skip
+#
+
+"""
+Description of "extend type Foo"
+"""
+extend type Foo {
+    """
+    Description of "seven" field
+    """
+    seven(argument: [String]): Type
+}
+
+"""
+Description of "extend type Foo2"
+"""
+extend type Foo2 @onType {}

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Processable;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Base\Dependent\Argument\BaseArgumentsContainer;
 use Railt\SDL\Base\Dependent\BaseArgument;
 use Railt\SDL\Base\Dependent\BaseField;

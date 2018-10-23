@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Schema;
 
-use Railt\Compiler\ParserInterface;
+use Railt\Parser\ParserInterface;
 use Railt\SDL\Reflection\Coercion\TypeCoercion;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Reflection\Validation\Base\ValidatorInterface;

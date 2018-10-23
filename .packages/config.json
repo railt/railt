@@ -4,31 +4,18 @@
         "./../.gitattributes": ".gitattributes",
         "./../.gitignore": ".gitignore",
         "./../.scrutinizer.yml": ".scrutinizer.yml",
-        "./../.travis.yml": ".travis.yml",
         "./../CONTRIBUTING.md": "CONTRIBUTING.md",
         "./../CODE_OF_CONDUCT.md": "CODE_OF_CONDUCT.md",
         "./../LICENSE.md": "LICENSE.md",
         "./../phpunit.xml": "phpunit.xml"
     },
     "packages": {
-        "railt/compiler": {
-            "remote": "git@github.com:railt/compiler.git",
-            "files": {
-                "./compiler/composer.json": "composer.json",
-                "./compiler/README.md": "README.md"
-            },
-            "dirs": {
-                "./../.github": ".github",
-                "./../src/Compiler": "src/Compiler",
-                "./../tests/Compiler": "tests",
-                "./../resources/templates": "resources/templates"
-            }
-        },
         "railt/container": {
             "remote": "git@github.com:railt/container.git",
             "files": {
                 "./container/composer.json": "composer.json",
-                "./container/README.md": "README.md"
+                "./container/README.md": "README.md",
+                "./container/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "./../.github": ".github",
@@ -40,7 +27,8 @@
             "remote": "git@github.com:railt/http.git",
             "files": {
                 "./http/composer.json": "composer.json",
-                "./http/README.md": "README.md"
+                "./http/README.md": "README.md",
+                "./http/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "./../.github": ".github",
@@ -52,7 +40,8 @@
             "remote": "git@github.com:railt/io.git",
             "files": {
                 "./io/composer.json": "composer.json",
-                "./io/README.md": "README.md"
+                "./io/README.md": "README.md",
+                "./io/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "./../.github": ".github",
@@ -60,11 +49,38 @@
                 "./../tests/Io": "tests"
             }
         },
+        "railt/lexer": {
+            "remote": "git@github.com:railt/lexer.git",
+            "files": {
+                "./lexer/composer.json": "composer.json",
+                "./lexer/README.md": "README.md",
+                "./lexer/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "./../.github": ".github",
+                "./../src/Lexer": "src/Lexer",
+                "./../tests/Lexer": "tests"
+            }
+        },
+        "railt/parser": {
+            "remote": "git@github.com:railt/parser.git",
+            "files": {
+                "./parser/composer.json": "composer.json",
+                "./parser/README.md": "README.md",
+                "./parser/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "./../.github": ".github",
+                "./../src/Parser": "src/Parser",
+                "./../tests/Parser": "tests"
+            }
+        },
         "railt/sdl": {
             "remote": "git@github.com:railt/sdl.git",
             "files": {
                 "./sdl/composer.json": "composer.json",
-                "./sdl/README.md": "README.md"
+                "./sdl/README.md": "README.md",
+                "./sdl/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "./../.github": ".github",
@@ -76,8 +92,9 @@
         "railt/storage": {
             "remote": "git@github.com:railt/storage.git",
             "files": {
-                "./sdl/composer.json": "composer.json",
-                "./sdl/README.md": "README.md"
+                "./storage/composer.json": "composer.json",
+                "./storage/README.md": "README.md",
+                "./storage/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "./../.github": ".github",

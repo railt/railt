@@ -1,0 +1,34 @@
+language: php
+
+matrix:
+  fast_finish: true
+  include:
+    - php: 7.1
+      env: setup=lowest
+    - php: 7.1
+      env: setup=highest
+    - php: 7.2
+      env: setup=lowest
+    - php: 7.2
+      env: setup=highest
+    - php: nightly
+      env: setup=lowest
+    - php: nightly
+      env: setup=highest
+  allow_failures:
+    - php: nightly
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+    - composer self-update -q
+    - composer clear-cache
+    - if [ -z "$setup" ]; then composer install; fi;
+    - if [ "$setup" = "lowest" ]; then composer update --prefer-lowest --no-interaction --prefer-dist --no-suggest; fi;
+    - if [ "$setup" = "highest" ]; then composer update --no-interaction --prefer-dist --no-suggest; fi;
+
+script: vendor/bin/phpunit

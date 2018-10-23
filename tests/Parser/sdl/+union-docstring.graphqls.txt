@@ -1,0 +1,45 @@
+>  Document
+>  >  UnionDefinition
+>  >  >  Description
+>  >  >  >  token(T_MULTILINE_STRING, """
+Description of "union Feed"
+""")
+>  >  >  Name
+>  >  >  >  token(T_NAME, Feed)
+>  >  >  Relations
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Story)
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Article)
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, Advert)
+>  >  UnionDefinition
+>  >  >  Description
+>  >  >  >  token(T_MULTILINE_STRING, """
+Description of "union AnnotatedUnion"
+""")
+>  >  >  Name
+>  >  >  >  token(T_NAME, AnnotatedUnion)
+>  >  >  Directive
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, onUnion)
+>  >  >  Relations
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, A)
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, B)
+>  >  UnionDefinition
+>  >  >  Description
+>  >  >  >  token(T_MULTILINE_STRING, """
+Description of "union AnnotatedUnionTwo"
+""")
+>  >  >  Name
+>  >  >  >  token(T_NAME, AnnotatedUnionTwo)
+>  >  >  Directive
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, onUnion)
+>  >  >  Relations
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, A)
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, B)

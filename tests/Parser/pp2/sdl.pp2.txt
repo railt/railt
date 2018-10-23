@@ -1,0 +1,888 @@
+>  Grammar
+>  >  PragmaDefinition
+>  >  >  token(T_PRAGMA, %pragma root Document)
+>  >  PragmaDefinition
+>  >  >  token(T_PRAGMA, %pragma lexer.unicode true)
+>  >  PragmaDefinition
+>  >  >  token(T_PRAGMA, %pragma parser.lookahead 1024)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_AND                    &)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_OR                     \|)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_PARENTHESIS_OPEN       \()
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_PARENTHESIS_CLOSE      \))
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_BRACKET_OPEN           \[)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_BRACKET_CLOSE          \])
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_BRACE_OPEN             {)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_BRACE_CLOSE            })
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_NON_NULL               !)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_THREE_DOTS             \.\.\.)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_COLON                  :)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_EQUAL                  =)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_DIRECTIVE_AT           @)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_NUMBER                 \-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][\+\-]?[0-9]+)?\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_TRUE                   true\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_FALSE                  false\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_NULL                   null\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_BLOCK_STRING           """(?:\\"""|(?!""").|\s)+""")
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_STRING                 "[^"\\]+(\\.[^"\\]*)*")
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_NAMESPACE              namespace\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_NAMESPACE_SEPARATOR    /)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_EXTENDS                extends\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_IMPLEMENTS             implements\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_ON                     on\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_TYPE                   type\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_ENUM                   enum\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_UNION                  union\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_INPUT_UNION            inputUnion\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_INTERFACE              interface\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_SCHEMA                 schema\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_SCALAR                 scalar\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_DIRECTIVE              directive\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_INPUT                  input\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_EXTEND                 extend\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_FRAGMENT               fragment\b)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_VARIABLE               \$[_A-Za-z][_0-9A-Za-z]*)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token T_NAME                   [_A-Za-z][_0-9A-Za-z]*)
+>  >  TokenDefinition
+>  >  >  token(T_SKIP, %skip T_WHITESPACE             (\xfe\xff|\x20|\x09|\x0a|\x0d)+)
+>  >  TokenDefinition
+>  >  >  token(T_SKIP, %skip T_COMMENT                #[^\n]*)
+>  >  TokenDefinition
+>  >  >  token(T_SKIP, %skip T_COMMA                  ,)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Document)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, DocumentImports())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, DocumentDefinitions())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, DocumentImports)
+>  >  >  token(T_INVOKE, Directive())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, DocumentDefinitions)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, Extension())
+>  >  >  >  token(T_INVOKE, Definition())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, NameWithoutReserved)
+>  >  >  token(T_TOKEN_KEPT, <T_NAME>)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, NameWithReserved)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, NameExceptValues())
+>  >  >  >  token(T_TOKEN_KEPT, <T_TRUE>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_FALSE>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_NULL>)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, NameExceptValues)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, NameWithoutReserved())
+>  >  >  >  token(T_TOKEN_KEPT, <T_NAMESPACE>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_EXTENDS>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_IMPLEMENTS>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_ON>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_TYPE>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_ENUM>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_UNION>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_INPUT_UNION>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_INTERFACE>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_SCHEMA>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_SCALAR>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_DIRECTIVE>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_INPUT>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_EXTEND>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_FRAGMENT>)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Variable)
+>  >  >  token(T_TOKEN_KEPT, <T_VARIABLE>)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, TypeName)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, GlobalTypeNamespace())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, __namespace())
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __namespace)
+>  >  >  Repetition
+>  >  >  >  Concatenation
+>  >  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  >  token(T_TOKEN_SKIPPED, ::T_NAMESPACE_SEPARATOR::)
+>  >  >  >  Quantifier
+>  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, GlobalTypeNamespace)
+>  >  >  token(T_TOKEN_SKIPPED, ::T_NAMESPACE_SEPARATOR::)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Boolean)
+>  >  >  Alternation
+>  >  >  >  token(T_TOKEN_KEPT, <T_FALSE>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_TRUE>)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Number)
+>  >  >  token(T_TOKEN_KEPT, <T_NUMBER>)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, String)
+>  >  >  Alternation
+>  >  >  >  token(T_TOKEN_KEPT, <T_BLOCK_STRING>)
+>  >  >  >  token(T_TOKEN_KEPT, <T_STRING>)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Null)
+>  >  >  token(T_TOKEN_KEPT, <T_NULL>)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Input)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __inputPair())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __inputPair)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_COLON::)
+>  >  >  >  token(T_INVOKE, Value())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, List)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACKET_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Value())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACKET_CLOSE::)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Value)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  token(T_INVOKE, Boolean())
+>  >  >  >  token(T_INVOKE, Number())
+>  >  >  >  token(T_INVOKE, String())
+>  >  >  >  token(T_INVOKE, Input())
+>  >  >  >  token(T_INVOKE, Null())
+>  >  >  >  token(T_INVOKE, List())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Documentation)
+>  >  >  token(T_INVOKE, String())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, TypeDefinitionImplements)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_IMPLEMENTS::)
+>  >  >  >  token(T_INVOKE, TypeInvocation())
+>  >  >  >  Repetition
+>  >  >  >  >  Concatenation
+>  >  >  >  >  >  token(T_TOKEN_SKIPPED, ::T_AND::)
+>  >  >  >  >  >  token(T_INVOKE, TypeInvocation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, TypeArguments)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __genericArgumentDefinition())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __genericArgumentDefinition)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, Variable())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_COLON::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, TypeHint)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, __typeHintList())
+>  >  >  >  token(T_INVOKE, __typeHintValue())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __typeHintList)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACKET_OPEN::)
+>  >  >  >  token(T_INVOKE, __typeHintValue())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACKET_CLOSE::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __typeHintNotNull())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __typeHintValue)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, TypeInvocation())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __typeHintNotNull())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __typeHintNotNull)
+>  >  >  token(T_TOKEN_SKIPPED, ::T_NON_NULL::)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ArgumentDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_COLON::)
+>  >  >  >  token(T_INVOKE, TypeHint())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __argumentDefinitionDefaultValue())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __argumentDefinitionDefaultValue)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EQUAL::)
+>  >  >  >  token(T_INVOKE, Value())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, FieldDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __fieldDefinitionArguments())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_COLON::)
+>  >  >  >  token(T_INVOKE, TypeHint())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __fieldDefinitionArguments)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __fieldDefinitionArgument())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __fieldDefinitionArgument)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, ArgumentDefinition())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, DirectiveDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, DirectiveDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, DirectiveDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_DIRECTIVE::)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_DIRECTIVE_AT::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __directiveDefinitionArguments())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_ON::)
+>  >  >  >  token(T_INVOKE, __directiveDefinitionLocations())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __directiveDefinitionArguments)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __directiveDefinitionArgument())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __directiveDefinitionArgument)
+>  >  >  token(T_INVOKE, ArgumentDefinition())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __directiveDefinitionLocations)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_TOKEN_SKIPPED, ::T_OR::)
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __directiveDefinitionLocation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ONE_OR_MORE, +)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __directiveDefinitionLocation)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  Repetition
+>  >  >  >  >  Concatenation
+>  >  >  >  >  >  token(T_TOKEN_SKIPPED, ::T_OR::)
+>  >  >  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, EnumDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, EnumDefinitionHead())
+>  >  >  >  token(T_INVOKE, EnumDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, EnumDefinitionHead)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_ENUM::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, EnumDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __enumDefinitionValue())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ONE_OR_MORE, +)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __enumDefinitionValue)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, NameExceptValues())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InputDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, InputDefinitionHead())
+>  >  >  >  token(T_INVOKE, InputDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InputDefinitionHead)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_INPUT::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InputDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __inputDefinitionField())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __inputDefinitionField)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, ArgumentDefinition())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InterfaceDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, InterfaceDefinitionHead())
+>  >  >  >  token(T_INVOKE, InterfaceDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InterfaceDefinitionHead)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_INTERFACE::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, TypeArguments())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, TypeDefinitionImplements())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InterfaceDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __interfaceFieldDefinitions())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, ChildrenDefinitions())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __interfaceFieldDefinitions)
+>  >  >  Repetition
+>  >  >  >  token(T_INVOKE, FieldDefinition())
+>  >  >  >  Quantifier
+>  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ObjectDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, ObjectDefinitionHead())
+>  >  >  >  token(T_INVOKE, ObjectDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ObjectDefinitionHead)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_TYPE::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, TypeArguments())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, TypeDefinitionImplements())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ObjectDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __objectFieldDefinitions())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, ChildrenDefinitions())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __objectFieldDefinitions)
+>  >  >  Repetition
+>  >  >  >  token(T_INVOKE, FieldDefinition())
+>  >  >  >  Quantifier
+>  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ScalarDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, ScalarDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ScalarDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_SCALAR::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __scalarExtends())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __scalarExtends)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTENDS::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, SchemaDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, SchemaDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, SchemaDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_SCHEMA::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __schemaField())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_BRACE_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __schemaField)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_COLON::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, UnionDefinition)
+>  >  >  Concatenation
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Documentation())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  token(T_INVOKE, UnionDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, UnionDefinitionBody)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_UNION::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, Directive())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EQUAL::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_TOKEN_SKIPPED, ::T_OR::)
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __unionDefinitionTargets())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ONE_OR_MORE, +)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __unionDefinitionTargets)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  Concatenation
+>  >  >  >  >  >  token(T_TOKEN_SKIPPED, ::T_OR::)
+>  >  >  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Definition)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, DirectiveDefinition())
+>  >  >  >  token(T_INVOKE, SchemaDefinition())
+>  >  >  >  token(T_INVOKE, __typeDefinitions())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ChildrenDefinitions)
+>  >  >  token(T_INVOKE, __typeDefinitions())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __typeDefinitions)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, EnumDefinition())
+>  >  >  >  token(T_INVOKE, InputDefinition())
+>  >  >  >  token(T_INVOKE, InterfaceDefinition())
+>  >  >  >  token(T_INVOKE, ObjectDefinition())
+>  >  >  >  token(T_INVOKE, ScalarDefinition())
+>  >  >  >  token(T_INVOKE, UnionDefinition())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, EnumExtension)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTEND::)
+>  >  >  >  token(T_INVOKE, __enumExtensionVariants())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __enumExtensionVariants)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, EnumDefinitionHead())
+>  >  >  >  Concatenation
+>  >  >  >  >  token(T_INVOKE, EnumDefinitionHead())
+>  >  >  >  >  token(T_INVOKE, EnumDefinitionBody())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InputExtension)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTEND::)
+>  >  >  >  token(T_INVOKE, __inputExtensionVariants())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __inputExtensionVariants)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, InputDefinitionHead())
+>  >  >  >  Concatenation
+>  >  >  >  >  token(T_INVOKE, InputDefinitionHead())
+>  >  >  >  >  token(T_INVOKE, InputDefinitionBody())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, InterfaceExtension)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTEND::)
+>  >  >  >  token(T_INVOKE, __interfaceExtensionVariants())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __interfaceExtensionVariants)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, InterfaceDefinitionHead())
+>  >  >  >  Concatenation
+>  >  >  >  >  token(T_INVOKE, InterfaceDefinitionHead())
+>  >  >  >  >  token(T_INVOKE, InterfaceDefinitionBody())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ObjectExtension)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTEND::)
+>  >  >  >  token(T_INVOKE, __objectExtensionVariants())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __objectExtensionVariants)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, ObjectDefinitionHead())
+>  >  >  >  Concatenation
+>  >  >  >  >  token(T_INVOKE, ObjectDefinitionHead())
+>  >  >  >  >  token(T_INVOKE, ObjectDefinitionBody())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ScalarExtension)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTEND::)
+>  >  >  >  token(T_INVOKE, ScalarDefinitionBody())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, SchemaExtension)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTEND::)
+>  >  >  >  token(T_INVOKE, SchemaDefinitionBody())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, UnionExtension)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_EXTEND::)
+>  >  >  >  token(T_INVOKE, UnionDefinitionBody())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Extension)
+>  >  >  Alternation
+>  >  >  >  token(T_INVOKE, EnumExtension())
+>  >  >  >  token(T_INVOKE, InputExtension())
+>  >  >  >  token(T_INVOKE, InterfaceExtension())
+>  >  >  >  token(T_INVOKE, ObjectExtension())
+>  >  >  >  token(T_INVOKE, ScalarExtension())
+>  >  >  >  token(T_INVOKE, SchemaExtension())
+>  >  >  >  token(T_INVOKE, UnionExtension())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, ArgumentInvocation)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_COLON::)
+>  >  >  >  token(T_INVOKE, Value())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Directive)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_DIRECTIVE_AT::)
+>  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __directiveInvocationArguments())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __directiveInvocationArguments)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __directiveInvocationArgument())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __directiveInvocationArgument)
+>  >  >  token(T_INVOKE, ArgumentInvocation())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, TypeInvocation)
+>  >  >  Concatenation
+>  >  >  >  Alternation
+>  >  >  >  >  token(T_INVOKE, TypeName())
+>  >  >  >  >  token(T_INVOKE, Variable())
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __typeInvocationDefinitionArguments())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_ONE, ?)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __typeInvocationDefinitionArguments)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_OPEN::)
+>  >  >  >  Repetition
+>  >  >  >  >  token(T_INVOKE, __typeInvocationDefinitionArgument())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_PARENTHESIS_CLOSE::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, __typeInvocationDefinitionArgument)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, NameWithReserved())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::T_COLON::)
+>  >  >  >  token(T_INVOKE, TypeInvocation())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, Invocation)
+>  >  >  token(T_INVOKE, Directive())

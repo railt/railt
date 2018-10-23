@@ -1,0 +1,83 @@
+>  Grammar
+>  >  TokenDefinition
+>  >  >  token(T_SKIP, %skip   space          \s)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  true           true)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  false          false)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  null           null)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  string         "[^"\\]+(\\.[^"\\]*)*")
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  brace_         {)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token _brace          })
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  bracket_       \[)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token _bracket        \])
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  colon          :)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  comma          ,)
+>  >  TokenDefinition
+>  >  >  token(T_TOKEN, %token  number         \d+)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, value)
+>  >  >  Alternation
+>  >  >  >  token(T_TOKEN_KEPT, <true>)
+>  >  >  >  token(T_TOKEN_KEPT, <false>)
+>  >  >  >  token(T_TOKEN_KEPT, <null>)
+>  >  >  >  token(T_INVOKE, string())
+>  >  >  >  token(T_INVOKE, object())
+>  >  >  >  token(T_INVOKE, array())
+>  >  >  >  token(T_INVOKE, number())
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, string)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::quote_::)
+>  >  >  >  token(T_TOKEN_KEPT, <string>)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::_quote::)
+>  >  RuleDefinition
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, number)
+>  >  >  token(T_TOKEN_KEPT, <number>)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, object)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::brace_::)
+>  >  >  >  token(T_INVOKE, pair())
+>  >  >  >  Repetition
+>  >  >  >  >  Concatenation
+>  >  >  >  >  >  token(T_TOKEN_SKIPPED, ::comma::)
+>  >  >  >  >  >  token(T_INVOKE, pair())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::_brace::)
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, pair)
+>  >  >  Concatenation
+>  >  >  >  token(T_INVOKE, string())
+>  >  >  >  token(T_TOKEN_SKIPPED, ::colon::)
+>  >  >  >  token(T_INVOKE, value())
+>  >  RuleDefinition
+>  >  >  ShouldKeep
+>  >  >  RuleName
+>  >  >  >  token(T_NAME, array)
+>  >  >  Concatenation
+>  >  >  >  token(T_TOKEN_SKIPPED, ::bracket_::)
+>  >  >  >  token(T_INVOKE, value())
+>  >  >  >  Repetition
+>  >  >  >  >  Concatenation
+>  >  >  >  >  >  token(T_TOKEN_SKIPPED, ::comma::)
+>  >  >  >  >  >  token(T_INVOKE, value())
+>  >  >  >  >  Quantifier
+>  >  >  >  >  >  token(T_REPEAT_ZERO_OR_MORE, *)
+>  >  >  >  token(T_TOKEN_SKIPPED, ::_bracket::)

@@ -1,0 +1,7 @@
+type TString implements IFloat {
+    field: String
+}
+
+interface IFloat {
+  field: Float
+}

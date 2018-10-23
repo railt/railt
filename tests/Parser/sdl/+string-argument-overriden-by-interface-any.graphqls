@@ -1,0 +1,7 @@
+type TString implements IAny {
+    field(arg: Any): String
+}
+
+interface IAny {
+    field(arg: String): String
+}

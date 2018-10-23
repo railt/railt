@@ -1,0 +1,7 @@
+type TInt implements IAny {
+    field(arg: Any): Int
+}
+
+interface IAny {
+    field(arg: Int): Int
+}

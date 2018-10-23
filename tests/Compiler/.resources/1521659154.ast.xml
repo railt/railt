@@ -1,8 +1,0 @@
-<Ast>
-  <Rule name="HellOrWorld" offset="0">
-    <Leaf name="T_TYPE" offset="0">type</Leaf>
-    <Leaf name="T_NAME" offset="5">asdasd</Leaf>
-    <Leaf name="T_TYPE" offset="12">type</Leaf>
-    <Leaf name="T_NAME" offset="17">asdasd</Leaf>
-  </Rule>
-</Ast>

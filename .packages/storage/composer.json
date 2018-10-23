@@ -30,10 +30,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\Storage\\": "src"
+            "Railt\\": "src/"
         },
         "files": [
-            "src/polyfill.php"
+            "./src/polyfill.php"
         ]
     },
     "require-dev": {
@@ -41,15 +41,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Tests\\Storage\\": "tests"
+            "Railt\\Tests\\Storage\\": "tests/"
         }
     },
     "config": {
         "sort-packages": true
-    },
-    "suggest": {
-        "psr/cache": "PSR-6 Cache Implementation",
-        "psr/simple-cache": "PSR-16 Cache Implementation"
     },
     "provide": {
         "psr/cache": "~1.0",

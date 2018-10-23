@@ -1,0 +1,109 @@
+%pragma parser.lookahead 1024
+%pragma parser.root Grammar
+
+%token T_PRAGMA                 %pragma\h+([\w\.]+)\h+([^\s]+)
+%token T_INCLUDE                %include\h+([^\s]+)
+%token T_TOKEN                  %token\h+(\w+)\h+([^\s]+)
+%token T_SKIP                   %skip\h+(\w+)\h+([^\s]+)
+%token T_OR                     \|
+%token T_TOKEN_SKIPPED          ::(\w+)::
+%token T_TOKEN_KEPT             <(\w+)>
+%token T_TOKEN_STRING           ("[^"\\]+(\\.[^"\\]*)*"|'[^'\\]+(\\.[^'\\]*)*')
+%token T_INVOKE                 (\w+)\(\)
+%token T_GROUP_OPEN             \(
+%token T_GROUP_CLOSE            \)
+%token T_REPEAT_ZERO_OR_ONE     \?
+%token T_REPEAT_ONE_OR_MORE     \+
+%token T_REPEAT_ZERO_OR_MORE    \*
+%token T_REPEAT_N_TO_M          {\h*(\d+)\h*,\h*(\d+)\h*}
+%token T_REPEAT_N_OR_MORE       {\h*(\d+)\h*,\h*}
+%token T_REPEAT_ZERO_TO_M       {\h*,\h*(\d+)\h*}
+%token T_REPEAT_EXACTLY_N       {\h*(\d+)\h*}
+%token T_KEPT_NAME              #
+%token T_NAME                   [a-zA-Z_\x7f-\xff\\][a-zA-Z0-9_\x7f-\xff\\]*
+%token T_EQ                     ::=
+%token T_ALIAS                  \bas\b
+%token T_COLON                  :
+%token T_DELEGATE               \->
+
+%skip T_WHITESPACE             (\xfe\xff|\x20|\x09|\x0a|\x0d)+
+%skip T_COMMENT                //[^\n]*
+%skip T_BLOCK_COMMENT          /\*.*?\*/
+
+#Grammar:
+    __definition()*
+
+__definition:
+    TokenDefinition() | PragmaDefinition() | IncludeDefinition() | RuleDefinition()
+
+//
+// Definitions structure
+//
+
+#TokenDefinition:
+    <T_TOKEN> | <T_SKIP>
+
+#PragmaDefinition:
+    <T_PRAGMA>
+
+#IncludeDefinition:
+    <T_INCLUDE>
+
+// ---------------------------------------------------------------------------------
+// - Rule Definition
+// ---------------------------------------------------------------------------------
+
+#RuleDefinition:
+    ShouldKeep()? RuleName() Alias()? RuleDelegate()? RuleProduction()
+
+#RuleName:
+    <T_NAME> __ruleProductionDelimiter()
+
+#Alias:
+    ::T_ALIAS:: <T_NAME>
+
+#RuleDelegate:
+    ::T_DELEGATE:: <T_NAME>
+
+#ShouldKeep:
+    ::T_KEPT_NAME::
+
+__ruleProductionDelimiter:
+    ::T_COLON:: | ::T_EQ::
+
+RuleProduction:
+    __alternation()
+
+__alternation:
+    __concatenation() | Alternation()
+
+#Alternation:
+    __concatenation() (::T_OR:: __concatenation())+
+
+__concatenation:
+    __repetition() | Concatenation()
+
+#Concatenation:
+    __repetition() __repetition()+
+
+__repetition:
+    __simple() | Repetition()
+
+#Repetition:
+    __simple() Quantifier()
+
+__simple:
+    ::T_GROUP_OPEN:: __alternation() ::T_GROUP_CLOSE:: |
+    <T_TOKEN_SKIPPED> |
+    <T_TOKEN_KEPT> |
+    <T_INVOKE>
+
+#Quantifier:
+    <T_REPEAT_ZERO_OR_ONE> |
+    <T_REPEAT_ONE_OR_MORE> |
+    <T_REPEAT_ZERO_OR_MORE> |
+    <T_REPEAT_N_TO_M> |
+    <T_REPEAT_ZERO_OR_MORE> |
+    <T_REPEAT_ZERO_TO_M> |
+    <T_REPEAT_N_OR_MORE> |
+    <T_REPEAT_EXACTLY_N>

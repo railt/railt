@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Definitions;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Base\Definitions\BaseScalar;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;

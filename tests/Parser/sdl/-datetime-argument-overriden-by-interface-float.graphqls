@@ -1,0 +1,7 @@
+type TDateTime implements IFloat {
+    field(arg: Float): DateTime
+}
+
+interface IFloat {
+    field(arg: DateTime): DateTime
+}

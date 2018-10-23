@@ -1,0 +1,7 @@
+type TID implements IFloat {
+    field: ID
+}
+
+interface IFloat {
+  field: Float
+}

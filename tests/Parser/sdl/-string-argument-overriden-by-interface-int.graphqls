@@ -1,0 +1,7 @@
+type TString implements IInt {
+    field(arg: Int): String
+}
+
+interface IInt {
+    field(arg: String): String
+}

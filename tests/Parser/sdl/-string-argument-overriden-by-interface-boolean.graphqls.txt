@@ -1,0 +1,30 @@
+>  Document
+>  >  ObjectDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, TString)
+>  >  >  Implements
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, IBoolean)
+>  >  >  Field
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, field)
+>  >  >  >  Argument
+>  >  >  >  >  Name
+>  >  >  >  >  >  token(T_NAME, arg)
+>  >  >  >  >  Type
+>  >  >  >  >  >  token(T_NAME, Boolean)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, String)
+>  >  InterfaceDefinition
+>  >  >  Name
+>  >  >  >  token(T_NAME, IBoolean)
+>  >  >  Field
+>  >  >  >  Name
+>  >  >  >  >  token(T_NAME, field)
+>  >  >  >  Argument
+>  >  >  >  >  Name
+>  >  >  >  >  >  token(T_NAME, arg)
+>  >  >  >  >  Type
+>  >  >  >  >  >  token(T_NAME, String)
+>  >  >  >  Type
+>  >  >  >  >  token(T_NAME, String)

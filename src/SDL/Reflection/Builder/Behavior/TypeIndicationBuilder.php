@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder\Behavior;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
-use Railt\Compiler\Parser\Ast\RuleInterface;
+use Railt\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Exceptions\TypeNotFoundException;
 
 /**
@@ -26,10 +26,10 @@ trait TypeIndicationBuilder
     protected function compileTypeIndicationBuilder(NodeInterface $ast): bool
     {
         switch ($ast->getName()) {
-            case '#Type':
+            case 'Type':
                 return $this->buildType($ast);
 
-            case '#List':
+            case 'List':
                 return $this->buildList($ast);
         }
 
@@ -68,7 +68,7 @@ trait TypeIndicationBuilder
         $this->isList = true;
 
         foreach ($ast->getChildren() as $child) {
-            if ($child->is('#Type')) {
+            if ($child->is('Type')) {
                 $this->buildType($child);
                 continue;
             }

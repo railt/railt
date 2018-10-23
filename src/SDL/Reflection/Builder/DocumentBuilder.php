@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder;
 
-use Railt\Compiler\Parser\Ast\NodeInterface;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\Io\Readable;
 use Railt\SDL\Base\BaseDocument;
 use Railt\SDL\Contracts\Definitions\Definition;
@@ -38,19 +38,19 @@ class DocumentBuilder extends BaseDocument implements Compilable
 
     public const AST_TYPE_MAPPING = [
         // Anonymous types
-        '#SchemaDefinition'    => Definitions\SchemaBuilder::class,
+        'SchemaDefinition'    => Definitions\SchemaBuilder::class,
 
         // Named types
-        '#ObjectDefinition'    => Definitions\ObjectBuilder::class,
-        '#InterfaceDefinition' => Definitions\InterfaceBuilder::class,
-        '#UnionDefinition'     => Definitions\UnionBuilder::class,
-        '#ScalarDefinition'    => Definitions\ScalarBuilder::class,
-        '#EnumDefinition'      => Definitions\EnumBuilder::class,
-        '#InputDefinition'     => Definitions\InputBuilder::class,
-        '#DirectiveDefinition' => Definitions\DirectiveBuilder::class,
+        'ObjectDefinition'    => Definitions\ObjectBuilder::class,
+        'InterfaceDefinition' => Definitions\InterfaceBuilder::class,
+        'UnionDefinition'     => Definitions\UnionBuilder::class,
+        'ScalarDefinition'    => Definitions\ScalarBuilder::class,
+        'EnumDefinition'      => Definitions\EnumBuilder::class,
+        'InputDefinition'     => Definitions\InputBuilder::class,
+        'DirectiveDefinition' => Definitions\DirectiveBuilder::class,
 
         // Modifiers
-        '#ExtendDefinition'    => ExtendBuilder::class,
+        'ExtendDefinition'    => ExtendBuilder::class,
     ];
 
     /**
@@ -136,7 +136,6 @@ class DocumentBuilder extends BaseDocument implements Compilable
      * @param NodeInterface $ast
      * @return bool
      * @throws \OutOfBoundsException
-     * @throws TypeConflictException
      * @throws BuildingException
      */
     protected function onCompile(NodeInterface $ast): bool
