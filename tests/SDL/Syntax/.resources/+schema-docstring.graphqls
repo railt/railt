@@ -1,0 +1,18 @@
+#
+# Skip
+#
+
+"""
+Description of schema
+"""
+schema {
+    """
+    Description of 'query' field
+    """
+    query: TestQuery
+
+    """
+    Description of 'mutation' field
+    """
+    mutation: TestMutation
+}

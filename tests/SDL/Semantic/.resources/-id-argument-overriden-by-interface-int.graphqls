@@ -1,0 +1,7 @@
+type TID implements IInt {
+    field(arg: Int): ID
+}
+
+interface IInt {
+    field(arg: ID): ID
+}

@@ -1,0 +1,7 @@
+type TAny implements IString {
+    field: Any
+}
+
+interface IString {
+  field: String
+}

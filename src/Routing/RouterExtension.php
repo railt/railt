@@ -66,7 +66,7 @@ class RouterExtension extends BaseExtension
      */
     private function loadSchema(CompilerInterface $compiler): void
     {
-        $compiler->compile(File::fromPathname(__DIR__ . '/resources/route.graphqls'));
+        $compiler->compile(File::fromPathname(__DIR__ . '/../../resources/routing/route.graphqls'));
     }
 
     /**

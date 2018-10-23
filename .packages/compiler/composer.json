@@ -1,0 +1,65 @@
+{
+    "name": "railt/compiler",
+    "type": "library",
+    "description": "The Railt Compiler Parser-Generator",
+    "version": "1.2.0",
+    "license": "MIT",
+    "keywords": [
+        "compiler",
+        "grammar",
+        "language",
+        "pp",
+        "ast"
+    ],
+    "homepage": "http://railt.org",
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/compiler"
+    },
+    "authors": [
+        {
+            "name": "Ivan Enderlin",
+            "email": "ivan.enderlin@hoa-project.net"
+        },
+        {
+            "name": "Hoa community",
+            "homepage": "https://hoa-project.net/"
+        },
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.3",
+        "ext-spl": "*",
+        "ext-pcre": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "railt/io": "1.2.*|dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Compiler\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "require-dev": {
+        "twig/twig": "~2.0",
+        "zendframework/zend-code": "~3.0",
+        "symfony/finder": "~4.0",
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Tests\\Compiler\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

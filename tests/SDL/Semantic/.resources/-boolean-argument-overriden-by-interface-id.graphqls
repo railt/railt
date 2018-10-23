@@ -1,0 +1,7 @@
+type TBoolean implements IID {
+    field(arg: ID): Boolean
+}
+
+interface IID {
+    field(arg: Boolean): Boolean
+}

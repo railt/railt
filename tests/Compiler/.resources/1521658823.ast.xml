@@ -1,0 +1,5 @@
+<Ast>
+  <Rule name="NewName" offset="0">
+    <Leaf name="T_NAME" offset="5">Name</Leaf>
+  </Rule>
+</Ast>

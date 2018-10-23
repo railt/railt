@@ -1,0 +1,51 @@
+<Ast>
+  <Rule name="Rule" offset="1">
+    <Rule name="Single" offset="1">
+      <Leaf name="T_NUM" offset="1">2</Leaf>
+    </Rule>
+    <Rule name="Single" offset="3">
+      <Leaf name="T_NUM" offset="3">2</Leaf>
+    </Rule>
+    <Rule name="Single" offset="6">
+      <Leaf name="T_NUM" offset="6">4</Leaf>
+    </Rule>
+    <Rule name="Multiple" offset="8">
+      <Leaf name="T_NUM" offset="8">432</Leaf>
+      <Leaf name="T_NUM" offset="12">465</Leaf>
+      <Leaf name="T_NUM" offset="16">765</Leaf>
+      <Leaf name="T_NUM" offset="20">23</Leaf>
+    </Rule>
+    <Rule name="Single" offset="23">
+      <Rule name="Single" offset="23">
+        <Leaf name="T_NUM" offset="23">432</Leaf>
+      </Rule>
+      <Rule name="Single" offset="27">
+        <Leaf name="T_NUM" offset="27">5432</Leaf>
+      </Rule>
+      <Rule name="Single" offset="32">
+        <Leaf name="T_NUM" offset="32">654</Leaf>
+      </Rule>
+      <Rule name="Single" offset="36">
+        <Leaf name="T_NUM" offset="36">7654</Leaf>
+      </Rule>
+      <Rule name="Single" offset="41">
+        <Leaf name="T_NUM" offset="41">87</Leaf>
+      </Rule>
+      <Rule name="Single" offset="44">
+        <Leaf name="T_NUM" offset="44">876</Leaf>
+      </Rule>
+      <Rule name="Single" offset="48">
+        <Leaf name="T_NUM" offset="48">876</Leaf>
+      </Rule>
+      <Rule name="Single" offset="52">
+        <Leaf name="T_NUM" offset="52">876</Leaf>
+      </Rule>
+      <Rule name="Single" offset="56">
+        <Leaf name="T_NUM" offset="56">87</Leaf>
+      </Rule>
+      <Rule name="Single" offset="59">
+        <Leaf name="T_NUM" offset="59">90</Leaf>
+      </Rule>
+    </Rule>
+  </Rule>
+</Ast>

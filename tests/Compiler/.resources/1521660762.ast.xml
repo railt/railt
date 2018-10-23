@@ -1,0 +1,53 @@
+<Ast>
+  <Rule name="Rule" offset="1">
+    <Rule name="Reduce" offset="1">
+      <Leaf name="T_NUM" offset="1">2</Leaf>
+      <Rule name="Reduce" offset="3">
+        <Leaf name="T_NUM" offset="3">2</Leaf>
+        <Rule name="Reduce" offset="6">
+          <Leaf name="T_NUM" offset="6">4</Leaf>
+          <Rule name="Reduce" offset="8">
+            <Leaf name="T_NUM" offset="8">432</Leaf>
+            <Rule name="Reduce" offset="12">
+              <Leaf name="T_NUM" offset="12">465</Leaf>
+              <Rule name="Reduce" offset="16">
+                <Leaf name="T_NUM" offset="16">765</Leaf>
+                <Rule name="Reduce" offset="20">
+                  <Leaf name="T_NUM" offset="20">23</Leaf>
+                  <Rule name="Reduce" offset="23">
+                    <Leaf name="T_NUM" offset="23">432</Leaf>
+                    <Rule name="Reduce" offset="27">
+                      <Leaf name="T_NUM" offset="27">5432</Leaf>
+                      <Rule name="Reduce" offset="32">
+                        <Leaf name="T_NUM" offset="32">654</Leaf>
+                        <Rule name="Reduce" offset="36">
+                          <Leaf name="T_NUM" offset="36">7654</Leaf>
+                          <Rule name="Reduce" offset="41">
+                            <Leaf name="T_NUM" offset="41">87</Leaf>
+                            <Rule name="Reduce" offset="44">
+                              <Leaf name="T_NUM" offset="44">876</Leaf>
+                              <Rule name="Reduce" offset="48">
+                                <Leaf name="T_NUM" offset="48">876</Leaf>
+                                <Rule name="Reduce" offset="52">
+                                  <Leaf name="T_NUM" offset="52">876</Leaf>
+                                  <Rule name="Reduce" offset="56">
+                                    <Leaf name="T_NUM" offset="56">87</Leaf>
+                                    <Leaf name="T_NUM" offset="59">90</Leaf>
+                                  </Rule>
+                                </Rule>
+                              </Rule>
+                            </Rule>
+                          </Rule>
+                        </Rule>
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Ast>

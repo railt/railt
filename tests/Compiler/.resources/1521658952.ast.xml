@@ -1,0 +1,19 @@
+<Ast>
+  <Rule name="HellOrWorld" offset="0">
+    <Leaf name="T_TYPE" offset="0">type</Leaf>
+    <Leaf name="T_TYPE" offset="5">type</Leaf>
+    <Leaf name="T_TYPE" offset="10">type</Leaf>
+    <Leaf name="T_TYPE" offset="15">type</Leaf>
+    <Leaf name="T_TYPE" offset="20">type</Leaf>
+    <Leaf name="T_TYPE" offset="25">type</Leaf>
+    <Leaf name="T_TYPE" offset="30">type</Leaf>
+    <Leaf name="T_TYPE" offset="35">type</Leaf>
+    <Leaf name="T_TYPE" offset="40">type</Leaf>
+    <Leaf name="T_TYPE" offset="45">type</Leaf>
+    <Leaf name="T_TYPE" offset="50">type</Leaf>
+    <Leaf name="T_TYPE" offset="55">type</Leaf>
+    <Leaf name="T_TYPE" offset="60">type</Leaf>
+    <Leaf name="T_TYPE" offset="65">type</Leaf>
+    <Leaf name="T_TYPE" offset="70">type</Leaf>
+  </Rule>
+</Ast>

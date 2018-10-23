@@ -1,0 +1,7 @@
+type TBoolean implements IBoolean {
+    field: Boolean
+}
+
+interface IBoolean {
+  field: Boolean
+}

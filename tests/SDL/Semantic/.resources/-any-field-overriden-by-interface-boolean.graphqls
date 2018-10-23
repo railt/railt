@@ -1,0 +1,7 @@
+type TAny implements IBoolean {
+    field: Any
+}
+
+interface IBoolean {
+  field: Boolean
+}

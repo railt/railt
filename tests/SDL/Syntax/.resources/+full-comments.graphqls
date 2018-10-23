@@ -1,0 +1,135 @@
+# DocBlock: schema
+schema
+# Comment
+{ # Comment
+    # DocBlock: schema { query }
+# DocBlock2: schema { query }
+    query: QueryType # COMMENT
+# DocBlock: schema { mutation }
+    mutation: MutationType # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: schema
+schema # Comment
+{ # COMMENT
+# DocBlock: schema { mutation }
+    mutation: MutationType # COMMENT
+# DocBlock: schema { query }
+    query: QueryType # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: type Foo
+type # Comment
+    Foo # Comment
+implements # Comment
+Bar # Comment
+{
+    # DocBlock: type Foo { one }
+# DocBlock2: type Foo { one }
+    one: Type # COMMENT
+# DocBlock: type Foo { two }
+    two(argument: InputType!): Type # COMMENT
+# DocBlock: type Foo { three }
+    three(argument: InputType, other: String): Int # COMMENT
+# DocBlock: type Foo { four }
+    four(argument: String = "string"): String # COMMENT
+# DocBlock: type Foo { five }
+    five(argument: [String] = ["string", "string"]): String # COMMENT
+# DocBlock: type Foo { six }
+    six(argument: InputType = {
+        key: "value",
+        key2: ["value1", "value2"]
+    }): Type # COMMENT
+# DocBlock: type Foo { seven }
+    seven(argument: Int = null): Type # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: type AnnotatedObject
+type AnnotatedObject @onObject(arg: "value", arg2: [Relation]) { # COMMENT
+# DocBlock: type AnnotatedObject { annotatedField }
+    annotatedField(arg: Type = "default" @onArg): Type @onField # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: interface Bar
+interface Bar {
+    # DocBlock: interface Bar { one }
+# DocBlock2: interface Bar { one }
+    one: Type # COMMENT
+# DocBlock: interface Bar { four }
+    four(argument: String = "string"): String # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: interface AnnotatedInterface
+interface AnnotatedInterface @onInterface { # COMMENT
+# DocBlock: interface AnnotatedInterface { annotatedField }
+    annotatedField(arg: Type @onArg): Type @onField # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: union Feed
+union Feed = Story | Article | Advert # COMMENT
+# DocBlock: union AnnotatedUnion
+union AnnotatedUnion @onUnion = A | B # COMMENT
+# DocBlock: union AnnotatedUnionTwo
+union AnnotatedUnionTwo @onUnion = | A | B # COMMENT
+# DocBlock: scalar CustomScalar
+scalar CustomScalar # COMMENT
+# DocBlock: scalar AnnotatedScalar
+scalar AnnotatedScalar @onScalar # COMMENT
+# DocBlock: enum Site
+enum Site { # COMMENT
+# DocBlock: enum Site { DESKTOP }
+    DESKTOP # COMMENT
+# DocBlock: enum Site { MOBILE }
+    MOBILE # COMMENT
+} # COMMENT
+# DocBlock: enum AnnotatedEnum
+enum AnnotatedEnum @onEnum { # COMMENT
+# DocBlock: enum AnnotatedEnum { ANNOTATED_VALUE }
+    ANNOTATED_VALUE @onEnumValue # COMMENT
+# DocBlock: enum AnnotatedEnum { OTHER_VALUE }
+    OTHER_VALUE # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: input InputType
+input InputType { # COMMENT
+# DocBlock: input InputType { key }
+    key: String! # COMMENT
+# DocBlock: input InputType { answer }
+    answer: Int = 42 # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: input AnnotatedInput
+input AnnotatedInput @onInputObjectType { # COMMENT
+# DocBlock: input AnnotatedInput { annotatedField }
+    annotatedField: Type @onField # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: extend type Foo
+extend type Foo { # COMMENT
+# DocBlock: extend type Foo { seven }
+    seven(argument: [String]): Type # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: extend type Foo
+extend type Foo @onType
+{ # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: type NoFields
+type NoFields { # COMMENT
+# COMMENT
+} # COMMENT
+# DocBlock: directive @skip
+directive @skip(if: Boolean!) # COMMENT
+    on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT # COMMENT
+# COMMENT
+# DocBlock: directive @include
+directive @include(if: Boolean!) # COMMENT
+    on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+# DocBlock: directive @include2
+directive @include2(if: Boolean!) on # COMMENT
+    | FIELD
+    | FRAGMENT_SPREAD # COMMENT
+    | INLINE_FRAGMENT
+# COMMENT
+# COMMENT

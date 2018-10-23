@@ -1,7 +1,8 @@
 {
     "name": "railt/railt",
     "type": "library",
-    "description": "The Railt Framework.",
+    "description": "The Railt Framework",
+    "version": "1.2.0",
     "license": "MIT",
     "keywords": [
         "graphql",
@@ -32,18 +33,25 @@
         "illuminate/support": "~5.5",
         "webonyx/graphql-php": "~0.10",
         "symfony/console": "~3.3|~4.0",
-        "symfony/event-dispatcher": "~3.3|~4.0",
-        "railt/io": "1.2.*|dev-master",
-        "railt/sdl": "1.2.*|dev-master",
-        "railt/http": "1.2.*|dev-master",
-        "railt/storage": "1.2.*|dev-master",
-        "railt/compiler": "1.2.*|dev-master",
-        "railt/container": "1.2.*|dev-master"
+        "symfony/event-dispatcher": "~3.3|~4.0"
+    },
+    "replace": {
+        "railt/container": "*",
+        "railt/compiler": "*",
+        "railt/io": "*",
+        "railt/sdl": "*",
+        "railt/http": "*",
+        "railt/storage": "*"
     },
     "autoload": {
         "psr-4": {
             "Railt\\": "src/"
-        }
+        },
+        "files": [
+            "./src/Compiler/helpers.php",
+            "./src/Storage/polyfill.php",
+            "./src/SDL/polyfill.php"
+        ]
     },
     "require-dev": {
         "twig/twig": "~2.0",

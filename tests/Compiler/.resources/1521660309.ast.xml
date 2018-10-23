@@ -1,0 +1,21 @@
+<Ast>
+  <Rule name="Rule" offset="1">
+    <Leaf name="T_NUM" offset="1">2</Leaf>
+    <Leaf name="T_NUM" offset="3">2</Leaf>
+    <Leaf name="T_NUM" offset="6">4</Leaf>
+    <Leaf name="T_NUM" offset="8">432</Leaf>
+    <Leaf name="T_NUM" offset="12">465</Leaf>
+    <Leaf name="T_NUM" offset="16">765</Leaf>
+    <Leaf name="T_NUM" offset="20">23</Leaf>
+    <Leaf name="T_NUM" offset="23">432</Leaf>
+    <Leaf name="T_NUM" offset="27">5432</Leaf>
+    <Leaf name="T_NUM" offset="32">654</Leaf>
+    <Leaf name="T_NUM" offset="36">7654</Leaf>
+    <Leaf name="T_NUM" offset="41">87</Leaf>
+    <Leaf name="T_NUM" offset="44">876</Leaf>
+    <Leaf name="T_NUM" offset="48">876</Leaf>
+    <Leaf name="T_NUM" offset="52">876</Leaf>
+    <Leaf name="T_NUM" offset="56">87</Leaf>
+    <Leaf name="T_NUM" offset="59">90</Leaf>
+  </Rule>
+</Ast>

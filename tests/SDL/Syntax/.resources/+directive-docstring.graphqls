@@ -1,0 +1,35 @@
+#
+# Skip
+#
+
+"""
+Directive @skip desciption
+"""
+directive @skip(
+    """
+    Attribute 'if' description
+    """
+    if: Boolean!
+) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"""
+Directive @include desciption
+"""
+directive @include(
+    """
+    Attribute "if" description
+    """
+    if: Boolean!
+)
+    on
+| FIELD
+| FRAGMENT_SPREAD
+| INLINE_FRAGMENT
+
+"""
+Directive @include2 desciption
+"""
+directive @include2(if: Boolean!) on
+    | FIELD
+    | FRAGMENT_SPREAD
+    | INLINE_FRAGMENT

@@ -60,7 +60,7 @@ class KernelExtension extends BaseExtension
     {
         $this->bootServices();
 
-        $compiler->compile(File::fromPathname(__DIR__ . '/resources/types.graphqls'));
+        $compiler->compile(File::fromPathname(__DIR__ . '/../../resources/kernel/types.graphqls'));
     }
 
     /**

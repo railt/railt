@@ -1,0 +1,17 @@
+<Ast>
+  <Rule name="Expression" offset="0">
+    <Rule name="B" offset="0">
+      <Leaf name="T_NUM" offset="0">10</Leaf>
+      <Leaf name="T_NUM" offset="5">2</Leaf>
+    </Rule>
+    <Rule name="A" offset="7">
+      <Leaf name="T_NUM" offset="7">2</Leaf>
+      <Leaf name="T_NUM" offset="11">2</Leaf>
+    </Rule>
+    <Rule name="B" offset="13">
+      <Leaf name="T_NUM" offset="13">4</Leaf>
+      <Leaf name="T_NUM" offset="17">10</Leaf>
+    </Rule>
+    <Leaf name="T_NAME" offset="21">Example</Leaf>
+  </Rule>
+</Ast>

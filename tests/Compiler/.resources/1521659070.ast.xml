@@ -1,0 +1,10 @@
+<Ast>
+  <Rule name="HellOrWorld" offset="0">
+    <Rule name="WithRename" offset="0">
+      <Leaf name="T_TYPE" offset="15">type</Leaf>
+    </Rule>
+    <Rule name="WithRename" offset="20">
+      <Leaf name="T_TYPE" offset="45">type</Leaf>
+    </Rule>
+  </Rule>
+</Ast>

@@ -1,0 +1,59 @@
+<Ast>
+  <Rule name="Rule" offset="1">
+    <Rule name="Last" offset="1">
+      <Leaf name="T_NUM" offset="1">2</Leaf>
+      <Rule name="Last" offset="3">
+        <Leaf name="T_NUM" offset="3">2</Leaf>
+        <Rule name="Last" offset="5">
+          <Leaf name="T_NUM" offset="5">4</Leaf>
+          <Rule name="Last" offset="7">
+            <Leaf name="T_NUM" offset="7">432</Leaf>
+            <Rule name="Last" offset="11">
+              <Leaf name="T_NUM" offset="11">465</Leaf>
+              <Rule name="Last" offset="15">
+                <Leaf name="T_NUM" offset="15">765</Leaf>
+                <Rule name="Last" offset="19">
+                  <Leaf name="T_NUM" offset="19">23</Leaf>
+                  <Rule name="Last" offset="22">
+                    <Leaf name="T_NUM" offset="22">432</Leaf>
+                    <Rule name="Last" offset="26">
+                      <Leaf name="T_NUM" offset="26">5432</Leaf>
+                      <Rule name="Last" offset="31">
+                        <Leaf name="T_PLUS" offset="31">+</Leaf>
+                        <Rule name="Last" offset="33">
+                          <Leaf name="T_NUM" offset="33">654</Leaf>
+                          <Rule name="Last" offset="37">
+                            <Leaf name="T_NUM" offset="37">7654</Leaf>
+                            <Rule name="Last" offset="42">
+                              <Leaf name="T_NUM" offset="42">87</Leaf>
+                              <Rule name="Last" offset="45">
+                                <Leaf name="T_NUM" offset="45">876</Leaf>
+                                <Rule name="Last" offset="49">
+                                  <Leaf name="T_NUM" offset="49">876</Leaf>
+                                  <Rule name="Last" offset="53">
+                                    <Leaf name="T_NUM" offset="53">876</Leaf>
+                                    <Rule name="Last" offset="57">
+                                      <Leaf name="T_NUM" offset="57">87</Leaf>
+                                      <Rule name="First" offset="60">
+                                        <Leaf name="T_PLUS" offset="60">+</Leaf>
+                                        <Leaf name="T_NUM" offset="62">90</Leaf>
+                                      </Rule>
+                                    </Rule>
+                                  </Rule>
+                                </Rule>
+                              </Rule>
+                            </Rule>
+                          </Rule>
+                        </Rule>
+                      </Rule>
+                    </Rule>
+                  </Rule>
+                </Rule>
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Ast>
