@@ -38,6 +38,8 @@
     "replace": {
         "railt/container": "*",
         "railt/compiler": "*",
+        "railt/lexer": "*",
+        "railt/parser": "*",
         "railt/io": "*",
         "railt/sdl": "*",
         "railt/http": "*",

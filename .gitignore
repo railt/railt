@@ -1,17 +1,8 @@
-
-# Development libraries
-
 .idea/
 vendor/
 composer.phar
-
-# OS Dependencies
-
 .DS_Store
 Thumbs.db
-
-# Test generated files
-
 *.phpt.out
 *.phpt.exp
 *.phpt.diff
