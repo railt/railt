@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Tests\SDL\Language\Arguments;
 
 use Railt\Io\File;
+use Railt\SDL\Compiler;
 use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
 use Railt\SDL\Contracts\Invocations\InputInvocation;
-use Railt\SDL\Compiler;
 use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
