@@ -122,7 +122,7 @@ class Buffer implements \Iterator, \Countable
      */
     public function next()
     {
-        $this->index++;
+        ++$this->index;
 
         if ($this->inner->valid()) {
             $this->buffer->push($this->inner->current());

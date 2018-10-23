@@ -43,7 +43,7 @@ class HoaDumper implements NodeDumperInterface
 
         if ($node instanceof LeafInterface) {
             return [
-                $prefix . 'token(' . $node->getName() . ', ' . $node->getValue() . ')'
+                $prefix . 'token(' . $node->getName() . ', ' . $node->getValue() . ')',
             ];
         }
 

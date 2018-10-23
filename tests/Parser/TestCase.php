@@ -30,7 +30,7 @@ abstract class TestCase extends BaseTestCase
             return \array_map('\\trim', $parts);
         };
 
-        $this->assertEquals($toArray($expected), $toArray((string)$actual),
+        $this->assertSame($toArray($expected), $toArray((string)$actual),
             \sprintf("Bad ast in: \n%s", (string)$actual));
     }
 }

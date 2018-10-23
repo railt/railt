@@ -70,7 +70,7 @@ class Finder implements \IteratorAggregate
      * @return Finder
      * @throws InternalException
      */
-    public static function new(NodeInterface ...$rules): Finder
+    public static function new(NodeInterface ...$rules): self
     {
         return new static(...$rules);
     }
@@ -79,7 +79,7 @@ class Finder implements \IteratorAggregate
      * @param int|null $to
      * @return Finder
      */
-    public function depth(int $to = null): Finder
+    public function depth(int $to = null): self
     {
         $this->depth->to($to);
 
@@ -93,7 +93,7 @@ class Finder implements \IteratorAggregate
      * @throws InternalException
      * @throws ParserException
      */
-    public function when(string $query, \Closure $then): Finder
+    public function when(string $query, \Closure $then): self
     {
         $nodes = \iterator_to_array($this->each($query, $then), false);
 
@@ -116,7 +116,7 @@ class Finder implements \IteratorAggregate
                 case \is_iterable($result):
                     yield from $result;
                     break;
-                case (bool)$result;
+                case (bool)$result:
                     yield $result;
                     break;
                 default:
@@ -190,7 +190,7 @@ class Finder implements \IteratorAggregate
      */
     private function lookahead(string $query): iterable
     {
-        $file = File::fromSources($query, \sprintf('"%s"', \addcslashes($query, '"')));
+        $file   = File::fromSources($query, \sprintf('"%s"', \addcslashes($query, '"')));
         $tokens = $this->lexer->lookahead($file);
 
         /**
@@ -199,7 +199,7 @@ class Finder implements \IteratorAggregate
          */
         foreach ($tokens as $token => $next) {
             if ($next->getName() === Unknown::T_NAME) {
-                $error = 'Unrecognized token %s';
+                $error     = 'Unrecognized token %s';
                 $exception = new UnrecognizedTokenException(\sprintf($error, $next));
                 $exception->throwsIn($file, $next->getOffset());
 
@@ -207,7 +207,7 @@ class Finder implements \IteratorAggregate
             }
 
             if ($this->lexer->isExpression($token) && $this->lexer->isExpression($next)) {
-                $error = 'Unexpected token %s';
+                $error     = 'Unexpected token %s';
                 $exception = new UnexpectedTokenException(\sprintf($error, $next));
                 $exception->throwsIn($file, $next->getOffset());
 
@@ -319,7 +319,7 @@ class Finder implements \IteratorAggregate
      * @param string $query
      * @return Finder
      */
-    public function where(string $query): Finder
+    public function where(string $query): self
     {
         $this->query .= $query;
 

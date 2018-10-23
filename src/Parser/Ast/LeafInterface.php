@@ -14,5 +14,4 @@ namespace Railt\Parser\Ast;
  */
 interface LeafInterface extends NodeInterface
 {
-
 }
