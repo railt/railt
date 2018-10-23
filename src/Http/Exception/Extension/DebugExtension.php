@@ -17,7 +17,7 @@ class DebugExtension extends Extension
     /**
      * @var int
      */
-    private const MAX_TRACE_SIZE = 20;
+    private const MAX_TRACE_SIZE = 80;
 
     /**
      * @var \Throwable[]
@@ -37,7 +37,7 @@ class DebugExtension extends Extension
     public function __construct(\Throwable $error, int $trace = self::MAX_TRACE_SIZE)
     {
         $this->exceptions[] = $error;
-        $this->trace        = \max(0, $trace);
+        $this->trace = \max(0, $trace);
     }
 
     /**
@@ -54,7 +54,7 @@ class DebugExtension extends Extension
     /**
      * @return array
      */
-    public function toArray(): array
+    public function getValue(): array
     {
         $errors = [];
 

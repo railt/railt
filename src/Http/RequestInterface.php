@@ -17,16 +17,10 @@ use Railt\Http\Provider\ProviderInterface;
 interface RequestInterface extends ProviderInterface, QueryInterface, \IteratorAggregate
 {
     /**
-     * @param ProviderInterface $provider
-     * @return RequestInterface
-     */
-    public function addProvider(ProviderInterface $provider): self;
-
-    /**
      * @param QueryInterface $query
      * @return RequestInterface
      */
-    public function addQuery(QueryInterface $query): self;
+    public function addQuery(QueryInterface $query): RequestInterface;
 
     /**
      * @return QueryInterface

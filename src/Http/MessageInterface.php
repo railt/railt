@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Exception\GraphQLExceptionInterface;
+
 /**
  * Interface MessageInterface
  */
@@ -28,6 +30,11 @@ interface MessageInterface
      * @return iterable|\Throwable[]
      */
     public function getExceptions(): iterable;
+
+    /**
+     * @return array
+     */
+    public function getData(): array;
 
     /**
      * @return array

@@ -31,12 +31,31 @@ class PsrHttpProvider extends Provider
     private $request;
 
     /**
+     * @var array|string[]
+     */
+    private $bodies;
+
+    /**
      * PsrHttpProvider constructor.
      * @param RequestInterface $request
      */
     public function __construct(RequestInterface $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isJson(): bool
+    {
+        foreach ($this->getContentTypes() as $type) {
+            if (\is_string($type) && $this->matchJson($type)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -58,28 +77,19 @@ class PsrHttpProvider extends Provider
     }
 
     /**
-     * @return bool
-     */
-    protected function isJson(): bool
-    {
-        foreach ($this->getContentTypes() as $type) {
-            if (\is_string($type) && $this->matchJson($type)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @return array
      */
     protected function getJson(): array
     {
         try {
-            $contents = $this->request->getBody()->getContents();
+            $body   = $this->request->getBody();
+            $bodyId = \spl_object_hash($body);
 
-            return $this->parseJson($contents);
+            if (! isset($this->bodies[$bodyId])) {
+                $this->bodies[$bodyId] = $body->getContents();
+            }
+
+            return $this->parseJson($this->bodies[$bodyId]);
         } catch (\Throwable $e) {
             return [];
         }
@@ -90,8 +100,7 @@ class PsrHttpProvider extends Provider
      */
     protected function getRequestArguments(): iterable
     {
-        return $this->request instanceof ServerRequestInterface
-            ? \array_merge($this->request->getQueryParams(), (array)$this->request->getParsedBody())
-            : [];
+        return $this->request instanceof ServerRequestInterface ? \array_merge($this->request->getQueryParams(),
+            (array)$this->request->getParsedBody()) : [];
     }
 }

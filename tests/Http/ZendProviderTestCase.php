@@ -9,13 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http;
 
-use Railt\Http\Provider\GlobalsProvider;
 use Railt\Http\Provider\ProviderInterface;
+use Railt\Http\Provider\ZendHttpProvider;
+use Zend\Http\Header\ContentType;
+use Zend\Http\Headers;
+use Zend\Http\Request;
+use Zend\Stdlib\Parameters;
 
 /**
- * Class GlobalsProviderTestCase
+ * Class ZendProviderTestCase
  */
-class GlobalsProviderTestCase extends TestCase
+class ZendProviderTestCase extends TestCase
 {
     /**
      * @param array $query
@@ -26,19 +30,17 @@ class GlobalsProviderTestCase extends TestCase
      */
     protected function provider(array $query = [], array $request = [], string $body = ''): ProviderInterface
     {
-        $_GET  = $query;
-        $_POST = $request;
-
-        $path = __DIR__ . '/.temp/input-stream.' . \random_int(1, \PHP_INT_MAX) . '.txt';
-        \defined('MOCK_PHP_INPUT_STREAM') or \define('MOCK_PHP_INPUT_STREAM', $path);
+        $zend = new Request();
+        $zend->setPost(new Parameters($request));
+        $zend->setQuery(new Parameters($query));
+        $zend->setContent($body);
 
         if ($body) {
-            $_SERVER['CONTENT_TYPE'] = 'application/json';
-            \file_put_contents(MOCK_PHP_INPUT_STREAM, $body);
+            $headers = new Headers();
+            $headers->addHeader(new ContentType('application/json'));
+            $zend->setHeaders($headers);
         }
 
-        return new class() extends GlobalsProvider {
-            protected const PHP_INPUT_STREAM = MOCK_PHP_INPUT_STREAM;
-        };
+        return new ZendHttpProvider($zend);
     }
 }

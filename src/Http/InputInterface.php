@@ -14,6 +14,9 @@ namespace Railt\Http;
  */
 interface InputInterface
 {
+    /**
+     * @var string
+     */
     public const DEPTH_DELIMITER = '.';
 
     /**

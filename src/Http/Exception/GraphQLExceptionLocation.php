@@ -18,6 +18,7 @@ class GraphQLExceptionLocation implements GraphQLExceptionLocationInterface
      * @var int
      */
     private $line;
+
     /**
      * @var int
      */
@@ -59,5 +60,17 @@ class GraphQLExceptionLocation implements GraphQLExceptionLocationInterface
     public function getColumn(): int
     {
         return $this->column;
+    }
+
+    /**
+     * @param array $location
+     * @return GraphQLExceptionLocation
+     */
+    public static function fromArray(array $location): self
+    {
+        $line   = (int)($location[static::JSON_LINE_KEY] ?? 0);
+        $column = (int)($location[static::JSON_COLUMN_KEY] ?? 0);
+
+        return new static($line, $column);
     }
 }

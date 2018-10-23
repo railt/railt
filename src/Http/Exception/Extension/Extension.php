@@ -14,11 +14,4 @@ namespace Railt\Http\Exception\Extension;
  */
 abstract class Extension implements ExtensionInterface
 {
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
-    }
 }

@@ -12,10 +12,10 @@ namespace Railt\Http\Exception\Extension;
 /**
  * Interface ExtensionInterface
  */
-interface ExtensionInterface extends \JsonSerializable
+interface ExtensionInterface
 {
     /**
-     * @return array
+     * @return mixed
      */
-    public function toArray(): array;
+    public function getValue();
 }

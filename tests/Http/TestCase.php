@@ -29,15 +29,15 @@ abstract class TestCase extends BaseTestCase
     public function requestsDataProvider(): iterable
     {
         $providers = function () {
-            yield function (array $data = []) {
+            yield 'GET Query String' => function (array $data = []) {
                 return new Request($this->provider($data));
             };
 
-            yield function (array $data = []) {
+            yield 'POST Query' => function (array $data = []) {
                 return new Request($this->provider([], $data));
             };
 
-            yield function (array $data = []) {
+            yield 'RAW JSON Body Query' => function (array $data = []) {
                 $json = \json_encode($data, self::JSON_OPTIONS);
 
                 return new Request($this->provider([], [], $json));
@@ -46,8 +46,8 @@ abstract class TestCase extends BaseTestCase
 
         $result = [];
 
-        foreach ($providers() as $provider) {
-            $result[] = [$provider];
+        foreach ($providers() as $key => $provider) {
+            $result[$key] = [$provider];
         }
 
         return $result;
@@ -67,7 +67,6 @@ abstract class TestCase extends BaseTestCase
      * @param \Closure $provider
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testBasicQuery(\Closure $provider): void
     {
@@ -88,7 +87,6 @@ abstract class TestCase extends BaseTestCase
      * @param \Closure $provider
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNoQueries(\Closure $provider): void
     {
@@ -109,7 +107,6 @@ abstract class TestCase extends BaseTestCase
      * @param \Closure $provider
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testVariablesWithoutQuery(\Closure $provider): void
     {
@@ -130,7 +127,6 @@ abstract class TestCase extends BaseTestCase
      * @param \Closure $provider
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testArrayVariables(\Closure $provider): void
     {
@@ -153,7 +149,6 @@ abstract class TestCase extends BaseTestCase
      * @param \Closure $provider
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testJsonVariables(\Closure $provider): void
     {
@@ -176,7 +171,6 @@ abstract class TestCase extends BaseTestCase
      * @param \Closure $provider
      * @throws \PHPUnit\Framework\AssertionFailedError
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testCorruptedVariables(\Closure $provider): void
     {
@@ -193,7 +187,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testBadJsonQuery(): void
     {
@@ -206,7 +199,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testJsonHasAHigherPriority(): void
     {
@@ -223,7 +215,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testBadJsonHasAHigherPriority(): void
     {

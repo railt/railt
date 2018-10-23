@@ -15,24 +15,42 @@ namespace Railt\Http;
 class Message implements MessageInterface
 {
     /**
-     * @var array
+     * @var iterable
      */
     private $data;
 
     /**
      * @var iterable|\Throwable[]
      */
-    private $errors;
+    private $exceptions = [];
 
     /**
      * ResponseChunk constructor.
-     * @param array $data
-     * @param array|\Throwable[] $errors
+     * @param iterable $data
+     * @param iterable|\Throwable[] $exceptions
      */
-    public function __construct(array $data = [], array $errors = [])
+    public function __construct(iterable $data = [], iterable $exceptions = [])
     {
-        $this->data   = $data;
-        $this->errors = $errors;
+        $this->data = $data;
+        $this->addExceptions($exceptions);
+    }
+
+    /**
+     * @param iterable|\Throwable[] $exceptions
+     */
+    public function addExceptions(iterable $exceptions): void
+    {
+        foreach ($exceptions as $exception) {
+            $this->addException($exception);
+        }
+    }
+
+    /**
+     * @param \Throwable $exception
+     */
+    public function addException(\Throwable $exception): void
+    {
+        $this->exceptions[] = $exception;
     }
 
     /**
@@ -40,7 +58,7 @@ class Message implements MessageInterface
      */
     public function getExceptions(): iterable
     {
-        return $this->errors;
+        return $this->exceptions;
     }
 
     /**
@@ -49,9 +67,20 @@ class Message implements MessageInterface
     public function toArray(): array
     {
         return \array_filter([
-            static::FIELD_DATA   => $this->data ?: null,
-            static::FIELD_ERRORS => $this->errors ?: null,
+            static::FIELD_DATA   => $this->getData() ?: null,
+            static::FIELD_ERRORS => $this->exceptions ?: null,
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        // Unwrap iterators
+        $this->data = $this->data instanceof \Traversable ? \iterator_to_array($this->data) : $this->data;
+
+        return $this->data;
     }
 
     /**
@@ -59,7 +88,7 @@ class Message implements MessageInterface
      */
     public function isSuccessful(): bool
     {
-        return \count($this->errors) === 0;
+        return \count($this->exceptions) === 0;
     }
 
     /**
@@ -67,6 +96,6 @@ class Message implements MessageInterface
      */
     public function hasErrors(): bool
     {
-        return \count($this->errors) > 0;
+        return \count($this->exceptions) > 0;
     }
 }

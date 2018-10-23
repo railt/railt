@@ -9,11 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Exception\GraphQLException;
+
 /**
  * Class Response
  */
 class Response implements ResponseInterface
 {
+    /**
+     * @var bool
+     */
+    private $vendor = true;
+
     /**
      * @var bool
      */
@@ -32,11 +39,11 @@ class Response implements ResponseInterface
     /**
      * Response constructor.
      * @param array $data
-     * @param array $errors
+     * @param iterable|\Throwable[] $errors
      */
-    public function __construct(array $data = [], array $errors = [])
+    public function __construct(array $data = [], iterable $errors = [])
     {
-        if (\count($data) || \count($errors)) {
+        if ($data || $errors) {
             $this->addMessage(new Message($data, $errors));
         }
     }
@@ -64,13 +71,44 @@ class Response implements ResponseInterface
     }
 
     /**
-     * @return iterable
+     * @return iterable|\Throwable[]
      */
     public function getExceptions(): iterable
     {
         foreach ($this->messages as $message) {
             yield from $message->getExceptions();
         }
+    }
+
+    /**
+     * @return iterable|MessageInterface[]
+     */
+    public function getMessages(): iterable
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        $result = [];
+
+        foreach ($this->messages as $message) {
+            /** @noinspection SlowArrayOperationsInLoopInspection */
+            $result = \array_merge_recursive($result, $message->getData());
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param bool $enable
+     */
+    public function withVendorHeader(bool $enable = true): void
+    {
+        $this->vendor = $enable;
     }
 
     /**
@@ -81,6 +119,10 @@ class Response implements ResponseInterface
         if (! \headers_sent()) {
             \http_response_code($this->getStatusCode());
             \header('Content-Type: application/json');
+
+            if ($this->vendor) {
+                \header('X-GraphQL-Server: Railt');
+            }
         }
 
         echo $this->render();
@@ -121,13 +163,13 @@ class Response implements ResponseInterface
      */
     public function toArray(): array
     {
-        return \json_decode(\json_encode($this->getMessages()), true);
+        return \json_decode(\json_encode($this->getMessagesAsArray()), true);
     }
 
     /**
      * @return array
      */
-    private function getMessages(): array
+    private function getMessagesAsArray(): array
     {
         switch (\count($this->messages)) {
             case 0:
@@ -183,5 +225,20 @@ class Response implements ResponseInterface
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    /**
+     * @param array $response
+     * @return ResponseInterface
+     */
+    public static function fromArray(array $response): ResponseInterface
+    {
+        $errors = [];
+
+        foreach ($response[static::FIELD_ERRORS] ?? [] as $error) {
+            $errors[] = GraphQLException::fromArray((array)$error);
+        }
+
+        return new static((array)($response[static::FIELD_DATA] ?? []), $errors);
     }
 }

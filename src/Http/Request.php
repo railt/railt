@@ -17,11 +17,6 @@ use Railt\Http\Provider\ProviderInterface;
 class Request implements RequestInterface
 {
     /**
-     * @var \SplStack|ProviderInterface[]
-     */
-    private $providers;
-
-    /**
      * @var \SplStack|QueryInterface[]
      */
     private $queries;
@@ -33,29 +28,38 @@ class Request implements RequestInterface
 
     /**
      * Request constructor.
-     * @param QueryInterface|ProviderInterface|null $queryOrProvider
+     * @param QueryInterface|ProviderInterface $queryOrProvider
      */
     public function __construct($queryOrProvider = null)
     {
-        $this->providers = new \SplStack();
-        $this->queries   = new \SplStack();
+        \assert($queryOrProvider === null || $queryOrProvider instanceof QueryInterface || $queryOrProvider instanceof ProviderInterface);
+
+        $this->queries = new \SplStack();
 
         $this->boot($queryOrProvider);
     }
 
     /**
-     * @param QueryInterface|ProviderInterface|null $queryOrProvider
+     * @param QueryInterface|ProviderInterface $queryOrProvider
      * @return void
      */
-    private function boot($queryOrProvider = null): void
+    private function boot($queryOrProvider): void
     {
         if ($queryOrProvider instanceof QueryInterface) {
-            $this->addQuery($queryOrProvider);
+            $this->bootFromQuery($queryOrProvider);
         }
 
         if ($queryOrProvider instanceof ProviderInterface) {
-            $this->addProvider($queryOrProvider);
+            $this->bootFromProvider($queryOrProvider);
         }
+    }
+
+    /**
+     * @param QueryInterface $query
+     */
+    private function bootFromQuery(QueryInterface $query): void
+    {
+        $this->addQuery($query);
     }
 
     /**
@@ -64,32 +68,35 @@ class Request implements RequestInterface
      */
     public function addQuery(QueryInterface $query): RequestInterface
     {
-        $this->resetMemoization();
-
         $this->queries->push($query);
 
         return $this;
     }
 
     /**
-     * @return void
+     * @param ProviderInterface $provider
      */
-    private function resetMemoization(): void
+    private function bootFromProvider(ProviderInterface $provider): void
     {
-        $this->isBatched = null;
+        foreach ($provider->getQueries() as $query) {
+            $this->addQuery($query);
+        }
     }
 
     /**
-     * @param ProviderInterface $provider
-     * @return RequestInterface
+     * @return string
      */
-    public function addProvider(ProviderInterface $provider): RequestInterface
+    public function getQuery(): string
     {
-        $this->resetMemoization();
+        return $this->first()->getQuery();
+    }
 
-        $this->providers->push($provider);
-
-        return $this;
+    /**
+     * @return QueryInterface
+     */
+    public function first(): QueryInterface
+    {
+        return $this->getQueries()->current();
     }
 
     /**
@@ -107,19 +114,13 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return QueryInterface
+     * @return \Generator|QueryInterface[]
      */
-    public function first(): QueryInterface
+    public function getIterator(): \Generator
     {
-        return $this->getQueries()->current();
-    }
-
-    /**
-     * @return string
-     */
-    public function getQuery(): string
-    {
-        return $this->first()->getQuery();
+        foreach ($this->queries as $query) {
+            yield $query;
+        }
     }
 
     /**
@@ -145,22 +146,6 @@ class Request implements RequestInterface
     public function getOperationName(): ?string
     {
         return $this->first()->getOperationName();
-    }
-
-    /**
-     * @return \Generator|QueryInterface[]
-     */
-    public function getIterator(): \Generator
-    {
-        foreach ($this->queries as $query) {
-            yield $query;
-        }
-
-        foreach ($this->providers as $provider) {
-            foreach ($provider->getQueries() as $query) {
-                yield $query;
-            }
-        }
     }
 
     /**

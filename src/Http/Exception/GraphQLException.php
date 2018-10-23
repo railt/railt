@@ -9,18 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception;
 
+use Railt\Http\Exception\Extension\DataExtension;
 use Railt\Http\Exception\Extension\ExtensionInterface;
+use Railt\Http\Exception\GraphQLExceptionLocation as Location;
 
 /**
  * Class GraphQLException
  */
 class GraphQLException extends \LogicException implements GraphQLExceptionInterface
 {
-    public const JSON_PATH_KEY       = 'path';
-    public const JSON_MESSAGE_KEY    = 'message';
-    public const JSON_LOCATIONS_KEY  = 'locations';
-    public const JSON_EXTENSIONS_KEY = 'extensions';
-
     /**
      * For all errors that reflect the internal state of the application
      * and should not be visible to users, the message should be replaced
@@ -29,6 +26,11 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
      * @var string
      */
     public const INTERNAL_EXCEPTION_MESSAGE = 'Internal Server Error';
+
+    /**
+     * @var string
+     */
+    public const UNDEFINED_EXCEPTION_MESSAGE = 'Unexpected GraphQL Exception';
 
     /**
      * @var array|int[]|string[]
@@ -51,6 +53,65 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     protected $public = false;
 
     /**
+     * @param array $error
+     * @return GraphQLException
+     */
+    public static function fromArray(array $error): self
+    {
+        $message = $error[static::JSON_MESSAGE_KEY] ?? static::UNDEFINED_EXCEPTION_MESSAGE;
+
+        $exception = (new static($message))->makePublic();
+
+        foreach ($error[static::JSON_LOCATIONS_KEY] ?? [] as $location) {
+            $exception->addLocation(Location::fromArray($location));
+        }
+
+        foreach ($error[static::JSON_PATH_KEY] ?? [] as $chunk) {
+            $exception->addPath($chunk);
+        }
+
+        foreach ($error[static::JSON_EXTENSIONS_KEY] ?? [] as $name => $value) {
+            $exception->addExtension($name, new DataExtension($value));
+        }
+
+        return $exception;
+    }
+
+    /**
+     * @return $this|GraphQLException
+     */
+    public function makePublic(): self
+    {
+        $this->public = true;
+
+        return $this;
+    }
+
+    /**
+     * @param GraphQLExceptionLocationInterface $location
+     * @return $this|GraphQLException
+     */
+    public function addLocation(GraphQLExceptionLocationInterface $location): self
+    {
+        $this->locations[] = $location;
+
+        return $this;
+    }
+
+    /**
+     * @param string|int $chunk
+     * @return $this|GraphQLException
+     */
+    public function addPath($chunk): self
+    {
+        \assert(\is_string($chunk) || \is_int($chunk), 'Path chunk should be an int or string');
+
+        $this->path[] = $chunk;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -59,7 +120,9 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
             static::JSON_MESSAGE_KEY    => $this->getPublicMessage(),
             static::JSON_LOCATIONS_KEY  => $this->getLocations() ?: null,
             static::JSON_PATH_KEY       => $this->getPath() ?: null,
-            static::JSON_EXTENSIONS_KEY => $this->getExtensions() ?: null,
+            static::JSON_EXTENSIONS_KEY => \array_map(function (ExtensionInterface $ext) {
+                return $ext->getValue();
+            }, $this->getExtensions()) ?: null,
         ]);
     }
 
@@ -142,15 +205,6 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     }
 
     /**
-     * @param mixed $key
-     * @return null|ExtensionInterface
-     */
-    public function getExtension($key): ?ExtensionInterface
-    {
-        return $this->extensions[$key] ?? null;
-    }
-
-    /**
      * @param string|int|bool|float $key
      * @param ExtensionInterface $value
      * @return $this|GraphQLException
@@ -165,24 +219,12 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     }
 
     /**
-     * @param GraphQLExceptionLocationInterface $location
-     * @return $this|GraphQLException
+     * @param mixed $key
+     * @return null|ExtensionInterface
      */
-    public function addLocation(GraphQLExceptionLocationInterface $location): self
+    public function getExtension($key): ?ExtensionInterface
     {
-        $this->locations[] = $location;
-
-        return $this;
-    }
-
-    /**
-     * @return $this|GraphQLException
-     */
-    public function makePublic(): self
-    {
-        $this->public = true;
-
-        return $this;
+        return $this->extensions[$key] ?? null;
     }
 
     /**
@@ -206,19 +248,6 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
         foreach ($chunks as $chunk) {
             $this->addPath($chunk);
         }
-
-        return $this;
-    }
-
-    /**
-     * @param string|int $chunk
-     * @return $this|GraphQLException
-     */
-    public function addPath($chunk): self
-    {
-        \assert(\is_string($chunk) || \is_int($chunk), 'Path chunk should be an int or string');
-
-        $this->path[] = $chunk;
 
         return $this;
     }
