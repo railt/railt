@@ -26,6 +26,7 @@ cache:
 
 before_script:
     - composer self-update -q
+    - composer clear-cache
     - if [ -z "$setup" ]; then composer install; fi;
     - if [ "$setup" = "lowest" ]; then composer update --prefer-lowest --no-interaction --prefer-dist --no-suggest; fi;
     - if [ "$setup" = "highest" ]; then composer update --no-interaction --prefer-dist --no-suggest; fi;
