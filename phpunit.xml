@@ -10,11 +10,8 @@
          stopOnFailure="false"
          syntaxCheck="true">
     <testsuites>
-        <testsuite name="Application Test Suite">
+        <testsuite name="Test Suite">
             <directory suffix="TestCase.php">./tests</directory>
-        </testsuite>
-        <testsuite name="Components Test Suite">
-            <directory suffix="TestCase.php">./vendor/railt/*/tests</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -25,7 +22,6 @@
     <php>
         <ini name="error_reporting" value="-1" />
         <ini name="memory_limit" value="-1" />
-
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
         <env name="APP_ENV" value="testing" />
     </php>
