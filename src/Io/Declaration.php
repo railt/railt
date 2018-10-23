@@ -12,7 +12,7 @@ namespace Railt\Io;
 /**
  * Class Declaration
  */
-final class Declaration
+final class Declaration implements DeclarationInterface
 {
     /**
      * @var string
@@ -40,6 +40,30 @@ final class Declaration
         $this->file  = $file;
         $this->line  = $line;
         $this->class = $class;
+    }
+
+    /**
+     * @param string ...$needles
+     * @return Declaration
+     */
+    public static function make(string ...$needles): self
+    {
+        [$file, $line, $class] = ['undefined', 0, null];
+
+        $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+
+        foreach ($trace as $i => $current) {
+            $class = $current['class'] ?? \stdClass::class;
+
+            foreach ($needles as $needle) {
+                if ($class === $needle || \is_subclass_of($class, $needle)) {
+                    [$file, $line, $class] = [$current['file'], (int)$current['line'], $trace[$i - 1]['class'] ?? null];
+                    break 2;
+                }
+            }
+        }
+
+        return new static($file, $line, $class);
     }
 
     /**
@@ -73,27 +97,5 @@ final class Declaration
     public function getClass(): ?string
     {
         return $this->class;
-    }
-
-    /**
-     * @param string $requiredDefinition
-     * @return Declaration
-     */
-    public static function make(string $requiredDefinition): self
-    {
-        [$file, $line, $class] = ['undefined', 0, null];
-
-        $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
-
-        foreach ($trace as $i => $data) {
-            $found = \is_subclass_of($data['class'] ?? \stdClass::class, $requiredDefinition);
-
-            if ($found) {
-                [$file, $line, $class] = [$data['file'], (int)$data['line'], $trace[$i - 1]['class'] ?? null];
-                break;
-            }
-        }
-
-        return new static($file, $line, $class);
     }
 }

@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Io;
 
+use Railt\Io\Exception\ExternalExceptionInterface;
+
 /**
  * Interface Readable
  */
@@ -22,8 +24,7 @@ interface Readable
     public function getPathname(): string;
 
     /**
-     * Returns the hash of the file. Required for
-     * disability cache.
+     * Returns the hash of the file.
      *
      * @return string
      */
@@ -38,14 +39,22 @@ interface Readable
 
     /**
      * @param int $bytesOffset
-     * @return Position
+     * @return PositionInterface
      */
-    public function getPosition(int $bytesOffset): Position;
+    public function getPosition(int $bytesOffset): PositionInterface;
 
     /**
-     * @return Declaration
+     * @return DeclarationInterface
      */
-    public function getDeclaration(): Declaration;
+    public function getDeclarationInfo(): DeclarationInterface;
+
+    /**
+     * @param string $message
+     * @param int $offsetOrLine
+     * @param int|null $column
+     * @return ExternalExceptionInterface
+     */
+    public function error(string $message, int $offsetOrLine = 0, int $column = null): ExternalExceptionInterface;
 
     /**
      * @return bool

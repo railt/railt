@@ -12,7 +12,7 @@ namespace Railt\Io;
 /**
  * Class Position
  */
-final class Position
+final class Position implements PositionInterface
 {
     /**
      * @var int
@@ -48,19 +48,20 @@ final class Position
      */
     private function getInformation(string $sources, int $bytesOffset): array
     {
-        $line     = 0;
-        $current  = 0;
+        $bytesOffset = \max(0, $bytesOffset);
+        $line        = 0;
+        $current     = 0;
 
         foreach (\explode("\n", $sources) as $line => $text) {
             $previous = $current;
             $current += \strlen($text) + 1;
 
             if ($current > $bytesOffset) {
-                return [$line + 1, $bytesOffset - $previous, $bytesOffset];
+                return [$line + 1, $bytesOffset - $previous + 1, $bytesOffset];
             }
         }
 
-        return [$line, 0, $current - 1];
+        return [$line, 1, $current - 1];
     }
 
     /**

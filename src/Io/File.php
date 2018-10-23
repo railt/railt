@@ -15,9 +15,9 @@ use Railt\Io\File\Physical;
 use Railt\Io\File\Virtual;
 
 /**
- * Class File
+ * File factory.
  */
-final class File
+abstract class File
 {
     /**
      * @param \SplFileInfo $info
@@ -26,10 +26,6 @@ final class File
      */
     public static function fromSplFileInfo(\SplFileInfo $info): Readable
     {
-        if ($info instanceof \Symfony\Component\Finder\SplFileInfo) {
-            return new Physical($info->getContents(), $info->getPathname());
-        }
-
         return static::fromPathname($info->getPathname());
     }
 
@@ -40,17 +36,14 @@ final class File
      */
     public static function fromPathname(string $path): Readable
     {
-        self::verifyIsFile($path);
-        self::verifyIsReadable($path);
-
-        return new Physical(self::tryRead($path), $path);
+        return new Physical(self::tryRead($path), \realpath($path));
     }
 
     /**
      * @param string $path
      * @throws NotFoundException
      */
-    private static function verifyIsFile(string $path): void
+    private static function isFile(string $path): void
     {
         if (! \is_file($path)) {
             $error = 'File "%s" not found';
@@ -62,10 +55,10 @@ final class File
      * @param string $path
      * @throws NotReadableException
      */
-    private static function verifyIsReadable(string $path): void
+    private static function isReadable(string $path): void
     {
         if (! \is_readable($path)) {
-            $error = 'Can not open the file for reading "%s": Permission denied';
+            $error = 'Can not read the file "%s": Permission denied';
             throw new NotReadableException(\sprintf($error, \realpath($path)));
         }
     }
@@ -77,17 +70,14 @@ final class File
      */
     private static function tryRead(string $path): string
     {
-        $level    = \error_reporting(0);
-        $contents = \file_get_contents($path);
+        self::isFile($path);
+        self::isReadable($path);
 
+        $level    = \error_reporting(0);
+        $contents = @\file_get_contents($path);
         \error_reporting($level);
 
-        if ($contents === false) {
-            $error = 'An unexpected error while reading the file "%s": %s';
-            throw new NotReadableException(\sprintf($error, \realpath($path), \error_get_last()['message']));
-        }
-
-        return $contents;
+        return (string)$contents;
     }
 
     /**
@@ -97,7 +87,9 @@ final class File
      */
     public static function fromSources(string $sources, string $name = null): Readable
     {
-        return new Virtual($sources, $name);
+        return $name && \is_file($name)
+            ? new Physical($sources, $name)
+            : new Virtual($sources, $name);
     }
 
     /**
