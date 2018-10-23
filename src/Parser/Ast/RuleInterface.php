@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Ast;
 
-use Railt\Parser\Finder\Findable;
-
 /**
  * Interface RuleInterface
  */

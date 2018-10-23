@@ -24,7 +24,7 @@ abstract class TraceItem
      * @param int $offset
      * @return TraceItem
      */
-    public function at(int $offset): TraceItem
+    public function at(int $offset): self
     {
         $this->offset = $offset;
 

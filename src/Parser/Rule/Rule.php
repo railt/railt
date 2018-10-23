@@ -107,7 +107,7 @@ abstract class Rule
      * @param string|null $defaultId
      * @return Rule
      */
-    public function setDefaultId(?string $defaultId): Rule
+    public function setDefaultId(?string $defaultId): self
     {
         $this->defaultId = $defaultId;
 

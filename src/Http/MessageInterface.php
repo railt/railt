@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Exception\GraphQLExceptionInterface;
-
 /**
  * Interface MessageInterface
  */

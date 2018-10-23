@@ -27,7 +27,7 @@ class Depth
     /**
      * @return Depth
      */
-    public static function any(): Depth
+    public static function any(): self
     {
         return new static();
     }
@@ -36,7 +36,7 @@ class Depth
      * @param int $depth
      * @return Depth
      */
-    public static function equals(int $depth): Depth
+    public static function equals(int $depth): self
     {
         return new static($depth, $depth);
     }
@@ -45,7 +45,7 @@ class Depth
      * @param int $depth
      * @return Depth
      */
-    public static function lte(int $depth): Depth
+    public static function lte(int $depth): self
     {
         return new static(0, $depth);
     }
@@ -54,7 +54,7 @@ class Depth
      * @param int $depth
      * @return Depth
      */
-    public static function gte(int $depth): Depth
+    public static function gte(int $depth): self
     {
         return new static($depth);
     }
@@ -73,7 +73,7 @@ class Depth
      * @param int $depth
      * @return Depth
      */
-    public function exactly(int $depth): Depth
+    public function exactly(int $depth): self
     {
         $this->from = $this->to = $depth;
 
@@ -84,7 +84,7 @@ class Depth
      * @param int $depth
      * @return Depth
      */
-    public function from(int $depth = 0): Depth
+    public function from(int $depth = 0): self
     {
         $this->from = $depth;
 
@@ -95,7 +95,7 @@ class Depth
      * @param int|null $depth
      * @return Depth
      */
-    public function to(int $depth = null): Depth
+    public function to(int $depth = null): self
     {
         $this->to = $depth ?? \PHP_INT_MAX;
 

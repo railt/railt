@@ -24,7 +24,7 @@ class Environment
      * @param mixed $value
      * @return Environment
      */
-    public function share(string $variable, $value): Environment
+    public function share(string $variable, $value): self
     {
         $this->data[$variable] = $value;
 

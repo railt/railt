@@ -9,15 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder;
 
-use Railt\Parser\Ast\NodeInterface;
 use Railt\Io\Readable;
+use Railt\Parser\Ast\NodeInterface;
 use Railt\SDL\Base\BaseDocument;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Invocations\Invocable;
 use Railt\SDL\Exceptions\BuildingException;
 use Railt\SDL\Exceptions\CompilerException;
-use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\SDL\Reflection\Builder\Invocations\ValueBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;

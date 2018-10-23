@@ -35,7 +35,7 @@ class Filter
      */
     public function __construct(\Closure $expr, Depth $depth)
     {
-        $this->expr = $expr;
+        $this->expr  = $expr;
         $this->depth = $depth;
     }
 
@@ -43,7 +43,7 @@ class Filter
      * @param Depth $depth
      * @return Filter
      */
-    public static function any(Depth $depth): Filter
+    public static function any(Depth $depth): self
     {
         return new static(function (): bool {
             return true;
@@ -55,7 +55,7 @@ class Filter
      * @param Depth $depth
      * @return Filter
      */
-    public static function node(string $name, Depth $depth): Filter
+    public static function node(string $name, Depth $depth): self
     {
         return new static(function (NodeInterface $node) use ($name): bool {
             return $node->is($name);
@@ -67,7 +67,7 @@ class Filter
      * @param Depth $depth
      * @return Filter
      */
-    public static function leaf(string $name, Depth $depth): Filter
+    public static function leaf(string $name, Depth $depth): self
     {
         return new static(function (NodeInterface $node) use ($name): bool {
             return $node instanceof LeafInterface && $node->is($name);
@@ -79,7 +79,7 @@ class Filter
      * @param Depth $depth
      * @return Filter
      */
-    public static function rule(string $name, Depth $depth): Filter
+    public static function rule(string $name, Depth $depth): self
     {
         return new static(function (NodeInterface $node) use ($name): bool {
             return $node instanceof RuleInterface && $node->is($name);

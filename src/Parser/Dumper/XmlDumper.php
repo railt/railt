@@ -84,7 +84,7 @@ class XmlDumper implements NodeDumperInterface
                     if ($i === 0) {
                         continue;
                     }
-                    
+
                     $this->renderAttribute($token, 'value:' . $i, $value);
                 }
             }
@@ -119,7 +119,7 @@ class XmlDumper implements NodeDumperInterface
 
             case $value === $this->escape($value):
                 return $root->createElement($name, $value);
-                
+
             default:
                 $result = $root->createElement($name);
                 $result->appendChild($root->createCDATASection($value));
