@@ -1,8 +1,19 @@
 # Release Notes
 
-## 1.2.0 (master)
+## 1.3
 
-### Framework Additionals
+### Internal
+
+- Added `railt/discover` package.
+- Compiler (`railt/compiler`) was divided to three separate package:
+    - Lexer (`railt/lexer`) - lexer implementation with multiple drivers, includes C++ lexertl-based extension. 
+    - Parser (`railt/parser`) - LL(k) parser.
+    - Compiler (`railt/compiler`) - PP2 (based on Hoa PP) Grammar parser-compiler (compiler-compiler).
+- Deprecated code was removed. 
+
+## 1.2
+
+### Framework
 
 - New Lexer kernel (faster than old algorithm more than 150 times).
 - New AST compiler structure.
@@ -16,7 +27,7 @@
 - Added support for recursive build of invocation types.
 - Added method of adding extensions `$app->extend(MyExtension::class)`.
 
-### GraphQL Additionals
+### GraphQL
 
 - Added a directive "`DOCUMENT`" location (`directive @xxx on DOCUMENT`).
 - Added validation of location directives.

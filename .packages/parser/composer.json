@@ -2,7 +2,7 @@
     "name": "railt/parser",
     "type": "library",
     "description": "Syntactic LL(k) parser-analyzer implementation",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "license": "MIT",
     "keywords": [
         "parser",
@@ -38,8 +38,8 @@
         "ext-spl": "*",
         "ext-pcre": "*",
         "ext-mbstring": "*",
-        "railt/io": "1.2.*|dev-master",
-        "railt/lexer": "1.2.*|dev-master"
+        "railt/io": "1.3.*|dev-master",
+        "railt/lexer": "1.3.*|dev-master"
     },
     "autoload": {
         "psr-4": {
