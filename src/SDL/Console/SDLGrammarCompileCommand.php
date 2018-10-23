@@ -11,6 +11,7 @@ namespace Railt\SDL\Console;
 
 use Railt\Compiler\Compiler;
 use Railt\Io\File;
+use Railt\SDL\Parser\Parser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,7 +24,7 @@ class SDLGrammarCompileCommand extends Command
     /**
      * @var string
      */
-    private const SCHEMA_SDL_GRAMMAR = __DIR__ . '/../../../resources/grammar/sdl.pp';
+    private const SCHEMA_SDL_GRAMMAR = Parser::GRAMMAR_PATHNAME;
 
     /**
      * @return void

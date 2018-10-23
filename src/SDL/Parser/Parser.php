@@ -15,6 +15,11 @@ namespace Railt\SDL\Parser;
 final class Parser extends BaseParser
 {
     /**
+     * @var string
+     */
+    public const GRAMMAR_PATHNAME = __DIR__ . '/../../../resources/grammar/sdl.pp';
+
+    /**
      * Make tokens public
      * @var string[]
      */
