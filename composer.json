@@ -50,9 +50,9 @@
             "Railt\\": "src/"
         },
         "files": [
-            "./src/Compiler/helpers.php",
-            "./src/Storage/polyfill.php",
-            "./src/SDL/polyfill.php"
+            "src/Compiler/helpers.php",
+            "src/Storage/polyfill.php",
+            "src/SDL/polyfill.php"
         ]
     },
     "require-dev": {
