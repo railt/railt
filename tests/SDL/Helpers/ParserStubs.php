@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Helpers;
 
-use Railt\Compiler\Parser;
+use Railt\Compiler\Grammar\Reader;
 use Railt\Io\File;
-use Railt\SDL\Parser\Factory;
-use Railt\SDL\Parser\SchemaParser;
+use Railt\SDL\Parser\Parser;
 
 /**
  * Trait ParserStubs
@@ -20,14 +19,14 @@ use Railt\SDL\Parser\SchemaParser;
 trait ParserStubs
 {
     /**
-     * @return \Traversable|Factory[]
+     * @return \Traversable
+     * @throws \Railt\Io\Exception\ExternalFileException
+     * @throws \Railt\Io\Exception\NotReadableException
      */
     protected function getParsers(): \Traversable
     {
-        //yield (new Factory())->setParser(new SchemaParser());
+        yield 'Compiled Parser' => new Parser();
 
-        yield (new Factory())->setParser(
-            Parser::fromGrammar(File::fromPathname(Factory::GRAMMAR_FILE))
-        );
+        yield 'Generated Parser' => (new Reader(File::fromPathname(Parser::GRAMMAR_PATHNAME)))->getParser();
     }
 }

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Syntax;
 
-use Railt\Compiler\Exception\UnexpectedTokenException;
 use Railt\Io\File;
-use Railt\SDL\Parser\Factory;
+use Railt\Parser\Exception\UnexpectedTokenException;
+use Railt\Parser\ParserInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -24,7 +24,6 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @return array
      * @throws \InvalidArgumentException
      * @throws \LogicException
-     * @throws \Railt\Io\Exceptions\NotReadableException
      * @throws \RuntimeException
      */
     public function positiveProvider(): array
@@ -35,8 +34,8 @@ class SpecTestCase extends AbstractSyntaxTestCase
 
         /** @var SplFileInfo $file */
         foreach ($files->getIterator() as $file) {
-            foreach ($this->getParsers() as $parser) {
-                $result[] = [$parser, $file->getContents()];
+            foreach ($this->getParsers() as $name => $parser) {
+                $result[$name . ': ' . $file->getBasename()] = [$parser, $file->getContents()];
             }
         }
 
@@ -47,7 +46,6 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @return array
      * @throws \InvalidArgumentException
      * @throws \LogicException
-     * @throws \Railt\Io\Exceptions\NotReadableException
      * @throws \RuntimeException
      */
     public function negativeProvider(): array
@@ -58,8 +56,8 @@ class SpecTestCase extends AbstractSyntaxTestCase
 
         /** @var SplFileInfo $file */
         foreach ($files->getIterator() as $file) {
-            foreach ($this->getParsers() as $parser) {
-                $result[] = [$parser, $file->getContents()];
+            foreach ($this->getParsers() as $name => $parser) {
+                $result[$name . ': ' . $file->getBasename()] = [$parser, $file->getContents()];
             }
         }
 
@@ -69,12 +67,12 @@ class SpecTestCase extends AbstractSyntaxTestCase
     /**
      * @dataProvider positiveProvider
      *
-     * @param Factory $parser
+     * @param ParserInterface $parser
      * @param string $expected
      * @return void
      * @throws \PHPUnit\Framework\AssertionFailedError
      */
-    public function testPositiveParserSpecs(Factory $parser, string $expected): void
+    public function testPositiveParserSpecs(ParserInterface $parser, string $expected): void
     {
         $parser->parse(File::fromSources($expected));
 
@@ -84,15 +82,15 @@ class SpecTestCase extends AbstractSyntaxTestCase
     /**
      * @dataProvider negativeProvider
      *
-     * @param Factory $parser
+     * @param ParserInterface $parser
      * @param string $expected
      * @return void
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testNegativeParserSpecs(Factory $parser, string $expected): void
+    public function testNegativeParserSpecs(ParserInterface $parser, string $expected): void
     {
         $this->expectException(UnexpectedTokenException::class);
-        $this->expectExceptionMessage('Unregistered token "broken" (T_NAME)');
+        $this->expectExceptionMessage('Unexpected token "broken" (T_NAME)');
 
         $parser->parse(File::fromSources($expected));
     }
