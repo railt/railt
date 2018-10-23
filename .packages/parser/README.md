@@ -11,6 +11,11 @@
     <a href="https://raw.githubusercontent.com/railt/parser/master/LICENSE.md"><img src="https://poser.pugx.org/railt/parser/license" alt="License MIT"></a>
 </p>
 
+# Parser
+
+> Note: All questions and issues please send 
+to [https://github.com/railt/railt/issues](https://github.com/railt/railt/issues)
+
 - [Introduction](#introduction)
     - [Lexer](#lexer)
     - [Grammar](#grammar)
