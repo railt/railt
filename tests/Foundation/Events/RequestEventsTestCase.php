@@ -42,19 +42,19 @@ class RequestEventsTestCase extends TestCase
             function (RequestReceived $event) use (&$connection, &$requests, &$request): void {
                 ++$requests;
                 $connection = $event->getConnection();
-                $request    = $event->getRequest();
+                $request = $event->getRequest();
             });
 
         $ev->addListener(ResponseProceed::class,
             function (ResponseProceed $event) use (&$connection, &$responses, &$response): void {
                 ++$responses;
                 $connection = $event->getConnection();
-                $response   = $event->getResponse();
+                $response = $event->getResponse();
             });
 
         for ($i = 0; $i < 10; ++$i) {
             $needleConnection = $app->connect(File::fromSources(self::EXAMPLE_QUERY));
-            $requests         = $responses = 0;
+            $requests = $responses = 0;
 
             for ($j = 0; $j < 10; ++$j) {
                 $needleResponse = $needleConnection->request(

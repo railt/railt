@@ -70,8 +70,8 @@ abstract class ResolverEvent extends Event implements ResolverEventInterface
     public function __construct(Identifiable $connection, RequestInterface $request, FieldDefinition $field)
     {
         $this->connection = $connection;
-        $this->request    = $request;
-        $this->field      = $field;
+        $this->request = $request;
+        $this->field = $field;
     }
 
     /**

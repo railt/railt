@@ -153,7 +153,7 @@ class Repository
      */
     private function invalidDependency(ExtensionInterface $extension, string $dependency, $package): ExtensionException
     {
-        $message  = 'Could not include dependent extension "%s" from [%s %s]';
+        $message = 'Could not include dependent extension "%s" from [%s %s]';
         $message .= \is_string($package)
             ? \sprintf('. You need to set up the project dependency "%s" using Composer.', $package)
             : '';

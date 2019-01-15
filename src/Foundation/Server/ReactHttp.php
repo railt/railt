@@ -10,13 +10,10 @@ declare(strict_types=1);
 namespace Railt\Foundation\Server;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Railt\Http\Identifiable;
 use React\EventLoop\Factory;
 use React\Http\Response;
 use React\Http\Server as HttpServer;
 use React\Socket\Server as SocketServer;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\CliDumper;
 
 /**
  * Class ReactHttp
@@ -43,7 +40,7 @@ class ReactHttp extends BaseServer
             $connection->close();
 
             return new Response($response->getStatusCode(), [
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ], $response->render());
         });
 

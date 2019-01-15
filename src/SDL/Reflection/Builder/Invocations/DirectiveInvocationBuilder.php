@@ -54,7 +54,7 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
             /** @var DirectiveDefinition $definition */
             $definition = $this->getTypeDefinition();
             /** @var ArgumentDefinition|null $argument */
-            $argument   = $definition->getArgument($name);
+            $argument = $definition->getArgument($name);
 
             if (! $argument) {
                 $this->getCompiler()->getCallStack()->push($definition);

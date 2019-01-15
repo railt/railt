@@ -36,7 +36,7 @@ class PostGlobalsTestCase extends FactoryTestCase
     protected function getProvider(): ProviderInterface
     {
         $_REQUEST = $_SERVER = $_SESSION = $_GET = [];
-        $_POST    = [
+        $_POST = [
             'query'         => $this->string(0),
             'variables'     => ['a' => $this->string(1)],
             'operationName' => $this->string(2),

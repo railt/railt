@@ -21,7 +21,7 @@ class ParameterResolutionException extends ContainerResolutionException
      */
     public static function fromReflectionFunction(string $message, \ReflectionFunctionAbstract $fn): self
     {
-        $exception       = new static($message);
+        $exception = new static($message);
         $exception->file = $fn->getFileName();
         $exception->line = $fn->getStartLine();
 

@@ -155,8 +155,8 @@ class ParamResolver
      */
     private function parameterError(\ReflectionParameter $param): ParameterResolutionException
     {
-        $type     = $param->hasType() ? $param->getType() : 'mixed';
-        $name     = $param->getName();
+        $type = $param->hasType() ? $param->getType() : 'mixed';
+        $name = $param->getName();
         $position = $param->getPosition();
         $function = $param->getDeclaringFunction()->getName();
 

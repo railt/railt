@@ -60,8 +60,8 @@ class Connection implements ConnectionInterface
      */
     public function __construct(EventDispatcherInterface $events, Dictionary $dictionary, SchemaDefinition $schema)
     {
-        $this->events     = $events;
-        $this->schema     = $schema;
+        $this->events = $events;
+        $this->schema = $schema;
         $this->dictionary = $dictionary;
 
         $this->connect();
@@ -193,7 +193,7 @@ class Connection implements ConnectionInterface
      */
     private function fireOnResponse(RequestReceived $event): ResponseProceed
     {
-        $after =  new ResponseProceed($event->getConnection(), $event->getRequest(), $event->getResponse());
+        $after = new ResponseProceed($event->getConnection(), $event->getRequest(), $event->getResponse());
         $after = $this->events->dispatch(ResponseProceed::class, $after);
 
         if ($after->isPropagationStopped()) {

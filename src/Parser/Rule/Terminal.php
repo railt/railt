@@ -43,7 +43,7 @@ class Terminal extends Rule
         parent::__construct($name, null);
 
         $this->tokenName = $tokenName;
-        $this->kept      = $kept;
+        $this->kept = $kept;
     }
 
     /**

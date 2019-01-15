@@ -18,7 +18,7 @@ use Railt\Parser\Ast\RuleInterface;
  */
 class XmlDumper implements NodeDumperInterface
 {
-    private const OUTPUT_CHARSET     = 'UTF-8';
+    private const OUTPUT_CHARSET = 'UTF-8';
     private const OUTPUT_XML_VERSION = '1.1';
 
     /**
@@ -223,7 +223,7 @@ class XmlDumper implements NodeDumperInterface
      */
     protected function setIndention(int $depth = 4, int $initial = 0): self
     {
-        $this->indention        = $depth;
+        $this->indention = $depth;
         $this->initialIndention = $initial;
 
         return $this;

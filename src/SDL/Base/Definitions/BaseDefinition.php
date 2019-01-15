@@ -71,7 +71,7 @@ abstract class BaseDefinition implements Definition, \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $data   = $this->__sleep();
+        $data = $this->__sleep();
         $result = [];
 
         foreach ($data as $fieldName) {

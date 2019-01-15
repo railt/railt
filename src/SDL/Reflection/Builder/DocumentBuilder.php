@@ -77,9 +77,9 @@ class DocumentBuilder extends BaseDocument implements Compilable
     public function __construct(NodeInterface $ast, Readable $readable, CompilerInterface $compiler)
     {
         $this->valueBuilder = new ValueBuilder($this);
-        $this->compiler     = $compiler;
-        $this->file         = $readable;
-        $this->future       = new \SplStack();
+        $this->compiler = $compiler;
+        $this->file = $readable;
+        $this->future = new \SplStack();
 
         try {
             $this->boot($ast, $this);

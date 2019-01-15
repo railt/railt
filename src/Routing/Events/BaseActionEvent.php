@@ -145,7 +145,7 @@ abstract class BaseActionEvent extends Event implements ActionEventInterface
     public function withResponse($answer): ActionEventInterface
     {
         $this->hasResponse = true;
-        $this->response    = $answer;
+        $this->response = $answer;
 
         return $this;
     }

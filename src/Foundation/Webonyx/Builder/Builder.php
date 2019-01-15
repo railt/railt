@@ -52,8 +52,8 @@ abstract class Builder implements BuilderInterface
     public function __construct(TypeDefinition $type, EventDispatcherInterface $events, TypeLoader $loader)
     {
         $this->reflection = $type;
-        $this->events     = $events;
-        $this->loader     = $loader;
+        $this->events = $events;
+        $this->loader = $loader;
     }
 
     /**

@@ -80,8 +80,8 @@ class Application implements ApplicationInterface
      */
     public function __construct(bool $debug = false, PSRContainer $container = null)
     {
-        $this->debug      = $debug;
-        $this->app        = $this->container($container);
+        $this->debug = $debug;
+        $this->app = $this->container($container);
         $this->extensions = new Repository($this->app);
 
         $this->registerBaseBindings($debug);

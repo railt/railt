@@ -32,7 +32,7 @@ class Config implements ConfigurationInterface
     public function __construct(iterable $extensions = [], iterable $commands = [])
     {
         $this->extensions = $this->toArray($extensions);
-        $this->commands   = $this->toArray($commands);
+        $this->commands = $this->toArray($commands);
     }
 
     /**

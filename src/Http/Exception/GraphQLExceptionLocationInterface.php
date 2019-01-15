@@ -14,7 +14,7 @@ namespace Railt\Http\Exception;
  */
 interface GraphQLExceptionLocationInterface extends \JsonSerializable
 {
-    public const JSON_LINE_KEY   = 'line';
+    public const JSON_LINE_KEY = 'line';
     public const JSON_COLUMN_KEY = 'column';
 
     /**

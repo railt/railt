@@ -35,7 +35,7 @@ class RequestsSubscriber implements EventSubscriberInterface
     public function __construct(bool $debug, ConnectionSubscriber $connections)
     {
         $this->connections = $connections;
-        $this->debug       = $debug;
+        $this->debug = $debug;
     }
 
     /**

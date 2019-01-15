@@ -48,8 +48,8 @@ class DirectiveLoader
      */
     public function __construct(ContainerInterface $container, RouterInterface $router, ClassLoaderInterface $loader)
     {
-        $this->router    = $router;
-        $this->loader    = $loader;
+        $this->router = $router;
+        $this->loader = $loader;
         $this->container = $container;
     }
 

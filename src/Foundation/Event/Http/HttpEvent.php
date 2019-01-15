@@ -42,8 +42,8 @@ abstract class HttpEvent extends Event implements HttpEventInterface
      */
     public function __construct(Identifiable $connection, RequestInterface $request, ResponseInterface $response = null)
     {
-        $this->request    = $request;
-        $this->response   = $response;
+        $this->request = $request;
+        $this->response = $response;
         $this->connection = $connection;
     }
 

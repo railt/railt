@@ -36,7 +36,7 @@ class GetGlobalsWithJsonVariablesTestCase extends FactoryTestCase
     protected function getProvider(): ProviderInterface
     {
         $_REQUEST = $_SERVER = $_SESSION = $_POST = [];
-        $_GET     = [
+        $_GET = [
             'query'         => $this->string(0),
             'variables'     => \json_encode(['a' => $this->string(1)]),
             'operationName' => $this->string(2),
