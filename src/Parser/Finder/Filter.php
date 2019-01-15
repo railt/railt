@@ -35,7 +35,7 @@ class Filter
      */
     public function __construct(\Closure $expr, Depth $depth)
     {
-        $this->expr  = $expr;
+        $this->expr = $expr;
         $this->depth = $depth;
     }
 

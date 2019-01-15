@@ -71,7 +71,7 @@ class Connection
     ) {
         $this->loader = new TypeLoader($events, $dictionary);
 
-        $this->debug  = $debug;
+        $this->debug = $debug;
         $this->events = $events;
         $this->schema = $schema;
     }
@@ -137,7 +137,7 @@ class Connection
     private function getExecutor(Identifiable $connection, Schema $schema): \Closure
     {
         return function (RequestInterface $request) use ($connection, $schema) {
-            $vars  = $request->getVariables();
+            $vars = $request->getVariables();
             $query = $this->parse($request->getQuery());
 
             $this->analyzeRequest($request, $query, $operation = $request->getOperation());

@@ -42,7 +42,7 @@ class ConnectionSubscriber implements EventSubscriberInterface
      */
     public function __construct(EventDispatcherInterface $events, bool $debug = false)
     {
-        $this->debug  = $debug;
+        $this->debug = $debug;
         $this->events = $events;
     }
 

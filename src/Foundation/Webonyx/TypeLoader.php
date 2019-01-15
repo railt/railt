@@ -62,7 +62,7 @@ class TypeLoader
     public function __construct(EventDispatcherInterface $events, Dictionary $dictionary)
     {
         $this->dictionary = $dictionary;
-        $this->events     = $events;
+        $this->events = $events;
     }
 
     /**
@@ -153,7 +153,7 @@ class TypeLoader
         }
 
         $document = $type->getDocument();
-        $error    = \sprintf('No available builder mappings found for type %s', $type);
+        $error = \sprintf('No available builder mappings found for type %s', $type);
 
         $exception = new BuilderMissingException($error);
         $exception->throwsIn($document->getFile(), $type->getDeclarationLine(), $type->getDeclarationColumn());

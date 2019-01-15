@@ -19,17 +19,17 @@ interface GraphQLExceptionInterface extends ProvidesExtensions, \Throwable, \Jso
     /**
      * @var string
      */
-    public const FIELD_PATH       = 'path';
+    public const FIELD_PATH = 'path';
 
     /**
      * @var string
      */
-    public const FIELD_MESSAGE    = 'message';
+    public const FIELD_MESSAGE = 'message';
 
     /**
      * @var string
      */
-    public const FIELD_LOCATIONS  = 'locations';
+    public const FIELD_LOCATIONS = 'locations';
 
     /**
      * @return iterable|GraphQLExceptionLocationInterface[]

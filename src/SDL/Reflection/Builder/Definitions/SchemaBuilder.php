@@ -38,7 +38,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
     public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
         $this->boot($ast, $document);
-        $this->name   = ($this->name ?? static::DEFAULT_SCHEMA_NAME);
+        $this->name = ($this->name ?? static::DEFAULT_SCHEMA_NAME);
         $this->offset = $this->resolveSchemaOffset($ast);
     }
 

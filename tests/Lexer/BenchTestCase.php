@@ -56,7 +56,7 @@ class BenchTestCase extends BaseTestCase
         }
 
         $tokens = require __DIR__ . '/resources/graphql.lex.php';
-        $lexer  = new ParleLexer();
+        $lexer = new ParleLexer();
 
         foreach ($tokens as $token => $pcre) {
             $lexer->add($token, $pcre);
@@ -73,7 +73,7 @@ class BenchTestCase extends BaseTestCase
      */
     private function execute(LexerInterface $lexer, int $samples, Readable $sources): void
     {
-        $cnt     = 0;
+        $cnt = 0;
         $results = [];
 
         for ($i = 0; $i < $samples; ++$i) {

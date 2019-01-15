@@ -37,7 +37,7 @@ class Context implements ProvidesConnection, ProvidesRequest
     public function __construct(Identifiable $connection, RequestInterface $request)
     {
         $this->connection = $connection;
-        $this->request    = $request;
+        $this->request = $request;
     }
 
     /**

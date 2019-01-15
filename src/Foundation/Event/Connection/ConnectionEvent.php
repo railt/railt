@@ -44,7 +44,7 @@ abstract class ConnectionEvent extends Event implements ConnectionEventInterface
     {
         $this->connection = $connection;
         $this->dictionary = $dictionary;
-        $this->schema     = $schema;
+        $this->schema = $schema;
     }
 
     /**
