@@ -58,8 +58,8 @@ class Route
      */
     public function __construct(ContainerInterface $container, FieldDefinition $field)
     {
-        $this->field      = $field;
-        $this->container  = $container;
+        $this->field = $field;
+        $this->container = $container;
     }
 
     /**

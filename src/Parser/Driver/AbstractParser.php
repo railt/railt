@@ -49,9 +49,9 @@ abstract class AbstractParser implements ParserInterface
      */
     public function __construct(LexerInterface $lexer, GrammarInterface $grammar, Environment $env = null)
     {
-        $this->lexer   = $lexer;
+        $this->lexer = $lexer;
         $this->grammar = $grammar;
-        $this->env     = $env ?? new Environment();
+        $this->env = $env ?? new Environment();
     }
 
     /**

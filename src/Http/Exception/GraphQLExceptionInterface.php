@@ -19,17 +19,17 @@ interface GraphQLExceptionInterface extends \JsonSerializable
     /**
      * @var string
      */
-    public const JSON_PATH_KEY       = 'path';
+    public const JSON_PATH_KEY = 'path';
 
     /**
      * @var string
      */
-    public const JSON_MESSAGE_KEY    = 'message';
+    public const JSON_MESSAGE_KEY = 'message';
 
     /**
      * @var string
      */
-    public const JSON_LOCATIONS_KEY  = 'locations';
+    public const JSON_LOCATIONS_KEY = 'locations';
 
     /**
      * @var string

@@ -64,9 +64,9 @@ class TestQuery
      */
     public function __construct(TestRequestInterface $request, string $query, string $operation = 'query')
     {
-        $this->query     = $query;
+        $this->query = $query;
         $this->operation = $operation;
-        $this->request   = $request;
+        $this->request = $request;
     }
 
     /**
@@ -78,7 +78,7 @@ class TestQuery
     public function variable(string $name, string $type, $value): self
     {
         $this->queryVariables[$name] = $type;
-        $this->variables[$name]      = $value;
+        $this->variables[$name] = $value;
 
         return $this;
     }

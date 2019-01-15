@@ -32,8 +32,8 @@ class TestResponse extends TestValue
      */
     final public function __construct(ResponseInterface $response)
     {
-        $this->field    = '<response>';
-        $this->value    = $response->toArray();
+        $this->field = '<response>';
+        $this->value = $response->toArray();
         $this->response = $response;
         $this->isExists = true;
     }

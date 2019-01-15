@@ -42,7 +42,7 @@ abstract class BaseResolver implements Resolver
     public function __construct(EventDispatcherInterface $events, Store $store)
     {
         $this->events = $events;
-        $this->store  = $store;
+        $this->store = $store;
     }
 
     /**

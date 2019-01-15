@@ -298,11 +298,11 @@ class Configurator
      */
     public function reset(): void
     {
-        $this->schema                 = null;
-        $this->debug                  = false;
-        $this->extensions             = [];
-        $this->container              = null;
-        $this->autoloadDirectories    = [];
+        $this->schema = null;
+        $this->debug = false;
+        $this->extensions = [];
+        $this->container = null;
+        $this->autoloadDirectories = [];
         $this->autoloadFileExtensions = self::DEFAULT_AUTOLOAD_FILE_EXTENSIONS;
     }
 }

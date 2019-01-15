@@ -82,7 +82,7 @@ class PsrHttpProvider extends Provider
     protected function getJson(): array
     {
         try {
-            $body   = $this->request->getBody();
+            $body = $this->request->getBody();
             $bodyId = \spl_object_hash($body);
 
             if (! isset($this->bodies[$bodyId])) {

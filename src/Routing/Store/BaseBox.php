@@ -39,8 +39,8 @@ abstract class BaseBox implements Box
      */
     public function __construct(Route $route, $data, $serialized)
     {
-        $this->route      = $route;
-        $this->data       = $data;
+        $this->route = $route;
+        $this->data = $data;
         $this->serialized = $serialized;
     }
 
@@ -51,12 +51,12 @@ abstract class BaseBox implements Box
      */
     public static function rebuild(Route $route, array $items): Box
     {
-        $data       = [];
+        $data = [];
         $serialized = [];
 
         /** @var ObjectBox $box */
         foreach ($items as $box) {
-            $data[]       = $box->getValue();
+            $data[] = $box->getValue();
             $serialized[] = $box->getResponse();
         }
 

@@ -102,7 +102,7 @@ class Llk extends AbstractParser
         $this->errorToken = null;
 
         $this->trace = [];
-        $this->todo  = [];
+        $this->todo = [];
     }
 
     /**
@@ -256,7 +256,7 @@ class Llk extends AbstractParser
 
         if ($next === 0) {
             $name = $repeat->getName();
-            $min  = $repeat->getMin();
+            $min = $repeat->getMin();
 
             $this->addTrace(new Entry($name, $min));
 
@@ -312,7 +312,7 @@ class Llk extends AbstractParser
             return false;
         }
 
-        $this->todo   = $last->getTodo();
+        $this->todo = $last->getTodo();
         $this->todo[] = new Entry($last->getRule(), $last->getData() + 1);
 
         return true;

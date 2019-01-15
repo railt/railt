@@ -37,8 +37,8 @@ final class Declaration implements DeclarationInterface
      */
     public function __construct(string $file, int $line, ?string $class)
     {
-        $this->file  = $file;
-        $this->line  = $line;
+        $this->file = $file;
+        $this->line = $line;
         $this->class = $class;
     }
 

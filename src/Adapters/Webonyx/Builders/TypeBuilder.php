@@ -45,8 +45,8 @@ abstract class TypeBuilder
     public function __construct(TypeDefinition $type, Registry $registry, Dispatcher $events)
     {
         $this->reflection = $type;
-        $this->registry   = $registry;
-        $this->events     = $events;
+        $this->registry = $registry;
+        $this->events = $events;
     }
 
     /**

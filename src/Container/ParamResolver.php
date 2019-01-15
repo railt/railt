@@ -102,7 +102,7 @@ class ParamResolver
     private function resolveParameter(\ReflectionParameter $parameter, array $additional = [])
     {
         if ($parameter->hasType()) {
-            $hint           = $parameter->getType()->getName();
+            $hint = $parameter->getType()->getName();
             $hasDefinedType = $this->has($hint, $additional);
 
             if ($hasDefinedType) {

@@ -40,7 +40,7 @@ class Factory implements Resolver
     {
         $store = new Store();
 
-        $this->divided  = new DividedResolver($events, $store);
+        $this->divided = new DividedResolver($events, $store);
         $this->singular = new SingularResolver($events, $store);
     }
 

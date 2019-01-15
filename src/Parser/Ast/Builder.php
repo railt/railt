@@ -44,8 +44,8 @@ class Builder
      */
     public function __construct(array $trace, GrammarInterface $grammar, Environment $env)
     {
-        $this->env     = $env;
-        $this->trace   = $trace;
+        $this->env = $env;
+        $this->trace = $trace;
         $this->grammar = $grammar;
     }
 
@@ -80,11 +80,11 @@ class Builder
             $trace = $this->trace[$i];
 
             if ($trace instanceof Entry) {
-                $ruleName  = $trace->getRule();
-                $rule      = $this->grammar->fetch($ruleName);
-                $isRule    = $trace->isTransitional() === false;
+                $ruleName = $trace->getRule();
+                $rule = $this->grammar->fetch($ruleName);
+                $isRule = $trace->isTransitional() === false;
                 $nextTrace = $this->trace[$i + 1];
-                $id        = $rule->getNodeId();
+                $id = $rule->getNodeId();
 
                 // Optimization: Skip empty trace sequence.
                 if ($nextTrace instanceof Escape && $ruleName === $nextTrace->getRule()) {
@@ -107,7 +107,7 @@ class Builder
                     continue;
                 }
 
-                $handle  = [];
+                $handle = [];
                 $childId = null;
 
                 do {

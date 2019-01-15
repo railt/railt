@@ -109,7 +109,7 @@ GraphQL;
                 static::assertTrue($type->isDeprecated());
 
                 $invocation = $type->getDirective('deprecated');
-                $directive  = $invocation->getTypeDefinition();
+                $directive = $invocation->getTypeDefinition();
 
                 static::assertSame('Directive', $invocation->getTypeDefinition()->getTypeName());
 

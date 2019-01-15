@@ -33,7 +33,7 @@ class Relation
      */
     public function __construct(string $child, string $parent = self::PARENT_DEFAULT_FIELD)
     {
-        $this->child  = $child;
+        $this->child = $child;
         $this->parent = $parent;
     }
 

@@ -34,7 +34,7 @@ class TestApplicationRequest extends TestRequest
      */
     public function __construct(Readable $schema, Application $app)
     {
-        $this->app    = $app;
+        $this->app = $app;
         $this->schema = $schema;
 
         parent::__construct();

@@ -37,8 +37,8 @@ class Query implements QueryInterface
      */
     public function __construct(string $query, iterable $vars = [], string $operationName = null)
     {
-        $this->query         = $query;
-        $this->vars          = $this->fromIterator($vars);
+        $this->query = $query;
+        $this->vars = $this->fromIterator($vars);
         $this->operationName = $operationName;
     }
 

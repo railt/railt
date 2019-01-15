@@ -70,9 +70,9 @@ class WebonyxInput implements InputInterface
     public function __construct(Dispatcher $dispatcher, FieldDefinition $field, ResolveInfo $info, array $arguments = [])
     {
         $this->dispatcher = $dispatcher;
-        $this->info       = $info;
-        $this->field      = $field;
-        $this->arguments  = $this->resolveArguments($field, $arguments);
+        $this->info = $info;
+        $this->field = $field;
+        $this->arguments = $this->resolveArguments($field, $arguments);
     }
 
     /**
@@ -99,7 +99,7 @@ class WebonyxInput implements InputInterface
     {
         foreach ($fields as $name => $sub) {
             /** @var FieldDefinition $field */
-            $field    = $context->getField($name);
+            $field = $context->getField($name);
             $relation = $this->getRelationName($name, $root);
 
             switch (true) {
@@ -260,7 +260,7 @@ class WebonyxInput implements InputInterface
      */
     public function updateParent($parent, $parentResponse): void
     {
-        $this->parentValue    = $parent;
+        $this->parentValue = $parent;
         $this->parentResponse = $parentResponse;
     }
 
@@ -321,7 +321,7 @@ class WebonyxInput implements InputInterface
     public function getPath(): string
     {
         if ($this->path === null) {
-            $path                    = $this->info->path;
+            $path = $this->info->path;
             $path[\count($path) - 1] = $this->getFieldName();
 
             // Remove array indexes
