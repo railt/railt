@@ -56,7 +56,7 @@ class ExternalFileException extends \LogicException implements ExternalException
      * @param ExternalFileException $exception
      * @return ExternalFileException|$this|self|static
      */
-    public function from(ExternalFileException $exception): self
+    public function from(self $exception): self
     {
         $this->file = $exception->getFile();
         $this->line = $exception->getLine();
