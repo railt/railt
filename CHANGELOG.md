@@ -9,7 +9,7 @@
     - Lexer (`railt/lexer`) - lexer implementation with multiple drivers, includes C++ lexertl-based extension. 
     - Parser (`railt/parser`) - LL(k) parser.
     - Compiler (`railt/compiler`) - PP2 (based on Hoa PP) Grammar parser-compiler (compiler-compiler).
-- Deprecated code was removed. 
+- Deprecated code was removed.
 
 ## 1.2
 

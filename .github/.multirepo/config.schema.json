@@ -7,6 +7,10 @@
         "packages"
     ],
     "properties": {
+        "root": {
+            "type": "string",
+            "description": "Root GIT directory"
+        },
         "files": {
             "type": "object",
             "description": "A global list of files which should be sync in {\"local-file\": \"external-file\"} format"

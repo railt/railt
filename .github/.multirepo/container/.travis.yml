@@ -1,21 +1,20 @@
 language: php
 
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - nightly
+
+env:
+  matrix:
+    - setup=lowest
+    - setup=highest
+
 matrix:
   fast_finish: true
-  include:
-    - php: 7.1
-      env: setup=lowest
-    - php: 7.1
-      env: setup=highest
-    - php: 7.2
-      env: setup=lowest
-    - php: 7.2
-      env: setup=highest
-    - php: nightly
-      env: setup=lowest
-    - php: nightly
-      env: setup=highest
   allow_failures:
+    - php: 7.3
     - php: nightly
 
 sudo: false

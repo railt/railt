@@ -4,7 +4,6 @@
 
 <p align="center">
     <a href="https://travis-ci.org/railt/storage"><img src="https://travis-ci.org/railt/storage.svg?branch=master" alt="Travis CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/railt/storage/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/storage/badges/coverage.png?b=master" alt="Code coverage" /></a>
     <a href="https://scrutinizer-ci.com/g/railt/storage/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/storage/badges/quality-score.png?b=master" alt="Scrutinizer CI" /></a>
     <a href="https://packagist.org/packages/railt/storage"><img src="https://poser.pugx.org/railt/storage/version" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/railt/storage"><img src="https://poser.pugx.org/railt/storage/v/unstable" alt="Latest Unstable Version"></a>

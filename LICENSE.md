@@ -1,6 +1,6 @@
 MIT License
 
-Copyright © 2017-2018 Kirill Nesmeyanov
+Copyright © 2017-2019 Kirill Nesmeyanov
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

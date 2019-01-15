@@ -40,8 +40,7 @@
         "webonyx/graphql-php": "~0.10",
         "symfony/console": "~3.4|~4.0",
         "symfony/event-dispatcher": "~3.4|~4.0",
-        "railt/discovery": "1.3.*|dev-master",
-        "railt/compiler": "1.3.*|dev-master"
+        "railt/discovery": "1.3.*|dev-master"
     },
     "replace": {
         "railt/container": "*",
@@ -62,6 +61,7 @@
         ]
     },
     "require-dev": {
+        "railt/compiler": "1.3.*|dev-master",
         "symfony/dependency-injection": "~3.4|~4.0",
         "symfony/var-dumper": "~4.0",
         "phpunit/phpunit": "^6.5",

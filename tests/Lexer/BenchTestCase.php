@@ -27,6 +27,7 @@ class BenchTestCase extends BaseTestCase
 | Time          | %01.5fs
 | AVG           | %01.5fs
 | Token/s       | %d
+
 ';
 
     /**

@@ -1,6 +1,6 @@
 * text=auto
-*.pp linguist-language=Antlr
-*.pp2 linguist-language=Antlr
+*.pp linguist-language=EBNF
+*.pp2 linguist-language=EBNF
 *.gql linguist-language=GraphQL
 *.graphqls linguist-language=GraphQL
 *.graphql linguist-language=GraphQL

@@ -14,31 +14,18 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: nightly
     - php: 7.3
+    - php: nightly
 
-sudo: required
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-5
-      - g++-5
+sudo: false
 
 cache:
   directories:
     - $HOME/.composer/cache
 
 before_script:
-  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
-  - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
-  - gcc --version
-  - g++ --version
-  - pecl install -f parle
-  - echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update -q
+  - composer clear-cache
   - if [ -z "$setup" ]; then composer install; fi;
   - if [ "$setup" = "lowest" ]; then composer update --prefer-lowest --no-interaction --prefer-dist --no-suggest; fi;
   - if [ "$setup" = "highest" ]; then composer update --no-interaction --prefer-dist --no-suggest; fi;
