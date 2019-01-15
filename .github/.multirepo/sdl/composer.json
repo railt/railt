@@ -1,9 +1,10 @@
 {
     "name": "railt/sdl",
-    "type": "library",
-    "description": "The GraphQL RL/SDL grammar and compiler",
-    "version": "1.3.0",
     "license": "MIT",
+    "type": "library",
+    "version": "1.3.0",
+    "homepage": "http://railt.org",
+    "description": "The GraphQL RL/SDL grammar and compiler",
     "keywords": [
         "graphql",
         "idl",
@@ -13,17 +14,16 @@
         "reflection",
         "compiler"
     ],
-    "homepage": "http://railt.org",
-    "support": {
-        "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/sdl"
-    },
     "authors": [
         {
             "name": "Kirill Nesmeyanov",
             "email": "nesk@xakep.ru"
         }
     ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/sdl"
+    },
     "require": {
         "php": "^7.1.3",
         "ext-mbstring": "*",
@@ -54,6 +54,6 @@
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }
