@@ -1,9 +1,10 @@
 {
     "name": "railt/io",
-    "type": "library",
-    "description": "The Railt filesystem utils",
-    "version": "1.3.0",
     "license": "MIT",
+    "type": "library",
+    "version": "1.3.0",
+    "homepage": "http://railt.org",
+    "description": "The Railt filesystem utils",
     "keywords": [
         "file",
         "filesystem",
@@ -12,17 +13,16 @@
         "output",
         "utils"
     ],
-    "homepage": "http://railt.org",
-    "support": {
-        "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/io"
-    },
     "authors": [
         {
             "name": "Kirill Nesmeyanov",
             "email": "nesk@xakep.ru"
         }
     ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/io"
+    },
     "require": {
         "php": "^7.1.3",
         "ext-spl": "*"
@@ -43,6 +43,6 @@
     "config": {
         "sort-packages": true
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }
