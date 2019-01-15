@@ -185,7 +185,7 @@ class Reader
         $this->dirs[] = $path = $this->absolute($path);
 
         $this->clear($path);
-        echo $this->exec('git clone %s "%s"', $remote, \escapeshellarg($path));
+        echo $this->exec('git clone %s "%s"', $remote, \str_replace('\'', '', \escapeshellarg($path)));
 
         return $path;
     }

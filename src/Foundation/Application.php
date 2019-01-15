@@ -31,6 +31,11 @@ use Railt\SDL\Schema\CompilerInterface;
 class Application implements PSRContainer
 {
     /**
+     * @var string
+     */
+    public const VERSION = '1.3.0';
+
+    /**
      * @var bool
      */
     private $debug;
