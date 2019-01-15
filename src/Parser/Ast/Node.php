@@ -49,8 +49,8 @@ abstract class Node implements NodeInterface
      */
     public function __construct(Environment $env, string $name, int $offset = 0)
     {
-        $this->env    = $env;
-        $this->name   = $name;
+        $this->env = $env;
+        $this->name = $name;
         $this->offset = $offset;
     }
 

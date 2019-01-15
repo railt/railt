@@ -70,8 +70,8 @@ class TestValue
      */
     public function __construct(string $field, $value, TestResponse $response, bool $exists = false)
     {
-        $this->field    = $field;
-        $this->value    = $value;
+        $this->field = $field;
+        $this->value = $value;
         $this->response = $response;
         $this->isExists = $exists;
     }

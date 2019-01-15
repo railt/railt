@@ -40,7 +40,7 @@ class TestEmptyRequest extends TestRequest
      */
     public function __construct(Readable $schema, bool $debug = true)
     {
-        $this->debug  = $debug;
+        $this->debug = $debug;
         $this->schema = $schema;
 
         parent::__construct();

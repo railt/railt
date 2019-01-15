@@ -55,7 +55,7 @@ class Serializer
      */
     public function __construct(ClassLoader $loader, ContainerInterface $container)
     {
-        $this->loader    = $loader;
+        $this->loader = $loader;
         $this->container = $container;
     }
 

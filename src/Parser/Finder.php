@@ -190,7 +190,7 @@ class Finder implements \IteratorAggregate
      */
     private function lookahead(string $query): iterable
     {
-        $file   = File::fromSources($query, \sprintf('"%s"', \addcslashes($query, '"')));
+        $file = File::fromSources($query, \sprintf('"%s"', \addcslashes($query, '"')));
         $tokens = $this->lexer->lookahead($file);
 
         /**
@@ -199,7 +199,7 @@ class Finder implements \IteratorAggregate
          */
         foreach ($tokens as $token => $next) {
             if ($next->getName() === Unknown::T_NAME) {
-                $error     = 'Unrecognized token %s';
+                $error = 'Unrecognized token %s';
                 $exception = new UnrecognizedTokenException(\sprintf($error, $next));
                 $exception->throwsIn($file, $next->getOffset());
 
@@ -207,7 +207,7 @@ class Finder implements \IteratorAggregate
             }
 
             if ($this->lexer->isExpression($token) && $this->lexer->isExpression($next)) {
-                $error     = 'Unexpected token %s';
+                $error = 'Unexpected token %s';
                 $exception = new UnexpectedTokenException(\sprintf($error, $next));
                 $exception->throwsIn($file, $next->getOffset());
 

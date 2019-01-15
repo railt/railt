@@ -26,7 +26,7 @@ class GlobalsProviderTestCase extends TestCase
      */
     protected function provider(array $query = [], array $request = [], string $body = ''): ProviderInterface
     {
-        $_GET  = $query;
+        $_GET = $query;
         $_POST = $request;
 
         $path = __DIR__ . '/.temp/input-stream.' . \random_int(1, \PHP_INT_MAX) . '.txt';

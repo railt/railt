@@ -51,7 +51,7 @@ class GraphQLDocument extends BaseDocument implements StandardType
      */
     public function __construct(Dictionary $dictionary, array $additionalTypes = [])
     {
-        $this->file            = File::fromSources('# Generated');
+        $this->file = File::fromSources('# Generated');
         $this->additionalTypes = $additionalTypes;
 
         $this->createStandardTypes();

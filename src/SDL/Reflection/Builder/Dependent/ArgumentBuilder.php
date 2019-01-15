@@ -51,7 +51,7 @@ class ArgumentBuilder extends BaseArgument implements Compilable
     {
         if ($ast->is('Value')) {
             $this->hasDefaultValue = true;
-            $this->defaultValue    = $this->parseValue(
+            $this->defaultValue = $this->parseValue(
                 $ast->getChild(0),
                 $this->getTypeDefinition()->getName()
             );

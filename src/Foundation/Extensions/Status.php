@@ -14,7 +14,7 @@ namespace Railt\Foundation\Extensions;
  */
 final class Status
 {
-    public const STABLE       = 'Stable';
-    public const DEPRECATED   = 'Deprecated';
+    public const STABLE = 'Stable';
+    public const DEPRECATED = 'Deprecated';
     public const EXPERIMENTAL = 'Experimental';
 }

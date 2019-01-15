@@ -35,7 +35,7 @@ class ArgumentResolving extends Event
     public function __construct(ArgumentDefinition $argument, $value)
     {
         $this->argument = $argument;
-        $this->value    = $value;
+        $this->value = $value;
     }
 
     /**

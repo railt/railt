@@ -48,8 +48,8 @@ class FieldResolver
      */
     public function __construct(RouterInterface $router, EventDispatcherInterface $dispatcher, Container $container)
     {
-        $this->router    = $router;
-        $this->resolver  = new Factory($dispatcher);
+        $this->router = $router;
+        $this->resolver = new Factory($dispatcher);
         $this->container = $container;
     }
 
@@ -126,7 +126,7 @@ class FieldResolver
      */
     private function routes(InputInterface $input): \Traversable
     {
-        $field  = $input->getFieldDefinition();
+        $field = $input->getFieldDefinition();
         $exists = false;
 
         foreach ($this->router->get($field) as $route) {

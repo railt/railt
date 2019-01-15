@@ -100,8 +100,8 @@ class Application implements PSRContainer
      */
     public function __construct(PSRContainer $container = null, bool $debug = false)
     {
-        $this->debug      = $debug;
-        $this->container  = $this->bootContainer($container);
+        $this->debug = $debug;
+        $this->container = $this->bootContainer($container);
         $this->extensions = new Repository($this->container);
 
         $this->bootIfNotBooted();
@@ -196,7 +196,7 @@ class Application implements PSRContainer
         $this->extensions->boot();
 
         $document = $this->container->make(CompilerInterface::class)->compile($sdl);
-        $adapter  = $this->container->make(AdapterInterface::class);
+        $adapter = $this->container->make(AdapterInterface::class);
 
         $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
             return $adapter->request($this->getSchema($document), $request);

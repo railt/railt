@@ -20,13 +20,13 @@ use Railt\Lexer\TokenInterface;
  */
 class FinderLexer implements LexerInterface
 {
-    public const T_WHITESPACE   = 'T_WHITESPACE';
-    public const T_LEAF         = 'T_LEAF';
-    public const T_RULE         = 'T_RULE';
-    public const T_NODE         = 'T_NODE';
-    public const T_EXACT_DEPTH  = 'T_EXACT_DEPTH';
+    public const T_WHITESPACE = 'T_WHITESPACE';
+    public const T_LEAF = 'T_LEAF';
+    public const T_RULE = 'T_RULE';
+    public const T_NODE = 'T_NODE';
+    public const T_EXACT_DEPTH = 'T_EXACT_DEPTH';
     public const T_DIRECT_DEPTH = 'T_DIRECT_DEPTH';
-    public const T_ANY          = 'T_ANY';
+    public const T_ANY = 'T_ANY';
 
     /**
      * @var string[]

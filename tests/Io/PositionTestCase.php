@@ -39,7 +39,7 @@ class PositionTestCase extends TestCase
 
         for ($offset = 0; $offset < $size; $offset += $size / \random_int(20, 1000)) {
             $offset = (int)\round($offset);
-            $chunk  = \substr($this->getSources(), 0, $offset);
+            $chunk = \substr($this->getSources(), 0, $offset);
 
             /** @var PositionInterface $position */
             $position = $readable->getPosition($offset);
