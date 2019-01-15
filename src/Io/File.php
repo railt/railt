@@ -73,7 +73,7 @@ abstract class File
         self::isFile($path);
         self::isReadable($path);
 
-        $level = \error_reporting(0);
+        $level    = \error_reporting(0);
         $contents = @\file_get_contents($path);
         \error_reporting($level);
 

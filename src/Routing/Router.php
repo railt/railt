@@ -9,109 +9,60 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Container\ContainerInterface;
-use Railt\Routing\Contracts\RouterInterface;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Http\InputInterface;
+use Railt\Http\RequestInterface;
 
 /**
  * Class Router
  */
-class Router implements RouterInterface
+class Router implements RouterInterface, \Countable
 {
     /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @var array|Route[]
+     * @var array|RouteInterface[]
      */
     private $routes = [];
 
     /**
-     * Router constructor.
-     * @param ContainerInterface $container
+     * @param RequestInterface $request
+     * @param InputInterface $input
+     * @return RouteInterface[]|iterable
      */
-    public function __construct(ContainerInterface $container)
+    public function resolve(RequestInterface $request, InputInterface $input): iterable
     {
-        $this->container = $container;
+        foreach ($this->routes as $route) {
+            if ($route->match($request, $input)) {
+                yield $route;
+            }
+        }
     }
 
     /**
-     * @param FieldDefinition $type
-     * @param string $field
-     * @return Route
+     * @param RouteInterface $route
+     * @return RouterInterface
      */
-    public function route(FieldDefinition $type, string $field = null): Route
+    public function add(RouteInterface $route): RouterInterface
     {
-        $route = new Route($this->container, $type);
+        $this->routes[] = $route;
 
-        if ($field !== null) {
-            $route->when($field);
-        }
-
-        return $this->add($route);
+        return $this;
     }
 
     /**
-     * @param Route $route
-     * @return Route
+     * @param callable $action
+     * @return RouteInterface
      */
-    public function add(Route $route): Route
+    public function create(callable $action): RouteInterface
     {
-        $index = $this->key($route->getField());
-
-        if (! \array_key_exists($index, $this->routes)) {
-            $this->routes[$index] = [];
-        }
-
-        $this->routes[$index][] = $route;
+        $this->add($route = new Route($action));
 
         return $route;
     }
 
     /**
-     * @param FieldDefinition $type
-     * @return string
+     * @return int
      */
-    private function key(FieldDefinition $type): string
+    public function count(): int
     {
-        return $type->getUniqueId();
-    }
-
-    /**
-     * @param FieldDefinition $type
-     * @return bool
-     */
-    public function has(FieldDefinition $type): bool
-    {
-        return \array_key_exists($this->key($type), $this->routes);
-    }
-
-    /**
-     * @param FieldDefinition $type
-     * @return iterable|Route[]
-     */
-    public function get(FieldDefinition $type): iterable
-    {
-        return $this->routes[$this->key($type)] ?? [];
-    }
-
-    /**
-     * @return array
-     */
-    public function __debugInfo(): array
-    {
-        $routes = [];
-
-        foreach ($this->routes as $queue) {
-            foreach ((array)$queue as $route) {
-                $routes[] = $route;
-            }
-        }
-
-        return [
-            'routes' => $routes,
-        ];
+        return \count($this->routes);
     }
 }

@@ -66,7 +66,7 @@ class ResolvingTestCase extends TestCase
     public function testSingletonResolvable(ContainerInterface $container): void
     {
         $container->register(\stdClass::class, function () {
-            $class = new \stdClass();
+            $class        = new \stdClass();
             $class->field = \random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
             return $class;
@@ -172,7 +172,6 @@ class ResolvingTestCase extends TestCase
      *
      * @param ContainerInterface $container
      * @throws \PHPUnit\Framework\Exception
-     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testUnresolvableAutowiring(ContainerInterface $container): void
     {
@@ -193,8 +192,8 @@ class ResolvingTestCase extends TestCase
      */
     public function testAutowiringWithAdditionalParameters(ContainerInterface $container): void
     {
-        [$i, $j] = [\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
-        $obj = new \stdClass();
+        [$i, $j]    = [\random_int(\PHP_INT_MIN, \PHP_INT_MAX), \random_int(\PHP_INT_MIN, \PHP_INT_MAX)];
+        $obj        = new \stdClass();
         $obj->value = \random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
         $container->instance(\stdClass::class, $obj);
@@ -202,7 +201,7 @@ class ResolvingTestCase extends TestCase
 
         $result = $container->call(function (\stdClass $c, int $a1, int $a2): string {
             return $c->value . ' ' . $a1 . ' ' . $a2;
-        }, ['a1' => $i, 'a2' => $j]);
+        }, ['$a1' => $i, '$a2' => $j]);
 
         $this->assertSame($obj->value . ' ' . $i . ' ' . $j, $result);
     }

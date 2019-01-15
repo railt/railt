@@ -33,13 +33,11 @@ trait BootableTraits
      */
     private function traits(): \Traversable
     {
-        $traits = [];
-
-        $parents = \class_parents(static::class);
-        $class = static::class;
+        [$traits, $class, $parents] = [[], static::class, \class_parents(static::class)];
 
         while ($class !== null) {
-            $traits = \array_merge(\array_values(\class_uses($class)), $traits);
+            /** @noinspection SlowArrayOperationsInLoopInspection */
+            $traits = \array_merge($traits, \array_values(\class_uses($class)));
 
             $class = \count($parents) ? \array_shift($parents) : null;
         }

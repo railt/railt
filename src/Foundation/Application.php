@@ -9,41 +9,54 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface as PSRContainer;
-use Psr\Container\NotFoundExceptionInterface;
-use Railt\Adapters\AdapterInterface;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
-use Railt\Foundation\Extensions\Extension;
-use Railt\Foundation\Extensions\Repository;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
+use Railt\Foundation\Application\CacheExtension;
+use Railt\Foundation\Application\CompilerExtension;
+use Railt\Foundation\Application\DebugExtension;
+use Railt\Foundation\Application\HasConsoleApplication;
+use Railt\Foundation\Config\ConfigurationInterface;
+use Railt\Foundation\Event\EventsExtension;
+use Railt\Foundation\Extension\ExtensionInterface;
+use Railt\Foundation\Extension\Repository;
+use Railt\Foundation\Normalization\NormalizationExtension;
+use Railt\Foundation\Webonyx\WebonyxExtension;
 use Railt\Io\Readable;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Contracts\Document;
-use Railt\SDL\Exceptions\TypeNotFoundException;
+use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
+use Railt\SDL\Schema\Configuration;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Application
  */
-class Application implements PSRContainer
+class Application implements ApplicationInterface
 {
+    use HasConsoleApplication;
+
     /**
      * @var string
      */
     public const VERSION = '1.3.0';
 
     /**
-     * @var bool
+     * @var string[]
      */
-    private $debug;
+    private const KERNEL_EXTENSIONS = [
+        EventsExtension::class,
+        CacheExtension::class,
+        DebugExtension::class,
+        CompilerExtension::class,
+        NormalizationExtension::class,
+        WebonyxExtension::class,
+    ];
 
     /**
      * @var ContainerInterface
      */
-    private $container;
+    private $app;
 
     /**
      * @var bool
@@ -54,112 +67,89 @@ class Application implements PSRContainer
      * @var Repository
      */
     private $extensions;
-
     /**
-     * Application extensions list.
-     *
-     * @var array
+     * @var bool
      */
-    private $kernelExtensions = [
-        /**
-         * An extension that provides the ability to operate
-         * by referring to a PHP code.
-         */
-        \Railt\Kernel\KernelExtension::class,
-
-        /**
-         * An extension that provides the ability to delegate
-         * field resolving to an external PHP code.
-         */
-        \Railt\Routing\RouterExtension::class,
-
-        /**
-         * An extension that provides the ability to handle
-         * serialization and deserialization of data.
-         */
-        \Railt\Mapper\MapperExtension::class,
-    ];
-
-    /**
-     * Application services list.
-     *
-     * @var array
-     */
-    private $services = [
-        \Railt\Foundation\Services\CacheService::class,
-        \Railt\Foundation\Services\CompilerService::class,
-        \Railt\Foundation\Services\GraphQLAdapterService::class,
-        \Railt\Foundation\Services\EventsService::class,
-    ];
+    private $debug;
 
     /**
      * Application constructor.
-     * @param PSRContainer|null $container
      * @param bool $debug
-     * @throws \InvalidArgumentException
+     * @param PSRContainer|null $container
+     * @throws \Railt\Foundation\Exception\ExtensionException
      */
-    public function __construct(PSRContainer $container = null, bool $debug = false)
+    public function __construct(bool $debug = false, PSRContainer $container = null)
     {
-        $this->debug = $debug;
-        $this->container = $this->bootContainer($container);
-        $this->extensions = new Repository($this->container);
+        $this->debug      = $debug;
+        $this->app        = $this->container($container);
+        $this->extensions = new Repository($this->app);
 
-        $this->bootIfNotBooted();
+        $this->registerBaseBindings($debug);
+        $this->boot();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 
     /**
      * @param PSRContainer|null $container
      * @return ContainerInterface
      */
-    private function bootContainer(PSRContainer $container = null): ContainerInterface
+    private function container(PSRContainer $container = null): ContainerInterface
     {
         return $container instanceof Container ? $container : new Container($container);
     }
 
     /**
+     * @param bool $debug
      * @return void
-     * @throws \InvalidArgumentException
+     */
+    private function registerBaseBindings(bool $debug): void
+    {
+        $this->app->instance('$debug', $debug);
+
+        $this->app->instance(ApplicationInterface::class, $this);
+        $this->app->instance(Repository::class, $this->extensions);
+        $this->app->instance(ContainerInterface::class, $this->app);
+    }
+
+    /**
+     * @return void
+     * @throws \Railt\Foundation\Exception\ExtensionException
+     */
+    private function boot(): void
+    {
+        $this->bootIfNotBooted();
+
+        $this->extensions->boot();
+    }
+
+    /**
+     * @return void
+     * @throws \Railt\Foundation\Exception\ExtensionException
      */
     private function bootIfNotBooted(): void
     {
         if ($this->booted === false) {
-            $this->boot();
+            foreach (self::KERNEL_EXTENSIONS as $extension) {
+                $this->extend($extension);
+            }
+
             $this->booted = true;
         }
     }
 
     /**
-     * @return void
-     * @throws \InvalidArgumentException
+     * @param string|ExtensionInterface $extension
+     * @return Application|$this
+     * @throws \Railt\Foundation\Exception\ExtensionException
      */
-    private function boot(): void
-    {
-        foreach ($this->services as $service) {
-            $this->service($service);
-        }
-
-        foreach ($this->kernelExtensions as $extension) {
-            $this->extend($extension);
-        }
-    }
-
-    /**
-     * @param string $service
-     * @return Application
-     */
-    public function service(string $service): self
-    {
-        $this->container->make($service)->register($this->container, $this->debug);
-
-        return $this;
-    }
-
-    /**
-     * @param string|Extension $extension
-     * @return Application
-     * @throws \InvalidArgumentException
-     */
-    public function extend(string $extension): self
+    public function extend(string $extension): ApplicationInterface
     {
         $this->extensions->add($extension);
 
@@ -167,60 +157,72 @@ class Application implements PSRContainer
     }
 
     /**
-     * @param string $id
-     * @return mixed
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @param ConfigurationInterface $config
+     * @return ApplicationInterface
+     * @throws \Railt\Foundation\Exception\ExtensionException
      */
-    public function get($id)
+    public function configure(ConfigurationInterface $config): ApplicationInterface
     {
-        return $this->container->get($id);
-    }
-
-    /**
-     * @param string $id
-     * @return bool
-     */
-    public function has($id): bool
-    {
-        return $this->container->has($id);
-    }
-
-    /**
-     * @param Readable $sdl
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     */
-    public function request(Readable $sdl, RequestInterface $request): ResponseInterface
-    {
-        $this->extensions->boot();
-
-        $document = $this->container->make(CompilerInterface::class)->compile($sdl);
-        $adapter = $this->container->make(AdapterInterface::class);
-
-        $pipeline = function (RequestInterface $request) use ($adapter, $document): ResponseInterface {
-            return $adapter->request($this->getSchema($document), $request);
-        };
-
-        return $this->extensions->handle($request, $pipeline);
-    }
-
-    /**
-     * @param Document $document
-     * @return SchemaDefinition
-     * @throws \Railt\SDL\Exceptions\TypeNotFoundException
-     */
-    private function getSchema(Document $document): SchemaDefinition
-    {
-        $schema = $document->getSchema();
-
-        if ($schema === null) {
-            $compiler = $this->container->make(CompilerInterface::class);
-
-            $error = \sprintf('The document %s must contain a schema definition', $document->getFileName());
-            throw new TypeNotFoundException($error, $compiler->getCallStack());
+        foreach ($config->getCommands() as $command) {
+            $this->addCommand($command);
         }
 
-        return $schema;
+        foreach ($config->getExtensions() as $extension) {
+            $this->extend($extension);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return ContainerInterface
+     */
+    public function getContainer(): ContainerInterface
+    {
+        return $this->app;
+    }
+
+    /**
+     * @param Readable $schema
+     * @return ConnectionInterface
+     * @throws \InvalidArgumentException
+     */
+    public function connect(Readable $schema): ConnectionInterface
+    {
+        $this->boot();
+
+        return $this->createConnection(...$this->compile($schema));
+    }
+
+    /**
+     * @param Dictionary $dictionary
+     * @param SchemaDefinition $schema
+     * @return ConnectionInterface
+     */
+    private function createConnection(Dictionary $dictionary, SchemaDefinition $schema): ConnectionInterface
+    {
+        return new Connection($this->getEventDispatcher(), $dictionary, $schema);
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     */
+    private function getEventDispatcher(): EventDispatcherInterface
+    {
+        return $this->app->make(EventDispatcherInterface::class);
+    }
+
+    /**
+     * @param Readable $readable
+     * @return array
+     */
+    private function compile(Readable $readable): array
+    {
+        /** @var CompilerInterface|Configuration $compiler */
+        $compiler = $this->app->make(CompilerInterface::class);
+
+        $document = $compiler->compile($readable);
+
+        return [$compiler->getDictionary(), $document->getSchema()];
     }
 }

@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Routing;
 
-use Railt\Tests\TestCase;
+use Railt\Foundation\ConnectionInterface;
+use Railt\Http\Request;
+use Railt\Io\File;
 
 /**
  * Class BasicRequestsTestCase
@@ -17,173 +19,43 @@ use Railt\Tests\TestCase;
 class BasicRequestsTestCase extends TestCase
 {
     /**
+     * @return void
      * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws \LogicException
      * @throws \PHPUnit\Framework\Exception
      */
-    public function testNotNull(): void
+    public function testSimpleRequest(): void
     {
-        $this->basicQuerySchema('type Query { field: Int! }')
-            ->query('{ field }')->send()
-                ->status(500)
-                ->hasErrors()
-            ->where('data.field')
-                ->notExists()
-            ->where('errors')
-                ->count(1)
-            ->where('errors.0')
-                ->hasFields('message', 'locations', 'path', 'extensions')
-                ->count(4)
-                ->field('message')
-                    ->equals('Cannot return null for non-nullable field Query.field.')
-        ;
+        $connection = $this->connect('
+            schema {
+                query: Query
+            } 
+            
+            type Query { 
+                scalar(value: String = null): String 
+                    @route(action: "Railt\\\\Tests\\\\Routing\\\\Mock\\\\Controller@scalar")
+            }
+        ');
 
-        $this->production->basicQuerySchema('type Query { field: Int! }')
-            ->query('{ field }')->send()
-                ->status(500)
-                ->hasErrors()
-            ->where('data.field')
-                ->notExists()
-            ->where('errors')
-                ->count(1)
-            ->where('errors.0')
-                ->hasFields('message', 'locations', 'path')
-                ->count(3)
-                ->field('message')
-                    ->equals('Internal Server Error')
-        ;
+        $response = $connection->request(Request::create('{ scalar }'));
+
+        $this->assertSame([], $response->getErrors());
+        $this->assertSame(['scalar' => 'default'], $response->getData());
+
+        $response = $connection->request(Request::create('{ scalar(value: "Value") }'));
+
+        $this->assertSame([], $response->getErrors());
+        $this->assertSame(['scalar' => 'Value'], $response->getData());
     }
 
     /**
+     * @param string $schema
+     * @return ConnectionInterface
      * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \PHPUnit\Framework\Exception
+     * @throws \LogicException
      */
-    public function testNotNullList(): void
+    protected function connect(string $schema): ConnectionInterface
     {
-        $this->basicQuerySchema('type Query { field: [Int]! }')
-            ->query('{ field }')->send()
-                ->status(500)
-                ->hasErrors()
-            ->where('data.field')
-                ->notExists()
-            ->where('errors')
-                ->count(1)
-            ->where('errors.0')
-                ->hasFields('message', 'locations', 'path', 'extensions')
-                ->count(4)
-                ->field('message')
-                    ->equals('Cannot return null for non-nullable field Query.field.')
-        ;
-
-        $this->production->basicQuerySchema('type Query { field: [Int]! }')
-            ->query('{ field }')->send()
-                ->status(500)
-                ->hasErrors()
-            ->where('data.field')
-                ->notExists()
-            ->where('errors')
-                ->count(1)
-            ->where('errors.0')
-                ->hasFields('message', 'locations', 'path')
-                ->count(3)
-                ->field('message')
-                    ->equals('Internal Server Error')
-        ;
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \PHPUnit\Framework\Exception
-     */
-    public function testNotNullListOfNotNulls(): void
-    {
-        $this->basicQuerySchema('type Query { field: [Int!]! }')
-            ->query('{ field }')->send()
-                ->status(500)
-                ->hasErrors()
-            ->where('data.field')
-                ->notExists()
-            ->where('errors')
-                ->count(1)
-            ->where('errors.0')
-                ->hasFields('message', 'locations', 'path', 'extensions')
-                ->count(4)
-                ->field('message')
-                    ->equals('Cannot return null for non-nullable field Query.field.')
-        ;
-
-        $this->production->basicQuerySchema('type Query { field: [Int!]! }')
-            ->query('{ field }')->send()
-                ->status(500)
-                ->hasErrors()
-            ->where('data.field')
-                ->notExists()
-            ->where('errors')
-                ->count(1)
-            ->where('errors.0')
-                ->hasFields('message', 'locations', 'path')
-                ->count(3)
-                ->field('message')
-                    ->equals('Internal Server Error')
-        ;
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \PHPUnit\Framework\Exception
-     */
-    public function testNull(): void
-    {
-        $this->basicQuerySchema('type Query { field: Int }')
-            ->query('{ field }')->send()
-                ->status(200)
-                ->successful()
-            ->where('data.field')
-                ->exists()
-                ->null()
-            ->where('errors')
-                ->notExists()
-        ;
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \PHPUnit\Framework\Exception
-     */
-    public function testNullableList(): void
-    {
-        $this->basicQuerySchema('type Query { field: [Int] }')
-            ->query('{ field }')->send()
-                ->status(200)
-                ->successful()
-            ->where('data.field')
-                ->exists()
-                ->null()
-            ->where('errors')
-                ->notExists()
-        ;
-    }
-
-    /**
-     * @throws \InvalidArgumentException
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     * @throws \PHPUnit\Framework\Exception
-     */
-    public function testNullableListOfNonNulls(): void
-    {
-        $this->basicQuerySchema('type Query { field: [Int!] }')
-            ->query('{ field }')->send()
-                ->status(200)
-                ->successful()
-            ->where('data.field')
-                ->exists()
-                ->null()
-            ->where('errors')
-                ->notExists()
-        ;
+        return $this->app()->connect(File::fromSources($schema));
     }
 }

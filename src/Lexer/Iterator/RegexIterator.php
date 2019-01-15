@@ -14,12 +14,12 @@ namespace Railt\Lexer\Iterator;
  */
 class RegexIterator implements \IteratorAggregate
 {
-    public const PREG_PARSING_ERROR = 'The error occurs while compiling PCRE';
-    public const PREG_INTERNAL_ERROR = 'There was an internal PCRE error';
-    public const PREG_BACKTRACK_LIMIT_ERROR = 'Backtrack limit was exhausted';
-    public const PREG_RECURSION_LIMIT_ERROR = 'Recursion limit was exhausted';
-    public const PREG_BAD_UTF8_ERROR = 'The offset didn\'t correspond to the begin of a valid UTF-8 code point';
-    public const PREG_BAD_UTF8_OFFSET_ERROR = 'Malformed UTF-8 data';
+    public const PREG_PARSING_ERROR          = 'The error occurs while compiling PCRE';
+    public const PREG_INTERNAL_ERROR         = 'There was an internal PCRE error';
+    public const PREG_BACKTRACK_LIMIT_ERROR  = 'Backtrack limit was exhausted';
+    public const PREG_RECURSION_LIMIT_ERROR  = 'Recursion limit was exhausted';
+    public const PREG_BAD_UTF8_ERROR         = 'The offset didn\'t correspond to the begin of a valid UTF-8 code point';
+    public const PREG_BAD_UTF8_OFFSET_ERROR  = 'Malformed UTF-8 data';
 
     /**
      * @var string

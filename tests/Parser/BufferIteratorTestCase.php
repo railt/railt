@@ -149,7 +149,7 @@ class BufferIteratorTestCase extends TestCase
      */
     public function testRewindableToNonAvailableVolume(): void
     {
-        $max = 1000;
+        $max   = 1000;
         $sizes = [];
         for ($i = 0; $i < $max; ++$i) {
             if (\random_int(0, 100) === 0) {

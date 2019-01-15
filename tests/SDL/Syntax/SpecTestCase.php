@@ -30,7 +30,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
     {
         $result = [];
 
-        $files = (new Finder())->files()->in(__DIR__ . '/.resources')->name('+*.graphqls');
+        $files = (new Finder())->files()->in(__DIR__ . '/resources')->name('+*.graphqls');
 
         /** @var SplFileInfo $file */
         foreach ($files->getIterator() as $file) {
@@ -52,7 +52,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
     {
         $result = [];
 
-        $files = (new Finder())->files()->in(__DIR__ . '/.resources')->name('-*.graphqls');
+        $files = (new Finder())->files()->in(__DIR__ . '/resources')->name('-*.graphqls');
 
         /** @var SplFileInfo $file */
         foreach ($files->getIterator() as $file) {

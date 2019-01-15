@@ -9,187 +9,146 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Container\ContainerInterface;
-use Railt\Routing\Route\Relation;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Http\InputInterface;
+use Railt\Http\RequestInterface;
 
 /**
  * Class Route
  */
-class Route
+class Route implements RouteInterface
 {
-    public const PATH_DELIMITER = '.';
+    /**
+     * @var array|\Closure[]
+     */
+    private $filters = [];
 
     /**
-     * @var FieldDefinition
+     * @var callable
      */
-    protected $field;
+    private $action;
 
     /**
-     * @var \Closure|null
+     * @var string|null
      */
-    protected $action;
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @var array|string[]
-     */
-    protected $operations = [];
-
-    /**
-     * @var array|Relation[]
-     */
-    private $relations = [];
-
-    /**
-     * @var TypeDefinition|null
-     */
-    private $type;
+    private $preferType;
 
     /**
      * Route constructor.
-     * @param ContainerInterface $container
-     * @param FieldDefinition $field
+     * @param callable $action
      */
-    public function __construct(ContainerInterface $container, FieldDefinition $field)
-    {
-        $this->field = $field;
-        $this->container = $container;
-    }
-
-    /**
-     * @param string ...$operations
-     * @return Route
-     */
-    public function on(string ...$operations): self
-    {
-        $this->operations = \array_merge($this->operations, $operations);
-
-        return $this;
-    }
-
-    /**
-     * @param TypeDefinition $definition
-     * @return Route
-     */
-    public function wants(TypeDefinition $definition): self
-    {
-        $this->type = $definition;
-
-        return $this;
-    }
-
-    /**
-     * @param string $parent
-     * @param string $child
-     * @return Route
-     */
-    public function relation(string $child, string $parent = Relation::PARENT_DEFAULT_FIELD): self
-    {
-        $this->relations[] = new Relation($child, $parent);
-
-        return $this;
-    }
-
-    /**
-     * @param \Closure $action
-     * @return Route
-     */
-    public function then(\Closure $action): self
+    public function __construct(callable $action)
     {
         $this->action = $action;
-
-        return $this;
-    }
-
-    /**
-     * @return array|string[]
-     */
-    public function getOperations(): array
-    {
-        return $this->operations;
     }
 
     /**
      * @param string $name
+     * @return RouteInterface
+     */
+    public function whereType(string $name): RouteInterface
+    {
+        return $this->matches(function (RequestInterface $_, InputInterface $input) use ($name): bool {
+            return $input->getTypeName() === $name;
+        });
+    }
+
+    /**
+     * @param string $field
+     * @return RouteInterface
+     */
+    public function whereField(string $field): RouteInterface
+    {
+        return $this->matches(function (RequestInterface $_, InputInterface $input) use ($field): bool {
+            return $input->getField() === $field;
+        });
+    }
+
+    /**
+     * @param string $type
+     * @return RouteInterface
+     */
+    public function wherePreferType(string $type): RouteInterface
+    {
+        $this->preferType = $type;
+
+        return $this->matches(function (RequestInterface $_, InputInterface $input) use ($type): bool {
+            return $input->wants($type);
+        });
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPreferType(): ?string
+    {
+        return $this->preferType;
+    }
+
+    /**
+     * @param string $operation
+     * @return RouteInterface
+     */
+    public function whereOperation(string $operation): RouteInterface
+    {
+        return $this->matches(function (RequestInterface $request) use ($operation): bool {
+            return $request->getOperation() === $operation;
+        });
+    }
+
+    /**
+     * @param string $queryType
+     * @return RouteInterface
+     */
+    public function whereQueryType(string $queryType): RouteInterface
+    {
+        return $this->matches(function (RequestInterface $request) use ($queryType): bool {
+            return $request->getQueryType() === $queryType;
+        });
+    }
+
+    /**
+     * @param string $variable
+     * @return RouteInterface
+     */
+    public function whereVariableExists(string $variable): RouteInterface
+    {
+        return $this->matches(function (RequestInterface $request) use ($variable): bool {
+            return $request->hasVariable($variable);
+        });
+    }
+
+    /**
+     * @param \Closure $filter
+     * @return RouteInterface
+     */
+    public function matches(\Closure $filter): RouteInterface
+    {
+        $this->filters[] = $filter;
+
+        return $this;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param InputInterface $input
      * @return bool
      */
-    public function matchOperation(string $name): bool
+    public function match(RequestInterface $request, InputInterface $input): bool
     {
-        if ($this->operations === []) {
-            return true;
+        foreach ($this->filters as $filter) {
+            if (! $filter($request, $input)) {
+                return false;
+            }
         }
 
-        return \in_array(\mb_strtolower($name), $this->operations, true);
+        return \count($this->filters) !== 0;
     }
 
     /**
-     * @return FieldDefinition
+     * @return callable
      */
-    public function getField(): FieldDefinition
+    public function getAction(): callable
     {
-        return $this->field;
-    }
-
-    /**
-     * @return null|TypeDefinition
-     */
-    public function getType(): ?TypeDefinition
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param array $params
-     * @return mixed
-     */
-    public function call(array $params = [])
-    {
-        return $this->container->call($this->getAction(), $params);
-    }
-
-    /**
-     * @return \Closure
-     */
-    public function getAction(): \Closure
-    {
-        return $this->action ??
-            function (): void {
-                // Otherwise do nothing
-            };
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasRelations(): bool
-    {
-        return \count($this->relations) > 0;
-    }
-
-    /**
-     * @return iterable|Relation[]
-     */
-    public function getRelations(): iterable
-    {
-        return $this->relations;
-    }
-
-    /**
-     * @return array
-     */
-    public function __debugInfo(): array
-    {
-        return [
-            'field'      => (string)$this->field->getParent() . (string)$this->field,
-            'type'       => $this->type,
-            'relations'  => $this->relations,
-            'operations' => $this->operations,
-        ];
+        return $this->action;
     }
 }

@@ -67,6 +67,7 @@ class DirectiveArgumentsDefaultsTestCase extends AbstractLanguageTestCase
      * @param Compiler $compiler
      * @param Readable $src
      * @return void
+     * @throws \LogicException
      */
     public function testValidDefaultArguments(Compiler $compiler, Readable $src): void
     {

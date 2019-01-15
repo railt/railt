@@ -39,12 +39,12 @@ final class Deprecation extends BaseDirective implements StandardType
      */
     public function __construct(Document $document)
     {
-        $this->document = $document;
-        $this->name = self::DIRECTIVE_TYPE_NAME;
+        $this->document          = $document;
+        $this->name              = self::DIRECTIVE_TYPE_NAME;
         $this->deprecationReason = self::RFC_IMPL_DESCRIPTION;
-        $this->locations = Location::TARGET_GRAPHQL_SDL;
+        $this->locations         = Location::TARGET_GRAPHQL_SDL;
 
-        $argument = $this->createReasonArgument();
+        $argument                              = $this->createReasonArgument();
         $this->arguments[$argument->getName()] = $argument;
     }
 

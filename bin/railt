@@ -8,8 +8,9 @@
  */
 declare(strict_types=1);
 
-use Railt\Discovery\Discovery;
-use Symfony\Component\Console\Application;
+use Railt\Foundation\Application as Railt;
+use Railt\Foundation\Config\Composer;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,10 +24,14 @@ use Symfony\Component\Console\Application;
 |
 */
 
-foreach ([
+$autoloadPaths = [
+    __DIR__ . '/../../autoload.php',
     __DIR__ . '/../vendor/autoload.php',
-    __DIR__ . '/../../../autoload.php',
-] as $path) {
+    __DIR__ . '/vendor/autoload.php',
+];
+
+
+foreach ($autoloadPaths as $path) {
     if (\is_file($path) && \is_readable($path)) {
         /** @var \Composer\Autoload\ClassLoader $classLoader */
         $classLoader = require_once $path;
@@ -34,10 +39,37 @@ foreach ([
     }
 }
 
-// Check dependencies
-if (! \class_exists(Application::class)) {
-    throw new \LogicException('Please install "symfony/console" first.');
+
+if (! isset($classLoader) || ! $classLoader) {
+    $error =
+        'Could not find autoload.php file.' . \PHP_EOL .
+        'You need to set up the project dependencies using Composer:' . \PHP_EOL . \PHP_EOL .
+        '    composer install' . \PHP_EOL . \PHP_EOL .
+        'You can learn all about Composer on https://getcomposer.org/.' . \PHP_EOL;
+
+    throw new \LogicException($error);
 }
+
+
+/*
+|--------------------------------------------------------------------------
+| Create The Application
+|--------------------------------------------------------------------------
+|
+| The first thing we will do is create a new Railt Application instance
+| which serves as the "glue" for all the components of Railt, and is
+| the dependency injection container for the system binding all of the
+| various parts.
+|
+*/
+
+try {
+    $railt = new Railt();
+    $railt->configure(Composer::fromDiscovery());
+} catch (\Throwable $e) {
+    throw new \LogicException('Could not start an application: ' . $e->getMessage());
+}
+
 
 /*
 |--------------------------------------------------------------------------
@@ -50,18 +82,10 @@ if (! \class_exists(Application::class)) {
 |
 */
 
-$cli = new Application();
-
-$loader = Discovery::fromClassLoader($classLoader);
-
-foreach ((array)$loader->get('railt.commands', []) as $command) {
-    $cli->add(new $command());
-}
-
 try {
-    $code = $cli->run();
-} catch (Throwable $e) {
-    echo $e;
+    $code = $railt->getConsoleApplication()->run();
+} catch (\Throwable $e) {
+    \fwrite(\STDERR, $e->getMessage());
     $code = $e->getCode() ?: 1;
 } finally {
     exit($code);

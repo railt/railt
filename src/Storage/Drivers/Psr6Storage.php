@@ -49,7 +49,7 @@ class Psr6Storage implements Storage
         \Closure $persist,
         int $timeout = self::DEFAULT_REMEMBER_TIME
     ) {
-        $this->pool = $pool;
+        $this->pool    = $pool;
         $this->persist = $persist;
         $this->timeout = $timeout;
     }

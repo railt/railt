@@ -42,8 +42,8 @@ abstract class BaseSchemaException extends \DomainException implements SchemaExc
 
         $latest = $this->renderer->getLastRenderer();
 
-        $this->file = $latest->getFile();
-        $this->line = $latest->getLine();
+        $this->file   = $latest->getFile();
+        $this->line   = $latest->getLine();
         $this->column = $latest->getColumn();
     }
 

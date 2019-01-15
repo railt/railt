@@ -46,8 +46,8 @@ abstract class BaseValidator implements ValidatorInterface
     public function __construct(Validator $factory, CallStackInterface $stack, ?string $name)
     {
         $this->validator = $factory;
-        $this->stack = $stack;
-        $this->name = $name ?? static::class;
+        $this->stack     = $stack;
+        $this->name      = $name ?? static::class;
     }
 
     /**

@@ -62,7 +62,7 @@ abstract class LexerTestCase extends BaseTestCase
      */
     public function testUnknownLookahead(LexerInterface $lexer): void
     {
-        $file = File::fromSources("23 \nunknown \n42");
+        $file   = File::fromSources("23 \nunknown \n42");
         $result = \iterator_to_array($lexer->lex($file));
 
         $this->assertCount(4, $result);

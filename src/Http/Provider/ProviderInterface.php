@@ -9,15 +9,28 @@ declare(strict_types=1);
 
 namespace Railt\Http\Provider;
 
-use Railt\Http\QueryInterface;
-
 /**
  * Interface ProviderInterface
  */
 interface ProviderInterface
 {
     /**
-     * @return QueryInterface[]|iterable
+     * @return array
      */
-    public function getQueries(): iterable;
+    public function getQueryArguments(): array;
+
+    /**
+     * @return array
+     */
+    public function getPostArguments(): array;
+
+    /**
+     * @return string|null
+     */
+    public function getContentType(): ?string;
+
+    /**
+     * @return string
+     */
+    public function getBody(): string;
 }

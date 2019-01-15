@@ -39,8 +39,8 @@ as an opt-out type in cases when the exact type is not known in advance.';
      */
     public function __construct(Document $document)
     {
-        $this->document = $document;
-        $this->name = static::SCALAR_TYPE_NAME;
+        $this->document    = $document;
+        $this->name        = static::SCALAR_TYPE_NAME;
         $this->description = static::TYPE_DESCRIPTION;
     }
 }

@@ -9,130 +9,116 @@ declare(strict_types=1);
 
 namespace Railt\Routing;
 
-use Railt\Foundation\Events\ActionDispatching;
-use Railt\Foundation\Events\FieldResolving;
-use Railt\Foundation\Extensions\BaseExtension;
-use Railt\Http\InputInterface;
+use Railt\ClassLoader\ClassLoaderExtension;
+use Railt\ClassLoader\ClassLoaderInterface;
+use Railt\Foundation\Application;
+use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Extension\Status;
 use Railt\Io\File;
-use Railt\Kernel\Contracts\ClassLoader;
-use Railt\Routing\Contracts\RouterInterface;
-use Railt\Routing\Route\Directive;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Routing\Subscribers\ActionDispatcherSubscriber;
+use Railt\Routing\Subscribers\DirectiveLoaderSubscriber;
+use Railt\Routing\Subscribers\FieldResolveToActionSubscriber;
 use Railt\SDL\Schema\CompilerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 /**
- * Class RouterServiceProvider
+ * Class RouterExtension
  */
-class RouterExtension extends BaseExtension
+class RouterExtension extends Extension
 {
     /**
-     * @var array
+     * @var string
      */
-    private $loadedRoutes = [];
+    private const ROUTING_GRAPHQL_FILE = __DIR__ . '/../../resources/routing.graphqls';
 
     /**
-     * @param CompilerInterface $compiler
-     * @param Dispatcher $events
-     * @param ClassLoader $loader
+     * @return string
+     */
+    public function getName(): string
+    {
+        return 'Routing';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return 'Provides the ability to create field resolvers using GraphQL SDL code.';
+    }
+
+    /**
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return Application::VERSION;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return Status::STABLE;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDependencies(): array
+    {
+        return ['railt/railt' => ClassLoaderExtension::class];
+    }
+
+    /**
      * @return void
-     * @throws \InvalidArgumentException
      */
-    public function boot(CompilerInterface $compiler, Dispatcher $events, ClassLoader $loader): void
+    public function register(): void
     {
-        $this->loadSchema($compiler);
-
-        $router = $this->getRouter();
-
-        $this->bootFieldResolver($events, $router, $loader);
-        $this->bootArgumentsInjector($events);
-    }
-
-    /**
-     * @return RouterInterface
-     */
-    private function getRouter(): RouterInterface
-    {
-        $router = new Router($this->getContainer());
-
-        $this->instance(RouterInterface::class, $router);
-
-        return $router;
-    }
-
-    /**
-     * @param CompilerInterface $compiler
-     */
-    private function loadSchema(CompilerInterface $compiler): void
-    {
-        $compiler->compile(File::fromPathname(__DIR__ . '/../../resources/routing/route.graphqls'));
-    }
-
-    /**
-     * @param Dispatcher $events
-     */
-    private function bootArgumentsInjector(Dispatcher $events): void
-    {
-        $events->addListener(ActionDispatching::class, function (ActionDispatching $event): void {
-            $input = $event->getInput();
-
-            $event->addParameter(InputInterface::class, $input);
-            $event->addParameter(TypeDefinition::class, $input->getFieldDefinition());
-            $event->addParameter(FieldDefinition::class, $input->getFieldDefinition());
-
-            $event->addParameters($input->all());
+        $this->registerIfNotRegistered(RouterInterface::class, function () {
+            return new Router();
         });
-    }
 
-    /**
-     * @param RouterInterface $router
-     * @param Dispatcher $events
-     * @param ClassLoader $loader
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
-     */
-    private function bootFieldResolver(Dispatcher $events, RouterInterface $router, ClassLoader $loader): void
-    {
-        $resolver = new FieldResolver($router, $events, $this->getContainer());
-
-        $callback = function (FieldResolving $event) use ($resolver, $loader, $router): void {
-            $field = $event->getInput()->getFieldDefinition();
-
-            $this->loadRouteDirectives($field, $loader, $router);
-
-            $event->setResponse($resolver->handle($event->getInput(), $event->getParentValue()));
+        $directiveLoaderResolver = function (RouterInterface $router, ClassLoaderInterface $loader) {
+            return new DirectiveLoader($this->app(), $router, $loader);
         };
 
-        $events->addListener(FieldResolving::class, $callback);
+        $this->registerIfNotRegistered(DirectiveLoader::class, $directiveLoaderResolver);
     }
 
     /**
-     * @param FieldDefinition $field
-     * @param ClassLoader $loader
-     * @param RouterInterface $router
+     * @param CompilerInterface $compiler
+     * @throws \Railt\Io\Exception\NotReadableException
      */
-    private function loadRouteDirectives(FieldDefinition $field, ClassLoader $loader, RouterInterface $router): void
+    public function boot(CompilerInterface $compiler): void
     {
-        if (\in_array($field->getUniqueId(), $this->loadedRoutes, true)) {
-            return;
-        }
+        $this->loadDirectives($compiler);
 
-        foreach (['route', 'query', 'mutation', 'subscription'] as $directiveName) {
-            foreach ($field->getDirectives($directiveName) as $directive) {
-                $action = new Directive($this->getContainer(), $directive, $loader);
+        $router = $this->make(RouterInterface::class);
+        $loader = $this->make(DirectiveLoader::class);
 
-                foreach ($field->getDirectives('relation') as $join) {
-                    $action->relation(
-                        (string)$join->getPassedArgument('child'),
-                        (string)$join->getPassedArgument('parent')
-                    );
-                }
+        //
+        // Subscribing to a field resolving event and trying to initialize the necessary directives.
+        //
+        $this->subscribe(new DirectiveLoaderSubscriber($loader));
 
-                $router->add($action);
-            }
-        }
+        //
+        // Subscribe to fields resolving, which creates a list of necessary arguments.
+        //
+        $this->subscribe(new FieldResolveToActionSubscriber($router, $this->events()));
 
-        $this->loadedRoutes[] = $field->getUniqueId();
+        //
+        // Subscribe to a method call event that should call the desired controller method.
+        //
+        $this->subscribe(new ActionDispatcherSubscriber($this->app()));
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @throws \Railt\Io\Exception\NotReadableException
+     */
+    private function loadDirectives(CompilerInterface $compiler): void
+    {
+        $compiler->compile(File::fromPathname(self::ROUTING_GRAPHQL_FILE));
     }
 }

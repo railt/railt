@@ -32,7 +32,7 @@ class SDLGrammarCompileCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setName('sdl:grammar:compile');
+        $this->setName('compiler:compile:sdl');
         $this->setDescription('Compile GraphQL SDL Parser');
     }
 

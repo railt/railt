@@ -53,7 +53,7 @@ trait CompilerStubs
      */
     protected function getCompilers(): \Traversable
     {
-        $storage = __DIR__ . '/.temp/';
+        $storage = __DIR__ . '/temp/';
 
         // Default
         yield new Compiler();

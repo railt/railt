@@ -34,7 +34,7 @@ class Token extends TraceItem
      */
     public function __construct(TokenInterface $token, bool $kept)
     {
-        $this->kept = $kept;
+        $this->kept  = $kept;
         $this->token = $token;
         $this->at($token->getOffset());
     }

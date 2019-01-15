@@ -14,4 +14,17 @@ namespace Railt\Container\Exception;
  */
 class ParameterResolutionException extends ContainerResolutionException
 {
+    /**
+     * @param string $message
+     * @param \ReflectionFunctionAbstract $fn
+     * @return ParameterResolutionException
+     */
+    public static function fromReflectionFunction(string $message, \ReflectionFunctionAbstract $fn): self
+    {
+        $exception       = new static($message);
+        $exception->file = $fn->getFileName();
+        $exception->line = $fn->getStartLine();
+
+        return $exception;
+    }
 }

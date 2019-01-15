@@ -9,96 +9,53 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Input\ProvideArguments;
+use Railt\Http\Input\ProvideField;
+use Railt\Http\Input\ProvideParents;
+use Railt\Http\Input\ProvidePath;
+use Railt\Http\Input\ProvideType;
+
 /**
  * Interface InputInterface
  */
-interface InputInterface
+interface InputInterface extends ProvideArguments, ProvideType, ProvideParents, ProvideField, ProvidePath
 {
     /**
-     * @var string
+     * @return RequestInterface
      */
-    public const DEPTH_DELIMITER = '.';
+    public function request(): RequestInterface;
 
     /**
-     * @return array
+     * @param RequestInterface $request
+     * @return InputInterface|$this
      */
-    public function all(): array;
+    public function withRequest(RequestInterface $request): self;
 
     /**
-     * @param string $argument
-     * @param null $default
-     * @return mixed
-     */
-    public function get(string $argument, $default = null);
-
-    /**
-     * @param string $argument
+     * @param string $type
      * @return bool
      */
-    public function has(string $argument): bool;
+    public function wants(string $type): bool;
+
+    /**
+     * @return iterable|string[]
+     */
+    public function getPreferTypes(): iterable;
 
     /**
      * @return string
      */
-    public function getOperation(): string;
+    public function getPreferType(): string;
 
     /**
-     * @return string
+     * @param string ...$types
+     * @return InputInterface|$this
      */
-    public function getPath(): string;
+    public function withPreferType(string ...$types): self;
 
     /**
-     * @return string
+     * @param string ...$types
+     * @return InputInterface|$this
      */
-    public function getFieldName(): string;
-
-    /**
-     * Note: The return value may be different from the specified
-     * value. It all depends on what SDL parser you use.
-     *
-     * @return \Railt\SDL\Contracts\Dependent\FieldDefinition
-     */
-    public function getFieldDefinition();
-
-    /**
-     * @return string
-     */
-    public function getAlias(): string;
-
-    /**
-     * @return bool
-     */
-    public function hasAlias(): bool;
-
-    /**
-     * @return mixed
-     */
-    public function getParent();
-
-    /**
-     * @return mixed
-     */
-    public function getParentResponse();
-
-    /**
-     * Note: The return value may be different from the specified
-     * value. It all depends on what SDL parser you use.
-     *
-     * @param int $depth
-     * @return iterable|\Railt\SDL\Contracts\Dependent\FieldDefinition[]
-     */
-    public function getRelations(int $depth = 0): iterable;
-
-    /**
-     * @param string ...$fields
-     * @return bool
-     */
-    public function hasRelation(string ...$fields): bool;
-
-    /**
-     * @param mixed $parent
-     * @param mixed $parentResponse
-     * @return void
-     */
-    public function updateParent($parent, $parentResponse): void;
+    public function setPreferType(string ...$types): self;
 }

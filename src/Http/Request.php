@@ -9,78 +9,47 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Provider\ProviderInterface;
+use Railt\Http\Request\HasOperation;
+use Railt\Http\Request\HasQueryType;
+use Railt\Http\Request\HasVariables;
 
 /**
  * Class Request
  */
 class Request implements RequestInterface
 {
-    /**
-     * @var \SplStack|QueryInterface[]
-     */
-    private $queries;
+    use HasVariables;
+    use HasQueryType;
+    use HasOperation;
+    use HasIdentifier;
 
     /**
-     * @var bool|null
+     * @var string
      */
-    private $isBatched;
+    private $query;
 
     /**
      * Request constructor.
-     * @param QueryInterface|ProviderInterface $queryOrProvider
+     * @param string $query
+     * @param array $variables
+     * @param string|null $operation
      */
-    public function __construct($queryOrProvider = null)
+    public function __construct(string $query, array $variables = [], string $operation = null)
     {
-        \assert($queryOrProvider === null || $queryOrProvider instanceof QueryInterface || $queryOrProvider instanceof ProviderInterface);
-
-        $this->queries = new \SplStack();
-
-        $this->boot($queryOrProvider);
+        $this->withQuery($query);
+        $this->withVariables($variables);
+        $this->withOperation($operation);
     }
 
     /**
-     * @param QueryInterface|ProviderInterface $queryOrProvider
-     * @return void
+     * @param string $query
+     * @return RequestInterface|$this
      */
-    private function boot($queryOrProvider): void
+    public function withQuery(string $query): RequestInterface
     {
-        if ($queryOrProvider instanceof QueryInterface) {
-            $this->bootFromQuery($queryOrProvider);
-        }
-
-        if ($queryOrProvider instanceof ProviderInterface) {
-            $this->bootFromProvider($queryOrProvider);
-        }
-    }
-
-    /**
-     * @param QueryInterface $query
-     */
-    private function bootFromQuery(QueryInterface $query): void
-    {
-        $this->addQuery($query);
-    }
-
-    /**
-     * @param QueryInterface $query
-     * @return RequestInterface
-     */
-    public function addQuery(QueryInterface $query): RequestInterface
-    {
-        $this->queries->push($query);
+        $this->query = $query;
 
         return $this;
-    }
-
-    /**
-     * @param ProviderInterface $provider
-     */
-    private function bootFromProvider(ProviderInterface $provider): void
-    {
-        foreach ($provider->getQueries() as $query) {
-            $this->addQuery($query);
-        }
     }
 
     /**
@@ -88,75 +57,17 @@ class Request implements RequestInterface
      */
     public function getQuery(): string
     {
-        return $this->first()->getQuery();
+        return $this->query;
     }
 
     /**
-     * @return QueryInterface
+     * @param string $query
+     * @param array $variables
+     * @param string|null $operation
+     * @return Request
      */
-    public function first(): QueryInterface
+    public static function create(string $query, array $variables = [], string $operation = null): self
     {
-        return $this->getQueries()->current();
-    }
-
-    /**
-     * @return iterable|QueryInterface[]|\Generator
-     */
-    public function getQueries(): iterable
-    {
-        $queries = $this->getIterator();
-
-        if ($queries->valid()) {
-            yield from $queries;
-        } else {
-            yield Query::empty();
-        }
-    }
-
-    /**
-     * @return \Generator|QueryInterface[]
-     */
-    public function getIterator(): \Generator
-    {
-        foreach ($this->queries as $query) {
-            yield $query;
-        }
-    }
-
-    /**
-     * @return iterable
-     */
-    public function getVariables(): iterable
-    {
-        return $this->first()->getVariables();
-    }
-
-    /**
-     * @param string $name
-     * @return mixed
-     */
-    public function getVariable(string $name)
-    {
-        return $this->first()->getVariable($name);
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getOperationName(): ?string
-    {
-        return $this->first()->getOperationName();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isBatched(): bool
-    {
-        if ($this->isBatched === null) {
-            $this->isBatched = \iterator_count($this->getIterator()) > 1;
-        }
-
-        return $this->isBatched;
+        return new static($query, $variables, $operation);
     }
 }

@@ -9,20 +9,40 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Extension\ProvidesExtensions;
+use Railt\Http\Response\Debuggable;
+use Railt\Http\Response\ProvideExceptions;
+use Railt\Http\Response\Renderable;
+
 /**
  * Interface ResponseInterface
  */
-interface ResponseInterface extends MessageInterface, \JsonSerializable
+interface ResponseInterface extends ProvideExceptions, ProvidesExtensions, Renderable, Debuggable
 {
     /**
-     * @var string Positive status code
+     * @var string Data field name
+     */
+    public const FIELD_DATA = 'data';
+
+    /**
+     * @var string Errors field name
+     */
+    public const FIELD_ERRORS = 'errors';
+
+    /**
+     * @var int Positive status code
      */
     public const STATUS_CODE_SUCCESS = 200;
 
     /**
-     * @var string Negative status code
+     * @var int Negative status code
      */
     public const STATUS_CODE_ERROR = 500;
+
+    /**
+     * @return bool
+     */
+    public function isSuccessful(): bool;
 
     /**
      * @return int
@@ -30,10 +50,26 @@ interface ResponseInterface extends MessageInterface, \JsonSerializable
     public function getStatusCode(): int;
 
     /**
-     * @param MessageInterface $message
-     * @return ResponseInterface
+     * @param int $code
+     * @return ResponseInterface|$this
      */
-    public function addMessage(MessageInterface $message): self;
+    public function withStatusCode(int $code): self;
+
+    /**
+     * @return array|null
+     */
+    public function getData(): ?array;
+
+    /**
+     * @param array|null $data
+     * @return ResponseInterface|$this
+     */
+    public function withData(?array $data): self;
+
+    /**
+     * @return array
+     */
+    public function toArray(): array;
 
     /**
      * @return string
@@ -44,14 +80,4 @@ interface ResponseInterface extends MessageInterface, \JsonSerializable
      * @return void
      */
     public function send(): void;
-
-    /**
-     * @return bool
-     */
-    public function isBatched(): bool;
-
-    /**
-     * @return iterable|MessageInterface[]
-     */
-    public function getMessages(): iterable;
 }

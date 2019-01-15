@@ -21,12 +21,16 @@ class SpecTestCase extends AbstractSemanticTestCase
 {
     /**
      * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \RuntimeException
+     * @throws \Exception
      */
     public function positiveProvider(): array
     {
         $result = [];
 
-        $files = (new Finder())->files()->in(__DIR__ . '/.resources')->name('+*.graphqls');
+        $files = (new Finder())->files()->in(__DIR__ . '/resources')->name('+*.graphqls');
 
         /** @var SplFileInfo $file */
         foreach ($files->getIterator() as $file) {
@@ -40,12 +44,16 @@ class SpecTestCase extends AbstractSemanticTestCase
 
     /**
      * @return array
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \RuntimeException
+     * @throws \Exception
      */
     public function negativeProvider(): array
     {
         $result = [];
 
-        $files = (new Finder())->files()->in(__DIR__ . '/.resources')->name('-*.graphqls');
+        $files = (new Finder())->files()->in(__DIR__ . '/resources')->name('-*.graphqls');
 
         /** @var SplFileInfo $file */
         foreach ($files->getIterator() as $file) {
@@ -63,6 +71,7 @@ class SpecTestCase extends AbstractSemanticTestCase
      * @param Compiler $compiler
      * @param string $expected
      * @return void
+     * @throws \PHPUnit\Framework\AssertionFailedError
      */
     public function testPositiveParserSpecs(Compiler $compiler, string $expected): void
     {
@@ -77,6 +86,7 @@ class SpecTestCase extends AbstractSemanticTestCase
      * @param Compiler $compiler
      * @param string $expected
      * @return void
+     * @throws \PHPUnit\Framework\Exception
      */
     public function testNegativeParserSpecs(Compiler $compiler, string $expected): void
     {

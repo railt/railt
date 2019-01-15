@@ -62,7 +62,7 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
      */
     private function validateArgumentTypes(HasPassedArguments $invocation, ArgumentDefinition $argument): void
     {
-        $type = $argument->getTypeDefinition();
+        $type  = $argument->getTypeDefinition();
         $value = $invocation->getPassedArgument($argument->getName());
 
         if ($value === null) {

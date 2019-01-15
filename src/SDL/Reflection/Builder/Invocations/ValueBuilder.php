@@ -21,12 +21,12 @@ use Railt\SDL\Reflection\Builder\DocumentBuilder;
  */
 class ValueBuilder
 {
-    private const AST_ID_ARRAY = 'List';
+    private const AST_ID_ARRAY  = 'List';
     private const AST_ID_OBJECT = 'Object';
 
-    private const TOKEN_NULL = 'T_NULL';
-    private const TOKEN_NUMBER = 'T_NUMBER_VALUE';
-    private const TOKEN_BOOL_TRUE = 'T_BOOL_TRUE';
+    private const TOKEN_NULL       = 'T_NULL';
+    private const TOKEN_NUMBER     = 'T_NUMBER_VALUE';
+    private const TOKEN_BOOL_TRUE  = 'T_BOOL_TRUE';
     private const TOKEN_BOOL_FALSE = 'T_BOOL_FALSE';
 
     /**
@@ -183,7 +183,7 @@ class ValueBuilder
     {
         // TODO Probably may be escaped by backslash like "\\n".
         $source = ['\b', '\f', '\n', '\r', '\t'];
-        $out = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u {0009}"];
+        $out    = ["\u{0008}", "\u{000C}", "\u{000A}", "\u{000D}", "\u {0009}"];
 
         return \str_replace($source, $out, $body);
     }

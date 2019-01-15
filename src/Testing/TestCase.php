@@ -10,18 +10,18 @@ declare(strict_types=1);
 namespace Railt\Testing;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use Railt\Testing\Common\MethodsAccess;
 use Railt\Testing\Feature\BootableTraits;
-use Railt\Testing\Feature\InteractWithServer;
+use Railt\Testing\Interact\InteractWithApplication;
+use Railt\Testing\Interact\InteractWithEnvironment;
 
 /**
  * Class TestCase
  */
 abstract class TestCase extends BaseTestCase
 {
-    use MethodsAccess;
     use BootableTraits;
-    use InteractWithServer;
+    use InteractWithApplication;
+    use InteractWithEnvironment;
 
     /**
      * @return void
