@@ -1,9 +1,10 @@
 {
     "name": "railt/http",
-    "type": "library",
-    "description": "The Railt HTTP component provides objects to build GraphQL requests from the client.",
-    "version": "1.3.0",
     "license": "MIT",
+    "type": "library",
+    "version": "1.3.0",
+    "homepage": "http://railt.org",
+    "description": "The Railt HTTP component provides objects to build GraphQL requests from the client.",
     "keywords": [
         "http",
         "http response",
@@ -17,17 +18,16 @@
         "request",
         "graphql"
     ],
-    "homepage": "http://railt.org",
-    "support": {
-        "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/http"
-    },
     "authors": [
         {
             "name": "Kirill Nesmeyanov",
             "email": "nesk@xakep.ru"
         }
     ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/http"
+    },
     "require": {
         "php": "^7.1.3",
         "ext-json": "*",
@@ -50,13 +50,13 @@
             "Railt\\Tests\\Http\\": "tests/"
         }
     },
-    "suggest": {
-        "symfony/http-foundation": "(~3.4|~4.0) Symfony HTTP Kernel",
-        "illuminate/http": "(~5.5) Laravel HTTP Kernel"
-    },
     "config": {
         "sort-packages": true
     },
+    "prefer-stable": true,
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "suggest": {
+        "symfony/http-foundation": "(~3.4|~4.0) Symfony HTTP Kernel",
+        "illuminate/http": "(~5.5) Laravel HTTP Kernel"
+    }
 }
