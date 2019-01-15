@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" />
+    <a href="https://railt.org"><img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" /></a>
 </p>
 
 <p align="center">
@@ -10,6 +10,8 @@
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/v/unstable" alt="Latest Unstable Version"></a>
     <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE.md"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
 </p>
+
+> Not ready for real world usage yet :bomb: :scream:
 
 ## Introduction
 
@@ -71,34 +73,39 @@ in the MVP (MVC with passive models) application, for example on
 the basis of a Symfony or Laravel.
 
 ```php
+<?php
 use Railt\Io\File;
-use Railt\SDL\Compiler;
 use Railt\Http\Request;
+use Railt\Discovery\Discovery;
 use Railt\Foundation\Application;
-use Railt\Routing\RouterExtension;
 
-// Creating a new application
+
+$loader = require __DIR__ . '/vendor/autoload.php';
+
+//
+// Creating a new Application
+//
 $app = new Application();
 
-// Link to the main SDL of the our application
-$schema = File::fromPathname(__DIR__ . '/schema.graphqls');
+//
+// Configure an Application from "composer.json" file
+//
+$app->configure(Discovery::fromClassLoader($loader));
 
-// Processing of HTTP request
-$response = $app->request($schema, new Request());
+//
+// Create a connection
+//
+$connection = $app->connect(File::fromPathname(__DIR__ . '/schema.graphqls'));
 
-// And sending a Response
+//
+// Processing of HTTP Request
+//
+$response = $connection->request(Request::create('query { say(message: "Something is awesome!") }'));
+
+//
+// And send the HTTP Response
+//
 $response->send();
-```
-
-### Example GraphQL query
-
-**Request:**
-
-```graphql
-# Request
-{
-    say(message: "Something is awesome!")
-}
 ```
 
 **Response:**
@@ -139,8 +146,6 @@ under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 
 ## Development Status
 
-> Not ready for real world usage yet :bomb: :scream:
-
 | Packages                                                               | Release                                                                                                                                  | CI Status                                                                                                                     |
 |------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | [`railt/railt`](https://github.com/railt/railt)                        | [![Latest Stable Version](https://poser.pugx.org/railt/railt/version)](https://packagist.org/packages/railt/railt)                       | [![Travis CI](https://travis-ci.org/railt/railt.svg?branch=master)](https://travis-ci.org/railt/railt)                        |
@@ -158,5 +163,14 @@ under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
 | [`railt/reflection`](https://github.com/railt/reflection)              | [![Latest Stable Version](https://poser.pugx.org/railt/reflection/version)](https://packagist.org/packages/railt/reflection)             | [![Travis CI](https://travis-ci.org/railt/reflection.svg?branch=master)](https://travis-ci.org/railt/reflection)              |
 | [`railt/sdl`](https://github.com/railt/sdl)                            | [![Latest Stable Version](https://poser.pugx.org/railt/sdl/version)](https://packagist.org/packages/railt/sdl)                           | [![Travis CI](https://travis-ci.org/railt/sdl.svg?branch=master)](https://travis-ci.org/railt/sdl)                            |
 | [`railt/storage`](https://github.com/railt/storage)                    | [![Latest Stable Version](https://poser.pugx.org/railt/storage/version)](https://packagist.org/packages/railt/storage)                   | [![Travis CI](https://travis-ci.org/railt/storage.svg?branch=master)](https://travis-ci.org/railt/storage)                    |
-| [`railt/lexer`](https://github.com/railt/lexer)                    | [![Latest Stable Version](https://poser.pugx.org/railt/lexer/version)](https://packagist.org/packages/railt/lexer)                   | [![Travis CI](https://travis-ci.org/railt/lexer.svg?branch=master)](https://travis-ci.org/railt/lexer)                                |
-| [`railt/parser`](https://github.com/railt/parser)                    | [![Latest Stable Version](https://poser.pugx.org/railt/parser/version)](https://packagist.org/packages/railt/parser)                   | [![Travis CI](https://travis-ci.org/railt/parser.svg?branch=master)](https://travis-ci.org/railt/parser)                          |
+| [`railt/lexer`](https://github.com/railt/lexer)                        | [![Latest Stable Version](https://poser.pugx.org/railt/lexer/version)](https://packagist.org/packages/railt/lexer)                       | [![Travis CI](https://travis-ci.org/railt/lexer.svg?branch=master)](https://travis-ci.org/railt/lexer)                        |
+| [`railt/parser`](https://github.com/railt/parser)                      | [![Latest Stable Version](https://poser.pugx.org/railt/parser/version)](https://packagist.org/packages/railt/parser)                     | [![Travis CI](https://travis-ci.org/railt/parser.svg?branch=master)](https://travis-ci.org/railt/parser)                      |
+
+
+
+## Supported By
+
+<p align="center">
+    <a href="https://www.jetbrains.com/" target="_blank"><img src="https://habrastorage.org/webt/oc/-2/ek/oc-2eklcyr_ncszrzytmlu8_vky.png" alt="JetBrains" /></a>
+    <a href="https://rambler-co.ru/" target="_blank"><img src="https://habrastorage.org/webt/wp/wu/wp/wpwuwpqpkskjfs0yjdjry5jvoog.png" alt="Rambler&Co" /></a>
+</p>
