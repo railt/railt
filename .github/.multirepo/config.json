@@ -1,13 +1,14 @@
 {
+    "root": "./../../",
     "files": {
-        "./../.editorconfig": ".editorconfig",
-        "./../.gitattributes": ".gitattributes",
-        "./../.gitignore": ".gitignore",
-        "./../.scrutinizer.yml": ".scrutinizer.yml",
-        "./../CONTRIBUTING.md": "CONTRIBUTING.md",
-        "./../CODE_OF_CONDUCT.md": "CODE_OF_CONDUCT.md",
-        "./../LICENSE.md": "LICENSE.md",
-        "./../phpunit.xml": "phpunit.xml"
+        "./../../.editorconfig": ".editorconfig",
+        "./../../.gitattributes": ".gitattributes",
+        "./../../.gitignore": ".gitignore",
+        "./../../.scrutinizer.yml": ".scrutinizer.yml",
+        "./../../CONTRIBUTING.md": "CONTRIBUTING.md",
+        "./../../CODE_OF_CONDUCT.md": "CODE_OF_CONDUCT.md",
+        "./../../LICENSE.md": "LICENSE.md",
+        "./../../phpunit.xml": "phpunit.xml"
     },
     "packages": {
         "railt/container": {
@@ -18,9 +19,8 @@
                 "./container/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "./../.github": ".github",
-                "./../src/Container": "src/Container",
-                "./../tests/Container": "tests"
+                "./../../src/Container": "src/Container",
+                "./../../tests/Container": "tests"
             }
         },
         "railt/http": {
@@ -31,9 +31,8 @@
                 "./http/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "./../.github": ".github",
-                "./../src/Http": "src/Http",
-                "./../tests/Http": "tests"
+                "./../../src/Http": "src/Http",
+                "./../../tests/Http": "tests"
             }
         },
         "railt/io": {
@@ -44,9 +43,8 @@
                 "./io/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "./../.github": ".github",
-                "./../src/Io": "src/Io",
-                "./../tests/Io": "tests"
+                "./../../src/Io": "src/Io",
+                "./../../tests/Io": "tests"
             }
         },
         "railt/lexer": {
@@ -57,9 +55,8 @@
                 "./lexer/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "./../.github": ".github",
-                "./../src/Lexer": "src/Lexer",
-                "./../tests/Lexer": "tests"
+                "./../../src/Lexer": "src/Lexer",
+                "./../../tests/Lexer": "tests"
             }
         },
         "railt/parser": {
@@ -70,9 +67,8 @@
                 "./parser/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "./../.github": ".github",
-                "./../src/Parser": "src/Parser",
-                "./../tests/Parser": "tests"
+                "./../../src/Parser": "src/Parser",
+                "./../../tests/Parser": "tests"
             }
         },
         "railt/sdl": {
@@ -83,10 +79,9 @@
                 "./sdl/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "./../.github": ".github",
-                "./../src/SDL": "src/SDL",
-                "./../tests/SDL": "tests",
-                "./../resources/grammar": "resources/grammar"
+                "./../../src/SDL": "src/SDL",
+                "./../../tests/SDL": "tests",
+                "./../../resources/grammar": "resources/grammar"
             }
         },
         "railt/storage": {
@@ -97,9 +92,8 @@
                 "./storage/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "./../.github": ".github",
-                "./../src/Storage": "src/Storage",
-                "./../tests/Storage": "tests"
+                "./../../src/Storage": "src/Storage",
+                "./../../tests/Storage": "tests"
             }
         }
     }
