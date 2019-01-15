@@ -53,17 +53,33 @@ final class Declaration implements DeclarationInterface
         $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
 
         foreach ($trace as $i => $current) {
-            $class = $current['class'] ?? \stdClass::class;
+            if (isset($current['class'])) {
+                $class = $current['class'];
 
-            foreach ($needles as $needle) {
-                if ($class === $needle || \is_subclass_of($class, $needle)) {
-                    [$file, $line, $class] = [$current['file'], (int)$current['line'], $trace[$i - 1]['class'] ?? null];
-                    break 2;
+                foreach ($needles as $needle) {
+                    if ($class === $needle || \is_a($class, $needle, true)) {
+                        [$file, $line, $class] = self::extractInfoFromTrace($current);
+
+                        break 2;
+                    }
                 }
             }
         }
 
         return new static($file, $line, $class);
+    }
+
+    /**
+     * @param array $trace
+     * @return array
+     */
+    private static function extractInfoFromTrace(array $trace): array
+    {
+        return [
+            $trace['file'],
+            $trace['line'],
+            $trace['class'] ?? null,
+        ];
     }
 
     /**

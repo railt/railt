@@ -46,7 +46,7 @@ interface Readable
     /**
      * @return DeclarationInterface
      */
-    public function getDeclarationInfo(): DeclarationInterface;
+    public function getDeclaration(): DeclarationInterface;
 
     /**
      * @param string $message

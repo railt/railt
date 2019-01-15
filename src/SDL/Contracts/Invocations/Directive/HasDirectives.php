@@ -30,13 +30,6 @@ interface HasDirectives
     public function hasDirective(string $name): bool;
 
     /**
-     * @param string $name
-     * @return null|DirectiveInvocation
-     * @deprecated Use ...->getDirectives($name) instead.
-     */
-    public function getDirective(string $name): ?DirectiveInvocation;
-
-    /**
      * @return int
      */
     public function getNumberOfDirectives(): int;

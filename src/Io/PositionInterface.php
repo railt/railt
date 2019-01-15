@@ -10,16 +10,22 @@ declare(strict_types=1);
 namespace Railt\Io;
 
 /**
- * NOTE: Do not use the returned typehint for compatibility with exceptions.
+ * Interface PositionInterface
  */
 interface PositionInterface
 {
     /**
+     * Note: Do not use the return type hint for compatibility with exceptions.
+     *
+     * @noinspection ReturnTypeCanBeDeclaredInspection
      * @return int
      */
     public function getLine();
 
     /**
+     * Note: Do not use the return type hint for compatibility with exceptions.
+     *
+     * @noinspection ReturnTypeCanBeDeclaredInspection
      * @return int
      */
     public function getColumn();

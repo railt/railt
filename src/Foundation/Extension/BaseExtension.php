@@ -22,7 +22,7 @@ abstract class BaseExtension extends Extension
      */
     public function __construct(ContainerInterface $container)
     {
-        $error = 'Class `%s` is deprecated since 1.3. Use class `%s` instead.';
+        $error = 'Class `%s` is deprecated since 1.4. Use class `%s` instead.';
         @\trigger_error(\sprintf($error, __CLASS__, Extension::class));
 
         parent::__construct($container);

@@ -15,19 +15,19 @@ namespace Railt\Io;
 final class Position implements PositionInterface
 {
     /**
-     * @var int
+     * @var int|null
      */
-    private $line = 0;
+    private $line;
+
+    /**
+     * @var int|null
+     */
+    private $column;
 
     /**
      * @var int
      */
-    private $column = 0;
-
-    /**
-     * @var int
-     */
-    private $offset = 0;
+    private $offset;
 
     /**
      * Position constructor.
@@ -36,32 +36,42 @@ final class Position implements PositionInterface
      */
     public function __construct(string $sources, int $offset)
     {
-        [$this->line, $this->column, $this->offset] = $this->getInformation($sources, $offset);
+        $this->offset = $this->normalizeOffset($sources, $offset);
+
+        $substr = \substr($sources, 0, $offset);
+
+        $this->line = $this->readLineByOffset($substr);
+        $this->column = $this->readColumnByOffset($substr);
     }
 
     /**
-     * Returns information about the error location: line, column and affected text lines.
-     *
-     * @param string $sources The source text in which we search for a line and a column
-     * @param int $bytesOffset Offset in bytes relative to the beginning of the source text
-     * @return array
+     * @param string $sources
+     * @param int $bytesOffset
+     * @return int
      */
-    private function getInformation(string $sources, int $bytesOffset): array
+    private function normalizeOffset(string $sources, int $bytesOffset): int
     {
-        $bytesOffset = \max(0, $bytesOffset);
-        $line = 0;
-        $current = 0;
+        return \max(0, \min(\strlen($sources), $bytesOffset));
+    }
 
-        foreach (\explode("\n", $sources) as $line => $text) {
-            $previous = $current;
-            $current += \strlen($text) + 1;
+    /**
+     * @param string $sources
+     * @return int
+     */
+    private function readLineByOffset(string $sources): int
+    {
+        return \substr_count($sources, "\n") + 1;
+    }
 
-            if ($current > $bytesOffset) {
-                return [$line + 1, $bytesOffset - $previous + 1, $bytesOffset];
-            }
-        }
+    /**
+     * @param string $sources
+     * @return int
+     */
+    private function readColumnByOffset(string $sources): int
+    {
+        $lines = \explode("\n", $sources);
 
-        return [$line, 1, $current - 1];
+        return \strlen($lines[\count($lines) - 1]) + 1;
     }
 
     /**
@@ -86,5 +96,17 @@ final class Position implements PositionInterface
     public function getOffset(): int
     {
         return $this->offset;
+    }
+
+    /**
+     * @return array|int[]
+     */
+    public function __debugInfo(): array
+    {
+        return [
+            'line'   => $this->line,
+            'column' => $this->column,
+            'offset' => $this->offset,
+        ];
     }
 }

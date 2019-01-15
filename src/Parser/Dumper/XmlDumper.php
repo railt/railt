@@ -199,15 +199,6 @@ class XmlDumper implements NodeDumperInterface
     }
 
     /**
-     * @return string
-     * @deprecated Use toString method instead
-     */
-    public function toXml(): string
-    {
-        return $this->toString();
-    }
-
-    /**
      * @param string $text
      * @return string
      */

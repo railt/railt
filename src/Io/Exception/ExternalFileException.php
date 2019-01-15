@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Io\Exception;
 
+use Railt\Io\PositionInterface;
 use Railt\Io\Readable;
 
 /**
@@ -24,7 +25,7 @@ class ExternalFileException extends \LogicException implements ExternalException
     /**
      * @param Readable $file
      * @param PositionInterface $position
-     * @return ExternalExceptionInterface
+     * @return ExternalExceptionInterface|$this
      */
     public function throwsAt(Readable $file, PositionInterface $position): ExternalExceptionInterface
     {
@@ -35,7 +36,7 @@ class ExternalFileException extends \LogicException implements ExternalException
      * @param Readable $file
      * @param int $offsetOrLine
      * @param int|null $column
-     * @return ExternalFileException
+     * @return ExternalFileException|$this
      */
     public function throwsIn(Readable $file, int $offsetOrLine = 0, int $column = null): ExternalExceptionInterface
     {
@@ -47,6 +48,19 @@ class ExternalFileException extends \LogicException implements ExternalException
         }
 
         [$this->line, $this->column] = [$offsetOrLine, $column];
+
+        return $this;
+    }
+
+    /**
+     * @param ExternalFileException $exception
+     * @return ExternalFileException|$this|self|static
+     */
+    public function from(ExternalFileException $exception): self
+    {
+        $this->file = $exception->getFile();
+        $this->line = $exception->getLine();
+        $this->column = $exception->getColumn();
 
         return $this;
     }

@@ -17,7 +17,7 @@ class Virtual extends BaseFile
     /**
      * @var string A default file name which created from sources
      */
-    private const FILE_NAME = 'php://input';
+    public const DEFAULT_FILE_NAME = 'php://input';
 
     /**
      * @var string|null
@@ -31,7 +31,7 @@ class Virtual extends BaseFile
      */
     public function __construct(string $contents, string $name = null)
     {
-        parent::__construct($contents, $name ?? self::FILE_NAME);
+        parent::__construct($contents, $name ?? static::DEFAULT_FILE_NAME);
     }
 
     /**
