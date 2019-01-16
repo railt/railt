@@ -11,8 +11,6 @@
     <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE.md"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
 </p>
 
-> Not ready for real world usage yet :bomb: :scream:
-
 ## Introduction
 
 This is a pure PHP realization of the **GraphQL** protocol based on the 
@@ -30,6 +28,20 @@ thereby solving problems such as:
 - More flexible integration with frameworks (e.g. 
 [Laravel](https://github.com/laravel/framework) or [Symfony](https://github.com/symfony/symfony))
 - And others
+
+## Installation
+
+- Add into your `composer.json`:
+```json
+{
+    "scripts": {
+        "post-autoload-dump": [
+            "Railt\\Discovery\\Manifest::discover"
+        ]
+    }
+}
+```
+- `composer require railt/railt`
 
 ## Quick start
 
@@ -75,9 +87,10 @@ the basis of a Symfony or Laravel.
 ```php
 <?php
 use Railt\Io\File;
-use Railt\Http\Request;
 use Railt\Discovery\Discovery;
 use Railt\Foundation\Application;
+use Railt\Foundation\Config\Composer;
+use Railt\Http\Provider\GlobalsProvider;
 
 
 $loader = require __DIR__ . '/vendor/autoload.php';
@@ -90,7 +103,7 @@ $app = new Application();
 //
 // Configure an Application from "composer.json" file
 //
-$app->configure(Discovery::fromClassLoader($loader));
+$app->configure(new Composer(Discovery::fromClassLoader($loader)));
 
 //
 // Create a connection
@@ -100,12 +113,12 @@ $connection = $app->connect(File::fromPathname(__DIR__ . '/schema.graphqls'));
 //
 // Processing of HTTP Request
 //
-$response = $connection->request(Request::create('query { say(message: "Something is awesome!") }'));
+$responses = $connection->requests(new GlobalsProvider());
 
 //
 // And send the HTTP Response
 //
-$response->send();
+$responses->send();
 ```
 
 **Response:**
@@ -140,7 +153,6 @@ the [MIT license](https://opensource.org/licenses/MIT).
 
 The Railt\Compiler, which is part of the Railt Framework re-distribute 
 under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
-
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frailt%2Frailt.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frailt%2Frailt?ref=badge_large)
 
