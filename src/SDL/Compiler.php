@@ -182,7 +182,7 @@ class Compiler implements CompilerInterface, Configuration
     private function load(Document $document): Document
     {
         foreach ($document->getTypeDefinitions() as $type) {
-            if (!$this->loader->has($type->getName())) {
+            if (! $this->loader->has($type->getName())) {
                 $this->stack->push($type);
                 $this->loader->register($type);
                 $this->stack->pop();
