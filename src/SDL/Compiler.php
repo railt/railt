@@ -181,9 +181,11 @@ class Compiler implements CompilerInterface, Configuration
     private function load(Document $document): Document
     {
         foreach ($document->getTypeDefinitions() as $type) {
-            $this->stack->push($type);
-            $this->loader->register($type);
-            $this->stack->pop();
+            if (!$this->loader->has($type->getName())) {
+                $this->stack->push($type);
+                $this->loader->register($type);
+                $this->stack->pop();
+            }
         }
 
         return $document;
@@ -208,6 +210,7 @@ class Compiler implements CompilerInterface, Configuration
     {
         /** @var DocumentBuilder $document */
         $document = $this->storage->remember($readable, $this->onCompile());
+        $this->load($document);
 
         return $document->withCompiler($this);
     }
