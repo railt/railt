@@ -39,7 +39,7 @@ class Application implements ApplicationInterface
     /**
      * @var string
      */
-    public const VERSION = '1.3.0';
+    public const VERSION = '1.4';
 
     /**
      * @var string[]
@@ -67,6 +67,7 @@ class Application implements ApplicationInterface
      * @var Repository
      */
     private $extensions;
+
     /**
      * @var bool
      */
