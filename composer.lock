@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e76f7fb4d7829a83807a11c6f74d87ff",
+    "content-hash": "0bd77eb03ab8f370c246ccf9ad547cc8",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -376,6 +376,57 @@
                 "simple-cache"
             ],
             "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
+            "name": "railt/carbon-extension",
+            "version": "1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/railt/carbon-extension.git",
+                "reference": "171da9866e60bf6f99857a29041e3d0f950da01c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/railt/carbon-extension/zipball/171da9866e60bf6f99857a29041e3d0f950da01c",
+                "reference": "171da9866e60bf6f99857a29041e3d0f950da01c",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "~1.9|~2.0",
+                "php": "^7.1.3",
+                "railt/railt": "1.3.*|dev-master"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Railt\\CarbonExtension\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "description": "An extension that provides objects for working with a date and time using the Carbon library",
+            "homepage": "http://railt.org",
+            "keywords": [
+                "carbon",
+                "date",
+                "datetime",
+                "extension",
+                "graphql",
+                "railt",
+                "time"
+            ],
+            "time": "2019-01-15T16:19:36+00:00"
         },
         {
             "name": "railt/discovery",
@@ -3827,10 +3878,10 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1.3",
-        "ext-spl": "*",
-        "ext-pcre": "*",
         "ext-json": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ext-pcre": "*",
+        "ext-spl": "*"
     },
     "platform-dev": []
 }

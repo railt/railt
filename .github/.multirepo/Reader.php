@@ -118,7 +118,7 @@ class Reader
 
         foreach ((array)\array_get($this->config, $path, []) as $from => $to) {
             if ($to === 'composer.json') {
-                $this->patchVersion($this->absolute($from));
+                $this->sortComposerKeys($this->absolute($from));
             }
 
             yield $this->absolute($from) => $to;
@@ -128,11 +128,9 @@ class Reader
     /**
      * @param string $path
      */
-    private function patchVersion(string $path): void
+    private function sortComposerKeys(string $path): void
     {
         $array = \json_decode(\file_get_contents($path), true);
-
-        $array['version'] = \Railt\Foundation\Application::VERSION;
 
         \uksort($array, function (string $a, string $b) {
             return (self::COMPOSER_PRIORITIES[$a] ?? 100) <=> (self::COMPOSER_PRIORITIES[$b] ?? 100);

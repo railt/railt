@@ -2,7 +2,6 @@
     "name": "railt/container",
     "license": "MIT",
     "type": "library",
-    "version": "1.3.0",
     "homepage": "http://railt.org",
     "description": "Simple Dependency Injection Container",
     "keywords": [

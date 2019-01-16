@@ -2,7 +2,6 @@
     "name": "railt/railt",
     "type": "library",
     "description": "The Railt Framework",
-    "version": "1.3.0",
     "license": "MIT",
     "keywords": [
         "graphql",
@@ -40,7 +39,7 @@
         "webonyx/graphql-php": "~0.12",
         "symfony/console": "~3.4|~4.0",
         "symfony/event-dispatcher": "~3.4|~4.0",
-        "railt/discovery": "1.3.*|dev-master"
+        "railt/discovery": "1.4.*|dev-master"
     },
     "replace": {
         "railt/container": "*",
@@ -60,7 +59,7 @@
         ]
     },
     "require-dev": {
-        "railt/compiler": "1.3.*|dev-master",
+        "railt/compiler": "1.4.*|dev-master",
         "symfony/dependency-injection": "~3.4|~4.0",
         "symfony/var-dumper": "~4.0",
         "phpunit/phpunit": "^6.5",

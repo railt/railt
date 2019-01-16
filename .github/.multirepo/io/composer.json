@@ -2,7 +2,6 @@
     "name": "railt/io",
     "license": "MIT",
     "type": "library",
-    "version": "1.3.0",
     "homepage": "http://railt.org",
     "description": "The Railt filesystem utils",
     "keywords": [

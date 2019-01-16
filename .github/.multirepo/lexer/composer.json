@@ -2,7 +2,6 @@
     "name": "railt/lexer",
     "license": "MIT",
     "type": "library",
-    "version": "1.3.0",
     "homepage": "http://railt.org",
     "description": "Fast implementation of the stateful and stateless lexers",
     "keywords": [
@@ -25,7 +24,7 @@
         "ext-spl": "*",
         "ext-pcre": "*",
         "ext-mbstring": "*",
-        "railt/io": "1.3.*|dev-master"
+        "railt/io": "1.4.*|dev-master"
     },
     "autoload": {
         "psr-4": {
