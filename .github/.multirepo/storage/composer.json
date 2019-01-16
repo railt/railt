@@ -2,7 +2,7 @@
     "name": "railt/storage",
     "license": "MIT",
     "type": "library",
-    "version": "1.3.0",
+    "version": "1.3",
     "homepage": "http://railt.org",
     "description": "The Railt Framework storage bridges and implementations.",
     "keywords": [
