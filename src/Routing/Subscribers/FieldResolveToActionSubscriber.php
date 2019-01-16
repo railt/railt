@@ -105,10 +105,8 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
                 continue;
             }
 
-            foreach ($before->getResponse() as $result) {
-                foreach ($this->result($route, $result) as $i) {
-                    $result[] = $i;
-                }
+            foreach ($before->getResponse() as $response) {
+                $result[] = $this->result($route, $response);
             }
         }
 
