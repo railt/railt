@@ -79,9 +79,9 @@ trait PathInfoLoader
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAlias(): string
+    public function getAlias(): ?string
     {
         $this->bootPathInfoLoader();
 
