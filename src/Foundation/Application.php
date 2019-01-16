@@ -39,7 +39,7 @@ class Application implements ApplicationInterface
     /**
      * @var string
      */
-    public const VERSION = '1.4';
+    public const VERSION = '1.4-dev';
 
     /**
      * @var string[]
