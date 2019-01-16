@@ -35,7 +35,7 @@ class DeclarationTestCase extends TestCase
         $readable = $factory();
 
         /** @var DeclarationInterface $declaration */
-        $declaration = $readable->getDeclarationInfo();
+        $declaration = $readable->getDeclaration();
 
         $this->assertSame(parent::class, $declaration->getClass());
     }
@@ -51,7 +51,7 @@ class DeclarationTestCase extends TestCase
         $readable = $factory();
 
         /** @var DeclarationInterface $declaration */
-        $declaration = $readable->getDeclarationInfo();
+        $declaration = $readable->getDeclaration();
 
         $ref = new \ReflectionClass(parent::class);
 
@@ -71,7 +71,7 @@ class DeclarationTestCase extends TestCase
         $provider = new \ReflectionMethod(parent::class, 'provider');
 
         /** @var DeclarationInterface $declaration */
-        $declaration = $readable->getDeclarationInfo();
+        $declaration = $readable->getDeclaration();
 
         $this->assertGreaterThan($provider->getStartLine(), $declaration->getLine());
         $this->assertLessThan($provider->getEndLine(), $declaration->getLine());

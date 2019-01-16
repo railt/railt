@@ -94,7 +94,7 @@ abstract class BaseFile implements Readable
      */
     public function __wakeup(): void
     {
-        $this->declaration = Declaration::make(static::class);
+        $this->declaration = Declaration::make(File::class, static::class);
     }
 
     /**

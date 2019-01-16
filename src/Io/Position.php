@@ -38,7 +38,7 @@ final class Position implements PositionInterface
     {
         $this->offset = $this->normalizeOffset($sources, $offset);
 
-        $substr = \substr($sources, 0, $offset);
+        $substr = \substr($sources, 0, $this->offset);
 
         $this->line = $this->readLineByOffset($substr);
         $this->column = $this->readColumnByOffset($substr);

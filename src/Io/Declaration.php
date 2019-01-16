@@ -48,38 +48,53 @@ final class Declaration implements DeclarationInterface
      */
     public static function make(string ...$needles): self
     {
-        [$file, $line, $class] = ['undefined', 0, null];
-
         $trace = \array_reverse(\debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
 
-        foreach ($trace as $i => $current) {
-            if (isset($current['class'])) {
-                $class = $current['class'];
-
-                foreach ($needles as $needle) {
-                    if ($class === $needle || \is_a($class, $needle, true)) {
-                        [$file, $line, $class] = self::extractInfoFromTrace($current);
-
-                        break 2;
-                    }
-                }
-            }
-        }
-
-        return new static($file, $line, $class);
+        return new static(...self::reduce($needles, $trace));
     }
 
     /**
+     * @param array $needles
      * @param array $trace
      * @return array
      */
-    private static function extractInfoFromTrace(array $trace): array
+    private static function reduce(array $needles, array $trace): array
     {
-        return [
-            $trace['file'],
-            $trace['line'],
-            $trace['class'] ?? null,
-        ];
+        [$file, $line, $class] = ['php://input', 0, null];
+
+        foreach ($trace as $i => $item) {
+            if (! isset($item['class'])) {
+                continue;
+            }
+
+            if (self::match($item['class'], ...$needles)) {
+                $previous = \max(0, $i - 1);
+
+                return [
+                    $item['file'] ?? $file,
+                    $item['line'] ?? $line,
+                    $trace[$previous]['class'] ?? $class,
+                ];
+            }
+        }
+
+        return [$file, $line, $class];
+    }
+
+    /**
+     * @param string $class
+     * @param string ...$needles
+     * @return bool
+     */
+    private static function match(string $class, string ...$needles): bool
+    {
+        foreach ($needles as $needle) {
+            if (\is_a($needle, $class, true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
