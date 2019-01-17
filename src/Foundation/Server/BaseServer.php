@@ -14,6 +14,7 @@ use Railt\Foundation\ConnectionInterface;
 
 /**
  * Class Server
+ * @internal This is experimental functional. Do not use it in production!
  */
 abstract class BaseServer implements ServerInterface
 {

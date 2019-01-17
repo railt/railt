@@ -14,6 +14,7 @@ use Swoole\Server;
 
 /**
  * Class SwooleHttp
+ * @internal This is experimental functional. Do not use it in production!
  */
 class SwooleHttp extends BaseServer
 {

@@ -13,6 +13,7 @@ use Railt\Foundation\ApplicationInterface;
 
 /**
  * Interface ServerInterface
+ * @internal This is experimental functional. Do not use it in production!
  */
 interface ServerInterface
 {

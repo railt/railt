@@ -14,6 +14,7 @@ use Swoole\Http\Request;
 
 /**
  * Class RequestProvider
+ * @internal This is experimental functional. Do not use it in production!
  */
 class SwooleProvider extends DataProvider
 {

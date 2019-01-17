@@ -17,6 +17,7 @@ use React\Socket\Server as SocketServer;
 
 /**
  * Class ReactHttp
+ * @internal This is experimental functional. Do not use it in production!
  */
 class ReactHttp extends BaseServer
 {

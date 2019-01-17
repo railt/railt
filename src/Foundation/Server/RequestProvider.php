@@ -14,6 +14,7 @@ use Railt\Http\Provider\DataProvider;
 
 /**
  * Class RequestProvider
+ * @internal This is experimental functional. Do not use it in production!
  */
 class RequestProvider extends DataProvider
 {
