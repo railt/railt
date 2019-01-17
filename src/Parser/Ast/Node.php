@@ -33,7 +33,7 @@ abstract class Node implements NodeInterface
      */
     public function __construct(string $name, int $offset = 0)
     {
-        $this->name   = $name;
+        $this->name = $name;
         $this->offset = $offset;
     }
 

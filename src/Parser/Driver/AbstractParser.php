@@ -42,7 +42,7 @@ abstract class AbstractParser implements ParserInterface
      */
     public function __construct(LexerInterface $lexer, GrammarInterface $grammar)
     {
-        $this->lexer   = $lexer;
+        $this->lexer = $lexer;
         $this->grammar = $grammar;
     }
 
