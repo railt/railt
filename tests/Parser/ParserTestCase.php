@@ -11,7 +11,7 @@ namespace Railt\Tests\Parser;
 
 use Railt\Io\File;
 use Railt\Io\Readable;
-use Railt\Parser\Dumper\HoaDumper;
+use Railt\Parser\Ast\Dumper\HoaDumper;
 use Railt\Parser\ParserInterface;
 
 /**

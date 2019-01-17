@@ -38,6 +38,15 @@ abstract class Node implements NodeInterface
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public function is(string $name): bool
+    {
+        return $this->getName() === $name;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string
