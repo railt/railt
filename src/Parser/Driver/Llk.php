@@ -87,13 +87,16 @@ class Llk extends AbstractParser
             /** @var TokenInterface $token */
             $token = $this->errorToken ?? $this->stream->current();
 
-            throw (new UnexpectedTokenException(\sprintf('Unexpected token %s', $token)))
-                ->throwsIn($input, $token->getOffset());
+            $exception = new UnexpectedTokenException(\sprintf('Unexpected token %s', $token));
+            $exception->throwsIn($input, $token->getOffset());
+
+            throw $exception;
         }
     }
 
     /**
      * @param Readable $input
+     * @throws \Railt\Io\Exception\ExternalFileException
      */
     private function reset(Readable $input): void
     {
@@ -102,7 +105,7 @@ class Llk extends AbstractParser
         $this->errorToken = null;
 
         $this->trace = [];
-        $this->todo = [];
+        $this->todo  = [];
     }
 
     /**
@@ -256,7 +259,7 @@ class Llk extends AbstractParser
 
         if ($next === 0) {
             $name = $repeat->getName();
-            $min = $repeat->getMin();
+            $min  = $repeat->getMin();
 
             $this->addTrace(new Entry($name, $min));
 
@@ -312,7 +315,7 @@ class Llk extends AbstractParser
             return false;
         }
 
-        $this->todo = $last->getTodo();
+        $this->todo   = $last->getTodo();
         $this->todo[] = new Entry($last->getRule(), $last->getData() + 1);
 
         return true;

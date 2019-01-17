@@ -14,4 +14,9 @@ namespace Railt\Parser\Ast;
  */
 interface LeafInterface extends NodeInterface
 {
+    /**
+     * @param int $group
+     * @return string|null
+     */
+    public function getValue(int $group = 0): ?string;
 }

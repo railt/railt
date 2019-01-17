@@ -9,24 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Ast;
 
-use Railt\Parser\Dumper\NodeDumperInterface;
-use Railt\Parser\Finder\Findable;
-
 /**
  * Interface NodeInterface
  */
-interface NodeInterface extends Findable
+interface NodeInterface
 {
     /**
      * @return string
      */
     public function getName(): string;
-
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function is(string $name): bool;
 
     /**
      * @return int
@@ -39,20 +30,7 @@ interface NodeInterface extends Findable
     public function getValues(): iterable;
 
     /**
-     * @param int $group
-     * @return string|null
-     */
-    public function getValue(int $group = 0): ?string;
-
-    /**
-     * @param NodeDumperInterface|string $dumper
      * @return string
      */
-    public function dump(string $dumper): string;
-
-    /**
-     * @param string $name
-     * @param \Closure $then
-     */
-    public static function extend(string $name, \Closure $then): void;
+    public function __toString(): string;
 }

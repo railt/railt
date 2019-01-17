@@ -44,7 +44,10 @@
     "autoload": {
         "psr-4": {
             "Railt\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"

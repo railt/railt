@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser;
 
-use Railt\Parser\Ast\Delegate;
 use Railt\Parser\Rule\Rule;
 
 /**
@@ -35,7 +34,7 @@ interface GrammarInterface
     public function fetch($rule): Rule;
 
     /**
-     * @return iterable|string[]|Delegate[]
+     * @return iterable|string[]
      */
     public function getDelegates(): iterable;
 

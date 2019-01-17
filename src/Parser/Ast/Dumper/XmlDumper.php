@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Dumper;
+namespace Railt\Parser\Ast\Dumper;
 
 use Railt\Parser\Ast\LeafInterface;
 use Railt\Parser\Ast\NodeInterface;
@@ -18,7 +18,7 @@ use Railt\Parser\Ast\RuleInterface;
  */
 class XmlDumper implements NodeDumperInterface
 {
-    private const OUTPUT_CHARSET = 'UTF-8';
+    private const OUTPUT_CHARSET     = 'UTF-8';
     private const OUTPUT_XML_VERSION = '1.1';
 
     /**
@@ -84,7 +84,7 @@ class XmlDumper implements NodeDumperInterface
                     if ($i === 0) {
                         continue;
                     }
-
+                    
                     $this->renderAttribute($token, 'value:' . $i, $value);
                 }
             }
@@ -116,10 +116,11 @@ class XmlDumper implements NodeDumperInterface
         switch (true) {
             case $value === null:
                 return $root->createElement($name);
+                
 
             case $value === $this->escape($value):
                 return $root->createElement($name, $value);
-
+                
             default:
                 $result = $root->createElement($name);
                 $result->appendChild($root->createCDATASection($value));
@@ -131,15 +132,13 @@ class XmlDumper implements NodeDumperInterface
      * @param NodeInterface $node
      * @return string
      */
-    private function getName(NodeInterface $node): string
+    private function getName($node): string
     {
-        $name = \basename(\str_replace('\\', '/', \get_class($node)));
-
-        $result = $node instanceof NodeInterface
-            ? \preg_replace('/\W+/u', '', $node->getName())
-            : $name;
-
-        return $this->escape($result);
+        return $this->escape(
+            $node instanceof NodeInterface
+                ? \preg_replace('/\W+/u', '', $node->getName())
+                : \class_basename($node)
+        );
     }
 
     /**
@@ -161,30 +160,7 @@ class XmlDumper implements NodeDumperInterface
 
         foreach ($reflection->getProperties(\ReflectionProperty::IS_PROTECTED) as $property) {
             $property->setAccessible(true);
-
-            if ($property->isStatic()) {
-                continue;
-            }
-
-            $this->renderAttribute($node, $property->getName(), $this->value($property->getValue($ast)));
-        }
-    }
-
-    /**
-     * @param mixed $value
-     * @return string
-     */
-    private function value($value): string
-    {
-        switch (true) {
-            case \is_scalar($value):
-                return (string)$value;
-            case \is_array($value):
-                return 'array(' . \count($value) . ') { ... }';
-            case \is_object($value):
-                return \get_class($value);
-            default:
-                return \print_r($value, true);
+            $this->renderAttribute($node, $property->getName(), (string)$property->getValue($ast));
         }
     }
 
@@ -223,7 +199,7 @@ class XmlDumper implements NodeDumperInterface
      */
     protected function setIndention(int $depth = 4, int $initial = 0): self
     {
-        $this->indention = $depth;
+        $this->indention        = $depth;
         $this->initialIndention = $initial;
 
         return $this;

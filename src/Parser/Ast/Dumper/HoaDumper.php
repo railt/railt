@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Dumper;
+namespace Railt\Parser\Ast\Dumper;
 
 use Railt\Parser\Ast\LeafInterface;
 use Railt\Parser\Ast\NodeInterface;
@@ -43,7 +43,7 @@ class HoaDumper implements NodeDumperInterface
 
         if ($node instanceof LeafInterface) {
             return [
-                $prefix . 'token(' . $node->getName() . ', ' . $node->getValue() . ')',
+                $prefix . 'token(' . $node->getName() . ', ' . $node->getValue() . ')'
             ];
         }
 

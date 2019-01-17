@@ -7,10 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Finder;
-
-use Railt\Parser\Ast\NodeInterface;
-use Railt\Parser\Finder;
+namespace Railt\Parser\Ast;
 
 /**
  * Interface Findable
@@ -18,16 +15,16 @@ use Railt\Parser\Finder;
 interface Findable
 {
     /**
-     * @param string $query
+     * @param string $name
      * @param int|null $depth
-     * @return Finder
+     * @return iterable
      */
-    public function find(string $query, int $depth = null): Finder;
+    public function find(string $name, int $depth = null): iterable;
 
     /**
-     * @param string $query
+     * @param string $name
      * @param int|null $depth
      * @return null|NodeInterface
      */
-    public function first(string $query, int $depth = null): ?NodeInterface;
+    public function first(string $name, int $depth = null): ?NodeInterface;
 }

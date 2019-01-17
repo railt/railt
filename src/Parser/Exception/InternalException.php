@@ -14,4 +14,5 @@ namespace Railt\Parser\Exception;
  */
 class InternalException extends ParserException
 {
+
 }

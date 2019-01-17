@@ -11,7 +11,6 @@ namespace Railt\Parser\Trace;
 
 /**
  * Class TraceItem
- * @internal the class is part of the internal logic
  */
 abstract class TraceItem
 {
@@ -24,7 +23,7 @@ abstract class TraceItem
      * @param int $offset
      * @return TraceItem
      */
-    public function at(int $offset): self
+    public function at(int $offset): TraceItem
     {
         $this->offset = $offset;
 

@@ -12,7 +12,7 @@ namespace Railt\Parser\Ast;
 /**
  * Interface RuleInterface
  */
-interface RuleInterface extends NodeInterface, \Countable, \IteratorAggregate
+interface RuleInterface extends NodeInterface, Findable, \Countable, \IteratorAggregate
 {
     /**
      * @return iterable|NodeInterface[]|RuleInterface[]|LeafInterface[]

@@ -61,7 +61,7 @@
         ]
     },
     "require-dev": {
-        "railt/compiler": "1.3.*|dev-master",
+        "railt/compiler": ">=1.3.3|dev-master",
         "symfony/dependency-injection": "~3.4|~4.0",
         "symfony/var-dumper": "~4.0",
         "phpunit/phpunit": "^6.5",

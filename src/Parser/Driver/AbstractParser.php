@@ -15,7 +15,6 @@ use Railt\Lexer\Result\Unknown;
 use Railt\Lexer\TokenInterface;
 use Railt\Parser\Ast\Builder;
 use Railt\Parser\Ast\RuleInterface;
-use Railt\Parser\Environment;
 use Railt\Parser\Exception\UnexpectedTokenException;
 use Railt\Parser\GrammarInterface;
 use Railt\Parser\ParserInterface;
@@ -37,31 +36,14 @@ abstract class AbstractParser implements ParserInterface
     protected $grammar;
 
     /**
-     * @var Environment
-     */
-    protected $env;
-
-    /**
      * AbstractParser constructor.
      * @param LexerInterface $lexer
      * @param GrammarInterface $grammar
-     * @param Environment|null $env
      */
-    public function __construct(LexerInterface $lexer, GrammarInterface $grammar, Environment $env = null)
+    public function __construct(LexerInterface $lexer, GrammarInterface $grammar)
     {
-        $this->lexer = $lexer;
+        $this->lexer   = $lexer;
         $this->grammar = $grammar;
-        $this->env = $env ?? new Environment();
-    }
-
-    /**
-     * @param string $variable
-     * @param mixed $value
-     * @return Environment
-     */
-    public function env(string $variable, $value): Environment
-    {
-        return $this->env->share($variable, $value);
     }
 
     /**
@@ -89,7 +71,7 @@ abstract class AbstractParser implements ParserInterface
     {
         $trace = $this->trace($input);
 
-        $builder = new Builder($trace, $this->grammar, $this->env);
+        $builder = new Builder($trace, $this->grammar);
 
         return $builder->build();
     }
