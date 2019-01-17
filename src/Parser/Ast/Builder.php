@@ -72,11 +72,11 @@ class Builder
             $trace = $this->trace[$i];
 
             if ($trace instanceof Entry) {
-                $ruleName  = $trace->getRule();
-                $rule      = $this->grammar->fetch($ruleName);
-                $isRule    = $trace->isTransitional() === false;
+                $ruleName = $trace->getRule();
+                $rule = $this->grammar->fetch($ruleName);
+                $isRule = $trace->isTransitional() === false;
                 $nextTrace = $this->trace[$i + 1];
-                $id        = $rule->getNodeId();
+                $id = $rule->getNodeId();
 
                 // Optimization: Skip empty trace sequence.
                 if ($nextTrace instanceof Escape && $ruleName === $nextTrace->getRule()) {
@@ -100,7 +100,7 @@ class Builder
                 }
 
                 $handle = [];
-                $childId    = null;
+                $childId = null;
 
                 do {
                     $pop = \array_pop($children);

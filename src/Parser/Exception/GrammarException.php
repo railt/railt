@@ -14,5 +14,4 @@ namespace Railt\Parser\Exception;
  */
 class GrammarException extends ParserException
 {
-
 }
