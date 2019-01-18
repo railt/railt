@@ -75,7 +75,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($result = $this->singular($routes, $event)) {
+        if (($result = $this->singular($routes, $event)) !== null) {
             $event->withResult($result);
         }
     }
@@ -191,6 +191,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
      */
     private function singular(iterable $routes, FieldResolve $event)
     {
+
         foreach ($routes as $route) {
             $before = $this->fireDispatch($route, $event);
 
