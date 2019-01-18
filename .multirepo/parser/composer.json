@@ -46,7 +46,7 @@
             "Railt\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/Parser/helpers.php"
         ]
     },
     "require-dev": {
