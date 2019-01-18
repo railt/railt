@@ -101,7 +101,9 @@ class Input implements InputInterface
      */
     public function getPreferType(): string
     {
-        return \reset($this->preferTypes);
+        $types = $this->getPreferTypes();
+
+        return (string)\reset($types);
     }
 
     /**
