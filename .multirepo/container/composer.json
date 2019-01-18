@@ -30,9 +30,9 @@
         }
     },
     "require-dev": {
-        "symfony/dependency-injection": "~3.4|~4.0",
+        "phpunit/phpunit": "^7.5",
         "illuminate/container": "~5.5",
-        "phpunit/phpunit": "^6.5"
+        "symfony/dependency-injection": "~3.4|~4.0"
     },
     "autoload-dev": {
         "psr-4": {
