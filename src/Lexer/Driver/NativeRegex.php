@@ -12,9 +12,9 @@ namespace Railt\Lexer\Driver;
 use Railt\Io\Readable;
 use Railt\Lexer\Driver\NativeStateful\PCRECompiler;
 use Railt\Lexer\Iterator\RegexNamedGroupsIterator;
-use Railt\Lexer\Result\Eoi;
-use Railt\Lexer\Result\Token;
-use Railt\Lexer\Result\Unknown;
+use Railt\Lexer\Token\EndOfInput;
+use Railt\Lexer\Token\Token;
+use Railt\Lexer\Token\Unknown;
 use Railt\Lexer\TokenInterface;
 
 /**
@@ -57,7 +57,7 @@ class NativeRegex extends SimpleLexer
             yield $token;
         }
 
-        yield new Eoi($offset);
+        yield new EndOfInput($offset);
     }
 
     /**

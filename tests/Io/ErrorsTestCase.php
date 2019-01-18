@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Io;
 
 use Railt\Io\Exception\ExternalExceptionInterface;
+use Railt\Io\Exception\ExternalFileException;
 use Railt\Io\Exception\NotFoundException;
 use Railt\Io\Exception\NotReadableException;
 use Railt\Io\File;
@@ -76,7 +77,7 @@ class ErrorsTestCase extends TestCase
         $readable = $factory();
 
         try {
-            throw $readable->error($message, 23, 42);
+            throw (new ExternalFileException($message))->throwsIn($readable, 23, 42);
         } catch (ExternalExceptionInterface $e) {
             $this->assertSame(23, $e->getLine());
             $this->assertSame(42, $e->getColumn());
@@ -100,7 +101,7 @@ class ErrorsTestCase extends TestCase
         $readable = $factory();
 
         try {
-            throw $readable->error($message, 150);
+            throw (new ExternalFileException($message))->throwsIn($readable, 150);
         } catch (ExternalExceptionInterface $e) {
             $this->assertSame(2, $e->getLine());
             $this->assertSame(39, $e->getColumn());

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Lexer\Result;
+namespace Railt\Lexer\Token;
 
 /**
  * Class Token

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Lexer\Result\Common;
+namespace Railt\Lexer\Token\Common;
 
 /**
  * Trait Renderable

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Lexer\Driver\NativeStateful;
 
-use Railt\Lexer\Result\Unknown;
+use Railt\Lexer\Token\Unknown;
 
 /**
  * Class PCRECompiler

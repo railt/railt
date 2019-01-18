@@ -23,6 +23,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNullableDefaultResponse(): void
     {
@@ -52,6 +53,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNullableResponse(): void
     {
@@ -81,6 +83,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNonNullResponse(): void
     {
@@ -112,6 +115,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testListDefaultResponse(): void
     {
@@ -124,6 +128,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testListResponse(): void
     {
@@ -138,6 +143,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testListResponseWithNulls(): void
     {
@@ -169,6 +175,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testListOfNonNullsDefaultResponse(): void
     {
@@ -181,6 +188,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testListOfNonNullsResponse(): void
     {
@@ -244,6 +252,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNonNullListResponse(): void
     {
@@ -258,6 +267,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNonNullListResponseWithNulls(): void
     {
@@ -304,6 +314,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNonNullListOfNonNullsResponse(): void
     {
@@ -352,6 +363,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testRenderableObject(): void
     {
@@ -373,6 +385,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testListTraversableObject(): void
     {
@@ -394,6 +407,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testListGeneratorObject(): void
     {

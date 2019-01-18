@@ -16,9 +16,9 @@ use Railt\Io\Readable;
 use Railt\Lexer\Definition\TokenDefinition;
 use Railt\Lexer\Exception\BadLexemeException;
 use Railt\Lexer\LexerInterface;
-use Railt\Lexer\Result\Eoi;
-use Railt\Lexer\Result\Token;
-use Railt\Lexer\Result\Unknown;
+use Railt\Lexer\Token\EndOfInput;
+use Railt\Lexer\Token\Token;
+use Railt\Lexer\Token\Unknown;
 use Railt\Lexer\TokenInterface;
 
 /**
@@ -101,7 +101,7 @@ class ParleLexer extends SimpleLexer
                 : $this->token($iterator);
         }
 
-        yield new Eoi($this->lexer->marker);
+        yield new EndOfInput($this->lexer->marker);
     }
 
     /**

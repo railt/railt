@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Lexer\Result;
+namespace Railt\Lexer\Token;
 
 /**
  * Class Eoi
  */
-final class Eoi extends BaseToken
+final class EndOfInput extends BaseToken
 {
     /**
      * End of input token name
