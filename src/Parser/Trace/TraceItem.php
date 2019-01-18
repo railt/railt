@@ -11,6 +11,7 @@ namespace Railt\Parser\Trace;
 
 /**
  * Class TraceItem
+ * @internal the class is part of the internal logic
  */
 abstract class TraceItem
 {

@@ -12,7 +12,7 @@ namespace Railt\Parser\Ast;
 /**
  * Class Rule
  */
-class Rule extends Node implements RuleInterface
+class Rule extends Node implements RuleInterface, \ArrayAccess
 {
     /**
      * @var array|iterable|\Traversable
@@ -34,15 +34,15 @@ class Rule extends Node implements RuleInterface
 
     /**
      * @param int $index
-     * @return null|NodeInterface
+     * @return LeafInterface|RuleInterface|NodeInterface|mixed
      */
-    public function getChild(int $index): ?NodeInterface
+    public function getChild(int $index)
     {
         return $this->getChildren()[$index] ?? null;
     }
 
     /**
-     * @return iterable|NodeInterface[]
+     * @return iterable|LeafInterface[]|RuleInterface[]|NodeInterface[]
      */
     public function getChildren(): iterable
     {
@@ -58,11 +58,28 @@ class Rule extends Node implements RuleInterface
     }
 
     /**
-     * @return \Traversable
+     * @return \Traversable|LeafInterface[]|RuleInterface[]
      */
     public function getIterator(): \Traversable
     {
         yield from $this->getChildren();
+    }
+
+    /**
+     * @param int $group
+     * @return null|string
+     */
+    public function getValue(int $group = 0): ?string
+    {
+        $result = '';
+
+        foreach ($this->getChildren() as $child) {
+            if (\method_exists($child, 'getValue')) {
+                $result .= $child->getValue($group);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -71,13 +88,50 @@ class Rule extends Node implements RuleInterface
     public function getValues(): iterable
     {
         foreach ($this->getChildren() as $child) {
-            if ($child instanceof LeafInterface) {
-                yield $child;
-            }
-
-            if ($child instanceof RuleInterface) {
-                yield from $child->getValues();
-            }
+            yield from $child->getValues();
         }
+    }
+
+    /**
+     * @param int $offset
+     * @return bool
+     */
+    public function offsetExists($offset): bool
+    {
+        \assert(\is_int($offset));
+
+        return isset($this->children[$offset]);
+    }
+
+    /**
+     * @param int $offset
+     * @return LeafInterface|NodeInterface|RuleInterface|mixed
+     */
+    public function offsetGet($offset)
+    {
+        \assert(\is_int($offset));
+
+        return $this->getChild((int)$offset);
+    }
+
+    /**
+     * @param int $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value): void
+    {
+        \assert(\is_int($offset));
+
+        $this->children[$offset] = $value;
+    }
+
+    /**
+     * @param int $offset
+     */
+    public function offsetUnset($offset): void
+    {
+        \assert(\is_int($offset));
+
+        unset($this->children[$offset]);
     }
 }

@@ -64,6 +64,50 @@ abstract class Rule
     }
 
     /**
+     * @param int|string $child
+     * @param int|string $relation
+     * @return Rule
+     */
+    public function addAfter($child, $relation): self
+    {
+        $result = [];
+
+        foreach ($this->children as $haystack) {
+            $result[] = $haystack;
+
+            if ($haystack === $child) {
+                $result[] = $relation;
+            }
+        }
+
+        $this->children = $result;
+
+        return $this;
+    }
+
+    /**
+     * @param int|string $child
+     * @param int|string $relation
+     * @return Rule
+     */
+    public function addBefore($child, $relation): self
+    {
+        $result = [];
+
+        foreach ($this->children as $haystack) {
+            if ($haystack === $child) {
+                $result[] = $relation;
+            }
+
+            $result[] = $haystack;
+        }
+
+        $this->children = $result;
+
+        return $this;
+    }
+
+    /**
      * Get rule name.
      *
      * @return string|int

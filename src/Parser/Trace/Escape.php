@@ -11,6 +11,7 @@ namespace Railt\Parser\Trace;
 
 /**
  * Class Escape
+ * @internal the class is part of the internal logic
  */
 class Escape extends Invocation
 {

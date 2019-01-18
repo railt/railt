@@ -11,6 +11,7 @@ namespace Railt\Parser\Trace;
 
 /**
  * Class Invocation
+ * @internal the class is part of the internal logic
  */
 abstract class Invocation extends TraceItem
 {

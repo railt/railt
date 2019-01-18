@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of Railt package.
+ * This file is part of compiler package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -44,6 +44,7 @@ class Builder
     /**
      * @return RuleInterface
      * @throws InternalException
+     * @throws \LogicException
      */
     public function build(): RuleInterface
     {
@@ -63,6 +64,7 @@ class Builder
      * @param int $i Current trace index.
      * @param array &$children Collected children.
      * @return Node|int
+     * @throws \LogicException
      */
     protected function buildTree(int $i = 0, array &$children = [])
     {
@@ -135,7 +137,7 @@ class Builder
                     continue;
                 }
 
-                $children[] = $this->leaf($trace);
+                $children[] = new Leaf($trace->getToken());
                 ++$i;
             }
         }
@@ -147,22 +149,18 @@ class Builder
      * @param string $name
      * @param array $children
      * @param int $offset
-     * @return RuleInterface
+     * @return Rule|mixed
+     * @throws \LogicException
      */
-    private function rule(string $name, array $children, int $offset): RuleInterface
+    protected function rule(string $name, array $children, int $offset)
     {
-        /** @var Rule $class */
-        $class = $this->grammar->delegate($name) ?? Rule::class;
+        $delegate = $this->grammar->delegate($name) ?? Rule::class;
 
-        return new $class($name, $children, $offset);
-    }
-
-    /**
-     * @param Token $token
-     * @return LeafInterface
-     */
-    private function leaf(Token $token): LeafInterface
-    {
-        return new Leaf($token->getToken());
+        try {
+            return new $delegate($name, $children, $offset);
+        } catch (\TypeError $e) {
+            $error = \sprintf('Error while %s initialization: %s', $delegate, $e->getMessage());
+            throw new \LogicException($error);
+        }
     }
 }

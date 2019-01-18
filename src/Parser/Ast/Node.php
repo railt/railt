@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Ast;
 
+use Railt\Parser\Dumper\NodeDumperInterface;
 use Railt\Parser\Dumper\XmlDumper;
 
 /**
@@ -17,14 +18,14 @@ use Railt\Parser\Dumper\XmlDumper;
 abstract class Node implements NodeInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @var int
      */
     protected $offset;
+
+    /**
+     * @var string
+     */
+    private $name;
 
     /**
      * Node constructor.
@@ -43,15 +44,7 @@ abstract class Node implements NodeInterface
      */
     public function is(string $name): bool
     {
-        return $this->getName() === $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
+        return $this->name === $name;
     }
 
     /**
@@ -68,9 +61,29 @@ abstract class Node implements NodeInterface
     public function __toString(): string
     {
         try {
-            return (new XmlDumper($this))->toString();
+            return $this->dump();
         } catch (\Throwable $e) {
             return $this->getName() . ': ' . $e->getMessage();
         }
+    }
+
+    /**
+     * @param NodeDumperInterface|string $dumper
+     * @return string
+     */
+    public function dump(string $dumper = XmlDumper::class): string
+    {
+        /** @var string|NodeDumperInterface $dumper */
+        $dumper = new $dumper($this);
+
+        return $dumper->toString();
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\TokenStream;
 
-use Railt\Lexer\Result\Eoi;
+use Railt\Lexer\Token\EndOfInput;
 use Railt\Lexer\TokenInterface;
 
 /**
@@ -22,7 +22,7 @@ final class TokenStream extends Buffer
      */
     public function isEoi(): bool
     {
-        return $this->current()->getName() === Eoi::T_NAME;
+        return $this->current()->getName() === EndOfInput::T_NAME;
     }
 
     /**

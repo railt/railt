@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Ast;
 
+use Railt\Parser\Dumper\NodeDumperInterface;
+
 /**
  * Interface NodeInterface
  */
@@ -18,6 +20,12 @@ interface NodeInterface
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function is(string $name): bool;
 
     /**
      * @return int
@@ -30,7 +38,14 @@ interface NodeInterface
     public function getValues(): iterable;
 
     /**
+     * @param int $group
+     * @return string|null
+     */
+    public function getValue(int $group = 0): ?string;
+
+    /**
+     * @param NodeDumperInterface|string $dumper
      * @return string
      */
-    public function __toString(): string;
+    public function dump(string $dumper): string;
 }

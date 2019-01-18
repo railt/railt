@@ -18,7 +18,14 @@ use Railt\Parser\Ast\RuleInterface;
  */
 class XmlDumper implements NodeDumperInterface
 {
+    /**
+     * @var string
+     */
     private const OUTPUT_CHARSET = 'UTF-8';
+
+    /**
+     * @var string
+     */
     private const OUTPUT_XML_VERSION = '1.1';
 
     /**
@@ -32,16 +39,18 @@ class XmlDumper implements NodeDumperInterface
     protected $indention = 4;
 
     /**
-     * @var NodeInterface
+     * @var NodeInterface|mixed
      */
     private $ast;
 
     /**
-     * NodeDumper constructor.
-     * @param NodeInterface $ast
+     * XmlDumper constructor.
+     * @param mixed|NodeInterface $ast
      */
-    public function __construct(NodeInterface $ast)
+    public function __construct($ast)
     {
+        \assert(\class_exists(\DOMDocument::class));
+
         $this->ast = $ast;
     }
 
@@ -62,22 +71,34 @@ class XmlDumper implements NodeDumperInterface
 
         $dom->formatOutput = true;
 
-        $root = $dom->createElement('Ast');
+        $root = $dom->createElement($this->getRootNodeName());
         $root->appendChild($this->renderAsXml($dom, $this->ast));
+
+        if (\count($root->childNodes) === 1) {
+            return $dom->saveXML($root->firstChild);
+        }
 
         return $dom->saveXML($root);
     }
 
     /**
+     * @return string
+     */
+    private function getRootNodeName(): string
+    {
+        return $this->getName($this->ast);
+    }
+
+    /**
      * @param \DOMDocument $root
-     * @param NodeInterface|LeafInterface|RuleInterface $ast
+     * @param NodeInterface|LeafInterface|RuleInterface|mixed $ast
      * @return \DOMElement
      */
-    private function renderAsXml(\DOMDocument $root, NodeInterface $ast): \DOMElement
+    private function renderAsXml(\DOMDocument $root, $ast): \DOMElement
     {
         if ($ast instanceof LeafInterface) {
             $token = $this->createElement($root, $this->getName($ast), $ast->getValue());
-            $this->renderAttributes($token, $ast);
+            $this->renderAttributes($root, $token, $ast);
 
             if (\count($ast->getValues()) > 1) {
                 foreach ($ast->getValues() as $i => $value) {
@@ -93,7 +114,7 @@ class XmlDumper implements NodeDumperInterface
         }
 
         $node = $this->createElement($root, $this->getName($ast));
-        $this->renderAttributes($node, $ast);
+        $this->renderAttributes($root, $node, $ast);
 
         if ($ast instanceof RuleInterface) {
             /** @var NodeInterface $child */
@@ -117,7 +138,6 @@ class XmlDumper implements NodeDumperInterface
             case $value === null:
                 return $root->createElement($name);
 
-
             case $value === $this->escape($value):
                 return $root->createElement($name, $value);
 
@@ -134,11 +154,13 @@ class XmlDumper implements NodeDumperInterface
      */
     private function getName($node): string
     {
-        return $this->escape(
-            $node instanceof NodeInterface
-                ? \preg_replace('/\W+/u', '', $node->getName())
-                : \class_basename($node)
-        );
+        $name = \basename(\str_replace('\\', '/', \get_class($node)));
+
+        $result = $node instanceof NodeInterface
+            ? \preg_replace('/\W+/u', '', $node->getName())
+            : $name;
+
+        return $this->escape($result);
     }
 
     /**
@@ -151,16 +173,67 @@ class XmlDumper implements NodeDumperInterface
     }
 
     /**
+     * @param \DOMDocument $root
      * @param \DOMElement $node
-     * @param NodeInterface $ast
+     * @param NodeInterface|mixed $ast
      */
-    private function renderAttributes(\DOMElement $node, NodeInterface $ast): void
+    private function renderAttributes(\DOMDocument $root, \DOMElement $node, $ast): void
     {
         $reflection = new \ReflectionObject($ast);
 
-        foreach ($reflection->getProperties(\ReflectionProperty::IS_PROTECTED) as $property) {
+        /** @var \ReflectionProperty[] $properties */
+        $properties = \array_merge(
+            $reflection->getProperties(\ReflectionProperty::IS_PROTECTED),
+            $reflection->getProperties(\ReflectionProperty::IS_PUBLIC)
+        );
+
+        foreach ($properties as $property) {
             $property->setAccessible(true);
-            $this->renderAttribute($node, $property->getName(), (string)$property->getValue($ast));
+
+            if ($property->isStatic()) {
+                continue;
+            }
+
+            $value = $property->getValue($ast);
+
+            if (\is_array($value)) {
+                foreach ($value as $key => $child) {
+                    if (\is_object($child)) {
+                        $node->appendChild($this->renderAsXml($root, $child));
+                    } else {
+                        $this->renderAttribute($node, $property->getName() . ':' . $key, $this->value($child));
+                    }
+                }
+                continue;
+            }
+
+            if (\is_object($value)) {
+                $node->appendChild($this->renderAsXml($root, $value));
+                continue;
+            }
+
+            $this->renderAttribute($node, $property->getName(), $this->value($value));
+        }
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    private function value($value): string
+    {
+        switch (true) {
+            case \is_scalar($value):
+                return (string)$value;
+
+            case \is_array($value):
+                return 'array(' . \count($value) . ') { ... }';
+
+            case \is_object($value):
+                return \get_class($value) . '::class';
+
+            default:
+                return $this->inline(\print_r($value, true));
         }
     }
 
@@ -171,7 +244,7 @@ class XmlDumper implements NodeDumperInterface
      */
     private function renderAttribute(\DOMElement $node, string $name, string $value): void
     {
-        $node->setAttribute(\htmlspecialchars($name), \htmlspecialchars((string)$value));
+        $node->setAttribute($this->escape($name), $this->escape($value));
     }
 
     /**
