@@ -7,6 +7,7 @@
         ".scrutinizer.yml": ".scrutinizer.yml",
         "CONTRIBUTING.md": "CONTRIBUTING.md",
         "CODE_OF_CONDUCT.md": "CODE_OF_CONDUCT.md",
+        ".travis.yml": ".travis.yml",
         "LICENSE.md": "LICENSE.md",
         "phpunit.xml": "phpunit.xml"
     },
@@ -18,8 +19,7 @@
             "remote": "git@github.com:railt/container.git",
             "files": {
                 ".multirepo/container/composer.json": "composer.json",
-                ".multirepo/container/README.md": "README.md",
-                ".multirepo/container/.travis.yml": ".travis.yml"
+                ".multirepo/container/README.md": "README.md"
             },
             "dirs": {
                 "src/Container": "src/Container",
@@ -30,8 +30,7 @@
             "remote": "git@github.com:railt/http.git",
             "files": {
                 ".multirepo/http/composer.json": "composer.json",
-                ".multirepo/http/README.md": "README.md",
-                ".multirepo/http/.travis.yml": ".travis.yml"
+                ".multirepo/http/README.md": "README.md"
             },
             "dirs": {
                 "src/Http": "src/Http",
@@ -42,8 +41,7 @@
             "remote": "git@github.com:railt/io.git",
             "files": {
                 ".multirepo/io/composer.json": "composer.json",
-                ".multirepo/io/README.md": "README.md",
-                ".multirepo/io/.travis.yml": ".travis.yml"
+                ".multirepo/io/README.md": "README.md"
             },
             "dirs": {
                 "src/Io": "src/Io",
@@ -54,8 +52,7 @@
             "remote": "git@github.com:railt/lexer.git",
             "files": {
                 ".multirepo/lexer/composer.json": "composer.json",
-                ".multirepo/lexer/README.md": "README.md",
-                ".multirepo/lexer/.travis.yml": ".travis.yml"
+                ".multirepo/lexer/README.md": "README.md"
             },
             "dirs": {
                 "src/Lexer": "src/Lexer",
@@ -66,8 +63,7 @@
             "remote": "git@github.com:railt/parser.git",
             "files": {
                 ".multirepo/parser/composer.json": "composer.json",
-                ".multirepo/parser/README.md": "README.md",
-                ".multirepo/parser/.travis.yml": ".travis.yml"
+                ".multirepo/parser/README.md": "README.md"
             },
             "dirs": {
                 "src/Parser": "src/Parser",
@@ -78,8 +74,7 @@
             "remote": "git@github.com:railt/sdl.git",
             "files": {
                 ".multirepo/sdl/composer.json": "composer.json",
-                ".multirepo/sdl/README.md": "README.md",
-                ".multirepo/sdl/.travis.yml": ".travis.yml"
+                ".multirepo/sdl/README.md": "README.md"
             },
             "dirs": {
                 "src/SDL": "src/SDL",
@@ -91,8 +86,7 @@
             "remote": "git@github.com:railt/storage.git",
             "files": {
                 ".multirepo/storage/composer.json": "composer.json",
-                ".multirepo/storage/README.md": "README.md",
-                ".multirepo/storage/.travis.yml": ".travis.yml"
+                ".multirepo/storage/README.md": "README.md"
             },
             "dirs": {
                 "src/Storage": "src/Storage",
