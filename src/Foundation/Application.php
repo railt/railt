@@ -14,13 +14,12 @@ use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Application\CacheExtension;
 use Railt\Foundation\Application\CompilerExtension;
-use Railt\Foundation\Application\DebugExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
 use Railt\Foundation\Config\ConfigurationInterface;
+use Railt\Foundation\Config\Discovery;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
-use Railt\Foundation\Normalization\NormalizationExtension;
 use Railt\Foundation\Webonyx\WebonyxExtension;
 use Railt\Io\Readable;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
@@ -47,9 +46,7 @@ class Application implements ApplicationInterface
     private const KERNEL_EXTENSIONS = [
         EventsExtension::class,
         CacheExtension::class,
-        DebugExtension::class,
         CompilerExtension::class,
-        NormalizationExtension::class,
         WebonyxExtension::class,
     ];
 
@@ -78,6 +75,7 @@ class Application implements ApplicationInterface
      * @param bool $debug
      * @param PSRContainer|null $container
      * @throws \Railt\Foundation\Exception\ExtensionException
+     * @throws \LogicException
      */
     public function __construct(bool $debug = false, PSRContainer $container = null)
     {
@@ -86,15 +84,7 @@ class Application implements ApplicationInterface
         $this->extensions = new Repository($this->app);
 
         $this->registerBaseBindings($debug);
-        $this->boot();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDebug(): bool
-    {
-        return $this->debug;
+        $this->bootIfNotBooted();
     }
 
     /**
@@ -122,17 +112,7 @@ class Application implements ApplicationInterface
     /**
      * @return void
      * @throws \Railt\Foundation\Exception\ExtensionException
-     */
-    private function boot(): void
-    {
-        $this->bootIfNotBooted();
-
-        $this->extensions->boot();
-    }
-
-    /**
-     * @return void
-     * @throws \Railt\Foundation\Exception\ExtensionException
+     * @throws \LogicException
      */
     private function bootIfNotBooted(): void
     {
@@ -141,8 +121,11 @@ class Application implements ApplicationInterface
                 $this->extend($extension);
             }
 
+            $this->configure(Discovery::auto());
             $this->booted = true;
         }
+
+        $this->extensions->boot();
     }
 
     /**
@@ -155,6 +138,14 @@ class Application implements ApplicationInterface
         $this->extensions->add($extension);
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 
     /**
@@ -186,11 +177,12 @@ class Application implements ApplicationInterface
     /**
      * @param Readable $schema
      * @return ConnectionInterface
-     * @throws \InvalidArgumentException
+     * @throws Exception\ExtensionException
+     * @throws \LogicException
      */
     public function connect(Readable $schema): ConnectionInterface
     {
-        $this->boot();
+        $this->bootIfNotBooted();
 
         return $this->createConnection(...$this->compile($schema));
     }
