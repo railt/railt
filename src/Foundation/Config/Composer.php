@@ -9,51 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Config;
 
-use Railt\Discovery\Discovery;
-
 /**
  * Class Composer
+ * @deprecated Use Railt\Foundation\Config\Discovery instead.
  */
-class Composer implements ConfigurationInterface
+class Composer extends Discovery
 {
     /**
-     * @var Discovery
-     */
-    private $discovery;
-
-    /**
-     * Composer constructor.
-     * @param Discovery $discovery
-     */
-    public function __construct(Discovery $discovery)
-    {
-        $this->discovery = $discovery;
-    }
-
-    /**
-     * @return \Railt\Foundation\Config\ConfigurationInterface
+     * @return ConfigurationInterface
      * @throws \LogicException
      */
     public static function fromDiscovery(): ConfigurationInterface
     {
-        return new static(Discovery::auto());
-    }
-
-    /**
-     * @return iterable
-     * @throws \InvalidArgumentException
-     */
-    public function getExtensions(): iterable
-    {
-        return (array)$this->discovery->get('railt.extensions', []);
-    }
-
-    /**
-     * @return iterable
-     * @throws \InvalidArgumentException
-     */
-    public function getCommands(): iterable
-    {
-        return (array)$this->discovery->get('railt.commands', []);
+        return parent::auto();
     }
 }
