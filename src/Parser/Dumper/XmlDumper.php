@@ -117,6 +117,7 @@ class XmlDumper implements NodeDumperInterface
             case $value === null:
                 return $root->createElement($name);
 
+
             case $value === $this->escape($value):
                 return $root->createElement($name, $value);
 
@@ -131,15 +132,13 @@ class XmlDumper implements NodeDumperInterface
      * @param NodeInterface $node
      * @return string
      */
-    private function getName(NodeInterface $node): string
+    private function getName($node): string
     {
-        $name = \basename(\str_replace('\\', '/', \get_class($node)));
-
-        $result = $node instanceof NodeInterface
-            ? \preg_replace('/\W+/u', '', $node->getName())
-            : $name;
-
-        return $this->escape($result);
+        return $this->escape(
+            $node instanceof NodeInterface
+                ? \preg_replace('/\W+/u', '', $node->getName())
+                : \class_basename($node)
+        );
     }
 
     /**
@@ -161,30 +160,7 @@ class XmlDumper implements NodeDumperInterface
 
         foreach ($reflection->getProperties(\ReflectionProperty::IS_PROTECTED) as $property) {
             $property->setAccessible(true);
-
-            if ($property->isStatic()) {
-                continue;
-            }
-
-            $this->renderAttribute($node, $property->getName(), $this->value($property->getValue($ast)));
-        }
-    }
-
-    /**
-     * @param mixed $value
-     * @return string
-     */
-    private function value($value): string
-    {
-        switch (true) {
-            case \is_scalar($value):
-                return (string)$value;
-            case \is_array($value):
-                return 'array(' . \count($value) . ') { ... }';
-            case \is_object($value):
-                return \get_class($value);
-            default:
-                return \print_r($value, true);
+            $this->renderAttribute($node, $property->getName(), (string)$property->getValue($ast));
         }
     }
 
@@ -196,6 +172,15 @@ class XmlDumper implements NodeDumperInterface
     private function renderAttribute(\DOMElement $node, string $name, string $value): void
     {
         $node->setAttribute(\htmlspecialchars($name), \htmlspecialchars((string)$value));
+    }
+
+    /**
+     * @return string
+     * @deprecated Use toString method instead
+     */
+    public function toXml(): string
+    {
+        return $this->toString();
     }
 
     /**

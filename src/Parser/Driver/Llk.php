@@ -87,13 +87,16 @@ class Llk extends AbstractParser
             /** @var TokenInterface $token */
             $token = $this->errorToken ?? $this->stream->current();
 
-            throw (new UnexpectedTokenException(\sprintf('Unexpected token %s', $token)))
-                ->throwsIn($input, $token->getOffset());
+            $exception = new UnexpectedTokenException(\sprintf('Unexpected token %s', $token));
+            $exception->throwsIn($input, $token->getOffset());
+
+            throw $exception;
         }
     }
 
     /**
      * @param Readable $input
+     * @throws \Railt\Io\Exception\ExternalFileException
      */
     private function reset(Readable $input): void
     {

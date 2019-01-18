@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of compiler package.
+ * This file is part of Railt package.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Ast;
 
-use Railt\Parser\Environment;
 use Railt\Parser\Exception\InternalException;
 use Railt\Parser\GrammarInterface;
 use Railt\Parser\Trace\Entry;
@@ -27,11 +26,6 @@ class Builder
     private $trace;
 
     /**
-     * @var Environment
-     */
-    private $env;
-
-    /**
      * @var GrammarInterface
      */
     private $grammar;
@@ -40,11 +34,9 @@ class Builder
      * Builder constructor.
      * @param array $trace
      * @param GrammarInterface $grammar
-     * @param Environment $env
      */
-    public function __construct(array $trace, GrammarInterface $grammar, Environment $env)
+    public function __construct(array $trace, GrammarInterface $grammar)
     {
-        $this->env = $env;
         $this->trace = $trace;
         $this->grammar = $grammar;
     }
@@ -159,19 +151,10 @@ class Builder
      */
     private function rule(string $name, array $children, int $offset): RuleInterface
     {
-        $class = $this->ruleOf($name);
-
-        return new $class($this->env, $name, $children, $offset);
-    }
-
-    /**
-     * @param string $name
-     * @return string|RuleInterface
-     */
-    protected function ruleOf(string $name): string
-    {
         /** @var Rule $class */
-        return $this->grammar->delegate($name) ?? Rule::class;
+        $class = $this->grammar->delegate($name) ?? Rule::class;
+
+        return new $class($name, $children, $offset);
     }
 
     /**
@@ -180,17 +163,6 @@ class Builder
      */
     private function leaf(Token $token): LeafInterface
     {
-        $leaf = $this->leafOf($token->getToken()->getName());
-
-        return new $leaf($this->env, $token->getToken());
-    }
-
-    /**
-     * @param string $token
-     * @return string
-     */
-    protected function leafOf(string $token): string
-    {
-        return $this->grammar->delegate($token) ?? Leaf::class;
+        return new Leaf($token->getToken());
     }
 }

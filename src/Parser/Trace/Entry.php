@@ -11,7 +11,6 @@ namespace Railt\Parser\Trace;
 
 /**
  * Class Entry
- * @internal the class is part of the internal logic
  */
 class Entry extends Invocation
 {

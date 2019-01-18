@@ -12,7 +12,6 @@ namespace Railt\Parser\Driver;
 use Railt\Io\Readable;
 use Railt\Lexer\LexerInterface;
 use Railt\Parser\Ast\RuleInterface;
-use Railt\Parser\Environment;
 use Railt\Parser\GrammarInterface;
 use Railt\Parser\ParserInterface;
 
@@ -33,16 +32,6 @@ class Proxy implements ParserInterface
     public function __construct(ParserInterface $parent)
     {
         $this->parent = $parent;
-    }
-
-    /**
-     * @param string $variable
-     * @param $value
-     * @return Environment
-     */
-    public function env(string $variable, $value): Environment
-    {
-        return $this->parent->env($variable, $value);
     }
 
     /**

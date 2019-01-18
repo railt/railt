@@ -13,7 +13,6 @@ use Railt\Lexer\TokenInterface;
 
 /**
  * Class Token
- * @internal the class is part of the internal logic
  */
 class Token extends TraceItem
 {
