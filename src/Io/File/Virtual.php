@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Io\File;
 
+use Railt\Io\File;
+
 /**
  * Class Virtual
  */
-class Virtual extends BaseFile
+class Virtual extends File
 {
     /**
      * @var string A default file name which created from sources
