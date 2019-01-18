@@ -58,7 +58,6 @@
         "cache/filesystem-adapter": "~1.0",
         "illuminate/container": "~5.5",
         "illuminate/http": "~5.5",
-        "symfony/process": "~3.4|~4.0",
         "symfony/http-foundation": "~3.4|~4.0",
         "zendframework/zend-diactoros": "~1.7",
         "zendframework/zend-http": "~2.8"
