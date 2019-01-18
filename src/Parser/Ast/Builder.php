@@ -13,7 +13,6 @@ use Railt\Parser\Exception\InternalException;
 use Railt\Parser\GrammarInterface;
 use Railt\Parser\Trace\Entry;
 use Railt\Parser\Trace\Escape;
-use Railt\Parser\Trace\Token;
 
 /**
  * Class Builder
