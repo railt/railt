@@ -1,7 +1,6 @@
 <p align="center">
     <a href="https://railt.org"><img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" /></a>
 </p>
-master
 <p align="center">
     <a href="https://travis-ci.org/railt/railt"><img src="https://travis-ci.org/railt/railt.svg?branch=1.4.x" alt="Travis CI" /></a>
     <a href="https://scrutinizer-ci.com/g/railt/railt/?branch=1.4.x"><img src="https://scrutinizer-ci.com/g/railt/railt/badges/coverage.png?b=1.4.x" alt="Code coverage" /></a>
