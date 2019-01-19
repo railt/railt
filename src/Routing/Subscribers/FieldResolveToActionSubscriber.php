@@ -191,7 +191,6 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
      */
     private function singular(iterable $routes, FieldResolve $event)
     {
-
         foreach ($routes as $route) {
             $before = $this->fireDispatch($route, $event);
 
