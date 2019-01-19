@@ -12,6 +12,7 @@ namespace Railt\Foundation\Webonyx;
 use Railt\Foundation\Application;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Webonyx\Subscribers\ConnectionSubscriber;
 use Railt\Foundation\Webonyx\Subscribers\RequestsSubscriber;
 use Railt\Foundation\Webonyx\Subscribers\TypeResolvingFixPathSubscriber;
@@ -43,6 +44,14 @@ class WebonyxExtension extends Extension
     public function getVersion(): string
     {
         return Application::VERSION;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return Status::STABLE;
     }
 
     /**

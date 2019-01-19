@@ -7,15 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Extension;
+namespace Railt\Foundation\Debug\Http;
 
 use Railt\Http\Exception\GraphQLException;
+use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Http\Extension\ExtensionInterface;
 use Railt\Io\PositionInterface;
 
 /**
- * Class DebugExtension
+ * Class ExceptionTraceExtension
  */
-class DebugExtension extends Extension
+class ExceptionTraceExtension implements ExtensionInterface
 {
     /**
      * @var int
@@ -41,6 +43,10 @@ class DebugExtension extends Extension
     {
         $this->exception = $exception;
         $this->trace = \max(0, $trace);
+
+        if ($exception instanceof GraphQLExceptionInterface) {
+            $exception->publish();
+        }
     }
 
     /**

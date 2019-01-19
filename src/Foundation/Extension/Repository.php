@@ -123,8 +123,10 @@ class Repository
      */
     private function loadDependencies(ExtensionInterface $extension): void
     {
-        foreach ($extension->getDependencies() as $package => $dependency) {
-            $this->loadDependency($extension, $dependency, $package);
+        foreach ($extension->getDependencies() as $package => $dependencies) {
+            foreach ((array)$dependencies as $dependency) {
+                $this->loadDependency($extension, $dependency, $package);
+            }
         }
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30ebdc0aa6fff76c7f2f07945f620bc6",
+    "content-hash": "e471fd95ee8e2be87017144cc53d25b2",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/discovery.git",
-                "reference": "fe1bd4f3c48cf105611210754dec7f96400e3afc"
+                "reference": "1a93bfee1d42ff15d448373107c0d3bb3faed768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/discovery/zipball/fe1bd4f3c48cf105611210754dec7f96400e3afc",
-                "reference": "fe1bd4f3c48cf105611210754dec7f96400e3afc",
+                "url": "https://api.github.com/repos/railt/discovery/zipball/1a93bfee1d42ff15d448373107c0d3bb3faed768",
+                "reference": "1a93bfee1d42ff15d448373107c0d3bb3faed768",
                 "shasum": ""
             },
             "require": {
@@ -423,7 +423,7 @@
                 "console",
                 "dependency"
             ],
-            "time": "2019-01-03T14:34:43+00:00"
+            "time": "2019-01-18T21:34:03+00:00"
         },
         {
             "name": "symfony/console",
@@ -2010,12 +2010,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/compiler.git",
-                "reference": "a1dca3df5a821824b8835ecd0c49fd8ff4066774"
+                "reference": "7fdaa5008fe100066838319f9378889c47bdcb2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/compiler/zipball/a1dca3df5a821824b8835ecd0c49fd8ff4066774",
-                "reference": "a1dca3df5a821824b8835ecd0c49fd8ff4066774",
+                "url": "https://api.github.com/repos/railt/compiler/zipball/7fdaa5008fe100066838319f9378889c47bdcb2f",
+                "reference": "7fdaa5008fe100066838319f9378889c47bdcb2f",
                 "shasum": ""
             },
             "require": {
@@ -2068,7 +2068,7 @@
                 "language",
                 "pp"
             ],
-            "time": "2019-01-18T15:03:51+00:00"
+            "time": "2019-01-18T21:34:04+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2800,7 +2800,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",

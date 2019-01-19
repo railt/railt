@@ -93,7 +93,7 @@
             "extensions": [
                 "Railt\\ClassLoader\\ClassLoaderExtension",
                 "Railt\\Routing\\RouterExtension",
-                "Railt\\Foundation\\Application\\DebugExtension",
+                "Railt\\Foundation\\Debug\\DebugExtension",
                 "Railt\\Foundation\\Normalization\\NormalizationExtension"
             ]
         }
