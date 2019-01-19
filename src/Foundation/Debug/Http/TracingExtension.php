@@ -87,7 +87,7 @@ class TracingExtension implements ExtensionInterface
             'fieldName'   => $input->getField(),
             'returnType'  => $input->getPreferType(),
             'startOffset' => $this->durationFromStart($this->now()),
-            'duration'    => 0
+            'duration'    => 0,
         ];
     }
 
@@ -138,9 +138,9 @@ class TracingExtension implements ExtensionInterface
                         $execution['startOffset'] = $this->ms($execution['startOffset']);
 
                         return $execution;
-                    }, \array_values($this->resolvers))
-                ]
-            ]
+                    }, \array_values($this->resolvers)),
+                ],
+            ],
         ];
     }
 

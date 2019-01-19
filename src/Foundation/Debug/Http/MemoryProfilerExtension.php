@@ -24,8 +24,8 @@ class MemoryProfilerExtension implements ExtensionInterface
         return [
             'memory' => [
                 'current' => $this->kBytes(\memory_get_usage()),
-                'peak'    => $this->kBytes(\memory_get_peak_usage())
-            ]
+                'peak'    => $this->kBytes(\memory_get_peak_usage()),
+            ],
         ];
     }
 

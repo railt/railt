@@ -101,7 +101,7 @@ class DebugExtension extends Extension
             $this->afterFieldResolve($event);
         }, -100);
 
-        $this->on(ResponseProceed::class, function (ResponseProceed $event) {
+        $this->on(ResponseProceed::class, function (ResponseProceed $event): void {
             $this->onResponseProceed($event);
         }, -100);
 
