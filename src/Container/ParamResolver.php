@@ -23,6 +23,7 @@ class ParamResolver
 
     /**
      * ParamResolver constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -135,6 +136,7 @@ class ParamResolver
      * @param \ReflectionParameter $parameter
      * @return mixed|null
      * @throws ParameterResolutionException
+     * @throws \ReflectionException
      */
     private function resolveDefault(\ReflectionParameter $parameter)
     {
@@ -142,7 +144,7 @@ class ParamResolver
             return $parameter->getDefaultValue();
         }
 
-        if ($parameter->isVariadic()) {
+        if ($parameter->isVariadic() || $parameter->allowsNull()) {
             return null;
         }
 
@@ -174,7 +176,7 @@ class ParamResolver
      * @param string $class
      * @param array $additional
      * @return array
-     * @throws \Railt\Container\Exception\ParameterResolutionException
+     * @throws ParameterResolutionException
      * @throws \ReflectionException
      */
     public function fromConstructor(string $class, array $additional = []): array
