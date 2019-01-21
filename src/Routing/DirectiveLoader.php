@@ -11,6 +11,7 @@ namespace Railt\Routing;
 
 use Railt\ClassLoader\ClassLoaderInterface;
 use Railt\Container\ContainerInterface;
+use Railt\Container\SignatureResolver;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Contracts\Document;
 use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
@@ -42,6 +43,7 @@ class DirectiveLoader
 
     /**
      * DirectiveLoader constructor.
+     *
      * @param ContainerInterface $container
      * @param RouterInterface $router
      * @param ClassLoaderInterface $loader
@@ -55,7 +57,6 @@ class DirectiveLoader
 
     /**
      * @param FieldDefinition $field
-     * @throws \ReflectionException
      */
     public function load(FieldDefinition $field): void
     {
@@ -68,7 +69,6 @@ class DirectiveLoader
      * @param FieldDefinition $field
      * @param DirectiveInvocation $directive
      * @return RouteInterface
-     * @throws \ReflectionException
      */
     private function createFromDirective(FieldDefinition $field, DirectiveInvocation $directive): RouteInterface
     {
@@ -87,55 +87,31 @@ class DirectiveLoader
     /**
      * @param FieldDefinition $field
      * @param DirectiveInvocation $directive
-     * @return callable
-     * @throws \ReflectionException
+     * @return string|mixed
      */
-    private function createAction(FieldDefinition $field, DirectiveInvocation $directive): callable
+    private function createAction(FieldDefinition $field, DirectiveInvocation $directive)
     {
-        [$class, $method] = $this->getAction($field->getDocument(), $directive);
+        //
+        // Action string in any allowed callable format.
+        //
+        $action = $directive->getPassedArgument('action');
 
         //
-        // If method is static
+        // Extract FQN
         //
-        if ((new \ReflectionMethod($class, $method))->isStatic()) {
-            return [$class, $method];
+        $fqn = $this->loader->find($field->getDocument(), $action);
+
+        //
+        // Bind class
+        //
+        if ($this->isSingleton($directive)) {
+            $chunks = \explode('@', $fqn);
+            $class = \reset($chunks);
+
+            $this->container->instance($class, $this->container->make($class));
         }
 
-        //
-        // If method an instance of controller
-        //
-        $instance = $this->createController($class, $this->isSingleton($directive));
-
-        return [$instance, $method];
-    }
-
-    /**
-     * @param Document $document
-     * @param DirectiveInvocation $directive
-     * @return array
-     */
-    private function getAction(Document $document, DirectiveInvocation $directive): array
-    {
-        [$action, $line] = [
-            $directive->getPassedArgument('action'),
-            $directive->getDeclarationLine(),
-        ];
-
-        return $this->loader->action($document, $action, $line);
-    }
-
-    /**
-     * @param string $controller
-     * @param bool $singleton
-     * @return object
-     */
-    private function createController(string $controller, bool $singleton)
-    {
-        if ($singleton && isset($this->controllers[$controller])) {
-            return $this->controllers[$controller];
-        }
-
-        return $this->controllers[$controller] = $this->container->make($controller);
+        return $fqn;
     }
 
     /**

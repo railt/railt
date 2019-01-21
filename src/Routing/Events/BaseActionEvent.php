@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\Event;
 abstract class BaseActionEvent extends Event implements ActionEventInterface
 {
     /**
-     * @var \Closure
+     * @var callable|mixed
      */
     private $action;
 
@@ -41,10 +41,11 @@ abstract class BaseActionEvent extends Event implements ActionEventInterface
 
     /**
      * BaseActionEvent constructor.
-     * @param \Closure $action
+     *
+     * @param callable|mixed $action
      * @param array $arguments
      */
-    public function __construct(\Closure $action, array $arguments = [])
+    public function __construct($action, array $arguments = [])
     {
         $this->action = $action;
         $this->withArguments($arguments);
@@ -75,18 +76,18 @@ abstract class BaseActionEvent extends Event implements ActionEventInterface
     }
 
     /**
-     * @return \Closure
+     * @return callable|mixed
      */
-    public function getAction(): \Closure
+    public function getAction()
     {
         return $this->action;
     }
 
     /**
-     * @param \Closure $action
+     * @param callable|mixed $action
      * @return ActionEventInterface
      */
-    public function withAction(\Closure $action): ActionEventInterface
+    public function withAction($action): ActionEventInterface
     {
         $this->action = $action;
 

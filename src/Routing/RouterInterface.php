@@ -31,8 +31,8 @@ interface RouterInterface
     public function add(RouteInterface $route): self;
 
     /**
-     * @param callable $action
+     * @param callable|mixed $action
      * @return RouteInterface
      */
-    public function create(callable $action): RouteInterface;
+    public function create($action): RouteInterface;
 }

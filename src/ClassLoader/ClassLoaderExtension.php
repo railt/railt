@@ -10,8 +10,10 @@ declare(strict_types=1);
 namespace Railt\ClassLoader;
 
 use Railt\Foundation\Application;
+use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\Io\Exception\NotReadableException;
 use Railt\Io\File;
 use Railt\SDL\Schema\CompilerInterface;
 
@@ -20,6 +22,11 @@ use Railt\SDL\Schema\CompilerInterface;
  */
 class ClassLoaderExtension extends Extension
 {
+    /**
+     * @var string
+     */
+    private const SOURCES_PATHNAME = __DIR__ . '/../../resources/class-loader.graphqls';
+
     /**
      * @return string
      */
@@ -34,6 +41,14 @@ class ClassLoaderExtension extends Extension
     public function getDescription(): string
     {
         return 'Provides the ability to reference PHP code from within GraphQL SDL files.';
+    }
+
+    /**
+     * @return array
+     */
+    public function getDependencies(): array
+    {
+        return ['railt/railt' => CompilerExtension::class];
     }
 
     /**
@@ -57,17 +72,17 @@ class ClassLoaderExtension extends Extension
      */
     public function register(): void
     {
-        $this->registerIfNotRegistered(ClassLoaderInterface::class, function () {
-            return new DirectiveClassLoader();
+        $this->registerIfNotRegistered(ClassLoaderInterface::class, function (CompilerInterface $compiler) {
+            return new DirectiveClassLoader($compiler);
         });
     }
 
     /**
      * @param CompilerInterface $compiler
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws NotReadableException
      */
     public function boot(CompilerInterface $compiler): void
     {
-        $compiler->compile(File::fromPathname(__DIR__ . '/../../resources/class-loader.graphqls'));
+        $compiler->compile(File::fromPathname(self::SOURCES_PATHNAME));
     }
 }

@@ -30,6 +30,7 @@ class DirectiveLoaderSubscriber implements EventSubscriberInterface
 
     /**
      * DirectiveLoaderSubscriber constructor.
+     *
      * @param DirectiveLoader $loader
      */
     public function __construct(DirectiveLoader $loader)

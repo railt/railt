@@ -38,6 +38,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
 
     /**
      * ResolverSubscriber constructor.
+     *
      * @param RouterInterface $router
      * @param EventDispatcherInterface $events
      */
@@ -69,6 +70,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
 
             if (\count($result) > 0) {
                 $event->withResult($result);
+
                 return;
             }
 
@@ -122,7 +124,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
     {
         $arguments = $this->getMethodArguments($route, $resolving);
 
-        $event = new ActionDispatch(\Closure::fromCallable($route->getAction()), $arguments);
+        $event = new ActionDispatch($route->getAction(), $arguments);
 
         return $this->events->dispatch(ActionDispatch::class, $event);
     }
@@ -138,7 +140,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
             //
             // Inject current route
             //
-            RouteInterface::class => $route,
+            RouteInterface::class   => $route,
 
             //
             // Inject request environment
@@ -150,8 +152,8 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
             //
             // Inject reflection environment
             //
-            FieldDefinition::class => $event->getFieldDefinition(),
-            TypeDefinition::class  => $event->getTypeDefinition(),
+            FieldDefinition::class  => $event->getFieldDefinition(),
+            TypeDefinition::class   => $event->getTypeDefinition(),
         ];
 
         //
@@ -166,7 +168,6 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
         //
         $arguments['$parent'] = $event->getParentResult();
 
-
         return $arguments;
     }
 
@@ -177,7 +178,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
      */
     private function result(RouteInterface $route, $result)
     {
-        if (\is_array($result)) {
+        if (\is_array($result) && ! isset($result['__typename'])) {
             return \array_merge($result, ['__typename' => $route->getPreferType()]);
         }
 

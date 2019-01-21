@@ -15,15 +15,15 @@ namespace Railt\Routing\Events;
 interface ActionEventInterface
 {
     /**
-     * @return \Closure
+     * @return callable|mixed
      */
-    public function getAction(): \Closure;
+    public function getAction();
 
     /**
-     * @param \Closure $action
+     * @param callable|mixed $action
      * @return ActionEventInterface
      */
-    public function withAction(\Closure $action): self;
+    public function withAction($action): self;
 
     /**
      * @return array

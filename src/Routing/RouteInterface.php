@@ -72,7 +72,7 @@ interface RouteInterface
     public function whereVariableExists(string $variable): self;
 
     /**
-     * @return callable
+     * @return callable|mixed
      */
-    public function getAction(): callable;
+    public function getAction();
 }

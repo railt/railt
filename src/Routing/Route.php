@@ -23,7 +23,7 @@ class Route implements RouteInterface
     private $filters = [];
 
     /**
-     * @var callable
+     * @var callable|mixed
      */
     private $action;
 
@@ -34,9 +34,10 @@ class Route implements RouteInterface
 
     /**
      * Route constructor.
-     * @param callable $action
+     *
+     * @param callable|mixed $action
      */
-    public function __construct(callable $action)
+    public function __construct($action)
     {
         $this->action = $action;
     }
@@ -145,9 +146,9 @@ class Route implements RouteInterface
     }
 
     /**
-     * @return callable
+     * @return callable|mixed
      */
-    public function getAction(): callable
+    public function getAction()
     {
         return $this->action;
     }
