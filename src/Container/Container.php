@@ -229,7 +229,7 @@ class Container implements ContainerInterface
         try {
             $callable = $this->signature->resolve($callable, $params);
             $resolved = $this->params->fromClosure($callable, $params);
-        } catch (\ReflectionException|\InvalidArgumentException $e) {
+        } catch (\ReflectionException | \InvalidArgumentException $e) {
             throw new ContainerResolutionException($e->getMessage(), $e->getCode(), $e);
         }
 

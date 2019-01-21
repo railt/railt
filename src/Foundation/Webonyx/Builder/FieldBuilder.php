@@ -21,7 +21,6 @@ use Railt\SDL\Contracts\Definitions\EnumDefinition;
 use Railt\SDL\Contracts\Definitions\ScalarDefinition;
 use Railt\SDL\Contracts\Dependent\Argument\HasArguments;
 use Railt\SDL\Contracts\Dependent\FieldDefinition as FieldDefinitionInterface;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class FieldBuilder

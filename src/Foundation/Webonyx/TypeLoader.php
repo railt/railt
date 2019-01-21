@@ -19,7 +19,6 @@ use Railt\SDL\Contracts\Definitions;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent;
 use Railt\SDL\Reflection\Dictionary;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

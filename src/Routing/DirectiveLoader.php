@@ -11,9 +11,7 @@ namespace Railt\Routing;
 
 use Railt\ClassLoader\ClassLoaderInterface;
 use Railt\Container\ContainerInterface;
-use Railt\Container\SignatureResolver;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
-use Railt\SDL\Contracts\Document;
 use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
 
 /**

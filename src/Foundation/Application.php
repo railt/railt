@@ -17,7 +17,6 @@ use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
 use Railt\Foundation\Config\ConfigurationInterface;
 use Railt\Foundation\Config\Discovery;
-use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Exception\ConnectionException;
 use Railt\Foundation\Exception\ExtensionException;

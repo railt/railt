@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Input;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use Railt\Foundation\Webonyx\Input;
 
 /**
  * Trait PathInfoLoader
