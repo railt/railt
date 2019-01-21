@@ -107,7 +107,7 @@ class SignatureResolver
      */
     public function fromInvocable(string $signature, array $params): \Closure
     {
-        return function() use ($signature, $params) {
+        return function () use ($signature, $params) {
             $instance = $this->container->make($signature, $params);
 
             return $this->container->call([$instance, '__invoke'], $params);
@@ -137,7 +137,7 @@ class SignatureResolver
 
         [$class, $method] = \explode('@', $signature);
 
-        return function() use ($class, $method, $params) {
+        return function () use ($class, $method, $params) {
             $instance = $this->container->make($class, $params);
 
             return $this->container->call([$instance, $method], $params);

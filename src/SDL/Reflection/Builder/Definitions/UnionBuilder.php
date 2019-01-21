@@ -12,7 +12,6 @@ namespace Railt\SDL\Reflection\Builder\Definitions;
 use Railt\Parser\Ast\NodeInterface;
 use Railt\Parser\Ast\RuleInterface;
 use Railt\SDL\Base\Definitions\BaseUnion;
-use Railt\SDL\Exceptions\TypeConflictException;
 use Railt\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\SDL\Reflection\Builder\Invocations\Directive\DirectivesBuilder;
 use Railt\SDL\Reflection\Builder\Process\Compilable;

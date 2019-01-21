@@ -16,7 +16,6 @@ use Railt\Foundation\Webonyx\Context;
 use Railt\Foundation\Webonyx\Input;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Trait TypeResolverTrait
