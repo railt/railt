@@ -33,12 +33,11 @@ class Rule extends Node implements RuleInterface, \ArrayAccess
     }
 
     /**
-     * @param int $index
-     * @return LeafInterface|RuleInterface|NodeInterface|mixed
+     * @return int
      */
-    public function getChild(int $index)
+    public function count(): int
     {
-        return $this->getChildren()[$index] ?? null;
+        return \count($this->getChildren());
     }
 
     /**
@@ -47,14 +46,6 @@ class Rule extends Node implements RuleInterface, \ArrayAccess
     public function getChildren(): iterable
     {
         return $this->children;
-    }
-
-    /**
-     * @return int
-     */
-    public function count(): int
-    {
-        return \count($this->getChildren());
     }
 
     /**
@@ -115,6 +106,15 @@ class Rule extends Node implements RuleInterface, \ArrayAccess
     }
 
     /**
+     * @param int $index
+     * @return LeafInterface|RuleInterface|NodeInterface|mixed
+     */
+    public function getChild(int $index)
+    {
+        return $this->getChildren()[$index] ?? null;
+    }
+
+    /**
      * @param int $offset
      * @param mixed $value
      */
@@ -133,5 +133,49 @@ class Rule extends Node implements RuleInterface, \ArrayAccess
         \assert(\is_int($offset));
 
         unset($this->children[$offset]);
+    }
+
+    /**
+     * @param string $name
+     * @param int|null $depth
+     * @return null|NodeInterface
+     */
+    public function first(string $name, int $depth = null): ?NodeInterface
+    {
+        return $this->find($name, $depth)->current();
+    }
+
+    /**
+     * @param string $name
+     * @param int|null $depth
+     * @return iterable|\Generator
+     */
+    public function find(string $name, int $depth = null): iterable
+    {
+        $depth = \max(0, $depth ?? \PHP_INT_MAX);
+        if ($this->getName() === $name) {
+            yield $this;
+        }
+        if ($depth > 0) {
+            yield from $this->findChildren($this, $name, $depth);
+        }
+    }
+
+    /**
+     * @param RuleInterface $rule
+     * @param string $name
+     * @param int $depth
+     * @return iterable
+     */
+    protected function findChildren(RuleInterface $rule, string $name, int $depth): iterable
+    {
+        foreach ($rule->getChildren() as $child) {
+            if ($child->getName() === $name) {
+                yield $child;
+            }
+            if ($depth > 1 && $child instanceof RuleInterface) {
+                yield from $this->findChildren($child, $name, $depth - 1);
+            }
+        }
     }
 }
