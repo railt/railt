@@ -4,30 +4,29 @@ php:
   - 7.1
   - 7.2
   - 7.3
+  - hhvm
+  - hhvm-nightly
   - nightly
 
 env:
-  matrix:
-    - setup=lowest
-    - setup=highest
+  - RAILT_DEBUG=1
+  - APP_ENV=testing
 
 matrix:
   fast_finish: true
   allow_failures:
     - php: 7.3
+    - php: hhvm
+    - php: hhvm-nightly
     - php: nightly
-
-sudo: false
 
 cache:
   directories:
     - $HOME/.composer/cache
 
 before_script:
-    - composer self-update -q
-    - composer clear-cache
-    - if [ -z "$setup" ]; then composer install; fi;
-    - if [ "$setup" = "lowest" ]; then composer update --prefer-lowest --no-interaction --prefer-dist --no-suggest; fi;
-    - if [ "$setup" = "highest" ]; then composer update --no-interaction --prefer-dist --no-suggest; fi;
+  - composer self-update -q
+  - composer global require hirak/prestissimo
+  - composer install --no-interaction --no-suggest
 
 script: vendor/bin/phpunit
