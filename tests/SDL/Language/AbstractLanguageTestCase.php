@@ -24,18 +24,23 @@ abstract class AbstractLanguageTestCase extends TestCase
 
     /**
      * @param string $body
-     * @return array|Document[][]
-     * @throws \Exception
+     * @return array
+     * @throws \Throwable
      */
     public function dataProviderDocuments(string $body): array
     {
-        $result = [];
+        try {
+            $result = [];
 
-        foreach ($this->getDocuments($body) as $document) {
-            $result[] = [$document];
+            foreach ($this->getDocuments($body) as $document) {
+                $result[] = [$document];
+            }
+
+            return $result;
+        } catch (\Throwable $e) {
+            echo $e;
+            throw $e;
         }
-
-        return $result;
     }
 
     /**
