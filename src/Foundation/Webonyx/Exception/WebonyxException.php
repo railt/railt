@@ -19,7 +19,8 @@ use Railt\Http\Exception\GraphQLExceptionLocation;
 class WebonyxException extends GraphQLHttpException
 {
     /**
-     * GraphQLException constructor.
+     * WebonyxException constructor.
+     *
      * @param Error $error
      */
     public function __construct(Error $error)
@@ -45,10 +46,10 @@ class WebonyxException extends GraphQLHttpException
     }
 
     /**
-     * @param Error|\Throwable $error
+     * @param \Throwable $error
      * @return \Throwable
      */
-    private function getRootException(Error $error): \Throwable
+    private function getRootException(\Throwable $error): \Throwable
     {
         while ($error->getPrevious()) {
             $error = $error->getPrevious();

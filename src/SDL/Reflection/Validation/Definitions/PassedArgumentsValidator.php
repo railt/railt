@@ -88,8 +88,8 @@ class PassedArgumentsValidator extends BaseDefinitionValidator
     /**
      * @param ArgumentDefinition $arg
      * @param Inputable $type
-     * @param $value
-     * @return void
+     * @param mixed $value
+     * @throws TypeConflictException
      */
     private function validateSingleArgument(ArgumentDefinition $arg, Inputable $type, $value): void
     {

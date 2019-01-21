@@ -32,6 +32,7 @@ class Psr16Storage implements Storage
 
     /**
      * Psr16Storage constructor.
+     *
      * @param CacheInterface $storage
      * @param int $timeout
      */

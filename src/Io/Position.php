@@ -31,6 +31,7 @@ final class Position implements PositionInterface
 
     /**
      * Position constructor.
+     *
      * @param string $sources
      * @param int $offset
      */

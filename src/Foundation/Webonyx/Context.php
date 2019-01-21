@@ -31,6 +31,7 @@ class Context implements ProvidesConnection, ProvidesRequest
 
     /**
      * Context constructor.
+     *
      * @param Identifiable $connection
      * @param RequestInterface $request
      */

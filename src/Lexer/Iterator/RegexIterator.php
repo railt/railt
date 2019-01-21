@@ -33,6 +33,7 @@ class RegexIterator implements \IteratorAggregate
 
     /**
      * RegexIterator constructor.
+     *
      * @param string $pattern
      * @param string $subject
      */
@@ -61,13 +62,15 @@ class RegexIterator implements \IteratorAggregate
     }
 
     /**
-     * @param $status
+     * @param int|null|bool $status
      * @return void
      * @throws \InvalidArgumentException
      * @throws \RuntimeException
      */
     private function validate($status): void
     {
+        \assert(\is_int($status) || \is_bool($status) || $status === null);
+
         $code = \preg_last_error();
 
         if ($code !== \PREG_NO_ERROR) {

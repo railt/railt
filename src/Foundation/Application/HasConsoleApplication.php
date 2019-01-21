@@ -12,6 +12,7 @@ namespace Railt\Foundation\Application;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Application;
 use Symfony\Component\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\Exception\LogicException;
 
 /**
  * Trait HasConsoleApplication
@@ -30,7 +31,7 @@ trait HasConsoleApplication
 
     /**
      * @return ConsoleApplication
-     * @throws \Symfony\Component\Console\Exception\LogicException
+     * @throws LogicException
      */
     public function getConsoleApplication(): ConsoleApplication
     {

@@ -24,6 +24,7 @@ abstract class BuildingEvent extends Event implements BuildingEventInterface
 
     /**
      * BuildingEvent constructor.
+     *
      * @param TypeDefinition $definition
      */
     public function __construct(TypeDefinition $definition)

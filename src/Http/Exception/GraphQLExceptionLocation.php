@@ -26,6 +26,7 @@ class GraphQLExceptionLocation implements GraphQLExceptionLocationInterface
 
     /**
      * GraphQLExceptionLocation constructor.
+     *
      * @param int $line
      * @param int $column
      */

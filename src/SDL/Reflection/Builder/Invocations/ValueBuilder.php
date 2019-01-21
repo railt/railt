@@ -48,6 +48,7 @@ class ValueBuilder
      * @param string $type
      * @param array $path
      * @return array|float|int|null|string
+     * @throws \OutOfBoundsException
      */
     public function parse(NodeInterface $ast, string $type, array $path = [])
     {

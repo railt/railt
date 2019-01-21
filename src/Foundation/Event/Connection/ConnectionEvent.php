@@ -36,6 +36,7 @@ abstract class ConnectionEvent extends Event implements ConnectionEventInterface
 
     /**
      * ConnectionEvent constructor.
+     *
      * @param Identifiable $connection
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema

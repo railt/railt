@@ -30,12 +30,13 @@ abstract class HttpEvent extends Event implements HttpEventInterface
     private $request;
 
     /**
-     * @var ResponseInterface
+     * @var ResponseInterface|null
      */
     private $response;
 
     /**
      * HttpEvent constructor.
+     *
      * @param Identifiable $connection
      * @param RequestInterface $request
      * @param ResponseInterface|null $response
@@ -59,7 +60,7 @@ abstract class HttpEvent extends Event implements HttpEventInterface
     }
 
     /**
-     * @return null|ResponseInterface
+     * @return ResponseInterface|null
      */
     public function getResponse(): ?ResponseInterface
     {

@@ -24,6 +24,7 @@ class DefinitionTraceRenderer extends BaseTraceRenderer
 
     /**
      * RecordRenderer constructor.
+     *
      * @param Definition $definition
      */
     public function __construct(Definition $definition)

@@ -57,7 +57,7 @@ final class DateTimeType extends StringType implements StandardType
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @return bool
      */
     private function verifyDate($value): bool

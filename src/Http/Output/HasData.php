@@ -41,7 +41,7 @@ trait HasData
     /**
      * @param string $key
      * @param mixed $data
-     * @return ProvideData
+     * @return ProvideData|$this
      */
     public function with(string $key, $data): ProvideData
     {

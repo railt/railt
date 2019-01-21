@@ -25,6 +25,7 @@ class HoaDumper implements NodeDumperInterface
 
     /**
      * HoaDumper constructor.
+     *
      * @param RuleInterface $ast
      */
     public function __construct(RuleInterface $ast)

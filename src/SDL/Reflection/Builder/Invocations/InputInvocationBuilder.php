@@ -39,10 +39,12 @@ class InputInvocationBuilder extends BaseInputInvocation implements Compilable
 
     /**
      * InputInvocationBuilder constructor.
+     *
      * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @param string $parentType
      * @param array $path
+     * @throws \OutOfBoundsException
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document, string $parentType, array $path)
     {

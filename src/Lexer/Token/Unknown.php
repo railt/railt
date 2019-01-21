@@ -21,6 +21,7 @@ final class Unknown extends Token
 
     /**
      * Undefined constructor.
+     *
      * @param string $value
      * @param int $offset
      */

@@ -38,6 +38,7 @@ abstract class Invocation extends TraceItem
 
     /**
      * Invocation constructor.
+     *
      * @param string|int $rule
      * @param int $state
      * @param array|null $todo

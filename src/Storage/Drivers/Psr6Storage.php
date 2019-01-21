@@ -40,6 +40,7 @@ class Psr6Storage implements Storage
 
     /**
      * Psr6Storage constructor.
+     *
      * @param CacheItemPoolInterface $pool
      * @param \Closure $persist
      * @param int $timeout

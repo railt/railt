@@ -98,7 +98,7 @@ class FieldBuilder extends Builder
      * @param array $args
      * @param Context $ctx
      * @param ResolveInfo $info
-     * @return FieldResolve|Event
+     * @return FieldResolve
      */
     private function fireResolving($parent, array $args, Context $ctx, ResolveInfo $info): FieldResolve
     {

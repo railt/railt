@@ -31,6 +31,7 @@ class Reason extends BaseArgument
 
     /**
      * Reason constructor.
+     *
      * @param Document|GraphQLDocument $document
      * @param DirectiveDefinition $type
      */

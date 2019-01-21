@@ -13,6 +13,7 @@ use Railt\Discovery\Discovery as RailtDiscovery;
 
 /**
  * Class Discovery
+ * @method static self|$this auto()
  */
 class Discovery extends RailtDiscovery implements ConfigurationInterface
 {

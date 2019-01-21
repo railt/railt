@@ -21,6 +21,7 @@ class DataExtension extends Extension
 
     /**
      * DataExtension constructor.
+     *
      * @param mixed $data
      */
     public function __construct($data)

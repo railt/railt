@@ -63,6 +63,7 @@ abstract class ResolverEvent extends Event implements ResolverEventInterface
 
     /**
      * ResolverEvent constructor.
+     *
      * @param Identifiable $connection
      * @param RequestInterface $request
      * @param FieldDefinition $field
@@ -83,7 +84,7 @@ abstract class ResolverEvent extends Event implements ResolverEventInterface
     }
 
     /**
-     * @return TypeDefinition|FieldDefinition
+     * @return TypeDefinition
      */
     public function getTypeDefinition(): TypeDefinition
     {
@@ -158,8 +159,8 @@ abstract class ResolverEvent extends Event implements ResolverEventInterface
     }
 
     /**
-     * @param mixed $value
-     * @return ResolverEvent
+     * @param mixed|null $value
+     * @return ResolverEvent|$this
      */
     public function withResult($value = null): self
     {
@@ -185,8 +186,8 @@ abstract class ResolverEvent extends Event implements ResolverEventInterface
     }
 
     /**
-     * @param mixed $value
-     * @return ResolverEvent
+     * @param mixed|null $value
+     * @return ResolverEvent|$this
      */
     public function withParentResult($value = null): self
     {

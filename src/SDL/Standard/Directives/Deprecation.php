@@ -35,6 +35,7 @@ final class Deprecation extends BaseDirective implements StandardType
 
     /**
      * Deprecation constructor.
+     *
      * @param Document $document
      */
     public function __construct(Document $document)

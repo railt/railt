@@ -11,7 +11,9 @@ namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Schema;
 use Railt\Foundation\Event\Building\TypeBuilding;
+use Railt\Foundation\Webonyx\Exception\BuilderMissingException;
 use Railt\Foundation\Webonyx\TypeLoader;
 use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
@@ -45,6 +47,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * Builder constructor.
+     *
      * @param TypeDefinition $type
      * @param EventDispatcherInterface $events
      * @param TypeLoader $loader
@@ -58,8 +61,8 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @param TypeDefinition $type
-     * @return Type|mixed
-     * @throws \Railt\Foundation\Webonyx\Exception\BuilderMissingException
+     * @return Type|Schema|null
+     * @throws BuilderMissingException
      */
     protected function buildType(TypeDefinition $type)
     {

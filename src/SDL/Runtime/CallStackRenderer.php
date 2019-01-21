@@ -30,6 +30,7 @@ class CallStackRenderer
 
     /**
      * CallStackRenderer constructor.
+     *
      * @param CallStackInterface $stack
      * @param array $trace
      */

@@ -26,6 +26,7 @@ final class EndOfInput extends BaseToken
 
     /**
      * Eoi constructor.
+     *
      * @param int $offset
      */
     public function __construct(int $offset)

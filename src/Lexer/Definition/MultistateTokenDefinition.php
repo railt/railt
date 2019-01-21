@@ -26,6 +26,7 @@ class MultistateTokenDefinition extends TokenDefinition
 
     /**
      * MultistateTokenDefinition constructor.
+     *
      * @param string $name
      * @param string $pcre
      * @param bool $keep

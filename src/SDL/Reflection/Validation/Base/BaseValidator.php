@@ -39,6 +39,7 @@ abstract class BaseValidator implements ValidatorInterface
 
     /**
      * BaseValidator constructor.
+     *
      * @param Validator $factory
      * @param CallStackInterface $stack
      * @param null|string $name

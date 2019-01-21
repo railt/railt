@@ -30,7 +30,7 @@ trait HasExtensions
 
     /**
      * @param iterable|ExtensionInterface[] $extensions
-     * @return $this|ProvidesExtensions
+     * @return ProvidesExtensions|$this
      */
     public function addExtensions(iterable $extensions): ProvidesExtensions
     {
@@ -48,7 +48,7 @@ trait HasExtensions
     /**
      * @param string|int|bool|float|ExtensionInterface $keyOrExtension
      * @param ExtensionInterface|\JsonSerializable|mixed $value
-     * @return $this|ProvidesExtensions
+     * @return ProvidesExtensions|$this
      */
     public function addExtension($keyOrExtension, $value = null): ProvidesExtensions
     {
@@ -73,7 +73,7 @@ trait HasExtensions
 
     /**
      * @param mixed $key
-     * @return null|ExtensionInterface
+     * @return ExtensionInterface|null
      */
     public function getExtension($key): ?ExtensionInterface
     {

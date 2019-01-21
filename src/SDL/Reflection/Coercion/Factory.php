@@ -39,7 +39,7 @@ class Factory implements TypeCoercion
     }
 
     /**
-     * @param string[]|BaseTypeCoercion[] ...$transformers
+     * @param string|BaseTypeCoercion ...$transformers
      * @return Factory
      */
     public function add(string ...$transformers): self

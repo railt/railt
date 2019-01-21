@@ -30,6 +30,7 @@ abstract class BaseSchemaException extends \DomainException implements SchemaExc
 
     /**
      * BaseSchemaException constructor.
+     *
      * @param string $message
      * @param CallStackInterface $stack
      * @param \Throwable|null $previous

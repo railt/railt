@@ -21,6 +21,7 @@ class Rule extends Node implements RuleInterface, \ArrayAccess
 
     /**
      * Rule constructor.
+     *
      * @param string $name
      * @param array|NodeInterface[] $children
      * @param int $offset

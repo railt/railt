@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\EnumType;
 use Railt\SDL\Contracts\Definitions\EnumDefinition;
 
@@ -20,7 +21,7 @@ class EnumBuilder extends Builder
 {
     /**
      * @return EnumType
-     * @throws \GraphQL\Error\Error
+     * @throws InvariantViolation
      */
     public function build(): EnumType
     {

@@ -31,10 +31,11 @@ class FieldBuilder extends BaseField implements Compilable
 
     /**
      * SchemaBuilder constructor.
+     *
      * @param NodeInterface $ast
      * @param DocumentBuilder $document
      * @param TypeDefinition $parent
-     * @throws \Railt\SDL\Exceptions\TypeConflictException
+     * @throws \OutOfBoundsException
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document, TypeDefinition $parent)
     {

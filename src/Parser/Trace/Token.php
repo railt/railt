@@ -29,6 +29,7 @@ class Token extends TraceItem
 
     /**
      * Token constructor.
+     *
      * @param TokenInterface $token
      * @param bool $kept
      */

@@ -32,6 +32,7 @@ class PCRECompiler
 
     /**
      * PCRECompiler constructor.
+     *
      * @param array $tokens
      */
     public function __construct(array $tokens = [])

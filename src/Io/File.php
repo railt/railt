@@ -31,6 +31,7 @@ abstract class File implements Readable
 
     /**
      * File constructor.
+     *
      * @param string $contents
      * @param string $name
      */
@@ -42,8 +43,8 @@ abstract class File implements Readable
 
     /**
      * @param \SplFileInfo $info
-     * @return File|Readable
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @return Readable|$this
+     * @throws NotReadableException
      */
     public static function fromSplFileInfo(\SplFileInfo $info): Readable
     {
@@ -52,8 +53,8 @@ abstract class File implements Readable
 
     /**
      * @param string $path
-     * @return File|Readable
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @return Readable|$this
+     * @throws NotReadableException
      */
     public static function fromPathname(string $path): Readable
     {
@@ -63,6 +64,7 @@ abstract class File implements Readable
     /**
      * @param string $path
      * @return string
+     * @throws NotFoundException
      * @throws NotReadableException
      */
     private static function tryRead(string $path): string
@@ -108,7 +110,7 @@ abstract class File implements Readable
     /**
      * @param string $fileOrSources
      * @param string|null $name
-     * @return Readable
+     * @return Readable|$this
      * @throws NotReadableException
      */
     public static function new(string $fileOrSources, string $name = null): Readable
@@ -132,7 +134,7 @@ abstract class File implements Readable
     /**
      * @param string $sources
      * @param string|null $name
-     * @return Virtual|Readable
+     * @return Readable|$this
      */
     public static function fromSources(string $sources = '', string $name = null): Readable
     {
@@ -141,7 +143,7 @@ abstract class File implements Readable
 
     /**
      * @param string|null $name
-     * @return Readable
+     * @return Readable|$this
      */
     public static function empty(string $name = null): Readable
     {
@@ -150,7 +152,7 @@ abstract class File implements Readable
 
     /**
      * @param Readable $readable
-     * @return Readable
+     * @return Readable|$this
      */
     public static function fromReadable(Readable $readable): Readable
     {
@@ -159,7 +161,7 @@ abstract class File implements Readable
 
     /**
      * @param int $bytesOffset
-     * @return Position|PositionInterface
+     * @return PositionInterface
      */
     public function getPosition(int $bytesOffset): PositionInterface
     {

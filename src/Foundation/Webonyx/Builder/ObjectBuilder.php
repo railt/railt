@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\ObjectType;
 use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 
@@ -20,7 +21,7 @@ class ObjectBuilder extends Builder
 {
     /**
      * @return ObjectType
-     * @throws \GraphQL\Error\Error
+     * @throws InvariantViolation
      */
     public function build(): ObjectType
     {

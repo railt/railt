@@ -84,7 +84,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     }
 
     /**
-     * @return $this|GraphQLException
+     * @return GraphQLExceptionInterface|$this
      */
     public function publish(): GraphQLExceptionInterface
     {
@@ -95,7 +95,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
 
     /**
      * @param GraphQLExceptionLocationInterface $location
-     * @return $this|GraphQLException
+     * @return GraphQLException|$this
      */
     public function addLocation(GraphQLExceptionLocationInterface $location): self
     {
@@ -105,8 +105,8 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     }
 
     /**
-     * @param string|int $chunk
-     * @return $this|GraphQLException
+     * @param int|string $chunk
+     * @return GraphQLException|$this
      */
     public function addPath($chunk): self
     {
@@ -147,7 +147,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     }
 
     /**
-     * @return iterable|GraphQLExceptionLocationInterface[]
+     * @return iterable|GraphQLExceptionInterface[]
      */
     public function getLocations(): iterable
     {
@@ -156,7 +156,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
 
     /**
      * @param iterable|GraphQLExceptionLocationInterface[] $locations
-     * @return $this|GraphQLException
+     * @return GraphQLException
      */
     public function setLocations(iterable $locations): self
     {
@@ -186,7 +186,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     }
 
     /**
-     * @return $this|GraphQLException
+     * @return GraphQLExceptionInterface|$this
      */
     public function hide(): GraphQLExceptionInterface
     {
@@ -197,7 +197,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
 
     /**
      * @param iterable|string[]|int[] $chunks
-     * @return $this|GraphQLException
+     * @return GraphQLException|$this
      */
     public function setPaths(iterable $chunks): self
     {

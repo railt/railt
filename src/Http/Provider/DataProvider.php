@@ -36,6 +36,7 @@ class DataProvider implements ProviderInterface
 
     /**
      * DataProvider constructor.
+     *
      * @param array $query
      * @param array $post
      */

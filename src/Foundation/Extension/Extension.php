@@ -51,7 +51,8 @@ abstract class Extension implements ExtensionInterface
     private $events;
 
     /**
-     * BaseExtension constructor.
+     * Extension constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -88,7 +89,7 @@ abstract class Extension implements ExtensionInterface
 
     /**
      * @param EventSubscriberInterface $subscriber
-     * @return Extension
+     * @return Extension|$this
      */
     protected function subscribe(EventSubscriberInterface $subscriber): self
     {
@@ -172,7 +173,7 @@ abstract class Extension implements ExtensionInterface
     /**
      * @param string $name
      * @param \Closure $registrar
-     * @return BaseExtension|$this
+     * @return Extension|$this
      */
     protected function registerIfNotRegistered(string $name, \Closure $registrar): self
     {

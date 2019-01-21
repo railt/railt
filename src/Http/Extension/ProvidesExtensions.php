@@ -27,7 +27,7 @@ interface ProvidesExtensions
     /**
      * @param string|int|bool|float|ExtensionInterface|\JsonSerializable $keyOrExtension
      * @param ExtensionInterface|\JsonSerializable|mixed $value
-     * @return $this|ProvidesExtensions
+     * @return ProvidesExtensions|$this
      */
     public function addExtension($keyOrExtension, $value = null): self;
 }

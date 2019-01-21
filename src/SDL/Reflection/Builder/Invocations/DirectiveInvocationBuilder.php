@@ -30,10 +30,11 @@ class DirectiveInvocationBuilder extends BaseDirectiveInvocation implements Comp
 
     /**
      * DirectiveInvocationBuilder constructor.
+     *
      * @param NodeInterface $ast
      * @param DocumentBuilder|Document $document
      * @param TypeDefinition $parent
-     * @throws \Railt\SDL\Exceptions\TypeConflictException
+     * @throws \OutOfBoundsException
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document, TypeDefinition $parent)
     {

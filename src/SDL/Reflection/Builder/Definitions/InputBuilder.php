@@ -28,9 +28,10 @@ class InputBuilder extends BaseInput implements Compilable
 
     /**
      * InputBuilder constructor.
+     *
      * @param NodeInterface $ast
      * @param DocumentBuilder $document
-     * @throws \Railt\SDL\Exceptions\TypeConflictException
+     * @throws \OutOfBoundsException
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {

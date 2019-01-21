@@ -38,6 +38,7 @@ class Input implements InputInterface
 
     /**
      * Input constructor.
+     *
      * @param RequestInterface $request
      * @param string $typeName
      * @param array $arguments
@@ -68,7 +69,10 @@ class Input implements InputInterface
      */
     public static function new(RequestInterface $request, string $typeName, string $path): InputInterface
     {
-        return new static($request, $typeName, $path);
+        $input = new static($request, $typeName);
+        $input->withPathChunks(self::pathToChunks($path));
+
+        return $input;
     }
 
     /**
@@ -108,7 +112,7 @@ class Input implements InputInterface
 
     /**
      * @param string ...$types
-     * @return Input|$this
+     * @return InputInterface|$this
      */
     public function withPreferType(string ...$types): InputInterface
     {
@@ -120,7 +124,7 @@ class Input implements InputInterface
 
     /**
      * @param string ...$types
-     * @return Input|$this
+     * @return InputInterface|$this
      */
     public function setPreferType(string ...$types): InputInterface
     {

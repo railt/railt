@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Schema;
 use Railt\Foundation\Event\Building\BuildingEvent;
 use Railt\Foundation\Event\Building\TypeBuilding;
 use Railt\Foundation\Webonyx\Builder\BuilderInterface;
@@ -56,8 +57,9 @@ class TypeLoader
 
     /**
      * TypeLoader constructor.
-     * @param Dictionary $dictionary
+     *
      * @param EventDispatcherInterface $events
+     * @param Dictionary $dictionary
      */
     public function __construct(EventDispatcherInterface $events, Dictionary $dictionary)
     {
@@ -116,7 +118,7 @@ class TypeLoader
 
     /**
      * @param TypeDefinition $type
-     * @return Type|\GraphQL\Type\Schema|null
+     * @return Type|Schema|null
      * @throws BuilderMissingException
      */
     public function build(TypeDefinition $type)
@@ -132,7 +134,7 @@ class TypeLoader
 
     /**
      * @param TypeDefinition $type
-     * @return BuildingEvent|Event
+     * @return BuildingEvent
      */
     private function fire(TypeDefinition $type): BuildingEvent
     {

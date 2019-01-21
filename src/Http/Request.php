@@ -30,6 +30,7 @@ class Request implements RequestInterface
 
     /**
      * Request constructor.
+     *
      * @param string $query
      * @param array $variables
      * @param string|null $operation

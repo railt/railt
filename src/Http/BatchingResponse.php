@@ -35,6 +35,7 @@ class BatchingResponse implements ResponseInterface
 
     /**
      * BatchingResponse constructor.
+     *
      * @param ResponseInterface ...$responses
      */
     public function __construct(ResponseInterface ...$responses)
@@ -56,7 +57,7 @@ class BatchingResponse implements ResponseInterface
 
     /**
      * @param ResponseInterface $response
-     * @return ResponseInterface|$this
+     * @return BatchingResponse|$this
      */
     public function withResponse(ResponseInterface $response): self
     {

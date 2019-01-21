@@ -43,7 +43,7 @@ class Connection implements ConnectionInterface
     private $closed = true;
 
     /**
-     * @var SchemaDefinition
+     * @var SchemaDefinition|null
      */
     private $schema;
 
@@ -54,6 +54,7 @@ class Connection implements ConnectionInterface
 
     /**
      * Connection constructor.
+     *
      * @param EventDispatcherInterface $events
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
@@ -156,7 +157,7 @@ class Connection implements ConnectionInterface
 
     /**
      * @param HttpEventInterface $event
-     * @throws \RuntimeException
+     * @throws ConnectionException
      */
     private function assertResponse(HttpEventInterface $event): void
     {
@@ -170,8 +171,8 @@ class Connection implements ConnectionInterface
 
     /**
      * @param RequestInterface $request
-     * @return RequestReceived|Event
-     * @throws \RuntimeException
+     * @return RequestReceived
+     * @throws ConnectionException
      */
     private function fireOnRequest(RequestInterface $request): RequestReceived
     {
@@ -188,8 +189,8 @@ class Connection implements ConnectionInterface
 
     /**
      * @param RequestReceived $event
-     * @return ResponseProceed|Event
-     * @throws \RuntimeException
+     * @return ResponseProceed
+     * @throws ConnectionException
      */
     private function fireOnResponse(RequestReceived $event): ResponseProceed
     {

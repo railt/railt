@@ -29,6 +29,7 @@ class RequestsSubscriber implements EventSubscriberInterface
 
     /**
      * RequestsSubscriber constructor.
+     *
      * @param bool $debug
      * @param ConnectionSubscriber $connections
      */

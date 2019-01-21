@@ -34,6 +34,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
      *
      * @param NodeInterface $ast
      * @param DocumentBuilder $document
+     * @throws \OutOfBoundsException
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
@@ -61,6 +62,7 @@ class SchemaBuilder extends BaseSchema implements Compilable
      * @param NodeInterface $ast
      * @return bool
      * @throws CompilerException
+     * @throws \OutOfBoundsException
      */
     protected function onCompile(NodeInterface $ast): bool
     {

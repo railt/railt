@@ -25,6 +25,7 @@ class Proxy implements ParserInterface
 
     /**
      * Proxy constructor.
+     *
      * @param ParserInterface $parent
      */
     public function __construct(ParserInterface $parent)

@@ -28,6 +28,7 @@ class Virtual extends File
 
     /**
      * Virtual constructor.
+     *
      * @param string $contents
      * @param string|null $name
      */

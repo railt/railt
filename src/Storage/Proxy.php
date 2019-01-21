@@ -28,6 +28,7 @@ class Proxy implements Storage
 
     /**
      * Proxy constructor.
+     *
      * @param Storage $front
      * @param Storage $fallback
      */

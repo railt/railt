@@ -28,9 +28,10 @@ class UnionBuilder extends BaseUnion implements Compilable
 
     /**
      * UnionBuilder constructor.
+     *
      * @param NodeInterface $ast
      * @param DocumentBuilder $document
-     * @throws \Railt\SDL\Exceptions\TypeConflictException
+     * @throws \OutOfBoundsException
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {
@@ -41,7 +42,7 @@ class UnionBuilder extends BaseUnion implements Compilable
     /**
      * @param NodeInterface|RuleInterface $ast
      * @return bool
-     * @throws TypeConflictException
+     * @throws \OutOfBoundsException
      */
     protected function onCompile(NodeInterface $ast): bool
     {

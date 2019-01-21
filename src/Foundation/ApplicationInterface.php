@@ -11,6 +11,7 @@ namespace Railt\Foundation;
 
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Config\ConfigurationInterface;
+use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Io\Readable;
 use Symfony\Component\Console\Application as ConsoleApplication;
 
@@ -36,7 +37,7 @@ interface ApplicationInterface
     public function getConsoleApplication(): ConsoleApplication;
 
     /**
-     * @param string $extension
+     * @param string|ExtensionInterface $extension
      * @return ApplicationInterface
      */
     public function extend(string $extension): self;

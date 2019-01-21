@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
@@ -21,8 +22,7 @@ class SchemaBuilder extends Builder
 {
     /**
      * @return Schema
-     * @throws \GraphQL\Error\Error
-     * @throws \GraphQL\Error\InvariantViolation
+     * @throws InvariantViolation
      */
     public function build(): Schema
     {

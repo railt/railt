@@ -18,6 +18,7 @@ interface SchemaException extends \Throwable
 {
     /**
      * SchemaException constructor.
+     *
      * @param string $message
      * @param CallStackInterface $stack
      * @param \Throwable|null $previous

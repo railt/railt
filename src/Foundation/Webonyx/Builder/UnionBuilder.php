@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\UnionType;
 use Railt\Foundation\Webonyx\Builder\Common\TypeResolverTrait;
 use Railt\SDL\Contracts\Definitions\UnionDefinition;
@@ -23,7 +24,7 @@ class UnionBuilder extends Builder
 
     /**
      * @return UnionType
-     * @throws \GraphQL\Error\Error
+     * @throws InvariantViolation
      */
     public function build(): UnionType
     {

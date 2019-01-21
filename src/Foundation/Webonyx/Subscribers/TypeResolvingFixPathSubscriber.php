@@ -32,6 +32,7 @@ class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
 
     /**
      * TypeResolvingFixPathSubscriber constructor.
+     *
      * @param ConnectionSubscriber $connections
      */
     public function __construct(ConnectionSubscriber $connections)

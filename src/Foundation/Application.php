@@ -17,7 +17,10 @@ use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
 use Railt\Foundation\Config\ConfigurationInterface;
 use Railt\Foundation\Config\Discovery;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\EventsExtension;
+use Railt\Foundation\Exception\ConnectionException;
+use Railt\Foundation\Exception\ExtensionException;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
 use Railt\Foundation\Webonyx\WebonyxExtension;
@@ -72,10 +75,11 @@ class Application implements ApplicationInterface
 
     /**
      * Application constructor.
+     *
      * @param bool $debug
      * @param PSRContainer|null $container
-     * @throws \Railt\Foundation\Exception\ExtensionException
      * @throws \LogicException
+     * @throws ExtensionException
      */
     public function __construct(bool $debug = false, PSRContainer $container = null)
     {
@@ -98,7 +102,6 @@ class Application implements ApplicationInterface
 
     /**
      * @param bool $debug
-     * @return void
      */
     private function registerBaseBindings(bool $debug): void
     {
@@ -110,9 +113,8 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * @return void
-     * @throws \Railt\Foundation\Exception\ExtensionException
      * @throws \LogicException
+     * @throws ExtensionException
      */
     private function bootIfNotBooted(): void
     {
@@ -130,8 +132,8 @@ class Application implements ApplicationInterface
 
     /**
      * @param string|ExtensionInterface $extension
-     * @return Application|$this
-     * @throws \Railt\Foundation\Exception\ExtensionException
+     * @return ApplicationInterface|$this
+     * @throws ExtensionException
      */
     public function extend(string $extension): ApplicationInterface
     {
@@ -141,17 +143,9 @@ class Application implements ApplicationInterface
     }
 
     /**
-     * @return bool
-     */
-    public function isDebug(): bool
-    {
-        return $this->debug;
-    }
-
-    /**
      * @param ConfigurationInterface $config
      * @return ApplicationInterface
-     * @throws \Railt\Foundation\Exception\ExtensionException
+     * @throws ExtensionException
      */
     public function configure(ConfigurationInterface $config): ApplicationInterface
     {
@@ -167,6 +161,14 @@ class Application implements ApplicationInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isDebug(): bool
+    {
+        return $this->debug;
+    }
+
+    /**
      * @return ContainerInterface
      */
     public function getContainer(): ContainerInterface
@@ -177,8 +179,9 @@ class Application implements ApplicationInterface
     /**
      * @param Readable $schema
      * @return ConnectionInterface
-     * @throws Exception\ExtensionException
      * @throws \LogicException
+     * @throws ConnectionException
+     * @throws ExtensionException
      */
     public function connect(Readable $schema): ConnectionInterface
     {
@@ -208,14 +211,23 @@ class Application implements ApplicationInterface
     /**
      * @param Readable $readable
      * @return array
+     * @throws ConnectionException
      */
     private function compile(Readable $readable): array
     {
-        /** @var CompilerInterface|Configuration $compiler */
+        /** @var CompilerInterface|Configuration */
         $compiler = $this->app->make(CompilerInterface::class);
 
         $document = $compiler->compile($readable);
+        $schema = $document->getSchema();
 
-        return [$compiler->getDictionary(), $document->getSchema()];
+        if ($schema === null) {
+            $error = 'In order to create a new connection, you must specify ' .
+                'a schema, but no available schema is defined in %s';
+
+            throw new ConnectionException(\sprintf($error, $readable));
+        }
+
+        return [$compiler->getDictionary(), $schema];
     }
 }

@@ -40,6 +40,7 @@ abstract class AbstractParser implements ParserInterface
 
     /**
      * AbstractParser constructor.
+     *
      * @param LexerInterface $lexer
      * @param GrammarInterface $grammar
      */

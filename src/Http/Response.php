@@ -36,6 +36,7 @@ class Response implements ResponseInterface
 
     /**
      * Response constructor.
+     *
      * @param array|null $data
      */
     public function __construct(array $data = null)

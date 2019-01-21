@@ -59,7 +59,7 @@ trait TypeResolverTrait
     }
 
     /**
-     * @param \Railt\Foundation\Event\Resolver\TypeResolve $resolving
+     * @param TypeResolve $resolving
      * @return \LogicException
      */
     private function throwInvalidResolveType(TypeResolve $resolving): \LogicException
@@ -75,7 +75,7 @@ trait TypeResolverTrait
      * @param Context $ctx
      * @param FieldDefinition $field
      * @param ResolveInfo $info
-     * @return TypeResolve|Event
+     * @return TypeResolve
      */
     private function fireTypeResolving($value, Context $ctx, FieldDefinition $field, ResolveInfo $info): TypeResolve
     {

@@ -74,6 +74,7 @@ class Compiler implements CompilerInterface, Configuration
 
     /**
      * Compiler constructor.
+     *
      * @param Storage|null $storage
      * @throws CompilerException
      * @throws Exceptions\TypeConflictException

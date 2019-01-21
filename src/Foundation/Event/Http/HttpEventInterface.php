@@ -18,7 +18,7 @@ use Railt\Http\ResponseInterface;
 interface HttpEventInterface extends ProvidesConnection, ProvidesRequest
 {
     /**
-     * @return null|ResponseInterface
+     * @return ResponseInterface|null
      */
     public function getResponse(): ?ResponseInterface;
 }

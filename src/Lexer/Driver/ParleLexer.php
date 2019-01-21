@@ -43,6 +43,7 @@ class ParleLexer extends SimpleLexer
 
     /**
      * ParleStateless constructor.
+     *
      * @param array $tokens
      * @param array $skip
      * @throws BadLexemeException

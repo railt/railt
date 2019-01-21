@@ -35,6 +35,7 @@ class Repository
 
     /**
      * Repository constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
@@ -45,7 +46,7 @@ class Repository
     /**
      * @param string $extension
      * @return void
-     * @throws \Railt\Foundation\Exception\ExtensionException
+     * @throws ExtensionException
      */
     public function add(string $extension): void
     {
@@ -60,7 +61,7 @@ class Repository
     /**
      * @param string $extension
      * @return mixed|object
-     * @throws \Railt\Foundation\Exception\ExtensionException
+     * @throws ExtensionException
      */
     private function instance(string $extension)
     {
@@ -81,7 +82,6 @@ class Repository
     }
 
     /**
-     * @return void
      * @throws ExtensionException
      */
     public function boot(): void
@@ -138,6 +138,8 @@ class Repository
      */
     private function loadDependency(ExtensionInterface $extension, string $dependency, $package): void
     {
+        \assert(\is_int($package) || \is_string($package));
+
         if (! $this->booted($dependency)) {
             if (! \class_exists($dependency)) {
                 throw $this->invalidDependency($extension, $dependency, $package);
@@ -155,6 +157,8 @@ class Repository
      */
     private function invalidDependency(ExtensionInterface $extension, string $dependency, $package): ExtensionException
     {
+        \assert(\is_int($package) || \is_string($package));
+
         $message = 'Could not include dependent extension "%s" from [%s %s]';
         $message .= \is_string($package)
             ? \sprintf('. You need to set up the project dependency "%s" using Composer.', $package)

@@ -17,7 +17,7 @@ use Railt\SDL\Contracts\Definitions\TypeDefinition;
 interface TypeUniquenessValidator extends UniquenessValidator
 {
     /**
-     * @param $container
+     * @param mixed $container
      * @param TypeDefinition $definition
      * @return void
      */

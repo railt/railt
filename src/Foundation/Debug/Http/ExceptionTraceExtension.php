@@ -36,6 +36,7 @@ class ExceptionTraceExtension implements ExtensionInterface
 
     /**
      * DebugExtension constructor.
+     *
      * @param \Throwable $exception
      * @param int $trace
      */

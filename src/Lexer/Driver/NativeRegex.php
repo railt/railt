@@ -24,6 +24,7 @@ class NativeRegex extends SimpleLexer
 {
     /**
      * NativeRegex constructor.
+     *
      * @param array $tokens
      * @param array $skip
      */

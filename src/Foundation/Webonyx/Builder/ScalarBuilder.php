@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
@@ -60,7 +61,7 @@ class ScalarBuilder extends Builder
     /**
      * @param ScalarDefinition $reflection
      * @return ScalarType
-     * @throws \GraphQL\Error\Error
+     * @throws InvariantViolation
      */
     private function create(ScalarDefinition $reflection): ScalarType
     {

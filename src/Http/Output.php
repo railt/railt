@@ -30,6 +30,7 @@ class Output implements OutputInterface
 
     /**
      * Output constructor.
+     *
      * @param mixed|null $value
      */
     public function __construct($value = null)

@@ -69,6 +69,7 @@ class DocumentBuilder extends BaseDocument implements Compilable
 
     /**
      * DocumentBuilder constructor.
+     *
      * @param NodeInterface $ast
      * @param Readable $readable
      * @param CompilerInterface $compiler

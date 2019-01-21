@@ -18,6 +18,7 @@ abstract class BaseExtension extends Extension
 {
     /**
      * BaseExtension constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)

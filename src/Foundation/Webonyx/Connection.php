@@ -11,6 +11,7 @@ namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Error\Error;
 use GraphQL\Error\InvariantViolation;
+use GraphQL\Error\SyntaxError;
 use GraphQL\Executor\ExecutionResult;
 use GraphQL\GraphQL;
 use GraphQL\Language\AST\DocumentNode;
@@ -57,7 +58,8 @@ class Connection
     private $schema;
 
     /**
-     * WebonyxResponder constructor.
+     * Connection constructor.
+     *
      * @param EventDispatcherInterface $events
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
@@ -186,8 +188,8 @@ class Connection
     /**
      * @param string $query
      * @return DocumentNode
-     * @throws Error
-     * @throws \GraphQL\Error\SyntaxError
+     * @throws InvariantViolation
+     * @throws SyntaxError
      */
     private function parse(string $query): DocumentNode
     {
@@ -198,7 +200,6 @@ class Connection
      * @param SchemaDefinition $schema
      * @param TypeLoader $loader
      * @return Schema
-     * @throws Error
      * @throws InvariantViolation
      */
     private function getSchema(SchemaDefinition $schema, TypeLoader $loader): Schema
@@ -209,8 +210,8 @@ class Connection
     }
 
     /**
-     * @param array|null $data
      * @param iterable $exceptions
+     * @param null $data
      * @return ResponseInterface
      */
     private function createResponse(iterable $exceptions, $data = null): ResponseInterface
@@ -226,9 +227,9 @@ class Connection
 
     /**
      * @param iterable|\Throwable[] $exceptions
-     * @return \Generator|GraphQLException[]
+     * @return \Generator|GraphQLExceptionInterface[]
      */
-    private function wrapExceptions(iterable $exceptions)
+    private function wrapExceptions(iterable $exceptions): \Generator
     {
         foreach ($exceptions as $exception) {
             $exception = $this->wrapException($exception);

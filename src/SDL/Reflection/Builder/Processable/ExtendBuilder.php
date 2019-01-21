@@ -39,10 +39,10 @@ class ExtendBuilder extends BaseExtend implements Compilable
 
     /**
      * ExtendBuilder constructor.
+     *
      * @param NodeInterface $ast
      * @param DocumentBuilder $document
-     * @throws TypeConflictException
-     * @throws \Exception
+     * @throws \OutOfBoundsException
      */
     public function __construct(NodeInterface $ast, DocumentBuilder $document)
     {

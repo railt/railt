@@ -146,7 +146,7 @@ class ArgumentValidator extends BaseDefinitionValidator
     /**
      * @param ArgumentDefinition $type
      * @param Inputable $definition
-     * @param $value
+     * @param mixed $value
      * @return void
      * @throws TypeConflictException
      */

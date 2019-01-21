@@ -31,6 +31,7 @@ class Builder
 
     /**
      * Builder constructor.
+     *
      * @param array $trace
      * @param GrammarInterface $grammar
      */

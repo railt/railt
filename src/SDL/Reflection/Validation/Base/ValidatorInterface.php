@@ -19,6 +19,7 @@ interface ValidatorInterface
 {
     /**
      * ValidatorInterface constructor.
+     *
      * @param Validator $validator
      * @param CallStackInterface $stack
      * @param string|null $group

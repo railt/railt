@@ -44,6 +44,7 @@ class Factory implements \IteratorAggregate
 
     /**
      * Factory constructor.
+     *
      * @param ProviderInterface $provider
      */
     public function __construct(ProviderInterface $provider)
@@ -106,7 +107,7 @@ class Factory implements \IteratorAggregate
 
     /**
      * @param ResolverInterface $resolver
-     * @return Factory
+     * @return Factory|$this
      */
     public function addResolver(ResolverInterface $resolver): self
     {
@@ -116,7 +117,7 @@ class Factory implements \IteratorAggregate
     }
 
     /**
-     * @return iterable|RequestInterface[]|\Traversable
+     * @return iterable|RequestInterface[]
      */
     public function getRequests(): iterable
     {
@@ -141,7 +142,7 @@ class Factory implements \IteratorAggregate
     /**
      * @param ResolverInterface $resolver
      * @param ProviderInterface $provider
-     * @return bool|\Generator
+     * @return \Generator|bool
      */
     private function parse(ResolverInterface $resolver, ProviderInterface $provider): \Generator
     {
@@ -156,10 +157,10 @@ class Factory implements \IteratorAggregate
     }
 
     /**
-     * @return \Traversable|ResponseInterface[]
+     * @return \Traversable|RequestInterface[]
      */
     public function getIterator(): \Traversable
     {
-        return $this->getRequests();
+        yield from $this->getRequests();
     }
 }

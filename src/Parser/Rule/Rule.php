@@ -52,6 +52,7 @@ abstract class Rule
 
     /**
      * Rule constructor.
+     *
      * @param string|int $name Rule name.
      * @param int|int[]|string|string[] $children Children.
      * @param string $nodeId Node ID.

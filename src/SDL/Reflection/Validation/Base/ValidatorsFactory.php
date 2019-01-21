@@ -24,6 +24,7 @@ abstract class ValidatorsFactory extends Factory
 
     /**
      * Definitions constructor.
+     *
      * @param Validator $factory
      * @param CallStackInterface $stack
      * @param null|string $name

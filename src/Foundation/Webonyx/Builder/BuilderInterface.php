@@ -9,9 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
-use GraphQL\Type\Definition\FieldArgument;
-use GraphQL\Type\Definition\FieldDefinition;
-use GraphQL\Type\Definition\InputObjectField;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
@@ -27,7 +24,7 @@ interface BuilderInterface
     public function getReflection(): TypeDefinition;
 
     /**
-     * @return Type|Schema|FieldDefinition|FieldArgument|InputObjectField
+     * @return mixed|Type|Schema
      */
     public function build();
 }

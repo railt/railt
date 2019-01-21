@@ -129,7 +129,7 @@ class ArgumentCoercion extends BaseTypeCoercion
 
     /**
      * @param BaseArgument $argument
-     * @param $value
+     * @param mixed $value
      */
     private function set(BaseArgument $argument, $value): void
     {

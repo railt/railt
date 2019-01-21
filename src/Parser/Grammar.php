@@ -35,6 +35,7 @@ class Grammar implements GrammarInterface
 
     /**
      * Grammar constructor.
+     *
      * @param array|Rule[] $rules
      * @param array|string[] $delegates
      * @param string|int|null $root

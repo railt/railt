@@ -14,7 +14,6 @@ use Railt\Foundation\Webonyx\Input;
 
 /**
  * Trait PathInfoLoader
- * @mixin Input
  */
 trait PathInfoLoader
 {

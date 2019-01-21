@@ -37,6 +37,7 @@ class ConnectionSubscriber implements EventSubscriberInterface
 
     /**
      * ConnectionSubscriber constructor.
+     *
      * @param EventDispatcherInterface $events
      * @param bool $debug
      */
@@ -59,7 +60,7 @@ class ConnectionSubscriber implements EventSubscriberInterface
 
     /**
      * @param int $id
-     * @return null|Connection
+     * @return Connection|null
      */
     public function getConnection(int $id): ?Connection
     {

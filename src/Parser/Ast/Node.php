@@ -29,6 +29,7 @@ abstract class Node implements NodeInterface
 
     /**
      * Node constructor.
+     *
      * @param string $name
      * @param int $offset
      */

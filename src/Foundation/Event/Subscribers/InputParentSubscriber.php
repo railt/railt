@@ -26,6 +26,7 @@ class InputParentSubscriber implements EventSubscriberInterface
 
     /**
      * InputParentSubscriber constructor.
+     *
      * @param InputSubscriber $inputs
      */
     public function __construct(InputSubscriber $inputs)
@@ -79,7 +80,7 @@ class InputParentSubscriber implements EventSubscriberInterface
     {
         $id = $event->getConnection()->getId();
 
-        /** @var \Railt\Foundation\Webonyx\Input $input */
+        /** @var Input $input */
         $input = $event->getInput();
 
         $input->withParentInput(function (int $depth, InputInterface $input) use ($id) {

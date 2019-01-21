@@ -46,6 +46,7 @@ class GraphQLDocument extends BaseDocument implements StandardType
 
     /**
      * GraphQLDocument constructor.
+     *
      * @param Dictionary $dictionary
      * @param array|string[] $additionalTypes
      */

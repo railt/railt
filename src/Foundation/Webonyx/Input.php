@@ -35,7 +35,8 @@ class Input extends BaseInput
     private $reflection;
 
     /**
-     * WebonyxInput constructor.
+     * Input constructor.
+     *
      * @param RequestInterface $request
      * @param ResolveInfo $info
      * @param FieldDefinition $field
