@@ -6,10 +6,6 @@ php:
   - 7.3
   - nightly
 
-env:
-  - RAILT_DEBUG=1
-  - APP_ENV=testing
-
 matrix:
   fast_finish: true
   allow_failures:
