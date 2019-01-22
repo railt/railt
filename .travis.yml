@@ -4,8 +4,6 @@ php:
   - 7.1
   - 7.2
   - 7.3
-  - hhvm
-  - hhvm-nightly
   - nightly
 
 env:
@@ -16,8 +14,6 @@ matrix:
   fast_finish: true
   allow_failures:
     - php: 7.3
-    - php: hhvm
-    - php: hhvm-nightly
     - php: nightly
 
 sudo: required
@@ -45,4 +41,4 @@ before_script:
   - composer global require hirak/prestissimo
   - composer install --no-interaction --no-suggest
 
-script: vendor/bin/paratest -p8
+script: vendor/bin/paratest -f -p8
