@@ -39,7 +39,6 @@ class InvocableObjectFetcher extends AbstractFetcher
             return \Closure::fromCallable($signature);
         } catch (ContainerResolutionException $e) {
             throw new ContainerInvocationException($e->getMessage(), $e->getCode(), $e);
-
         } catch (\TypeError $e) {
             $error = 'Given class %s should provide method __invoke to use as callable type';
             throw new ContainerInvocationException(\sprintf($error, $this->fetchClass($signature)));

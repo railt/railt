@@ -112,7 +112,7 @@ class SignatureTestCase extends TestCase
     {
         $resolver = new SignatureResolver();
 
-        $this->assertEquals($class, $resolver->fetchClass($signature));
+        $this->assertSame($class, $resolver->fetchClass($signature));
     }
 
     /**
@@ -127,7 +127,7 @@ class SignatureTestCase extends TestCase
     {
         $resolver = new SignatureResolver();
 
-        $this->assertEquals($class, $resolver->fetchClass($signature));
+        $this->assertSame($class, $resolver->fetchClass($signature));
     }
 
     /**
@@ -145,7 +145,7 @@ class SignatureTestCase extends TestCase
 
         $expected = \random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
-        $this->assertEquals($expected, $container->call($signature, ['$argument' => $expected]));
+        $this->assertSame($expected, $container->call($signature, ['$argument' => $expected]));
     }
 
     /**
@@ -161,6 +161,6 @@ class SignatureTestCase extends TestCase
 
         $expected = \random_int(\PHP_INT_MIN, \PHP_INT_MAX);
 
-        $this->assertEquals($expected, $container->call($signature, ['$argument' => $expected]));
+        $this->assertSame($expected, $container->call($signature, ['$argument' => $expected]));
     }
 }

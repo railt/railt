@@ -42,6 +42,5 @@ namespace Railt\Tests\Container {
 
     class NotCallableClass
     {
-
     }
 }

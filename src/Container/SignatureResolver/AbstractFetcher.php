@@ -11,7 +11,6 @@ namespace Railt\Container\SignatureResolver;
 
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
-use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\SignatureResolver;
 
 /**

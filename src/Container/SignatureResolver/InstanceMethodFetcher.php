@@ -65,10 +65,8 @@ class InstanceMethodFetcher extends AbstractFetcher
 
         try {
             return \Closure::fromCallable([$this->container->make($class), $method]);
-
         } catch (ContainerResolutionException $e) {
             throw new ContainerInvocationException($e->getMessage(), $e->getCode(), $e);
-
         } catch (\TypeError $e) {
             $error = 'Given object of %s does not contain a method %s';
             throw new ContainerInvocationException(\sprintf($error, $this->fetchClass($signature), $method));
