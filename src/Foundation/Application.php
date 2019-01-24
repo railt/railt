@@ -196,15 +196,7 @@ class Application implements ApplicationInterface
      */
     private function createConnection(Dictionary $dictionary, SchemaDefinition $schema): ConnectionInterface
     {
-        return new Connection($this->getEventDispatcher(), $dictionary, $schema);
-    }
-
-    /**
-     * @return EventDispatcherInterface
-     */
-    private function getEventDispatcher(): EventDispatcherInterface
-    {
-        return $this->app->make(EventDispatcherInterface::class);
+        return new Connection($this, $dictionary, $schema);
     }
 
     /**
