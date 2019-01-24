@@ -47,7 +47,7 @@ class DirectiveBuilder extends Builder
             'name'        => $this->reflection->getName(),
             'description' => $this->reflection->getDescription(),
             'locations'   => \iterator_to_array($this->getPublicLocations()),
-            'args'        => $this->getFieldArguments()
+            'args'        => $this->getFieldArguments(),
         ]));
     }
 
@@ -75,7 +75,7 @@ class DirectiveBuilder extends Builder
                 $field = new FieldArgument([
                     'name'         => $argument->getName(),
                     'type'         => $this->buildTypeHint($argument),
-                    'description'  => $argument->getDescription()
+                    'description'  => $argument->getDescription(),
                 ]);
 
                 if ($argument->hasDefaultValue()) {

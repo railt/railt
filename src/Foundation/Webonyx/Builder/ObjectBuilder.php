@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
-use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\ObjectType;
 use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 

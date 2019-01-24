@@ -28,7 +28,6 @@ use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
-use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
