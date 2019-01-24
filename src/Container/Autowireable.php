@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
+
 /**
  * Interface Autowireable
  */
@@ -18,6 +21,7 @@ interface Autowireable
      * @param callable|\Closure|mixed $callable
      * @param array $params
      * @return mixed
+     * @throws ContainerInvocationException
      */
     public function call($callable, array $params = []);
 
@@ -25,6 +29,7 @@ interface Autowireable
      * @param string $class
      * @param array $params
      * @return mixed|object
+     * @throws ContainerResolutionException
      */
     public function make(string $class, array $params = []);
 }

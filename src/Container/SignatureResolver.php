@@ -9,138 +9,144 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\SignatureResolver\CallableArrayFetcher;
+use Railt\Container\SignatureResolver\CallableFunctionFetcher;
+use Railt\Container\SignatureResolver\CallableStaticMethodFetcher;
+use Railt\Container\SignatureResolver\ClosureFetcher;
+use Railt\Container\SignatureResolver\FetcherInterface;
+use Railt\Container\SignatureResolver\InstanceMethodFetcher;
+use Railt\Container\SignatureResolver\InvocableClassFetcher;
+use Railt\Container\SignatureResolver\InvocableObjectFetcher;
+
 /**
  * Class SignatureResolver
  */
 class SignatureResolver
 {
     /**
+     * @var array|string[]|FetcherInterface[]
+     */
+    private const DEFAULT_FETCHER_CLASSES = [
+        ClosureFetcher::class,
+        CallableArrayFetcher::class,
+        CallableFunctionFetcher::class,
+        CallableStaticMethodFetcher::class,
+        InstanceMethodFetcher::class,
+        InvocableClassFetcher::class,
+        InvocableObjectFetcher::class,
+    ];
+
+    /**
      * @var ContainerInterface
      */
     private $container;
 
     /**
+     * @var array|FetcherInterface[]
+     */
+    private $fetchers = [];
+
+    /**
      * SignatureResolver constructor.
      *
-     * @param ContainerInterface $container
+     * @param ContainerInterface|null $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container = null)
     {
-        $this->container = $container;
+        $this->container = $container ?? new Container();
+
+        $this->bootDefaultFetchers();
+    }
+
+    /**
+     * @return void
+     */
+    private function bootDefaultFetchers(): void
+    {
+        foreach (self::DEFAULT_FETCHER_CLASSES as $class) {
+            $this->register($class);
+        }
+    }
+
+    /**
+     * @param string|FetcherInterface $resolver
+     */
+    public function register(string $resolver): void
+    {
+        $this->fetchers[] = new $resolver($this->container);
+    }
+
+    /**
+     * @param callable|mixed $signature
+     * @return string|null
+     * @throws \InvalidArgumentException
+     */
+    public function fetchClass($signature): ?string
+    {
+        if ($fetcher = $this->match($signature)) {
+            return $fetcher->fetchClass($signature);
+        }
+
+        $error = 'Could not determine callable format of %s';
+        throw new \InvalidArgumentException(\sprintf($error, static::signatureToString($signature)));
+    }
+
+    /**
+     * @param mixed|callable $signature
+     * @return FetcherInterface|null
+     */
+    public function match($signature): ?FetcherInterface
+    {
+        foreach ($this->fetchers as $fetcher) {
+            if ($fetcher->match($signature)) {
+                return $fetcher;
+            }
+        }
+
+        return null;
     }
 
     /**
      * @param mixed $signature
-     * @param array $params
-     * @return \Closure
-     * @throws \InvalidArgumentException
+     * @return string
      */
-    public function resolve($signature, array $params): \Closure
+    public static function signatureToString($signature): string
     {
+        $pattern = '%s %s';
+
         switch (true) {
-            case static::isClosure($signature):
-                return $this->fromClosure($signature);
+            case $signature === null:
+                return 'null value';
 
-            case static::isCallable($signature):
-                return $this->fromCallable($signature);
+            case \is_object($signature):
+                return \sprintf($pattern, 'object', \get_class($signature));
 
-            case static::isInvocable($signature):
-                return $this->fromInvocable($signature, $params);
+            case \is_string($signature):
+                return \sprintf($pattern, 'string', '"' . \addcslashes($signature, '"') . '"');
 
-            case static::isSignature($signature):
-                return $this->fromSignature($signature, $params);
+            case \is_array($signature):
+                $items = \array_map([static::class, 'signatureToString'], $signature);
+
+                return '[ ' . \implode(', ', $items) . ' ]';
 
             default:
-                throw new \InvalidArgumentException('Could not determine callable format');
+                return \sprintf($pattern, \strtolower(\gettype($signature)), $signature);
         }
     }
 
     /**
-     * @param \Closure|mixed $signature
-     * @return bool
-     */
-    public static function isClosure($signature): bool
-    {
-        return $signature instanceof \Closure;
-    }
-
-    /**
-     * @param \Closure $signature
-     * @return \Closure
-     */
-    public function fromClosure(\Closure $signature): \Closure
-    {
-        return $signature;
-    }
-
-    /**
      * @param callable|mixed $signature
-     * @return bool
-     */
-    public static function isCallable($signature): bool
-    {
-        return \is_callable($signature);
-    }
-
-    /**
-     * @param callable $callable
      * @return \Closure
+     * @throws ContainerInvocationException
      */
-    public function fromCallable(callable $callable): \Closure
+    public function fetchAction($signature): \Closure
     {
-        return \Closure::fromCallable($callable);
-    }
-
-    /**
-     * @param callable|mixed $signature
-     * @return bool
-     */
-    public static function isInvocable($signature): bool
-    {
-        return \is_string($signature) && \class_exists($signature);
-    }
-
-    /**
-     * @param string $signature
-     * @param array $params
-     * @return \Closure
-     */
-    public function fromInvocable(string $signature, array $params): \Closure
-    {
-        return function () use ($signature, $params) {
-            $instance = $this->container->make($signature, $params);
-
-            return $this->container->call([$instance, '__invoke'], $params);
-        };
-    }
-
-    /**
-     * @param callable|mixed $signature
-     * @return bool
-     */
-    public static function isSignature($signature): bool
-    {
-        return \is_string($signature) && \strpos($signature, '@') !== false;
-    }
-
-    /**
-     * @param string $signature
-     * @param array $params
-     * @return \Closure
-     * @throws \InvalidArgumentException
-     */
-    public function fromSignature(string $signature, array $params): \Closure
-    {
-        if (\substr_count($signature, '@') !== 1) {
-            throw new \InvalidArgumentException('Bad signature function format');
+        if ($fetcher = $this->match($signature)) {
+            return $fetcher->fetchAction($signature);
         }
 
-        [$class, $method] = \explode('@', $signature);
-
-        return function () use ($class, $method, $params) {
-            $instance = $this->container->make($class, $params);
-
-            return $this->container->call([$instance, $method], $params);
-        };
+        $error = '%s is not allowed for invocations';
+        throw new ContainerInvocationException(\sprintf($error, static::signatureToString($signature)));
     }
 }

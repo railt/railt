@@ -73,7 +73,7 @@ class ClassLoaderExtension extends Extension
     public function register(): void
     {
         $this->registerIfNotRegistered(ClassLoaderInterface::class, function (CompilerInterface $compiler) {
-            return new DirectiveClassLoader($compiler);
+            return new DirectiveClassLoader($compiler, $this->app);
         });
     }
 
