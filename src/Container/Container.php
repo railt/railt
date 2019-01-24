@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace Railt\Container;
 
 use Psr\Container\ContainerInterface as PSRContainer;
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Container\Exception\ParameterResolutionException;
 
 /**
  * Class Container
@@ -55,8 +57,6 @@ class Container implements ContainerInterface
     public function __construct(PSRContainer $parent = null)
     {
         $this->parent = $parent;
-        $this->instance(ContainerInterface::class, $this);
-
         $this->params = new ParamResolver($this);
         $this->signature = new SignatureResolver($this);
     }
@@ -71,6 +71,22 @@ class Container implements ContainerInterface
         $this->resolved[$locator] = $instance;
 
         return $this;
+    }
+
+    /**
+     * @return SignatureResolver
+     */
+    public function getSignatureResolver(): SignatureResolver
+    {
+        return $this->signature;
+    }
+
+    /**
+     * @return ParamResolver
+     */
+    public function getParamResolver(): ParamResolver
+    {
+        return $this->params;
     }
 
     /**
@@ -107,7 +123,9 @@ class Container implements ContainerInterface
      * @param string $locator
      * @param array $params
      * @return mixed|object
+     * @throws ContainerInvocationException
      * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     public function make(string $locator, array $params = [])
     {
@@ -157,15 +175,14 @@ class Container implements ContainerInterface
      */
     private function isRegistered(string $service): bool
     {
-        return isset($this->resolved[$service])
-            || isset($this->registered[$service])
-            || \array_key_exists($service, $this->resolved)
-            || \array_key_exists($service, $this->registered);
+        return isset($this->resolved[$service]) || isset($this->registered[$service]) || \array_key_exists($service,
+                $this->resolved) || \array_key_exists($service, $this->registered);
     }
 
     /**
      * @param string $id
      * @return mixed|object
+     * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      */
     public function get($id)
@@ -192,6 +209,7 @@ class Container implements ContainerInterface
     /**
      * @param string $id
      * @return mixed|object
+     * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      */
     protected function resolve(string $id)
@@ -222,17 +240,18 @@ class Container implements ContainerInterface
      * @param callable|\Closure|mixed $callable
      * @param array $params
      * @return mixed
-     * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     public function call($callable, array $params = [])
     {
+        $action = $this->signature->fetchAction($callable);
+
         try {
-            $callable = $this->signature->resolve($callable, $params);
-            $resolved = $this->params->fromClosure($callable, $params);
-        } catch (\ReflectionException | \InvalidArgumentException $e) {
-            throw new ContainerResolutionException($e->getMessage(), $e->getCode(), $e);
+            $resolvedParameters = $this->params->fromClosure($action, $params);
+        } catch (\ReflectionException $e) {
+            throw new ContainerInvocationException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return \call_user_func_array($callable, $resolved);
+        return $action(...$resolvedParameters);
     }
 }

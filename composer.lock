@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/discovery.git",
-                "reference": "f452deb7981cec2b538315a7b5bcccd69f12385b"
+                "reference": "2f883f374d99fcc8028cfbe3110f1d3257a481a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/discovery/zipball/f452deb7981cec2b538315a7b5bcccd69f12385b",
-                "reference": "f452deb7981cec2b538315a7b5bcccd69f12385b",
+                "url": "https://api.github.com/repos/railt/discovery/zipball/2f883f374d99fcc8028cfbe3110f1d3257a481a6",
+                "reference": "2f883f374d99fcc8028cfbe3110f1d3257a481a6",
                 "shasum": ""
             },
             "require": {
@@ -423,7 +423,7 @@
                 "console",
                 "dependency"
             ],
-            "time": "2019-01-18T22:01:57+00:00"
+            "time": "2019-01-22T01:14:13+00:00"
         },
         {
             "name": "symfony/console",
@@ -2176,12 +2176,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/compiler.git",
-                "reference": "47cc05fa340922bb70c3e3c364abc03acd862d40"
+                "reference": "58a44bfb09579b05fbdf58e5fe394d26f02bfd81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/compiler/zipball/47cc05fa340922bb70c3e3c364abc03acd862d40",
-                "reference": "47cc05fa340922bb70c3e3c364abc03acd862d40",
+                "url": "https://api.github.com/repos/railt/compiler/zipball/58a44bfb09579b05fbdf58e5fe394d26f02bfd81",
+                "reference": "58a44bfb09579b05fbdf58e5fe394d26f02bfd81",
                 "shasum": ""
             },
             "require": {
@@ -2234,7 +2234,7 @@
                 "language",
                 "pp"
             ],
-            "time": "2019-01-21T14:59:18+00:00"
+            "time": "2019-01-22T01:14:14+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

@@ -144,7 +144,7 @@ class ParamResolver
             return $parameter->getDefaultValue();
         }
 
-        if ($parameter->isVariadic() || $parameter->allowsNull()) {
+        if ($parameter->allowsNull() && $parameter->hasType()) {
             return null;
         }
 
