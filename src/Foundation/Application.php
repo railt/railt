@@ -10,8 +10,11 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Psr\Container\ContainerInterface as PSRContainer;
+use Railt\Container\Autowireable;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application\CacheExtension;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
@@ -33,7 +36,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * Class Application
  */
-class Application implements ApplicationInterface
+class Application implements ApplicationInterface, Autowireable
 {
     use HasConsoleApplication;
 
@@ -88,6 +91,28 @@ class Application implements ApplicationInterface
 
         $this->registerBaseBindings($debug);
         $this->bootIfNotBooted();
+    }
+
+    /**
+     * @param string $class
+     * @param array $params
+     * @return mixed|object
+     * @throws ContainerResolutionException
+     */
+    public function make(string $class, array $params = [])
+    {
+        return $this->getContainer()->make($class, $params);
+    }
+
+    /**
+     * @param callable|\Closure|mixed $callable
+     * @param array $params
+     * @return mixed
+     * @throws ContainerInvocationException
+     */
+    public function call($callable, array $params = [])
+    {
+        return $this->getContainer()->call($callable, $params);
     }
 
     /**
