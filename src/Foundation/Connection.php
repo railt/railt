@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Railt\Container\ContainerInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\HttpEventInterface;
@@ -33,11 +34,6 @@ class Connection implements ConnectionInterface
     use HasIdentifier;
 
     /**
-     * @var EventDispatcherInterface
-     */
-    private $events;
-
-    /**
      * @var bool
      */
     private $closed = true;
@@ -53,19 +49,39 @@ class Connection implements ConnectionInterface
     private $dictionary;
 
     /**
+     * @var Application
+     */
+    private $app;
+
+    /**
+     * @var
+     */
+    private $events;
+
+    /**
      * Connection constructor.
      *
-     * @param EventDispatcherInterface $events
+     * @param Application $app
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
      */
-    public function __construct(EventDispatcherInterface $events, Dictionary $dictionary, SchemaDefinition $schema)
+    public function __construct(Application $app, Dictionary $dictionary, SchemaDefinition $schema)
     {
-        $this->events = $events;
+        $this->app = $app;
         $this->schema = $schema;
         $this->dictionary = $dictionary;
+        $this->events = $this->resolveEventDispatcher($app->getContainer());
 
         $this->connect();
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return EventDispatcherInterface
+     */
+    private function resolveEventDispatcher(ContainerInterface $container): EventDispatcherInterface
+    {
+        return $container->make(EventDispatcherInterface::class);
     }
 
     /**
@@ -135,7 +151,11 @@ class Connection implements ConnectionInterface
             $after = $this->fireOnResponse($before);
             $this->assertResponse($after);
 
-            return $after->getResponse();
+            /** @var ResponseInterface $response */
+            $response = $after->getResponse();
+            $response->debug($this->app->isDebug());
+
+            return $response;
         } catch (\Throwable $e) {
             $this->close();
 
@@ -171,7 +191,7 @@ class Connection implements ConnectionInterface
 
     /**
      * @param RequestInterface $request
-     * @return RequestReceived
+     * @return RequestReceived|Event
      * @throws ConnectionException
      */
     private function fireOnRequest(RequestInterface $request): RequestReceived
@@ -189,7 +209,7 @@ class Connection implements ConnectionInterface
 
     /**
      * @param RequestReceived $event
-     * @return ResponseProceed
+     * @return ResponseProceed|Event
      * @throws ConnectionException
      */
     private function fireOnResponse(RequestReceived $event): ResponseProceed

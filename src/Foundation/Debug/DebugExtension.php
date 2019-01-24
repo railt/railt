@@ -148,7 +148,7 @@ class DebugExtension extends Extension
     private function onResponseProceed(ResponseProceed $event): void
     {
         if ($response = $event->getResponse()) {
-            $response->debug();
+            //$response->debug();
 
             $this->shareMemoryProfiler($response);
             $this->shareExceptionTrace($response);
