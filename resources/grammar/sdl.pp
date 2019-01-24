@@ -411,9 +411,7 @@ DirectiveDefinitionDefaultValue
 
 ObjectDefinitionImplements
   : ::T_TYPE_IMPLEMENTS:: Key()*
-    (
-      ::T_AND:: Key()
-    )?
+    (::T_AND:: Key())*
     #Implements
   ;
 
