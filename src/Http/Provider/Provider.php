@@ -54,7 +54,7 @@ abstract class Provider implements ProviderInterface
         $arguments = $this->isJson() ? $this->getJson() : $this->getRequestArguments();
 
         if ($this->isApolloBatching($arguments)) {
-            yield $arguments;
+            yield from $arguments;
         } elseif ($this->isHttpBatching($arguments)) {
             yield from $this->extractHttpBatching($arguments);
         } else {
