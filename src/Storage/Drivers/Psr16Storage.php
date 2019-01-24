@@ -60,7 +60,7 @@ class Psr16Storage implements Storage
 
         $result = $then($readable);
 
-        $this->storage->set($readable->getHash(), $data, $this->timeout);
+        $this->storage->set($readable->getHash(), $result, $this->timeout);
 
         return $result;
     }
