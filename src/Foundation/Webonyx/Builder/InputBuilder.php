@@ -21,7 +21,6 @@ class InputBuilder extends Builder
 {
     /**
      * @return InputObjectType
-     * @throws InvariantViolation
      * @throws \Exception
      */
     public function build(): InputObjectType

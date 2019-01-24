@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
@@ -103,9 +104,9 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @param string $type
-     * @return Type
+     * @return Type|Directive
      */
-    protected function loadType(string $type): Type
+    protected function loadType(string $type)
     {
         return $this->loader->get($type, $this->getReflection());
     }

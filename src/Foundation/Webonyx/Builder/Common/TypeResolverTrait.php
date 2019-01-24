@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder\Common;
 
+use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Railt\Foundation\Event\Resolver\TypeResolve;
@@ -31,9 +32,9 @@ trait TypeResolverTrait
 
     /**
      * @param string $type
-     * @return Type
+     * @return Type|Directive
      */
-    abstract protected function loadType(string $type): Type;
+    abstract protected function loadType(string $type);
 
     /**
      * @return \Closure
