@@ -207,6 +207,7 @@ class Compiler implements CompilerInterface, Configuration
     /**
      * @param Readable $readable
      * @return Document
+     * @throws Exceptions\TypeConflictException
      */
     public function compile(Readable $readable): Document
     {
