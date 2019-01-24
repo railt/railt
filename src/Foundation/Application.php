@@ -31,7 +31,6 @@ use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Application
