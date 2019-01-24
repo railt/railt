@@ -21,7 +21,6 @@ class ObjectBuilder extends Builder
 {
     /**
      * @return ObjectType
-     * @throws InvariantViolation
      */
     public function build(): ObjectType
     {

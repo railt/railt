@@ -9,20 +9,26 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
-use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Class SchemaBuilder
+ *
  * @property SchemaDefinition $reflection
  */
 class SchemaBuilder extends Builder
 {
     /**
+     * @var array
+     */
+    private $types = [];
+
+    /**
      * @return Schema
-     * @throws InvariantViolation
      */
     public function build(): Schema
     {
@@ -31,6 +37,7 @@ class SchemaBuilder extends Builder
             'mutation'     => $this->getMutation(),
             'subscription' => $this->getSubscription(),
             'typeLoader'   => $this->loader,
+            'types'        => $this->types
         ]));
     }
 
@@ -64,5 +71,15 @@ class SchemaBuilder extends Builder
         }
 
         return null;
+    }
+
+    /**
+     * @param Dictionary $dictionary
+     */
+    public function preload(Dictionary $dictionary): void
+    {
+        foreach ($dictionary->only(ObjectDefinition::class) as $object) {
+            $this->types[] = $this->loadType($object->getName());
+        }
     }
 }

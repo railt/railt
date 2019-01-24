@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
-use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\InterfaceType;
 use Railt\Foundation\Webonyx\Builder\Common\TypeResolverTrait;
 use Railt\SDL\Contracts\Definitions\InterfaceDefinition;
@@ -24,7 +23,6 @@ class InterfaceBuilder extends Builder
 
     /**
      * @return InterfaceType
-     * @throws InvariantViolation
      */
     public function build(): InterfaceType
     {

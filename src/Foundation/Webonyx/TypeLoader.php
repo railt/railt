@@ -16,6 +16,7 @@ use Railt\Foundation\Event\Building\TypeBuilding;
 use Railt\Foundation\Webonyx\Builder\BuilderInterface;
 use Railt\Foundation\Webonyx\Exception\BuilderMissingException;
 use Railt\SDL\Contracts\Definitions;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent;
 use Railt\SDL\Reflection\Dictionary;
@@ -30,7 +31,7 @@ class TypeLoader
      * @var string[]
      */
     private const BUILDERS_MAPPING = [
-        Definitions\ObjectDefinition::class    => Builder\ObjectBuilder::class,
+        ObjectDefinition::class    => Builder\ObjectBuilder::class,
         Definitions\InterfaceDefinition::class => Builder\InterfaceBuilder::class,
         Definitions\InputDefinition::class     => Builder\InputBuilder::class,
         Definitions\UnionDefinition::class     => Builder\UnionBuilder::class,

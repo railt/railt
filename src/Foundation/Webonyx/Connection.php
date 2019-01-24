@@ -28,6 +28,7 @@ use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -58,6 +59,11 @@ class Connection
     private $schema;
 
     /**
+     * @var Dictionary
+     */
+    private $dictionary;
+
+    /**
      * Connection constructor.
      *
      * @param EventDispatcherInterface $events
@@ -76,6 +82,7 @@ class Connection
         $this->debug = $debug;
         $this->events = $events;
         $this->schema = $schema;
+        $this->dictionary = $dictionary;
     }
 
     /**
@@ -188,7 +195,6 @@ class Connection
     /**
      * @param string $query
      * @return DocumentNode
-     * @throws InvariantViolation
      * @throws SyntaxError
      */
     private function parse(string $query): DocumentNode
@@ -200,11 +206,12 @@ class Connection
      * @param SchemaDefinition $schema
      * @param TypeLoader $loader
      * @return Schema
-     * @throws InvariantViolation
      */
     private function getSchema(SchemaDefinition $schema, TypeLoader $loader): Schema
     {
         $builder = new SchemaBuilder($schema, $this->events, $loader);
+
+        $builder->preload($this->dictionary);
 
         return $builder->build();
     }
