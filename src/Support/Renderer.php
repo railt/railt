@@ -253,7 +253,7 @@ final class Renderer
 
             return \vsprintf(self::PATTERN_FN, [
                 \implode(', ', $parameters),
-                \spl_object_id($argument)
+                \spl_object_id($argument),
             ]);
         } catch (\ReflectionException $e) {
             return self::PATTERN_FN_FALLBACK;

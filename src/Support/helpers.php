@@ -83,6 +83,3 @@ if (! \function_exists('\\maybe')) {
         return new Maybe($value);
     }
 }
-
-
-

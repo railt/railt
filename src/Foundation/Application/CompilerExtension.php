@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
-use Railt\Container\ContainerInterface as Container;
 use Railt\Foundation\Application;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
