@@ -31,7 +31,7 @@
             "files": {
                 ".multirepo/http/composer.json": "composer.json",
                 ".multirepo/http/README.md": "README.md",
-                ".multirepo/container/.travis.yml": ".travis.yml"
+                ".multirepo/http/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "src/Http": "src/Http",
@@ -43,7 +43,7 @@
             "files": {
                 ".multirepo/io/composer.json": "composer.json",
                 ".multirepo/io/README.md": "README.md",
-                ".multirepo/container/.travis.yml": ".travis.yml"
+                ".multirepo/io/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "src/Io": "src/Io",
@@ -55,7 +55,7 @@
             "files": {
                 ".multirepo/lexer/composer.json": "composer.json",
                 ".multirepo/lexer/README.md": "README.md",
-                ".multirepo/container/.travis.yml": ".travis.yml"
+                ".multirepo/lexer/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "src/Lexer": "src/Lexer",
@@ -67,7 +67,7 @@
             "files": {
                 ".multirepo/parser/composer.json": "composer.json",
                 ".multirepo/parser/README.md": "README.md",
-                ".multirepo/container/.travis.yml": ".travis.yml"
+                ".multirepo/parser/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "src/Parser": "src/Parser",
@@ -79,7 +79,7 @@
             "files": {
                 ".multirepo/sdl/composer.json": "composer.json",
                 ".multirepo/sdl/README.md": "README.md",
-                ".multirepo/container/.travis.yml": ".travis.yml"
+                ".multirepo/sdl/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "src/SDL": "src/SDL",
@@ -92,11 +92,23 @@
             "files": {
                 ".multirepo/storage/composer.json": "composer.json",
                 ".multirepo/storage/README.md": "README.md",
-                ".multirepo/container/.travis.yml": ".travis.yml"
+                ".multirepo/storage/.travis.yml": ".travis.yml"
             },
             "dirs": {
                 "src/Storage": "src/Storage",
                 "tests/Storage": "tests"
+            }
+        },
+        "railt/support": {
+            "remote": "git@github.com:railt/support.git",
+            "files": {
+                ".multirepo/support/composer.json": "composer.json",
+                ".multirepo/support/README.md": "README.md",
+                ".multirepo/support/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Support": "src/Support",
+                "tests/Support": "tests"
             }
         }
     }

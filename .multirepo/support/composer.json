@@ -1,0 +1,52 @@
+{
+    "name": "railt/support",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "http://railt.org",
+    "description": "The Railt Framework support library.",
+    "keywords": [
+        "helpers",
+        "support",
+        "maybe",
+        "monad",
+        "functional",
+        "partial application",
+        "curry",
+        "debug"
+    ],
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/storage"
+    },
+    "require": {
+        "php": "^7.1.3",
+        "symfony/polyfill": "~1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\": "src/"
+        },
+        "files": [
+            "./src/Support/helpers.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Tests\\Support\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
