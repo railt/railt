@@ -44,10 +44,6 @@ class ExceptionTraceExtension implements ExtensionInterface
     {
         $this->exception = $exception;
         $this->trace = \max(0, $trace);
-
-        if ($exception instanceof GraphQLExceptionInterface) {
-            $exception->publish();
-        }
     }
 
     /**

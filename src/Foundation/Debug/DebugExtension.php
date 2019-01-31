@@ -23,6 +23,7 @@ use Railt\Foundation\Extension\Status;
 use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Identifiable;
 use Railt\Http\ResponseInterface;
+use Railt\Support\Debug\Debuggable;
 
 /**
  * Class DebugExtension
@@ -75,11 +76,11 @@ class DebugExtension extends Extension
     }
 
     /**
-     * @param bool $debug
+     * @param Debuggable $debuggable
      */
-    public function boot(bool $debug = false): void
+    public function boot(Debuggable $debuggable): void
     {
-        if ($debug) {
+        if ($debuggable->isDebug()) {
             $this->listen();
         }
     }
