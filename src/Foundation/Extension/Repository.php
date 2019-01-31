@@ -11,6 +11,7 @@ namespace Railt\Foundation\Extension;
 
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Foundation\Exception\ExtensionException;
 
 /**
@@ -67,6 +68,8 @@ class Repository
     {
         try {
             return $this->container->make($extension);
+        } catch (ParameterResolutionException $e) {
+            throw $e;
         } catch (ContainerResolutionException $e) {
             $error = \sprintf('Could not initialize extension %s', $extension);
             throw new ExtensionException($error, 0, $e);

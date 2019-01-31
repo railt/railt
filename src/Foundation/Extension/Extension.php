@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerInvocationException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -174,6 +175,7 @@ abstract class Extension implements ExtensionInterface
      * @param string $name
      * @param \Closure $registrar
      * @return Extension|$this
+     * @throws ContainerInvocationException
      */
     protected function registerIfNotRegistered(string $name, \Closure $registrar): self
     {

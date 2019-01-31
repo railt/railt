@@ -20,16 +20,10 @@ use Railt\Http\ResponseInterface;
 interface ConnectionInterface extends Identifiable
 {
     /**
-     * @param RequestInterface $request
+     * @param RequestInterface|RequestInterface[] $requests
      * @return ResponseInterface
      */
-    public function request(RequestInterface $request): ResponseInterface;
-
-    /**
-     * @param ProviderInterface $provider
-     * @return ResponseInterface
-     */
-    public function requests(ProviderInterface $provider): ResponseInterface;
+    public function request($requests): ResponseInterface;
 
     /**
      * @return void

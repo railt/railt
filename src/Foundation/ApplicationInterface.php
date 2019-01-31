@@ -13,12 +13,13 @@ use Railt\Container\ContainerInterface;
 use Railt\Foundation\Config\ConfigurationInterface;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Io\Readable;
+use Railt\Support\Debug\Debuggable;
 use Symfony\Component\Console\Application as ConsoleApplication;
 
 /**
  * Interface ApplicationInterface
  */
-interface ApplicationInterface
+interface ApplicationInterface extends Debuggable
 {
     /**
      * @return ContainerInterface
@@ -47,9 +48,4 @@ interface ApplicationInterface
      * @return ConnectionInterface
      */
     public function connect(Readable $schema): ConnectionInterface;
-
-    /**
-     * @return bool
-     */
-    public function isDebug(): bool;
 }

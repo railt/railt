@@ -10,16 +10,17 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\HttpEventInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Railt\Foundation\Exception\ConnectionException;
-use Railt\Http\Factory;
+use Railt\Http\BatchingResponse;
 use Railt\Http\HasIdentifier;
-use Railt\Http\Provider\ProviderInterface;
 use Railt\Http\RequestInterface;
+use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
@@ -64,6 +65,7 @@ class Connection implements ConnectionInterface
      * @param Application $app
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
+     * @throws ContainerResolutionException
      */
     public function __construct(Application $app, Dictionary $dictionary, SchemaDefinition $schema)
     {
@@ -78,6 +80,7 @@ class Connection implements ConnectionInterface
     /**
      * @param ContainerInterface $container
      * @return EventDispatcherInterface
+     * @throws ContainerResolutionException
      */
     private function resolveEventDispatcher(ContainerInterface $container): EventDispatcherInterface
     {
@@ -133,12 +136,56 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * @param RequestInterface|RequestInterface[] $requests
+     * @return ResponseInterface
+     * @throws ConnectionException
+     * @throws \Throwable
+     */
+    public function request($requests): ResponseInterface
+    {
+        $responses = [];
+
+        foreach ($this->requestsToIterable($requests) as $request) {
+            $responses[] = $this->singleRequest($request);
+        }
+
+        return $this->formatResponses($responses);
+    }
+
+    /**
+     * @param array|ResponseInterface[] $responses
+     * @return ResponseInterface
+     */
+    private function formatResponses(array $responses): ResponseInterface
+    {
+        switch (\count($responses)) {
+            case 0:
+                return Response::empty();
+
+            case 1:
+                return \reset($responses);
+
+            default:
+                return new BatchingResponse(...$responses);
+        }
+    }
+
+    /**
+     * @param RequestInterface|RequestInterface[] $requests
+     * @return iterable|RequestInterface[]
+     */
+    private function requestsToIterable($requests): iterable
+    {
+        return $requests instanceof RequestInterface ? [$requests] : $requests;
+    }
+
+    /**
      * @param RequestInterface $request
      * @return ResponseInterface
      * @throws ConnectionException
      * @throws \Throwable
      */
-    public function request(RequestInterface $request): ResponseInterface
+    private function singleRequest(RequestInterface $request): ResponseInterface
     {
         if ($this->closed) {
             throw new ConnectionException('Connection was closed and can no longer process requests');
@@ -153,39 +200,16 @@ class Connection implements ConnectionInterface
 
             /** @var ResponseInterface $response */
             $response = $after->getResponse();
-            $response->debug($this->app->isDebug());
+
+            if ($response instanceof Response) {
+                $response->debug($this->app->isDebug());
+            }
 
             return $response;
         } catch (\Throwable $e) {
             $this->close();
 
             throw $e;
-        }
-    }
-
-    /**
-     * @param ProviderInterface $provider
-     * @return ResponseInterface
-     */
-    public function requests(ProviderInterface $provider): ResponseInterface
-    {
-        return Factory::create($provider)
-            ->through(function (RequestInterface $request) {
-                return $this->request($request);
-            });
-    }
-
-    /**
-     * @param HttpEventInterface $event
-     * @throws ConnectionException
-     */
-    private function assertResponse(HttpEventInterface $event): void
-    {
-        $response = $event->getResponse();
-
-        if ($response === null) {
-            $error = \sprintf('The %s event should provide a response, but null given', \get_class($event));
-            throw new ConnectionException($error);
         }
     }
 
@@ -205,6 +229,20 @@ class Connection implements ConnectionInterface
         }
 
         return $event;
+    }
+
+    /**
+     * @param HttpEventInterface $event
+     * @throws ConnectionException
+     */
+    private function assertResponse(HttpEventInterface $event): void
+    {
+        $response = $event->getResponse();
+
+        if ($response === null) {
+            $error = \sprintf('The %s event should provide a response, but null given', \get_class($event));
+            throw new ConnectionException($error);
+        }
     }
 
     /**

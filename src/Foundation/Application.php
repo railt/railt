@@ -31,6 +31,8 @@ use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
+use Railt\Support\Debug\DebugAwareTrait;
+use Railt\Support\Debug\Debuggable;
 
 /**
  * Class Application
@@ -38,6 +40,7 @@ use Railt\SDL\Schema\Configuration;
 class Application implements ApplicationInterface, Autowireable
 {
     use HasConsoleApplication;
+    use DebugAwareTrait;
 
     /**
      * @var string
@@ -70,11 +73,6 @@ class Application implements ApplicationInterface, Autowireable
     private $extensions;
 
     /**
-     * @var bool
-     */
-    private $debug;
-
-    /**
      * Application constructor.
      *
      * @param bool $debug
@@ -84,34 +82,13 @@ class Application implements ApplicationInterface, Autowireable
      */
     public function __construct(bool $debug = false, PSRContainer $container = null)
     {
-        $this->debug = $debug;
         $this->app = $this->container($container);
         $this->extensions = new Repository($this->app);
 
-        $this->registerBaseBindings($debug);
+        $this->debug($debug);
+
+        $this->registerBaseBindings();
         $this->bootIfNotBooted();
-    }
-
-    /**
-     * @param string $class
-     * @param array $params
-     * @return mixed|object
-     * @throws ContainerResolutionException
-     */
-    public function make(string $class, array $params = [])
-    {
-        return $this->getContainer()->make($class, $params);
-    }
-
-    /**
-     * @param callable|\Closure|mixed $callable
-     * @param array $params
-     * @return mixed
-     * @throws ContainerInvocationException
-     */
-    public function call($callable, array $params = [])
-    {
-        return $this->getContainer()->call($callable, $params);
     }
 
     /**
@@ -124,12 +101,11 @@ class Application implements ApplicationInterface, Autowireable
     }
 
     /**
-     * @param bool $debug
+     * @return void
      */
-    private function registerBaseBindings(bool $debug): void
+    private function registerBaseBindings(): void
     {
-        $this->app->instance('$debug', $debug);
-
+        $this->app->instance(Debuggable::class, $this);
         $this->app->instance(ApplicationInterface::class, $this);
         $this->app->instance(Repository::class, $this->extensions);
         $this->app->instance(ContainerInterface::class, $this->app);
@@ -184,11 +160,14 @@ class Application implements ApplicationInterface, Autowireable
     }
 
     /**
-     * @return bool
+     * @param string $class
+     * @param array $params
+     * @return mixed|object
+     * @throws ContainerResolutionException
      */
-    public function isDebug(): bool
+    public function make(string $class, array $params = [])
     {
-        return $this->debug;
+        return $this->getContainer()->make($class, $params);
     }
 
     /**
@@ -197,6 +176,25 @@ class Application implements ApplicationInterface, Autowireable
     public function getContainer(): ContainerInterface
     {
         return $this->app;
+    }
+
+    /**
+     * @param callable|\Closure|mixed $callable
+     * @param array $params
+     * @return mixed
+     * @throws ContainerInvocationException
+     */
+    public function call($callable, array $params = [])
+    {
+        return $this->getContainer()->call($callable, $params);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDebug(): bool
+    {
+        return $this->debug;
     }
 
     /**
@@ -210,13 +208,16 @@ class Application implements ApplicationInterface, Autowireable
     {
         $this->bootIfNotBooted();
 
-        return $this->createConnection(...$this->compile($schema));
+        [$dictionary, $schema] = $this->compile($schema);
+
+        return $this->createConnection($dictionary, $schema);
     }
 
     /**
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
      * @return ConnectionInterface
+     * @throws ContainerResolutionException
      */
     private function createConnection(Dictionary $dictionary, SchemaDefinition $schema): ConnectionInterface
     {

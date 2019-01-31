@@ -19,11 +19,16 @@ use GraphQL\Language\AST\OperationDefinitionNode;
 use GraphQL\Language\Parser;
 use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
+use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
 use Railt\Foundation\Webonyx\Exception\WebonyxException;
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Exception\GraphQLExceptionLocation;
+use Railt\Http\HasIdentifier;
 use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
@@ -37,16 +42,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class Connection
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $events;
-
-    /**
-     * @var bool
-     */
-    private $debug;
-
     /**
      * @var TypeLoader
      */
@@ -63,25 +58,53 @@ class Connection
     private $dictionary;
 
     /**
+     * @var ApplicationInterface
+     */
+    private $app;
+
+    /**
      * Connection constructor.
      *
-     * @param EventDispatcherInterface $events
+     * @param ApplicationInterface $app
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
-     * @param bool $debug
      */
-    public function __construct(
-        EventDispatcherInterface $events,
-        Dictionary $dictionary,
-        SchemaDefinition $schema,
-        bool $debug
-    ) {
-        $this->loader = new TypeLoader($events, $dictionary);
-
-        $this->debug = $debug;
-        $this->events = $events;
+    public function __construct(ApplicationInterface $app, Dictionary $dictionary, SchemaDefinition $schema)
+    {
+        $this->app = $app;
         $this->schema = $schema;
         $this->dictionary = $dictionary;
+    }
+
+    /**
+     * @return TypeLoader
+     * @throws ContainerResolutionException
+     */
+    private function getTypeLoader(): TypeLoader
+    {
+        if ($this->loader === null) {
+            $this->loader = new TypeLoader($this->getEventDispatcher(), $this->dictionary);
+        }
+
+        return $this->loader;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isDebug(): bool
+    {
+        return $this->app->isDebug();
+    }
+
+    /**
+     * @return EventDispatcherInterface
+     * @throws ContainerResolutionException
+     */
+    private function getEventDispatcher(): EventDispatcherInterface
+    {
+        return $this->app->getContainer()
+            ->make(EventDispatcherInterface::class);
     }
 
     /**
@@ -92,31 +115,13 @@ class Connection
     public function request(Identifiable $connection, RequestInterface $request): ResponseInterface
     {
         try {
-            if (! \trim($request->getQuery())) {
-                return $this->empty();
-            }
-
             /** @var ExecutionResult $result */
-            $result = $this->exec($connection, $request, $this->getSchema($this->schema, $this->loader));
+            $result = $this->exec($connection, $request, $this->getSchema($this->schema, $this->getTypeLoader()));
 
             return $this->createResponse($result->errors, $result->data);
         } catch (\Throwable $e) {
             return $this->createResponse([$e]);
         }
-    }
-
-    /**
-     * @return ResponseInterface
-     */
-    private function empty(): ResponseInterface
-    {
-        $response = new Response();
-
-        $exception = new GraphQLException('Empty GraphQL Request');
-        $exception->addLocation(new GraphQLExceptionLocation(0, 0));
-        $exception->publish();
-
-        return $response->withException($exception);
     }
 
     /**
@@ -128,7 +133,7 @@ class Connection
      */
     private function exec(Identifiable $connection, RequestInterface $request, Schema $schema)
     {
-        if ($this->debug) {
+        if ($this->isDebug()) {
             $schema->assertValid();
         }
 
@@ -154,6 +159,16 @@ class Connection
 
             return GraphQL::executeQuery($schema, $query, null, $context, $vars, $operation);
         };
+    }
+
+    /**
+     * @param string $query
+     * @return DocumentNode
+     * @throws SyntaxError
+     */
+    private function parse(string $query): DocumentNode
+    {
+        return Parser::parse(new Source($query ?: '', 'GraphQL'));
     }
 
     /**
@@ -192,23 +207,14 @@ class Connection
     }
 
     /**
-     * @param string $query
-     * @return DocumentNode
-     * @throws SyntaxError
-     */
-    private function parse(string $query): DocumentNode
-    {
-        return Parser::parse(new Source($query ?: '', 'GraphQL'));
-    }
-
-    /**
      * @param SchemaDefinition $schema
      * @param TypeLoader $loader
      * @return Schema
+     * @throws ContainerResolutionException
      */
     private function getSchema(SchemaDefinition $schema, TypeLoader $loader): Schema
     {
-        $builder = new SchemaBuilder($schema, $this->events, $loader);
+        $builder = new SchemaBuilder($schema, $this->getEventDispatcher(), $loader);
 
         $builder->preload($this->dictionary);
 

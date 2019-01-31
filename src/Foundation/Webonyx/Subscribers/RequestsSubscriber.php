@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Subscribers;
 
 use Railt\Foundation\Event\Http\RequestReceived;
+use Railt\Support\Debug\Debuggable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -23,20 +24,14 @@ class RequestsSubscriber implements EventSubscriberInterface
     private $connections;
 
     /**
-     * @var bool
-     */
-    private $debug;
-
-    /**
      * RequestsSubscriber constructor.
      *
-     * @param bool $debug
      * @param ConnectionSubscriber $connections
+     * @param Debuggable $debuggable
      */
-    public function __construct(bool $debug, ConnectionSubscriber $connections)
+    public function __construct(ConnectionSubscriber $connections)
     {
         $this->connections = $connections;
-        $this->debug = $debug;
     }
 
     /**
@@ -58,7 +53,6 @@ class RequestsSubscriber implements EventSubscriberInterface
 
         if ($connection = $this->connections->getConnection($id)) {
             $response = $connection->request($event->getConnection(), $event->getRequest());
-            $response->debug($this->debug);
 
             $event->withResponse($response);
         }

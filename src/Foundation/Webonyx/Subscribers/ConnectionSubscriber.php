@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Subscribers;
 
+use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Webonyx\Connection;
@@ -26,25 +27,18 @@ class ConnectionSubscriber implements EventSubscriberInterface
     private $connections = [];
 
     /**
-     * @var EventDispatcherInterface
+     * @var ApplicationInterface
      */
-    private $events;
-
-    /**
-     * @var bool
-     */
-    private $debug;
+    private $app;
 
     /**
      * ConnectionSubscriber constructor.
      *
-     * @param EventDispatcherInterface $events
-     * @param bool $debug
+     * @param ApplicationInterface $app
      */
-    public function __construct(EventDispatcherInterface $events, bool $debug = false)
+    public function __construct(ApplicationInterface $app)
     {
-        $this->debug = $debug;
-        $this->events = $events;
+        $this->app = $app;
     }
 
     /**
@@ -83,7 +77,7 @@ class ConnectionSubscriber implements EventSubscriberInterface
     {
         $id = $event->getConnection()->getId();
 
-        $connection = new Connection($this->events, $event->getDictionary(), $event->getSchema(), $this->debug);
+        $connection = new Connection($this->app, $event->getDictionary(), $event->getSchema());
 
         $this->connections[$id] = $connection;
     }

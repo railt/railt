@@ -10,12 +10,16 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use Railt\Foundation\Application;
+use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Webonyx\Subscribers\ConnectionSubscriber;
 use Railt\Foundation\Webonyx\Subscribers\RequestsSubscriber;
 use Railt\Foundation\Webonyx\Subscribers\TypeResolvingFixPathSubscriber;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Class WebonyxExtension
@@ -63,20 +67,19 @@ class WebonyxExtension extends Extension
     }
 
     /**
-     * @param bool $debug
-     * @return void
+     * @param ApplicationInterface $app
      */
-    public function boot(bool $debug = false): void
+    public function boot(ApplicationInterface $app): void
     {
         //
         // Listen all connections.
         //
-        $this->subscribe($connections = new ConnectionSubscriber($this->events(), $debug));
+        $this->subscribe($connections = new ConnectionSubscriber($app));
 
         //
         // Listen requests and delegate it to several connection.
         //
-        $this->subscribe($requests = new RequestsSubscriber($debug, $connections));
+        $this->subscribe($requests = new RequestsSubscriber($connections));
 
         //
         // Fix of https://github.com/webonyx/graphql-php/issues/396
