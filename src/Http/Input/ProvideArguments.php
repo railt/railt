@@ -12,7 +12,7 @@ namespace Railt\Http\Input;
 /**
  * Interface ProvideArguments
  */
-interface ProvideArguments extends \Countable, \IteratorAggregate
+interface ProvideArguments extends \Countable, \IteratorAggregate, \ArrayAccess
 {
     /**
      * @return array

@@ -7,24 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Support;
+namespace Railt\Support\Debug;
 
 /**
- * Trait DebugTrait
- * @mixin Debuggable
+ * Interface Debuggable
  */
-trait DebugTrait
+interface Debuggable
 {
-    /**
-     * @var bool
-     */
-    protected $debug = false;
-
     /**
      * @return bool
      */
-    public function isDebug(): bool
-    {
-        return $this->debug;
-    }
+    public function isDebug(): bool;
 }

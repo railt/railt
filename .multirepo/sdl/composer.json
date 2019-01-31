@@ -30,7 +30,7 @@
         "railt/storage": "~1.4.0|1.4.x-dev",
         "railt/parser": "~1.4.0|1.4.x-dev",
         "railt/lexer": "~1.4.0|1.4.x-dev",
-        "illuminate/support": "~5.5"
+        "railt/support": "~1.4.0|1.4.x-dev"
     },
     "autoload": {
         "psr-4": {

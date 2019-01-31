@@ -117,4 +117,24 @@ trait HasArguments
     {
         return \count($this->arguments);
     }
+
+    public function offsetExists($offset)
+    {
+        throw new \LogicException('The ' . __METHOD__ . ' not implemented yet');
+    }
+
+    public function offsetGet($offset)
+    {
+        throw new \LogicException('The ' . __METHOD__ . ' not implemented yet');
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        throw new \LogicException('The ' . __METHOD__ . ' not implemented yet');
+    }
+
+    public function offsetUnset($offset)
+    {
+
+    }
 }

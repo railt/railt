@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Response;
+namespace Railt\Support\Debug;
 
 /**
  * Trait DebugTrait
@@ -26,16 +26,5 @@ trait DebugTrait
     public function isDebug(): bool
     {
         return $this->debug;
-    }
-
-    /**
-     * @param bool $debug
-     * @return Debuggable|$this
-     */
-    public function debug(bool $debug = true): Debuggable
-    {
-        $this->debug = $debug;
-
-        return $this;
     }
 }

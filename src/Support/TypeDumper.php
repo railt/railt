@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Support;
 
 /**
- * Class Renderer
+ * Class TypeDumper
  */
-final class Renderer
+class TypeDumper
 {
     /**
      * @var string
@@ -120,18 +120,10 @@ final class Renderer
     private const PARAM_DEFAULT_VALUE = ' = %s';
 
     /**
-     * Renderer constructor.
-     */
-    private function __construct()
-    {
-        // This is static class. Constructor invocation is not allowed.
-    }
-
-    /**
      * @param mixed $argument
      * @return string
      */
-    public static function renderType($argument): string
+    public static function dumpType($argument): string
     {
         switch (true) {
             case \is_int($argument):
@@ -163,14 +155,14 @@ final class Renderer
      * @param array $argument
      * @return string
      */
-    public static function renderArray(array $argument): string
+    public static function dumpArray(array $argument): string
     {
         $result = [];
 
         foreach ($argument as $key => $value) {
             $result[] = \vsprintf(self::PATTERN_ARRAY_BODY, [
-                self::render($key, false),
-                self::render($value),
+                self::dump($key, false),
+                self::dump($value),
             ]);
         }
 
@@ -182,29 +174,29 @@ final class Renderer
      * @param bool $deep
      * @return string
      */
-    public static function render($argument, bool $deep = true): string
+    public static function dump($argument, bool $deep = true): string
     {
         switch (true) {
             case $argument === null:
                 return self::PATTERN_NULL;
 
             case \is_scalar($argument):
-                return self::renderScalar($argument);
+                return self::dumpScalar($argument);
 
             case $argument instanceof \Closure:
-                return self::renderClosure($argument);
+                return self::dumpClosure($argument);
 
             case \is_array($argument):
-                return $deep ? self::renderArray($argument) : self::PATTERN_NON_RENDER_ITERABLE;
+                return $deep ? self::dumpArray($argument) : self::PATTERN_NON_RENDER_ITERABLE;
 
             case \is_iterable($argument):
-                return $deep ? self::renderIterator($argument) : self::PATTERN_NON_RENDER_ITERABLE;
+                return $deep ? self::dumpIterator($argument) : self::PATTERN_NON_RENDER_ITERABLE;
 
             case \is_object($argument):
-                return self::renderObject($argument);
+                return self::dumpObject($argument);
 
             case \is_resource($argument):
-                return self::renderResource($argument);
+                return self::dumpResource($argument);
         }
 
         return '?';
@@ -214,7 +206,7 @@ final class Renderer
      * @param float|int|string|bool $argument
      * @return string
      */
-    public static function renderScalar($argument): string
+    public static function dumpScalar($argument): string
     {
         switch (true) {
             case \is_int($argument):
@@ -241,14 +233,14 @@ final class Renderer
      * @param \Closure $argument
      * @return string
      */
-    public static function renderClosure(\Closure $argument): string
+    public static function dumpClosure(\Closure $argument): string
     {
         try {
             $reflection = new \ReflectionFunction($argument);
             $parameters = [];
 
             foreach ($reflection->getParameters() as $parameter) {
-                $parameters[] = self::renderParameter($parameter);
+                $parameters[] = self::dumpParameter($parameter);
             }
 
             return \vsprintf(self::PATTERN_FN, [
@@ -265,7 +257,7 @@ final class Renderer
      * @return string
      * @throws \ReflectionException
      */
-    public static function renderParameter(\ReflectionParameter $parameter): string
+    public static function dumpParameter(\ReflectionParameter $parameter): string
     {
         // Is nullable?
         $result = $parameter->allowsNull() ? self::PARAM_NULLABLE : '';
@@ -278,7 +270,7 @@ final class Renderer
 
         // Default value
         if ($parameter->isDefaultValueAvailable()) {
-            $result .= \sprintf(self::PARAM_DEFAULT_VALUE, self::render($parameter->getDefaultValue()));
+            $result .= \sprintf(self::PARAM_DEFAULT_VALUE, self::dump($parameter->getDefaultValue()));
         }
 
         return $result;
@@ -288,17 +280,17 @@ final class Renderer
      * @param \Traversable $argument
      * @return string
      */
-    public static function renderIterator(\Traversable $argument): string
+    public static function dumpIterator(\Traversable $argument): string
     {
         $result = [];
         $types = [];
 
         foreach ($argument as $key => $value) {
-            $types[] = self::renderType($value);
+            $types[] = self::dumpType($value);
 
             $result[] = \vsprintf(self::PATTERN_IT_BODY, [
-                self::render($key, false),
-                self::render($value),
+                self::dump($key, false),
+                self::dump($value),
             ]);
         }
 
@@ -314,7 +306,7 @@ final class Renderer
      * @param object $argument
      * @return string
      */
-    public static function renderObject($argument): string
+    public static function dumpObject($argument): string
     {
         if (\method_exists($argument, '__toString')) {
             return \sprintf(self::PATTERN_OBJECT, $argument, \spl_object_id($argument));
@@ -327,7 +319,7 @@ final class Renderer
      * @param resource $argument
      * @return string
      */
-    public static function renderResource($argument): string
+    public static function dumpResource($argument): string
     {
         return \sprintf(self::PATTERN_RESOURCE, $argument);
     }
@@ -336,12 +328,12 @@ final class Renderer
      * @param mixed ...$arguments
      * @return string
      */
-    public static function renderAll(...$arguments): string
+    public static function dumpAll(...$arguments): string
     {
         $result = [];
 
         foreach ($arguments as $argument) {
-            $result[] = self::render($argument);
+            $result[] = self::dump($argument);
         }
 
         return \implode(', ', $result);

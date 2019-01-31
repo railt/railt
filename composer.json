@@ -49,7 +49,8 @@
         "railt/io": "*",
         "railt/sdl": "*",
         "railt/http": "*",
-        "railt/storage": "*"
+        "railt/storage": "*",
+        "railt/support": "*"
     },
     "autoload": {
         "psr-4": {

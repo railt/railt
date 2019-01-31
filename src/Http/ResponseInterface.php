@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Extension\ProvidesExtensions;
-use Railt\Http\Response\Debuggable;
 use Railt\Http\Response\ProvideExceptions;
 use Railt\Http\Response\Renderable;
+use Railt\Support\Debug\Debuggable;
 
 /**
  * Interface ResponseInterface

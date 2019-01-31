@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Extension\HasExtensions;
-use Railt\Http\Response\DebugTrait;
 use Railt\Http\Response\HasExceptions;
 use Railt\Http\Response\ResponseRenderer;
+use Railt\Support\Debug\DebugAwareTrait;
 
 /**
  * Class Response
@@ -22,7 +22,7 @@ class Response implements ResponseInterface
     use ResponseRenderer;
     use HasExtensions;
     use HasExceptions;
-    use DebugTrait;
+    use DebugAwareTrait;
 
     /**
      * @var int|null

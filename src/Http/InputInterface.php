@@ -13,12 +13,19 @@ use Railt\Http\Input\ProvideArguments;
 use Railt\Http\Input\ProvideField;
 use Railt\Http\Input\ProvideParents;
 use Railt\Http\Input\ProvidePath;
+use Railt\Http\Input\ProvidePreferTypes;
 use Railt\Http\Input\ProvideType;
 
 /**
  * Interface InputInterface
  */
-interface InputInterface extends ProvideArguments, ProvideType, ProvideParents, ProvideField, ProvidePath
+interface InputInterface extends
+    ProvidePath,
+    ProvideType,
+    ProvideField,
+    ProvideParents,
+    ProvideArguments,
+    ProvidePreferTypes
 {
     /**
      * @return RequestInterface
@@ -30,32 +37,4 @@ interface InputInterface extends ProvideArguments, ProvideType, ProvideParents, 
      * @return InputInterface|$this
      */
     public function withRequest(RequestInterface $request): self;
-
-    /**
-     * @param string $type
-     * @return bool
-     */
-    public function wants(string $type): bool;
-
-    /**
-     * @return iterable|string[]
-     */
-    public function getPreferTypes(): iterable;
-
-    /**
-     * @return string
-     */
-    public function getPreferType(): string;
-
-    /**
-     * @param string ...$types
-     * @return InputInterface|$this
-     */
-    public function withPreferType(string ...$types): self;
-
-    /**
-     * @param string ...$types
-     * @return InputInterface|$this
-     */
-    public function setPreferType(string ...$types): self;
 }

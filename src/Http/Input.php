@@ -13,6 +13,7 @@ use Railt\Http\Input\HasArguments;
 use Railt\Http\Input\HasField;
 use Railt\Http\Input\HasParents;
 use Railt\Http\Input\HasPath;
+use Railt\Http\Input\HasPreferTypes;
 use Railt\Http\Input\HasType;
 
 /**
@@ -25,16 +26,12 @@ class Input implements InputInterface
     use HasField;
     use HasParents;
     use HasArguments;
+    use HasPreferTypes;
 
     /**
      * @var RequestInterface
      */
     protected $request;
-
-    /**
-     * @var array|string[]
-     */
-    protected $preferTypes = [];
 
     /**
      * Input constructor.
@@ -87,50 +84,9 @@ class Input implements InputInterface
      * @param string $type
      * @return bool
      */
-    public function wants(string $type): bool
+    public function wantsType(string $type): bool
     {
         return \in_array($type, $this->getPreferTypes(), true);
-    }
-
-    /**
-     * @return iterable|string[]
-     */
-    public function getPreferTypes(): iterable
-    {
-        return $this->preferTypes;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPreferType(): string
-    {
-        $types = $this->getPreferTypes();
-
-        return (string)\reset($types);
-    }
-
-    /**
-     * @param string ...$types
-     * @return InputInterface|$this
-     */
-    public function withPreferType(string ...$types): InputInterface
-    {
-        $this->preferTypes = \array_merge($this->preferTypes, $types);
-        $this->preferTypes = \array_unique($this->preferTypes);
-
-        return $this;
-    }
-
-    /**
-     * @param string ...$types
-     * @return InputInterface|$this
-     */
-    public function setPreferType(string ...$types): InputInterface
-    {
-        $this->preferTypes = $types;
-
-        return $this;
     }
 
     /**

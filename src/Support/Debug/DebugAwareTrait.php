@@ -7,21 +7,23 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Response;
+namespace Railt\Support\Debug;
 
 /**
- * Interface Debuggable
+ * Trait DebugAwareTrait
  */
-interface Debuggable
+trait DebugAwareTrait
 {
-    /**
-     * @return bool
-     */
-    public function isDebug(): bool;
+    use DebugTrait;
 
     /**
      * @param bool $debug
-     * @return Debuggable
+     * @return DebugTrait|Debuggable|$this
      */
-    public function debug(bool $debug = true): self;
+    public function debug(bool $debug = true): self
+    {
+        $this->debug = $debug;
+
+        return $this;
+    }
 }

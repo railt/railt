@@ -73,7 +73,7 @@ class Route implements RouteInterface
         $this->preferType = $type;
 
         return $this->matches(function (RequestInterface $_, InputInterface $input) use ($type): bool {
-            return $input->wants($type);
+            return $input->wantsType($type);
         });
     }
 
