@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Container;
 
 use Railt\Container\Exception\ParameterResolutionException;
+use Railt\Support\TypeDumper;
 
 /**
  * Class ParamResolver
@@ -154,18 +155,16 @@ class ParamResolver
     /**
      * @param \ReflectionParameter $param
      * @return ParameterResolutionException
+     * @throws \ReflectionException
      */
     private function parameterError(\ReflectionParameter $param): ParameterResolutionException
     {
-        $type = $param->hasType() ? $param->getType() : 'mixed';
-        $name = $param->getName();
         $position = $param->getPosition();
         $function = $param->getDeclaringFunction()->getName();
 
-        $error = \vsprintf('Cannot resolve parameter #%d "%s $%s" defined in %s(...)', [
+        $error = \vsprintf('Cannot resolve parameter #%d "%s" defined in %s(...)', [
             $position,
-            $type,
-            $name,
+            TypeDumper::dumpParameter($param),
             $function,
         ]);
 

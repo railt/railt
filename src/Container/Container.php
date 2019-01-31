@@ -130,7 +130,7 @@ class Container implements ContainerInterface
     public function make(string $locator, array $params = [])
     {
         if ($this->has($locator)) {
-            return $this->get($locator);
+            return $this->getWithParameters($locator, $params);
         }
 
         if (! \class_exists($locator)) {
@@ -175,8 +175,10 @@ class Container implements ContainerInterface
      */
     private function isRegistered(string $service): bool
     {
-        return isset($this->resolved[$service]) || isset($this->registered[$service]) || \array_key_exists($service,
-                $this->resolved) || \array_key_exists($service, $this->registered);
+        return isset($this->resolved[$service])
+            || isset($this->registered[$service])
+            || \array_key_exists($service, $this->resolved)
+            || \array_key_exists($service, $this->registered);
     }
 
     /**
@@ -187,10 +189,22 @@ class Container implements ContainerInterface
      */
     public function get($id)
     {
+        return $this->getWithParameters($id);
+    }
+
+    /**
+     * @param mixed $id
+     * @param array $additional
+     * @return mixed|object
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     */
+    private function getWithParameters($id, array $additional = [])
+    {
         $locator = $this->getLocator($id);
 
         if ($this->isRegistered($locator)) {
-            return $this->resolve($locator);
+            return $this->resolve($locator, $additional);
         }
 
         if ($this->parent && $this->parent->has($locator)) {
@@ -208,11 +222,12 @@ class Container implements ContainerInterface
 
     /**
      * @param string $id
+     * @param array $additional
      * @return mixed|object
      * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      */
-    protected function resolve(string $id)
+    protected function resolve(string $id, array $additional = [])
     {
         $locator = $this->getLocator($id);
 
@@ -221,7 +236,7 @@ class Container implements ContainerInterface
         }
 
         if (! $this->isResolved($locator)) {
-            $this->resolved[$locator] = $this->call($this->registered[$locator]);
+            $this->resolved[$locator] = $this->call($this->registered[$locator], $additional);
         }
 
         return $this->resolved[$locator];
