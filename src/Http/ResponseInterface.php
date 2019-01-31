@@ -12,12 +12,11 @@ namespace Railt\Http;
 use Railt\Http\Extension\ProvidesExtensions;
 use Railt\Http\Response\ProvideExceptions;
 use Railt\Http\Response\Renderable;
-use Railt\Support\Debug\Debuggable;
 
 /**
  * Interface ResponseInterface
  */
-interface ResponseInterface extends ProvideExceptions, ProvidesExtensions, Renderable, Debuggable
+interface ResponseInterface extends ProvideExceptions, ProvidesExtensions, Renderable
 {
     /**
      * @var string Data field name

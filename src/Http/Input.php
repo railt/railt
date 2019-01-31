@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Illuminate\Support\Traits\Macroable;
 use Railt\Http\Input\HasArguments;
 use Railt\Http\Input\HasField;
 use Railt\Http\Input\HasParents;
@@ -21,6 +22,7 @@ use Railt\Http\Input\HasType;
  */
 class Input implements InputInterface
 {
+    use Macroable;
     use HasType;
     use HasPath;
     use HasField;

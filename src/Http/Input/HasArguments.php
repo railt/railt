@@ -31,19 +31,11 @@ trait HasArguments
     /**
      * @param string $argument
      * @param mixed|null $default
-     * @return null
+     * @return mixed
      */
     public function get(string $argument, $default = null)
     {
-        /**
-         * Support sampling from an array using the helper of Illuminate Framework.
-         * @see https://laravel.com/docs/5.7/helpers#method-array-get
-         */
-        if (\function_exists('\\array_get')) {
-            return \array_get($this->arguments, $argument, $default);
-        }
-
-        return $this->arguments[$argument] ?? $default;
+        return \array_get($this->arguments, $argument, $default);
     }
 
     /**
@@ -52,15 +44,7 @@ trait HasArguments
      */
     public function has(string $argument): bool
     {
-        /**
-         * Support for checking an element in an array when used the helper of Illuminate Framework.
-         * @see https://laravel.com/docs/5.7/helpers#method-array-has
-         */
-        if (\function_exists('\\array_has')) {
-            return \array_has($this->arguments, $argument);
-        }
-
-        return isset($this->arguments[$argument]) || \array_key_exists($argument, $this->arguments);
+        return \array_has($this->arguments, $argument);
     }
 
     /**
@@ -71,19 +55,22 @@ trait HasArguments
      */
     public function withArgument(string $argument, $value, bool $rewrite = false): ProvideArguments
     {
-        if ($rewrite || ! $this->has($argument)) {
-            /**
-             * Support insertion into an array using the helper of Illuminate Framework.
-             * @see https://laravel.com/docs/5.7/helpers#method-array-set
-             */
-            if (\function_exists('\\array_set')) {
-                \array_set($this->arguments, $argument, $value);
-
-                return $this;
-            }
-
-            $this->arguments[$argument] = $value;
+        if ($rewrite) {
+            \array_set($this->arguments, $argument, $value);
+        } else {
+            \array_add($this->arguments, $argument, $value);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param string $argument
+     * @return ProvideArguments
+     */
+    public function withoutArgument(string $argument): ProvideArguments
+    {
+        \array_forget($this->arguments, $argument);
 
         return $this;
     }
@@ -118,22 +105,38 @@ trait HasArguments
         return \count($this->arguments);
     }
 
-    public function offsetExists($offset): void
+    /**
+     * @param string $offset
+     * @return bool
+     */
+    public function offsetExists($offset): bool
     {
-        throw new \LogicException('The ' . __METHOD__ . ' not implemented yet');
+        return $this->has((string)$offset);
     }
 
-    public function offsetGet($offset): void
+    /**
+     * @param string $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
     {
-        throw new \LogicException('The ' . __METHOD__ . ' not implemented yet');
+        return $this->get((string)$offset);
     }
 
+    /**
+     * @param string $offset
+     * @param mixed $value
+     */
     public function offsetSet($offset, $value): void
     {
-        throw new \LogicException('The ' . __METHOD__ . ' not implemented yet');
+        $this->withArgument((string)$offset, $value);
     }
 
+    /**
+     * @param string $offset
+     */
     public function offsetUnset($offset): void
     {
+        $this->withoutArgument((string)$offset);
     }
 }

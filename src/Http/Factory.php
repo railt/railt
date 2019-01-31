@@ -72,30 +72,6 @@ class Factory implements \IteratorAggregate
     }
 
     /**
-     * @param \Closure $each
-     * @return ResponseInterface
-     */
-    public function through(\Closure $each): ResponseInterface
-    {
-        $responses = [];
-
-        foreach ($this->getRequests() as $request) {
-            $responses[] = $each($request);
-        }
-
-        switch (\count($responses)) {
-            case 0:
-                return $each(new Request(''));
-
-            case 1:
-                return \reset($responses);
-
-            default:
-                return new BatchingResponse(...$responses);
-        }
-    }
-
-    /**
      * @return void
      */
     private function boot(): void

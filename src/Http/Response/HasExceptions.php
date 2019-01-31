@@ -11,6 +11,7 @@ namespace Railt\Http\Response;
 
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Http\Exception\GraphQLExceptionLocation;
 
 /**
  * Trait HasExceptions
@@ -43,6 +44,10 @@ trait HasExceptions
     public function withException(\Throwable $exception): ProvideExceptions
     {
         $this->exceptions[] = $exception;
+
+        if ($exception instanceof GraphQLExceptionInterface && $this->isDebug()) {
+            $exception->publish();
+        }
 
         return $this;
     }

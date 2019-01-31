@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Exception\GraphQLException;
+use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\Http\Extension\HasExtensions;
 use Railt\Http\Response\HasExceptions;
 use Railt\Http\Response\ResponseRenderer;
@@ -42,6 +44,20 @@ class Response implements ResponseInterface
     public function __construct(array $data = null)
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return ResponseInterface|$this|self|static
+     */
+    public static function empty(): ResponseInterface
+    {
+        $response = new static();
+
+        $exception = new GraphQLException('Empty GraphQL Request');
+        $exception->addLocation(new GraphQLExceptionLocation(0, 0));
+        $exception->publish();
+
+        return $response->withException($exception);
     }
 
     /**
