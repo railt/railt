@@ -11,7 +11,6 @@ namespace Railt\Http\Response;
 
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Exception\GraphQLExceptionInterface;
-use Railt\Http\Exception\GraphQLExceptionLocation;
 
 /**
  * Trait HasExceptions

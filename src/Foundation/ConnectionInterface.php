@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Railt\Http\Identifiable;
-use Railt\Http\Provider\ProviderInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 

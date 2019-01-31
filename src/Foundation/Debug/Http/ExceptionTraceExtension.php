@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Foundation\Debug\Http;
 
 use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Extension\ExtensionInterface;
 use Railt\Io\PositionInterface;
 
