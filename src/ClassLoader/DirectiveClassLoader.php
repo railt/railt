@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\ClassLoader;
 
+use Railt\ClassLoader\Exception\UnknownClassException;
 use Railt\Container\ContainerInterface;
 use Railt\Container\SignatureResolver;
 use Railt\SDL\Contracts\Document;
@@ -46,11 +47,19 @@ class DirectiveClassLoader implements ClassLoaderInterface
      * @param string $needle
      * @return string
      * @throws \InvalidArgumentException
+     * @throws UnknownClassException
      */
     public function find(Document $document, string $needle): string
     {
         $aliases = $this->repository->getAliases($document);
-        $alias = $this->prefix($this->signature->fetchClass($needle));
+        $class = $this->signature->fetchClass($needle);
+
+        if ($class === null) {
+            $error = \sprintf('Route action class "%s" not found', $needle);
+            throw new UnknownClassException($error);
+        }
+
+        $alias = $this->prefix($class);
 
         if (isset($aliases[$alias])) {
             $needle = \substr_replace($needle, $aliases[$alias], 0, \strlen($alias));
