@@ -11,12 +11,12 @@ namespace Railt\Subscriptions\Server;
 
 use Illuminate\Contracts\Support\Jsonable;
 use Railt\Foundation\ApplicationInterface;
+use Railt\Io\Readable;
 use Railt\Subscriptions\Message\Message;
 use Railt\Subscriptions\Message\MessageInterface;
 use Railt\Subscriptions\Protocol;
 use Railt\Subscriptions\Server;
 use Railt\Subscriptions\SubProtocol\ProtocolInterface;
-use Railt\Io\Readable;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 use Swoole\WebSocket\Frame;
