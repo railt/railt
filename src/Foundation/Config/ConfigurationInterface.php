@@ -23,4 +23,9 @@ interface ConfigurationInterface
      * @return iterable|string[]
      */
     public function getCommands(): iterable;
+
+    /**
+     * @return iterable|string[]
+     */
+    public function getAutoloadPaths(): iterable;
 }

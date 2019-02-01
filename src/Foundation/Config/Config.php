@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Config;
 
+use Illuminate\Support\Str;
+
 /**
  * Class Config
  */
@@ -25,27 +27,29 @@ class Config implements ConfigurationInterface
     private $commands;
 
     /**
+     * @var array
+     */
+    private $autoload;
+
+    /**
      * Config constructor.
-     * @param iterable $extensions
-     * @param iterable $commands
+     *
+     * @param iterable|string[] $extensions
+     * @param iterable|string[] $commands
+     * @param iterable|string[] $autoload
      */
-    public function __construct(iterable $extensions = [], iterable $commands = [])
-    {
-        $this->extensions = $this->toArray($extensions);
-        $this->commands = $this->toArray($commands);
+    public function __construct(
+        iterable $extensions = [],
+        iterable $commands = [],
+        iterable $autoload = []
+    ) {
+        $this->extensions = \iterable_to_array($extensions, false);
+        $this->commands   = \iterable_to_array($commands, false);
+        $this->autoload   = \iterable_to_array($autoload, false);
     }
 
     /**
-     * @param iterable $items
-     * @return array
-     */
-    private function toArray(iterable $items): array
-    {
-        return $items instanceof \Traversable ? \iterator_to_array($items) : $items;
-    }
-
-    /**
-     * @return iterable
+     * @return iterable|string[]
      */
     public function getExtensions(): iterable
     {
@@ -53,10 +57,18 @@ class Config implements ConfigurationInterface
     }
 
     /**
-     * @return iterable
+     * @return iterable|string[]
      */
     public function getCommands(): iterable
     {
         return $this->commands;
+    }
+
+    /**
+     * @return iterable|string[]
+     */
+    public function getAutoloadPaths(): iterable
+    {
+        return $this->autoload;
     }
 }

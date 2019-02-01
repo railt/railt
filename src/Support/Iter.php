@@ -75,4 +75,18 @@ class Iter
             }
         }
     }
+
+    /**
+     * @param iterable $iterable
+     * @param bool $useKeys
+     * @return array
+     */
+    public static function toArray(iterable $iterable, bool $useKeys = true): array
+    {
+        if ($iterable instanceof \Traversable) {
+            return \iterator_to_array($iterable, $useKeys);
+        }
+
+        return (array)$iterable;
+    }
 }

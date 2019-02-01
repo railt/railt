@@ -28,7 +28,7 @@ interface ApplicationInterface extends Debuggable
 
     /**
      * @param ConfigurationInterface $config
-     * @return ApplicationInterface
+     * @return ApplicationInterface|$this
      */
     public function configure(ConfigurationInterface $config): self;
 
@@ -39,9 +39,15 @@ interface ApplicationInterface extends Debuggable
 
     /**
      * @param string|ExtensionInterface $extension
-     * @return ApplicationInterface
+     * @return ApplicationInterface|$this
      */
     public function extend(string $extension): self;
+
+    /**
+     * @param string $path
+     * @return ApplicationInterface|$this
+     */
+    public function autoload(string $path): self;
 
     /**
      * @param Readable $schema

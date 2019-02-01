@@ -34,4 +34,13 @@ class Discovery extends RailtDiscovery implements ConfigurationInterface
     {
         return (array)$this->get('railt.commands', []);
     }
+
+    /**
+     * @return iterable|string[]
+     * @throws \InvalidArgumentException
+     */
+    public function getAutoloadPaths(): iterable
+    {
+        return (array)$this->get('railt.autoload', []);
+    }
 }

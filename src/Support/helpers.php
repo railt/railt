@@ -38,6 +38,18 @@ if (! \function_exists('\\iterable_filter')) {
     }
 }
 
+if (! \function_exists('\\iterable_to_array')) {
+    /**
+     * @param iterable $iterable
+     * @param bool $useKeys
+     * @return array
+     */
+    function iterable_to_array(iterable $iterable, bool $useKeys = true): array
+    {
+        return Iter::toArray($iterable, $useKeys);
+    }
+}
+
 
 if (! \function_exists('\\dump_type')) {
     /**

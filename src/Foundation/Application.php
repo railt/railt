@@ -73,6 +73,11 @@ class Application implements ApplicationInterface, Autowireable
     private $extensions;
 
     /**
+     * @var array|string[]
+     */
+    private $autoload = [];
+
+    /**
      * Application constructor.
      *
      * @param bool $debug
@@ -89,6 +94,14 @@ class Application implements ApplicationInterface, Autowireable
 
         $this->registerBaseBindings();
         $this->bootIfNotBooted();
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getAutoloadPaths(): array
+    {
+        return $this->autoload;
     }
 
     /**
@@ -155,6 +168,21 @@ class Application implements ApplicationInterface, Autowireable
         foreach ($config->getExtensions() as $extension) {
             $this->extend($extension);
         }
+
+        foreach ($config->getAutoloadPaths() as $path) {
+            $this->autoload($path);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $path
+     * @return ApplicationInterface|$this
+     */
+    public function autoload(string $path): ApplicationInterface
+    {
+        $this->autoload[] = $path;
 
         return $this;
     }
