@@ -12,11 +12,13 @@ namespace Railt\Http\Exception;
 use Railt\Http\Exception\GraphQLExceptionLocation as Location;
 use Railt\Http\Extension\DataExtension;
 use Railt\Http\Extension\HasExtensions;
+use Railt\Io\Exception\ExternalFileException;
+use Throwable;
 
 /**
  * Class GraphQLException
  */
-class GraphQLException extends \LogicException implements GraphQLExceptionInterface
+class GraphQLException extends ExternalFileException implements GraphQLExceptionInterface
 {
     use HasExtensions;
 
@@ -50,6 +52,25 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     protected $public = false;
 
     /**
+     * @var string
+     */
+    private $originalMessage;
+
+    /**
+     * GraphQLException constructor.
+     *
+     * @param string $message
+     * @param int $code
+     * @param Throwable|null $previous
+     */
+    public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
+    {
+        $this->originalMessage = $message;
+
+        parent::__construct(static::INTERNAL_EXCEPTION_MESSAGE, $code, $previous);
+    }
+
+    /**
      * @param array $error
      * @return GraphQLException
      */
@@ -75,12 +96,34 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     }
 
     /**
-     * @param \Throwable $exception
-     * @return GraphQLException
+     * @param \Throwable $throwable
+     * @return GraphQLExceptionInterface|self
      */
-    public static function fromThrowable(\Throwable $exception): self
+    public static function fromThrowable(\Throwable $throwable): GraphQLExceptionInterface
     {
-        return new static($exception->getMessage(), $exception->getCode(), $exception);
+        if ($throwable instanceof GraphQLExceptionInterface) {
+            return $throwable;
+        }
+
+        $root = static::getRootException($throwable);
+
+        $exception = new static($throwable->getMessage(), $throwable->getCode(), $root);
+        $exception->from($throwable);
+
+        return $exception;
+    }
+
+    /**
+     * @param \Throwable $throwable
+     * @return \Throwable
+     */
+    public static function getRootException(\Throwable $throwable): \Throwable
+    {
+        while ($throwable->getPrevious()) {
+            $throwable = $throwable->getPrevious();
+        }
+
+        return $throwable;
     }
 
     /**
@@ -89,6 +132,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     public function publish(): GraphQLExceptionInterface
     {
         $this->public = true;
+        $this->message = $this->originalMessage;
 
         return $this;
     }
@@ -123,19 +167,11 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     public function jsonSerialize(): array
     {
         return \array_filter([
-            static::FIELD_MESSAGE    => $this->getPublicMessage(),
+            static::FIELD_MESSAGE    => $this->getMessage(),
             static::FIELD_LOCATIONS  => $this->getLocations() ?: null,
             static::FIELD_PATH       => $this->getPath() ?: null,
             static::FIELD_EXTENSIONS => $this->getExtensions() ?: null,
         ]);
-    }
-
-    /**
-     * @return string
-     */
-    public function getPublicMessage(): string
-    {
-        return $this->isPublic() ? $this->getMessage() : static::INTERNAL_EXCEPTION_MESSAGE;
     }
 
     /**
@@ -191,6 +227,7 @@ class GraphQLException extends \LogicException implements GraphQLExceptionInterf
     public function hide(): GraphQLExceptionInterface
     {
         $this->public = false;
+        $this->message = static::INTERNAL_EXCEPTION_MESSAGE;
 
         return $this;
     }

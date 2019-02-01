@@ -59,10 +59,10 @@ class ExceptionTraceExtension implements ExtensionInterface
      */
     private function errorToArray(\Throwable $error): array
     {
-        $message = $error instanceof GraphQLException ? $error->getPublicMessage() : $error->getMessage();
+        $error = GraphQLException::getRootException($error);
 
         return \array_filter([
-            'message'   => $message,
+            'message'   => $error->getMessage(),
             'exception' => \get_class($error),
             'code'      => $error->getCode(),
             'file'      => $error->getFile(),

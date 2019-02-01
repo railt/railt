@@ -14,27 +14,15 @@ use Railt\Http\Exception\GraphQLExceptionInterface;
 
 /**
  * Trait HasExceptions
+ *
  * @mixin ProvideExceptions
  */
 trait HasExceptions
 {
     /**
-     * @var array|\Throwable[]
+     * @var array|GraphQLExceptionInterface[]
      */
     protected $exceptions = [];
-
-    /**
-     * @return bool
-     */
-    abstract public function isDebug(): bool;
-
-    /**
-     * @return array|\Throwable[]
-     */
-    public function getExceptions(): array
-    {
-        return $this->exceptions;
-    }
 
     /**
      * @param \Throwable $exception
@@ -42,14 +30,15 @@ trait HasExceptions
      */
     public function withException(\Throwable $exception): ProvideExceptions
     {
-        $this->exceptions[] = $exception;
-
-        if ($exception instanceof GraphQLExceptionInterface && $this->isDebug()) {
-            $exception->publish();
-        }
+        $this->exceptions[] = GraphQLException::fromThrowable($exception);
 
         return $this;
     }
+
+    /**
+     * @return bool
+     */
+    abstract public function isDebug(): bool;
 
     /**
      * @return array
@@ -58,15 +47,33 @@ trait HasExceptions
     {
         $errors = [];
 
-        foreach ($this->exceptions as $exception) {
+        foreach ($this->getExceptions() as $exception) {
             if (! $exception instanceof GraphQLExceptionInterface) {
                 $exception = GraphQLException::fromThrowable($exception);
+            }
+
+            if ($this->isDebug()) {
+                $exception->publish();
             }
 
             $errors[] = $exception->jsonSerialize();
         }
 
         return $errors;
+    }
+
+    /**
+     * @return array|GraphQLExceptionInterface[]
+     */
+    public function getExceptions(): array
+    {
+        foreach ($this->exceptions as $exception) {
+            if ($exception instanceof GraphQLExceptionInterface && $this->isDebug()) {
+                $exception->publish();
+            }
+        }
+
+        return $this->exceptions;
     }
 
     /**

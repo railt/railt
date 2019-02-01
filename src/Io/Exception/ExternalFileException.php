@@ -53,14 +53,50 @@ class ExternalFileException extends \LogicException implements ExternalException
     }
 
     /**
-     * @param ExternalFileException $exception
-     * @return ExternalFileException|$this|self|static
+     * @param int $line
+     * @return ExternalFileException|$this
      */
-    public function from(self $exception): self
+    public function withLine(int $line): self
+    {
+        $this->line = $line;
+
+        return $this;
+    }
+
+    /**
+     * @param int $column
+     * @return ExternalFileException|$this
+     */
+    public function withColumn(int $column): self
+    {
+        $this->column = $column;
+
+        return $this;
+    }
+
+    /**
+     * @param string $file
+     * @return ExternalFileException|$this
+     */
+    public function withFile(string $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * @param \Throwable $exception
+     * @return ExternalFileException|$this
+     */
+    public function from(\Throwable $exception): self
     {
         $this->file = $exception->getFile();
         $this->line = $exception->getLine();
-        $this->column = $exception->getColumn();
+
+        if ($exception instanceof PositionInterface) {
+            $this->column = $exception->getColumn();
+        }
 
         return $this;
     }
