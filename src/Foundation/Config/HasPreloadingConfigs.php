@@ -30,7 +30,7 @@ trait HasPreloadingConfigs
      */
     protected $preloadExtensions = [
         '.graphqls',
-        '.graphql'
+        '.graphql',
     ];
 
     /**
