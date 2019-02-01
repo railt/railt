@@ -12,7 +12,6 @@ use Railt\Support\Iter;
 use Railt\Support\PartiallyAppliedFunction;
 use Railt\Support\TypeDumper;
 
-
 if (! \function_exists('\\iterable_map')) {
     /**
      * @param callable $map
