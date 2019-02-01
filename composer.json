@@ -50,7 +50,8 @@
         "railt/sdl": "*",
         "railt/http": "*",
         "railt/storage": "*",
-        "railt/support": "*"
+        "railt/support": "*",
+        "railt/subscriptions": "*"
     },
     "autoload": {
         "psr-4": {
