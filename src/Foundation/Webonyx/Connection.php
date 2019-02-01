@@ -9,21 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
-use GraphQL\Error\Error;
-use GraphQL\Error\InvariantViolation;
-use GraphQL\Error\SyntaxError;
-use GraphQL\Executor\ExecutionResult;
-use GraphQL\GraphQL;
-use GraphQL\Language\AST\DocumentNode;
-use GraphQL\Language\AST\OperationDefinitionNode;
-use GraphQL\Language\Parser;
 use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
-use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
