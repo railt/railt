@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Subscriptions\SubProtocol;
 
-use Railt\Subscriptions\Message\MessageInterface;
 use Railt\Http\Identifiable;
+use Railt\Subscriptions\Message\MessageInterface;
 
 /**
  * Interface ProtocolInterface

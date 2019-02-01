@@ -11,8 +11,8 @@ namespace Railt\Subscriptions\Server;
 
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
-use Railt\Subscriptions\Server\ReactServer\FrontController;
 use Railt\Io\Readable;
+use Railt\Subscriptions\Server\ReactServer\FrontController;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;

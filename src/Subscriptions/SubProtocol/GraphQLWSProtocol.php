@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Subscriptions\SubProtocol;
 
-use Railt\Subscriptions\Message\MessageInterface;
-use Railt\Subscriptions\Message\NoticeMessage;
-use Railt\Subscriptions\Message\PingMessage;
-use Railt\Subscriptions\Message\ResponseMessage;
 use Railt\Http\Request;
 use Railt\Http\RequestInterface;
 use Railt\Http\Resolver\ResolverInterface;
 use Railt\Http\ResponseInterface;
+use Railt\Subscriptions\Message\MessageInterface;
+use Railt\Subscriptions\Message\NoticeMessage;
+use Railt\Subscriptions\Message\PingMessage;
+use Railt\Subscriptions\Message\ResponseMessage;
 
 /**
  * Class GraphQLWSProtocol

@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Subscriptions;
 
 use Railt\Foundation\ApplicationInterface;
+use Railt\Io\Readable;
 use Railt\Subscriptions\Server\RatchetServer;
 use Railt\Subscriptions\Server\ServerInterface;
 use Railt\Subscriptions\Server\SwooleServer;
-use Railt\Io\Readable;
 
 /**
  * Class Server
