@@ -10,8 +10,10 @@ declare(strict_types=1);
 namespace Railt\Foundation\Application;
 
 use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application;
 use Symfony\Component\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 
 /**
@@ -32,6 +34,7 @@ trait HasConsoleApplication
     /**
      * @return ConsoleApplication
      * @throws LogicException
+     * @throws ContainerResolutionException
      */
     public function getConsoleApplication(): ConsoleApplication
     {
@@ -50,5 +53,13 @@ trait HasConsoleApplication
     protected function addCommand(string $command): void
     {
         $this->commands[] = $command;
+    }
+
+    /**
+     * @return array|Command[]
+     */
+    public function getCommands(): array
+    {
+        return $this->commands;
     }
 }
