@@ -90,11 +90,6 @@
             "railt"
         ],
         "railt": {
-            "autoload": {
-                "paths": [
-                    "./"
-                ]
-            },
             "commands": [
                 "Railt\\SDL\\Console\\SDLGrammarCompileCommand",
                 "Railt\\Foundation\\Console\\ExtensionsListCommand"
