@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6806d4c7c6dd752c5298e21a85f4bbd",
+    "content-hash": "8692d721d9264d32d2c8933e51dfca0e",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -75,7 +75,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.7.22",
+            "version": "v5.7.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -119,7 +119,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.7.22",
+            "version": "v5.7.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -1059,16 +1059,16 @@
         },
         {
             "name": "brianium/paratest",
-            "version": "2.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paratestphp/paratest.git",
-                "reference": "c1e7c170138e833ccb44f8c9bc5b14cc0abe327f"
+                "reference": "6c353410b9516d6ddc480f1418d1d83e7713ac03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/c1e7c170138e833ccb44f8c9bc5b14cc0abe327f",
-                "reference": "c1e7c170138e833ccb44f8c9bc5b14cc0abe327f",
+                "url": "https://api.github.com/repos/paratestphp/paratest/zipball/6c353410b9516d6ddc480f1418d1d83e7713ac03",
+                "reference": "6c353410b9516d6ddc480f1418d1d83e7713ac03",
                 "shasum": ""
             },
             "require": {
@@ -1118,7 +1118,7 @@
                 "phpunit",
                 "testing"
             ],
-            "time": "2018-10-09T17:48:55+00:00"
+            "time": "2019-01-28T08:41:16+00:00"
         },
         {
             "name": "cache/adapter-common",
@@ -1422,7 +1422,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.7.22",
+            "version": "v5.7.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -2608,16 +2608,16 @@
         },
         {
             "name": "sebastian/environment",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/environment.git",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f"
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/febd209a219cea7b56ad799b30ebbea34b71eb8f",
-                "reference": "febd209a219cea7b56ad799b30ebbea34b71eb8f",
+                "url": "https://api.github.com/repos/sebastianbergmann/environment/zipball/4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
+                "reference": "4a43e9af57b4afa663077b9bc85255dbc6e8a2bd",
                 "shasum": ""
             },
             "require": {
@@ -2654,7 +2654,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2018-11-25T09:31:21+00:00"
+            "time": "2019-01-28T15:26:03+00:00"
         },
         {
             "name": "sebastian/exporter",

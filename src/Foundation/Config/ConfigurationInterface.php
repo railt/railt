@@ -12,20 +12,17 @@ namespace Railt\Foundation\Config;
 /**
  * Interface ConfigurationInterface
  */
-interface ConfigurationInterface
+interface ConfigurationInterface extends
+    PreloadingConfigurationInterface,
+    AutoloadingConfigurationInterface
 {
     /**
      * @return iterable|string[]
      */
-    public function getExtensions(): iterable;
+    public function getExtensions(): array;
 
     /**
      * @return iterable|string[]
      */
-    public function getCommands(): iterable;
-
-    /**
-     * @return iterable|string[]
-     */
-    public function getAutoloadPaths(): iterable;
+    public function getCommands(): array;
 }

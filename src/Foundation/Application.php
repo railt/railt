@@ -18,6 +18,7 @@ use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application\CacheExtension;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
+use Railt\Foundation\Application\HasSchemaLoaderConfigs;
 use Railt\Foundation\Config\ConfigurationInterface;
 use Railt\Foundation\Config\Discovery;
 use Railt\Foundation\Event\EventsExtension;
@@ -39,8 +40,9 @@ use Railt\Support\Debug\Debuggable;
  */
 class Application implements ApplicationInterface, Autowireable
 {
-    use HasConsoleApplication;
     use DebugAwareTrait;
+    use HasConsoleApplication;
+    use HasSchemaLoaderConfigs;
 
     /**
      * @var string
@@ -73,11 +75,6 @@ class Application implements ApplicationInterface, Autowireable
     private $extensions;
 
     /**
-     * @var array|string[]
-     */
-    private $autoload = [];
-
-    /**
      * Application constructor.
      *
      * @param bool $debug
@@ -94,14 +91,6 @@ class Application implements ApplicationInterface, Autowireable
 
         $this->registerBaseBindings();
         $this->bootIfNotBooted();
-    }
-
-    /**
-     * @return array|string[]
-     */
-    public function getAutoloadPaths(): array
-    {
-        return $this->autoload;
     }
 
     /**
@@ -136,6 +125,7 @@ class Application implements ApplicationInterface, Autowireable
             }
 
             $this->configure(Discovery::auto());
+
             $this->booted = true;
         }
 
@@ -169,20 +159,7 @@ class Application implements ApplicationInterface, Autowireable
             $this->extend($extension);
         }
 
-        foreach ($config->getAutoloadPaths() as $path) {
-            $this->autoload($path);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $path
-     * @return ApplicationInterface|$this
-     */
-    public function autoload(string $path): ApplicationInterface
-    {
-        $this->autoload[] = $path;
+        $this->loadSchemaLoaderConfigsFrom($config);
 
         return $this;
     }

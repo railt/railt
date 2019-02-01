@@ -9,9 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
+use Composer\Autoload\ClassLoader;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Config\Discovery;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 use Railt\Io\File;
@@ -26,15 +28,6 @@ use Railt\Storage\Storage;
  */
 class CompilerExtension extends Extension
 {
-    /**
-     * @var string[]
-     */
-    private const FILE_EXTENSIONS = [
-        '.graphqls',
-        '.graphql',
-        '.gql',
-    ];
-
     /**
      * @return string
      */
@@ -76,90 +69,149 @@ class CompilerExtension extends Extension
     }
 
     /**
-     * @param string $fileWithoutExtension
-     * @return string|null
-     */
-    private function findByFileWithoutExtension(string $fileWithoutExtension): ?string
-    {
-        foreach (self::FILE_EXTENSIONS as $extension) {
-            $pathname = $fileWithoutExtension . $extension;
-
-            if (\is_file($pathname)) {
-                return $pathname;
-            }
-        }
-
-        return \is_file($fileWithoutExtension) ? $fileWithoutExtension : null;
-    }
-
-    /**
-     * @param string $dirname
-     * @param string $type
-     * @return Readable|null
-     * @throws \Railt\Io\Exception\NotReadableException
-     */
-    private function findByDirectoryAndType(string $dirname, string $type): ?Readable
-    {
-        $result = $this->findByFileWithoutExtension($dirname . '/' . $type);
-
-        if (\is_string($result)) {
-            return File::fromPathname($result);
-        }
-
-        return null;
-    }
-
-    /**
+     * @return void
      * @throws ContainerInvocationException
      */
     public function register(): void
     {
-        $resolver = function (ApplicationInterface $app, Storage $cache) {
-            $compiler = new Compiler($cache);
-
-            $this->registerBasicAutoloaderLogic($compiler);
-            $this->registerAutoloadPaths($app, $compiler);
-
-            return $compiler;
-        };
-
-        $this->registerIfNotRegistered(CompilerInterface::class, $resolver);
-    }
-
-    /**
-     * @param Compiler $compiler
-     */
-    private function registerBasicAutoloaderLogic(Compiler $compiler): void
-    {
-        $compiler->autoload(function (string $type, ?TypeDefinition $from): ?Readable {
-            if ($from === null) {
-                return null;
-            }
-
-            if (! ($file = $from->getDocument()->getFile())->isFile()) {
-                return null;
-            }
-
-            return $this->findByDirectoryAndType(\dirname($file->getPathname()), $type);
+        $this->registerIfNotRegistered(CompilerInterface::class, function (Storage $cache) {
+            return new Compiler($cache);
         });
     }
 
     /**
+     * @param CompilerInterface $compiler
      * @param ApplicationInterface $app
-     * @param Compiler $compiler
+     * @throws \Railt\Io\Exception\NotReadableException
      */
-    private function registerAutoloadPaths(ApplicationInterface $app, Compiler $compiler): void
+    public function boot(ApplicationInterface $app, CompilerInterface $compiler): void
     {
         if ($app instanceof Application) {
-            $compiler->autoload(function (string $type) use ($app): ?Readable {
-                foreach ($app->getAutoloadPaths() as $directory) {
-                    if ($result = $this->findByDirectoryAndType($directory, $type)) {
-                        return $result;
+            $this->preload($app, $compiler);
+            $this->autoload($app, $compiler);
+        }
+    }
+
+    /**
+     * @param Application $app
+     * @param CompilerInterface $compiler
+     */
+    private function autoload(Application $app, CompilerInterface $compiler): void
+    {
+        $this->autoloadFiles($compiler, $app->getAutoloadFiles());
+        $this->autoloadPaths($compiler, $app->getAutoloadPaths(), $app->getAutoloadExtensions());
+        $this->autoloadFromSameFile($compiler, $app->getAutoloadExtensions());
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @param array|string[] $extensions
+     */
+    private function autoloadFromSameFile(CompilerInterface $compiler, array $extensions): void
+    {
+        $compiler->autoload(function (string $type, ?TypeDefinition $from) use ($extensions) {
+            if ($from === null) {
+                return null;
+            }
+
+            $file = $from->getDocument()->getFile();
+
+            if (! $file->isFile()) {
+                return null;
+            }
+
+            foreach ($extensions as $extension) {
+                $pathname = \dirname($file->getPathname()) . '/' . $type . $extension;
+
+                if (\is_file($pathname)) {
+                    return File::fromPathname($pathname);
+                }
+            }
+
+            return null;
+        });
+    }
+
+    /**
+     * @param Application $app
+     * @param CompilerInterface $compiler
+     * @throws \Railt\Io\Exception\NotReadableException
+     */
+    private function preload(Application $app, CompilerInterface $compiler): void
+    {
+        $this->preloadFiles($compiler, $app->getPreloadFiles());
+        $this->preloadPaths($compiler, $app->getPreloadPaths(), $app->getPreloadExtensions());
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @param array|string[] $files
+     * @throws \Railt\Io\Exception\NotReadableException
+     */
+    private function preloadFiles(CompilerInterface $compiler, array $files): void
+    {
+        foreach ($files as $file) {
+            $compiler->compile(File::fromPathname($file));
+        }
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @param array|string[] $paths
+     * @param array|string[] $extensions
+     * @throws \Railt\Io\Exception\NotReadableException
+     */
+    private function preloadPaths(CompilerInterface $compiler, array $paths, array $extensions): void
+    {
+        foreach ($extensions as $extension) {
+            foreach ($paths as $path) {
+                $files = \glob($path . '*' . $extension);
+
+                foreach ($files as $file) {
+                    $compiler->compile(File::fromPathname($file));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @param array|string[] $files
+     */
+    private function autoloadFiles(CompilerInterface $compiler, array $files): void
+    {
+        foreach ($files as $file) {
+            $files[pathinfo($file, \PATHINFO_FILENAME)] = $file;
+        }
+
+        $compiler->autoload(function (string $type) use ($files) {
+            if (isset($files[$type])) {
+                return File::fromPathname($files[$type]);
+            }
+
+            return null;
+        });
+    }
+
+    /**
+     * @param CompilerInterface $compiler
+     * @param array|string[] $paths
+     * @param array|string[] $extensions
+     */
+    private function autoloadPaths(CompilerInterface $compiler, array $paths, array $extensions): void
+    {
+        $compiler->autoload(function (string $type) use ($paths, $extensions) {
+            foreach ($paths as $path) {
+                foreach ($extensions as $extension) {
+                    $pathname = $path . '/' . $type . $extension;
+
+                    if (\is_file($pathname)) {
+                        return File::fromPathname($pathname);
                     }
                 }
+            }
 
-                return null;
-            });
-        }
+            return null;
+        });
     }
 }

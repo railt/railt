@@ -13,34 +13,90 @@ use Railt\Discovery\Discovery as RailtDiscovery;
 
 /**
  * Class Discovery
- * @method static self|$this auto()
  */
-class Discovery extends RailtDiscovery implements ConfigurationInterface
+class Discovery extends Config
 {
     /**
-     * @return iterable|string[]
+     * @var string
+     */
+    public const KEY_COMMANDS = 'railt.commands';
+
+    /**
+     * @var string
+     */
+    public const KEY_EXTENSIONS = 'railt.extensions';
+
+    /**
+     * @var string
+     */
+    public const KEY_AUTOLOAD_PATHS = 'railt.autoload.paths';
+
+    /**
+     * @var string
+     */
+    public const KEY_AUTOLOAD_FILES = 'railt.autoload.files';
+
+    /**
+     * @var string
+     */
+    public const KEY_AUTOLOAD_EXTENSIONS = 'railt.autoload.extensions';
+
+    /**
+     * @var string
+     */
+    public const KEY_PRELOAD_PATHS = 'railt.preload.paths';
+
+    /**
+     * @var string
+     */
+    public const KEY_PRELOAD_FILES = 'railt.preload.files';
+
+    /**
+     * @var string
+     */
+    public const KEY_PRELOAD_EXTENSIONS = 'railt.preload.extensions';
+
+    /**
+     * Discovery constructor.
+     *
+     * @param RailtDiscovery $discovery
      * @throws \InvalidArgumentException
      */
-    public function getExtensions(): iterable
+    public function __construct(RailtDiscovery $discovery)
     {
-        return (array)$this->get('railt.extensions', []);
+        $this->bootAsArray($discovery, [
+            self::KEY_COMMANDS            => [$this, 'withCommands'],
+            self::KEY_EXTENSIONS          => [$this, 'withExtensions'],
+
+            self::KEY_AUTOLOAD_EXTENSIONS => [$this, 'withAutoloadExtensions'],
+            self::KEY_AUTOLOAD_PATHS      => [$this, 'withAutoloadPaths'],
+            self::KEY_AUTOLOAD_FILES      => [$this, 'withAutoloadFiles'],
+
+            self::KEY_PRELOAD_PATHS       => [$this, 'withPreloadPaths'],
+            self::KEY_PRELOAD_FILES       => [$this, 'withPreloadFiles'],
+            self::KEY_PRELOAD_EXTENSIONS  => [$this, 'withPreloadExtensions'],
+        ]);
     }
 
     /**
-     * @return iterable|string[]
+     * @param RailtDiscovery $discovery
+     * @param array|callable[] $mappings
      * @throws \InvalidArgumentException
      */
-    public function getCommands(): iterable
+    private function bootAsArray(RailtDiscovery $discovery, array $mappings)
     {
-        return (array)$this->get('railt.commands', []);
+        foreach ($mappings as $key => $callable) {
+            $callable((array)$discovery->get($key, []));
+        }
     }
 
     /**
-     * @return iterable|string[]
-     * @throws \InvalidArgumentException
+     * @param array $paths
+     * @return Discovery
+     * @throws \LogicException
      */
-    public function getAutoloadPaths(): iterable
+    public static function auto(array $paths = []): self
     {
-        return (array)$this->get('railt.autoload', []);
+        return new static(RailtDiscovery::auto($paths));
     }
 }

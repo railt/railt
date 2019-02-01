@@ -44,12 +44,6 @@ interface ApplicationInterface extends Debuggable
     public function extend(string $extension): self;
 
     /**
-     * @param string $path
-     * @return ApplicationInterface|$this
-     */
-    public function autoload(string $path): self;
-
-    /**
      * @param Readable $schema
      * @return ConnectionInterface
      */

@@ -9,66 +9,64 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Config;
 
-use Illuminate\Support\Str;
 
 /**
  * Class Config
  */
 class Config implements ConfigurationInterface
 {
-    /**
-     * @var array
-     */
-    private $extensions;
+    use HasPreloadingConfigs;
+    use HasAutoloadingConfigs;
 
     /**
-     * @var array
+     * @var array|string[]
      */
-    private $commands;
+    private $extensions = [];
 
     /**
-     * @var array
+     * @var array|string[]
      */
-    private $autoload;
+    private $commands = [];
 
     /**
-     * Config constructor.
-     *
-     * @param iterable|string[] $extensions
-     * @param iterable|string[] $commands
-     * @param iterable|string[] $autoload
+     * @return array|string[]
      */
-    public function __construct(
-        iterable $extensions = [],
-        iterable $commands = [],
-        iterable $autoload = []
-    ) {
-        $this->extensions = \iterable_to_array($extensions, false);
-        $this->commands   = \iterable_to_array($commands, false);
-        $this->autoload   = \iterable_to_array($autoload, false);
-    }
-
-    /**
-     * @return iterable|string[]
-     */
-    public function getExtensions(): iterable
+    public function getExtensions(): array
     {
         return $this->extensions;
     }
 
     /**
-     * @return iterable|string[]
+     * @param iterable|string[] $extensions
+     * @return Config
      */
-    public function getCommands(): iterable
+    public function withExtensions(iterable $extensions): self
+    {
+        $extensions = \iterable_to_array($extensions, false);
+
+        $this->extensions = \array_unique(\array_merge($this->extensions, $extensions));
+
+        return $this;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getCommands(): array
     {
         return $this->commands;
     }
 
     /**
-     * @return iterable|string[]
+     * @param iterable|string[] $commands
+     * @return Config
      */
-    public function getAutoloadPaths(): iterable
+    public function withCommands(iterable $commands): self
     {
-        return $this->autoload;
+        $commands = \iterable_to_array($commands, false);
+
+        $this->commands = \array_unique(\array_merge($this->commands, $commands));
+
+        return $this;
     }
 }
