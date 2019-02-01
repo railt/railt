@@ -9,15 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
-use Composer\Autoload\ClassLoader;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
-use Railt\Foundation\Config\Discovery;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 use Railt\Io\File;
-use Railt\Io\Readable;
 use Railt\SDL\Compiler;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Schema\CompilerInterface;
@@ -181,7 +178,7 @@ class CompilerExtension extends Extension
     private function autoloadFiles(CompilerInterface $compiler, array $files): void
     {
         foreach ($files as $file) {
-            $files[pathinfo($file, \PATHINFO_FILENAME)] = $file;
+            $files[\pathinfo($file, \PATHINFO_FILENAME)] = $file;
         }
 
         $compiler->autoload(function (string $type) use ($files) {

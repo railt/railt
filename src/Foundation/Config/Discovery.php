@@ -83,7 +83,7 @@ class Discovery extends Config
      * @param array|callable[] $mappings
      * @throws \InvalidArgumentException
      */
-    private function bootAsArray(RailtDiscovery $discovery, array $mappings)
+    private function bootAsArray(RailtDiscovery $discovery, array $mappings): void
     {
         foreach ($mappings as $key => $callable) {
             $callable((array)$discovery->get($key, []));
