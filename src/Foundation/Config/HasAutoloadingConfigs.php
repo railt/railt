@@ -28,10 +28,7 @@ trait HasAutoloadingConfigs
     /**
      * @var array|string[]
      */
-    protected $autoloadExtensions = [
-        '.graphqls',
-        '.graphql',
-    ];
+    protected $autoloadExtensions = [];
 
     /**
      * @param iterable|string[] $files

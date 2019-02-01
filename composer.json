@@ -90,6 +90,18 @@
             "railt"
         ],
         "railt": {
+            "preload": {
+                "extensions": [
+                    ".graphqls",
+                    ".graphql"
+                ]
+            },
+            "autoload": {
+                "extensions": [
+                    ".graphqls",
+                    ".graphql"
+                ]
+            },
             "commands": [
                 "Railt\\SDL\\Console\\SDLGrammarCompileCommand",
                 "Railt\\Foundation\\Console\\ExtensionsListCommand"

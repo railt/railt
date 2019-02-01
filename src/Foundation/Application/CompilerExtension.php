@@ -84,8 +84,8 @@ class CompilerExtension extends Extension
     public function boot(ApplicationInterface $app, CompilerInterface $compiler): void
     {
         if ($app instanceof Application) {
-            $this->preload($app, $compiler);
             $this->autoload($app, $compiler);
+            $this->preload($app, $compiler);
         }
     }
 

@@ -28,10 +28,7 @@ trait HasPreloadingConfigs
     /**
      * @var array|string[]
      */
-    protected $preloadExtensions = [
-        '.graphqls',
-        '.graphql',
-    ];
+    protected $preloadExtensions = [];
 
     /**
      * @param iterable|string[] $files
