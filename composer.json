@@ -92,14 +92,14 @@
         "railt": {
             "preload": {
                 "extensions": [
-                    ".graphqls",
-                    ".graphql"
+                    "graphqls",
+                    "graphql"
                 ]
             },
             "autoload": {
                 "extensions": [
-                    ".graphqls",
-                    ".graphql"
+                    "graphqls",
+                    "graphql"
                 ]
             },
             "commands": [

@@ -118,7 +118,7 @@ class CompilerExtension extends Extension
             }
 
             foreach ($extensions as $extension) {
-                $pathname = \dirname($file->getPathname()) . '/' . $type . $extension;
+                $pathname = \dirname($file->getPathname()) . '/' . $type . '.' . $extension;
 
                 if (\is_file($pathname)) {
                     return File::fromPathname($pathname);
@@ -162,7 +162,7 @@ class CompilerExtension extends Extension
     {
         foreach ($extensions as $extension) {
             foreach ($paths as $path) {
-                $files = \glob($path . '*' . $extension);
+                $files = \glob($path . '*' . '.' . $extension);
 
                 foreach ($files as $file) {
                     $compiler->compile(File::fromPathname($file));
@@ -200,7 +200,7 @@ class CompilerExtension extends Extension
         $compiler->autoload(function (string $type) use ($paths, $extensions) {
             foreach ($paths as $path) {
                 foreach ($extensions as $extension) {
-                    $pathname = $path . '/' . $type . $extension;
+                    $pathname = $path . '/' . $type . '.' . $extension;
 
                     if (\is_file($pathname)) {
                         return File::fromPathname($pathname);
