@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Subscriptions;
 
+
 /**
  * Class Factory
  */
