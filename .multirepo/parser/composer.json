@@ -37,8 +37,8 @@
         "ext-spl": "*",
         "ext-pcre": "*",
         "ext-mbstring": "*",
-        "railt/io": "~1.4.0|1.4.x-dev",
-        "railt/lexer": "~1.4.0|1.4.x-dev"
+        "railt/io": "1.4.*|1.4.x-dev",
+        "railt/lexer": "1.4.*|1.4.x-dev"
     },
     "autoload": {
         "psr-4": {

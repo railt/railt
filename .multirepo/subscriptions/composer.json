@@ -24,7 +24,7 @@
     },
     "require": {
         "php": "^7.1.3",
-        "railt/railt": "~1.4.0|1.4.x-dev",
+        "railt/railt": "1.4.*|1.4.x-dev",
     },
     "autoload": {
         "psr-4": {
