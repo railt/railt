@@ -59,7 +59,8 @@
         },
         "files": [
             "./src/SDL/polyfill.php",
-            "./src/Support/helpers.php"
+            "./src/Support/helpers.php",
+            "./src/Json/polyfill.php"
         ]
     },
     "require-dev": {
