@@ -50,6 +50,18 @@
                 "tests/Io": "tests"
             }
         },
+        "railt/json": {
+            "remote": "git@github.com:railt/json.git",
+            "files": {
+                ".multirepo/json/composer.json": "composer.json",
+                ".multirepo/json/README.md": "README.md",
+                ".multirepo/json/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Json": "src/Json",
+                "tests/Json": "tests"
+            }
+        },
         "railt/lexer": {
             "remote": "git@github.com:railt/lexer.git",
             "files": {

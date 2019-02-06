@@ -1,0 +1,51 @@
+{
+    "name": "railt/json",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "http://railt.org",
+    "description": "Simple library for working with json data",
+    "keywords": [
+        "json",
+        "parsing",
+        "read",
+        "write",
+        "decode",
+        "encode",
+        "json5"
+    ],
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/railt"
+    },
+    "require": {
+        "php": "^7.1.3",
+        "railt/io": "~1.4.0|1.4.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\": "src/"
+        },
+        "files": [
+            "./src/Json/polyfill.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Tests\\Json\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
