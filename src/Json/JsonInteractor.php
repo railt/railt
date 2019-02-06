@@ -108,14 +108,12 @@ class JsonInteractor implements JsonInteractorInterface
     {
         try {
             $result = $expression();
-
         } catch (\JsonException $e) {
             //
             // Since PHP >= 7.3 parsing json containing errors can throws
             // an exception. It is necessary to handle these cases.
             //
             throw $this->throwFromJsonException($e);
-
         } catch (\Throwable $e) {
             //
             // Other times we may get other (includes generally) errors.
