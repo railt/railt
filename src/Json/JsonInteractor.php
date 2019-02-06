@@ -30,6 +30,30 @@ class JsonInteractor implements JsonInteractorInterface
     protected $depth = self::DEFAULT_DEPTH;
 
     /**
+     * @return JsonInteractor|$this
+     */
+    public function withNativeExceptions(): self
+    {
+        if (! $this->hasDecodeOption(static::THROW_ON_ERROR)) {
+            $this->withDecodeOptions(static::THROW_ON_ERROR);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return JsonInteractor|$this
+     */
+    public function withoutNativeExceptions(): self
+    {
+        if ($this->hasDecodeOption(static::THROW_ON_ERROR)) {
+            $this->withoutDecodeOptions(static::THROW_ON_ERROR);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param Readable $readable
      * @return array
      * @throws JsonException

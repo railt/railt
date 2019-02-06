@@ -24,7 +24,9 @@ interface JsonInteractorInterface extends JsonDecoderInterface, JsonEncoderInter
      *
      * @var int
      */
-    public const DEFAULT_ENCODE_OPTIONS = 15;
+    public const DEFAULT_ENCODE_OPTIONS =
+        self::ENCODE_HEX_TAG | self::ENCODE_HEX_APOS | self::ENCODE_HEX_AMP |
+        self::ENCODE_HEX_QUOT | self::ENCODE_PRESERVE_ZERO_FRACTION;
 
     /**
      * Automatically enables object to array convertation.
