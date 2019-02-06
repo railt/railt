@@ -64,7 +64,7 @@ interface JsonDecoderInterface
      * @param int $options
      * @return JsonDecoderInterface|$this
      */
-    public function setDecodeOptions(int $options): JsonDecoderInterface;
+    public function setDecodeOptions(int $options): self;
 
     /**
      * Update options used while decoding JSON to PHP array.
@@ -72,5 +72,5 @@ interface JsonDecoderInterface
      * @param int $options
      * @return JsonDecoderInterface|$this
      */
-    public function withDecodeOptions(int $options): JsonDecoderInterface;
+    public function withDecodeOptions(int $options): self;
 }
