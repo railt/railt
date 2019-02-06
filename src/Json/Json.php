@@ -226,7 +226,7 @@ class Json
     /**
      * @return Json|static
      */
-    public static function make(): Json
+    public static function make(): self
     {
         return self::$instance ?? static::new();
     }
@@ -234,7 +234,7 @@ class Json
     /**
      * @return Json|static
      */
-    public static function new(): Json
+    public static function new(): self
     {
         return static::setInstance(new static());
     }
@@ -243,7 +243,7 @@ class Json
      * @param Json|null $instance
      * @return Json|null
      */
-    public static function setInstance(Json $instance = null): ?Json
+    public static function setInstance(self $instance = null): ?self
     {
         self::$instance = $instance;
 
