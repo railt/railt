@@ -17,6 +17,32 @@ use Railt\Io\Readable;
 interface JsonInteractorInterface extends JsonDecoderInterface, JsonEncoderInterface
 {
     /**
+     * Encode <, >, ', &, and " characters in the JSON, making it also safe to
+     * be embedded into HTML.
+     *
+     * Note: ENCODE_HEX_TAG | ENCODE_HEX_APOS | ENCODE_HEX_AMP | ENCODE_HEX_QUOT = 15
+     *
+     * @var int
+     */
+    public const DEFAULT_ENCODE_OPTIONS = 15;
+
+    /**
+     * Automatically enables object to array convertation.
+     *
+     * Note: DECODE_OBJECT_AS_ARRAY = 1
+     *
+     * @var int
+     */
+    public const DEFAULT_DECODE_OPTIONS = 1;
+
+    /**
+     * User specified recursion depth default value.
+     *
+     * @var int
+     */
+    public const DEFAULT_DEPTH = 64;
+
+    /**
      * Throws JsonException if an error occurs instead of setting the global
      * error state that is retrieved with json_last_error().
      * JSON_PARTIAL_OUTPUT_ON_ERROR takes precedence over
@@ -27,32 +53,6 @@ interface JsonInteractorInterface extends JsonDecoderInterface, JsonEncoderInter
      * @var int
      */
     public const THROW_ON_ERROR = JSON_THROW_ON_ERROR;
-
-    /**
-     * Encode <, >, ', &, and " characters in the JSON, making it also safe to
-     * be embedded into HTML.
-     *
-     * Note: ENCODE_HEX_TAG | ENCODE_HEX_APOS | ENCODE_HEX_AMP | ENCODE_HEX_QUOT = 15
-     *
-     * @var int
-     */
-    public const DEFAULT_ENCODE_OPTIONS = 15 | self::THROW_ON_ERROR;
-
-    /**
-     * Automatically enables object to array convertation.
-     *
-     * Note: DECODE_OBJECT_AS_ARRAY = 1
-     *
-     * @var int
-     */
-    public const DEFAULT_DECODE_OPTIONS = 1 | self::THROW_ON_ERROR;
-
-    /**
-     * User specified recursion depth default value.
-     *
-     * @var int
-     */
-    public const DEFAULT_DEPTH = 64;
 
     /**
      * Writes transferred data to the specified stream pathname.
@@ -71,4 +71,15 @@ interface JsonInteractorInterface extends JsonDecoderInterface, JsonEncoderInter
      * @throws \JsonException
      */
     public function read(Readable $readable): array;
+
+    /**
+     * @return int
+     */
+    public function getDepth(): int;
+
+    /**
+     * @param int $depth
+     * @return JsonInteractorInterface|$this
+     */
+    public function withDepth(int $depth): self;
 }

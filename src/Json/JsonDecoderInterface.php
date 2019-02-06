@@ -42,10 +42,10 @@ interface JsonDecoderInterface
      * @see http://www.php.net/manual/en/function.json-decode.php
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param string $json
-     * @return array
+     * @return array|mixed
      * @throws JsonException
      */
-    public function decode(string $json): array;
+    public function decode(string $json);
 
     /**
      * Determine if a JSON decoding option is set.
@@ -63,16 +63,24 @@ interface JsonDecoderInterface
     /**
      * Sets (overwrites) options used while decoding JSON to PHP array.
      *
-     * @param int $options
+     * @param int ...$options
      * @return JsonDecoderInterface|$this
      */
-    public function setDecodeOptions(int $options): self;
+    public function setDecodeOptions(int ...$options): self;
 
     /**
      * Update options used while decoding JSON to PHP array.
      *
-     * @param int $options
+     * @param int ...$options
      * @return JsonDecoderInterface|$this
      */
-    public function withDecodeOptions(int $options): self;
+    public function withDecodeOptions(int ...$options): self;
+
+    /**
+     * Except options used while decoding JSON to PHP array.
+     *
+     * @param int ...$options
+     * @return JsonDecoderInterface|$this
+     */
+    public function withoutDecodeOptions(int ...$options): self;
 }

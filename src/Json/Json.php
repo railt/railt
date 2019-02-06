@@ -12,86 +12,63 @@ namespace Railt\Json;
 use Railt\Io\Readable;
 
 /**
- * Class Json
  * @method static array read(Readable $readable)
  * @method static Readable write(string $pathname, array $data)
- *
- * @method static array decode(string $json)
- * @method static bool hasDecodeOption(int $option)
- * @method static int getDecodeOptions()
- * @method static JsonDecoderInterface setDecodeOptions(int $options)
- * @method static JsonDecoderInterface withDecodeOptions(int $options)
- *
  * @method static string encode(array $data)
+ * @method static array decode(string $json)
  * @method static bool hasEncodeOption(int $option)
+ * @method static bool hasDecodeOption(int $option)
  * @method static int getEncodeOptions()
- * @method static JsonEncoderInterface setEncodeOptions(int $options)
- * @method static JsonEncoderInterface withEncodeOptions(int $options)
+ * @method static int getDecodeOptions()
+ * @method static JsonInteractorInterface|JsonInteractor setEncodeOptions(int ...$options)
+ * @method static JsonInteractorInterface|JsonInteractor setDecodeOptions(int ...$options)
+ * @method static JsonInteractorInterface|JsonInteractor withEncodeOptions(int ...$options)
+ * @method static JsonInteractorInterface|JsonInteractor withDecodeOptions(int ...$options)
+ * @method static JsonInteractorInterface|JsonInteractor withoutDecodeOptions(int ...$options)
+ * @method static JsonInteractorInterface|JsonInteractor withoutEncodeOptions(int ...$options)
  */
 class Json
 {
     /**
+     * @var string
+     */
+    protected const DEFAULT_INTERACTOR_CLASS = JsonInteractor::class;
+
+    /**
      * @var string|JsonInteractorInterface
      */
-    protected static $class = JsonInteractor::class;
+    protected static $interactor = self::DEFAULT_INTERACTOR_CLASS;
 
     /**
-     * @var JsonInteractor|null
-     */
-    protected static $instance;
-
-    /**
-     * Json constructor.
-     */
-    private function __construct()
-    {
-        // Not accessible
-    }
-
-    /**
-     * @return JsonInteractorInterface
-     */
-    public static function make(): JsonInteractorInterface
-    {
-        return self::$instance ?? static::new();
-    }
-
-    /**
-     * @return JsonInteractorInterface
-     */
-    public static function new(): JsonInteractorInterface
-    {
-        $class = self::$class;
-
-        return static::setInstance(new $class());
-    }
-
-    /**
-     * @param JsonInteractorInterface|null $instance
-     * @return JsonInteractorInterface|null
-     */
-    public static function setInstance(JsonInteractorInterface $instance = null): ?JsonInteractorInterface
-    {
-        self::$instance = $instance;
-
-        return self::$instance;
-    }
-
-    /**
-     * @param string $name
+     * @param string $method
      * @param array $arguments
      * @return mixed
      */
-    public static function __callStatic(string $name, array $arguments = [])
+    public static function __callStatic(string $method, array $arguments = [])
     {
-        return static::make()->{$name}(...$arguments);
+        return static::new()->{$method}(...$arguments);
     }
 
     /**
-     * @return void
+     * @return JsonInteractorInterface|JsonInteractor
      */
-    private function __clone()
+    public static function new(): JsonInteractorInterface
     {
-        // Not accessible
+        return static::using(self::$interactor);
+    }
+
+    /**
+     * @param string|JsonInteractorInterface $interactor
+     * @return JsonInteractorInterface|JsonInteractor
+     */
+    public static function using(string $interactor): JsonInteractorInterface
+    {
+        \assert(\class_exists($interactor),
+            \sprintf('Unable to find the given interactor class %s', $interactor));
+
+        \assert(\is_subclass_of($interactor, JsonInteractorInterface::class),
+            \sprintf('The given interactor must implement %s interface', JsonInteractorInterface::class));
+
+        return new $interactor();
     }
 }

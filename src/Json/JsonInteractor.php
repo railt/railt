@@ -19,58 +19,15 @@ use Railt\Json\Exception\JsonException;
  */
 class JsonInteractor implements JsonInteractorInterface
 {
-    /**
-     * Bitmask of given json encoding options.
-     *
-     * @var int
-     */
-    private $encodeOptions = self::DEFAULT_ENCODE_OPTIONS;
-
-    /**
-     * Bitmask of given json decoding options.
-     *
-     * @var int
-     */
-    private $decodeOptions = self::DEFAULT_DECODE_OPTIONS;
+    use JsonEncoderTrait;
+    use JsonDecoderTrait;
 
     /**
      * User specified recursion depth.
      *
      * @var int
      */
-    private $depth = self::DEFAULT_DEPTH;
-
-    /**
-     * Json constructor.
-     *
-     * @param int $depth
-     */
-    public function __construct(int $depth = self::DEFAULT_DEPTH)
-    {
-        $this->depth = $depth;
-    }
-
-    /**
-     * Determine if a JSON encoding option is set.
-     *
-     * @param int $option
-     * @return bool
-     */
-    public function hasEncodeOption(int $option): bool
-    {
-        return (bool)($this->encodeOptions & $option);
-    }
-
-    /**
-     * Determine if a JSON decoding option is set.
-     *
-     * @param int $option
-     * @return bool
-     */
-    public function hasDecodeOption(int $option): bool
-    {
-        return (bool)($this->decodeOptions & $option);
-    }
+    protected $depth = self::DEFAULT_DEPTH;
 
     /**
      * @param Readable $readable
@@ -83,28 +40,11 @@ class JsonInteractor implements JsonInteractorInterface
     }
 
     /**
-     * Wrapper for json_decode with predefined options that throws
-     * a Railt\Json\Exception\JsonException when an error occurs.
-     *
-     * @see http://www.php.net/manual/en/function.json-decode.php
-     * @see http://php.net/manual/en/class.jsonexception.php
-     * @param string $json
-     * @return array
-     * @throws JsonException
-     */
-    public function decode(string $json): array
-    {
-        return $this->wrap(function () use ($json) {
-            return @\json_decode($json, true, $this->depth, $this->getDecodeOptions());
-        });
-    }
-
-    /**
      * @param \Closure $expression
      * @return mixed
      * @throws JsonException
      */
-    private function wrap(\Closure $expression)
+    protected function wrap(\Closure $expression)
     {
         try {
             $result = $expression();
@@ -170,27 +110,6 @@ class JsonInteractor implements JsonInteractorInterface
     }
 
     /**
-     * @return int
-     */
-    public function getDecodeOptions(): int
-    {
-        return $this->encodeOptions;
-    }
-
-    /**
-     * Sets (overwrites) options used while decoding JSON to PHP array.
-     *
-     * @param int $options
-     * @return JsonDecoderInterface|$this
-     */
-    public function setDecodeOptions(int $options): JsonDecoderInterface
-    {
-        $this->decodeOptions = $options;
-
-        return $this;
-    }
-
-    /**
      * Writes transferred data to the specified stream (pathname).
      *
      * @param string $pathname
@@ -219,65 +138,22 @@ class JsonInteractor implements JsonInteractorInterface
     }
 
     /**
-     * Wrapper for JSON encoding logic with predefined options that
-     * throws a Railt\Json\Exception\JsonException when an error occurs.
-     *
-     * @see http://www.php.net/manual/en/function.json-encode.php
-     * @see http://php.net/manual/en/class.jsonexception.php
-     * @param array $data
-     * @return string
-     * @throws JsonException
-     */
-    public function encode(array $data): string
-    {
-        return $this->wrap(function () use ($data) {
-            return @\json_encode($data, $this->getEncodeOptions(), $this->depth);
-        });
-    }
-
-    /**
      * @return int
      */
-    public function getEncodeOptions(): int
+    public function getDepth(): int
     {
-        return $this->encodeOptions;
+        return $this->depth;
     }
 
     /**
-     * Sets (overwrites) options used while encoding data to JSON.
-     *
-     * @param int $options
-     * @return JsonEncoderInterface|$this
+     * @param int $depth
+     * @return JsonInteractorInterface|$this
      */
-    public function setEncodeOptions(int $options): JsonEncoderInterface
+    public function withDepth(int $depth): JsonInteractorInterface
     {
-        $this->encodeOptions = $options;
+        \assert($depth > 0, 'Depth value should be greater than 0');
 
-        return $this;
-    }
-
-    /**
-     * Update options used while encoding data to JSON.
-     *
-     * @param int $options
-     * @return JsonEncoderInterface|$this
-     */
-    public function withEncodeOptions(int $options): JsonEncoderInterface
-    {
-        $this->encodeOptions |= $options;
-
-        return $this;
-    }
-
-    /**
-     * Update options used while decoding JSON to PHP array.
-     *
-     * @param int $options
-     * @return JsonDecoderInterface|$this
-     */
-    public function withDecodeOptions(int $options): JsonDecoderInterface
-    {
-        $this->encodeOptions |= $options;
+        $this->depth = $depth;
 
         return $this;
     }

@@ -135,11 +135,11 @@ interface JsonEncoderInterface
      *
      * @see http://www.php.net/manual/en/function.json-encode.php
      * @see http://php.net/manual/en/class.jsonexception.php
-     * @param array $data
+     * @param mixed $data
      * @return string
      * @throws JsonException
      */
-    public function encode(array $data): string;
+    public function encode($data): string;
 
     /**
      * Determine if a JSON encoding option is set.
@@ -155,18 +155,24 @@ interface JsonEncoderInterface
     public function getEncodeOptions(): int;
 
     /**
-     * Sets (overwrites) options used while encoding data to JSON.
-     *
-     * @param int $options
+     * @param int ...$options
      * @return JsonEncoderInterface|$this
      */
-    public function setEncodeOptions(int $options): self;
+    public function setEncodeOptions(int ...$options): self;
 
     /**
      * Update options used while encoding data to JSON.
      *
-     * @param int $options
+     * @param int ...$options
      * @return JsonEncoderInterface|$this
      */
-    public function withEncodeOptions(int $options): self;
+    public function withEncodeOptions(int ...$options): self;
+
+    /**
+     * Except options used while encoding data to JSON.
+     *
+     * @param int ...$options
+     * @return JsonEncoderInterface|$this
+     */
+    public function withoutEncodeOptions(int ...$options): self;
 }
