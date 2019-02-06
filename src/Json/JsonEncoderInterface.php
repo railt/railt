@@ -158,7 +158,7 @@ interface JsonEncoderInterface
      * @param int $options
      * @return JsonEncoderInterface|$this
      */
-    public function setEncodeOptions(int $options): JsonEncoderInterface;
+    public function setEncodeOptions(int $options): self;
 
     /**
      * Update options used while encoding data to JSON.
@@ -166,5 +166,5 @@ interface JsonEncoderInterface
      * @param int $options
      * @return JsonEncoderInterface|$this
      */
-    public function withEncodeOptions(int $options): JsonEncoderInterface;
+    public function withEncodeOptions(int $options): self;
 }

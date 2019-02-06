@@ -51,7 +51,7 @@ class Json
     /**
      * @return JsonObject|static
      */
-    public static function new(): Json
+    public static function new(): self
     {
         $class = self::$class;
 
