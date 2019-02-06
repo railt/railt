@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
+use Railt\Json\Exception\JsonException;
+
 /**
  * Interface JsonDecoderInterface
  */
@@ -41,7 +43,7 @@ interface JsonDecoderInterface
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param string $json
      * @return array
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function decode(string $json): array;
 

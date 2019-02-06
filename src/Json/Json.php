@@ -9,18 +9,34 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
+use Railt\Io\Readable;
+
 /**
  * Class Json
+ * @method static array read(Readable $readable)
+ * @method static Readable write(string $pathname, array $data)
+ *
+ * @method static array decode(string $json)
+ * @method static bool hasDecodeOption(int $option)
+ * @method static int getDecodeOptions()
+ * @method static JsonDecoderInterface setDecodeOptions(int $options)
+ * @method static JsonDecoderInterface withDecodeOptions(int $options)
+ *
+ * @method static string encode(array $data)
+ * @method static bool hasEncodeOption(int $option)
+ * @method static int getEncodeOptions()
+ * @method static JsonEncoderInterface setEncodeOptions(int $options)
+ * @method static JsonEncoderInterface withEncodeOptions(int $options)
  */
 class Json
 {
     /**
-     * @var string
+     * @var string|JsonInteractorInterface
      */
-    protected static $class = JsonObject::class;
+    protected static $class = JsonInteractor::class;
 
     /**
-     * @var JsonObject|null
+     * @var JsonInteractor|null
      */
     protected static $instance;
 
@@ -33,25 +49,17 @@ class Json
     }
 
     /**
-     * @return void
+     * @return JsonInteractorInterface
      */
-    private function __clone()
-    {
-        // Not accessible
-    }
-
-    /**
-     * @return JsonObject|static
-     */
-    public static function make(): self
+    public static function make(): JsonInteractorInterface
     {
         return self::$instance ?? static::new();
     }
 
     /**
-     * @return JsonObject|static
+     * @return JsonInteractorInterface
      */
-    public static function new(): self
+    public static function new(): JsonInteractorInterface
     {
         $class = self::$class;
 
@@ -59,13 +67,31 @@ class Json
     }
 
     /**
-     * @param JsonObject|null $instance
-     * @return JsonObject|null
+     * @param JsonInteractorInterface|null $instance
+     * @return JsonInteractorInterface|null
      */
-    public static function setInstance(JsonObject $instance = null): ?JsonObject
+    public static function setInstance(JsonInteractorInterface $instance = null): ?JsonInteractorInterface
     {
         self::$instance = $instance;
 
         return self::$instance;
+    }
+
+    /**
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public static function __callStatic(string $name, array $arguments = [])
+    {
+        return static::make()->{$name}(...$arguments);
+    }
+
+    /**
+     * @return void
+     */
+    private function __clone()
+    {
+        // Not accessible
     }
 }

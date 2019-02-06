@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
+use Railt\Json\Exception\JsonException;
+
 /**
  * Interface JsonEncoderInterface
  */
@@ -135,7 +137,7 @@ interface JsonEncoderInterface
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param array $data
      * @return string
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function encode(array $data): string;
 

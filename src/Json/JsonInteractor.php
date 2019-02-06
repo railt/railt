@@ -10,35 +10,35 @@ declare(strict_types=1);
 namespace Railt\Json;
 
 use Railt\Io\Exception\NotAccessibleException;
-use Railt\Io\File;
 use Railt\Io\File\Physical;
 use Railt\Io\Readable;
+use Railt\Json\Exception\JsonException;
 
 /**
- * Class JsonObject
+ * Class JsonInteractor
  */
-class JsonObject implements JsonInteractorInterface
+class JsonInteractor implements JsonInteractorInterface
 {
     /**
      * Bitmask of given json encoding options.
      *
      * @var int
      */
-    private $encodeOptions;
+    private $encodeOptions = self::DEFAULT_ENCODE_OPTIONS;
 
     /**
-     *  Bitmask of given json decoding options.
+     * Bitmask of given json decoding options.
      *
      * @var int
      */
-    private $decodeOptions;
+    private $decodeOptions = self::DEFAULT_DECODE_OPTIONS;
 
     /**
      * User specified recursion depth.
      *
      * @var int
      */
-    private $depth;
+    private $depth = self::DEFAULT_DEPTH;
 
     /**
      * Json constructor.
@@ -75,7 +75,7 @@ class JsonObject implements JsonInteractorInterface
     /**
      * @param Readable $readable
      * @return array
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function read(Readable $readable): array
     {
@@ -84,13 +84,13 @@ class JsonObject implements JsonInteractorInterface
 
     /**
      * Wrapper for json_decode with predefined options that throws
-     * a \JsonException when an error occurs.
+     * a Railt\Json\Exception\JsonException when an error occurs.
      *
      * @see http://www.php.net/manual/en/function.json-decode.php
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param string $json
      * @return array
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function decode(string $json): array
     {
@@ -102,30 +102,73 @@ class JsonObject implements JsonInteractorInterface
     /**
      * @param \Closure $expression
      * @return mixed
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function wrap(\Closure $expression)
     {
         try {
             $result = $expression();
 
+        } catch (\JsonException $e) {
+            //
             // Since PHP >= 7.3 parsing json containing errors can throws
             // an exception. It is necessary to handle these cases.
-        } catch (\Throwable $e) {
-            if (\get_class($e) === 'Exception' && \strpos($e->getMessage(), 'Failed calling ') === 0) {
-                $e = $e->getPrevious() ?: $e;
-            }
+            //
+            throw $this->throwFromJsonException($e);
 
-            throw new \JsonException($e->getMessage(), $e->getCode(), $e);
+        } catch (\Throwable $e) {
+            //
+            // Other times we may get other (includes generally) errors.
+            //
+            throw $this->throwFromInternal($e);
         }
 
         // If PHP is lower or equal to version 7.2, then we must
         // handle the error in the old good way.
-        if (\json_last_error() !== \JSON_ERROR_NONE) {
-            throw new \JsonException(\json_last_error_msg(), \json_last_error());
+        if (($errorCode = \json_last_error()) !== \JSON_ERROR_NONE) {
+            throw $this->throwFromJsonErrorCode($errorCode);
         }
 
         return $result;
+    }
+
+    /**
+     * @param \JsonException $original
+     * @return JsonException
+     */
+    private function throwFromJsonException(\JsonException $original): JsonException
+    {
+        $exception = JsonException::getExceptionByCode($original->getCode());
+        $message = JsonException::getMessageByCode($original->getCode());
+
+        return new $exception($message, $original->getCode(), $original);
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return JsonException
+     */
+    private function throwFromInternal(\Throwable $e): JsonException
+    {
+        $exception = JsonException::getExceptionByCode($e->getCode());
+
+        if (\get_class($e) === 'Exception' && \strpos($e->getMessage(), 'Failed calling ') === 0) {
+            $e = $e->getPrevious() ?: $e;
+        }
+
+        throw new $exception($e->getMessage(), $e->getCode(), $e);
+    }
+
+    /**
+     * @param int $code
+     * @return JsonException
+     */
+    private function throwFromJsonErrorCode(int $code): JsonException
+    {
+        $exception = JsonException::getExceptionByCode($code);
+        $message = JsonException::getMessageByCode($code);
+
+        return new $exception($message, $code);
     }
 
     /**
@@ -156,7 +199,7 @@ class JsonObject implements JsonInteractorInterface
      * @param array $data
      * @return Readable
      * @throws NotAccessibleException
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function write(string $pathname, array $data): Readable
     {
@@ -179,13 +222,13 @@ class JsonObject implements JsonInteractorInterface
 
     /**
      * Wrapper for JSON encoding logic with predefined options that
-     * throws a \JsonException when an error occurs.
+     * throws a Railt\Json\Exception\JsonException when an error occurs.
      *
      * @see http://www.php.net/manual/en/function.json-encode.php
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param array $data
      * @return string
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function encode(array $data): string
     {
