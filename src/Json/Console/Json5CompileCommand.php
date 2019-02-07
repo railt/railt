@@ -48,8 +48,8 @@ class Json5CompileCommand extends Command
 
         Compiler::load(File::fromPathname(self::JSON5_GRAMMAR))
             ->setClassName('BaseParser')
-            ->setNamespace('Railt\\Json\\Json5')
-            ->saveTo(__DIR__ . '/../Json5');
+            ->setNamespace('Railt\\Json\\Json5\\Decoder')
+            ->saveTo(__DIR__ . '/../Json5/Decoder');
 
         $out->writeln('<info>OK</info>');
     }

@@ -7,15 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Ast;
+namespace Railt\Json\Json5\Decoder;
 
 /**
- * Interface NodeInterface
+ * Class Parser
  */
-interface NodeInterface
+class Parser extends BaseParser
 {
-    /**
-     * @return mixed
-     */
-    public function reduce();
 }

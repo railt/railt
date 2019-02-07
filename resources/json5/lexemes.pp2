@@ -86,11 +86,10 @@
  */
 
 %token T_INF                    ([\+\-]?)Infinity\b
-%token T_NAN                    NaN\b
+%token T_NAN                    ([\+\-]?)NaN\b
 %token T_HEX_NUMBER             ([\+\-]?)0x([0-9a-fA-F]+)
-%token T_FLOAT                  ([\+\-]?)(?:[1-9][0-9]*)?\.[0-9]*
-%token T_INT                    ([\+\-]?)(?:[1-9][0-9]*)
-%token T_EXPONENTIAL_PART       [eE]([\+\-]?)([0-9]+)
+%token T_FLOAT                  [\+\-]?(?:[1-9][0-9]*)?\.[0-9]*(?:[eE][\+\-]?[0-9]+)?
+%token T_INT                    [\+\-]?[1-9][0-9]*(?:[eE][\+\-]?[0-9]+)?
 
 
 /**

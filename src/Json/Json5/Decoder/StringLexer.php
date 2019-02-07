@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Lexer;
+namespace Railt\Json\Json5\Decoder;
 
 use Railt\Io\Readable;
 use Railt\Lexer\Factory;

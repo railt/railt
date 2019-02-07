@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Ast;
+namespace Railt\Json\Json5\Decoder\Ast;
 
 /**
- * Class IdentifierNode
+ * @internal Internal class for json5 abstract syntax tree node representation
  */
 class IdentifierNode implements NodeInterface
 {

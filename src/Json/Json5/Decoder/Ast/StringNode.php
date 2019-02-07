@@ -7,18 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Ast;
+namespace Railt\Json\Json5\Decoder\Ast;
 
 use Railt\Io\File;
 use Railt\Io\Readable;
 use Railt\Json\Exception\JsonSyntaxException;
 use Railt\Json\Json;
-use Railt\Json\Json5\Lexer\StringLexer;
+use Railt\Json\Json5\Decoder\StringLexer;
 use Railt\Lexer\TokenInterface;
 use Railt\Parser\Ast\LeafInterface;
 
 /**
- * Class StringNode
+ * @internal Internal class for json5 abstract syntax tree node representation
  */
 class StringNode implements NodeInterface
 {

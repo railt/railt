@@ -10,8 +10,12 @@ declare(strict_types=1);
 namespace Railt\Json\Json5;
 
 use Railt\Io\File;
+use Railt\Json\Exception\JsonEncodingException;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Exception\JsonStackOverflowException;
 use Railt\Json\Exception\JsonSyntaxException;
-use Railt\Json\Json5\Ast\Json5Node;
+use Railt\Json\Json5\Decoder\Ast\Json5Node;
+use Railt\Json\Json5\Decoder\Parser;
 use Railt\Json\JsonDecoder;
 use Railt\Json\Rfc7159\NativeJsonDecoder;
 use Railt\Lexer\LexerInterface;
@@ -73,6 +77,7 @@ class Json5Decoder extends JsonDecoder
     /**
      * @param string $json
      * @return mixed
+     * @throws JsonException
      */
     public function decode(string $json)
     {
@@ -87,12 +92,15 @@ class Json5Decoder extends JsonDecoder
      * @param string $json
      * @param \Closure $otherwise
      * @return mixed
+     * @throws JsonException
      */
     private function tryFallback(string $json, \Closure $otherwise)
     {
         try {
             return $this->native->decode($json);
-        } catch (\JsonException | \AssertionError $e) {
+        } catch (JsonStackOverflowException | JsonEncodingException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
             return $otherwise($json);
         }
     }

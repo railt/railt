@@ -7,29 +7,37 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Ast;
+namespace Railt\Json\Json5\Decoder\Ast;
 
 use Railt\Parser\Ast\LeafInterface;
 
 /**
- * Class HexNode
+ * @internal Internal class for json5 abstract syntax tree node representation
  */
 class HexNode implements NodeInterface
 {
     /**
      * @var LeafInterface
      */
-    private $leaf;
+    private $value;
 
     /**
-     * StringNode constructor.
+     * BoolNode constructor.
      *
      * @param string $name
      * @param array $children
      */
     public function __construct(string $name, array $children = [])
     {
-        $this->leaf = \reset($children);
+        $this->value = \reset($children);
+    }
+
+    /**
+     * @return bool
+     */
+    private function isNegative(): bool
+    {
+        return $this->value->getValue(1) === '-';
     }
 
     /**
@@ -37,20 +45,8 @@ class HexNode implements NodeInterface
      */
     public function reduce(): int
     {
-        $isPositive = $this->leaf->getValue(1) !== '-';
+        $value = \hexdec($this->value->getValue(2));
 
-        return $this->parse($this->leaf->getValue(2), $isPositive);
-    }
-
-    /**
-     * @param string $value
-     * @param bool $positive
-     * @return int
-     */
-    private function parse(string $value, bool $positive): int
-    {
-        $int = \hexdec($value);
-
-        return $positive ? $int : -$int;
+        return $this->isNegative() ? -$value : $value;
     }
 }

@@ -7,14 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Ast;
-
-use Railt\Parser\Ast\RuleInterface;
+namespace Railt\Json\Json5\Decoder\Ast;
 
 /**
- * Class ObjectNode
+ * @internal Internal class for json5 abstract syntax tree node representation
  */
-class ObjectNode implements NodeInterface
+class ArrayNode implements NodeInterface
 {
     /**
      * @var array
@@ -39,15 +37,9 @@ class ObjectNode implements NodeInterface
     {
         $result = [];
 
-        /** @var RuleInterface $child */
+        /** @var NodeInterface $child */
         foreach ($this->children as $child) {
-            /**
-             * @var NodeInterface $key
-             * @var NodeInterface $value
-             */
-            [$key, $value] = $child->getChildren();
-
-            $result[$key->reduce()] = $value->reduce();
+            $result[] = $child->reduce();
         }
 
         return $result;
