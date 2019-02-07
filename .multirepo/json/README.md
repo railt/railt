@@ -15,4 +15,88 @@
 > Note: All questions and issues please send 
 to [https://github.com/railt/railt/issues](https://github.com/railt/railt/issues)
 
+## JSON RFC-7159 Usage
 
+Small examples on working with the RFC-7159 specification.
+
+### Encoding
+
+```php
+<?php
+
+use Railt\Json\Json;
+use Railt\Json\Exception\JsonException;
+
+try {
+    $json = Json::encode([1, 2, 3]);
+} catch (JsonException $exception) {
+    // Exception handling
+}
+```
+
+### Decoding
+
+```php
+<?php
+
+use Railt\Json\Json;
+use Railt\Json\Exception\JsonException;
+
+try {
+    $data = Json::decode(<<<JSON
+        {
+            "quotes": "I can use \"double quotes\" here",
+            "float": 0.8675309,
+            "number": 42,
+            "array": ["a", "b", "c"]
+        }
+    JSON);
+} catch (JsonException $exception) {
+    // Exception handling
+}
+```
+
+## JSON5 Usage
+
+### Encoding
+
+```php
+<?php
+
+use Railt\Json\Json5;
+use Railt\Json\Exception\JsonException;
+
+try {
+    $json = Json5::encode([1, 2, 3]);
+} catch (JsonException $exception) {
+    // Exception handling
+}
+```
+
+### Decoding
+
+```php
+<?php
+
+use Railt\Json\Json5;
+use Railt\Json\Exception\JsonException;
+
+try {
+    $data = Json5::decode(<<<'JSON5'
+        // Simple example of JSON5 spec
+        {
+            unquoted: 'and you can quote me on that',
+            singleQuotes: 'I can use "double quotes" here',
+            lineBreaks: "Look, Mom! \
+            No \\n's!",
+            hexadecimal: 0xdecaf,
+            leadingDecimalPoint: .8675309, andTrailing: 8675309.,
+            positiveSign: +1,
+            trailingComma: 'in objects', andIn: ['arrays',],
+            "backwardsCompatible": "with JSON",
+        }
+    JSON5);
+} catch (JsonException $exception) {
+    // Exception handling
+}
+```
