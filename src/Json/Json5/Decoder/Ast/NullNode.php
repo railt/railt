@@ -19,6 +19,5 @@ class NullNode implements NodeInterface
      */
     public function reduce(): void
     {
-        return;
     }
 }
