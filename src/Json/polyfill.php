@@ -13,6 +13,7 @@ if (! \defined('JSON_THROW_ON_ERROR')) {
      * Throws JsonException if an error occurs instead of setting the global
      * error state that is retrieved with json_last_error().
      * JSON_PARTIAL_OUTPUT_ON_ERROR takes precedence over JSON_THROW_ON_ERROR.
+     *
      * @since PHP 7.3.0
      * @see https://php.net/manual/en/json.constants.php
      */

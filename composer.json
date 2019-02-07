@@ -44,14 +44,15 @@
     },
     "replace": {
         "railt/container": "*",
+        "railt/http": "*",
+        "railt/io": "*",
+        "railt/json": "*",
         "railt/lexer": "*",
         "railt/parser": "*",
-        "railt/io": "*",
         "railt/sdl": "*",
-        "railt/http": "*",
         "railt/storage": "*",
-        "railt/support": "*",
-        "railt/subscriptions": "*"
+        "railt/subscriptions": "*",
+        "railt/support": "*"
     },
     "autoload": {
         "psr-4": {
@@ -106,6 +107,7 @@
             },
             "commands": [
                 "Railt\\SDL\\Console\\SDLGrammarCompileCommand",
+                "Railt\\Json\\Console\\Json5CompileCommand",
                 "Railt\\Foundation\\Console\\ExtensionsListCommand"
             ],
             "extensions": [

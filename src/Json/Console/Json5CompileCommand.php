@@ -7,24 +7,23 @@
  */
 declare(strict_types=1);
 
-namespace Railt\SDL\Console;
+namespace Railt\Json\Console;
 
 use Railt\Compiler\Compiler;
 use Railt\Io\File;
-use Railt\SDL\Parser\Parser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class SDLCompileCommand
+ * Class Json5CompileCommand
  */
-class SDLGrammarCompileCommand extends Command
+class Json5CompileCommand extends Command
 {
     /**
      * @var string
      */
-    private const SCHEMA_SDL_GRAMMAR = Parser::GRAMMAR_PATHNAME;
+    private const JSON5_GRAMMAR = __DIR__ . '/../../../resources/json5/grammar.pp2';
 
     /**
      * @return void
@@ -32,8 +31,8 @@ class SDLGrammarCompileCommand extends Command
      */
     protected function configure(): void
     {
-        $this->setName('compile:sdl');
-        $this->setDescription('Compile GraphQL SDL Parser');
+        $this->setName('compile:json5');
+        $this->setDescription('Compile JSON5 Parser');
     }
 
     /**
@@ -47,10 +46,10 @@ class SDLGrammarCompileCommand extends Command
     {
         $out->write('Compilation: ');
 
-        Compiler::load(File::fromPathname(self::SCHEMA_SDL_GRAMMAR))
+        Compiler::load(File::fromPathname(self::JSON5_GRAMMAR))
             ->setClassName('BaseParser')
-            ->setNamespace('Railt\\SDL\\Parser')
-            ->saveTo(__DIR__ . '/../Parser');
+            ->setNamespace('Railt\\Json\\Json5')
+            ->saveTo(__DIR__ . '/../Json5');
 
         $out->writeln('<info>OK</info>');
     }

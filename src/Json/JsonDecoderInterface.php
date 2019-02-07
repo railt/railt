@@ -9,32 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
+use Railt\Io\Readable;
 use Railt\Json\Exception\JsonException;
 
 /**
  * Interface JsonDecoderInterface
  */
-interface JsonDecoderInterface
+interface JsonDecoderInterface extends JsonRuntimeInterface
 {
-    /**
-     * Decodes large integers as their original string value.
-     *
-     * @since PHP 5.4.0
-     * @see https://php.net/manual/en/json.constants.php
-     * @var int
-     */
-    public const DECODE_BIGINT_AS_STRING = JSON_BIGINT_AS_STRING;
-
-    /**
-     * Decodes JSON objects as PHP array. This option can be added automatically
-     * by calling json_decode() with the second parameter equal to TRUE.
-     *
-     * @since PHP 5.4.0
-     * @see https://php.net/manual/en/json.constants.php
-     * @var int
-     */
-    public const DECODE_OBJECT_AS_ARRAY = JSON_OBJECT_AS_ARRAY;
-
     /**
      * Wrapper for json_decode with predefined options that throws
      * a \JsonException when an error occurs.
@@ -46,6 +28,15 @@ interface JsonDecoderInterface
      * @throws JsonException
      */
     public function decode(string $json);
+
+    /**
+     * Reads and parses json data from the specified stream.
+     *
+     * @param Readable $readable
+     * @return array
+     * @throws \JsonException
+     */
+    public function read(Readable $readable): array;
 
     /**
      * Determine if a JSON decoding option is set.

@@ -1,0 +1,27 @@
+/**
+ * --------------------------------------------------------------------------
+ *  JSON5 Grammar
+ * --------------------------------------------------------------------------
+ *
+ * The JSON5 Data Interchange Format (JSON5) is a superset of JSON that aims
+ * to alleviate some of the limitations of JSON by expanding its syntax to
+ * include some productions from ECMAScript 5.1.
+ *
+ * @see https://tools.ietf.org/html/rfc7159
+ * @see https://www.ecma-international.org/ecma-262/5.1/
+ */
+
+%include lexemes.pp2
+
+#Json
+  : Value()
+  ;
+
+#Value
+  : StringValue()
+  ;
+
+#StringValue
+  : <T_DOUBLE_QUOTED_STRING>
+  | <T_SINGLE_QUOTED_STRING>
+  ;

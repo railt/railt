@@ -1,0 +1,38 @@
+/**
+ * --------------------------------------------------------------------------
+ *  JSON5 Punctuators and Keywords
+ * --------------------------------------------------------------------------
+ */
+
+%skip T_COMMENT                 //[^\n]*\n
+%skip T_DOC_COMMENT             /\*.*?\*/
+
+%token T_BRACKET_OPEN           \[
+%token T_BRACKET_CLOSE          \]
+%token T_BRACE_OPEN             {
+%token T_BRACE_CLOSE            }
+%token T_COLON                  :
+%token T_COMMA                  ,
+
+
+%token T_BOOL_TRUE              true\b
+%token T_BOOL_FALSE             false\b
+%token T_NULL                   null\b
+%token T_DOUBLE_QUOTED_STRING   "[^"\\]*(\\.[^"\\]*)*"
+%token T_SINGLE_QUOTED_STRING   '[^'\\]*(\\.[^'\\]*)*'
+%token T_KEY                    [_A-Za-z][_0-9A-Za-z]*
+%token T_HEX_NUMBER             \-?0x([0-9a-fA-F]+)
+%token T_NUMBER                 \-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][\+\-]?[0-9]+)?
+
+
+%skip T_HTAB                   \x09
+%skip T_LF                     \x0A
+%skip T_CR                     \x0D
+%skip T_WHITESPACE             \x20
+%skip T_UTF32BE_BOM            ^\x00\x00\xFE\xFF
+%skip T_UTF32LE_BOM            ^\xFE\xFF\x00\x00
+%skip T_UTF16BE_BOM            ^\xFE\xFF
+%skip T_UTF16LE_BOM            ^\xFF\xFE
+%skip T_UTF8_BOM               ^\xEF\xBB\xBF
+%skip T_UTF7_BOM               ^\x2B\x2F\x76\x38\x2B\x2F\x76\x39\x2B\x2F\x76\x2B\x2B\x2F\x76\x2F
+

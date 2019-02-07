@@ -37,11 +37,25 @@
         ]
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "railt/lexer": "1.4.*|1.4.x-dev",
+        "railt/parser": "1.4.*|1.4.x-dev",
+        "railt/compiler": "1.4.*|1.4.x-dev"
     },
     "autoload-dev": {
         "psr-4": {
             "Railt\\Tests\\Json\\": "tests"
+        }
+    },
+    "suggest": {
+        "railt/lexer": "(1.4.*) JSON5 decoder support",
+        "railt/parser": "(1.4.*) JSON5 decoder support"
+    },
+    "extra": {
+        "railt": {
+            "commands": [
+                "Railt\\Json\\Console\\Json5CompileCommand"
+            ]
         }
     },
     "config": {

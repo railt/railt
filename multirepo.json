@@ -59,7 +59,8 @@
             },
             "dirs": {
                 "src/Json": "src/Json",
-                "tests/Json": "tests"
+                "tests/Json": "tests",
+                "resources/json5": "resources/json5"
             }
         },
         "railt/lexer": {

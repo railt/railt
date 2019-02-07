@@ -9,27 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
-use Railt\Json\Rfc7159\NativeJsonDecoder;
-use Railt\Json\Rfc7159\NativeJsonEncoder;
-
 /**
- * Class Json
+ * Interface JsonFacadeInterface
  */
-class Json extends Facade
+interface JsonFacadeInterface
 {
     /**
      * @return JsonEncoderInterface
      */
-    public static function encoder(): JsonEncoderInterface
-    {
-        return new NativeJsonEncoder();
-    }
+    public static function encoder(): JsonEncoderInterface;
 
     /**
      * @return JsonDecoderInterface
      */
-    public static function decoder(): JsonDecoderInterface
-    {
-        return new NativeJsonDecoder();
-    }
+    public static function decoder(): JsonDecoderInterface;
 }
