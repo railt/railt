@@ -11,10 +11,13 @@ namespace Railt\Json\Json5;
 
 use Railt\Io\File;
 use Railt\Json\Exception\JsonSyntaxException;
+use Railt\Json\Json5\Ast\Json5Node;
 use Railt\Json\JsonDecoder;
 use Railt\Json\Rfc7159\NativeJsonDecoder;
 use Railt\Lexer\LexerInterface;
 use Railt\Parser\Exception\ParserException;
+use Railt\Parser\Exception\UnexpectedTokenException;
+use Railt\Parser\Exception\UnrecognizedTokenException;
 use Railt\Parser\ParserInterface;
 
 /**
@@ -102,17 +105,24 @@ class Json5Decoder extends JsonDecoder
     private function tryParse(string $json5)
     {
         try {
+            /** @var Json5Node $ast */
             $ast = $this->parser->parse(File::fromSources($json5));
-            // TODO
-        } catch (ParserException $e) {
-            $message = \vsprintf('%s at line %d column %d in %s', [
-                $e->getMessage(),
-                $e->getLine(),
-                $e->getColumn(),
-                $json5,
-            ]);
 
-            throw new JsonSyntaxException($message);
+            return $ast->reduce();
+        } catch (UnrecognizedTokenException | UnexpectedTokenException $e) {
+            throw $this->throwJson5Exception($e);
         }
+    }
+
+    /**
+     * @param ParserException $e
+     * @return JsonSyntaxException
+     */
+    private function throwJson5Exception(ParserException $e): JsonSyntaxException
+    {
+        $message = '%s on line %d at column %d';
+        $message = \sprintf($message, $e->getMessage(), $e->getLine(), $e->getColumn());
+
+        return new JsonSyntaxException($message);
     }
 }

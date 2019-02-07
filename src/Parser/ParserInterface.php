@@ -19,9 +19,9 @@ interface ParserInterface
 {
     /**
      * @param Readable $input
-     * @return RuleInterface
+     * @return RuleInterface|mixed
      */
-    public function parse(Readable $input): RuleInterface;
+    public function parse(Readable $input);
 
     /**
      * @param string $rule

@@ -42,19 +42,12 @@ class Builder
     }
 
     /**
-     * @return RuleInterface
-     * @throws InternalException
+     * @return RuleInterface|mixed
      * @throws \LogicException
      */
-    public function build(): RuleInterface
+    public function build()
     {
-        $result = $this->buildTree();
-
-        if (! $result instanceof RuleInterface) {
-            throw new InternalException('Cannot build AST, the trace is corrupted');
-        }
-
-        return $result;
+        return $this->buildTree();
     }
 
     /**

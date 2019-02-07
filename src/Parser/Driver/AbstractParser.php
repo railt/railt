@@ -115,17 +115,22 @@ abstract class AbstractParser implements ParserInterface
 
     /**
      * @param Readable $input
-     * @return RuleInterface
-     * @throws \Railt\Parser\Exception\InternalException
+     * @return RuleInterface|mixed
      * @throws \LogicException
      */
-    public function parse(Readable $input): RuleInterface
+    public function parse(Readable $input)
     {
-        $trace = $this->trace($input);
+        return $this->build($this->trace($input));
+    }
 
-        $builder = new Builder($trace, $this->grammar);
-
-        return $builder->build();
+    /**
+     * @param array $trace
+     * @return mixed|RuleInterface
+     * @throws \LogicException
+     */
+    protected function build(array $trace)
+    {
+        return (new Builder($trace, $this->grammar))->build();
     }
 
     /**

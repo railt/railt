@@ -3,25 +3,112 @@
  *  JSON5 Grammar
  * --------------------------------------------------------------------------
  *
- * The JSON5 Data Interchange Format (JSON5) is a superset of JSON that aims
- * to alleviate some of the limitations of JSON by expanding its syntax to
- * include some productions from ECMAScript 5.1.
+ * The JSON5 Data Interchange Format (JSON5) is a superset of JSON that
+ * aims to alleviate some of the limitations of JSON by expanding its
+ * syntax to include some productions from ECMAScript 5.1.
  *
+ * Similar to JSON, JSON5 can represent four primitive types
+ * (strings, numbers, Booleans, and null) and two structured types
+ * (objects and arrays).
+ *
+ * A string is a sequence of zero or more Unicode characters. Note that
+ * this citation references the latest version of Unicode rather than a
+ * specific release. It is not expected that future changes in the Unicode
+ * specification will impact the syntax of JSON5.
+ *
+ * An object is an unordered collection of zero or more name/value pairs,
+ * where a name is a string or identifier and a value is a string, number,
+ * Boolean, null, object, or array.
+ *
+ * An array is an ordered sequence of zero or more values.
+ *
+ * @see https://spec.json5.org/
+ * @see http://www.unicode.org/versions/Unicode11.0.0/
  * @see https://tools.ietf.org/html/rfc7159
  * @see https://www.ecma-international.org/ecma-262/5.1/
  */
 
 %include lexemes.pp2
 
-#Json
+
+#Json -> Railt\Json\Json5\Ast\Json5Node
   : Value()
   ;
 
-#Value
-  : StringValue()
+Value
+  : Object()
+  | Array()
+  | String()
+  | Boolean()
+  | Null()
+  | Inf()
+  | NaN()
+  | Hex()
+  | Float()
+  | Int()
   ;
 
-#StringValue
+#Object -> Railt\Json\Json5\Ast\ObjectNode
+  : ::T_BRACE_OPEN::
+        (ObjectPair() ::T_COMMA::)*
+        (ObjectPair() ::T_COMMA::?)?
+    ::T_BRACE_CLOSE::
+  ;
+
+#ObjectPair
+  : ObjectKey() ::T_COLON:: ObjectValue()
+  ;
+
+ObjectKey
+  : String()
+  | Identifier()
+  ;
+
+ObjectValue
+  : Value()
+  ;
+
+#Array -> Railt\Json\Json5\Ast\ArrayNode
+  : ::T_BRACKET_OPEN::
+      (Value() ::T_COMMA::)*
+      (Value() ::T_COMMA::?)?
+    ::T_BRACKET_CLOSE::
+  ;
+
+#String -> Railt\Json\Json5\Ast\StringNode
   : <T_DOUBLE_QUOTED_STRING>
   | <T_SINGLE_QUOTED_STRING>
+  ;
+
+#Boolean
+  : <T_BOOL_TRUE>
+  | <T_BOOL_FALSE>
+  ;
+
+#Null
+  : <T_NULL>
+  ;
+
+#Inf
+  : <T_INF>
+  ;
+
+#NaN
+  : <T_NAN>
+  ;
+
+#Float
+  : <T_FLOAT> <T_EXPONENTIAL_PART>?
+  ;
+
+#Int
+  : <T_INT> <T_EXPONENTIAL_PART>?
+  ;
+
+#Hex -> Railt\Json\Json5\Ast\HexNode
+  : <T_HEX_NUMBER>
+  ;
+
+#Identifier -> Railt\Json\Json5\Ast\IdentifierNode
+  : <T_IDENTIFIER>
   ;
