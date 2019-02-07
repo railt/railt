@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Ast;
 
-use Railt\Parser\Ast\RuleInterface;
-
 /**
  * Class ArrayNode
  */

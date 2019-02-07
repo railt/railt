@@ -140,7 +140,7 @@ class StringNode implements NodeInterface
     {
         try {
             return \mb_convert_encoding(\pack('H*', $code), 'UTF-8', 'UCS-2BE');
-        } catch (\Error|\ErrorException $error) {
+        } catch (\Error | \ErrorException $error) {
             try {
                 return (string)Json::decode('{"char": "\\u' . $code . '"}')['char'];
             } catch (\Throwable $e) {
@@ -160,7 +160,7 @@ class StringNode implements NodeInterface
         $value = $token->getValue();
 
         if (\is_int(\strpos($value, "\n"))) {
-            $string = str_replace("\n", '\n', $this->leaf->getValue());
+            $string = \str_replace("\n", '\n', $this->leaf->getValue());
 
             $pos = $sources->getPosition($token->getOffset() + 1);
 

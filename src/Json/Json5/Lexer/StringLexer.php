@@ -36,7 +36,7 @@ class StringLexer implements LexerInterface
         'T_ESC_BACKSLASH'    => '\\\\\\\\',
         'T_CHAR_UTF'         => '\\\\u([0-9a-fA-Z]{4})',
         'T_CHAR_ALT_UTF'     => '\\\\x([0-9a-fA-Z]{1,2})',
-        'T_UNESCAPED_CHAR'   => '\\\\(\\w)'
+        'T_UNESCAPED_CHAR'   => '\\\\(\\w)',
     ];
 
     /**
