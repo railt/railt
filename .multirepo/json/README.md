@@ -43,7 +43,7 @@ use Railt\Json\Json;
 use Railt\Json\Exception\JsonException;
 
 try {
-    $data = Json::decode(<<<JSON
+    $data = Json::decode(<<<'JSON'
         {
             "quotes": "I can use \"double quotes\" here",
             "float": 0.8675309,
