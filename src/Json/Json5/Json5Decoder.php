@@ -15,8 +15,6 @@ use Railt\Json\JsonDecoder;
 use Railt\Json\Rfc7159\NativeJsonDecoder;
 use Railt\Lexer\LexerInterface;
 use Railt\Parser\Exception\ParserException;
-use Railt\Parser\Exception\UnexpectedTokenException;
-use Railt\Parser\Exception\UnrecognizedTokenException;
 use Railt\Parser\ParserInterface;
 
 /**
@@ -91,7 +89,7 @@ class Json5Decoder extends JsonDecoder
     {
         try {
             return $this->native->decode($json);
-        } catch (\JsonException|\AssertionError $e) {
+        } catch (\JsonException | \AssertionError $e) {
             return $otherwise($json);
         }
     }
@@ -106,13 +104,12 @@ class Json5Decoder extends JsonDecoder
         try {
             $ast = $this->parser->parse(File::fromSources($json5));
             // TODO
-
         } catch (ParserException $e) {
             $message = \vsprintf('%s at line %d column %d in %s', [
                 $e->getMessage(),
                 $e->getLine(),
                 $e->getColumn(),
-                $json5
+                $json5,
             ]);
 
             throw new JsonSyntaxException($message);
