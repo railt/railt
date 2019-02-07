@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Json\Rfc7159;
 
-use Railt\Json\JsonEncoder;
 use Railt\Json\Exception\JsonException;
+use Railt\Json\JsonEncoder;
 
 /**
  * Class NativeJsonEncoder
