@@ -50,7 +50,8 @@ try {
             "number": 42,
             "array": ["a", "b", "c"]
         }
-    JSON);
+JSON
+);
 } catch (JsonException $exception) {
     // Exception handling
 }
@@ -88,14 +89,15 @@ try {
             unquoted: 'and you can quote me on that',
             singleQuotes: 'I can use "double quotes" here',
             lineBreaks: "Look, Mom! \
-            No \\n's!",
-            hexadecimal: 0xdecaf,
-            leadingDecimalPoint: .8675309, andTrailing: 8675309.,
+                No \\n's!",
+            hexadecimal: 0xDEADBEEF,
+            leadingDecimalPoint: .42, andTrailing: 23.,
             positiveSign: +1,
             trailingComma: 'in objects', andIn: ['arrays',],
             "backwardsCompatible": "with JSON",
         }
-    JSON5);
+JSON5
+);
 } catch (JsonException $exception) {
     // Exception handling
 }
