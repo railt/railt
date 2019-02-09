@@ -16,5 +16,4 @@ use Railt\Parser\Ast\Builder as BaseAstBuilder;
  */
 class Builder extends BaseAstBuilder
 {
-
 }

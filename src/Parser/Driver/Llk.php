@@ -16,5 +16,4 @@ use Railt\Parser\Parser;
  */
 class Llk extends Parser
 {
-
 }
