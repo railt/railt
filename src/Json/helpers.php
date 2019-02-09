@@ -21,7 +21,7 @@ if (! function_exists('\\json5_decode')) {
     function json5_decode(string $json, bool $assoc = false, int $depth = 512, int $options = 0)
     {
         return Json5::decoder()
-            ->setOption(Json5::DECODE_OBJECT_AS_ARRAY, $assoc)
+            ->setOption(\JSON_OBJECT_AS_ARRAY, $assoc)
             ->withRecursionDepth($depth)
             ->withOptions($options)
             ->decode($json);

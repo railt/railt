@@ -20,9 +20,11 @@ abstract class JsonDecoder extends JsonRuntime implements JsonDecoderInterface
     /**
      * Automatically enables object to array convertation.
      *
+     * Note: JSON_OBJECT_AS_ARRAY = 1
+     *
      * @var int
      */
-    protected $options = Json::DECODE_OBJECT_AS_ARRAY;
+    protected $options = 1;
 
     /**
      * @param Readable $readable

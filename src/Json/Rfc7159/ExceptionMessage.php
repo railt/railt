@@ -67,7 +67,7 @@ class ExceptionMessage
     /**
      * @var string
      */
-    public const ERROR_MESSAGE_UTF16 = 'he JSON string contains a malformed UTF-16 characters, possibly incorrectly encoded';
+    public const ERROR_MESSAGE_UTF16 = 'The JSON string contains a malformed UTF-16 characters, possibly incorrectly encoded';
 
     /**
      * @param int $code

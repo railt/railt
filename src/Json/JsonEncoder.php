@@ -23,14 +23,11 @@ abstract class JsonEncoder extends JsonRuntime implements JsonEncoderInterface
      * Encode <, >, ', &, and " characters in the JSON, making it also safe to
      * be embedded into HTML.
      *
+     * Note: JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PRESERVE_ZERO_FRACTION = 1039
+     *
      * @var int
      */
-    protected $options =
-        Json::ENCODE_HEX_TAG |
-        Json::ENCODE_HEX_APOS |
-        Json::ENCODE_HEX_AMP |
-        Json::ENCODE_HEX_QUOT |
-        Json::ENCODE_PRESERVE_ZERO_FRACTION;
+    protected $options = 1039;
 
     /**
      * Writes transferred data to the specified stream (pathname).

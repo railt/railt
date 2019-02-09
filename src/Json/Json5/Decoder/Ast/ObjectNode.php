@@ -57,7 +57,7 @@ class ObjectNode implements NodeInterface
             $result[$key->reduce()] = $value->reduce();
         }
 
-        if ($this->options & Json::DECODE_OBJECT_AS_ARRAY) {
+        if ($this->options & \JSON_OBJECT_AS_ARRAY) {
             return $result;
         }
 

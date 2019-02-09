@@ -58,8 +58,8 @@ abstract class JsonRuntime implements JsonRuntimeInterface
     {
         $options = $this->options;
 
-        if (! (bool)($options & Json::THROW_ON_ERROR)) {
-            $options |= Json::THROW_ON_ERROR;
+        if (! (bool)($options & \JSON_THROW_ON_ERROR)) {
+            $options |= \JSON_THROW_ON_ERROR;
         }
 
         return $options;

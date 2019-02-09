@@ -97,11 +97,11 @@ ObjectValue
   : <T_NAN>
   ;
 
-#Float -> Railt\Json\Json5\Decoder\Ast\NumberNode
+#Float -> Railt\Json\Json5\Decoder\Ast\FloatNode
   : <T_FLOAT>
   ;
 
-#Int -> Railt\Json\Json5\Decoder\Ast\NumberNode
+#Int -> Railt\Json\Json5\Decoder\Ast\IntNode
   : <T_INT>
   ;
 

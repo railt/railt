@@ -40,7 +40,7 @@ class NativeJsonDecoder extends JsonDecoder
      */
     public function decode(string $json)
     {
-        $shouldBeArray = $this->hasOption(Json::DECODE_OBJECT_AS_ARRAY);
+        $shouldBeArray = $this->hasOption(\JSON_OBJECT_AS_ARRAY);
 
         return $this->wrap(function () use ($json, $shouldBeArray) {
             return @\json_decode($json, $shouldBeArray, $this->getRecursionDepth(), $this->getOptions());

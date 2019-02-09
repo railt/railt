@@ -9,23 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Decoder\Ast;
 
-use Railt\Json\Json;
 use Railt\Parser\Ast\LeafInterface;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation
  */
-class NumberNode implements NodeInterface
+abstract class NumberNode implements NodeInterface
 {
     /**
      * @var LeafInterface
      */
-    private $value;
-
-    /**
-     * @var bool
-     */
-    private $float;
+    protected $value;
 
     /**
      * @var int
@@ -42,32 +36,22 @@ class NumberNode implements NodeInterface
     {
         $this->options = $options;
         $this->value = \reset($children);
-        $this->float = $this->value->is('T_FLOAT');
-    }
-
-    /**
-     * @return float|int|mixed
-     */
-    public function reduce()
-    {
-        $value = $this->value->getValue();
-
-        if (($this->options & Json::DECODE_BIGINT_AS_STRING) && $this->isFloatOrOverflow($value)) {
-            return (string)$value;
-        }
-
-        if ($this->float || $this->isFloatOrOverflow($value)) {
-            return (float)$value;
-        }
-
-        return (int)$value;
     }
 
     /**
      * @param string $value
      * @return bool
      */
-    private function isFloatOrOverflow(string $value): bool
+    protected function isStringable(string $value): bool
+    {
+        return (bool)($this->options & \JSON_BIGINT_AS_STRING);
+    }
+
+    /**
+     * @param string $value
+     * @return bool
+     */
+    protected function isFloatOrOverflow(string $value): bool
     {
         if (\strpos($value, 'e') !== false) {
             return true;
