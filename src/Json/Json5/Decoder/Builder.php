@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Driver;
+namespace Railt\Json\Json5\Decoder;
 
-use Railt\Parser\Parser;
+use Railt\Parser\Ast\Builder as BaseAstBuilder;
 
 /**
- * @deprecated since Railt 1.4, use Railt\Parser\Parser instead.
+ * Class Builder
  */
-class Llk extends Parser
+class Builder extends BaseAstBuilder
 {
 
 }

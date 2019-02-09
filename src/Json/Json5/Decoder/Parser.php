@@ -14,4 +14,5 @@ namespace Railt\Json\Json5\Decoder;
  */
 class Parser extends BaseParser
 {
+
 }

@@ -12,8 +12,7 @@ namespace Railt\Parser\Driver;
 use Railt\Parser\ParserInterface;
 
 /**
- * Class Stateful
- * @deprecated Use Proxy parser instead
+ * @deprecated since Railt 1.4, use Railt\Parser\Parser instead.
  */
 abstract class Stateful extends Proxy
 {
