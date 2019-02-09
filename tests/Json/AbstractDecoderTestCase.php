@@ -129,7 +129,6 @@ abstract class AbstractDecoderTestCase extends TestCase
         $this->assertSame(0.42, $this->decode('42e-2'));
     }
 
-
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -147,11 +146,11 @@ abstract class AbstractDecoderTestCase extends TestCase
         $result = [];
         $string = [];
 
-        for ($i = 0, $len = 0xd800; $i < $len; $i++) {
+        for ($i = 0, $len = 0xd800; $i < $len; ++$i) {
             $char = '\u' . \str_pad(\dechex($i), 4, '0', \STR_PAD_LEFT);
 
             if (\count($string) > 100) {
-                $result[] = ['"' . implode('', $string) . '"'];
+                $result[] = ['"' . \implode('', $string) . '"'];
                 $string = [];
             } else {
                 $string[] = $char;
@@ -171,6 +170,3 @@ abstract class AbstractDecoderTestCase extends TestCase
         $this->assertSame(\json_decode($char), $this->decode($char));
     }
 }
-
-
-

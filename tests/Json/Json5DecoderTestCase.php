@@ -34,6 +34,6 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
      */
     public function testVerticalTabChar(): void
     {
-        $this->assertEquals("\u{000B}", $this->decode('"\v"'));
+        $this->assertSame("\u{000B}", $this->decode('"\v"'));
     }
 }

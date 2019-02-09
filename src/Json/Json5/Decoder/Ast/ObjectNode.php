@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Decoder\Ast;
 
-use Railt\Json\Json;
 use Railt\Parser\Ast\RuleInterface;
 
 /**
