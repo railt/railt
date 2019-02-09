@@ -9,9 +9,55 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Decoder;
 
+use Railt\Io\Readable;
+use Railt\Parser\Ast\BuilderInterface;
+use Railt\Parser\TokenStream\TokenStream;
+
 /**
  * Class Parser
  */
 class Parser extends BaseParser
 {
+    /**
+     * @var int
+     */
+    private $options;
+
+    /**
+     * @var int
+     */
+    private $depth;
+
+    /**
+     * Parser constructor.
+     *
+     * @param int $options
+     * @param int $depth
+     */
+    public function __construct(int $options, int $depth)
+    {
+        $this->depth = $depth;
+        $this->options = $options;
+
+        parent::__construct();
+    }
+
+    /**
+     * @param Readable $input
+     * @return TokenStream
+     * @throws \Railt\Parser\Exception\UnexpectedTokenException
+     */
+    protected function getStream(Readable $input): TokenStream
+    {
+        return new TokenStream($this->lex($input), \max(1, $this->depth - 1));
+    }
+
+    /**
+     * @param array $trace
+     * @return BuilderInterface
+     */
+    protected function getBuilder(array $trace): BuilderInterface
+    {
+        return new Builder($trace, $this->grammar, $this->options);
+    }
 }

@@ -18,7 +18,6 @@ class Json5 extends Json
 {
     /**
      * @return JsonDecoderInterface
-     * @throws \LogicException
      */
     public static function decoder(): JsonDecoderInterface
     {

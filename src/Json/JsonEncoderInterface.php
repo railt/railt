@@ -37,39 +37,4 @@ interface JsonEncoderInterface extends JsonRuntimeInterface
      * @return Readable
      */
     public function write(string $pathname, array $data): Readable;
-
-    /**
-     * Determine if a JSON encoding option is set.
-     *
-     * @param int $option
-     * @return bool
-     */
-    public function hasEncodeOption(int $option): bool;
-
-    /**
-     * @return int
-     */
-    public function getEncodeOptions(): int;
-
-    /**
-     * @param int ...$options
-     * @return JsonEncoderInterface|$this
-     */
-    public function setEncodeOptions(int ...$options): self;
-
-    /**
-     * Update options used while encoding data to JSON.
-     *
-     * @param int ...$options
-     * @return JsonEncoderInterface|$this
-     */
-    public function withEncodeOptions(int ...$options): self;
-
-    /**
-     * Except options used while encoding data to JSON.
-     *
-     * @param int ...$options
-     * @return JsonEncoderInterface|$this
-     */
-    public function withoutEncodeOptions(int ...$options): self;
 }

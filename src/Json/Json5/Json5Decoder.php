@@ -30,48 +30,28 @@ use Railt\Parser\ParserInterface;
 class Json5Decoder extends JsonDecoder
 {
     /**
-     * @var Parser
-     */
-    private $parser;
-
-    /**
-     * @var NativeJsonDecoder
-     */
-    private $native;
-
-    /**
      * Json5Decoder constructor.
-     *
-     * @throws \LogicException
      */
     public function __construct()
     {
-        if (! \interface_exists(ParserInterface::class)) {
-            throw $this->throwDependencyException('railt/parser', 1);
-        }
+        \assert(\interface_exists(ParserInterface::class),
+            $this->throwDependencyException('railt/parser'));
 
-        if (! \interface_exists(LexerInterface::class)) {
-            throw $this->throwDependencyException('railt/lexer', 2);
-        }
-
-        $this->parser = new Parser();
-        $this->native = new NativeJsonDecoder();
+        \assert(\interface_exists(LexerInterface::class),
+            $this->throwDependencyException('railt/lexer'));
     }
 
     /**
      * @param string $dependency
-     * @param int $code
      * @return \LogicException
      */
-    private function throwDependencyException(string $dependency, int $code = 0): \LogicException
+    private function throwDependencyException(string $dependency): string
     {
         $message = 'The "%s" package is required, make sure the component ' .
             'is installed correctly or use the "composer require %1$s" ' .
             'command to install missing dependency';
 
-        $message = \sprintf($message, $dependency);
-
-        return new \LogicException($message, $code);
+        return \sprintf($message, $dependency);
     }
 
     /**
@@ -97,7 +77,10 @@ class Json5Decoder extends JsonDecoder
     private function tryFallback(string $json, \Closure $otherwise)
     {
         try {
-            return $this->native->decode($json);
+            $decoder = new NativeJsonDecoder();
+            $decoder->setOptions($this->getOptions());
+
+            return $decoder->decode($json);
         } catch (JsonStackOverflowException | JsonEncodingException $e) {
             throw $e;
         } catch (\Throwable $e) {
@@ -107,14 +90,17 @@ class Json5Decoder extends JsonDecoder
 
     /**
      * @param string $json5
+     * @return mixed|null
      * @throws JsonSyntaxException
-     * @return mixed
+     * @throws \Railt\Io\Exception\ExternalFileException
      */
     private function tryParse(string $json5)
     {
         try {
+            $parser = new Parser($this->getOptions(), $this->getRecursionDepth());
+
             /** @var Json5Node $ast */
-            $ast = $this->parser->parse(File::fromSources($json5));
+            $ast = $parser->parse(File::fromSources($json5));
 
             return $ast->reduce();
         } catch (UnrecognizedTokenException | UnexpectedTokenException $e) {

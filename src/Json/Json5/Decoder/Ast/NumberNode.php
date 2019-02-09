@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Decoder\Ast;
 
+use Railt\Json\Json;
 use Railt\Parser\Ast\LeafInterface;
 
 /**
@@ -27,13 +28,19 @@ class NumberNode implements NodeInterface
     private $float;
 
     /**
+     * @var int
+     */
+    private $options;
+
+    /**
      * BoolNode constructor.
      *
-     * @param string $name
      * @param array $children
+     * @param int $options
      */
-    public function __construct(string $name, array $children = [])
+    public function __construct(array $children = [], int $options = 0)
     {
+        $this->options = $options;
         $this->value = \reset($children);
         $this->float = $this->value->is('T_FLOAT');
     }
@@ -45,13 +52,12 @@ class NumberNode implements NodeInterface
     {
         $value = $this->value->getValue();
 
-        if ($this->float || $this->isFloatOrOverflow($value)) {
-            $result = (float)$value;
+        if (($this->options & Json::DECODE_BIGINT_AS_STRING) && $this->isFloatOrOverflow($value)) {
+            return (string)$value;
+        }
 
-            /** @noinspection TypeUnsafeComparisonInspection */
-            if ($result != (int)$value) {
-                return $result;
-            }
+        if ($this->float || $this->isFloatOrOverflow($value)) {
+            return (float)$value;
         }
 
         return (int)$value;

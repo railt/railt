@@ -22,10 +22,9 @@ class ArrayNode implements NodeInterface
     /**
      * ObjectNode constructor.
      *
-     * @param string $name
      * @param array $children
      */
-    public function __construct(string $name, array $children = [])
+    public function __construct(array $children = [])
     {
         $this->children = $children;
     }

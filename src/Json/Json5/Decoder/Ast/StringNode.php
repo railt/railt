@@ -30,10 +30,9 @@ class StringNode implements NodeInterface
     /**
      * StringNode constructor.
      *
-     * @param string $name
      * @param array $children
      */
-    public function __construct(string $name, array $children = [])
+    public function __construct(array $children = [])
     {
         $this->leaf = \reset($children);
     }

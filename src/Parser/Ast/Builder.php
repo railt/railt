@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Ast;
 
+use Railt\Parser\Exception\GrammarException;
 use Railt\Parser\GrammarInterface;
 use Railt\Parser\Trace\Entry;
 use Railt\Parser\Trace\Escape;
@@ -120,7 +121,11 @@ class Builder implements BuilderInterface
                     continue;
                 }
 
-                $children[] = $this->rule((string)($id ?: $childId), \array_reverse($handle), $trace->getOffset());
+                $children[] = $this->getRule(
+                    (string)($id ?: $childId),
+                    \array_reverse($handle),
+                    $trace->getOffset()
+                );
             } elseif ($trace instanceof Escape) {
                 return $i + 1;
             } else {
@@ -144,15 +149,35 @@ class Builder implements BuilderInterface
      * @return Rule|mixed
      * @throws \LogicException
      */
-    protected function rule(string $name, array $children, int $offset)
+    protected function getRule(string $name, array $children, int $offset)
     {
-        $delegate = $this->grammar->delegate($name) ?? Rule::class;
+        $class = $this->getRuleClass($name);
 
         try {
-            return new $delegate($name, $children, $offset);
-        } catch (\TypeError $e) {
-            $error = \sprintf('Error while %s initialization: %s', $delegate, $e->getMessage());
-            throw new \LogicException($error);
+            return new $class($name, $children, $offset);
+        } catch (\Throwable $e) {
+            throw $this->throwInitializationError($e, $class);
         }
+    }
+
+    /**
+     * @param \Throwable $e
+     * @param string $class
+     * @return GrammarException
+     */
+    protected function throwInitializationError(\Throwable $e, string $class): GrammarException
+    {
+        $error = \sprintf('Error while %s initialization: %s', $class, $e->getMessage());
+
+        return new GrammarException($error);
+    }
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    protected function getRuleClass(string $name): string
+    {
+        return $this->grammar->delegate($name) ?? Rule::class;
     }
 }

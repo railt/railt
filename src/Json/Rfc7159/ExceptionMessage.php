@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Exception;
+namespace Railt\Json\Rfc7159;
 
 /**
  * Class Message
  */
-class Message
+class ExceptionMessage
 {
     /**
      * @var string

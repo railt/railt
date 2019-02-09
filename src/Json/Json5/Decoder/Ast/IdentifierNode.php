@@ -22,10 +22,9 @@ class IdentifierNode implements NodeInterface
     /**
      * IdentifierNode constructor.
      *
-     * @param string $name
      * @param array $children
      */
-    public function __construct(string $name, array $children = [])
+    public function __construct(array $children = [])
     {
         $this->value = (string)\reset($children)->getValue();
     }

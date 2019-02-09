@@ -33,7 +33,8 @@
             "Railt\\": "src/"
         },
         "files": [
-            "./src/Json/polyfill.php"
+            "./src/Json/polyfill.php",
+            "./src/Json/helpers.php"
         ]
     },
     "require-dev": {

@@ -37,41 +37,4 @@ interface JsonDecoderInterface extends JsonRuntimeInterface
      * @throws \JsonException
      */
     public function read(Readable $readable): array;
-
-    /**
-     * Determine if a JSON decoding option is set.
-     *
-     * @param int $option
-     * @return bool
-     */
-    public function hasDecodeOption(int $option): bool;
-
-    /**
-     * @return int
-     */
-    public function getDecodeOptions(): int;
-
-    /**
-     * Sets (overwrites) options used while decoding JSON to PHP array.
-     *
-     * @param int ...$options
-     * @return JsonDecoderInterface|$this
-     */
-    public function setDecodeOptions(int ...$options): self;
-
-    /**
-     * Update options used while decoding JSON to PHP array.
-     *
-     * @param int ...$options
-     * @return JsonDecoderInterface|$this
-     */
-    public function withDecodeOptions(int ...$options): self;
-
-    /**
-     * Except options used while decoding JSON to PHP array.
-     *
-     * @param int ...$options
-     * @return JsonDecoderInterface|$this
-     */
-    public function withoutDecodeOptions(int ...$options): self;
 }

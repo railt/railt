@@ -9,9 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
-use Railt\Json\Exception\JsonException;
-use Railt\Json\Exception\Message;
-
 /**
  * Class JsonRuntime
  */
@@ -23,6 +20,13 @@ abstract class JsonRuntime implements JsonRuntimeInterface
      * @var int
      */
     protected $depth = self::DEFAULT_RECURSION_DEPTH;
+
+    /**
+     * Bitmask of given json encoding and decoding options.
+     *
+     * @var int
+     */
+    protected $options = 0;
 
     /**
      * @return int
@@ -38,7 +42,7 @@ abstract class JsonRuntime implements JsonRuntimeInterface
      */
     public function withRecursionDepth(int $depth): JsonRuntimeInterface
     {
-        \assert($depth > 0, 'Depth value should be greater than 0');
+        \assert($depth > 0, 'Depth must be greater than zero');
 
         $this->depth = $depth;
 
@@ -46,70 +50,92 @@ abstract class JsonRuntime implements JsonRuntimeInterface
     }
 
     /**
-     * @param \Closure $expression
-     * @return mixed
-     * @throws JsonException
+     * Returns options used while encoding and decoding JSON sources.
+     *
+     * @return int
      */
-    protected function wrap(\Closure $expression)
+    public function getOptions(): int
     {
-        try {
-            $result = $expression();
-        } catch (\JsonException $e) {
-            //
-            // Since PHP >= 7.3 parsing json containing errors can throws
-            // an exception. It is necessary to handle these cases.
-            //
-            throw $this->throwFromJsonException($e);
-        } catch (\Throwable $e) {
-            //
-            // Other times we may get other (includes generally) errors.
-            //
-            throw $this->throwFromInternal($e);
+        $options = $this->options;
+
+        if (! (bool)($options & Json::THROW_ON_ERROR)) {
+            $options |= Json::THROW_ON_ERROR;
         }
 
-        // If PHP is lower or equal to version 7.2, then we must
-        // handle the error in the old good way.
-        if (($errorCode = \json_last_error()) !== \JSON_ERROR_NONE) {
-            throw $this->throwFromJsonErrorCode($errorCode);
-        }
-
-        return $result;
+        return $options;
     }
 
     /**
-     * @param \JsonException $original
-     * @return JsonException
+     * Determine if a JSON decoding and encoding option is set.
+     *
+     * @param int $option
+     * @return bool
      */
-    private function throwFromJsonException(\JsonException $original): JsonException
+    public function hasOption(int $option): bool
     {
-        $exception = JsonException::getExceptionByCode($original->getCode());
-
-        return new $exception(Message::getByException($original), $original->getCode(), $original);
+        return (bool)($this->options & $option);
     }
 
     /**
-     * @param \Throwable $e
-     * @return JsonException
+     * Sets (overwrites) options used while encoding and decoding JSON sources.
+     *
+     * @param int ...$options
+     * @return JsonRuntimeInterface|$this
      */
-    private function throwFromInternal(\Throwable $e): JsonException
+    public function setOptions(int ...$options): JsonRuntimeInterface
     {
-        $exception = JsonException::getExceptionByCode($e->getCode());
+        $this->options = 0;
 
-        if (\get_class($e) === 'Exception' && \strpos($e->getMessage(), 'Failed calling ') === 0) {
-            $e = $e->getPrevious() ?: $e;
+        return $this->withOptions(...$options);
+    }
+
+    /**
+     * Sets option used while encoding and decoding JSON sources.
+     *
+     * @param int $option
+     * @param bool $enable
+     * @return JsonRuntimeInterface|$this
+     */
+    public function setOption(int $option, bool $enable = true): JsonRuntimeInterface
+    {
+        if ($enable && ! $this->hasOption($option)) {
+            $this->withOptions($option);
         }
 
-        throw new $exception($e->getMessage(), $e->getCode(), $e);
+        if (! $enable && $this->hasOption($option)) {
+            $this->withoutOptions($option);
+        }
+
+        return $this;
     }
 
     /**
-     * @param int $code
-     * @return JsonException
+     * Update options used while encoding and decoding JSON sources.
+     *
+     * @param int ...$options
+     * @return JsonRuntimeInterface|$this
      */
-    private function throwFromJsonErrorCode(int $code): JsonException
+    public function withOptions(int ...$options): JsonRuntimeInterface
     {
-        $exception = JsonException::getExceptionByCode($code);
+        foreach ($options as $option) {
+            $this->options |= $option;
+        }
 
-        return new $exception(Message::getByCode($code), $code);
+        return $this;
+    }
+
+    /**
+     * Except options used while encoding and decoding JSON sources.
+     *
+     * @param int ...$options
+     * @return JsonRuntimeInterface|$this
+     */
+    public function withoutOptions(int ...$options): JsonRuntimeInterface
+    {
+        foreach ($options as $option) {
+            $this->options &= ~$option;
+        }
+
+        return $this;
     }
 }

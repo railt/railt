@@ -2384,12 +2384,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/compiler.git",
-                "reference": "58a44bfb09579b05fbdf58e5fe394d26f02bfd81"
+                "reference": "7810cffdc93a0832738ecd91265230bba0c8e2ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/compiler/zipball/58a44bfb09579b05fbdf58e5fe394d26f02bfd81",
-                "reference": "58a44bfb09579b05fbdf58e5fe394d26f02bfd81",
+                "url": "https://api.github.com/repos/railt/compiler/zipball/7810cffdc93a0832738ecd91265230bba0c8e2ec",
+                "reference": "7810cffdc93a0832738ecd91265230bba0c8e2ec",
                 "shasum": ""
             },
             "require": {
@@ -2413,8 +2413,7 @@
                 "railt": {
                     "commands": [
                         "Railt\\Compiler\\Console\\GrammarCompileCommand",
-                        "Railt\\Compiler\\Console\\CompileCommand",
-                        "Railt\\Compiler\\Console\\AnalyzeCommand"
+                        "Railt\\Compiler\\Console\\CompileCommand"
                     ]
                 }
             },
@@ -2442,7 +2441,7 @@
                 "language",
                 "pp"
             ],
-            "time": "2019-01-22T01:14:14+00:00"
+            "time": "2019-02-09T15:37:17+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
