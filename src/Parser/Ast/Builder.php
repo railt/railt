@@ -16,7 +16,7 @@ use Railt\Parser\Trace\Escape;
 /**
  * Class Builder
  */
-class Builder
+class Builder implements BuilderInterface
 {
     /**
      * @var array

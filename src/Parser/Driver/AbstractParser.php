@@ -14,6 +14,7 @@ use Railt\Lexer\LexerInterface;
 use Railt\Lexer\Token\Unknown;
 use Railt\Lexer\TokenInterface;
 use Railt\Parser\Ast\Builder;
+use Railt\Parser\Ast\BuilderInterface;
 use Railt\Parser\Ast\RuleInterface;
 use Railt\Parser\Exception\GrammarException;
 use Railt\Parser\Exception\UnexpectedTokenException;
@@ -116,7 +117,6 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @param Readable $input
      * @return RuleInterface|mixed
-     * @throws \LogicException
      */
     public function parse(Readable $input)
     {
@@ -125,23 +125,30 @@ abstract class AbstractParser implements ParserInterface
 
     /**
      * @param array $trace
-     * @return mixed|RuleInterface
-     * @throws \LogicException
+     * @return mixed
      */
     protected function build(array $trace)
     {
-        return (new Builder($trace, $this->grammar))->build();
+        return $this->getBuilder($trace)->build();
+    }
+
+    /**
+     * @param array $trace
+     * @return BuilderInterface
+     */
+    protected function getBuilder(array $trace): BuilderInterface
+    {
+        return new Builder($trace, $this->grammar);
     }
 
     /**
      * @param Readable $input
-     * @param int $size
      * @return TokenStream
      * @throws \Railt\Io\Exception\ExternalFileException
      */
-    protected function stream(Readable $input, int $size = \PHP_INT_MAX): TokenStream
+    protected function getStream(Readable $input): TokenStream
     {
-        return new TokenStream($this->lex($input), $size);
+        return new TokenStream($this->lex($input), \PHP_INT_MAX);
     }
 
     /**

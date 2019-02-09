@@ -100,7 +100,7 @@ class Llk extends AbstractParser
      */
     private function reset(Readable $input): void
     {
-        $this->stream = $this->stream($input);
+        $this->stream = $this->getStream($input);
 
         $this->errorToken = null;
 
