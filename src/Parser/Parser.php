@@ -10,8 +10,13 @@ declare(strict_types=1);
 namespace Railt\Parser;
 
 use Railt\Io\Readable;
+use Railt\Lexer\LexerInterface;
+use Railt\Lexer\Token\Unknown;
 use Railt\Lexer\TokenInterface;
-use Railt\Parser\Driver\AbstractParser;
+use Railt\Parser\Ast\Builder;
+use Railt\Parser\Ast\BuilderInterface;
+use Railt\Parser\Ast\RuleInterface;
+use Railt\Parser\Exception\GrammarException;
 use Railt\Parser\Exception\UnexpectedTokenException;
 use Railt\Parser\Rule\Alternation;
 use Railt\Parser\Rule\Concatenation;
@@ -23,12 +28,6 @@ use Railt\Parser\Trace\Entry;
 use Railt\Parser\Trace\Escape;
 use Railt\Parser\Trace\Token;
 use Railt\Parser\Trace\TraceItem;
-use Railt\Lexer\LexerInterface;
-use Railt\Lexer\Token\Unknown;
-use Railt\Parser\Ast\Builder;
-use Railt\Parser\Ast\BuilderInterface;
-use Railt\Parser\Ast\RuleInterface;
-use Railt\Parser\Exception\GrammarException;
 
 /**
  * Class Parser
@@ -36,42 +35,37 @@ use Railt\Parser\Exception\GrammarException;
 class Parser implements ParserInterface
 {
     /**
+     * @var LexerInterface
+     */
+    protected $lexer;
+    /**
+     * @var GrammarInterface
+     */
+    protected $grammar;
+    /**
      * Lexer iterator
      *
      * @var TokenStream
      */
     private $stream;
-
     /**
      * Possible token causing an error
      *
      * @var TokenInterface|null
      */
     private $errorToken;
-
     /**
      * Trace of parsed rules
      *
      * @var array|TraceItem[]
      */
     private $trace = [];
-
     /**
      * Stack of items which need to be processed
      *
      * @var \SplStack|TraceItem[]
      */
     private $todo;
-
-    /**
-     * @var LexerInterface
-     */
-    protected $lexer;
-
-    /**
-     * @var GrammarInterface
-     */
-    protected $grammar;
 
     /**
      * AbstractParser constructor.
@@ -88,7 +82,7 @@ class Parser implements ParserInterface
     /**
      * @param string $ruleId
      * @param \Closure $then
-     * @return AbstractParser|$this
+     * @return ParserInterface|$this
      * @throws GrammarException
      */
     public function extend(string $ruleId, \Closure $then): ParserInterface
@@ -172,6 +166,41 @@ class Parser implements ParserInterface
 
     /**
      * @param Readable $input
+     * @return array
+     * @throws \Railt\Io\Exception\ExternalFileException
+     */
+    protected function trace(Readable $input): array
+    {
+        $this->reset($input);
+        $this->prepare();
+
+        do {
+            if ($this->unfold() && $this->stream->isEoi()) {
+                break;
+            }
+
+            $this->verifyBacktrace($input);
+        } while (true);
+
+        return $this->trace;
+    }
+
+    /**
+     * @param Readable $input
+     * @throws \Railt\Io\Exception\ExternalFileException
+     */
+    private function reset(Readable $input): void
+    {
+        $this->stream = $this->getStream($input);
+
+        $this->errorToken = null;
+
+        $this->trace = [];
+        $this->todo = [];
+    }
+
+    /**
+     * @param Readable $input
      * @return TokenStream
      * @throws \Railt\Io\Exception\ExternalFileException
      */
@@ -200,58 +229,6 @@ class Parser implements ParserInterface
     }
 
     /**
-     * @param Readable $input
-     * @return array
-     * @throws \Railt\Io\Exception\ExternalFileException
-     */
-    protected function trace(Readable $input): array
-    {
-        $this->reset($input);
-        $this->prepare();
-
-        do {
-            if ($this->unfold() && $this->stream->isEoi()) {
-                break;
-            }
-
-            $this->verifyBacktrace($input);
-        } while (true);
-
-        return $this->trace;
-    }
-
-    /**
-     * @param Readable $input
-     * @throws \Railt\Io\Exception\ExternalFileException
-     */
-    private function verifyBacktrace(Readable $input): void
-    {
-        if ($this->backtrack() === false) {
-            /** @var TokenInterface $token */
-            $token = $this->errorToken ?? $this->stream->current();
-
-            $exception = new UnexpectedTokenException(\sprintf('Unexpected token %s', $token));
-            $exception->throwsIn($input, $token->getOffset());
-
-            throw $exception;
-        }
-    }
-
-    /**
-     * @param Readable $input
-     * @throws \Railt\Io\Exception\ExternalFileException
-     */
-    private function reset(Readable $input): void
-    {
-        $this->stream = $this->getStream($input);
-
-        $this->errorToken = null;
-
-        $this->trace = [];
-        $this->todo = [];
-    }
-
-    /**
      * @return void
      */
     private function prepare(): void
@@ -265,6 +242,7 @@ class Parser implements ParserInterface
 
     /**
      * Unfold trace.
+     *
      * @return bool
      */
     private function unfold(): bool
@@ -462,5 +440,22 @@ class Parser implements ParserInterface
         $this->todo[] = new Entry($last->getRule(), $last->getData() + 1);
 
         return true;
+    }
+
+    /**
+     * @param Readable $input
+     * @throws \Railt\Io\Exception\ExternalFileException
+     */
+    private function verifyBacktrace(Readable $input): void
+    {
+        if ($this->backtrack() === false) {
+            /** @var TokenInterface $token */
+            $token = $this->errorToken ?? $this->stream->current();
+
+            $exception = new UnexpectedTokenException(\sprintf('Unexpected token %s', $token));
+            $exception->throwsIn($input, $token->getOffset());
+
+            throw $exception;
+        }
     }
 }
