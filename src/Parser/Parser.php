@@ -38,28 +38,33 @@ class Parser implements ParserInterface
      * @var LexerInterface
      */
     protected $lexer;
+
     /**
      * @var GrammarInterface
      */
     protected $grammar;
+
     /**
      * Lexer iterator
      *
      * @var TokenStream
      */
-    private $stream;
+    protected $stream;
+
     /**
      * Possible token causing an error
      *
      * @var TokenInterface|null
      */
     private $errorToken;
+
     /**
      * Trace of parsed rules
      *
      * @var array|TraceItem[]
      */
-    private $trace = [];
+    protected $trace = [];
+
     /**
      * Stack of items which need to be processed
      *
