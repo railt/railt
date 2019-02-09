@@ -10,8 +10,14 @@ declare(strict_types=1);
 namespace Railt\Parser;
 
 use Railt\Io\Readable;
+use Railt\Lexer\LexerInterface;
+use Railt\Lexer\Token\Unknown;
 use Railt\Lexer\TokenInterface;
+use Railt\Parser\Ast\Builder;
+use Railt\Parser\Ast\BuilderInterface;
+use Railt\Parser\Ast\RuleInterface;
 use Railt\Parser\Driver\AbstractParser;
+use Railt\Parser\Exception\GrammarException;
 use Railt\Parser\Exception\UnexpectedTokenException;
 use Railt\Parser\Rule\Alternation;
 use Railt\Parser\Rule\Concatenation;
@@ -23,12 +29,6 @@ use Railt\Parser\Trace\Entry;
 use Railt\Parser\Trace\Escape;
 use Railt\Parser\Trace\Token;
 use Railt\Parser\Trace\TraceItem;
-use Railt\Lexer\LexerInterface;
-use Railt\Lexer\Token\Unknown;
-use Railt\Parser\Ast\Builder;
-use Railt\Parser\Ast\BuilderInterface;
-use Railt\Parser\Ast\RuleInterface;
-use Railt\Parser\Exception\GrammarException;
 
 /**
  * Class Parser
