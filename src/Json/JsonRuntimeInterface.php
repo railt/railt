@@ -30,7 +30,7 @@ interface JsonRuntimeInterface
      * @param int $depth
      * @return JsonRuntimeInterface|$this
      */
-    public function withRecursionDepth(int $depth): JsonRuntimeInterface;
+    public function withRecursionDepth(int $depth): self;
 
     /**
      * Determine if a JSON decoding and encoding option is set.

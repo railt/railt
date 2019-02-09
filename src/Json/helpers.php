@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 use Railt\Json\Json5;
 
-if (! function_exists('\\json5_decode')) {
+if (! \function_exists('\\json5_decode')) {
     /**
      * @param string $json
      * @param bool $assoc
@@ -28,7 +28,7 @@ if (! function_exists('\\json5_decode')) {
     }
 }
 
-if (! function_exists('\\json5_encode')) {
+if (! \function_exists('\\json5_encode')) {
     /**
      * @param mixed $value
      * @param int $options
@@ -44,4 +44,3 @@ if (! function_exists('\\json5_encode')) {
             ->encode($value);
     }
 }
-
