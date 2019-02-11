@@ -180,7 +180,7 @@ abstract class AbstractDecoderTestCase extends TestCase
      */
     public function testObjectValue(): void
     {
-        $this->assertEquals((object)['a' => 1, 'b' => 0.1, 'c' => true, 'd' => false, 'e' => 'string'],
+        $this->assertSame((object)['a' => 1, 'b' => 0.1, 'c' => true, 'd' => false, 'e' => 'string'],
             $this->decode('{"a": 1, "b": 0.1, "c": true, "d": false, "e": "string"}'));
     }
 
