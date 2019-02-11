@@ -15,9 +15,9 @@ namespace Railt\Json\Json5\Decoder\Ast;
 class HexNode extends NumberNode
 {
     /**
-     * @return float
+     * @return int
      */
-    public function reduce(): float
+    public function reduce(): int
     {
         $value = \hexdec($this->getValue(1));
 

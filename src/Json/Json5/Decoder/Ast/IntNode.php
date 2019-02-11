@@ -19,6 +19,25 @@ class IntNode extends NumberNode
      */
     public function reduce()
     {
-        return null;
+        return $this->isPositive() ? $this->formatValue() : -$this->formatValue();
+    }
+
+    /**
+     * @return float|int
+     */
+    private function formatValue()
+    {
+        [$exp, $value] = [$this->getExponent(), $this->getValue()];
+
+        switch ($exp <=> 0) {
+            case 1:
+                return (float)($value . \str_repeat('0', $exp));
+
+            case -1:
+                return (float)($value . 'e' . $exp);
+
+            default:
+                return (int)$value;
+        }
     }
 }

@@ -14,4 +14,11 @@ namespace Railt\Json\Json5\Decoder\Ast;
  */
 class NaNNode extends NumberNode
 {
+    /**
+     * @return float
+     */
+    public function reduce(): float
+    {
+        return $this->isPositive() ? \NAN : -\NAN;
+    }
 }

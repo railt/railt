@@ -65,9 +65,29 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
      * @throws \Railt\Json\Exception\JsonException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
+    public function testHexNegativeValueUpperCase(): void
+    {
+        $this->assertSame(-0xDEADBEEF, $this->decode('-0xDEADBEEF'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testHexNegativeValueLowerCase(): void
+    {
+        $this->assertSame(-0xDEADBEEF, $this->decode('-0xdeadbeef'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testFloatValueWithLeadingFloatingPoint(): void
     {
-        $this->assertSame(0.666, $this->decode('.666'));
+        $this->assertSame(0.42, $this->decode('.42'));
     }
 
     /**
@@ -77,6 +97,66 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
      */
     public function testFloatValueWithTrailingFloatingPoint(): void
     {
-        $this->assertSame(666.0, $this->decode('666.'));
+        $this->assertSame(42.0, $this->decode('42.'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testFloatNegativeValueWithLeadingFloatingPoint(): void
+    {
+        $this->assertSame(0.42, $this->decode('.42'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testFloatNegativeValueWithTrailingFloatingPoint(): void
+    {
+        $this->assertSame(42.0, $this->decode('42.'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testInfValue(): void
+    {
+        $this->assertSame(\INF, $this->decode('Infinity'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testInfNegativeValue(): void
+    {
+        $this->assertSame(-\INF, $this->decode('-Infinity'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testNaNValue(): void
+    {
+        $this->assertNan($this->decode('NaN'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \Railt\Json\Exception\JsonException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testNaNNegativeValue(): void
+    {
+        $this->assertNan($this->decode('-NaN'));
     }
 }

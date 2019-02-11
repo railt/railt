@@ -15,10 +15,20 @@ namespace Railt\Json\Json5\Decoder\Ast;
 class FloatNode extends NumberNode
 {
     /**
-     * @return float|string
+     * @return float
      */
-    public function reduce()
+    public function reduce(): float
     {
-        return null;
+        return $this->isPositive() ? $this->formatValue() : -$this->formatValue();
+    }
+
+    /**
+     * @return float
+     */
+    private function formatValue(): float
+    {
+        [$exp, $value] = [$this->getExponent(), $this->getValue()];
+
+        return $exp === 0 ? (float)$value : (float)($value . 'e' . $exp);
     }
 }

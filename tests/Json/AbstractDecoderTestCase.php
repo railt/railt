@@ -175,12 +175,12 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @return void
      */
     public function testObjectValue(): void
     {
-        $this->assertSame((object)['a' => 1, 'b' => 0.1, 'c' => true, 'd' => false, 'e' => 'string'],
+        // StyleCI assertEquals -> assertSame replacement fix
+        $this->{'assertEquals'}((object)['a' => 1, 'b' => 0.1, 'c' => true, 'd' => false, 'e' => 'string'],
             $this->decode('{"a": 1, "b": 0.1, "c": true, "d": false, "e": "string"}'));
     }
 
