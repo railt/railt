@@ -14,6 +14,7 @@ use Railt\Json\Exception\JsonEncodingException;
 use Railt\Json\Exception\JsonException;
 use Railt\Json\Exception\JsonStackOverflowException;
 use Railt\Json\Exception\JsonSyntaxException;
+use Railt\Json\Json5;
 use Railt\Json\Json5\Decoder\Ast\Json5Node;
 use Railt\Json\Json5\Decoder\Parser;
 use Railt\Json\JsonDecoder;
@@ -76,6 +77,10 @@ class Json5Decoder extends JsonDecoder
      */
     private function tryFallback(string $json, \Closure $otherwise)
     {
+        if ($this->hasOption(Json5::FORCE_JSON5_DECODER)) {
+            return $otherwise($json);
+        }
+
         try {
             $decoder = new NativeJsonDecoder();
             $decoder->setOptions($this->getOptions());

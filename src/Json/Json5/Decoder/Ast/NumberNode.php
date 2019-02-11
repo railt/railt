@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Json\Json5\Decoder\Ast;
 
 use Railt\Parser\Ast\LeafInterface;
+use Railt\Parser\Ast\RuleInterface;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation
@@ -19,7 +20,7 @@ abstract class NumberNode implements NodeInterface
     /**
      * @var LeafInterface
      */
-    protected $value;
+    private $value;
 
     /**
      * @var int
@@ -27,84 +28,107 @@ abstract class NumberNode implements NodeInterface
     private $options;
 
     /**
+     * @var bool
+     */
+    private $positive = true;
+
+    /**
+     * @var int
+     */
+    private $exponent = 0;
+
+    /**
      * BoolNode constructor.
      *
-     * @param array $children
+     * @param array|RuleInterface[]|LeafInterface[] $children
      * @param int $options
      */
     public function __construct(array $children = [], int $options = 0)
     {
         $this->options = $options;
-        $this->value = \reset($children);
+        $this->parseValue($children);
     }
 
     /**
-     * @param string $value
+     * @param iterable|RuleInterface[]|LeafInterface[] $children
+     */
+    private function parseValue(iterable $children): void
+    {
+        foreach ($children as $child) {
+            switch (true) {
+                case $child->is('Sign'):
+                    $this->positive = $this->isPositiveSign($child);
+                    break;
+
+                case $child->is('ExponentPart'):
+                    $this->exponent = $this->parseExponent($child);
+                    break;
+
+                default:
+                    $this->value = $child;
+            }
+        }
+    }
+
+    /**
+     * @param RuleInterface $rule
      * @return bool
      */
-    protected function isStringable(string $value): bool
+    private function isPositiveSign(RuleInterface $rule): bool
+    {
+        return $rule->getChild(0)->is('T_PLUS');
+    }
+
+    /**
+     * @param RuleInterface $rule
+     * @return int
+     */
+    private function parseExponent(RuleInterface $rule): int
+    {
+        [$isPositive, $value] = [true, 0];
+
+        foreach ($rule->getChildren() as $child) {
+            if ($child->is('Sign')) {
+                $isPositive = $this->isPositiveSign($child);
+                continue;
+            }
+
+            $value = (int)$child->getValue();
+        }
+
+        return $isPositive ? $value : -$value;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isPositive(): bool
+    {
+        return $this->positive;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getExponent(): int
+    {
+        return $this->exponent;
+    }
+
+    /**
+     * @param int $index
+     * @return string
+     */
+    protected function getValue(int $index = 0): string
+    {
+        return $this->value->getValue($index);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function renderAsString(): bool
     {
         return (bool)($this->options & \JSON_BIGINT_AS_STRING);
-    }
-
-    /**
-     * @param string $value
-     * @return bool
-     */
-    protected function isFloatOrOverflow(string $value): bool
-    {
-        if (\strpos($value, 'e') !== false) {
-            return true;
-        }
-
-        switch (true) {
-            case $this->isBCMathSupports():
-                return $this->isBCMathOverflow($value);
-
-            case $this->isGMPSupports():
-                return $this->isGMPOverflow($value);
-
-            default:
-                // Fallback
-                return \strlen($value) > (\strlen(\PHP_INT_MAX) - 1);
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    private function isBCMathSupports(): bool
-    {
-        return \function_exists('\\bccomp');
-    }
-
-    /**
-     * @param string $value
-     * @return bool
-     */
-    private function isBCMathOverflow(string $value): bool
-    {
-        return \bccomp($value, (string)\PHP_INT_MAX) > 0
-            || \bccomp($value, (string)\PHP_INT_MIN) < 0;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isGMPSupports(): bool
-    {
-        return ! $this->float &&
-            \function_exists('\\gmp_cmp') &&
-            \function_exists('\\gmp_init');
-    }
-
-    /**
-     * @param string $value
-     * @return bool
-     */
-    private function isGMPOverflow(string $value): bool
-    {
-        return \gmp_cmp(\gmp_init($value), \gmp_init((string)\PHP_INT_MAX)) > 0
-            || \gmp_cmp(\gmp_init($value), \gmp_init((string)\PHP_INT_MIN)) < 0;
     }
 }

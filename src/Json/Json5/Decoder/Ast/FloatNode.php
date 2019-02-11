@@ -15,10 +15,11 @@ namespace Railt\Json\Json5\Decoder\Ast;
 class FloatNode extends NumberNode
 {
     /**
-     * @return float|mixed
+     * @return float|string
      */
     public function reduce()
     {
-        return (float)$this->value;
+
+        return null;
     }
 }

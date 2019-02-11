@@ -17,6 +17,17 @@ use Railt\Json\Json5\Json5Decoder;
 class Json5 extends Json
 {
     /**
+     * @var int
+     */
+    public const FORCE_JSON5_DECODER = 8388608;
+
+    /**
+     * @internal Reserved for future releases.
+     * @var int
+     */
+    public const FORCE_JSON5_ENCODER = 8388608;
+
+    /**
      * @return JsonDecoderInterface
      */
     public static function decoder(): JsonDecoderInterface

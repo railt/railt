@@ -50,9 +50,12 @@ Value
 
 #Object -> Railt\Json\Json5\Decoder\Ast\ObjectNode
   : ::T_BRACE_OPEN::
-        (ObjectPair() ::T_COMMA::)*
-        (ObjectPair() ::T_COMMA::?)?
+      ObjectBody()? ::T_COMMA::?
     ::T_BRACE_CLOSE::
+  ;
+
+ObjectBody
+  : (ObjectPair() ::T_COMMA::)+ ObjectPair()
   ;
 
 #ObjectPair
@@ -70,9 +73,12 @@ ObjectValue
 
 #Array -> Railt\Json\Json5\Decoder\Ast\ArrayNode
   : ::T_BRACKET_OPEN::
-      (Value() ::T_COMMA::)*
-      (Value() ::T_COMMA::?)?
+      ArrayBody()? ::T_COMMA::?
     ::T_BRACKET_CLOSE::
+  ;
+
+ArrayBody
+  : (Value() ::T_COMMA::)+ Value()
   ;
 
 #String -> Railt\Json\Json5\Decoder\Ast\StringNode
@@ -89,26 +95,39 @@ ObjectValue
   : ::T_NULL::
   ;
 
+#Identifier -> Railt\Json\Json5\Decoder\Ast\IdentifierNode
+  : <T_IDENTIFIER>
+  ;
+
+//
+// Numbers
+//
+
+#Sign
+  : <T_PLUS>
+  | <T_MINUS>
+  ;
+
+#ExponentPart
+  : ::T_EXPONENT_INDICATOR:: Sign()? <T_INT_NUMBER>
+  ;
+
 #Inf -> Railt\Json\Json5\Decoder\Ast\InfNode
-  : <T_INF>
+  : Sign()? <T_INF>
   ;
 
 #NaN -> Railt\Json\Json5\Decoder\Ast\NaNNode
-  : <T_NAN>
+  : Sign()? <T_NAN>
   ;
 
 #Float -> Railt\Json\Json5\Decoder\Ast\FloatNode
-  : <T_FLOAT>
+  : Sign()? (<T_FLOAT_LD_NUMBER> | <T_FLOAT_TG_NUMBER>) ExponentPart()?
   ;
 
 #Int -> Railt\Json\Json5\Decoder\Ast\IntNode
-  : <T_INT>
+  : Sign()? <T_INT_NUMBER> ExponentPart()?
   ;
 
 #Hex -> Railt\Json\Json5\Decoder\Ast\HexNode
-  : <T_HEX_NUMBER>
-  ;
-
-#Identifier -> Railt\Json\Json5\Decoder\Ast\IdentifierNode
-  : <T_IDENTIFIER>
+  : Sign()? <T_HEX_NUMBER>
   ;

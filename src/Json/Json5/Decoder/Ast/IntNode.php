@@ -15,16 +15,11 @@ namespace Railt\Json\Json5\Decoder\Ast;
 class IntNode extends NumberNode
 {
     /**
-     * @return int|string|null
+     * @return int|string|float
      */
     public function reduce()
     {
-        $value = $this->value->getValue(0);
 
-        if ($this->isStringable($value)) {
-            return (string)(float)$value;
-        }
-
-        return (int)$value;
+        return null;
     }
 }

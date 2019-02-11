@@ -53,6 +53,8 @@
 %token T_BRACE_CLOSE            }
 %token T_COLON                  :
 %token T_COMMA                  ,
+%token T_PLUS                   \+
+%token T_MINUS                  \-
 
 /**
  * --------------------------------------------------------------------------
@@ -85,11 +87,18 @@
  *
  */
 
-%token T_INF                    ([\+\-]?)Infinity\b
-%token T_NAN                    ([\+\-]?)NaN\b
-%token T_HEX_NUMBER             ([\+\-]?)0x([0-9a-fA-F]+)
-%token T_FLOAT                  [\+\-]?(?:[1-9][0-9]*)?\.[0-9]*(?:[eE][\+\-]?[0-9]+)?
-%token T_INT                    [\+\-]?[1-9][0-9]*(?:[eE][\+\-]?[0-9]+)?
+%token T_INF                    Infinity\b
+%token T_NAN                    NaN\b
+%token T_HEX_NUMBER             0x([0-9a-fA-F]+)
+
+// Float number with leading (LD) floating point
+%token T_FLOAT_LD_NUMBER        [0-9]*\.[0-9]+
+
+// Float number with trailing (TG) floating point
+%token T_FLOAT_TG_NUMBER        [0-9]+\.[0-9]*
+
+%token T_INT_NUMBER             [0-9]+
+%token T_EXPONENT_INDICATOR     [eE]
 
 
 /**

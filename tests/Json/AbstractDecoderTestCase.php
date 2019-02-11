@@ -195,6 +195,46 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBigintValueAsFloat(): void
+    {
+        $this->assertSame(9.223372036854776e37,
+            $this->decode('92233720368547758079223372036854775807'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBigintValueAsString(): void
+    {
+        $this->assertSame('92233720368547758079223372036854775807',
+            $this->decode('92233720368547758079223372036854775807', \JSON_BIGINT_AS_STRING));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBigintExponentValueAsFloat(): void
+    {
+        $this->assertSame(9.223372036854776e37,
+            $this->decode('9.223372036854776e37'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBigintExponentValueAsString(): void
+    {
+        $this->assertSame('9.223372036854776e37',
+            $this->decode('9.223372036854776e37', \JSON_BIGINT_AS_STRING));
+    }
+
+    /**
      * @return array|string[]
      */
     public function validCharsDataProvider(): array
