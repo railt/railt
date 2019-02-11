@@ -19,7 +19,6 @@ class IntNode extends NumberNode
      */
     public function reduce()
     {
-
         return null;
     }
 }

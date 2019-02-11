@@ -19,7 +19,6 @@ class FloatNode extends NumberNode
      */
     public function reduce()
     {
-
         return null;
     }
 }
