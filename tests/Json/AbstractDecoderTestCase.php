@@ -139,6 +139,62 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBooleanTrueValue(): void
+    {
+        $this->assertTrue($this->decode('true'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBooleanFalseValue(): void
+    {
+        $this->assertFalse($this->decode('false'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBooleanNullValue(): void
+    {
+        $this->assertNull($this->decode('null'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testArrayValue(): void
+    {
+        $this->assertSame([1, 0.1, true, false, 'string'], $this->decode('[1, 0.1, true, false, "string"]'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testObjectValue(): void
+    {
+        $this->assertEquals((object)['a' => 1, 'b' => 0.1, 'c' => true, 'd' => false, 'e' => 'string'],
+            $this->decode('{"a": 1, "b": 0.1, "c": true, "d": false, "e": "string"}'));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testObjectParsedAsArrayValue(): void
+    {
+        $this->assertSame(['a' => 1, 'b' => 0.1, 'c' => true, 'd' => false, 'e' => 'string'],
+            $this->decode('{"a": 1, "b": 0.1, "c": true, "d": false, "e": "string"}', \JSON_OBJECT_AS_ARRAY));
+    }
+
+    /**
      * @return array|string[]
      */
     public function validCharsDataProvider(): array
