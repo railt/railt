@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Json\Json5\Decoder\Ast;
 
 /**
- * Interface NodeInterface
+ * @internal Internal interface for json5 abstract syntax tree node representation
  */
 interface NodeInterface
 {

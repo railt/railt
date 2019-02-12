@@ -41,7 +41,8 @@
         "phpunit/phpunit": "^7.5",
         "railt/lexer": "1.4.*|1.4.x-dev",
         "railt/parser": "1.4.*|1.4.x-dev",
-        "railt/compiler": "1.4.*|1.4.x-dev"
+        "railt/compiler": "1.4.*|1.4.x-dev",
+        "justinrainbow/json-schema": "~5.2"
     },
     "autoload-dev": {
         "psr-4": {
@@ -50,7 +51,8 @@
     },
     "suggest": {
         "railt/lexer": "(1.4.*) JSON5 decoder support",
-        "railt/parser": "(1.4.*) JSON5 decoder support"
+        "railt/parser": "(1.4.*) JSON5 decoder support",
+        "justinrainbow/json-schema": "(~5.2) JSON validation support"
     },
     "extra": {
         "railt": {
