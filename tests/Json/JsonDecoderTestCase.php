@@ -24,6 +24,8 @@ class JsonDecoderTestCase extends AbstractDecoderTestCase
      */
     protected function decode(string $value, int $options = 0)
     {
-        return Json::decoder()->setOptions($options)->decode($value);
+        return Json::decoder()
+            ->setOptions($options)
+            ->decode($value);
     }
 }
