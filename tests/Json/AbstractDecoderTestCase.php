@@ -15,9 +15,9 @@ namespace Railt\Tests\Json;
 abstract class AbstractDecoderTestCase extends TestCase
 {
     /**
-     * @var int
+     * @var string
      */
-    protected const PHP_INT_MAX_X32 = 2147483647;
+    protected const PHP_INT_MAX_X32 = '2147483647';
 
     /**
      * @var string
@@ -25,9 +25,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     protected const PHP_INT_MAX_X32_OVERFLOWS = '2147483648';
 
     /**
-     * @var int
+     * @var string
      */
-    protected const PHP_INT_MAX_X64 = 9223372036854775807;
+    protected const PHP_INT_MAX_X64 = '9223372036854775807';
 
     /**
      * @var string
@@ -35,9 +35,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     protected const PHP_INT_MAX_X64_OVERFLOWS = '9223372036854775808';
 
     /**
-     * @var int
+     * @var string
      */
-    protected const PHP_INT_MIN_X32 = -2147483648;
+    protected const PHP_INT_MIN_X32 = '-2147483648';
 
     /**
      * @var string
@@ -45,9 +45,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     protected const PHP_INT_MIN_X32_OVERFLOWS = '-2147483649';
 
     /**
-     * @var int
+     * @var string
      */
-    protected const PHP_INT_MIN_X64 = -9223372036854775808;
+    protected const PHP_INT_MIN_X64 = '-9223372036854775808';
 
     /**
      * @var string
@@ -295,7 +295,7 @@ abstract class AbstractDecoderTestCase extends TestCase
      */
     public function testIntMaxValue(): void
     {
-        $this->assertSame(\PHP_INT_MAX,
+        $this->assertSame((int)\PHP_INT_MAX,
             $this->decode((string)\PHP_INT_MAX, \JSON_BIGINT_AS_STRING));
     }
 
@@ -310,8 +310,8 @@ abstract class AbstractDecoderTestCase extends TestCase
             $this->markTestSkipped('This test is not supported on non x86 (32-bits) platforms');
         }
 
-        $this->assertSame(self::PHP_INT_MAX_X32,
-            $this->decode((string)self::PHP_INT_MAX_X32, \JSON_BIGINT_AS_STRING));
+        $this->assertSame((int)self::PHP_INT_MAX_X32,
+            $this->decode(self::PHP_INT_MAX_X32, \JSON_BIGINT_AS_STRING));
     }
 
     /**
@@ -325,8 +325,8 @@ abstract class AbstractDecoderTestCase extends TestCase
             $this->markTestSkipped('This test is not supported on non x64 platforms');
         }
 
-        $this->assertSame(self::PHP_INT_MAX_X64,
-            $this->decode((string)self::PHP_INT_MAX_X64, \JSON_BIGINT_AS_STRING));
+        $this->assertSame((int)self::PHP_INT_MAX_X64,
+            $this->decode(self::PHP_INT_MAX_X64, \JSON_BIGINT_AS_STRING));
     }
 
     /**
@@ -349,6 +349,21 @@ abstract class AbstractDecoderTestCase extends TestCase
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      * @throws \PHPUnit\Framework\SkippedTestError
      */
+    public function testInt32MaxOverflowValueAsFloat(): void
+    {
+        if (! $this->isX32Platform()) {
+            $this->markTestSkipped('This test is not supported on non x86 (32-bits) platforms');
+        }
+
+        $this->assertSame((float)self::PHP_INT_MAX_X32_OVERFLOWS,
+            $this->decode((string)self::PHP_INT_MAX_X32_OVERFLOWS));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws \PHPUnit\Framework\SkippedTestError
+     */
     public function testInt64MaxOverflowValue(): void
     {
         if (! $this->isX64Platform()) {
@@ -362,10 +377,25 @@ abstract class AbstractDecoderTestCase extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws \PHPUnit\Framework\SkippedTestError
+     */
+    public function testInt64MaxOverflowValueAsFloat(): void
+    {
+        if (! $this->isX64Platform()) {
+            $this->markTestSkipped('This test is not supported on non x64 platforms');
+        }
+
+        $this->assertSame((float)self::PHP_INT_MAX_X64_OVERFLOWS,
+            $this->decode((string)self::PHP_INT_MAX_X64_OVERFLOWS));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testIntMinValue(): void
     {
-        $this->assertSame(\PHP_INT_MIN,
+        $this->assertSame((int)\PHP_INT_MIN,
             $this->decode((string)\PHP_INT_MIN, \JSON_BIGINT_AS_STRING));
     }
 
@@ -380,8 +410,8 @@ abstract class AbstractDecoderTestCase extends TestCase
             $this->markTestSkipped('This test is not supported on non x86 (32-bits) platforms');
         }
 
-        $this->assertSame(self::PHP_INT_MIN_X32,
-            $this->decode((string)self::PHP_INT_MIN_X32, \JSON_BIGINT_AS_STRING));
+        $this->assertSame((int)self::PHP_INT_MIN_X32,
+            $this->decode(self::PHP_INT_MIN_X32, \JSON_BIGINT_AS_STRING));
     }
 
     /**
@@ -395,8 +425,8 @@ abstract class AbstractDecoderTestCase extends TestCase
             $this->markTestSkipped('This test is not supported on non x64 platforms');
         }
 
-        $this->assertSame(self::PHP_INT_MIN_X64,
-            $this->decode((string)self::PHP_INT_MIN_X64, \JSON_BIGINT_AS_STRING));
+        $this->assertSame((int)self::PHP_INT_MIN_X64,
+            $this->decode(self::PHP_INT_MIN_X64, \JSON_BIGINT_AS_STRING));
     }
 
     /**
@@ -411,7 +441,22 @@ abstract class AbstractDecoderTestCase extends TestCase
         }
 
         $this->assertSame(self::PHP_INT_MIN_X32_OVERFLOWS,
-            $this->decode((string)self::PHP_INT_MIN_X32_OVERFLOWS, \JSON_BIGINT_AS_STRING));
+            $this->decode(self::PHP_INT_MIN_X32_OVERFLOWS, \JSON_BIGINT_AS_STRING));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws \PHPUnit\Framework\SkippedTestError
+     */
+    public function testInt32MinOverflowValueAsFloat(): void
+    {
+        if (! $this->isX32Platform()) {
+            $this->markTestSkipped('This test is not supported on non x86 (32-bits) platforms');
+        }
+
+        $this->assertSame((float)self::PHP_INT_MIN_X32_OVERFLOWS,
+            $this->decode(self::PHP_INT_MIN_X32_OVERFLOWS));
     }
 
     /**
@@ -427,6 +472,21 @@ abstract class AbstractDecoderTestCase extends TestCase
 
         $this->assertSame(self::PHP_INT_MIN_X64_OVERFLOWS,
             $this->decode((string)self::PHP_INT_MIN_X64_OVERFLOWS, \JSON_BIGINT_AS_STRING));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws \PHPUnit\Framework\SkippedTestError
+     */
+    public function testInt64MinOverflowValueAsFloat(): void
+    {
+        if (! $this->isX64Platform()) {
+            $this->markTestSkipped('This test is not supported on non x64 platforms');
+        }
+
+        $this->assertSame((float)self::PHP_INT_MIN_X64_OVERFLOWS,
+            $this->decode((string)self::PHP_INT_MIN_X64_OVERFLOWS));
     }
 
     /**

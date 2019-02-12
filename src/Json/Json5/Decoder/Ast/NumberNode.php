@@ -124,67 +124,11 @@ abstract class NumberNode implements NodeInterface
     }
 
     /**
-     * @param string $value
-     * @return bool
-     */
-    protected function isOverflow(string $value): bool
-    {
-        switch (true) {
-            case $this->isBCMathSupports():
-                return $this->isBCMathOverflow($value);
-
-            case $this->isGMPSupports():
-                return $this->isGMPOverflow($value);
-
-            default:
-                return $value > \PHP_INT_MAX || $value < \PHP_INT_MIN;
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    private function isBCMathSupports(): bool
-    {
-        return \function_exists('\\bccomp');
-    }
-
-    /**
-     * @param string $value
-     * @return bool
-     */
-    private function isBCMathOverflow(string $value): bool
-    {
-        return \bccomp($value, (string)\PHP_INT_MAX) > 0 || \bccomp($value, (string)\PHP_INT_MIN) < 0;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isGMPSupports(): bool
-    {
-        return
-            \function_exists('\\gmp_cmp') &&
-            \function_exists('\\gmp_init') &&
-            (\strpos('e', $this->getValue()) >= 0 || \strpos('.', $this->getValue()) >= 0);
-    }
-
-    /**
      * @param int $index
      * @return string
      */
     protected function getValue(int $index = 0): string
     {
         return $this->value->getValue($index);
-    }
-
-    /**
-     * @param string $value
-     * @return bool
-     */
-    private function isGMPOverflow(string $value): bool
-    {
-        return \gmp_cmp(\gmp_init($value), \gmp_init((string)\PHP_INT_MAX)) > 0 ||
-            \gmp_cmp(\gmp_init($value), \gmp_init((string)\PHP_INT_MIN)) < 0;
     }
 }

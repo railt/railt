@@ -19,31 +19,48 @@ class IntNode extends NumberNode
      */
     public function reduce()
     {
-        return $this->formatValue();
+        return $this->renderValue();
+    }
+
+    /**
+     * @return string
+     */
+    private function valueToString(): string
+    {
+        $value = ($this->isPositive() ? '' : '-') . $this->getValue();
+
+        return $this->getExponent() !== 0 ? $value . 'e' . $this->getExponent() : $value;
     }
 
     /**
      * @return float|int
      */
-    private function formatValue()
+    private function renderValue()
     {
-        [$exp, $value] = [$this->getExponent(), $this->getValue()];
+        $value = $this->valueToString();
 
-        $value = $this->isPositive() ? $value : '-' . $value;
+        if ($this->getExponent() === 0) {
+            if ($this->isOverflow($value)) {
+                return $this->renderAsString() ? $value : (float)$value;
+            }
 
-        switch ($exp <=> 0) {
-            case 1:
-                return (float)($value . \str_repeat('0', $exp));
-
-            case -1:
-                return (float)($value . 'e' . $exp);
-
-            default:
-                if ($this->isOverflow($value)) {
-                    return $this->renderAsString() ? (string)$value : (float)$value;
-                }
-
-                return (int)$value;
+            return (int)$value;
         }
+
+        return $this->isOverflow($value) && $this->renderAsString() ? $value : (float)$value;
+    }
+
+    /**
+     * @param string $value
+     * @return bool
+     */
+    protected function isOverflow(string $value): bool
+    {
+        if (\function_exists('\\bccomp')) {
+            return \bccomp($value, (string)\PHP_INT_MAX) > 0 || \bccomp($value, (string)\PHP_INT_MIN) < 0;
+        }
+
+        // Try to fallback
+        return $value > \PHP_INT_MAX || $value < \PHP_INT_MIN;
     }
 }
