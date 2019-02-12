@@ -61,6 +61,7 @@ abstract class AbstractDecoderTestCase extends TestCase
     {
         return \PHP_INT_SIZE === 8;
     }
+
     /**
      * @return bool
      */
