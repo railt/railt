@@ -55,7 +55,7 @@ Value
   ;
 
 ObjectBody
-  : (ObjectPair() ::T_COMMA::)+ ObjectPair()
+  : (ObjectPair() ::T_COMMA::)* ObjectPair()
   ;
 
 #ObjectPair
@@ -78,7 +78,7 @@ ObjectValue
   ;
 
 ArrayBody
-  : (Value() ::T_COMMA::)+ Value()
+  : (Value() ::T_COMMA::)* Value()
   ;
 
 #String -> Railt\Json\Json5\Decoder\Ast\StringNode

@@ -24,7 +24,7 @@ interface JsonDecoderInterface extends JsonRuntimeInterface
      * @see http://www.php.net/manual/en/function.json-decode.php
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param string $json
-     * @return array|mixed
+     * @return array|object|mixed
      * @throws JsonException
      */
     public function decode(string $json);
@@ -33,8 +33,8 @@ interface JsonDecoderInterface extends JsonRuntimeInterface
      * Reads and parses json data from the specified stream.
      *
      * @param Readable $readable
-     * @return array
+     * @return array|object|mixed
      * @throws \JsonException
      */
-    public function read(Readable $readable): array;
+    public function read(Readable $readable);
 }

@@ -12,7 +12,7 @@ namespace Railt\Json;
 /**
  * Interface JsonRuntimeInterface
  */
-interface JsonRuntimeInterface
+interface JsonRuntimeInterface extends OptionsInterface
 {
     /**
      * User specified recursion depth default value.
@@ -31,52 +31,4 @@ interface JsonRuntimeInterface
      * @return JsonRuntimeInterface|$this
      */
     public function withRecursionDepth(int $depth): self;
-
-    /**
-     * Determine if a JSON decoding and encoding option is set.
-     *
-     * @param int $option
-     * @return bool
-     */
-    public function hasOption(int $option): bool;
-
-    /**
-     * Returns options used while encoding and decoding JSON sources.
-     *
-     * @return int
-     */
-    public function getOptions(): int;
-
-    /**
-     * Sets (overwrites) options used while encoding and decoding JSON sources.
-     *
-     * @param int ...$options
-     * @return JsonRuntimeInterface|$this
-     */
-    public function setOptions(int ...$options): self;
-
-    /**
-     * Sets option used while encoding and decoding JSON sources.
-     *
-     * @param int $option
-     * @param bool $enable
-     * @return JsonRuntimeInterface|$this
-     */
-    public function setOption(int $option, bool $enable = true): self;
-
-    /**
-     * Update options used while encoding and decoding JSON sources.
-     *
-     * @param int ...$options
-     * @return JsonRuntimeInterface|$this
-     */
-    public function withOptions(int ...$options): self;
-
-    /**
-     * Except options used while encoding and decoding JSON sources.
-     *
-     * @param int ...$options
-     * @return JsonRuntimeInterface|$this
-     */
-    public function withoutOptions(int ...$options): self;
 }

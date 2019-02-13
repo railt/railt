@@ -28,10 +28,10 @@ abstract class JsonDecoder extends JsonRuntime implements JsonDecoderInterface
 
     /**
      * @param Readable $readable
-     * @return array
+     * @return array|object|mixed
      * @throws JsonException
      */
-    public function read(Readable $readable): array
+    public function read(Readable $readable)
     {
         return $this->decode($readable->getContents());
     }
