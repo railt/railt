@@ -120,7 +120,7 @@
 %token T_SINGLE_QUOTED_STRING   '([^'\\]*(\\.[^'\\]*)*)'
 
 
-%token T_IDENTIFIER             [A-Za-z][_0-9A-Za-z]*
+%token T_IDENTIFIER             [\$A-Za-z][\$_0-9A-Za-z]*
 
 
 /**
