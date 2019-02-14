@@ -27,7 +27,7 @@ class JsonValidationException extends JsonException implements JsonValidationExc
      */
     public function __construct(string $message = '', array $path = [])
     {
-        $this->path = $path;
+        $this->path = \array_filter($path);
 
         parent::__construct($message);
     }
