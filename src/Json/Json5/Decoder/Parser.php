@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Decoder;
 
-use Railt\Io\Readable;
 use Railt\Parser\Ast\BuilderInterface;
-use Railt\Parser\TokenStream\TokenStream;
 
 /**
  * Class Parser
