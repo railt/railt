@@ -66,6 +66,7 @@
         ]
     },
     "require-dev": {
+        "vimeo/psalm": "~0.3",
         "phpunit/phpunit": "^7.5",
         "brianium/paratest": "^2.1",
         "railt/compiler": "1.4.*|1.4.x-dev",
@@ -91,9 +92,11 @@
         ]
     },
     "extra": {
-        "discovery": [
-            "railt"
-        ],
+        "discovery": {
+            "railt": {
+                "schema": "${project.dir}/resources/railt.schema.json"
+            }
+        },
         "railt": {
             "preload": {
                 "extensions": [

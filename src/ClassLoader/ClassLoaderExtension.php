@@ -26,7 +26,7 @@ class ClassLoaderExtension extends Extension
     /**
      * @var string
      */
-    private const SOURCES_PATHNAME = __DIR__ . '/../../resources/class-loader.graphqls';
+    private const SOURCES_PATHNAME = __DIR__ . '/../../resources/use/use.graphqls';
 
     /**
      * @return string

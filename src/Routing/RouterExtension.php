@@ -28,7 +28,7 @@ class RouterExtension extends Extension
     /**
      * @var string
      */
-    private const ROUTING_GRAPHQL_FILE = __DIR__ . '/../../resources/routing.graphqls';
+    private const ROUTING_GRAPHQL_FILE = __DIR__ . '/../../resources/routing/route.graphqls';
 
     /**
      * @return string
