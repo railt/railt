@@ -100,7 +100,7 @@
 %token T_INT_NUMBER             [0-9]+
 
 %token T_EXPONENT_PART          [eE]((?:\-|\+)?[0-9]+)
-%token T_IDENTIFIER             [\$A-Za-z][\$_0-9A-Za-z]*
+%token T_IDENTIFIER             [\$_A-Za-z][\$_0-9A-Za-z]*
 
 
 /**
