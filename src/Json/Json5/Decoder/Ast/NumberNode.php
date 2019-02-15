@@ -85,18 +85,9 @@ abstract class NumberNode implements NodeInterface
      */
     private function parseExponent(RuleInterface $rule): int
     {
-        [$isPositive, $value] = [true, 0];
+        $exponent = $rule->getChild(0);
 
-        foreach ($rule->getChildren() as $child) {
-            if ($child->is('Sign')) {
-                $isPositive = $this->isPositiveSign($child);
-                continue;
-            }
-
-            $value = (int)$child->getValue();
-        }
-
-        return $isPositive ? $value : -$value;
+        return (int)$exponent->getValue(1);
     }
 
     /**

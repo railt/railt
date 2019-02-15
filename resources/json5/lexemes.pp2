@@ -98,7 +98,9 @@
 %token T_FLOAT_TG_NUMBER        [0-9]+\.[0-9]*
 
 %token T_INT_NUMBER             [0-9]+
-%token T_EXPONENT_INDICATOR     [eE]
+
+%token T_EXPONENT_PART          [eE]((?:\-|\+)?[0-9]+)
+%token T_IDENTIFIER             [\$_A-Za-z][\$_0-9A-Za-z]*
 
 
 /**
@@ -118,9 +120,6 @@
 
 %token T_DOUBLE_QUOTED_STRING   "([^"\\]*(\\.[^"\\]*)*)"
 %token T_SINGLE_QUOTED_STRING   '([^'\\]*(\\.[^'\\]*)*)'
-
-
-%token T_IDENTIFIER             [\$A-Za-z][\$_0-9A-Za-z]*
 
 
 /**

@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Decoder;
 
-use Railt\Io\Readable;
 use Railt\Parser\Ast\BuilderInterface;
-use Railt\Parser\TokenStream\TokenStream;
 
 /**
  * Class Parser
@@ -40,16 +38,6 @@ class Parser extends BaseParser
         $this->options = $options;
 
         parent::__construct();
-    }
-
-    /**
-     * @param Readable $input
-     * @return TokenStream
-     * @throws \Railt\Parser\Exception\UnexpectedTokenException
-     */
-    protected function getStream(Readable $input): TokenStream
-    {
-        return new TokenStream($this->lex($input), \max(1, $this->depth - 1));
     }
 
     /**
