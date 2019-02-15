@@ -85,9 +85,9 @@ abstract class NumberNode implements NodeInterface
      */
     private function parseExponent(RuleInterface $rule): int
     {
-        $exponent = $rule->getChild(0)->getValue();
+        $exponent = $rule->getChild(0);
 
-        return (int)\trim($exponent, 'eE');
+        return (int)$exponent->getValue(1);
     }
 
     /**
