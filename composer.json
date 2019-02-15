@@ -94,7 +94,7 @@
     "extra": {
         "discovery": {
             "railt": {
-                "schema": "${package.dir}/resources/railt.schema.json"
+                "schema": "${package.dir}/resources/railt.schema.json5"
             }
         },
         "railt": {
