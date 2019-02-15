@@ -109,7 +109,7 @@ ArrayBody
   ;
 
 #ExponentPart
-  : ::T_EXPONENT_INDICATOR:: Sign()? <T_INT_NUMBER>
+  : <T_EXPONENT_PART>
   ;
 
 #Inf -> Railt\Json\Json5\Decoder\Ast\InfNode
