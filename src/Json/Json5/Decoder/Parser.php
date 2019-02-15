@@ -43,16 +43,6 @@ class Parser extends BaseParser
     }
 
     /**
-     * @param Readable $input
-     * @return TokenStream
-     * @throws \Railt\Parser\Exception\UnexpectedTokenException
-     */
-    protected function getStream(Readable $input): TokenStream
-    {
-        return new TokenStream($this->lex($input), \max(1, $this->depth - 1));
-    }
-
-    /**
      * @param array $trace
      * @return BuilderInterface
      */
