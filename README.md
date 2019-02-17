@@ -86,9 +86,8 @@ the basis of a Symfony or Laravel.
 ```php
 <?php
 use Railt\Io\File;
-use Railt\Discovery\Discovery;
+use Railt\Http\Factory;
 use Railt\Foundation\Application;
-use Railt\Foundation\Config\Composer;
 use Railt\Http\Provider\GlobalsProvider;
 
 
@@ -100,11 +99,6 @@ $loader = require __DIR__ . '/vendor/autoload.php';
 $app = new Application();
 
 //
-// Configure an Application from "composer.json" file
-//
-$app->configure(new Composer(Discovery::fromClassLoader($loader)));
-
-//
 // Create a connection
 //
 $connection = $app->connect(File::fromPathname(__DIR__ . '/schema.graphqls'));
@@ -112,7 +106,7 @@ $connection = $app->connect(File::fromPathname(__DIR__ . '/schema.graphqls'));
 //
 // Processing of HTTP Request
 //
-$responses = $connection->requests(new GlobalsProvider());
+$responses = $connection->request(Factory::create(new GlobalsProvider()));
 
 //
 // And send the HTTP Response

@@ -19,7 +19,7 @@ use Railt\Http\ResponseInterface;
 interface ConnectionInterface extends Identifiable
 {
     /**
-     * @param RequestInterface|RequestInterface[] $requests
+     * @param RequestInterface|RequestInterface[]|iterable $requests
      * @return ResponseInterface
      */
     public function request($requests): ResponseInterface;
