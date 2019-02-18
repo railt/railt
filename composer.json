@@ -107,6 +107,10 @@
                 "extensions": [
                     "graphqls",
                     "graphql"
+                ],
+                "paths": [
+                    "${package.dir}/resources/routing",
+                    "${package.dir}/resources/use"
                 ]
             },
             "commands": [

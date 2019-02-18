@@ -11,10 +11,11 @@ namespace Railt\Routing;
 
 use Railt\ClassLoader\ClassLoaderExtension;
 use Railt\ClassLoader\ClassLoaderInterface;
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
-use Railt\Io\File;
 use Railt\Routing\Subscribers\ActionDispatcherSubscriber;
 use Railt\Routing\Subscribers\DirectiveLoaderSubscriber;
 use Railt\Routing\Subscribers\FieldResolveToActionSubscriber;
@@ -25,11 +26,6 @@ use Railt\SDL\Schema\CompilerInterface;
  */
 class RouterExtension extends Extension
 {
-    /**
-     * @var string
-     */
-    private const ROUTING_GRAPHQL_FILE = __DIR__ . '/../../resources/routing/route.graphqls';
-
     /**
      * @return string
      */
@@ -71,7 +67,7 @@ class RouterExtension extends Extension
     }
 
     /**
-     * @return void
+     * @throws ContainerInvocationException
      */
     public function register(): void
     {
@@ -88,12 +84,10 @@ class RouterExtension extends Extension
 
     /**
      * @param CompilerInterface $compiler
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws ContainerResolutionException
      */
     public function boot(CompilerInterface $compiler): void
     {
-        $this->loadDirectives($compiler);
-
         $router = $this->make(RouterInterface::class);
         $loader = $this->make(DirectiveLoader::class);
 
@@ -111,14 +105,5 @@ class RouterExtension extends Extension
         // Subscribe to a method call event that should call the desired controller method.
         //
         $this->subscribe(new ActionDispatcherSubscriber($this->app()));
-    }
-
-    /**
-     * @param CompilerInterface $compiler
-     * @throws \Railt\Io\Exception\NotReadableException
-     */
-    private function loadDirectives(CompilerInterface $compiler): void
-    {
-        $compiler->compile(File::fromPathname(self::ROUTING_GRAPHQL_FILE));
     }
 }

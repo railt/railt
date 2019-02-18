@@ -24,11 +24,6 @@ use Railt\SDL\Schema\CompilerInterface;
 class ClassLoaderExtension extends Extension
 {
     /**
-     * @var string
-     */
-    private const SOURCES_PATHNAME = __DIR__ . '/../../resources/use/use.graphqls';
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -76,14 +71,5 @@ class ClassLoaderExtension extends Extension
         $this->registerIfNotRegistered(ClassLoaderInterface::class, function (CompilerInterface $compiler) {
             return new DirectiveClassLoader($compiler, $this->app);
         });
-    }
-
-    /**
-     * @param CompilerInterface $compiler
-     * @throws NotReadableException
-     */
-    public function boot(CompilerInterface $compiler): void
-    {
-        $compiler->compile(File::fromPathname(self::SOURCES_PATHNAME));
     }
 }
