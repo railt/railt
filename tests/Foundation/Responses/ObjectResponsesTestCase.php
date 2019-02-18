@@ -74,7 +74,8 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     public function testObjectResponseWithPublicFields(): void
     {
         $response = $this->request('nullable', '{ a, b }', function () {
-            return new class() {
+            return new class()
+            {
                 public $a = 42;
             };
         });
@@ -123,6 +124,52 @@ class ObjectResponsesTestCase extends ResponsesTestCase
             ],
         ], $response->getData());
 
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testIterableResponse(): void
+    {
+        $response = $this->request('list', '{ a, b }', function () {
+            return new \ArrayObject([
+                ['a' => '1', 'b' => '1'],
+                ['a' => '2', 'b' => null],
+                ['a' => null, 'b' => '3'],
+            ]);
+        });
+
+        $this->assertSame(['list' => [
+            ['a' => '1', 'b' => '1'],
+            ['a' => '2', 'b' => null],
+            ['a' => null, 'b' => '3'],
+        ]], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testIterableOfIterablesResponse(): void
+    {
+        $response = $this->request('list', '{ a, b }', function () {
+            return new \ArrayObject([
+                new \ArrayObject(['a' => '1', 'b' => '1']),
+                new \ArrayObject(['a' => '2', 'b' => null]),
+                new \ArrayObject(['a' => null, 'b' => '3']),
+            ]);
+        });
+
+        $this->assertSame(['list' => [
+            ['a' => '1', 'b' => '1'],
+            ['a' => '2', 'b' => null],
+            ['a' => null, 'b' => '3'],
+        ]], $response->getData());
         $this->assertSame([], $response->getErrors());
     }
 
