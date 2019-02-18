@@ -74,8 +74,7 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     public function testObjectResponseWithPublicFields(): void
     {
         $response = $this->request('nullable', '{ a, b }', function () {
-            return new class()
-            {
+            return new class() {
                 public $a = 42;
             };
         });
