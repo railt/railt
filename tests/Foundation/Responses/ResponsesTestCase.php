@@ -10,6 +10,9 @@ declare(strict_types=1);
 namespace Railt\Tests\Foundation\Responses;
 
 use Railt\Foundation\ConnectionInterface;
+use Railt\Foundation\Event\Resolver\FieldResolve;
+use Railt\Http\Request;
+use Railt\Http\ResponseInterface;
 use Railt\Io\File;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -19,6 +22,27 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 abstract class ResponsesTestCase extends TestCase
 {
+    /**
+     * @param string $field
+     * @param string $body
+     * @param \Closure $then
+     * @return \Railt\Http\ResponseInterface
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     */
+    protected function request(string $field, string $body, \Closure $then): ResponseInterface
+    {
+        $request = new Request('{ ' . $field . ' ' . $body . ' }');
+
+        $connection = $this->connection(function (FieldResolve $event) use ($field, $then): void {
+            if ($event->getPath() === $field) {
+                $event->withResult($then($event));
+            }
+        });
+
+        return $connection->request($request);
+    }
+
     /**
      * @param \Closure|null $resolver
      * @return ConnectionInterface

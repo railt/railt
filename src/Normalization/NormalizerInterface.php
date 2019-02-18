@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Normalization;
+namespace Railt\Normalization;
 
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
 

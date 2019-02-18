@@ -14,7 +14,7 @@ use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\Http\Extension\HasExtensions;
 use Railt\Http\Response\HasExceptions;
 use Railt\Http\Response\ResponseRenderer;
-use Railt\Support\Debug\DebugAwareTrait;
+use Railt\Debug\DebugAwareTrait;
 
 /**
  * Class Response

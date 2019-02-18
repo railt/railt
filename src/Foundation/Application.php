@@ -32,8 +32,8 @@ use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use Railt\Support\Debug\DebugAwareTrait;
-use Railt\Support\Debug\Debuggable;
+use Railt\Debug\DebugAwareTrait;
+use Railt\Debug\Debuggable;
 
 /**
  * Class Application

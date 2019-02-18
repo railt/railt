@@ -12,6 +12,7 @@ namespace Railt\Tests\Foundation;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Http\Request;
+use Railt\Http\ResponseInterface;
 use Railt\Tests\Foundation\Responses\ResponsesTestCase;
 use Railt\Tests\Foundation\Stub\TraversableObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -24,6 +25,7 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNullableDefaultResponse(): void
     {
@@ -53,14 +55,13 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNullableResponse(): void
     {
-        $response = $this->connection(function (FieldResolve $event): void {
-            if ($event->getPath() === 'nullable') {
-                $event->withResult(['a' => '42']);
-            }
-        })->request(new Request('{ nullable { a } }'));
+        $response = $this->request('nullable', '{ a }', function () {
+            return ['a' => '42'];
+        });
 
         $this->assertSame(['nullable' => ['a' => '42']], $response->getData());
         $this->assertSame([], $response->getErrors());
@@ -69,16 +70,16 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testObjectResponseWithPublicFields(): void
     {
-        $response = $this->connection(function (FieldResolve $event): void {
-            if ($event->getPath() === 'nullable') {
-                $event->withResult(new class() {
-                    public $a = 42;
-                });
-            }
-        })->request(new Request('{ nullable { a, b } }'));
+        $response = $this->request('nullable', '{ a, b }', function () {
+            return new class()
+            {
+                public $a = 42;
+            };
+        });
 
         $this->assertSame(['nullable' => ['a' => '42', 'b' => null]], $response->getData());
         $this->assertSame([], $response->getErrors());
@@ -87,16 +88,43 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testObjectResponseIsTraversable(): void
     {
-        $response = $this->connection(function (FieldResolve $event): void {
-            if ($event->getPath() === 'nullable') {
-                $event->withResult(new TraversableObject(['b' => 100500]));
-            }
-        })->request(new Request('{ nullable { a, b } }'));
+        $response = $this->request('nullable', '{ a, b }', function () {
+            return new TraversableObject(['b' => 100500]);
+        });
 
         $this->assertSame(['nullable' => ['a' => null, 'b' => '100500']], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testListResponse(): void
+    {
+        $response = $this->request('list', '{ a, b }', function () {
+            return [
+                ['a' => 1, 'b' => 1],
+                ['a' => 2, 'b' => 2],
+                ['a' => 3],
+                ['b' => 4],
+            ];
+        });
+
+        $this->assertSame([
+            'list' => [
+                ['a' => '1', 'b' => '1'],
+                ['a' => '2', 'b' => '2'],
+                ['a' => '3', 'b' => null],
+                ['a' => null, 'b' => '4'],
+            ],
+        ], $response->getData());
+
         $this->assertSame([], $response->getErrors());
     }
 

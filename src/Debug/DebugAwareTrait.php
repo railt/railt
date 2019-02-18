@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Support\Debug;
+namespace Railt\Debug;
 
 /**
  * Trait DebugAwareTrait

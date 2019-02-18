@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event;
 
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Event\Subscribers\DefaultResponseSubscriber;
 use Railt\Foundation\Event\Subscribers\InputParentSubscriber;
@@ -57,7 +58,7 @@ class EventsExtension extends Extension
     }
 
     /**
-     * @return void
+     * @throws ContainerInvocationException
      */
     public function register(): void
     {

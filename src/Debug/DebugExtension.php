@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Debug;
+namespace Railt\Debug;
 
 use Railt\Foundation\Application;
-use Railt\Foundation\Debug\Http\ExceptionTraceExtension;
-use Railt\Foundation\Debug\Http\MemoryProfilerExtension;
-use Railt\Foundation\Debug\Http\TracingExtension;
+use Railt\Debug\Http\ExceptionTraceExtension;
+use Railt\Debug\Http\MemoryProfilerExtension;
+use Railt\Debug\Http\TracingExtension;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\EventsExtension;
@@ -23,7 +23,7 @@ use Railt\Foundation\Extension\Status;
 use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Identifiable;
 use Railt\Http\ResponseInterface;
-use Railt\Support\Debug\Debuggable;
+use Railt\Debug\Debuggable;
 
 /**
  * Class DebugExtension
@@ -40,7 +40,7 @@ class DebugExtension extends Extension
      */
     public function getDescription(): string
     {
-        return 'Switches all responses to debug mode';
+        return 'Debugging and profiling extension';
     }
 
     /**

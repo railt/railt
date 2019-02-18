@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Subscribers;
 
 use Railt\Foundation\Event\Http\RequestReceived;
-use Railt\Support\Debug\Debuggable;
+use Railt\Debug\Debuggable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

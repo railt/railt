@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Debug\Http;
+namespace Railt\Debug\Http;
 
 use Railt\Http\Extension\ExtensionInterface;
 

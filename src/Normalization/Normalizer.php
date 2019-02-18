@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Normalization;
+namespace Railt\Normalization;
 
 use Railt\SDL\Contracts\Definitions\EnumDefinition;
 use Railt\SDL\Contracts\Definitions\ScalarDefinition;

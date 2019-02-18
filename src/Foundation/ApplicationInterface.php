@@ -13,7 +13,7 @@ use Railt\Container\ContainerInterface;
 use Railt\Foundation\Config\ConfigurationInterface;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Io\Readable;
-use Railt\Support\Debug\Debuggable;
+use Railt\Debug\Debuggable;
 use Symfony\Component\Console\Application as ConsoleApplication;
 
 /**

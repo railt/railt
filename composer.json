@@ -110,19 +110,19 @@
                 ],
                 "paths": [
                     "${package.dir}/resources/routing",
-                    "${package.dir}/resources/use"
+                    "${package.dir}/resources/class-loader"
                 ]
             },
             "commands": [
-                "Railt\\SDL\\Console\\SDLGrammarCompileCommand",
                 "Railt\\Json\\Console\\Json5CompileCommand",
+                "Railt\\SDL\\Console\\SDLGrammarCompileCommand",
                 "Railt\\Foundation\\Console\\ExtensionsListCommand"
             ],
             "extensions": [
+                "Railt\\Debug\\DebugExtension",
                 "Railt\\ClassLoader\\ClassLoaderExtension",
                 "Railt\\Routing\\RouterExtension",
-                "Railt\\Foundation\\Debug\\DebugExtension",
-                "Railt\\Foundation\\Normalization\\NormalizationExtension"
+                "Railt\\Normalization\\NormalizationExtension"
             ]
         }
     },
