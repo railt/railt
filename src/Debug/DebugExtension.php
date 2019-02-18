@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Debug;
 
-use Railt\Foundation\Application;
 use Railt\Debug\Http\ExceptionTraceExtension;
 use Railt\Debug\Http\MemoryProfilerExtension;
 use Railt\Debug\Http\TracingExtension;
+use Railt\Foundation\Application;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\EventsExtension;
@@ -23,7 +23,6 @@ use Railt\Foundation\Extension\Status;
 use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Identifiable;
 use Railt\Http\ResponseInterface;
-use Railt\Debug\Debuggable;
 
 /**
  * Class DebugExtension

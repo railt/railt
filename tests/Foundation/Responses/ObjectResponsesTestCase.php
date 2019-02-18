@@ -12,7 +12,6 @@ namespace Railt\Tests\Foundation;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Http\Request;
-use Railt\Http\ResponseInterface;
 use Railt\Tests\Foundation\Responses\ResponsesTestCase;
 use Railt\Tests\Foundation\Stub\TraversableObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -75,8 +74,7 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     public function testObjectResponseWithPublicFields(): void
     {
         $response = $this->request('nullable', '{ a, b }', function () {
-            return new class()
-            {
+            return new class() {
                 public $a = 42;
             };
         });

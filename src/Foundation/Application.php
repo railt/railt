@@ -15,6 +15,8 @@ use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Debug\DebugAwareTrait;
+use Railt\Debug\Debuggable;
 use Railt\Foundation\Application\CacheExtension;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
@@ -32,8 +34,6 @@ use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use Railt\Debug\DebugAwareTrait;
-use Railt\Debug\Debuggable;
 
 /**
  * Class Application

@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Railt\Container\ContainerInterface;
+use Railt\Debug\Debuggable;
 use Railt\Foundation\Config\ConfigurationInterface;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Io\Readable;
-use Railt\Debug\Debuggable;
 use Symfony\Component\Console\Application as ConsoleApplication;
 
 /**
