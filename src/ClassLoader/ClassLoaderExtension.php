@@ -14,7 +14,6 @@ use Railt\Foundation\Application;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
-use Railt\Io\Exception\NotReadableException;
 use Railt\Io\File;
 use Railt\SDL\Schema\CompilerInterface;
 
