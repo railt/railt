@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Normalization;
 
 use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
@@ -36,9 +37,10 @@ class Factory implements NormalizerInterface
     private $container;
 
     /**
-     * Normalizer constructor.
+     * Factory constructor.
      *
      * @param ContainerInterface $container
+     * @throws ContainerResolutionException
      */
     public function __construct(ContainerInterface $container)
     {
@@ -48,12 +50,12 @@ class Factory implements NormalizerInterface
     }
 
     /**
-     * @return void
+     * @throws ContainerResolutionException
      */
     private function bootNormalizers(): void
     {
         foreach (self::DEFAULT_NORMALIZERS as $class) {
-            $this->addNormalizer($this->container->make($class));
+            $this->addNormalizer($this->container->make($class, [NormalizerInterface::class => $this]));
         }
     }
 

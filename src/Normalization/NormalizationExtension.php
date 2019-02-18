@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Normalization;
 
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Event\Resolver\FieldResolve;
@@ -61,7 +62,7 @@ class NormalizationExtension extends Extension
     }
 
     /**
-     * @return void
+     * @throws ContainerInvocationException
      */
     public function register(): void
     {

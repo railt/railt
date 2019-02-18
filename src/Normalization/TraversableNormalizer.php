@@ -17,16 +17,37 @@ use Railt\SDL\Contracts\Dependent\FieldDefinition;
 class TraversableNormalizer extends Normalizer
 {
     /**
-     * @param mixed $result
+     * @var NormalizerInterface
+     */
+    private $normalizer;
+
+    /**
+     * TraversableNormalizer constructor.
+     *
+     * @param NormalizerInterface $normalizer
+     */
+    public function __construct(NormalizerInterface $normalizer)
+    {
+        $this->normalizer = $normalizer;
+    }
+
+    /**
+     * @param mixed $data
      * @param FieldDefinition $field
      * @return array|bool|float|int|mixed|string
      */
-    public function normalize($result, FieldDefinition $field)
+    public function normalize($data, FieldDefinition $field)
     {
-        if ($result instanceof \Traversable) {
-            return \iterator_to_array($result);
+        if ($data instanceof \Traversable) {
+            $result = [];
+
+            foreach ($data as $key => $value) {
+                $result[$key] = $this->normalizer->normalize($value, $field);
+            }
+
+            return $result;
         }
 
-        return $result;
+        return $data;
     }
 }
