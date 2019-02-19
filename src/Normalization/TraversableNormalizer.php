@@ -38,7 +38,7 @@ class TraversableNormalizer extends Normalizer
      */
     public function normalize($data, FieldDefinition $field)
     {
-        if (\is_iterable($data)) {
+        if (\is_iterable($data) && $field->isList()) {
             $result = [];
 
             foreach ($data as $key => $value) {
@@ -46,6 +46,10 @@ class TraversableNormalizer extends Normalizer
             }
 
             return $result;
+        }
+
+        if ($data instanceof \Traversable && ! $field->isList()) {
+            return \iterator_to_array($data);
         }
 
         return $data;
