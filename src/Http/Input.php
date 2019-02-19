@@ -15,6 +15,7 @@ use Railt\Http\Input\HasField;
 use Railt\Http\Input\HasParents;
 use Railt\Http\Input\HasPath;
 use Railt\Http\Input\HasPreferTypes;
+use Railt\Http\Input\HasRelatedFields;
 use Railt\Http\Input\HasType;
 
 /**
@@ -29,6 +30,7 @@ class Input implements InputInterface
     use HasParents;
     use HasArguments;
     use HasPreferTypes;
+    use HasRelatedFields;
 
     /**
      * @var RequestInterface
@@ -80,15 +82,6 @@ class Input implements InputInterface
     public function request(): RequestInterface
     {
         return $this->request;
-    }
-
-    /**
-     * @param string $type
-     * @return bool
-     */
-    public function wantsType(string $type): bool
-    {
-        return \in_array($type, $this->getPreferTypes(), true);
     }
 
     /**

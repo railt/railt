@@ -14,6 +14,7 @@ use Railt\Http\Input\ProvideField;
 use Railt\Http\Input\ProvideParents;
 use Railt\Http\Input\ProvidePath;
 use Railt\Http\Input\ProvidePreferTypes;
+use Railt\Http\Input\ProvideRelatedFields;
 use Railt\Http\Input\ProvideType;
 
 /**
@@ -25,7 +26,8 @@ interface InputInterface extends
     ProvideField,
     ProvideParents,
     ProvideArguments,
-    ProvidePreferTypes
+    ProvidePreferTypes,
+    ProvideRelatedFields
 {
     /**
      * @return RequestInterface

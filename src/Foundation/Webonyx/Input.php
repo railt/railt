@@ -52,6 +52,22 @@ class Input extends BaseInput
 
         $this->withField($this->reflection->getName());
         $this->resolveDefaultArguments($field);
+        $this->setRelatedFields(\array_keys($info->getFieldSelection()));
+    }
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    public function wants(string $field): bool
+    {
+        $depth = \substr_count($field, '.');
+
+        if ($depth === 0) {
+            return \in_array($field, $this->getRelatedFields(), true);
+        }
+
+        return \array_has($this->info->getFieldSelection($depth), $field);
     }
 
     /**

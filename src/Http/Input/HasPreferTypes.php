@@ -61,4 +61,13 @@ trait HasPreferTypes
 
         return $this;
     }
+    
+    /**
+     * @param string $type
+     * @return bool
+     */
+    public function wantsType(string $type): bool
+    {
+        return \in_array($type, $this->getPreferTypes(), true);
+    }
 }
