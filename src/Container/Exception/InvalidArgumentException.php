@@ -14,5 +14,4 @@ namespace Railt\Container\Exception;
  */
 class InvalidArgumentException extends \InvalidArgumentException
 {
-
 }

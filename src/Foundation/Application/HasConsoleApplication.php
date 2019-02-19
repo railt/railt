@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
-use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Config\RepositoryInterface;
 use Symfony\Component\Console\Application as ConsoleApplication;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\LogicException;
 
 /**

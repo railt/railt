@@ -13,7 +13,6 @@ use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\ApplicationInterface;
-use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
 use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
