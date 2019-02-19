@@ -52,7 +52,20 @@ class Input extends BaseInput
 
         $this->withField($this->reflection->getName());
         $this->resolveDefaultArguments($field);
-        $this->setRelatedFields(\array_keys($info->getFieldSelection()));
+    }
+
+    /**
+     * @return array
+     */
+    public function getRelatedFields(): array
+    {
+        $result = parent::getRelatedFields();
+
+        foreach ($this->info->fieldNodes as $fieldNode) {
+            $result[] = $fieldNode->name->value;
+        }
+
+        return \array_unique($result);
     }
 
     /**
