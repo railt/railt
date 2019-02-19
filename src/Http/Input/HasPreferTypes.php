@@ -61,7 +61,7 @@ trait HasPreferTypes
 
         return $this;
     }
-    
+
     /**
      * @param string $type
      * @return bool

@@ -23,13 +23,13 @@ interface ProvideRelatedFields
      * @param array $fields
      * @return ProvideRelatedFields|$this
      */
-    public function withRelatedFields(array $fields): ProvideRelatedFields;
+    public function withRelatedFields(array $fields): self;
 
     /**
      * @param array $fields
      * @return ProvideRelatedFields|$this
      */
-    public function setRelatedFields(array $fields): ProvideRelatedFields;
+    public function setRelatedFields(array $fields): self;
 
     /**
      * @param string $field
