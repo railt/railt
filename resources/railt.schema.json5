@@ -31,6 +31,10 @@
         }
     },
     properties: {
+        debug: {
+            type: "boolean",
+            description: "Set debug state of railt application"
+        },
         preload: {
             type: "object",
             description: "The list of settings responsible for preloading of GraphQL schemes",
@@ -77,6 +81,5 @@
             description: "List of extension classes",
             $ref: "#/definitions/classes"
         }
-    },
-    additionalProperties: false
+    }
 }

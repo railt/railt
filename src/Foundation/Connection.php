@@ -72,7 +72,7 @@ class Connection implements ConnectionInterface
         $this->app = $app;
         $this->schema = $schema;
         $this->dictionary = $dictionary;
-        $this->events = $this->resolveEventDispatcher($app->getContainer());
+        $this->events = $this->resolveEventDispatcher($app);
 
         $this->connect();
     }
@@ -200,10 +200,6 @@ class Connection implements ConnectionInterface
 
             /** @var ResponseInterface $response */
             $response = $after->getResponse();
-
-            if ($response instanceof Response) {
-                $response->debug($this->app->isDebug());
-            }
 
             return $response;
         } catch (\Throwable $e) {

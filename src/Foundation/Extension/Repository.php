@@ -17,7 +17,7 @@ use Railt\Foundation\Exception\ExtensionException;
 /**
  * Class Repository
  */
-class Repository
+class Repository implements RepositoryInterface
 {
     /**
      * @var array|ExtensionInterface[]
@@ -48,6 +48,7 @@ class Repository
      * @param string $extension
      * @return void
      * @throws ExtensionException
+     * @throws ParameterResolutionException
      */
     public function add(string $extension): void
     {
@@ -63,6 +64,7 @@ class Repository
      * @param string $extension
      * @return mixed|object
      * @throws ExtensionException
+     * @throws ParameterResolutionException
      */
     private function instance(string $extension)
     {
@@ -86,6 +88,7 @@ class Repository
 
     /**
      * @throws ExtensionException
+     * @throws ParameterResolutionException
      */
     public function boot(): void
     {
@@ -97,6 +100,7 @@ class Repository
     /**
      * @param ExtensionInterface $extension
      * @throws ExtensionException
+     * @throws ParameterResolutionException
      */
     private function bootIfNotBooted(ExtensionInterface $extension): void
     {
@@ -123,6 +127,7 @@ class Repository
     /**
      * @param ExtensionInterface $extension
      * @throws ExtensionException
+     * @throws ParameterResolutionException
      */
     private function loadDependencies(ExtensionInterface $extension): void
     {
@@ -138,6 +143,7 @@ class Repository
      * @param string $dependency
      * @param int|string $package
      * @throws ExtensionException
+     * @throws ParameterResolutionException
      */
     private function loadDependency(ExtensionInterface $extension, string $dependency, $package): void
     {

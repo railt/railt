@@ -9,10 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Debug;
 
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Debug\Http\ExceptionTraceExtension;
 use Railt\Debug\Http\MemoryProfilerExtension;
 use Railt\Debug\Http\TracingExtension;
 use Railt\Foundation\Application;
+use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\EventsExtension;
@@ -22,6 +25,7 @@ use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Identifiable;
+use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
 
 /**
@@ -75,17 +79,22 @@ class DebugExtension extends Extension
     }
 
     /**
-     * @param Debuggable $debuggable
+     * @param RepositoryInterface $config
+     * @param ApplicationInterface $app
+     * @throws ContainerResolutionException
      */
-    public function boot(Debuggable $debuggable): void
+    public function boot(RepositoryInterface $config, ApplicationInterface $app): void
     {
-        if ($debuggable->isDebug()) {
+        $isDebug = $config->get(RepositoryInterface::KEY_DEBUG, false);
+
+        if ($isDebug) {
             $this->listen();
         }
     }
 
     /**
      * @return void
+     * @throws ContainerResolutionException
      */
     private function listen(): void
     {
@@ -151,6 +160,10 @@ class DebugExtension extends Extension
             $this->shareMemoryProfiler($response);
             $this->shareExceptionTrace($response);
             $this->shareTracing($event->getConnection(), $response);
+
+            if ($response instanceof Response) {
+                $response->debug(true);
+            }
         }
     }
 

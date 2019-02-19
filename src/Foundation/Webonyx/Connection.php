@@ -13,6 +13,7 @@ use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
 use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
@@ -75,21 +76,12 @@ class Connection
     }
 
     /**
-     * @return bool
-     */
-    private function isDebug(): bool
-    {
-        return $this->app->isDebug();
-    }
-
-    /**
      * @return EventDispatcherInterface
      * @throws ContainerResolutionException
      */
     private function getEventDispatcher(): EventDispatcherInterface
     {
-        return $this->app->getContainer()
-            ->make(EventDispatcherInterface::class);
+        return $this->app->make(EventDispatcherInterface::class);
     }
 
     /**
@@ -134,7 +126,6 @@ class Connection
     private function createResponse(iterable $exceptions, $data = null): ResponseInterface
     {
         $response = new Response($data);
-        $response->debug($this->isDebug());
 
         foreach ($exceptions as $exception) {
             $response->withException(ExceptionResolver::resolve($exception));

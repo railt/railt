@@ -90,16 +90,30 @@ class Container implements ContainerInterface
     }
 
     /**
-     * @param string $class
-     * @param \Closure $resolver
+     * @param string $id
+     * @param \Closure $then
      * @return Registrable|$this
      */
-    public function register(string $class, \Closure $resolver): Registrable
+    public function register(string $id, \Closure $then): Registrable
     {
-        $this->registered[$class] = $resolver;
+        $this->registered[$id] = $then;
 
-        if (isset($this->resolved[$class])) {
-            unset($this->resolved[$class]);
+        if (isset($this->resolved[$id])) {
+            unset($this->resolved[$id]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $class
+     * @param \Closure $then
+     * @return Container
+     */
+    public function registerIfNotRegistered(string $class, \Closure $then): self
+    {
+        if (! $this->has($class)) {
+            $this->register($class, $then);
         }
 
         return $this;

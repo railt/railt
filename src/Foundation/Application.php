@@ -10,24 +10,24 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Psr\Container\ContainerInterface as PSRContainer;
-use Railt\Container\Autowireable;
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Debug\DebugAwareTrait;
-use Railt\Debug\Debuggable;
 use Railt\Foundation\Application\CacheExtension;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
-use Railt\Foundation\Application\HasSchemaLoaderConfigs;
-use Railt\Foundation\Config\ConfigurationInterface;
-use Railt\Foundation\Config\Discovery;
+use Railt\Foundation\Application\ProvidesExtensions;
+use Railt\Foundation\Config\DiscoveryRepository;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Exception\ConnectionException;
 use Railt\Foundation\Exception\ExtensionException;
-use Railt\Foundation\Extension\ExtensionInterface;
-use Railt\Foundation\Extension\Repository;
+use Railt\Foundation\Config\Repository as ConfigRepository;
+use Railt\Foundation\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Foundation\Extension\Repository as ExtensionRepository;
+use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterface;
 use Railt\Foundation\Webonyx\WebonyxExtension;
 use Railt\Io\Readable;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
@@ -38,11 +38,9 @@ use Railt\SDL\Schema\Configuration;
 /**
  * Class Application
  */
-class Application implements ApplicationInterface, Autowireable
+class Application extends Container implements ApplicationInterface
 {
-    use DebugAwareTrait;
     use HasConsoleApplication;
-    use HasSchemaLoaderConfigs;
 
     /**
      * @var string
@@ -60,154 +58,127 @@ class Application implements ApplicationInterface, Autowireable
     ];
 
     /**
-     * @var ContainerInterface
-     */
-    private $app;
-
-    /**
      * @var bool
      */
     private $booted = false;
-
-    /**
-     * @var Repository
-     */
-    private $extensions;
 
     /**
      * Application constructor.
      *
      * @param bool $debug
      * @param PSRContainer|null $container
-     * @throws \LogicException
-     * @throws ExtensionException
      */
     public function __construct(bool $debug = false, PSRContainer $container = null)
     {
-        $this->app = $this->container($container);
-        $this->extensions = new Repository($this->app);
+        parent::__construct($container);
 
-        $this->debug($debug);
-
-        $this->registerBaseBindings();
-        $this->bootIfNotBooted();
+        $this->registerBaseBindings($debug);
     }
 
     /**
-     * @param PSRContainer|null $container
-     * @return ContainerInterface
+     * @param bool $debug
+     * @return void
      */
-    private function container(PSRContainer $container = null): ContainerInterface
+    private function registerBaseBindings(bool $debug): void
     {
-        return $container instanceof Container ? $container : new Container($container);
+        $this->registerConfigsRepository($debug);
+        $this->registerApplicationBindings();
+        $this->registerExtensionsRepository();
     }
 
     /**
      * @return void
      */
-    private function registerBaseBindings(): void
+    private function registerApplicationBindings(): void
     {
-        $this->app->instance(Debuggable::class, $this);
-        $this->app->instance(ApplicationInterface::class, $this);
-        $this->app->instance(Repository::class, $this->extensions);
-        $this->app->instance(ContainerInterface::class, $this->app);
+        $this->registerIfNotRegistered(ContainerInterface::class, function () {
+            return $this;
+        });
+
+        $this->registerIfNotRegistered(ApplicationInterface::class, function () {
+            return $this;
+        });
     }
 
     /**
-     * @throws \LogicException
-     * @throws ExtensionException
+     * @return void
+     */
+    private function registerExtensionsRepository(): void
+    {
+        $this->registerIfNotRegistered(ExtensionRepositoryInterface::class, function () {
+            return new ExtensionRepository($this);
+        });
+
+        $this->alias(ExtensionRepositoryInterface::class, ExtensionRepository::class);
+    }
+
+    /**
+     * @param bool $debug
+     * @return void
+     */
+    private function registerConfigsRepository(bool $debug): void
+    {
+        $this->registerIfNotRegistered(ConfigRepositoryInterface::class, function () use ($debug) {
+            $configs = new ConfigRepository(['debug' => $debug]);
+            $configs->mergeWith(new DiscoveryRepository());
+
+            return $configs;
+        });
+
+        $this->alias(ConfigRepositoryInterface::class, ConfigRepository::class);
+    }
+
+    /**
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     private function bootIfNotBooted(): void
     {
-        if ($this->booted === false) {
-            foreach (self::KERNEL_EXTENSIONS as $extension) {
-                $this->extend($extension);
-            }
+        $extensions = $this->make(ExtensionRepositoryInterface::class);
+        $configs = $this->make(ConfigRepositoryInterface::class);
 
-            $this->configure(Discovery::auto());
-
-            $this->booted = true;
+        foreach (self::KERNEL_EXTENSIONS as $extension) {
+            $extensions->add($extension);
         }
 
-        $this->extensions->boot();
-    }
-
-    /**
-     * @param string|ExtensionInterface $extension
-     * @return ApplicationInterface|$this
-     * @throws ExtensionException
-     */
-    public function extend(string $extension): ApplicationInterface
-    {
-        $this->extensions->add($extension);
-
-        return $this;
-    }
-
-    /**
-     * @param ConfigurationInterface $config
-     * @return ApplicationInterface
-     * @throws ExtensionException
-     */
-    public function configure(ConfigurationInterface $config): ApplicationInterface
-    {
-        foreach ($config->getCommands() as $command) {
-            $this->addCommand($command);
+        foreach ($configs->get(ConfigRepositoryInterface::KEY_EXTENSIONS) as $extension) {
+            $extensions->add($extension);
         }
 
-        foreach ($config->getExtensions() as $extension) {
-            $this->extend($extension);
-        }
-
-        $this->loadSchemaLoaderConfigsFrom($config);
-
-        return $this;
-    }
-
-    /**
-     * @param string $class
-     * @param array $params
-     * @return mixed|object
-     * @throws ContainerResolutionException
-     */
-    public function make(string $class, array $params = [])
-    {
-        return $this->getContainer()->make($class, $params);
-    }
-
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer(): ContainerInterface
-    {
-        return $this->app;
-    }
-
-    /**
-     * @param callable|\Closure|mixed $callable
-     * @param array $params
-     * @return mixed
-     * @throws ContainerInvocationException
-     */
-    public function call($callable, array $params = [])
-    {
-        return $this->getContainer()->call($callable, $params);
+        $extensions->boot();
     }
 
     /**
      * @return bool
      */
-    public function isDebug(): bool
+    public function isRunningInConsole(): bool
     {
-        return $this->debug;
+        return \in_array(\PHP_SAPI, ['cli', 'phpdbg']);
+    }
+
+    /**
+     * @param string $extension
+     * @return ApplicationInterface|$this
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
+     */
+    public function extend(string $extension): ProvidesExtensions
+    {
+        $extensions = $this->make(ExtensionRepositoryInterface::class);
+        $extensions->add($extension);
+
+        return $this;
     }
 
     /**
      * @param Readable $schema
      * @return ConnectionInterface
-     * @throws \LogicException
      * @throws ConnectionException
-     * @throws ExtensionException
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     public function connect(Readable $schema): ConnectionInterface
     {
@@ -219,26 +190,17 @@ class Application implements ApplicationInterface, Autowireable
     }
 
     /**
-     * @param Dictionary $dictionary
-     * @param SchemaDefinition $schema
-     * @return ConnectionInterface
-     * @throws ContainerResolutionException
-     */
-    private function createConnection(Dictionary $dictionary, SchemaDefinition $schema): ConnectionInterface
-    {
-        return new Connection($this, $dictionary, $schema);
-    }
-
-    /**
      * @param Readable $readable
      * @return array
      * @throws ConnectionException
+     * @throws ContainerInvocationException
      * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     private function compile(Readable $readable): array
     {
         /** @var CompilerInterface|Configuration */
-        $compiler = $this->app->make(CompilerInterface::class);
+        $compiler = $this->make(CompilerInterface::class);
 
         $document = $compiler->compile($readable);
         $schema = $document->getSchema();
@@ -251,5 +213,16 @@ class Application implements ApplicationInterface, Autowireable
         }
 
         return [$compiler->getDictionary(), $schema];
+    }
+
+    /**
+     * @param Dictionary $dictionary
+     * @param SchemaDefinition $schema
+     * @return ConnectionInterface
+     * @throws ContainerResolutionException
+     */
+    private function createConnection(Dictionary $dictionary, SchemaDefinition $schema): ConnectionInterface
+    {
+        return new Connection($this, $dictionary, $schema);
     }
 }

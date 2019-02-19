@@ -11,9 +11,10 @@ namespace Railt\Foundation\Application;
 
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
-use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\Io\Exception\NotReadableException;
 use Railt\Io\File;
 use Railt\SDL\Compiler;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
@@ -77,111 +78,42 @@ class CompilerExtension extends Extension
     }
 
     /**
+     * @param RepositoryInterface $config
      * @param CompilerInterface $compiler
-     * @param ApplicationInterface $app
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws NotReadableException
      */
-    public function boot(ApplicationInterface $app, CompilerInterface $compiler): void
+    public function boot(RepositoryInterface $config, CompilerInterface $compiler): void
     {
-        if ($app instanceof Application) {
-            $this->autoload($app, $compiler);
-            $this->preload($app, $compiler);
+        if (! $this->app->isRunningInConsole()) {
+            $this->autoload($config, $compiler);
+            $this->preload($config, $compiler);
         }
     }
 
     /**
-     * @param Application $app
+     * @param RepositoryInterface $config
      * @param CompilerInterface $compiler
      */
-    private function autoload(Application $app, CompilerInterface $compiler): void
+    private function autoload(RepositoryInterface $config, CompilerInterface $compiler): void
     {
-        $this->autoloadFiles($compiler, $app->getAutoloadFiles());
-        $this->autoloadPaths($compiler, $app->getAutoloadPaths(), $app->getAutoloadExtensions());
-        $this->autoloadFromSameFile($compiler, $app->getAutoloadExtensions());
+        $this->autoloadFiles($config, $compiler);
+        $this->autoloadPaths($config, $compiler);
+        $this->autoloadFromSameFile($config, $compiler);
     }
 
     /**
+     * @param RepositoryInterface $config
      * @param CompilerInterface $compiler
-     * @param array|string[] $extensions
      */
-    private function autoloadFromSameFile(CompilerInterface $compiler, array $extensions): void
+    private function autoloadFiles(RepositoryInterface $config, CompilerInterface $compiler): void
     {
-        $compiler->autoload(function (string $type, ?TypeDefinition $from) use ($extensions) {
-            if ($from === null) {
-                return null;
+        $compiler->autoload(function (string $type) use ($config) {
+            $files = (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_FILES);
+
+            foreach ($files as $file) {
+                $files[\pathinfo($file, \PATHINFO_FILENAME)] = $file;
             }
 
-            $file = $from->getDocument()->getFile();
-
-            if (! $file->isFile()) {
-                return null;
-            }
-
-            foreach ($extensions as $extension) {
-                $pathname = \dirname($file->getPathname()) . '/' . $type . '.' . $extension;
-
-                if (\is_file($pathname)) {
-                    return File::fromPathname($pathname);
-                }
-            }
-
-            return null;
-        });
-    }
-
-    /**
-     * @param Application $app
-     * @param CompilerInterface $compiler
-     * @throws \Railt\Io\Exception\NotReadableException
-     */
-    private function preload(Application $app, CompilerInterface $compiler): void
-    {
-        $this->preloadFiles($compiler, $app->getPreloadFiles());
-        $this->preloadPaths($compiler, $app->getPreloadPaths(), $app->getPreloadExtensions());
-    }
-
-    /**
-     * @param CompilerInterface $compiler
-     * @param array|string[] $files
-     * @throws \Railt\Io\Exception\NotReadableException
-     */
-    private function preloadFiles(CompilerInterface $compiler, array $files): void
-    {
-        foreach ($files as $file) {
-            $compiler->compile(File::fromPathname($file));
-        }
-    }
-
-    /**
-     * @param CompilerInterface $compiler
-     * @param array|string[] $paths
-     * @param array|string[] $extensions
-     * @throws \Railt\Io\Exception\NotReadableException
-     */
-    private function preloadPaths(CompilerInterface $compiler, array $paths, array $extensions): void
-    {
-        foreach ($extensions as $extension) {
-            foreach ($paths as $path) {
-                $files = \glob($path . '*' . '.' . $extension);
-
-                foreach ($files as $file) {
-                    $compiler->compile(File::fromPathname($file));
-                }
-            }
-        }
-    }
-
-    /**
-     * @param CompilerInterface $compiler
-     * @param array|string[] $files
-     */
-    private function autoloadFiles(CompilerInterface $compiler, array $files): void
-    {
-        foreach ($files as $file) {
-            $files[\pathinfo($file, \PATHINFO_FILENAME)] = $file;
-        }
-
-        $compiler->autoload(function (string $type) use ($files) {
             if (isset($files[$type])) {
                 return File::fromPathname($files[$type]);
             }
@@ -191,13 +123,17 @@ class CompilerExtension extends Extension
     }
 
     /**
+     * @param RepositoryInterface $config
      * @param CompilerInterface $compiler
-     * @param array|string[] $paths
-     * @param array|string[] $extensions
      */
-    private function autoloadPaths(CompilerInterface $compiler, array $paths, array $extensions): void
+    private function autoloadPaths(RepositoryInterface $config, CompilerInterface $compiler): void
     {
-        $compiler->autoload(function (string $type) use ($paths, $extensions) {
+        $compiler->autoload(function (string $type) use ($config) {
+            [$paths, $extensions] = [
+                (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_PATHS),
+                (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_EXTENSIONS),
+            ];
+
             foreach ($paths as $path) {
                 foreach ($extensions as $extension) {
                     $pathname = $path . '/' . $type . '.' . $extension;
@@ -210,5 +146,82 @@ class CompilerExtension extends Extension
 
             return null;
         });
+    }
+
+    /**
+     * @param RepositoryInterface $config
+     * @param CompilerInterface $compiler
+     */
+    private function autoloadFromSameFile(RepositoryInterface $config, CompilerInterface $compiler): void
+    {
+        $compiler->autoload(function (string $type, ?TypeDefinition $from) use ($config) {
+            if ($from === null) {
+                return null;
+            }
+
+            $file = $from->getDocument()->getFile();
+
+            if (! $file->isFile()) {
+                return null;
+            }
+
+            foreach ($config->get(RepositoryInterface::KEY_AUTOLOAD_EXTENSIONS) as $extension) {
+                $pathname = \dirname($file->getPathname()) . '/' . $type . '.' . $extension;
+
+                if (\is_file($pathname)) {
+                    return File::fromPathname($pathname);
+                }
+            }
+
+            return null;
+        });
+    }
+
+    /**
+     * @param RepositoryInterface $config
+     * @param CompilerInterface $compiler
+     * @throws NotReadableException
+     */
+    private function preload(RepositoryInterface $config, CompilerInterface $compiler): void
+    {
+        $this->preloadFiles($config, $compiler);
+        $this->preloadPaths($config, $compiler);
+    }
+
+    /**
+     * @param RepositoryInterface $config
+     * @param CompilerInterface $compiler
+     * @throws NotReadableException
+     */
+    private function preloadFiles(RepositoryInterface $config, CompilerInterface $compiler): void
+    {
+        $files = (array)$config->get(RepositoryInterface::KEY_PRELOAD_FILES);
+
+        foreach ($files as $file) {
+            $compiler->compile(File::fromPathname($file));
+        }
+    }
+
+    /**
+     * @param RepositoryInterface $config
+     * @param CompilerInterface $compiler
+     * @throws NotReadableException
+     */
+    private function preloadPaths(RepositoryInterface $config, CompilerInterface $compiler): void
+    {
+        [$paths, $extensions] = [
+            (array)$config->get(RepositoryInterface::KEY_PRELOAD_PATHS),
+            (array)$config->get(RepositoryInterface::KEY_PRELOAD_EXTENSIONS),
+        ];
+
+        foreach ($extensions as $extension) {
+            foreach ($paths as $path) {
+                $files = \glob($path . '*' . '.' . $extension);
+
+                foreach ($files as $file) {
+                    $compiler->compile(File::fromPathname($file));
+                }
+            }
+        }
     }
 }

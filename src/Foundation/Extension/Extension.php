@@ -11,6 +11,8 @@ namespace Railt\Foundation\Extension;
 
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Foundation\ApplicationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -32,7 +34,7 @@ abstract class Extension implements ExtensionInterface
     private const METHOD_BOOT = 'boot';
 
     /**
-     * @var ContainerInterface
+     * @var ApplicationInterface
      */
     protected $app;
 
@@ -54,17 +56,19 @@ abstract class Extension implements ExtensionInterface
     /**
      * Extension constructor.
      *
-     * @param ContainerInterface $container
+     * @param ApplicationInterface $app
+     * @throws ContainerInvocationException
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ApplicationInterface $app)
     {
-        $this->app = $container;
+        $this->app = $app;
 
         $this->onRegister();
     }
 
     /**
      * @return EventDispatcherInterface
+     * @throws ContainerResolutionException
      */
     protected function events(): EventDispatcherInterface
     {
@@ -80,6 +84,7 @@ abstract class Extension implements ExtensionInterface
      * @param \Closure $then
      * @param int $priority
      * @return Extension|$this
+     * @throws ContainerResolutionException
      */
     protected function on(string $event, \Closure $then, int $priority = 0): self
     {
@@ -91,6 +96,7 @@ abstract class Extension implements ExtensionInterface
     /**
      * @param EventSubscriberInterface $subscriber
      * @return Extension|$this
+     * @throws ContainerResolutionException
      */
     protected function subscribe(EventSubscriberInterface $subscriber): self
     {
@@ -101,6 +107,7 @@ abstract class Extension implements ExtensionInterface
 
     /**
      * @return void
+     * @throws ContainerInvocationException
      */
     private function onRegister(): void
     {
@@ -113,6 +120,7 @@ abstract class Extension implements ExtensionInterface
 
     /**
      * @return void
+     * @throws ContainerInvocationException
      */
     public function run(): void
     {
@@ -194,6 +202,7 @@ abstract class Extension implements ExtensionInterface
      * @param string $locator
      * @param array $params
      * @return mixed|object
+     * @throws ContainerResolutionException
      */
     protected function make(string $locator, array $params = [])
     {
