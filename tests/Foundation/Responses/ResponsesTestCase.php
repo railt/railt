@@ -46,8 +46,6 @@ abstract class ResponsesTestCase extends TestCase
     /**
      * @param \Closure|null $resolver
      * @return ConnectionInterface
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
      */
     protected function connection(\Closure $resolver = null): ConnectionInterface
     {
@@ -55,7 +53,7 @@ abstract class ResponsesTestCase extends TestCase
 
         $app = $this->app();
 
-        $events = $app->getContainer()->get(EventDispatcherInterface::class);
+        $events = $app->get(EventDispatcherInterface::class);
 
         if ($resolver) {
             $resolver($events);
