@@ -124,6 +124,10 @@
                 "Railt\\Routing\\RouterExtension",
                 "Railt\\Normalization\\NormalizationExtension"
             ]
+        },
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev"
         }
     },
     "config": {

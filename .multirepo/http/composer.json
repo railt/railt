@@ -50,13 +50,19 @@
             "Railt\\Tests\\Http\\": "tests/"
         }
     },
+    "suggest": {
+        "symfony/http-foundation": "(~3.4|~4.0) Symfony HTTP Kernel",
+        "illuminate/http": "(~5.5) Laravel HTTP Kernel"
+    },
+    "extra": {
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev"
+        }
+    },
     "config": {
         "sort-packages": true
     },
     "prefer-stable": true,
-    "minimum-stability": "dev",
-    "suggest": {
-        "symfony/http-foundation": "(~3.4|~4.0) Symfony HTTP Kernel",
-        "illuminate/http": "(~5.5) Laravel HTTP Kernel"
-    }
+    "minimum-stability": "dev"
 }

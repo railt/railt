@@ -43,6 +43,12 @@
         "ext-swoole": "(~4.1) High-performance, scalable, concurrent WebSocket extension in PHP programming language",
         "cboden/ratchet": "(~0.4) PHP implementation of WebSocket protocol"
     },
+    "extra": {
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev"
+        }
+    },
     "config": {
         "sort-packages": true
     },
