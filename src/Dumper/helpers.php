@@ -10,7 +10,6 @@ declare(strict_types=1);
 use Railt\Dumper\TypeDumper;
 use Railt\Dumper\VarDumper;
 
-
 if (! \function_exists('\\dump_type')) {
     /**
      * @param mixed $value

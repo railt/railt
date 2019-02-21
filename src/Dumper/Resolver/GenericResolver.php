@@ -45,5 +45,4 @@ class GenericResolver extends Resolver
     {
         return \print_r($value, true);
     }
-
 }
