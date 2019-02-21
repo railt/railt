@@ -12,15 +12,12 @@ namespace Railt\Tests\Routing;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Http\Request;
 use Railt\Io\File;
-use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class BasicRequestsTestCase
  */
 class BasicRequestsTestCase extends TestCase
 {
-
-
     /**
      * @return void
      * @throws \InvalidArgumentException

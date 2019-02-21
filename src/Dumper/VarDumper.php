@@ -37,7 +37,7 @@ class VarDumper
     /**
      * @return VarDumper
      */
-    public static function getInstance(): VarDumper
+    public static function getInstance(): self
     {
         return static::$instance ?? (static::$instance = new static());
     }
@@ -46,7 +46,7 @@ class VarDumper
      * @param VarDumper|null $dumper
      * @return VarDumper|null
      */
-    public static function setInstance(?VarDumper $dumper): ?VarDumper
+    public static function setInstance(?self $dumper): ?self
     {
         return static::$instance = $dumper;
     }
@@ -57,7 +57,7 @@ class VarDumper
      */
     public function dump($value): string
     {
-        return $this->stdoutToString(function () use ($value) {
+        return $this->stdoutToString(function () use ($value): void {
             if (\class_exists(CliDumper::class)) {
                 $dumper = $this->getDumper();
                 $dumper->dump((new VarCloner())->cloneVar($value));

@@ -20,7 +20,7 @@ interface TypeDumperInterface
      * @param string|ResolverInterface $resolver
      * @return TypeDumperInterface
      */
-    public function add(string $resolver): TypeDumperInterface;
+    public function add(string $resolver): self;
 
     /**
      * @param mixed $value

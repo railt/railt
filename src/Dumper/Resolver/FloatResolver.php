@@ -57,7 +57,7 @@ class FloatResolver extends Resolver
             case $value === \NAN:
                 return static::FLOAT_NAN;
 
-            case \is_infinite($value);
+            case \is_infinite($value):
                 return $value > 0 ? static::FLOAT_POS_INF : static::FLOAT_NEG_INF;
 
             default:

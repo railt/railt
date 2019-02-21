@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Dumper\Resolver;
 
-use Railt\Dumper\TypeDumper;
-
 /**
  * Class ArrayResolver
  */
@@ -49,7 +47,7 @@ class ArrayResolver extends Resolver
             }
 
             $result[] = $this->dumper->value($key) . ' => ' . $this->dumper->du($value);
-            $i++;
+            ++$i;
         }
 
         return '[' . \implode(', ', $result) . ']';
