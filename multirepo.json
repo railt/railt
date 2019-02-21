@@ -26,6 +26,18 @@
                 "tests/Container": "tests"
             }
         },
+        "railt/dumper": {
+            "remote": "git@github.com:railt/dumper.git",
+            "files": {
+                ".multirepo/dumper/composer.json": "composer.json",
+                ".multirepo/dumper/README.md": "README.md",
+                ".multirepo/dumper/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Dumper": "src/Dumper",
+                "tests/Dumper": "tests"
+            }
+        },
         "railt/http": {
             "remote": "git@github.com:railt/http.git",
             "files": {
@@ -122,18 +134,6 @@
             "dirs": {
                 "src/Subscriptions": "src/Subscriptions",
                 "tests/Subscriptions": "tests"
-            }
-        },
-        "railt/support": {
-            "remote": "git@github.com:railt/support.git",
-            "files": {
-                ".multirepo/support/composer.json": "composer.json",
-                ".multirepo/support/README.md": "README.md",
-                ".multirepo/support/.travis.yml": ".travis.yml"
-            },
-            "dirs": {
-                "src/Support": "src/Support",
-                "tests/Support": "tests"
             }
         }
     }

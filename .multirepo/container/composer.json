@@ -23,7 +23,7 @@
     "require": {
         "php": "^7.1.3",
         "psr/container": "~1.0",
-        "railt/support": "1.4.*|1.4.x-dev"
+        "illuminate/supports": "~5.5"
     },
     "autoload": {
         "psr-4": {

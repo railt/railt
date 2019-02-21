@@ -52,7 +52,7 @@
         "railt/sdl": "*",
         "railt/storage": "*",
         "railt/subscriptions": "*",
-        "railt/support": "*"
+        "railt/dumper": "*"
     },
     "autoload": {
         "psr-4": {
@@ -60,7 +60,7 @@
         },
         "files": [
             "./src/SDL/polyfill.php",
-            "./src/Support/helpers.php",
+            "./src/Dumper/helpers.php",
             "./src/Json/polyfill.php",
             "./src/Json/helpers.php"
         ]

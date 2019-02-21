@@ -10,9 +10,31 @@
     <a href="https://raw.githubusercontent.com/railt/support/master/LICENSE.md"><img src="https://poser.pugx.org/railt/support/license" alt="License MIT"></a>
 </p>
 
-# Support
+# Dumper
 
 > Note: All questions and issues please send 
 to [https://github.com/railt/railt/issues](https://github.com/railt/railt/issues)
 
+## Usage
 
+Component for **short** dump types. Can be used as a display of values in exceptions 
+or short messages without detailed disclosure of the internal structure.
+
+```php
+<?php
+
+echo dump_type(function (string $message = 'Hello World!'): string {
+    return $message;
+});
+
+// fn((string $message = "Hello World!") -> string)
+```
+
+
+```php
+<?php
+
+echo dump_type(new ArrayIterator([1, 2, 3, 0.2]));
+
+// object(ArrayIterator#18<int|float>)
+```

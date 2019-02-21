@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90e58a031a414489e42fcc16f6b3e9f3",
+    "content-hash": "ac5e93a37d681901047ba4ded9dc8cca",
     "packages": [
         {
             "name": "composer/semver",
@@ -598,12 +598,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/discovery.git",
-                "reference": "f83c27076dfe6da4c093b41972bc063edd167b60"
+                "reference": "1b7fd69e13d1cf3791d5fb2159bfefaeff4b37e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/discovery/zipball/f83c27076dfe6da4c093b41972bc063edd167b60",
-                "reference": "f83c27076dfe6da4c093b41972bc063edd167b60",
+                "url": "https://api.github.com/repos/railt/discovery/zipball/1b7fd69e13d1cf3791d5fb2159bfefaeff4b37e7",
+                "reference": "1b7fd69e13d1cf3791d5fb2159bfefaeff4b37e7",
                 "shasum": ""
             },
             "require": {
@@ -644,7 +644,7 @@
                 "console",
                 "dependency"
             ],
-            "time": "2019-02-18T17:46:48+00:00"
+            "time": "2019-02-19T23:49:37+00:00"
         },
         {
             "name": "symfony/console",
@@ -2223,16 +2223,16 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "2.0.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f"
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b8454ea6958c3dee38453d3bd571e023108c91f",
-                "reference": "8b8454ea6958c3dee38453d3bd571e023108c91f",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/8b389aebe1b8b0578430bda0c7c95a829608e059",
+                "reference": "8b389aebe1b8b0578430bda0c7c95a829608e059",
                 "shasum": ""
             },
             "require": {
@@ -2244,7 +2244,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -2268,7 +2268,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2018-02-01T13:07:23+00:00"
+            "time": "2019-02-20T10:12:59+00:00"
         },
         {
             "name": "phpunit/php-token-stream",

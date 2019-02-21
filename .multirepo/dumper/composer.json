@@ -1,17 +1,12 @@
 {
-    "name": "railt/support",
+    "name": "railt/dumper",
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "The Railt Framework support library.",
+    "description": "The Railt Framework mechanism for exploring and dumping PHP variable types",
     "keywords": [
         "helpers",
-        "support",
-        "maybe",
-        "monad",
-        "functional",
-        "partial application",
-        "curry",
+        "dump",
         "debug"
     ],
     "authors": [
@@ -26,15 +21,14 @@
     },
     "require": {
         "php": "^7.1.3",
-        "symfony/polyfill": "~1.10",
-        "illuminate/support": "~5.5"
+        "symfony/var-dumper": "~3.4|~4.0"
     },
     "autoload": {
         "psr-4": {
             "Railt\\": "src/"
         },
         "files": [
-            "./src/Support/helpers.php"
+            "./src/Dumper/helpers.php"
         ]
     },
     "require-dev": {
@@ -42,7 +36,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Tests\\Support\\": "tests/"
+            "Railt\\Tests\\Dumper\\": "tests/"
         }
     },
     "config": {
