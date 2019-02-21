@@ -100,6 +100,9 @@ class Application extends Container implements ApplicationInterface
 
     /**
      * @return void
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     private function registerExtensionsRepository(): void
     {
@@ -108,6 +111,8 @@ class Application extends Container implements ApplicationInterface
         });
 
         $this->alias(ExtensionRepositoryInterface::class, ExtensionRepository::class);
+
+        $this->loadExtensions($this->make(ExtensionRepositoryInterface::class));
     }
 
     /**
@@ -127,13 +132,13 @@ class Application extends Container implements ApplicationInterface
     }
 
     /**
+     * @param ExtensionRepositoryInterface $extensions
      * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      * @throws ParameterResolutionException
      */
-    private function bootIfNotBooted(): void
+    private function loadExtensions(ExtensionRepositoryInterface $extensions): void
     {
-        $extensions = $this->make(ExtensionRepositoryInterface::class);
         $configs = $this->make(ConfigRepositoryInterface::class);
 
         foreach (self::KERNEL_EXTENSIONS as $extension) {
@@ -143,6 +148,17 @@ class Application extends Container implements ApplicationInterface
         foreach ($configs->get(ConfigRepositoryInterface::KEY_EXTENSIONS) as $extension) {
             $extensions->add($extension);
         }
+    }
+
+    /**
+     * @param ExtensionRepositoryInterface $extensions
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
+     */
+    private function bootExtensions(ExtensionRepositoryInterface $extensions): void
+    {
+        $this->loadExtensions($extensions);
 
         $extensions->boot();
     }
@@ -180,7 +196,7 @@ class Application extends Container implements ApplicationInterface
      */
     public function connect(Readable $schema): ConnectionInterface
     {
-        $this->bootIfNotBooted();
+        $this->bootExtensions($this->make(ExtensionRepositoryInterface::class));
 
         [$dictionary, $schema] = $this->compile($schema);
 

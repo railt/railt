@@ -34,6 +34,8 @@ class ConnectionEventsTestCase extends TestCase
      *
      * @param ApplicationInterface $app
      * @param EventDispatcherInterface $dispatcher
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testConnection(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
@@ -61,6 +63,8 @@ class ConnectionEventsTestCase extends TestCase
      * @param ApplicationInterface $app
      * @param EventDispatcherInterface $dispatcher
      * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testConnectionsClosedByGC(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
@@ -92,6 +96,7 @@ class ConnectionEventsTestCase extends TestCase
      * @param EventDispatcherInterface $dispatcher
      * @return void
      * @throws \PHPUnit\Framework\Exception
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testConnectionsClosedManually(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
@@ -127,6 +132,8 @@ class ConnectionEventsTestCase extends TestCase
      *
      * @param ApplicationInterface $app
      * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testUniqueIdentifiers(ApplicationInterface $app): void
     {
@@ -155,6 +162,7 @@ class ConnectionEventsTestCase extends TestCase
      * @param EventDispatcherInterface $dispatcher
      * @return void
      * @throws \PHPUnit\Framework\Exception
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testPropagationWasStopped(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {

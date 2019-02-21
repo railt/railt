@@ -84,8 +84,9 @@ class CompilerExtension extends Extension
      */
     public function boot(RepositoryInterface $config, CompilerInterface $compiler): void
     {
+        $this->autoload($config, $compiler);
+
         if (! $this->app->isRunningInConsole()) {
-            $this->autoload($config, $compiler);
             $this->preload($config, $compiler);
         }
     }

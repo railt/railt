@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation;
 
+use Illuminate\Support\Arr;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Http\Request;
@@ -77,7 +78,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertNull($response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('Cannot return null for non-nullable field Query.non_null.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -109,7 +110,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertNull($response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('Expected a value of type "String" but received: ["42"]',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -169,7 +170,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertSame(['list' => null], $response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('User Error: expected iterable, but did not find one for field Query.list.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -214,7 +215,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertSame(['list_of_non_nulls' => null], $response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('Cannot return null for non-nullable field Query.list_of_non_nulls.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -231,7 +232,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertSame(['list_of_non_nulls' => null], $response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('User Error: expected iterable, but did not find one for field Query.list_of_non_nulls.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -246,7 +247,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertNull($response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('Cannot return null for non-nullable field Query.non_null_list.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -293,7 +294,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertNull($response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('User Error: expected iterable, but did not find one for field Query.non_null_list.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -308,7 +309,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertNull($response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('Cannot return null for non-nullable field Query.non_null_list_of_non_nulls.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -340,7 +341,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertNull($response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('Cannot return null for non-nullable field Query.non_null_list_of_non_nulls.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**
@@ -357,7 +358,7 @@ class ScalarResponsesTestCase extends ResponsesTestCase
         $this->assertNull($response->getData());
         $this->assertCount(1, $response->getErrors());
         $this->assertSame('User Error: expected iterable, but did not find one for field Query.non_null_list_of_non_nulls.',
-            \array_get($response->getErrors(), '0.message'));
+            Arr::get($response->getErrors(), '0.message'));
     }
 
     /**

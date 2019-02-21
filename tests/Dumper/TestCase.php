@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\Support;
+namespace Railt\Tests\Dumper;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
 

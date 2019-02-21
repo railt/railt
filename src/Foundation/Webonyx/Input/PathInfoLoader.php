@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Input;
 
 use GraphQL\Type\Definition\ResolveInfo;
+use Illuminate\Support\Arr;
 
 /**
  * Trait PathInfoLoader
@@ -69,7 +70,7 @@ trait PathInfoLoader
      */
     private function bootAlias(ResolveInfo $info): void
     {
-        $field = \array_last($info->path);
+        $field = Arr::last($info->path);
 
         if ($this->getField() !== $field) {
             $this->withAlias($field);

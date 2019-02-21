@@ -9,8 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Input;
 
+use Illuminate\Support\Arr;
+
 /**
  * Trait HasArguments
+ *
  * @mixin ProvideArguments
  */
 trait HasArguments
@@ -35,7 +38,7 @@ trait HasArguments
      */
     public function get(string $argument, $default = null)
     {
-        return \array_get($this->arguments, $argument, $default);
+        return Arr::get($this->arguments, $argument, $default);
     }
 
     /**
@@ -44,7 +47,7 @@ trait HasArguments
      */
     public function has(string $argument): bool
     {
-        return \array_has($this->arguments, $argument);
+        return Arr::has($this->arguments, $argument);
     }
 
     /**
@@ -56,9 +59,9 @@ trait HasArguments
     public function withArgument(string $argument, $value, bool $rewrite = false): ProvideArguments
     {
         if ($rewrite) {
-            \array_set($this->arguments, $argument, $value);
+            Arr::set($this->arguments, $argument, $value);
         } else {
-            \array_add($this->arguments, $argument, $value);
+            Arr::add($this->arguments, $argument, $value);
         }
 
         return $this;
@@ -70,7 +73,7 @@ trait HasArguments
      */
     public function withoutArgument(string $argument): ProvideArguments
     {
-        \array_forget($this->arguments, $argument);
+        Arr::forget($this->arguments, $argument);
 
         return $this;
     }

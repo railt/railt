@@ -9,8 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Output;
 
+use Illuminate\Support\Arr;
+
 /**
  * Trait HasData
+ *
  * @mixin ProvideData
  */
 trait HasData
@@ -27,15 +30,7 @@ trait HasData
      */
     public function get(string $key, $default = null)
     {
-        /**
-         * Support sampling from an array using the helper of Illuminate Framework.
-         * @see https://laravel.com/docs/5.7/helpers#method-array-get
-         */
-        if (\function_exists('\\array_get')) {
-            return \array_get($this->data, $key, $default);
-        }
-
-        return $this->data[$key] ?? $default;
+        return Arr::get($this->data, $key, $default);
     }
 
     /**
@@ -45,17 +40,7 @@ trait HasData
      */
     public function with(string $key, $data): ProvideData
     {
-        /**
-         * Support insertion into an array using the helper of Illuminate Framework.
-         * @see https://laravel.com/docs/5.7/helpers#method-array-set
-         */
-        if (\function_exists('\\array_set')) {
-            \array_set($this->data, $key, $data);
-
-            return $this;
-        }
-
-        $this->data[$key] = $data;
+        Arr::set($this->data, $key, $data);
 
         return $this;
     }
@@ -66,15 +51,7 @@ trait HasData
      */
     public function has(string $key): bool
     {
-        /**
-         * Support for checking an element in an array when used the helper of Illuminate Framework.
-         * @see https://laravel.com/docs/5.7/helpers#method-array-has
-         */
-        if (\function_exists('\\array_has')) {
-            return \array_has($this->data, $key);
-        }
-
-        return isset($this->data[$key]) || \array_key_exists($key, $this->data);
+        return Arr::has($this->data, $key);
     }
 
     /**

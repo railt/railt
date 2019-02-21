@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Subscribers;
 
+use Illuminate\Support\Arr;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Foundation\Webonyx\Input;
@@ -78,9 +79,9 @@ class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
         //
         [$input, $identifier] = [$event->getInput(), $this->getIndexIdentifier($event)];
 
-        $index = \array_get($this->indexes, $identifier, 0);
+        $index = Arr::get($this->indexes, $identifier, 0);
 
-        \array_set($this->indexes, $identifier, $index + 1);
+        Arr::set($this->indexes, $identifier, $index + 1);
 
         $input->withPath($input->getPath() . Input::PATH_DELIMITER . $index);
     }

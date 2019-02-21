@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Container;
 
 use Railt\Container\Exception\ParameterResolutionException;
-use Railt\Support\TypeDumper;
+use Railt\Support\TypeDumperOld;
 
 /**
  * Class ParamResolver
@@ -164,7 +164,7 @@ class ParamResolver
 
         $error = \vsprintf('Cannot resolve parameter #%d "%s" defined in %s(...)', [
             $position,
-            TypeDumper::dumpParameter($param),
+            TypeDumperOld::dumpParameter($param),
             $function,
         ]);
 

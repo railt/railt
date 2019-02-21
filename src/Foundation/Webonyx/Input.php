@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
+use Illuminate\Support\Arr;
 use Railt\Foundation\Webonyx\Input\PathInfoLoader;
 use Railt\Foundation\Webonyx\Input\PreferTypesLoader;
 use Railt\Http\Input as BaseInput;
@@ -80,7 +81,7 @@ class Input extends BaseInput
             return \in_array($field, $this->getRelatedFields(), true);
         }
 
-        return \array_has($this->info->getFieldSelection($depth), $field);
+        return Arr::has($this->info->getFieldSelection($depth), $field);
     }
 
     /**

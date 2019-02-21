@@ -41,6 +41,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularResolving(string $type, string $field, string $query): void
     {
@@ -63,6 +64,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularFromArray(string $type, string $field, string $query): void
     {
@@ -81,6 +83,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularResolvingPriorityFromArray(string $type, string $field, string $query): void
     {
@@ -103,6 +106,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularResolvingFromTraversable(string $type, string $field, string $query): void
     {
@@ -119,8 +123,6 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $field
      * @param \Closure $then
      * @return \Railt\Http\ResponseInterface
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
      */
     protected function interface(string $query, \Closure $then, string $field = 'interface'): ResponseInterface
     {

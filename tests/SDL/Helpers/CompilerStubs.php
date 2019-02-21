@@ -12,6 +12,7 @@ namespace Railt\Tests\SDL\Helpers;
 use Cache\Adapter\Common\AbstractCachePool;
 use Cache\Adapter\Common\CacheItem;
 use Cache\Adapter\Filesystem\FilesystemCachePool;
+use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Railt\Io\Readable;
@@ -98,7 +99,7 @@ trait CompilerStubs
     {
         $filesystem = new Filesystem(new Local($dir));
 
-        $folder = \snake_case(\class_basename($this)) .
+        $folder = Str::snake(\class_basename($this)) .
             '/' . $name . '_' . \random_int(0, \PHP_INT_MAX);
 
         return new FilesystemCachePool($filesystem, $folder);

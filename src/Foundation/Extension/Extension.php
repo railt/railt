@@ -62,8 +62,6 @@ abstract class Extension implements ExtensionInterface
     public function __construct(ApplicationInterface $app)
     {
         $this->app = $app;
-
-        $this->onRegister();
     }
 
     /**
@@ -103,32 +101,6 @@ abstract class Extension implements ExtensionInterface
         $this->events()->addSubscriber($subscriber);
 
         return $this;
-    }
-
-    /**
-     * @return void
-     * @throws ContainerInvocationException
-     */
-    private function onRegister(): void
-    {
-        if (! $this->registered && \method_exists($this, self::METHOD_REGISTER)) {
-            $this->registered = true;
-
-            $this->app->call(\Closure::fromCallable([$this, self::METHOD_REGISTER]));
-        }
-    }
-
-    /**
-     * @return void
-     * @throws ContainerInvocationException
-     */
-    public function run(): void
-    {
-        if (! $this->booted && \method_exists($this, self::METHOD_BOOT)) {
-            $this->booted = true;
-
-            $this->app->call(\Closure::fromCallable([$this, self::METHOD_BOOT]));
-        }
     }
 
     /**

@@ -38,9 +38,4 @@ interface ExtensionInterface
      * @return array|string[]
      */
     public function getDependencies(): array;
-
-    /**
-     * @return void
-     */
-    public function run(): void;
 }

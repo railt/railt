@@ -10,8 +10,10 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;
+use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Exception\ExtensionException;
 
 /**
@@ -20,14 +22,24 @@ use Railt\Foundation\Exception\ExtensionException;
 class Repository implements RepositoryInterface
 {
     /**
+     * @var string
+     */
+    protected const EXTENSION_REGISTER_METHOD = 'register';
+
+    /**
+     * @var string
+     */
+    protected const EXTENSION_BOOT_METHOD = 'boot';
+
+    /**
      * @var array|ExtensionInterface[]
      */
     private $extensions = [];
 
     /**
-     * @var ContainerInterface
+     * @var ApplicationInterface
      */
-    private $container;
+    private $app;
 
     /**
      * @var array|string[]
@@ -37,11 +49,11 @@ class Repository implements RepositoryInterface
     /**
      * Repository constructor.
      *
-     * @param ContainerInterface $container
+     * @param ApplicationInterface $app
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ApplicationInterface $app)
     {
-        $this->container = $container;
+        $this->app = $app;
     }
 
     /**
@@ -49,6 +61,7 @@ class Repository implements RepositoryInterface
      * @return void
      * @throws ExtensionException
      * @throws ParameterResolutionException
+     * @throws ContainerInvocationException
      */
     public function add(string $extension): void
     {
@@ -57,7 +70,31 @@ class Repository implements RepositoryInterface
             return;
         }
 
-        $this->extensions[$extension] = $this->instance($extension);
+        $this->extensions[$extension] = $instance = $this->instance($extension);
+
+        $this->fireRegistration($instance);
+    }
+
+    /**
+     * @param ExtensionInterface $extension
+     * @throws ContainerInvocationException
+     */
+    protected function fireRegistration(ExtensionInterface $extension): void
+    {
+        if (\method_exists($extension, self::EXTENSION_REGISTER_METHOD)) {
+            $this->app->call([$extension, self::EXTENSION_REGISTER_METHOD]);
+        }
+    }
+
+    /**
+     * @param ExtensionInterface $extension
+     * @throws ContainerInvocationException
+     */
+    protected function fireBoot(ExtensionInterface $extension): void
+    {
+        if (\method_exists($extension, self::EXTENSION_BOOT_METHOD)) {
+            $this->app->call([$extension, self::EXTENSION_BOOT_METHOD]);
+        }
     }
 
     /**
@@ -69,7 +106,7 @@ class Repository implements RepositoryInterface
     private function instance(string $extension)
     {
         try {
-            return $this->container->make($extension);
+            return $this->app->make($extension);
         } catch (ParameterResolutionException $e) {
             throw $e;
         } catch (ContainerResolutionException $e) {
@@ -89,6 +126,7 @@ class Repository implements RepositoryInterface
     /**
      * @throws ExtensionException
      * @throws ParameterResolutionException
+     * @throws ContainerInvocationException
      */
     public function boot(): void
     {
@@ -101,6 +139,7 @@ class Repository implements RepositoryInterface
      * @param ExtensionInterface $extension
      * @throws ExtensionException
      * @throws ParameterResolutionException
+     * @throws ContainerInvocationException
      */
     private function bootIfNotBooted(ExtensionInterface $extension): void
     {
@@ -110,8 +149,7 @@ class Repository implements RepositoryInterface
             $this->booted[] = $class;
 
             $this->loadDependencies($extension);
-
-            $extension->run();
+            $this->fireBoot($extension);
         }
     }
 
@@ -128,6 +166,7 @@ class Repository implements RepositoryInterface
      * @param ExtensionInterface $extension
      * @throws ExtensionException
      * @throws ParameterResolutionException
+     * @throws ContainerInvocationException
      */
     private function loadDependencies(ExtensionInterface $extension): void
     {
@@ -144,6 +183,7 @@ class Repository implements RepositoryInterface
      * @param int|string $package
      * @throws ExtensionException
      * @throws ParameterResolutionException
+     * @throws ContainerInvocationException
      */
     private function loadDependency(ExtensionInterface $extension, string $dependency, $package): void
     {
