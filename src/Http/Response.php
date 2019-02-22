@@ -10,12 +10,10 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\Http\Extension\HasExtensions;
 use Railt\Http\Response\HasExceptions;
 use Railt\Http\Response\ResponseRenderer;
-use Railt\Json\Json;
 
 /**
  * Class Response
