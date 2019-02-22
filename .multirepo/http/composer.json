@@ -31,6 +31,7 @@
         "php": "^7.1.3",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "railt/json": "1.4.x-dev|1.4.*",
         "illuminate/supports": "~5.5"
     },
     "autoload": {

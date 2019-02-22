@@ -69,14 +69,4 @@ interface ResponseInterface extends ProvideExceptions, ProvidesExtensions, Rende
      * @return array
      */
     public function toArray(): array;
-
-    /**
-     * @return string
-     */
-    public function render(): string;
-
-    /**
-     * @return void
-     */
-    public function send(): void;
 }

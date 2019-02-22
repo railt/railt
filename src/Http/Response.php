@@ -9,12 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Debug\DebugAwareTrait;
 use Railt\Http\Exception\GraphQLException;
+use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\Http\Extension\HasExtensions;
 use Railt\Http\Response\HasExceptions;
 use Railt\Http\Response\ResponseRenderer;
+use Railt\Json\Json;
 
 /**
  * Class Response
@@ -24,7 +25,6 @@ class Response implements ResponseInterface
     use ResponseRenderer;
     use HasExtensions;
     use HasExceptions;
-    use DebugAwareTrait;
 
     /**
      * @var int|null
@@ -124,9 +124,22 @@ class Response implements ResponseInterface
 
     /**
      * @return string
+     * @throws \Railt\Json\Exception\JsonException
      */
     public function __toString(): string
     {
-        return $this->render();
+        try {
+            return $this->render();
+        } catch (\JsonException $e) {
+            // We should not use the `toArray()` method,
+            // because it may throw similar exceptions.
+            return Json::encoder()
+                ->setOptions($this->getJsonOptions())
+                ->encode([
+                    ResponseInterface::FIELD_ERRORS => [
+                        [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal Error: ' . $e->getMessage()]
+                    ]
+                ]);
+        }
     }
 }

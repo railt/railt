@@ -161,8 +161,8 @@ class DebugExtension extends Extension
             $this->shareExceptionTrace($response);
             $this->shareTracing($event->getConnection(), $response);
 
-            if ($response instanceof Response) {
-                $response->debug(true);
+            if ($response instanceof ResponseInterface) {
+                $response->withJsonOptions(\JSON_PRETTY_PRINT);
             }
         }
     }
@@ -188,6 +188,8 @@ class DebugExtension extends Extension
             if ($exception instanceof GraphQLExceptionInterface) {
                 $exception->addExtension(new ExceptionTraceExtension($exception));
             }
+
+            $exception->publish();
         }
     }
 

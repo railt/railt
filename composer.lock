@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac5e93a37d681901047ba4ded9dc8cca",
+    "content-hash": "39628aa81eff6b0611d5de72b00380c7",
     "packages": [
         {
             "name": "composer/semver",
@@ -598,12 +598,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/discovery.git",
-                "reference": "1b7fd69e13d1cf3791d5fb2159bfefaeff4b37e7"
+                "reference": "19bed86068c0ed96d9c500a995e37494606b83ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/discovery/zipball/1b7fd69e13d1cf3791d5fb2159bfefaeff4b37e7",
-                "reference": "1b7fd69e13d1cf3791d5fb2159bfefaeff4b37e7",
+                "url": "https://api.github.com/repos/railt/discovery/zipball/19bed86068c0ed96d9c500a995e37494606b83ea",
+                "reference": "19bed86068c0ed96d9c500a995e37494606b83ea",
                 "shasum": ""
             },
             "require": {
@@ -622,6 +622,12 @@
                 "symfony/var-dumper": "~3.4|~4.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "1.3.x": "1.3.x-dev",
+                    "1.4.x": "1.4.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Railt\\Discovery\\": "src"
@@ -644,7 +650,7 @@
                 "console",
                 "dependency"
             ],
-            "time": "2019-02-19T23:49:37+00:00"
+            "time": "2019-02-21T00:37:27+00:00"
         },
         {
             "name": "symfony/console",
@@ -2456,12 +2462,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/compiler.git",
-                "reference": "7810cffdc93a0832738ecd91265230bba0c8e2ec"
+                "reference": "df6d69bcbde3f93f10cae128c0e2db2ed939366c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/compiler/zipball/7810cffdc93a0832738ecd91265230bba0c8e2ec",
-                "reference": "7810cffdc93a0832738ecd91265230bba0c8e2ec",
+                "url": "https://api.github.com/repos/railt/compiler/zipball/df6d69bcbde3f93f10cae128c0e2db2ed939366c",
+                "reference": "df6d69bcbde3f93f10cae128c0e2db2ed939366c",
                 "shasum": ""
             },
             "require": {
@@ -2487,6 +2493,10 @@
                         "Railt\\Compiler\\Console\\GrammarCompileCommand",
                         "Railt\\Compiler\\Console\\CompileCommand"
                     ]
+                },
+                "branch-alias": {
+                    "1.3.x": "1.3.x-dev",
+                    "1.4.x": "1.4.x-dev"
                 }
             },
             "autoload": {
@@ -2513,7 +2523,7 @@
                 "language",
                 "pp"
             ],
-            "time": "2019-02-09T15:37:17+00:00"
+            "time": "2019-02-21T00:37:27+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

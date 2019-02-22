@@ -36,11 +36,6 @@ trait HasExceptions
     }
 
     /**
-     * @return bool
-     */
-    abstract public function isDebug(): bool;
-
-    /**
      * @return array
      */
     public function getErrors(): array
@@ -50,10 +45,6 @@ trait HasExceptions
         foreach ($this->getExceptions() as $exception) {
             if (! $exception instanceof GraphQLExceptionInterface) {
                 $exception = GraphQLException::fromThrowable($exception);
-            }
-
-            if ($this->isDebug()) {
-                $exception->publish();
             }
 
             $errors[] = $exception->jsonSerialize();
@@ -67,12 +58,6 @@ trait HasExceptions
      */
     public function getExceptions(): array
     {
-        foreach ($this->exceptions as $exception) {
-            if ($exception instanceof GraphQLExceptionInterface && $this->isDebug()) {
-                $exception->publish();
-            }
-        }
-
         return $this->exceptions;
     }
 
