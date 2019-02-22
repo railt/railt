@@ -195,13 +195,4 @@ class BatchingResponse implements ResponseInterface
 
         return $result;
     }
-
-    /**
-     * @return string
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    public function __toString(): string
-    {
-        return $this->render();
-    }
 }

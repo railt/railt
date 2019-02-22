@@ -121,25 +121,4 @@ class Response implements ResponseInterface
     {
         return $this->data;
     }
-
-    /**
-     * @return string
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    public function __toString(): string
-    {
-        try {
-            return $this->render();
-        } catch (\JsonException $e) {
-            // We should not use the `toArray()` method,
-            // because it may throw similar exceptions.
-            return Json::encoder()
-                ->setOptions($this->getJsonOptions())
-                ->encode([
-                    ResponseInterface::FIELD_ERRORS => [
-                        [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal Error: ' . $e->getMessage()],
-                    ],
-                ]);
-        }
-    }
 }

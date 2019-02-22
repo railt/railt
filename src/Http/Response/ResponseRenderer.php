@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Response;
 
+use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Http\ResponseInterface;
 use Railt\Json\Json;
 
 /**
@@ -102,5 +104,26 @@ trait ResponseRenderer
     public function jsonSerialize(): array
     {
         return $this->toArray();
+    }
+
+    /**
+     * @return string
+     * @throws \Railt\Json\Exception\JsonException
+     */
+    public function __toString(): string
+    {
+        try {
+            return $this->render();
+        } catch (\JsonException $e) {
+            // We should not use the `toArray()` method,
+            // because it may throw similar exceptions.
+            return Json::encoder()
+                ->setOptions($this->getJsonOptions())
+                ->encode([
+                    ResponseInterface::FIELD_ERRORS => [
+                        [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal JSON encoding error'],
+                    ],
+                ]);
+        }
     }
 }
