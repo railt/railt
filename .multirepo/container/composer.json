@@ -21,9 +21,9 @@
         "source": "https://github.com/railt/railt"
     },
     "require": {
-        "php": "^7.1.3",
+        "php": ">=7.1.3",
         "psr/container": "~1.0",
-        "illuminate/supports": "~5.5"
+        "illuminate/support": "~5.5"
     },
     "autoload": {
         "psr-4": {
