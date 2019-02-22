@@ -137,8 +137,8 @@ class Response implements ResponseInterface
                 ->setOptions($this->getJsonOptions())
                 ->encode([
                     ResponseInterface::FIELD_ERRORS => [
-                        [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal Error: ' . $e->getMessage()]
-                    ]
+                        [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal Error: ' . $e->getMessage()],
+                    ],
                 ]);
         }
     }

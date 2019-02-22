@@ -24,13 +24,13 @@ interface Renderable extends \JsonSerializable
      * @param int $options
      * @return Renderable
      */
-    public function withJsonOptions(int $options): Renderable;
+    public function withJsonOptions(int $options): self;
 
     /**
      * @param int $options
      * @return Renderable
      */
-    public function setJsonOptions(int $options): Renderable;
+    public function setJsonOptions(int $options): self;
 
     /**
      * @return int
