@@ -137,7 +137,7 @@ class Application extends Container implements ApplicationInterface
             $extensions->add($extension);
         }
 
-        foreach ($configs->get(ConfigRepositoryInterface::KEY_EXTENSIONS) as $extension) {
+        foreach ((array)$configs->get(ConfigRepositoryInterface::KEY_EXTENSIONS) as $extension) {
             $extensions->add($extension);
         }
     }
