@@ -11,7 +11,6 @@ namespace Railt\Container;
 
 use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Dumper\TypeDumper;
-use Railt\Support\TypeDumperOld;
 
 /**
  * Class ParamResolver

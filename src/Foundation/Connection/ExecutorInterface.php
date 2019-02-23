@@ -12,7 +12,6 @@ namespace Railt\Foundation\Connection;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Interface ExecutorInterface
