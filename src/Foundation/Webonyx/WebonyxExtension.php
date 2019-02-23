@@ -15,8 +15,6 @@ use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
-use Railt\Foundation\Webonyx\Subscribers\ConnectionSubscriber;
-use Railt\Foundation\Webonyx\Subscribers\RequestsSubscriber;
 use Railt\Foundation\Webonyx\Subscribers\TypeResolvingFixPathSubscriber;
 use Railt\SDL\Reflection\Dictionary;
 

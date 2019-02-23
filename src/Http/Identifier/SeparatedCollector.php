@@ -41,4 +41,3 @@ class SeparatedCollector implements CollectorInterface
         return self::$identifiers[$class] ?? 0;
     }
 }
-

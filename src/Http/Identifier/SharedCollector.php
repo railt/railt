@@ -37,4 +37,3 @@ class SharedCollector implements CollectorInterface
         return self::$identifier;
     }
 }
-

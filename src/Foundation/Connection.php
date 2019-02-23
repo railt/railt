@@ -16,7 +16,6 @@ use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Foundation\Exception\ConnectionException;
 use Railt\Http\HasIdentifier;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
@@ -108,9 +107,9 @@ class Connection implements ConnectionInterface
     private function bootExecutor(): void
     {
         $this->executor = $this->app->make(ExecutorInterface::class, [
-            SchemaDefinition::class => $this->schema,
+            SchemaDefinition::class  => $this->schema,
             CompilerInterface::class => $this->compiler,
-            Dictionary::class => $this->dictionary
+            Dictionary::class        => $this->dictionary,
         ]);
     }
 
