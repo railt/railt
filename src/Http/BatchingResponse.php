@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Extension\HasExtensions;
-use Railt\Http\Response\DebugTrait;
 use Railt\Http\Response\ProvideExceptions;
 use Railt\Http\Response\ResponseRenderer;
 
@@ -19,7 +18,6 @@ use Railt\Http\Response\ResponseRenderer;
  */
 class BatchingResponse implements ResponseInterface
 {
-    use DebugTrait;
     use HasExtensions;
     use ResponseRenderer;
 
@@ -42,6 +40,7 @@ class BatchingResponse implements ResponseInterface
     {
         foreach ($responses as $response) {
             $this->responses[] = $response;
+            $this->withJsonOptions($response->getJsonOptions());
         }
     }
 
@@ -195,13 +194,5 @@ class BatchingResponse implements ResponseInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

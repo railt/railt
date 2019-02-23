@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Response;
 
-use Railt\Debug\Debuggable;
-
 /**
  * Interface ProvideExceptions
  */
-interface ProvideExceptions extends Debuggable
+interface ProvideExceptions
 {
     /**
      * @return array|\Throwable[]

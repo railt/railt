@@ -32,12 +32,11 @@ class Context implements ProvidesConnection, ProvidesRequest
     /**
      * Context constructor.
      *
-     * @param Identifiable $connection
      * @param RequestInterface $request
      */
-    public function __construct(Identifiable $connection, RequestInterface $request)
+    public function __construct(RequestInterface $request)
     {
-        $this->connection = $connection;
+        $this->connection = $request; // TODO
         $this->request = $request;
     }
 

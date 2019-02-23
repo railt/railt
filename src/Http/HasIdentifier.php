@@ -9,16 +9,20 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Identifier\CollectorInterface;
+use Railt\Http\Identifier\SharedCollector;
+
 /**
  * Trait HasIdentifier
+ *
  * @mixin Identifiable
  */
 trait HasIdentifier
 {
     /**
-     * @var int
+     * @var string|CollectorInterface
      */
-    private static $lastId = 0;
+    protected static $collector = SharedCollector::class;
 
     /**
      * @var int
@@ -31,7 +35,7 @@ trait HasIdentifier
     public function getId(): int
     {
         if ($this->id === null) {
-            $this->id = self::$lastId++;
+            $this->id = static::$collector::next(static::class);
         }
 
         return $this->id;

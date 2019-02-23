@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Debug\DebugAwareTrait;
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Exception\GraphQLExceptionLocation;
 use Railt\Http\Extension\HasExtensions;
@@ -24,7 +23,6 @@ class Response implements ResponseInterface
     use ResponseRenderer;
     use HasExtensions;
     use HasExceptions;
-    use DebugAwareTrait;
 
     /**
      * @var int|null
@@ -53,11 +51,13 @@ class Response implements ResponseInterface
     {
         $response = new static();
 
-        $exception = new GraphQLException('Empty GraphQL Request');
+        $exception = new GraphQLException('GraphQL request must contain a valid query data, but it came empty');
         $exception->addLocation(new GraphQLExceptionLocation(0, 0));
         $exception->publish();
 
-        return $response->withException($exception);
+        $response->withException($exception);
+
+        return $response;
     }
 
     /**
@@ -120,13 +120,5 @@ class Response implements ResponseInterface
     public function getData(): ?array
     {
         return $this->data;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->render();
     }
 }

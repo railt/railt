@@ -24,9 +24,9 @@
         "source": "https://github.com/railt/sdl"
     },
     "require": {
-        "php": "^7.1.3",
+        "php": ">=7.1.3",
         "ext-mbstring": "*",
-        "illuminate/supports": "~5.5",
+        "illuminate/support": "~5.5",
         "railt/io": "1.4.*|1.4.x-dev",
         "railt/storage": "1.4.*|1.4.x-dev",
         "railt/parser": "1.4.*|1.4.x-dev",

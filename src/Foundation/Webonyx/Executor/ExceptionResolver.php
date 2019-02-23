@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Webonyx;
+namespace Railt\Foundation\Webonyx\Executor;
 
 use GraphQL\Error\Error;
 use GraphQL\Error\InvariantViolation;

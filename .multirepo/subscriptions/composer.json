@@ -23,7 +23,7 @@
         "source": "https://github.com/railt/subscriptions"
     },
     "require": {
-        "php": "^7.1.3",
+        "php": ">=7.1.3",
         "railt/railt": "1.4.*|1.4.x-dev",
     },
     "autoload": {

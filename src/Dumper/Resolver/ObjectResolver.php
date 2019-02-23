@@ -43,13 +43,9 @@ class ObjectResolver extends Resolver
      */
     public function value($object): string
     {
-        $hash = self::getId($object);
+        $hash = $this->getId($object);
 
-        if (\method_exists($object, '__toString')) {
-            return $object . '#' . $hash;
-        }
-
-        if (self::isAnonymous($object)) {
+        if ($this->isAnonymous($object)) {
             return 'class@anonymous#' . $hash;
         }
 

@@ -9,108 +9,76 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
-use GraphQL\Error\SyntaxError;
-use GraphQL\Executor\ExecutionResult;
-use GraphQL\GraphQL;
-use GraphQL\Language\AST\DocumentNode;
-use GraphQL\Language\AST\OperationDefinitionNode;
-use GraphQL\Language\Parser;
-use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
-use Railt\Http\Identifiable;
+use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Connection\ExecutorInterface;
+use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
+use Railt\Foundation\Webonyx\Executor\RequestResolver;
+use Railt\Foundation\Webonyx\Executor\ResponseResolver;
 use Railt\Http\RequestInterface;
+use Railt\Http\ResponseInterface;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Reflection\Dictionary;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Executor
  */
-class Executor
+class Executor implements ExecutorInterface
 {
     /**
-     * @var \Closure
+     * @var Dictionary
      */
-    private $executor;
+    private $dictionary;
+
+    /**
+     * @var TypeLoader
+     */
+    private $loader;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $events;
 
     /**
      * Executor constructor.
      *
-     * @param Identifiable $connection
-     * @param Schema $schema
+     * @param ApplicationInterface $app
+     * @param Dictionary $dictionary
+     * @throws \Railt\Container\Exception\ContainerResolutionException
      */
-    public function __construct(Identifiable $connection, Schema $schema)
+    public function __construct(ApplicationInterface $app, Dictionary $dictionary)
     {
-        $this->executor = $this->getExecutor($connection, $schema);
+        $this->dictionary = $dictionary;
+        $this->events = $app->make(EventDispatcherInterface::class);
+        $this->loader = new TypeLoader($this->events, $dictionary);
     }
 
     /**
-     * @param Identifiable $connection
-     * @param Schema $schema
-     * @return \Closure
-     */
-    private function getExecutor(Identifiable $connection, Schema $schema): \Closure
-    {
-        return function (RequestInterface $request) use ($connection, $schema) {
-            $vars = $request->getVariables();
-            $query = $this->parse($request->getQuery());
-
-            $this->analyzeRequest($request, $query, $operation = $request->getOperation());
-
-            $context = new Context($connection, $request);
-
-            return GraphQL::executeQuery($schema, $query, null, $context, $vars, $operation);
-        };
-    }
-
-    /**
+     * @param SchemaDefinition $definition
      * @param RequestInterface $request
-     * @param DocumentNode $ast
-     * @param string|null $operation
+     * @return ResponseInterface
+     * @throws \GraphQL\Error\InvariantViolation
+     * @throws \GraphQL\Error\SyntaxError
      */
-    private function analyzeRequest(RequestInterface $request, DocumentNode $ast, string $operation = null): void
+    public function execute(SchemaDefinition $definition, RequestInterface $request): ResponseInterface
     {
-        /** @var OperationDefinitionNode $node */
-        foreach ($ast->definitions as $node) {
-            if ($node->kind === 'OperationDefinition') {
-                $realOperationName = $this->readQueryName($node);
+        $result = RequestResolver::resolve($this->getSchema($definition), $request);
 
-                if ($operation === $realOperationName) {
-                    $request->withOperation($realOperationName);
-                    $request->withQueryType($node->operation);
-
-                    return;
-                }
-            }
-        }
+        return ResponseResolver::resolve($result);
     }
 
     /**
-     * @param OperationDefinitionNode $operation
-     * @return string|null
+     * @param SchemaDefinition $schema
+     * @return Schema
      */
-    private function readQueryName(OperationDefinitionNode $operation): ?string
+    private function getSchema(SchemaDefinition $schema): Schema
     {
-        if ($operation->name === null) {
-            return null;
-        }
+        $builder = new SchemaBuilder($schema, $this->events, $this->loader);
 
-        return (string)$operation->name->value;
-    }
+        $builder->preload($this->dictionary);
 
-    /**
-     * @param string $query
-     * @return DocumentNode
-     * @throws SyntaxError
-     */
-    private function parse(string $query): DocumentNode
-    {
-        return Parser::parse(new Source($query ?: '', 'GraphQL'));
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return ExecutionResult
-     */
-    public function execute(RequestInterface $request): ExecutionResult
-    {
-        return ($this->executor)($request);
+        return $builder->build();
     }
 }
