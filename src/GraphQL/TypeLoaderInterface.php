@@ -14,5 +14,4 @@ namespace Railt\GraphQL;
  */
 interface TypeLoaderInterface
 {
-
 }

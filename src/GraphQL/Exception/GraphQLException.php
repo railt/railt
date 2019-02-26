@@ -16,5 +16,4 @@ use Railt\Io\Exception\ExternalFileException;
  */
 abstract class GraphQLException extends ExternalFileException
 {
-
 }

@@ -1,4 +1,5 @@
-<?php use Railt\GraphQL\Frontend\Parser;
+<?php declare(strict_types=1);
+use Railt\GraphQL\Frontend\Parser;
 use Railt\Io\File;
 
 require __DIR__ . '/vendor/autoload.php';

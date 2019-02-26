@@ -7,11 +7,9 @@
  */
 declare(strict_types=1);
 
-use Psr\SimpleCache\CacheInterface;
 use Railt\GraphQL\Compiler;
 use Railt\GraphQL\ProgramInterface;
 use Railt\Io\File;
-use Railt\Io\Readable;
 
 if (! \function_exists('\\gql')) {
     /**

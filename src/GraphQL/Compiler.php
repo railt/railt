@@ -120,7 +120,6 @@ class Compiler implements CompilerInterface
      */
     public function preload(Readable $schema)
     {
-
     }
 
     /**
@@ -166,7 +165,6 @@ class Compiler implements CompilerInterface
      */
     public function compile(Readable $schema)
     {
-
     }
 
     public function autoload(TypeLoaderInterface $loader): void
