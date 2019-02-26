@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Normalization;
 
 use Railt\Json\Json;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class ObjectNormalizer
@@ -19,14 +18,14 @@ class ObjectNormalizer extends Normalizer
 {
     /**
      * @param mixed $result
-     * @param FieldDefinition $field
+     * @param int $options
      * @return array|bool|float|int|mixed|string
      * @throws \Railt\Json\Exception\JsonException
      */
-    public function normalize($result, FieldDefinition $field)
+    public function normalize($result, int $options = 0)
     {
         if (\is_object($result)) {
-            return $this->isScalar($field)
+            return ($options & static::TYPE_SCALAR)
                 ? $this->renderScalar($result)
                 : $this->renderObject($result);
         }

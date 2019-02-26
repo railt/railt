@@ -69,13 +69,13 @@ class Factory implements NormalizerInterface
 
     /**
      * @param mixed $result
-     * @param FieldDefinition $field
+     * @param int $options
      * @return array|bool|float|int|mixed|string
      */
-    public function normalize($result, FieldDefinition $field)
+    public function normalize($result, int $options = 0)
     {
         foreach ($this->normalizers as $normalizer) {
-            $result = $normalizer->normalize($result, $field);
+            $result = $normalizer->normalize($result, $options);
         }
 
         return $result;

@@ -15,6 +15,9 @@ use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\SDL\Contracts\Definitions\EnumDefinition;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class SerializationExtension
@@ -74,15 +77,47 @@ class NormalizationExtension extends Extension
     /**
      * @param NormalizerInterface $normalizer
      * @return void
+     * @throws \Railt\Container\Exception\ContainerResolutionException
      */
     public function boot(NormalizerInterface $normalizer): void
     {
         $this->on(FieldResolve::class, function (FieldResolve $event) use ($normalizer): void {
             if ($event->hasResult()) {
-                $result = $normalizer->normalize($event->getResult(), $event->getFieldDefinition());
+                $field = $event->getFieldDefinition();
+
+                $result = $normalizer->normalize($event->getResult(), $this->fieldToOptions($field));
 
                 $event->withResult($result);
             }
         }, -100);
+    }
+
+    /**
+     * @param FieldDefinition $field
+     * @return int
+     */
+    private function fieldToOptions(FieldDefinition $field): int
+    {
+        $result = 0;
+
+        if ($field->isList()) {
+            $result |= NormalizerInterface::LIST;
+        }
+
+        if ($field->isNonNull()) {
+            $result |= NormalizerInterface::NON_NULL;
+        }
+
+        if ($field->isListOfNonNulls()) {
+            $result |= NormalizerInterface::LIST_OF_NON_NULLS;
+        }
+
+        $type = $field->getTypeDefinition();
+
+        if ($type instanceof ScalarDefinition || $type instanceof EnumDefinition) {
+            $result |= NormalizerInterface::TYPE_SCALAR;
+        }
+
+        return $result;
     }
 }

@@ -9,50 +9,27 @@ declare(strict_types=1);
 
 namespace Railt\Normalization;
 
-use Railt\SDL\Contracts\Definitions\EnumDefinition;
-use Railt\SDL\Contracts\Definitions\ScalarDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
-
 /**
  * Class Normalizer
  */
 abstract class Normalizer implements NormalizerInterface
 {
     /**
-     * @param FieldDefinition $field
-     * @return bool
+     * @param int $options
+     * @return int
      */
-    protected function isList(FieldDefinition $field): bool
+    public function listItemOptions(int $options): int
     {
-        return $field->isList();
-    }
+        $result = 0;
 
-    /**
-     * @param FieldDefinition $field
-     * @return bool
-     */
-    protected function isSingular(FieldDefinition $field): bool
-    {
-        return ! $this->isList($field);
-    }
+        if ($options & static::LIST_OF_NON_NULLS) {
+            $result |= static::NON_NULL;
+        }
 
-    /**
-     * @param FieldDefinition $field
-     * @return bool
-     */
-    protected function isScalar(FieldDefinition $field): bool
-    {
-        $type = $field->getTypeDefinition();
+        if ($options & static::TYPE_SCALAR) {
+            $result |= static::TYPE_SCALAR;
+        }
 
-        return $type instanceof ScalarDefinition || $type instanceof EnumDefinition;
-    }
-
-    /**
-     * @param FieldDefinition $field
-     * @return bool
-     */
-    protected function isComposite(FieldDefinition $field): bool
-    {
-        return ! $this->isScalar($field);
+        return $result;
     }
 }

@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Normalization;
 
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
-
 /**
  * Class TraversableNormalizer
  */
@@ -33,22 +31,23 @@ class TraversableNormalizer extends Normalizer
 
     /**
      * @param mixed $data
-     * @param FieldDefinition $field
+     * @param int $options
      * @return array|bool|float|int|mixed|string
      */
-    public function normalize($data, FieldDefinition $field)
+    public function normalize($data, int $options = 0)
     {
-        if (\is_iterable($data) && $field->isList()) {
+        if (($options & static::LIST) && \is_iterable($data)) {
+            $childOptions = $this->listItemOptions($options);
             $result = [];
 
             foreach ($data as $key => $value) {
-                $result[$key] = $this->normalizer->normalize($value, $field);
+                $result[$key] = $this->normalizer->normalize($value, $childOptions);
             }
 
             return $result;
         }
 
-        if ($data instanceof \Traversable && ! $field->isList()) {
+        if ($data instanceof \Traversable && ! ($options & static::LIST)) {
             return \iterator_to_array($data);
         }
 
