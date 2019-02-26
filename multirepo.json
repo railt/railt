@@ -123,18 +123,6 @@
                 "src/Storage": "src/Storage",
                 "tests/Storage": "tests"
             }
-        },
-        "railt/subscriptions": {
-            "remote": "git@github.com:railt/subscriptions.git",
-            "files": {
-                ".multirepo/subscriptions/composer.json": "composer.json",
-                ".multirepo/subscriptions/README.md": "README.md",
-                ".multirepo/subscriptions/.travis.yml": ".travis.yml"
-            },
-            "dirs": {
-                "src/Subscriptions": "src/Subscriptions",
-                "tests/Subscriptions": "tests"
-            }
         }
     }
 }
