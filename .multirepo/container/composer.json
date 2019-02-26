@@ -22,6 +22,7 @@
     },
     "require": {
         "php": ">=7.1.3",
+        "railt/dumper": "1.4.*|1.4.x-dev",
         "psr/container": "~1.0",
         "illuminate/support": "~5.5"
     },
