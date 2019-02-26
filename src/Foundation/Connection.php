@@ -79,6 +79,8 @@ class Connection implements ConnectionInterface
 
         $this->bootSchema($schema);
         $this->bootExecutor();
+
+        $this->connect();
     }
 
     /**

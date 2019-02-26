@@ -78,7 +78,7 @@ class RequestEventsTestCase extends TestCase
      */
     public function testQueryRequestType(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
-        $dispatcher->addListener(RequestReceived::class, function (RequestReceived $ev): void {
+        $dispatcher->addListener(ResponseProceed::class, function (ResponseProceed $ev): void {
             $request = $ev->getRequest();
 
             $this->assertSame(Request::TYPE_QUERY, $request->getQueryType());
@@ -96,7 +96,7 @@ class RequestEventsTestCase extends TestCase
      */
     public function testMutationRequestType(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
-        $dispatcher->addListener(RequestReceived::class, function (RequestReceived $ev): void {
+        $dispatcher->addListener(ResponseProceed::class, function (ResponseProceed $ev): void {
             $request = $ev->getRequest();
 
             $this->assertSame(Request::TYPE_MUTATION, $request->getQueryType());
@@ -114,7 +114,7 @@ class RequestEventsTestCase extends TestCase
      */
     public function testSubscriptionRequestType(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
-        $dispatcher->addListener(RequestReceived::class, function (RequestReceived $ev): void {
+        $dispatcher->addListener(ResponseProceed::class, function (ResponseProceed $ev): void {
             $request = $ev->getRequest();
 
             $this->assertSame(Request::TYPE_SUBSCRIPTION, $request->getQueryType());
