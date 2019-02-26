@@ -39,12 +39,13 @@ class ActionDispatcherSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            ActionDispatch::class => ['onHandle'],
+            ActionDispatch::class => ['onHandle', -100],
         ];
     }
 
     /**
      * @param ActionDispatch $event
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function onHandle(ActionDispatch $event): void
     {

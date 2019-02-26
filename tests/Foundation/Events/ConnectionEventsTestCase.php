@@ -13,8 +13,6 @@ use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed as Closed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished as Established;
-use Railt\Foundation\Exception\ConnectionException;
-use Railt\Http\Request;
 use Railt\Io\File;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
