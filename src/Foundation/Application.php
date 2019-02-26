@@ -15,7 +15,6 @@ use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;
-use Railt\Foundation\Application\CacheExtension;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\HasConsoleApplication;
 use Railt\Foundation\Application\ProvidesExtensions;
@@ -45,7 +44,6 @@ class Application extends Container implements ApplicationInterface
      */
     private const KERNEL_EXTENSIONS = [
         EventsExtension::class,
-        CacheExtension::class,
         CompilerExtension::class,
         WebonyxExtension::class,
     ];

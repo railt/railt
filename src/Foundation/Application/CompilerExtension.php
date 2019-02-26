@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
+use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Config\RepositoryInterface;
@@ -59,20 +60,14 @@ class CompilerExtension extends Extension
     }
 
     /**
-     * @return array
-     */
-    public function getDependencies(): array
-    {
-        return ['railt/railt' => CacheExtension::class];
-    }
-
-    /**
      * @return void
      * @throws ContainerInvocationException
      */
     public function register(): void
     {
-        $this->registerIfNotRegistered(CompilerInterface::class, function (Storage $cache) {
+        $this->registerIfNotRegistered(CompilerInterface::class, function () {
+            $cache = $this->app->has(Storage::class) ? $this->app->make(Storage::class) : null;
+
             return new Compiler($cache);
         });
     }
