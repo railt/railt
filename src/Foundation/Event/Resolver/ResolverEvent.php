@@ -12,6 +12,7 @@ namespace Railt\Foundation\Event\Resolver;
 use Railt\Http\Identifiable;
 use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
+use Railt\Json\Json;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Symfony\Component\EventDispatcher\Event;
@@ -209,7 +210,11 @@ abstract class ResolverEvent extends Event implements ResolverEventInterface
      */
     public function __toString(): string
     {
-        return (string)\json_encode($this->getResult());
+        try {
+            return (string)Json::encode($this->getResult());
+        } catch (\JsonException $e) {
+            return '';
+        }
     }
 
     /**

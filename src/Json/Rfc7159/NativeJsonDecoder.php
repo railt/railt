@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Json\Rfc7159;
 
 use Railt\Json\Exception\JsonException;
-use Railt\Json\Json;
 use Railt\Json\JsonDecoder;
 
 /**

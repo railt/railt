@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Railt\Dumper\TypeDumper;
+use Railt\Json\Json;
 use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
@@ -102,6 +104,7 @@ trait Support
     /**
      * @param mixed $value
      * @return string
+     * @throws \Railt\Json\Exception\JsonException
      */
     protected function valueWithType($value): string
     {
@@ -111,6 +114,7 @@ trait Support
     /**
      * @param mixed $value
      * @return mixed
+     * @throws \Railt\Json\Exception\JsonException
      */
     protected function valueToScalar($value)
     {
@@ -138,11 +142,13 @@ trait Support
         }
 
         if ($value instanceof \Illuminate\Contracts\Support\Jsonable) {
-            return $this->valueToScalar(\json_decode($value->toJson(), true));
+            $decoder = Json::decoder()->withOptions(\JSON_OBJECT_AS_ARRAY);
+
+            return $this->valueToScalar($decoder->decode($value->toJson()));
         }
 
         if ($value instanceof \JsonSerializable) {
-            return $this->valueToScalar(\json_encode($value->jsonSerialize(), true));
+            return $this->valueToScalar(Json::encode($value->jsonSerialize()));
         }
 
         return \ucfirst(\strtolower(\gettype($value)));
@@ -151,13 +157,14 @@ trait Support
     /**
      * @param mixed|iterable|null $value
      * @return string
+     * @throws \Railt\Json\Exception\JsonException
      */
     protected function valueToString($value): string
     {
         $result = $this->valueToScalar($value);
 
         if (\is_array($result)) {
-            $result = \json_encode($result);
+            $result = Json::encode($result);
             $result = \preg_replace('/"([_A-Za-z][_0-9A-Za-z]*)":/u', '$1: ', $result);
             $result = \preg_replace('/:\s+(.*?),/u', ': $1, ', $result);
 

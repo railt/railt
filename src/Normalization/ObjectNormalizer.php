@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Normalization;
 
+use Railt\Json\Json;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
@@ -20,6 +21,7 @@ class ObjectNormalizer extends Normalizer
      * @param mixed $result
      * @param FieldDefinition $field
      * @return array|bool|float|int|mixed|string
+     * @throws \Railt\Json\Exception\JsonException
      */
     public function normalize($result, FieldDefinition $field)
     {
@@ -52,9 +54,12 @@ class ObjectNormalizer extends Normalizer
     /**
      * @param mixed $result
      * @return mixed
+     * @throws \Railt\Json\Exception\JsonException
      */
     private function renderObject($result)
     {
-        return \json_decode(\json_encode($result), true);
+        return Json::decoder()
+            ->withOptions(\JSON_OBJECT_AS_ARRAY)
+            ->decode(Json::encode($result));
     }
 }

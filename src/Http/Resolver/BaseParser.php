@@ -11,6 +11,7 @@ namespace Railt\Http\Resolver;
 
 use Railt\Http\Request;
 use Railt\Http\RequestInterface;
+use Railt\Json\Json;
 
 /**
  * Class BaseParser
@@ -59,28 +60,12 @@ abstract class BaseParser implements ResolverInterface
     protected function parseJson(string $json, bool $throws = false): array
     {
         try {
-            $data = @\json_decode($json, true, 64);
-            // Since PHP >= 7.3 parsing json containing errors will throws
-            // an exception. It is necessary to handle these cases.
-        } catch (\Throwable $e) {
-            if ($throws) {
-                throw new \LogicException($e->getMessage(), $e->getCode(), $e);
-            }
-
-            $data = [];
+            return Json::decoder()
+                ->withOptions(\JSON_OBJECT_AS_ARRAY)
+                ->decode($json);
+        } catch (\JsonException $e) {
+            return [];
         }
-
-        // If PHP is lower or equal to version 7.2, then we must
-        // handle the error in the old good way.
-        if (\json_last_error() !== \JSON_ERROR_NONE) {
-            if ($throws) {
-                throw new \LogicException(\json_last_error_msg(), \json_last_error());
-            }
-
-            $data = [];
-        }
-
-        return $data;
     }
 
     /**
