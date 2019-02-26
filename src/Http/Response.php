@@ -51,11 +51,13 @@ class Response implements ResponseInterface
     {
         $response = new static();
 
-        $exception = new GraphQLException('Empty GraphQL Request');
+        $exception = new GraphQLException('GraphQL request must contain a valid query data, but it came empty');
         $exception->addLocation(new GraphQLExceptionLocation(0, 0));
         $exception->publish();
 
-        return $response->withException($exception);
+        $response->withException($exception);
+
+        return $response;
     }
 
     /**

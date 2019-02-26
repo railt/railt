@@ -9,21 +9,22 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
-use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Foundation\Connection\ExecutorInterface;
+use Railt\Foundation\Connection\Format;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
-use Railt\Foundation\Event\Http\HttpEventInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Foundation\Exception\ConnectionException;
-use Railt\Http\BatchingResponse;
 use Railt\Http\HasIdentifier;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
+use Railt\Io\Readable;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
+use Railt\SDL\Schema\CompilerInterface;
+use Railt\SDL\Schema\Configuration;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -35,14 +36,24 @@ class Connection implements ConnectionInterface
     use HasIdentifier;
 
     /**
+     * @var ApplicationInterface
+     */
+    private $app;
+
+    /**
+     * @var SchemaDefinition
+     */
+    private $schema;
+
+    /**
      * @var bool
      */
     private $closed = true;
 
     /**
-     * @var SchemaDefinition|null
+     * @var CompilerInterface|Configuration
      */
-    private $schema;
+    private $compiler;
 
     /**
      * @var Dictionary
@@ -50,62 +61,141 @@ class Connection implements ConnectionInterface
     private $dictionary;
 
     /**
-     * @var Application
+     * @var ExecutorInterface
      */
-    private $app;
-
-    /**
-     * @var
-     */
-    private $events;
+    private $executor;
 
     /**
      * Connection constructor.
      *
-     * @param Application $app
-     * @param Dictionary $dictionary
-     * @param SchemaDefinition $schema
+     * @param ApplicationInterface $app
+     * @param Readable $schema
      * @throws ContainerResolutionException
+     * @throws \InvalidArgumentException
      */
-    public function __construct(Application $app, Dictionary $dictionary, SchemaDefinition $schema)
+    public function __construct(ApplicationInterface $app, Readable $schema)
     {
         $this->app = $app;
-        $this->schema = $schema;
-        $this->dictionary = $dictionary;
-        $this->events = $this->resolveEventDispatcher($app);
 
-        $this->connect();
+        $this->bootSchema($schema);
+        $this->bootExecutor();
     }
 
     /**
-     * @param ContainerInterface $container
-     * @return EventDispatcherInterface
+     * @param Readable $schema
+     * @throws ContainerResolutionException
+     * @throws \InvalidArgumentException
+     */
+    private function bootSchema(Readable $schema): void
+    {
+        $compiler = $this->app->make(CompilerInterface::class);
+
+        $document = $compiler->compile($schema);
+
+        if (! $document->getSchema()) {
+            $error = 'The GraphQL SDL must define at least one Schema definition';
+            throw new \InvalidArgumentException($error);
+        }
+
+        $this->schema = $document->getSchema();
+        $this->dictionary = $compiler->getDictionary();
+    }
+
+    /**
      * @throws ContainerResolutionException
      */
-    private function resolveEventDispatcher(ContainerInterface $container): EventDispatcherInterface
+    private function bootExecutor(): void
     {
-        return $container->make(EventDispatcherInterface::class);
+        $this->executor = $this->app->make(ExecutorInterface::class, [
+            SchemaDefinition::class  => $this->schema,
+            CompilerInterface::class => $this->compiler,
+            Dictionary::class        => $this->dictionary,
+        ]);
+    }
+
+    /**
+     * @param iterable|RequestInterface|RequestInterface[] $requests
+     * @return ResponseInterface
+     * @throws \InvalidArgumentException
+     * @throws ContainerResolutionException
+     */
+    public function request($requests): ResponseInterface
+    {
+        $this->connect();
+
+        $responses = [];
+
+        foreach (Format::requests($requests) as $request) {
+            $this->fireOnRequestEvent($request);
+
+            $responses[] = $response = \trim($request->getQuery())
+                ? $this->execute($this->schema, $request)
+                : Response::empty();
+
+            $this->fireOnResponseEvent($request, $response);
+        }
+
+        return Format::responses($responses);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return RequestInterface
+     * @throws ContainerResolutionException
+     */
+    private function fireOnRequestEvent(RequestInterface $request): RequestInterface
+    {
+        /** @var RequestReceived $event */
+        $event = $this->fire(new RequestReceived($this, $request));
+
+        if ($event->isPropagationStopped()) {
+            return $request;
+        }
+
+        return $event->getRequest() ?? $request;
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws ContainerResolutionException
+     */
+    private function fireOnResponseEvent(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        /** @var ResponseProceed $after */
+        $after = $this->fire(new ResponseProceed($this, $request, $response));
+
+        if ($after->isPropagationStopped()) {
+            return $response;
+        }
+
+        return $after->getResponse() ?? $response;
     }
 
     /**
      * @return void
+     * @throws ContainerResolutionException
      */
     private function connect(): void
     {
         if ($this->closed) {
             $this->closed = false;
 
-            $this->fireOnConnectEvent();
+            $this->fireOnConnectEvent($this->dictionary, $this->schema);
         }
     }
 
     /**
-     * @return void
+     * @param Dictionary $dictionary
+     * @param SchemaDefinition $schema
+     * @throws ContainerResolutionException
      */
-    private function fireOnConnectEvent(): void
+    private function fireOnConnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
     {
-        $event = new ConnectionEstablished($this, $this->dictionary, $this->schema);
-        $event = $this->events->dispatch(ConnectionEstablished::class, $event);
+        $event = new ConnectionEstablished($this, $dictionary, $schema);
+
+        $event = $this->fire($event);
 
         if ($event->isPropagationStopped()) {
             $this->close();
@@ -113,7 +203,20 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * @param Event $event
+     * @return Event
+     * @throws ContainerResolutionException
+     */
+    private function fire(Event $event): Event
+    {
+        $events = $this->app->make(EventDispatcherInterface::class);
+
+        return $events->dispatch(\get_class($event), $event);
+    }
+
+    /**
      * @return void
+     * @throws ContainerResolutionException
      */
     public function close(): void
     {
@@ -121,145 +224,33 @@ class Connection implements ConnectionInterface
             $this->closed = true;
             \gc_collect_cycles();
 
-            $this->fireOnDisconnect();
+            $this->fireOnDisconnectEvent($this->dictionary, $this->schema);
         }
+    }
+
+    /**
+     * @param Dictionary $dictionary
+     * @param SchemaDefinition $schema
+     * @throws ContainerResolutionException
+     */
+    private function fireOnDisconnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
+    {
+        $this->fire(new ConnectionClosed($this, $dictionary, $schema));
+    }
+
+    /**
+     * @param SchemaDefinition $schema
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     */
+    private function execute(SchemaDefinition $schema, RequestInterface $request): ResponseInterface
+    {
+        return $this->executor->execute($schema, $request);
     }
 
     /**
      * @return void
-     */
-    private function fireOnDisconnect(): void
-    {
-        $event = new ConnectionClosed($this, $this->dictionary, $this->schema);
-
-        $this->events->dispatch(ConnectionClosed::class, $event);
-    }
-
-    /**
-     * @param RequestInterface|RequestInterface[] $requests
-     * @return ResponseInterface
-     * @throws ConnectionException
-     * @throws \Throwable
-     */
-    public function request($requests): ResponseInterface
-    {
-        $responses = [];
-
-        foreach ($this->requestsToIterable($requests) as $request) {
-            $responses[] = $this->singleRequest($request);
-        }
-
-        return $this->formatResponses($responses);
-    }
-
-    /**
-     * @param array|ResponseInterface[] $responses
-     * @return ResponseInterface
-     */
-    private function formatResponses(array $responses): ResponseInterface
-    {
-        switch (\count($responses)) {
-            case 0:
-                return Response::empty();
-
-            case 1:
-                return \reset($responses);
-
-            default:
-                return new BatchingResponse(...$responses);
-        }
-    }
-
-    /**
-     * @param RequestInterface|RequestInterface[] $requests
-     * @return iterable|RequestInterface[]
-     */
-    private function requestsToIterable($requests): iterable
-    {
-        return $requests instanceof RequestInterface ? [$requests] : $requests;
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     * @throws ConnectionException
-     * @throws \Throwable
-     */
-    private function singleRequest(RequestInterface $request): ResponseInterface
-    {
-        if ($this->closed) {
-            throw new ConnectionException('Connection was closed and can no longer process requests');
-        }
-
-        try {
-            $before = $this->fireOnRequest($request);
-            $this->assertResponse($before);
-
-            $after = $this->fireOnResponse($before);
-            $this->assertResponse($after);
-
-            /** @var ResponseInterface $response */
-            $response = $after->getResponse();
-
-            return $response;
-        } catch (\Throwable $e) {
-            $this->close();
-
-            throw $e;
-        }
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return RequestReceived|Event
-     * @throws ConnectionException
-     */
-    private function fireOnRequest(RequestInterface $request): RequestReceived
-    {
-        $event = new RequestReceived($this, $request);
-        $event = $this->events->dispatch(RequestReceived::class, $event);
-
-        if ($event->isPropagationStopped()) {
-            $error = 'The ability to process a request was blocked before generating a correct response.';
-            throw new ConnectionException($error);
-        }
-
-        return $event;
-    }
-
-    /**
-     * @param HttpEventInterface $event
-     * @throws ConnectionException
-     */
-    private function assertResponse(HttpEventInterface $event): void
-    {
-        $response = $event->getResponse();
-
-        if ($response === null) {
-            $error = \sprintf('The %s event should provide a response, but null given', \get_class($event));
-            throw new ConnectionException($error);
-        }
-    }
-
-    /**
-     * @param RequestReceived $event
-     * @return ResponseProceed|Event
-     * @throws ConnectionException
-     */
-    private function fireOnResponse(RequestReceived $event): ResponseProceed
-    {
-        $after = new ResponseProceed($event->getConnection(), $event->getRequest(), $event->getResponse());
-        $after = $this->events->dispatch(ResponseProceed::class, $after);
-
-        if ($after->isPropagationStopped()) {
-            throw new ConnectionException('The ability to send a generated response has been blocked.');
-        }
-
-        return $after;
-    }
-
-    /**
-     * @return void
+     * @throws ContainerResolutionException
      */
     public function __destruct()
     {

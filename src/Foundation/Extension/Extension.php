@@ -24,29 +24,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 abstract class Extension implements ExtensionInterface
 {
     /**
-     * @var string
-     */
-    private const METHOD_REGISTER = 'register';
-
-    /**
-     * @var string
-     */
-    private const METHOD_BOOT = 'boot';
-
-    /**
      * @var ApplicationInterface
      */
     protected $app;
-
-    /**
-     * @var bool
-     */
-    private $booted = false;
-
-    /**
-     * @var bool
-     */
-    private $registered = false;
 
     /**
      * @var EventDispatcherInterface|null
@@ -57,7 +37,6 @@ abstract class Extension implements ExtensionInterface
      * Extension constructor.
      *
      * @param ApplicationInterface $app
-     * @throws ContainerInvocationException
      */
     public function __construct(ApplicationInterface $app)
     {

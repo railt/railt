@@ -22,24 +22,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var ConnectionSubscriber
-     */
-    private $connections;
-
-    /**
      * @var array
      */
     private $indexes = [];
-
-    /**
-     * TypeResolvingFixPathSubscriber constructor.
-     *
-     * @param ConnectionSubscriber $connections
-     */
-    public function __construct(ConnectionSubscriber $connections)
-    {
-        $this->connections = $connections;
-    }
 
     /**
      * @return array
@@ -57,15 +42,6 @@ class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
      */
     public function onTypeResolve(TypeResolve $event): void
     {
-        $connection = $event->getConnection()->getId();
-
-        //
-        // Skip coercion in case there is no necessary Webonyx connection.
-        //
-        if (! $this->connections->hasConnection($connection)) {
-            return;
-        }
-
         //
         // The error is associated with List types only.
         // Skip coercion if a singular value is returned.

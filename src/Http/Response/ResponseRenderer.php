@@ -48,7 +48,7 @@ trait ResponseRenderer
     {
         return Json::encoder()
             ->setOptions($jsonOptions ?? $this->options)
-            ->encode($this->toArray());
+            ->encode((object)$this->toArray());
     }
 
     /**
@@ -99,11 +99,11 @@ trait ResponseRenderer
     }
 
     /**
-     * @return array
+     * @return object|mixed
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize()
     {
-        return $this->toArray();
+        return (object)$this->toArray();
     }
 
     /**
@@ -119,7 +119,7 @@ trait ResponseRenderer
             // because it may throw similar exceptions.
             return Json::encoder()
                 ->setOptions($this->getJsonOptions())
-                ->encode([
+                ->encode((object)[
                     ResponseInterface::FIELD_ERRORS => [
                         [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal JSON encoding error'],
                     ],

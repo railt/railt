@@ -89,7 +89,7 @@ class GraphQLException extends ExternalFileException implements GraphQLException
         }
 
         foreach ($error[static::FIELD_EXTENSIONS] ?? [] as $name => $value) {
-            $exception->addExtension($name, new DataExtension($value));
+            $exception->withExtension($name, new DataExtension($value));
         }
 
         return $exception;

@@ -32,13 +32,13 @@ trait HasExtensions
      * @param iterable|ExtensionInterface[] $extensions
      * @return ProvidesExtensions|$this
      */
-    public function addExtensions(iterable $extensions): ProvidesExtensions
+    public function withExtensions(iterable $extensions): ProvidesExtensions
     {
         foreach ($extensions as $key => $value) {
             if ($value instanceof ExtensionInterface) {
-                $this->addExtension($value);
+                $this->withExtension($value);
             } else {
-                $this->addExtension($key, $value);
+                $this->withExtension($key, $value);
             }
         }
 
@@ -50,7 +50,7 @@ trait HasExtensions
      * @param ExtensionInterface|\JsonSerializable|mixed $value
      * @return ProvidesExtensions|$this
      */
-    public function addExtension($keyOrExtension, $value = null): ProvidesExtensions
+    public function withExtension($keyOrExtension, $value = null): ProvidesExtensions
     {
         if ($keyOrExtension instanceof \JsonSerializable) {
             $this->extensions = \array_merge_recursive($this->extensions, (array)$keyOrExtension->jsonSerialize());

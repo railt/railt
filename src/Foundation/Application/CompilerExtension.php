@@ -17,7 +17,7 @@ use Railt\Foundation\Extension\Status;
 use Railt\Io\Exception\NotReadableException;
 use Railt\Io\File;
 use Railt\SDL\Compiler;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\Storage\Storage;
 
@@ -155,7 +155,7 @@ class CompilerExtension extends Extension
      */
     private function autoloadFromSameFile(RepositoryInterface $config, CompilerInterface $compiler): void
     {
-        $compiler->autoload(function (string $type, ?TypeDefinition $from) use ($config) {
+        $compiler->autoload(function (string $type, ?Definition $from) use ($config) {
             if ($from === null) {
                 return null;
             }

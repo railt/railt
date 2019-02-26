@@ -11,12 +11,12 @@ namespace Railt\Foundation\Webonyx;
 
 use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
-use Railt\Foundation\Webonyx\Subscribers\ConnectionSubscriber;
-use Railt\Foundation\Webonyx\Subscribers\RequestsSubscriber;
 use Railt\Foundation\Webonyx\Subscribers\TypeResolvingFixPathSubscriber;
+use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Class WebonyxExtension
@@ -64,24 +64,25 @@ class WebonyxExtension extends Extension
     }
 
     /**
+     * @return void
+     */
+    public function register(): void
+    {
+        $this->app->register(ExecutorInterface::class, function (Dictionary $dictionary) {
+            return new Executor($this->app, $dictionary);
+        });
+    }
+
+    /**
      * @param ApplicationInterface $app
+     * @throws \Railt\Container\Exception\ContainerResolutionException
      */
     public function boot(ApplicationInterface $app): void
     {
         //
-        // Listen all connections.
-        //
-        $this->subscribe($connections = new ConnectionSubscriber($app));
-
-        //
-        // Listen requests and delegate it to several connection.
-        //
-        $this->subscribe($requests = new RequestsSubscriber($connections));
-
-        //
         // Fix of https://github.com/webonyx/graphql-php/issues/396
         // Reproduced to Webonyx version < 0.12.6 (including)
         //
-        $this->subscribe(new TypeResolvingFixPathSubscriber($connections));
+        $this->subscribe(new TypeResolvingFixPathSubscriber());
     }
 }

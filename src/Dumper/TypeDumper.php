@@ -98,6 +98,15 @@ class TypeDumper implements TypeDumperInterface
      * @param mixed $value
      * @return string
      */
+    public static function render($value): string
+    {
+        return static::getInstance()->dump($value);
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
     public function dump($value): string
     {
         return \vsprintf(self::DUMP_PATTERN, [

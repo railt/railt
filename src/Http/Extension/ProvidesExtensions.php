@@ -29,5 +29,5 @@ interface ProvidesExtensions
      * @param ExtensionInterface|\JsonSerializable|mixed $value
      * @return ProvidesExtensions|$this
      */
-    public function addExtension($keyOrExtension, $value = null): self;
+    public function withExtension($keyOrExtension, $value = null): self;
 }
