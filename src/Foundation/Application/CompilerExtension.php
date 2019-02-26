@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
-use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Config\RepositoryInterface;
