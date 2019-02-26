@@ -19,7 +19,6 @@ use Railt\Io\File;
 use Railt\SDL\Compiler;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Schema\CompilerInterface;
-use Railt\Storage\Storage;
 
 /**
  * Class CompilerExtension
