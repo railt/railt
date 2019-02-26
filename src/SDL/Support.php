@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\Dumper\TypeDumper;
 use Railt\Json\Json;
 use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 use Railt\SDL\Contracts\Definitions\Definition;

@@ -11,7 +11,6 @@ namespace Railt\Normalization;
 
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerResolutionException;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class Normalizer
