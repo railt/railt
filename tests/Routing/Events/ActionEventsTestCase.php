@@ -64,7 +64,7 @@ class ActionEventsTestCase extends TestCase
     ): void {
         $dispatched = false;
 
-        $e->addListener(ActionDispatch::class, function (ActionDispatch $event) use (&$dispatched) {
+        $e->addListener(ActionDispatch::class, function (ActionDispatch $event) use (&$dispatched): void {
             $dispatched = true;
         });
 
@@ -93,7 +93,7 @@ class ActionEventsTestCase extends TestCase
 
         $dispatched = false;
 
-        $e->addListener(ActionDispatch::class, function (ActionDispatch $event) use (&$dispatched) {
+        $e->addListener(ActionDispatch::class, function (ActionDispatch $event) use (&$dispatched): void {
             $dispatched = true;
         });
 
@@ -121,13 +121,13 @@ class ActionEventsTestCase extends TestCase
         })->whereField('id');
 
 
-        $e->addListener(ActionDispatch::class, function (ActionDispatch $event) {
+        $e->addListener(ActionDispatch::class, function (ActionDispatch $event): void {
             $event->withArgument(\stdClass::class, new \stdClass());
         });
 
         $response = $c->request(new Request('{ id }'));
 
-        $this->assertEquals(\stdClass::class, Arr::get($response->toArray(), 'data.id'));
+        $this->assertSame(\stdClass::class, Arr::get($response->toArray(), 'data.id'));
     }
 
     /**
@@ -149,13 +149,13 @@ class ActionEventsTestCase extends TestCase
         })->whereField('id');
 
 
-        $e->addListener(ActionDispatch::class, function (ActionDispatch $event) {
+        $e->addListener(ActionDispatch::class, function (ActionDispatch $event): void {
             $event->withArgument('$variable', 42);
         });
 
         $response = $c->request(new Request('{ id }'));
 
-        $this->assertEquals('42', Arr::get($response->toArray(), 'data.id'));
+        $this->assertSame('42', Arr::get($response->toArray(), 'data.id'));
     }
 
     /**
@@ -181,7 +181,7 @@ class ActionEventsTestCase extends TestCase
         })->whereField('id');
 
 
-        $e->addListener(ActionDispatch::class, function (ActionDispatch $event) {
+        $e->addListener(ActionDispatch::class, function (ActionDispatch $event): void {
             $event->withArguments(['$a' => 42, \stdClass::class => new \stdClass()]);
         });
 
