@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Debug\Http;
+namespace Railt\Debug\MemoryProfiler;
 
 use Railt\Http\Extension\ExtensionInterface;
 

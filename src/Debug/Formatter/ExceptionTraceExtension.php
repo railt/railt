@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Debug\Http;
+namespace Railt\Debug\Formatter;
 
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Extension\ExtensionInterface;

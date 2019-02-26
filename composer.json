@@ -75,7 +75,8 @@
         "cache/filesystem-adapter": "~1.0",
         "illuminate/container": "~5.5",
         "monolog/monolog": "~1.9",
-        "justinrainbow/json-schema": "~5.2"
+        "justinrainbow/json-schema": "~5.2",
+        "itsgoingd/clockwork": "~3.1"
     },
     "autoload-dev": {
         "psr-4": {

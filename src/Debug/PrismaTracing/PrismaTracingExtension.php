@@ -7,15 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Debug\Http;
+namespace Railt\Debug\PrismaTracing;
 
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Http\Extension\ExtensionInterface;
 
 /**
- * Class TracingExtension
+ * Class PrismaTracingExtension
  */
-class TracingExtension implements ExtensionInterface
+class PrismaTracingExtension implements ExtensionInterface
 {
     /**
      * @var string
