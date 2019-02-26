@@ -1,0 +1,44 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Operations
+ * --------------------------------------------------------------------------
+ *
+ * There are three types of operations that GraphQL models:
+ *     - "query" – a read‐only fetch.
+ *     - "mutation" – a write followed by a fetch.
+ *     - "subscription" – a long‐lived request that fetches data in response
+ *       to source events.
+ *
+ * Each operation is represented by an optional operation name and
+ * a selection set.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Language.Operations
+ */
+
+OperationDefinition
+  : QueryOperation()
+  | MutationOperation()
+  | SubscriptionOperation()
+  ;
+
+#QueryOperation -> Railt\GraphQL\AST\Executable\Selection
+  : (::T_QUERY:: NameWithReserved()?)?
+    __operationDefinitionBody()
+  ;
+
+#MutationOperation -> Railt\GraphQL\AST\Executable\Selection
+  : ::T_MUTATION:: NameWithReserved()?
+    __operationDefinitionBody()
+  ;
+
+#SubscriptionOperation -> Railt\GraphQL\AST\Executable\Selection
+  : ::T_SUBSCRIPTION:: NameWithReserved()?
+    __operationDefinitionBody()
+  ;
+
+__operationDefinitionBody
+  : VariableDefinitions()? Directives()?
+    SelectionSet()
+  ;

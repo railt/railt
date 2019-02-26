@@ -1,0 +1,35 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Interfaces
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL interfaces represent a list of named fields and their arguments.
+ * GraphQL objects can then implement these interfaces which requires that
+ * the object type will define all fields defined by those interfaces.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Interfaces
+ */
+
+#InterfaceDefinition -> Railt\GraphQL\AST\Definition\InterfaceNode
+  : Description()?
+    InterfaceDefinitionExceptDescription()
+  ;
+
+InterfaceDefinitionExceptDescription
+  : InterfaceDefinitionHead()
+    InterfaceDefinitionBody()?
+  ;
+
+InterfaceDefinitionHead
+  : ::T_INTERFACE:: TypeName()
+    TypeDefinitionImplements()?
+    Directive()*
+  ;
+
+InterfaceDefinitionBody
+  : ::T_BRACE_OPEN::
+      FieldDefinition()*
+    ::T_BRACE_CLOSE::
+  ;

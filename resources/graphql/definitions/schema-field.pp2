@@ -1,0 +1,34 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Schema Fields
+ * --------------------------------------------------------------------------
+ *
+ * A schema defines the initial root operation type for each kind of
+ * operation it supports: query, mutation, and subscription; this determines
+ * the place in the type system where those operations begin.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Root-Operation-Types
+ */
+
+
+#SchemaFieldDefinition -> Railt\GraphQL\AST\Definition\SchemaFieldNode
+  : Description()?
+    __schemaFieldName() __schemaFieldBody()
+    Directive()*
+  ;
+
+__schemaFieldName
+  : SchemaFieldName() #Name
+  ;
+
+SchemaFieldName
+  : <T_QUERY>
+  | <T_MUTATION>
+  | <T_SUBSCRIPTION>
+  ;
+
+__schemaFieldBody
+  : ::T_COLON:: Type()
+  ;

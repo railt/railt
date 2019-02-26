@@ -1,0 +1,19 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enum Values
+ * --------------------------------------------------------------------------
+ *
+ * Enums are not references for a numeric value, but are unique values
+ * in their own right. They may serialize as a string: the name of the
+ * represented value.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#EnumValuesDefinition
+ */
+
+#EnumValueDefinition -> Railt\GraphQL\AST\Definition\EnumValueNode
+  : Description()?
+    NameWithoutValues() DefaultValue()?
+    Directive()* ::T_COMMA::?
+  ;

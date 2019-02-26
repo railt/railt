@@ -1,0 +1,33 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enums
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL Enum types, like scalar types, also represent leaf values in
+ * a GraphQL type system. However Enum types describe the set of
+ * possible values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Enums
+ */
+
+#EnumDefinition -> Railt\GraphQL\AST\Definition\EnumNode
+  : Description()?
+    EnumDefinitionExceptDescription()
+  ;
+
+EnumDefinitionExceptDescription
+  : EnumDefinitionHead()
+    EnumDefinitionBody()?
+  ;
+
+EnumDefinitionHead
+  : ::T_ENUM:: TypeName() Directive()*
+  ;
+
+EnumDefinitionBody
+  : ::T_BRACE_OPEN::
+      EnumValueDefinition()*
+    ::T_BRACE_CLOSE::
+  ;

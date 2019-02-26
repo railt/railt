@@ -1,0 +1,26 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Object Values (Input Object Values)
+ * --------------------------------------------------------------------------
+ *
+ * Input object literal values are unordered lists of keyed input values
+ * wrapped in curly‐braces { }. The values of an object literal may be any
+ * input value literal or variable (ex.  { name: "Hello world", score: 1.0 }).
+ * We refer to literal representation of input objects as “object literals.”
+ *
+ * NOTE: Input object fields are unordered
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Object-Values
+ */
+
+
+#ObjectValue -> Railt\GraphQL\AST\Value\ObjectValue
+  : ::T_BRACE_OPEN:: ObjectField()* ::T_BRACE_CLOSE::
+  ;
+
+#ObjectField
+  : NameWithReserved() ::T_COLON:: Value()
+    ::T_COMMA::?
+  ;

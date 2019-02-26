@@ -1,0 +1,39 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Directives
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL schema describes directives which are used to annotate
+ * various parts of a GraphQL document as an indicator that they should
+ * be evaluated differently by a validator, executor, or client
+ * tool such as a code generator.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Type-System.Directives
+ */
+
+
+#DirectiveDefinition -> Railt\GraphQL\AST\Definition\DirectiveNode
+  : Description()?
+    DirectiveDefinitionHead()
+    DirectiveDefinitionBody()
+  ;
+
+DirectiveDefinitionHead
+  : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: TypeName()
+    ArgumentDefinitions()?
+  ;
+
+DirectiveDefinitionBody
+  : ::T_ON:: DirectiveLocations()
+  ;
+
+DirectiveLocations
+  : ::T_OR::? DirectiveLocation()
+    ( ::T_OR:: DirectiveLocation() )*
+  ;
+
+#DirectiveLocation -> Railt\GraphQL\AST\Definition\DirectiveLocationNode
+  : NameWithReserved()
+  ;

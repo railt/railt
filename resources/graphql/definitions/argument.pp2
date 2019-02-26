@@ -1,0 +1,35 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Arguments
+ * --------------------------------------------------------------------------
+ *
+ * Object fields are conceptually functions which yield values.
+ * Occasionally object fields can accept arguments to further specify
+ * the return value. Object field arguments are defined as a list of
+ * all possible argument names and their expected input types.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Field-Arguments
+ */
+
+ArgumentDefinitions
+  : ::T_PARENTHESIS_OPEN::
+      __argumentDefinitions()?
+    ::T_PARENTHESIS_CLOSE::
+  ;
+
+__argumentDefinitions
+  : ArgumentDefinition()+
+  ;
+
+#ArgumentDefinition -> Railt\GraphQL\AST\Definition\ArgumentNode
+  : Description()?
+    __argumentDefinitionBody()
+    DefaultValue()?
+    Directive()* ::T_COMMA::?
+  ;
+
+__argumentDefinitionBody
+  : NameWithReserved() ::T_COLON:: TypeHint()
+  ;

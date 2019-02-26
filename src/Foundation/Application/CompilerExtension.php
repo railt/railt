@@ -9,17 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
+use Psr\SimpleCache\CacheInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\GraphQL\Compiler;
+use Railt\GraphQL\CompilerInterface;
 use Railt\Io\Exception\NotReadableException;
 use Railt\Io\File;
-use Railt\SDL\Compiler;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\SDL\Schema\CompilerInterface;
-use Railt\Storage\Storage;
 
 /**
  * Class CompilerExtension
@@ -72,7 +71,7 @@ class CompilerExtension extends Extension
      */
     public function register(): void
     {
-        $this->registerIfNotRegistered(CompilerInterface::class, function (Storage $cache) {
+        $this->registerIfNotRegistered(CompilerInterface::class, function (CacheInterface $cache) {
             return new Compiler($cache);
         });
     }

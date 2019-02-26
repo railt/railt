@@ -16,10 +16,10 @@ use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\GraphQL\CompilerInterface;
 use Railt\Routing\Subscribers\ActionDispatcherSubscriber;
 use Railt\Routing\Subscribers\DirectiveLoaderSubscriber;
 use Railt\Routing\Subscribers\FieldResolveToActionSubscriber;
-use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class RouterExtension

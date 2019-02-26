@@ -9,17 +9,22 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
+use Psr\SimpleCache\CacheInterface;
 use Railt\Foundation\Application;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
-use Railt\Storage\Drivers\ArrayStorage;
-use Railt\Storage\Storage;
 
 /**
  * Class CacheExtension
  */
 class CacheExtension extends Extension
 {
+    /**
+     * @var int
+     */
+    protected const DEFAULT_CACHE_POOL_SIZE = 0x00ff;
+
     /**
      * @return string
      */
@@ -54,11 +59,12 @@ class CacheExtension extends Extension
 
     /**
      * @return void
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function register(): void
     {
-        $this->registerIfNotRegistered(Storage::class, function () {
-            return new ArrayStorage();
+        $this->registerIfNotRegistered(CacheInterface::class, function () {
+            return new ArrayCachePool(static::DEFAULT_CACHE_POOL_SIZE);
         });
     }
 }

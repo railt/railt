@@ -1,0 +1,36 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Schema
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL service's collective type system capabilities are referred
+ * to as that service's "schema". A schema is defined in terms of the
+ * types and directives it supports as well as the root operation types for
+ * each kind of operation: query, mutation, and subscription; this
+ * determines the place in the type system where those operations begin.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Schema
+ */
+
+#SchemaDefinition -> Railt\GraphQL\AST\Definition\SchemaNode
+  : Description()?
+    SchemaDefinitionExceptDescription()
+  ;
+
+SchemaDefinitionExceptDescription
+  : SchemaDefinitionHead()
+    SchemaDefinitionBody()?
+  ;
+
+SchemaDefinitionHead
+  : ::T_SCHEMA:: TypeName()?
+    Directive()*
+  ;
+
+SchemaDefinitionBody
+  : ::T_BRACE_OPEN::
+      (SchemaFieldDefinition() ::T_COMMA::?)*
+    ::T_BRACE_CLOSE::
+  ;

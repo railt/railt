@@ -1,0 +1,8 @@
+
+//
+// Types description/documentation
+//
+
+#Description -> Railt\GraphQL\AST\Common\Description
+  : StringValue()
+  ;

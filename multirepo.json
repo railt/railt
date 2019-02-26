@@ -38,6 +38,20 @@
                 "tests/Dumper": "tests"
             }
         },
+        "railt/graphql": {
+            "remote": "git@github.com:railt/graphql.git",
+            "files": {
+                ".multirepo/graphql/composer.json": "composer.json",
+                ".multirepo/graphql/README.md": "README.md",
+                ".multirepo/graphql/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/GraphQL": "src/GraphQL",
+                "tests/GraphQL": "tests",
+                "resources/graphql": "resources/graphql",
+                "resources/stdlib": "resources/stdlib"
+            }
+        },
         "railt/http": {
             "remote": "git@github.com:railt/http.git",
             "files": {
@@ -97,43 +111,6 @@
             "dirs": {
                 "src/Parser": "src/Parser",
                 "tests/Parser": "tests"
-            }
-        },
-        "railt/sdl": {
-            "remote": "git@github.com:railt/sdl.git",
-            "files": {
-                ".multirepo/sdl/composer.json": "composer.json",
-                ".multirepo/sdl/README.md": "README.md",
-                ".multirepo/sdl/.travis.yml": ".travis.yml"
-            },
-            "dirs": {
-                "src/SDL": "src/SDL",
-                "tests/SDL": "tests",
-                "resources/grammar": "resources/grammar"
-            }
-        },
-        "railt/storage": {
-            "remote": "git@github.com:railt/storage.git",
-            "files": {
-                ".multirepo/storage/composer.json": "composer.json",
-                ".multirepo/storage/README.md": "README.md",
-                ".multirepo/storage/.travis.yml": ".travis.yml"
-            },
-            "dirs": {
-                "src/Storage": "src/Storage",
-                "tests/Storage": "tests"
-            }
-        },
-        "railt/subscriptions": {
-            "remote": "git@github.com:railt/subscriptions.git",
-            "files": {
-                ".multirepo/subscriptions/composer.json": "composer.json",
-                ".multirepo/subscriptions/README.md": "README.md",
-                ".multirepo/subscriptions/.travis.yml": ".travis.yml"
-            },
-            "dirs": {
-                "src/Subscriptions": "src/Subscriptions",
-                "tests/Subscriptions": "tests"
             }
         }
     }

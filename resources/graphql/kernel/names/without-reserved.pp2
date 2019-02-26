@@ -1,0 +1,12 @@
+
+//
+// Any name without reserved keywords.
+//
+
+NameWithoutReserved
+  : __nameWithoutReserved() #Name
+  ;
+
+__nameWithoutReserved
+  : <T_NAME>
+  ;

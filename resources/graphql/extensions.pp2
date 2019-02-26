@@ -1,0 +1,9 @@
+
+
+%include extensions/enum
+%include extensions/input
+%include extensions/interface
+%include extensions/object
+%include extensions/scalar
+%include extensions/schema
+%include extensions/union

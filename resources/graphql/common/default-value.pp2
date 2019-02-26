@@ -1,0 +1,8 @@
+
+//
+// Types default value
+//
+
+#DefaultValue -> Railt\GraphQL\AST\Common\DefaultValue
+  : ::T_EQUAL:: Value()
+  ;
