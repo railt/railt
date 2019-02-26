@@ -65,9 +65,7 @@ class CompilerExtension extends Extension
     public function register(): void
     {
         $this->registerIfNotRegistered(CompilerInterface::class, function () {
-            $cache = $this->app->has(Storage::class) ? $this->app->make(Storage::class) : null;
-
-            return new Compiler($cache);
+            return new Compiler();
         });
     }
 

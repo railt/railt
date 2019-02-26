@@ -61,6 +61,8 @@ class Application extends Container implements ApplicationInterface
      * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      * @throws ParameterResolutionException
+     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \ReflectionException
      */
     public function __construct(bool $debug = false, PSRContainer $container = null)
     {
@@ -75,6 +77,8 @@ class Application extends Container implements ApplicationInterface
      * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      * @throws ParameterResolutionException
+     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \ReflectionException
      */
     private function registerBaseBindings(bool $debug): void
     {

@@ -110,6 +110,17 @@ class Compiler implements CompilerInterface, Configuration
     }
 
     /**
+     * @param Storage|null $storage
+     * @return Compiler
+     */
+    public function setStorage(?Storage $storage): self
+    {
+        $this->storage = $this->bootStorage($storage);
+
+        return $this;
+    }
+
+    /**
      * @param null|Storage $storage
      * @return Storage
      */
