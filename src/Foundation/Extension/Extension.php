@@ -12,6 +12,7 @@ namespace Railt\Foundation\Extension;
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,7 +25,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 abstract class Extension implements ExtensionInterface
 {
     /**
-     * @var ApplicationInterface
+     * @var ApplicationInterface|Application
      */
     protected $app;
 
@@ -134,17 +135,10 @@ abstract class Extension implements ExtensionInterface
      * @param string $name
      * @param \Closure $registrar
      * @return Extension|$this
-     * @throws ContainerInvocationException
      */
     protected function registerIfNotRegistered(string $name, \Closure $registrar): self
     {
-        if (! $this->app->has($name) && $instance = $this->app->call($registrar)) {
-            $this->app->instance($name, $instance);
-
-            if ($name !== \get_class($instance)) {
-                $this->app->alias($name, \get_class($instance));
-            }
-        }
+        $this->app->registerIfNotRegistered($name, $registrar);
 
         return $this;
     }
@@ -154,6 +148,7 @@ abstract class Extension implements ExtensionInterface
      * @param array $params
      * @return mixed|object
      * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function make(string $locator, array $params = [])
     {

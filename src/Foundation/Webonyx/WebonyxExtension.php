@@ -68,9 +68,11 @@ class WebonyxExtension extends Extension
      */
     public function register(): void
     {
-        $this->app->register(ExecutorInterface::class, function (Dictionary $dictionary) {
+        $this->app->registerIfNotRegistered(ExecutorInterface::class, function (Dictionary $dictionary) {
             return new Executor($this->app, $dictionary);
         });
+
+        $this->app->alias(ExecutorInterface::class, Executor::class);
     }
 
     /**

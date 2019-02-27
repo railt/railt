@@ -58,13 +58,15 @@ class EventsExtension extends Extension
     }
 
     /**
-     * @throws ContainerInvocationException
+     * @return void
      */
     public function register(): void
     {
-        $this->registerIfNotRegistered(EventDispatcherInterface::class, function () {
+        $this->app->registerIfNotRegistered(EventDispatcherInterface::class, function () {
             return new EventDispatcher();
         });
+
+        $this->app->alias(EventDispatcherInterface::class, EventDispatcher::class);
     }
 
     /**

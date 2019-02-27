@@ -19,6 +19,7 @@ use Railt\Io\File;
 use Railt\SDL\Compiler;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Schema\CompilerInterface;
+use Railt\Storage\Storage;
 
 /**
  * Class CompilerExtension
@@ -59,13 +60,16 @@ class CompilerExtension extends Extension
 
     /**
      * @return void
-     * @throws ContainerInvocationException
      */
     public function register(): void
     {
-        $this->registerIfNotRegistered(CompilerInterface::class, function () {
-            return new Compiler();
+        $this->app->registerIfNotRegistered(CompilerInterface::class, function () {
+            $cache = $this->app->has(Storage::class) ? $this->app->make(Storage::class) : null;
+
+            return new Compiler($cache);
         });
+
+        $this->app->alias(CompilerInterface::class, Compiler::class);
     }
 
     /**
