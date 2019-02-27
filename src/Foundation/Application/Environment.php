@@ -34,14 +34,14 @@ class Environment implements EnvironmentInterface
      */
     protected const CLI_SAPI = [
         'cli',
-        'phpdbg'
+        'phpdbg',
     ];
 
     /**
      * @var string[]
      */
     protected const CLI_ENV = [
-        'APP_RUNNING_IN_CONSOLE'
+        'APP_RUNNING_IN_CONSOLE',
     ];
 
     /**
@@ -90,7 +90,7 @@ class Environment implements EnvironmentInterface
      */
     public function isRunningInConsole(): bool
     {
-        return $this->fromEnvironment(self::CLI_ENV, ['true'], function() {
+        return $this->fromEnvironment(self::CLI_ENV, ['true'], function () {
             return \in_array(\strtolower(\PHP_SAPI), static::CLI_SAPI, true);
         });
     }

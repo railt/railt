@@ -11,7 +11,6 @@ namespace Railt\Foundation;
 
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Application\ProvidesConsoleApplication;
-use Railt\Foundation\Application\ProvidesEnvironment;
 use Railt\Foundation\Application\ProvidesExtensions;
 use Railt\Io\Readable;
 
