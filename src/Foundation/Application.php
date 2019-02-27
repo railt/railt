@@ -16,6 +16,8 @@ use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Foundation\Application\CompilerExtension;
+use Railt\Foundation\Application\Environment;
+use Railt\Foundation\Application\EnvironmentInterface;
 use Railt\Foundation\Application\HasConsoleApplication;
 use Railt\Foundation\Application\ProvidesExtensions;
 use Railt\Foundation\Config\DiscoveryRepository;
@@ -82,9 +84,19 @@ class Application extends Container implements ApplicationInterface
      */
     private function registerBaseBindings(bool $debug): void
     {
+        $this->registerEnvironment();
         $this->registerConfigsRepository($debug);
         $this->registerApplicationBindings();
         $this->registerExtensionsRepository();
+    }
+
+    /**
+     * @return void
+     */
+    private function registerEnvironment(): void
+    {
+        $this->instance(EnvironmentInterface::class, new Environment());
+        $this->alias(EnvironmentInterface::class, Environment::class);
     }
 
     /**
@@ -142,14 +154,6 @@ class Application extends Container implements ApplicationInterface
         foreach ((array)$configs->get(ConfigRepositoryInterface::KEY_EXTENSIONS) as $extension) {
             $extensions->add($extension);
         }
-    }
-
-    /**
-     * @return bool
-     */
-    public function isRunningInConsole(): bool
-    {
-        return \in_array(\PHP_SAPI, ['cli', 'phpdbg']);
     }
 
     /**

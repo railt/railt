@@ -13,6 +13,7 @@ use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application;
+use Railt\Foundation\Application\EnvironmentInterface;
 use Railt\Foundation\ApplicationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,18 +36,26 @@ abstract class Extension implements ExtensionInterface
     private $events;
 
     /**
+     * @var EnvironmentInterface
+     */
+    protected $env;
+
+    /**
      * Extension constructor.
      *
      * @param ApplicationInterface $app
+     * @param EnvironmentInterface $env
      */
-    public function __construct(ApplicationInterface $app)
+    public function __construct(ApplicationInterface $app, EnvironmentInterface $env)
     {
         $this->app = $app;
+        $this->env = $env;
     }
 
     /**
      * @return EventDispatcherInterface
      * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function events(): EventDispatcherInterface
     {
@@ -63,6 +72,7 @@ abstract class Extension implements ExtensionInterface
      * @param int $priority
      * @return Extension|$this
      * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function on(string $event, \Closure $then, int $priority = 0): self
     {
@@ -75,6 +85,7 @@ abstract class Extension implements ExtensionInterface
      * @param EventSubscriberInterface $subscriber
      * @return Extension|$this
      * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function subscribe(EventSubscriberInterface $subscriber): self
     {

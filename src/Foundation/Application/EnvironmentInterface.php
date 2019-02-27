@@ -10,14 +10,17 @@ declare(strict_types=1);
 namespace Railt\Foundation\Application;
 
 /**
- * Interface ProvidesEnvironment
+ * Interface EnvironmentInterface
  */
-interface ProvidesEnvironment
+interface EnvironmentInterface
 {
     /**
-     * Determine if the application is running in the console.
-     *
      * @return bool
      */
     public function isRunningInConsole(): bool;
+
+    /**
+     * @return bool
+     */
+    public function isRunningInTests(): bool;
 }

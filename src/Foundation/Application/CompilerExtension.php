@@ -81,7 +81,7 @@ class CompilerExtension extends Extension
     {
         $this->autoload($config, $compiler);
 
-        if (! $this->app->isRunningInConsole()) {
+        if (! $this->env->isRunningInConsole()) {
             $this->preload($config, $compiler);
         }
     }

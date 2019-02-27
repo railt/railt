@@ -18,7 +18,7 @@ use Railt\Io\Readable;
 /**
  * Interface ApplicationInterface
  */
-interface ApplicationInterface extends ContainerInterface, ProvidesConsoleApplication, ProvidesExtensions, ProvidesEnvironment
+interface ApplicationInterface extends ContainerInterface, ProvidesConsoleApplication, ProvidesExtensions
 {
     /**
      * @param Readable $schema
