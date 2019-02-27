@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event;
 
-use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Event\Subscribers\DefaultResponseSubscriber;
 use Railt\Foundation\Event\Subscribers\InputParentSubscriber;

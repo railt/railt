@@ -72,7 +72,7 @@ class Repository implements RepositoryInterface
         //
         // Register an extension
         //
-        $instance = \tap($this->create($extension), function (ExtensionInterface $instance) use ($extension) {
+        $instance = \tap($this->create($extension), function (ExtensionInterface $instance) use ($extension): void {
             $this->extensions[$extension] = $instance;
         });
 
