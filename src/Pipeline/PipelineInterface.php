@@ -18,13 +18,13 @@ interface PipelineInterface
      * @param \Closure|null $then
      * @return PipelineInterface
      */
-    public function then(?\Closure $then): PipelineInterface;
+    public function then(?\Closure $then): self;
 
     /**
      * @param string|\Closure $middleware
      * @return PipelineInterface
      */
-    public function through($middleware): PipelineInterface;
+    public function through($middleware): self;
 
     /**
      * @param mixed $value
