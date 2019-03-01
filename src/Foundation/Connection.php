@@ -186,7 +186,7 @@ class Connection extends Container implements ConnectionInterface
 
             [$dictionary, $schema] = [
                 $this->make(Dictionary::class),
-                $this->make(SchemaDefinition::class)
+                $this->make(SchemaDefinition::class),
             ];
 
             $this->fireOnConnectEvent($dictionary, $schema);
@@ -236,7 +236,7 @@ class Connection extends Container implements ConnectionInterface
 
             [$dictionary, $schema] = [
                 $this->make(Dictionary::class),
-                $this->make(SchemaDefinition::class)
+                $this->make(SchemaDefinition::class),
             ];
 
             $this->fireOnDisconnectEvent($dictionary, $schema);
