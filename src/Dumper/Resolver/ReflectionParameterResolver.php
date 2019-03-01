@@ -12,7 +12,7 @@ namespace Railt\Dumper\Resolver;
 /**
  * Class ReflectionParameterResolver
  */
-class ReflectionParameterResolver extends Resolver
+class ReflectionParameterResolver extends Resolver implements SelfDisplayed
 {
     /**
      * @param mixed $value
@@ -50,5 +50,15 @@ class ReflectionParameterResolver extends Resolver
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $type
+     * @param string $value
+     * @return string
+     */
+    public function render(string $type, string $value): string
+    {
+        return $type . ' ' . $value;
     }
 }

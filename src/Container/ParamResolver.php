@@ -161,11 +161,8 @@ class ParamResolver
         $position = $param->getPosition();
         $function = $param->getDeclaringFunction()->getName();
 
-        $error = \vsprintf('Cannot resolve parameter #%d "%s" defined in %s(...)', [
-            $position,
-            TypeDumper::render($param),
-            $function,
-        ]);
+        $error = 'Can not resolve parameter (#%d %s) which is required in %s(...)';
+        $error = \sprintf($error, $position, TypeDumper::render($param), $function);
 
         return ParameterResolutionException::fromReflectionFunction($error, $param->getDeclaringFunction());
     }

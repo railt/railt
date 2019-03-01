@@ -11,6 +11,7 @@ namespace Railt\Dumper;
 
 use Railt\Dumper\Resolver\GenericResolver;
 use Railt\Dumper\Resolver\ResolverInterface;
+use Railt\Dumper\Resolver\SelfDisplayed;
 
 /**
  * Class TypeDumper
@@ -109,9 +110,15 @@ class TypeDumper implements TypeDumperInterface
      */
     public function dump($value): string
     {
+        $resolver = $this->resolve($value);
+
+        if ($resolver instanceof SelfDisplayed) {
+            return $resolver->render($resolver->type($value), $resolver->value($value));
+        }
+
         return \vsprintf(self::DUMP_PATTERN, [
-            $this->type($value),
-            $this->value($value),
+            $resolver->type($value),
+            $resolver->value($value),
         ]);
     }
 

@@ -245,6 +245,14 @@ class Container implements ContainerInterface
     {
         $locator = $this->getLocator($id);
 
+        if ( isset($additional[$id])) {
+            return $additional[$id];
+        }
+
+        if ( isset($additional[$locator])) {
+            return $additional[$locator];
+        }
+
         if (! $this->isRegistered($locator)) {
             throw new ContainerResolutionException('Unresolvable dependency ' . $id);
         }

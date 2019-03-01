@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Railt\Container\Container;
+use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\Connection\Format;
@@ -17,11 +19,13 @@ use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Railt\Http\HasIdentifier;
+use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
 use Railt\Io\Readable;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Contracts\Document;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
@@ -31,19 +35,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 /**
  * Class Connection
  */
-class Connection implements ConnectionInterface
+class Connection extends Container implements ConnectionInterface
 {
     use HasIdentifier;
-
-    /**
-     * @var ApplicationInterface
-     */
-    private $app;
-
-    /**
-     * @var SchemaDefinition
-     */
-    private $schema;
 
     /**
      * @var bool
@@ -56,63 +50,63 @@ class Connection implements ConnectionInterface
     private $compiler;
 
     /**
-     * @var Dictionary
-     */
-    private $dictionary;
-
-    /**
-     * @var ExecutorInterface
-     */
-    private $executor;
-
-    /**
      * Connection constructor.
      *
      * @param ApplicationInterface $app
      * @param Readable $schema
      * @throws ContainerResolutionException
      * @throws \InvalidArgumentException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function __construct(ApplicationInterface $app, Readable $schema)
     {
-        $this->app = $app;
+        parent::__construct($app);
 
-        $this->bootSchema($schema);
-        $this->bootExecutor();
+        $this->registerBaseBindings($schema);
 
         $this->connect();
     }
 
     /**
      * @param Readable $schema
-     * @throws ContainerResolutionException
-     * @throws \InvalidArgumentException
      */
-    private function bootSchema(Readable $schema): void
+    private function registerBaseBindings(Readable $schema): void
     {
-        $compiler = $this->app->make(CompilerInterface::class);
+        $this->instance(Identifiable::class, $this);
+        $this->instance(ContainerInterface::class, $this);
+        $this->instance(ConnectionInterface::class, $this);
 
-        $document = $compiler->compile($schema);
+        $this->instance(Readable::class, $schema);
 
-        if (! $document->getSchema()) {
-            $error = 'The GraphQL SDL must define at least one Schema definition';
-            throw new \InvalidArgumentException($error);
-        }
-
-        $this->schema = $document->getSchema();
-        $this->dictionary = $compiler->getDictionary();
+        $this->registerDocument();
+        $this->registerSchemaDefinition();
     }
 
     /**
-     * @throws ContainerResolutionException
+     * @return void
      */
-    private function bootExecutor(): void
+    private function registerDocument(): void
     {
-        $this->executor = $this->app->make(ExecutorInterface::class, [
-            SchemaDefinition::class  => $this->schema,
-            CompilerInterface::class => $this->compiler,
-            Dictionary::class        => $this->dictionary,
-        ]);
+        $this->register(Document::class, function (CompilerInterface $compiler, Readable $schema) {
+            return $compiler->compile($schema);
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerSchemaDefinition(): void
+    {
+        $this->register(SchemaDefinition::class, function (Document $document) {
+            $schema = $document->getSchema();
+
+            if (! $schema) {
+                $error = 'The GraphQL SDL must define at least one Schema definition';
+                throw new \InvalidArgumentException($error);
+            }
+
+            return $schema;
+        });
     }
 
     /**
@@ -120,10 +114,13 @@ class Connection implements ConnectionInterface
      * @return ResponseInterface
      * @throws \InvalidArgumentException
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function request($requests): ResponseInterface
     {
         $this->connect();
+
+        $schema = $this->make(SchemaDefinition::class);
 
         $responses = [];
 
@@ -131,7 +128,7 @@ class Connection implements ConnectionInterface
             $this->fireOnRequestEvent($request);
 
             $responses[] = $response = \trim($request->getQuery())
-                ? $this->execute($this->schema, $request)
+                ? $this->execute($schema, $request)
                 : Response::empty();
 
             $this->fireOnResponseEvent($request, $response);
@@ -144,6 +141,7 @@ class Connection implements ConnectionInterface
      * @param RequestInterface $request
      * @return RequestInterface
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     private function fireOnRequestEvent(RequestInterface $request): RequestInterface
     {
@@ -162,6 +160,7 @@ class Connection implements ConnectionInterface
      * @param ResponseInterface $response
      * @return ResponseInterface
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     private function fireOnResponseEvent(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
@@ -178,13 +177,19 @@ class Connection implements ConnectionInterface
     /**
      * @return void
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     private function connect(): void
     {
         if ($this->closed) {
             $this->closed = false;
 
-            $this->fireOnConnectEvent($this->dictionary, $this->schema);
+            [$dictionary, $schema] = [
+                $this->make(Dictionary::class),
+                $this->make(SchemaDefinition::class)
+            ];
+
+            $this->fireOnConnectEvent($dictionary, $schema);
         }
     }
 
@@ -192,6 +197,7 @@ class Connection implements ConnectionInterface
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     private function fireOnConnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
     {
@@ -208,10 +214,11 @@ class Connection implements ConnectionInterface
      * @param Event $event
      * @return Event
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     private function fire(Event $event): Event
     {
-        $events = $this->app->make(EventDispatcherInterface::class);
+        $events = $this->make(EventDispatcherInterface::class);
 
         return $events->dispatch(\get_class($event), $event);
     }
@@ -219,6 +226,7 @@ class Connection implements ConnectionInterface
     /**
      * @return void
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function close(): void
     {
@@ -226,7 +234,12 @@ class Connection implements ConnectionInterface
             $this->closed = true;
             \gc_collect_cycles();
 
-            $this->fireOnDisconnectEvent($this->dictionary, $this->schema);
+            [$dictionary, $schema] = [
+                $this->make(Dictionary::class),
+                $this->make(SchemaDefinition::class)
+            ];
+
+            $this->fireOnDisconnectEvent($dictionary, $schema);
         }
     }
 
@@ -234,6 +247,7 @@ class Connection implements ConnectionInterface
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     private function fireOnDisconnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
     {
@@ -244,15 +258,21 @@ class Connection implements ConnectionInterface
      * @param SchemaDefinition $schema
      * @param RequestInterface $request
      * @return ResponseInterface
+     * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ParameterResolutionException
      */
     private function execute(SchemaDefinition $schema, RequestInterface $request): ResponseInterface
     {
-        return $this->executor->execute($schema, $request);
+        $executor = $this->make(ExecutorInterface::class);
+
+        return $executor->execute($schema, $request);
     }
 
     /**
      * @return void
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function __destruct()
     {

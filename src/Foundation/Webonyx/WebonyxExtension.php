@@ -78,6 +78,7 @@ class WebonyxExtension extends Extension
     /**
      * @param ApplicationInterface $app
      * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function boot(ApplicationInterface $app): void
     {
