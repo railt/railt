@@ -64,7 +64,7 @@ class Repository
     /**
      * Repository constructor.
      *
-     * @param CompilerInterface|Configuration $compiler
+     * @param CompilerInterface&Configuration $compiler
      */
     public function __construct(CompilerInterface $compiler)
     {

@@ -63,12 +63,14 @@ class ClassLoaderExtension extends Extension
     }
 
     /**
-     * @throws ContainerInvocationException
+     * @return void
      */
     public function register(): void
     {
-        $this->registerIfNotRegistered(ClassLoaderInterface::class, function (CompilerInterface $compiler) {
+        $handler = function (CompilerInterface $compiler): ClassLoaderInterface {
             return new DirectiveClassLoader($compiler, $this->app);
-        });
+        };
+
+        $this->registerIfNotRegistered(ClassLoaderInterface::class, $handler);
     }
 }

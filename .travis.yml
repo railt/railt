@@ -37,4 +37,9 @@ before_script:
   - composer global require hirak/prestissimo
   - composer install --no-interaction --no-suggest
 
-script: vendor/bin/paratest -f -p8
+jobs:
+  include:
+    - stage: tests
+      script: vendor/bin/paratest -f -p8
+    - stage: analysis
+      script: vendor/bin/psalm

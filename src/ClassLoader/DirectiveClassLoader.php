@@ -76,6 +76,6 @@ class DirectiveClassLoader implements ClassLoaderInterface
     {
         $parts = \explode('\\', $class);
 
-        return \reset($parts);
+        return (string)\reset($parts);
     }
 }
