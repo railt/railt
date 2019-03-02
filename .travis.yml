@@ -37,7 +37,7 @@ before_script:
 
   # Installing the parle extension
   # @see http://php.net/manual/ru/book.parle.php
-  - pecl install -f parle
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} < "7.4" ]]; then pecl install -f parle; fi
 
   # Installing Composer dependencies
   - composer install --no-interaction --no-suggest --optimize-autoloader
