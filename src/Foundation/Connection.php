@@ -172,9 +172,6 @@ class Connection extends Container implements ConnectionInterface
     public function close(): void
     {
         if ($this->closed === false) {
-            $this->clean();
-            \gc_collect_cycles();
-
             $this->closed = true;
 
             [$dictionary, $schema] = [
@@ -183,6 +180,9 @@ class Connection extends Container implements ConnectionInterface
             ];
 
             $this->fireOnDisconnectEvent($dictionary, $schema);
+            $this->clean();
+
+            \gc_collect_cycles();
         }
     }
 
