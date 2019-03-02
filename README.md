@@ -5,8 +5,13 @@
     <a href="https://travis-ci.org/railt/railt"><img src="https://travis-ci.org/railt/railt.svg?branch=1.4.x" alt="Travis CI" /></a>
     <a href="https://codeclimate.com/github/railt/railt/test_coverage"><img src="https://api.codeclimate.com/v1/badges/07b06e5fc97ecbfaafb6/test_coverage" /></a>
     <a href="https://codeclimate.com/github/railt/railt/maintainability"><img src="https://api.codeclimate.com/v1/badges/07b06e5fc97ecbfaafb6/maintainability" /></a>
+    <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-7.1+-brightgreen.svg" alt="PHP 7.1+"></a>
+</p>
+<p align="center">
+    <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-blue.svg" alt="railt.org"></a>
+    <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-blue.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/version" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/v/unstable" alt="Latest Unstable Version"></a>
+    <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/downloads" alt="Total Downloads"></a>
     <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE.md"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
 </p>
 
