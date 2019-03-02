@@ -40,7 +40,7 @@ before_script:
 
   # Installing the parle extension
   # @see http://php.net/manual/ru/book.parle.php
-  - composer require pickle
+  - composer require friendsofphp/pickle
   - vendor/bin/pickle install parle
   - echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
