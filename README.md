@@ -144,11 +144,6 @@ at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
 The Railt Framework is open-sourced software licensed under 
 the [MIT license](https://opensource.org/licenses/MIT).
 
-The Railt\Compiler, which is part of the Railt Framework re-distribute 
-under the [BSD-3-Clause license](https://opensource.org/licenses/BSD-3-Clause).
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frailt%2Frailt.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frailt%2Frailt?ref=badge_large)
-
 ## Development Status
 
 | Packages                                                               | Release                                                                                                                                  | CI Status                                                                                                                     |
