@@ -52,11 +52,11 @@ before_script:
   - ./cc-test-reporter before-build
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT format-coverage -t clover -o clover.xml
 
 jobs:
   include:
     - stage: analysis
       script: vendor/bin/psalm
 
-script: vendor/bin/paratest -f -p8
+script: vendor/bin/paratest -f -p8 --coverage-clover clover.xml
