@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Connection;
 
+use Railt\Foundation\ConnectionInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
@@ -19,9 +20,10 @@ use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 interface ExecutorInterface
 {
     /**
-     * @param SchemaDefinition $schema
+     * @param ConnectionInterface $connection
      * @param RequestInterface $request
+     * @param SchemaDefinition $schema
      * @return ResponseInterface
      */
-    public function execute(SchemaDefinition $schema, RequestInterface $request): ResponseInterface;
+    public function execute(ConnectionInterface $connection, RequestInterface $request, SchemaDefinition $schema): ResponseInterface;
 }

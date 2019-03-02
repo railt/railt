@@ -67,7 +67,7 @@ class RouterExtension extends Extension
     }
 
     /**
-     * @throws ContainerInvocationException
+     * @return void
      */
     public function register(): void
     {
@@ -85,6 +85,7 @@ class RouterExtension extends Extension
     /**
      * @param CompilerInterface $compiler
      * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     public function boot(CompilerInterface $compiler): void
     {

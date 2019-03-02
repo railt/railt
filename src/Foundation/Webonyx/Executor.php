@@ -10,8 +10,10 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Schema;
+use Railt\Container\ContainerInterface;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ExecutorInterface;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
 use Railt\Foundation\Webonyx\Executor\RequestResolver;
 use Railt\Foundation\Webonyx\Executor\ResponseResolver;
@@ -56,15 +58,15 @@ class Executor implements ExecutorInterface
     }
 
     /**
-     * @param SchemaDefinition $definition
+     * @param ConnectionInterface $conn
      * @param RequestInterface $request
+     * @param SchemaDefinition $schema
      * @return ResponseInterface
-     * @throws \GraphQL\Error\InvariantViolation
      * @throws \GraphQL\Error\SyntaxError
      */
-    public function execute(SchemaDefinition $definition, RequestInterface $request): ResponseInterface
+    public function execute(ConnectionInterface $conn, RequestInterface $request, SchemaDefinition $schema): ResponseInterface
     {
-        $result = RequestResolver::resolve($this->getSchema($definition), $request);
+        $result = RequestResolver::resolve($conn, $request, $this->getSchema($schema));
 
         return ResponseResolver::resolve($result);
     }

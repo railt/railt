@@ -17,6 +17,7 @@ use GraphQL\Language\AST\OperationDefinitionNode;
 use GraphQL\Language\Parser;
 use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Webonyx\Context;
 use Railt\Http\RequestInterface;
 
@@ -26,24 +27,13 @@ use Railt\Http\RequestInterface;
 class RequestResolver
 {
     /**
-     * @param string $query
-     * @return DocumentNode
-     * @throws SyntaxError
-     * @throws \GraphQL\Error\InvariantViolation
-     */
-    private static function parse(string $query): DocumentNode
-    {
-        return Parser::parse(new Source($query ?: '', 'GraphQL'));
-    }
-
-    /**
-     * @param Schema $schema
+     * @param ConnectionInterface $connection
      * @param RequestInterface $request
+     * @param Schema $schema
      * @return ExecutionResult
      * @throws SyntaxError
-     * @throws \GraphQL\Error\InvariantViolation
      */
-    public static function resolve(Schema $schema, RequestInterface $request): ExecutionResult
+    public static function resolve(ConnectionInterface $connection, RequestInterface $request, Schema $schema): ExecutionResult
     {
         $vars = $request->getVariables();
 
@@ -54,9 +44,19 @@ class RequestResolver
         $request->withOperation($name);
         $request->withQueryType($type);
 
-        $context = new Context($request);
+        $context = new Context($connection, $request);
 
         return GraphQL::executeQuery($schema, $query, null, $context, $vars, $operation);
+    }
+
+    /**
+     * @param string $query
+     * @return DocumentNode
+     * @throws SyntaxError
+     */
+    private static function parse(string $query): DocumentNode
+    {
+        return Parser::parse(new Source($query ?: '', 'GraphQL'));
     }
 
     /**

@@ -12,6 +12,7 @@ namespace Railt\Foundation\Webonyx;
 use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ExecutorInterface;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
@@ -68,9 +69,11 @@ class WebonyxExtension extends Extension
      */
     public function register(): void
     {
-        $this->app->registerIfNotRegistered(ExecutorInterface::class, function (Dictionary $dictionary) {
+        $handler = function (Dictionary $dictionary) {
             return new Executor($this->app, $dictionary);
-        });
+        };
+
+        $this->app->registerIfNotRegistered(ExecutorInterface::class, $handler);
 
         $this->app->alias(ExecutorInterface::class, Executor::class);
     }

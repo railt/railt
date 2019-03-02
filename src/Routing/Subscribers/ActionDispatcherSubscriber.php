@@ -45,11 +45,12 @@ class ActionDispatcherSubscriber implements EventSubscriberInterface
 
     /**
      * @param ActionDispatch $event
-     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function onHandle(ActionDispatch $event): void
     {
-        $response = $this->container->call($event->getAction(), $event->getArguments());
+        $connection = $event->getConnection();
+
+        $response = $connection->call($event->getAction(), $event->getArguments());
 
         $event->withResponse($response);
     }

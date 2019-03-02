@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Connection\ProvidesConnection;
 use Railt\Foundation\Event\Http\ProvidesRequest;
 use Railt\Http\Identifiable;
@@ -32,11 +33,12 @@ class Context implements ProvidesConnection, ProvidesRequest
     /**
      * Context constructor.
      *
+     * @param ConnectionInterface $connection
      * @param RequestInterface $request
      */
-    public function __construct(RequestInterface $request)
+    public function __construct(ConnectionInterface $connection, RequestInterface $request)
     {
-        $this->connection = $request; // TODO
+        $this->connection = $connection;
         $this->request = $request;
     }
 

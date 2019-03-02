@@ -55,7 +55,6 @@ class Connection extends Container implements ConnectionInterface
      * @param ApplicationInterface $app
      * @param Readable $schema
      * @throws ContainerResolutionException
-     * @throws \InvalidArgumentException
      * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function __construct(ApplicationInterface $app, Readable $schema)
@@ -107,71 +106,6 @@ class Connection extends Container implements ConnectionInterface
 
             return $schema;
         });
-    }
-
-    /**
-     * @param iterable|RequestInterface|RequestInterface[] $requests
-     * @return ResponseInterface
-     * @throws \InvalidArgumentException
-     * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
-     */
-    public function request($requests): ResponseInterface
-    {
-        $this->connect();
-
-        $schema = $this->make(SchemaDefinition::class);
-
-        $responses = [];
-
-        foreach (Format::requests($requests) as $request) {
-            $this->fireOnRequestEvent($request);
-
-            $responses[] = $response = \trim($request->getQuery())
-                ? $this->execute($schema, $request)
-                : Response::empty();
-
-            $this->fireOnResponseEvent($request, $response);
-        }
-
-        return Format::responses($responses);
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return RequestInterface
-     * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
-     */
-    private function fireOnRequestEvent(RequestInterface $request): RequestInterface
-    {
-        /** @var RequestReceived $event */
-        $event = $this->fire(new RequestReceived($this, $request));
-
-        if ($event->isPropagationStopped()) {
-            return $request;
-        }
-
-        return $event->getRequest() ?? $request;
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @param ResponseInterface $response
-     * @return ResponseInterface
-     * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
-     */
-    private function fireOnResponseEvent(RequestInterface $request, ResponseInterface $response): ResponseInterface
-    {
-        /** @var ResponseProceed $after */
-        $after = $this->fire(new ResponseProceed($this, $request, $response));
-
-        if ($after->isPropagationStopped()) {
-            return $response;
-        }
-
-        return $after->getResponse() ?? $response;
     }
 
     /**
@@ -255,6 +189,52 @@ class Connection extends Container implements ConnectionInterface
     }
 
     /**
+     * @param iterable|RequestInterface|RequestInterface[] $requests
+     * @return ResponseInterface
+     * @throws \InvalidArgumentException
+     * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     */
+    public function request($requests): ResponseInterface
+    {
+        $this->connect();
+
+        $schema = $this->make(SchemaDefinition::class);
+
+        $responses = [];
+
+        foreach (Format::requests($requests) as $request) {
+            $this->fireOnRequestEvent($request);
+
+            $responses[] = $response = \trim($request->getQuery())
+                ? $this->execute($request, $schema)
+                : Response::empty();
+
+            $this->fireOnResponseEvent($request, $response);
+        }
+
+        return Format::responses($responses);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return RequestInterface
+     * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     */
+    private function fireOnRequestEvent(RequestInterface $request): RequestInterface
+    {
+        /** @var RequestReceived $event */
+        $event = $this->fire(new RequestReceived($this, $request));
+
+        if ($event->isPropagationStopped()) {
+            return $request;
+        }
+
+        return $event->getRequest() ?? $request;
+    }
+
+    /**
      * @param SchemaDefinition $schema
      * @param RequestInterface $request
      * @return ResponseInterface
@@ -262,11 +242,30 @@ class Connection extends Container implements ConnectionInterface
      * @throws \Railt\Container\Exception\ContainerInvocationException
      * @throws \Railt\Container\Exception\ParameterResolutionException
      */
-    private function execute(SchemaDefinition $schema, RequestInterface $request): ResponseInterface
+    private function execute(RequestInterface $request, SchemaDefinition $schema): ResponseInterface
     {
         $executor = $this->make(ExecutorInterface::class);
 
-        return $executor->execute($schema, $request);
+        return $executor->execute($this, $request, $schema);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     */
+    private function fireOnResponseEvent(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        /** @var ResponseProceed $after */
+        $after = $this->fire(new ResponseProceed($this, $request, $response));
+
+        if ($after->isPropagationStopped()) {
+            return $response;
+        }
+
+        return $after->getResponse() ?? $response;
     }
 
     /**
