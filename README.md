@@ -153,6 +153,12 @@ the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Development Status
 
+<style>
+table {
+    width:100%;
+}
+</style>
+
 | Packages                                                               | Release                                                                                                                                  | CI Status                                                                                                                     |
 |------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | [`railt/railt`](https://github.com/railt/railt)                        | [![Latest Stable Version](https://poser.pugx.org/railt/railt/version)](https://packagist.org/packages/railt/railt)                       | [![Travis CI](https://travis-ci.org/railt/railt.svg?branch=1.4.x)](https://travis-ci.org/railt/railt)                        |
