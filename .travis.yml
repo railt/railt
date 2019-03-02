@@ -31,15 +31,20 @@ before_script:
   - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
   - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
 
-  # Installing the parle extension
-  # @see http://php.net/manual/ru/book.parle.php
-  - pecl install -f parle
-  - echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-
-  # Installing Composer dependencies
+  # Initialise Composer
   - composer self-update -q
   - composer global require hirak/prestissimo
-  - composer install --no-interaction --no-suggest
+
+  # Installing pickle
+  - curl -L https://github.com/FriendsOfPHP/pickle/releases/download/v0.4.0/pickle.phar > ./pickle.phar
+
+  # Installing the parle extension
+  # @see http://php.net/manual/ru/book.parle.php
+  - php pickle.phar install parle
+  #- echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+  # Installing Composer dependencies
+  - composer install --no-interaction --no-suggest --optimize-autoloader
 
   # Installing code coverage tools
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
