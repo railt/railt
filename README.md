@@ -17,23 +17,25 @@
 
 ## Introduction
 
-This is a pure PHP realization of the **GraphQL** protocol based on the 
-[webonyx/graphql-php](https://github.com/webonyx/graphql-php#fields) 
-implementations of the official GraphQL Specification 
-located on [Facebook GitHub](http://facebook.github.io/graphql/).
+Project idea is clean and high-quality code.
+Unlike most (all at the moment) implementations, like [webonyx](https://github.com/webonyx/graphql-php), 
+[youshido](https://github.com/youshido-php/GraphQL) or [digitalonline](https://github.com/digiaonline/graphql-php) 
+the Railt contains a completely own implementation of the GraphQL SDL parser 
+which is based on [EBNF-like grammar](https://github.com/railt/railt/tree/1.4.x/resources/grammar). This opportunity 
+allows not only to have the [original implementation of the language](https://facebook.github.io/graphql/draft/) and to 
+keep it always up to date, but also to implement [a new backward compatible 
+functionality](https://github.com/railt/railt/projects/1) that is not available 
+to other implementations.
 
-The difference from the above implementations is that the Railt provides the 
-ability to describe the types and extended control of their behavior, 
-thereby solving problems such as:
-
-- Simplifying type declarations
-- Types reusage
-- Significant simplification of the construction of the API
-- More flexible integration with frameworks (e.g. 
-[Laravel](https://github.com/laravel/framework) or [Symfony](https://github.com/symfony/symfony))
-- And others
+Goal of Railt:
+- Do not repeat the mistakes made in the JS-based implementations.
+- Implement a modern and convenient environment for PHP developers.
+- Implement easy integration into any ready-made solutions based on PSR.
+- Provide familiar functionality (including dependency injection, routing, etc.).
 
 ## Installation
+
+Via [Composer](https://getcomposer.org/):
 
 - Add into your `composer.json`:
 ```json
@@ -45,16 +47,12 @@ thereby solving problems such as:
     }
 }
 ```
+
 - `composer require railt/railt`
 
-## Quick start
+## Quick Start
 
-The documentation is in the process of writing, therefore, 
-in order to understand how it works, a quick start.
-
-### `schema.graphqls`
-
-This is our main GraphQL application schema.
+Let's create our first GraphQL schema!
 
 ```graphql
 schema {
@@ -67,9 +65,8 @@ type Example {
 }
 ```
 
-### `ExampleController.php`
-
-The GraphQL request `query { say }` handler indicated in the `@route` directive
+In order to return the correct answer from the `say` field let's create an 
+`ExampleController` controller with the desired method `say`.
 
 ```php
 class ExampleController
@@ -81,12 +78,15 @@ class ExampleController
 }
 ```
 
-### `index.php`
+That's all we need to know 🚀
 
-This is the main file that handles all requests to the application. 
-With the same success this role can be performed by any controller 
-in the MVP (MVC with passive models) application, for example on 
-the basis of a Symfony or Laravel.
+But I think we should still run the application. For the [Symfony](https://github.com/railt/symfony-bundle) 
+and [Laravel](https://github.com/railt/laravel-provider) there are appropriate 
+packages, but if you do not use (or do not want to use) frameworks, it is not 
+difficult to do it from scratch.
+
+The `index.php` is the main file that handles all requests to the application. 
+So let's create it and write a simple logic:
 
 ```php
 <?php
@@ -95,31 +95,31 @@ use Railt\Http\Factory;
 use Railt\Foundation\Application;
 use Railt\Http\Provider\GlobalsProvider;
 
+require __DIR__ . '/vendor/autoload.php';
 
-$loader = require __DIR__ . '/vendor/autoload.php';
+// Creating a new Application in debug mode information
+// about which is passed in the first argument.
+$app = new Application(true);
 
-//
-// Creating a new Application
-//
-$app = new Application();
-
-//
 // Create a connection
-//
 $connection = $app->connect(File::fromPathname(__DIR__ . '/schema.graphqls'));
 
-//
 // Processing of HTTP Request
-//
 $responses = $connection->request(Factory::create(new GlobalsProvider()));
 
-//
 // And send the HTTP Response
-//
 $responses->send();
 ```
 
-**Response:**
+...send request
+
+```graphql
+{
+    say(message: "Something is awesome!")
+}
+```
+
+...and get the answer!
 
 ```json
 {
@@ -127,12 +127,14 @@ $responses->send();
 }
 ```
 
+That's how simple it is 🎈
+
 ## Learning Railt
 
 > This documentation can contain NOT RELEVANT information and currently in progress.
 
-- [Russian](https://ru.railt.org)
 - [English](https://en.railt.org)
+- [Russian](https://ru.railt.org)
 
 ## Contributing
 
@@ -171,9 +173,7 @@ the [MIT license](https://opensource.org/licenses/MIT).
 | [`railt/json`](https://github.com/railt/json)                          | [![Latest Stable Version](https://poser.pugx.org/railt/json/version)](https://packagist.org/packages/railt/json)                         | [![Travis CI](https://travis-ci.org/railt/json.svg?branch=1.4.x)](https://travis-ci.org/railt/json)                          |
 | [`railt/dumper`](https://github.com/railt/dumper)                      | [![Latest Stable Version](https://poser.pugx.org/railt/dumper/version)](https://packagist.org/packages/railt/dumper)                     | [![Travis CI](https://travis-ci.org/railt/dumper.svg?branch=1.4.x)](https://travis-ci.org/railt/dumper)                      |
 
-
-
-## Supported By
+## Thanks To
 
 <p align="center">
     <a href="https://www.jetbrains.com/?from=Railt" target="_blank"><img src="https://habrastorage.org/webt/oc/-2/ek/oc-2eklcyr_ncszrzytmlu8_vky.png" alt="JetBrains" /></a>
