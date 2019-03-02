@@ -14,6 +14,11 @@
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/downloads" alt="Total Downloads"></a>
     <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE.md"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
 </p>
+<style>
+table {
+    width:100%;
+}
+</style>
 
 ## Introduction
 
@@ -153,11 +158,6 @@ the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Development Status
 
-<style>
-table {
-    width:100%;
-}
-</style>
 
 | Packages                                                               | Release                                                                                                                                  | CI Status                                                                                                                     |
 |------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
