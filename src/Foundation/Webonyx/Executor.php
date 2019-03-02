@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Schema;
-use Railt\Container\ContainerInterface;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\ConnectionInterface;
