@@ -27,15 +27,27 @@ cache:
     - $HOME/.composer/cache
 
 before_script:
+  # Installing the latest C and C++ compiler versions
   - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
   - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
-  - gcc --version
-  - g++ --version
+
+  # Installing the parle extension
+  # @see http://php.net/manual/ru/book.parle.php
   - pecl install -f parle
   - echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
+  # Installing Composer dependencies
   - composer self-update -q
   - composer global require hirak/prestissimo
   - composer install --no-interaction --no-suggest
+
+  # Installing code coverage tools
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 jobs:
   include:
