@@ -39,7 +39,7 @@ before_script:
 
 jobs:
   include:
-    - stage: tests
-      script: vendor/bin/paratest -f -p8
     - stage: analysis
       script: vendor/bin/psalm
+
+script: vendor/bin/paratest -f -p8
