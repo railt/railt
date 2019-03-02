@@ -37,8 +37,7 @@ before_script:
 
   # Installing the parle extension
   # @see http://php.net/manual/ru/book.parle.php
-  - pecl install parle
-  - echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - pecl install -f parle
 
   # Installing Composer dependencies
   - composer install --no-interaction --no-suggest --optimize-autoloader
