@@ -50,6 +50,11 @@ class Connection extends Container implements ConnectionInterface
     private $compiler;
 
     /**
+     * @var Readable
+     */
+    private $schema;
+
+    /**
      * Connection constructor.
      *
      * @param ApplicationInterface $app
@@ -59,9 +64,9 @@ class Connection extends Container implements ConnectionInterface
      */
     public function __construct(ApplicationInterface $app, Readable $schema)
     {
-        parent::__construct($app);
+        $this->schema = $schema;
 
-        $this->registerBaseBindings($schema);
+        parent::__construct($app);
 
         $this->connect();
     }
@@ -118,6 +123,8 @@ class Connection extends Container implements ConnectionInterface
         if ($this->closed) {
             $this->closed = false;
 
+            $this->registerBaseBindings($this->schema);
+
             [$dictionary, $schema] = [
                 $this->make(Dictionary::class),
                 $this->make(SchemaDefinition::class),
@@ -165,8 +172,10 @@ class Connection extends Container implements ConnectionInterface
     public function close(): void
     {
         if ($this->closed === false) {
-            $this->closed = true;
+            $this->clean();
             \gc_collect_cycles();
+
+            $this->closed = true;
 
             [$dictionary, $schema] = [
                 $this->make(Dictionary::class),

@@ -291,4 +291,22 @@ class Container implements ContainerInterface
 
         return $action(...$resolvedParameters);
     }
+
+    /**
+     * @return void
+     */
+    protected function clean(): void
+    {
+        foreach ($this->registered as $key => $value) {
+            unset($this->registered[$key]);
+        }
+
+        foreach ($this->resolved as $key => $value) {
+            unset($this->resolved[$key]);
+        }
+
+        foreach ($this->aliases as $key => $value) {
+            unset($this->aliases[$key]);
+        }
+    }
 }
