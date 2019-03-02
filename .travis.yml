@@ -55,4 +55,4 @@ jobs:
     - stage: analysis
       script: vendor/bin/psalm
 
-script: vendor/bin/paratest -f -p8 --coverage-clover clover.xml
+script: vendor/bin/phpunit --coverage-clover clover.xml --verbose
