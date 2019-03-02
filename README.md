@@ -7,7 +7,7 @@
     <a href="https://codeclimate.com/github/railt/railt/maintainability"><img src="https://api.codeclimate.com/v1/badges/07b06e5fc97ecbfaafb6/maintainability" /></a>
 </p>
 <p align="center">
-    <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-7.1+-brightgreen.svg" alt="PHP 7.1+"></a>
+    <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-7.1+-blue.svg" alt="PHP 7.1+"></a>
     <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-blue.svg" alt="railt.org"></a>
     <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-blue.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/version" alt="Latest Stable Version"></a>
