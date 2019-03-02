@@ -35,13 +35,9 @@ before_script:
   - composer self-update -q
   - composer global require hirak/prestissimo
 
-  # Installing pickle
-  - curl -L https://github.com/FriendsOfPHP/pickle/releases/download/v0.4.0/pickle.phar > ./pickle.phar
-
   # Installing the parle extension
   # @see http://php.net/manual/ru/book.parle.php
-  - composer require friendsofphp/pickle
-  - vendor/bin/pickle install parle
+  - pecl install parle
   - echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
   # Installing Composer dependencies
