@@ -6,6 +6,10 @@ php:
   - 7.3
   - nightly
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=46782ef0ec0fe8bfda0733a577c579e5b97a722caba9be1d7ed87ee94e96a3c3
+
 matrix:
   fast_finish: true
   allow_failures:
@@ -48,11 +52,11 @@ before_script:
   - ./cc-test-reporter before-build
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT format-coverage -t clover clover.xml
+  - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
 
 jobs:
   include:
     - stage: analysis
       script: vendor/bin/psalm
 
-script: vendor/bin/phpunit --coverage-clover clover.xml --verbose
+script: vendor/bin/paratest --coverage-clover clover.xml
