@@ -489,36 +489,4 @@ abstract class AbstractDecoderTestCase extends TestCase
         $this->assertSame((float)self::PHP_INT_MIN_X64_OVERFLOWS,
             $this->decode((string)self::PHP_INT_MIN_X64_OVERFLOWS));
     }
-
-    /**
-     * @return array|string[]
-     */
-    public function validCharsDataProvider(): array
-    {
-        $result = [];
-        $string = [];
-
-        for ($i = 0, $len = 0xd800; $i < $len; ++$i) {
-            $char = '\u' . \str_pad(\dechex($i), 4, '0', \STR_PAD_LEFT);
-
-            if (\count($string) > 100) {
-                $result[] = ['"' . \implode('', $string) . '"'];
-                $string = [];
-            } else {
-                $string[] = $char;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @dataProvider validCharsDataProvider
-     * @param string $char
-     * @throws \Throwable
-     */
-    public function testValidUtfCharacters(string $char): void
-    {
-        $this->assertSame(\json_decode($char), $this->decode($char));
-    }
 }

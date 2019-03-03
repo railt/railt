@@ -55,4 +55,4 @@ jobs:
     - stage: analysis
       script: vendor/bin/psalm
 
-script: travis_wait 120 vendor/bin/phpunit --coverage-clover clover.xml --verbose
+script: vendor/bin/phpunit --coverage-clover clover.xml --verbose
