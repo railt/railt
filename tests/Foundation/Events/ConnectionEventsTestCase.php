@@ -61,38 +61,6 @@ class ConnectionEventsTestCase extends TestCase
      * @param ApplicationInterface $app
      * @param EventDispatcherInterface $dispatcher
      * @return void
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     */
-    public function testConnectionsClosedByGC(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
-    {
-        $established = $closed = 0;
-
-        $dispatcher->addListener(Established::class, function (Established $ev) use (&$established): void {
-            ++$established;
-        });
-
-        $dispatcher->addListener(Closed::class, function (Closed $ev) use (&$closed): void {
-            ++$closed;
-        });
-
-        for ($i = 0; $i < 10; ++$i) {
-            //
-            // In this case, the GC destroys the connection object, closing it.
-            //
-            $app->connect(File::fromSources(self::EXAMPLE_QUERY));
-        }
-
-        $this->assertSame(10, $established);
-        $this->assertSame(10, $closed);
-    }
-
-    /**
-     * @dataProvider eventsProvider
-     *
-     * @param ApplicationInterface $app
-     * @param EventDispatcherInterface $dispatcher
-     * @return void
      * @throws \PHPUnit\Framework\Exception
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
