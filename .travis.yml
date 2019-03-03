@@ -48,7 +48,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT format-coverage -t clover -o clover.xml
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT format-coverage -t clover clover.xml
 
 jobs:
   include:
