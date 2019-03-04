@@ -47,7 +47,7 @@ trait Support
     private static $syntaxNonNull = '%s!';
 
     /**
-     * @param AllowsTypeIndication|Definition $type
+     * @param AllowsTypeIndication&Definition $type
      * @return string
      */
     protected function typeToString(Definition $type): string

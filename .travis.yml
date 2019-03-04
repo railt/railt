@@ -58,5 +58,6 @@ jobs:
   include:
     - stage: analysis
       script: vendor/bin/psalm
+      async: true
 
 script: vendor/bin/paratest --coverage-clover clover.xml

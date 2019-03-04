@@ -10,18 +10,6 @@
 *.phpt linguist-language=PHP
 
 #
-# Compiler Export Ignore
-#
-/src/Compiler export-ignore
-/resources/pp2 export-ignore
-
-#
-# Discovery Export Ignore
-#
-/src/Discovery export-ignore
-/resources/discovery.schema.json5 export-ignore
-
-#
 # Multi Repo Ignore
 #
 multirepo.json export-ignore
