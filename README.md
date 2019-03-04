@@ -177,7 +177,7 @@ the [MIT license](https://opensource.org/licenses/MIT).
 
 Join our [Discord community](https://discord.gg/ND7SpD4) if you run into issues or have questions. We love talking to you!
 
-<p align="center"><a href="https://discord.gg/ND7SpD4"><img src="https://habrastorage.org/webt/mb/j2/pi/mbj2pi0-41ddglfgsib8zfgc0zu.png" /></a></p>
+<p align="center"><a href="https://discord.gg/ND7SpD4"><img src="https://habrastorage.org/webt/g0/bf/cf/g0bfcfxd-pjpl_gbdhjb2o-kj7u.png" /></a></p>
 
 ## Supported By
 
