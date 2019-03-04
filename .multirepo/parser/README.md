@@ -1,13 +1,18 @@
 <p align="center">
     <img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" />
 </p>
-
 <p align="center">
     <a href="https://travis-ci.org/railt/parser"><img src="https://travis-ci.org/railt/parser.svg?branch=1.4.x" alt="Travis CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/railt/parser/?branch=1.4.x"><img src="https://scrutinizer-ci.com/g/railt/parser/badges/quality-score.png?b=1.4.x" alt="Scrutinizer CI" /></a>
+    <a href="https://codeclimate.com/github/railt/parser/test_coverage"><img src="https://api.codeclimate.com/v1/badges/69e87dcab05a47df928b/test_coverage" /></a>
+    <a href="https://codeclimate.com/github/railt/parser/maintainability"><img src="https://api.codeclimate.com/v1/badges/69e87dcab05a47df928b/maintainability" /></a>
+</p>
+<p align="center">
+    <a href="https://packagist.org/packages/railt/parser"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>
+    <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
+    <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/parser"><img src="https://poser.pugx.org/railt/parser/version" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/railt/parser"><img src="https://poser.pugx.org/railt/parser/v/unstable" alt="Latest Unstable Version"></a>
-    <a href="https://raw.githubusercontent.com/railt/parser/master/LICENSE.md"><img src="https://poser.pugx.org/railt/parser/license" alt="License MIT"></a>
+    <a href="https://packagist.org/packages/railt/parser"><img src="https://poser.pugx.org/railt/parser/downloads" alt="Total Downloads"></a>
+    <a href="https://raw.githubusercontent.com/railt/parser/1.4.x/LICENSE.md"><img src="https://poser.pugx.org/railt/parser/license" alt="License MIT"></a>
 </p>
 
 # Parser

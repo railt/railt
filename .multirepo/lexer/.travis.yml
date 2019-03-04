@@ -6,6 +6,10 @@ php:
   - 7.3
   - nightly
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=077c161db2faf73d35da7894c5844dcf916d32140b8ccbadbb588063d86b9ea1
+
 matrix:
   fast_finish: true
   allow_failures:
@@ -27,14 +31,19 @@ cache:
     - $HOME/.composer/cache
 
 before_script:
-  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
-  - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
-  - gcc --version
-  - g++ --version
-  - pecl install -f parle
-  - echo "extension=parle.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  # Initialise Composer
   - composer self-update -q
   - composer global require hirak/prestissimo
-  - composer install --no-interaction --no-suggest
 
-script: vendor/bin/phpunit
+  # Installing Composer dependencies
+  - composer install --no-interaction --no-suggest --optimize-autoloader
+
+  # Installing code coverage tools
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
+
+script: vendor/bin/paratest --coverage-clover clover.xml

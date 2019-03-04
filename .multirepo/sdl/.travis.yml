@@ -6,19 +6,44 @@ php:
   - 7.3
   - nightly
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=dd1d0b1d4a1d9fb40b815afa7ea02f6dcc38c040464b3d2b5c6f74e42d6afc88
+
 matrix:
   fast_finish: true
   allow_failures:
     - php: 7.3
     - php: nightly
 
+sudo: required
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-5
+      - g++-5
+
 cache:
   directories:
     - $HOME/.composer/cache
 
 before_script:
+  # Initialise Composer
   - composer self-update -q
   - composer global require hirak/prestissimo
-  - composer install --no-interaction --no-suggest
 
-script: vendor/bin/phpunit
+  # Installing Composer dependencies
+  - composer install --no-interaction --no-suggest --optimize-autoloader
+
+  # Installing code coverage tools
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build -t clover --exit-code $TRAVIS_TEST_RESULT
+
+script: vendor/bin/paratest --coverage-clover clover.xml

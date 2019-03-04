@@ -4,7 +4,6 @@
         ".editorconfig": ".editorconfig",
         ".gitattributes": ".gitattributes",
         ".gitignore": ".gitignore",
-        ".scrutinizer.yml": ".scrutinizer.yml",
         "CONTRIBUTING.md": "CONTRIBUTING.md",
         "CODE_OF_CONDUCT.md": "CODE_OF_CONDUCT.md",
         "LICENSE.md": "LICENSE.md",

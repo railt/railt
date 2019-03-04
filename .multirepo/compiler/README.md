@@ -1,14 +1,18 @@
 <p align="center">
     <img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" />
 </p>
-
 <p align="center">
-    <a href="https://travis-ci.org/railt/compiler"><img src="https://travis-ci.org/railt/compiler.svg?branch=master" alt="Travis CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/railt/compiler/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/compiler/badges/coverage.png?b=1.4.x" alt="Code coverage" /></a>
-    <a href="https://scrutinizer-ci.com/g/railt/compiler/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/compiler/badges/quality-score.png?b=1.4.x" alt="Scrutinizer CI" /></a>
+    <a href="https://travis-ci.org/railt/compiler"><img src="https://travis-ci.org/railt/compiler.svg?branch=1.4.x" alt="Travis CI" /></a>
+    <a href="https://codeclimate.com/github/railt/compiler/test_coverage"><img src="https://api.codeclimate.com/v1/badges/8128b42973c66101b3c8/test_coverage" /></a>
+    <a href="https://codeclimate.com/github/railt/compiler/maintainability"><img src="https://api.codeclimate.com/v1/badges/8128b42973c66101b3c8/maintainability" /></a>
+</p>
+<p align="center">
+    <a href="https://packagist.org/packages/railt/compiler"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>
+    <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
+    <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/compiler"><img src="https://poser.pugx.org/railt/compiler/version" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/railt/compiler"><img src="https://poser.pugx.org/railt/compiler/v/unstable" alt="Latest Unstable Version"></a>
-    <a href="https://raw.githubusercontent.com/railt/compiler/master/LICENSE.md"><img src="https://poser.pugx.org/railt/compiler/license" alt="License MIT"></a>
+    <a href="https://packagist.org/packages/railt/compiler"><img src="https://poser.pugx.org/railt/compiler/downloads" alt="Total Downloads"></a>
+    <a href="https://raw.githubusercontent.com/railt/compiler/1.4.x/LICENSE.md"><img src="https://poser.pugx.org/railt/compiler/license" alt="License MIT"></a>
 </p>
 
 # Compiler

@@ -1,13 +1,18 @@
 <p align="center">
     <img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" />
 </p>
-
 <p align="center">
     <a href="https://travis-ci.org/railt/dumper"><img src="https://travis-ci.org/railt/dumper.svg?branch=1.4.x" alt="Travis CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/railt/dumper/?branch=1.4.x"><img src="https://scrutinizer-ci.com/g/railt/dumper/badges/quality-score.png?b=1.4.x" alt="Scrutinizer CI" /></a>
+    <a href="https://codeclimate.com/github/railt/dumper/test_coverage"><img src="https://api.codeclimate.com/v1/badges/e22fba6228b1fa641e10/test_coverage" /></a>
+    <a href="https://codeclimate.com/github/railt/dumper/maintainability"><img src="https://api.codeclimate.com/v1/badges/e22fba6228b1fa641e10/maintainability" /></a>
+</p>
+<p align="center">
+    <a href="https://packagist.org/packages/railt/dumper"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>
+    <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
+    <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/dumper"><img src="https://poser.pugx.org/railt/dumper/version" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/railt/dumper"><img src="https://poser.pugx.org/railt/dumper/v/unstable" alt="Latest Unstable Version"></a>
-    <a href="https://raw.githubusercontent.com/railt/dumper/master/LICENSE.md"><img src="https://poser.pugx.org/railt/dumper/license" alt="License MIT"></a>
+    <a href="https://packagist.org/packages/railt/dumper"><img src="https://poser.pugx.org/railt/dumper/downloads" alt="Total Downloads"></a>
+    <a href="https://raw.githubusercontent.com/railt/dumper/1.4.x/LICENSE.md"><img src="https://poser.pugx.org/railt/dumper/license" alt="License MIT"></a>
 </p>
 
 # Dumper
