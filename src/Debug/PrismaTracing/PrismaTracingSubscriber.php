@@ -33,8 +33,10 @@ class PrismaTracingSubscriber implements EventSubscriberInterface
         return [
             ConnectionEstablished::class => ['onConnect', -100],
             ConnectionClosed::class      => ['onDisconnect', -100],
-            FieldResolve::class          => ['onFieldResolving', 100],
-            FieldResolve::class          => ['onFieldResolved', -100],
+            FieldResolve::class          => [
+                ['onFieldResolving', 100],
+                ['onFieldResolved', -100],
+            ],
             ResponseProceed::class       => ['onResponse', -100],
         ];
     }
