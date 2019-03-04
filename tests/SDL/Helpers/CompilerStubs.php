@@ -10,21 +10,13 @@ declare(strict_types=1);
 namespace Railt\Tests\SDL\Helpers;
 
 use Cache\Adapter\Common\AbstractCachePool;
-use Cache\Adapter\Common\CacheItem;
 use Cache\Adapter\Filesystem\FilesystemCachePool;
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use Railt\Io\Readable;
 use Railt\SDL\Compiler;
-use Railt\SDL\Contracts\Document;
 use Railt\SDL\Schema\CompilerInterface;
-use Railt\Storage\Drivers\ArrayStorage;
-use Railt\Storage\Drivers\EmulatingStorage;
-use Railt\Storage\Drivers\NullableStorage;
-use Railt\Storage\Drivers\Psr16Storage;
-use Railt\Storage\Drivers\Psr6Storage;
-use Railt\Storage\Storage;
 
 /**
  * Trait CompilerStubs
@@ -59,34 +51,11 @@ trait CompilerStubs
         // Default
         yield new Compiler();
 
-        // Nullable (Return Document "as is")
-        yield new Compiler(new NullableStorage());
-
         // Array (Return Document "as is" and store same files into php array stateless memory)
-        yield new Compiler(new ArrayStorage());
-
-        // Emulation of data saving
-        yield new Compiler(new EmulatingStorage());
-
-        // PSR-6 + Flysystem Serialization
-        yield new Compiler($this->getPsr6FileSystemStorage($storage));
+        yield new Compiler(new ArrayCachePool());
 
         // PSR-16 + system Serialization
-        yield new Compiler($this->getPsr16FileSystemStorage($storage));
-    }
-
-    /**
-     * @param string $dir
-     * @return Storage
-     * @throws \Exception
-     */
-    private function getPsr6FileSystemStorage(string $dir): Storage
-    {
-        $cachePool = $this->createFilesystemPool('psr6', $dir);
-
-        return new Psr6Storage($cachePool, function (Readable $readable, Document $document) {
-            return new CacheItem($readable->getHash(), true, $document);
-        });
+        yield new Compiler($this->createFilesystemPool('psr16', $storage));
     }
 
     /**
@@ -103,15 +72,5 @@ trait CompilerStubs
             '/' . $name . '_' . \random_int(0, \PHP_INT_MAX);
 
         return new FilesystemCachePool($filesystem, $folder);
-    }
-
-    /**
-     * @param string $dir
-     * @return Storage
-     * @throws \Exception
-     */
-    private function getPsr16FileSystemStorage(string $dir): Storage
-    {
-        return new Psr16Storage($this->createFilesystemPool('psr16', $dir));
     }
 }

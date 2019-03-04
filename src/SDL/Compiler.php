@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Railt\Io\Readable;
 use Railt\Parser\ParserInterface;
 use Railt\SDL\Contracts\Definitions\Definition;
@@ -31,9 +32,7 @@ use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
 use Railt\SDL\Standard\GraphQLDocument;
 use Railt\SDL\Standard\StandardType;
-use Railt\Storage\Drivers\ArrayStorage;
-use Railt\Storage\Proxy;
-use Railt\Storage\Storage;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * Class Compiler
@@ -53,7 +52,7 @@ class Compiler implements CompilerInterface, Configuration
     private $parser;
 
     /**
-     * @var Storage|ArrayStorage
+     * @var CacheInterface|null
      */
     private $storage;
 
@@ -75,11 +74,11 @@ class Compiler implements CompilerInterface, Configuration
     /**
      * Compiler constructor.
      *
-     * @param Storage|null $storage
+     * @param CacheInterface|null $cache
      * @throws CompilerException
      * @throws Exceptions\TypeConflictException
      */
-    public function __construct(Storage $storage = null)
+    public function __construct(CacheInterface $cache = null)
     {
         $this->parser = new Parser();
         $this->stack = new CallStack();
@@ -87,7 +86,7 @@ class Compiler implements CompilerInterface, Configuration
         $this->typeValidator = new Validator($this->stack);
         $this->typeCoercion = new Factory();
 
-        $this->storage = $this->bootStorage($storage);
+        $this->storage = $this->bootStorage($cache);
 
         $this->add($this->getStandardLibrary());
     }
@@ -110,31 +109,23 @@ class Compiler implements CompilerInterface, Configuration
     }
 
     /**
-     * @param Storage|null $storage
+     * @param CacheInterface|null $cache
      * @return Compiler
      */
-    public function setStorage(?Storage $storage): self
+    public function setStorage(?CacheInterface $cache): self
     {
-        $this->storage = $this->bootStorage($storage);
+        $this->storage = $this->bootStorage($cache);
 
         return $this;
     }
 
     /**
-     * @param null|Storage $storage
-     * @return Storage
+     * @param null|CacheInterface $storage
+     * @return CacheInterface
      */
-    private function bootStorage(?Storage $storage): Storage
+    private function bootStorage(?CacheInterface $storage): CacheInterface
     {
-        if ($storage === null) {
-            return new ArrayStorage();
-        }
-
-        if ($storage instanceof Proxy || $storage instanceof ArrayStorage) {
-            return $storage;
-        }
-
-        return new Proxy(new ArrayStorage(), $storage);
+        return $storage instanceof CacheInterface ? $storage : new ArrayCachePool();
     }
 
     /**
@@ -219,11 +210,16 @@ class Compiler implements CompilerInterface, Configuration
      * @param Readable $readable
      * @return Document
      * @throws Exceptions\TypeConflictException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function compile(Readable $readable): Document
     {
+        if (! $this->storage->has($readable->getHash())) {
+            $this->storage->set($readable->getHash(), ($this->onCompile())($readable));
+        }
+
         /** @var DocumentBuilder $document */
-        $document = $this->storage->remember($readable, $this->onCompile());
+        $document = $this->storage->get($readable->getHash());
         $this->load($document);
 
         return $document->withCompiler($this);
@@ -265,14 +261,6 @@ class Compiler implements CompilerInterface, Configuration
     public function getTypeCoercion(): TypeCoercion
     {
         return $this->typeCoercion;
-    }
-
-    /**
-     * @return Storage
-     */
-    public function getStorage(): Storage
-    {
-        return $this->storage;
     }
 
     /**

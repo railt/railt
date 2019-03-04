@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
+use Psr\SimpleCache\CacheInterface;
 use Railt\Foundation\Application;
 use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Extension\Extension;
@@ -65,7 +66,7 @@ class CompilerExtension extends Extension
     public function register(): void
     {
         $this->app->registerIfNotRegistered(CompilerInterface::class, function () {
-            $cache = $this->app->has(Storage::class) ? $this->app->make(Storage::class) : null;
+            $cache = $this->app->has(CacheInterface::class) ? $this->app->make(CacheInterface::class) : null;
 
             return new Compiler($cache);
         });
