@@ -14,12 +14,21 @@ use Railt\Http\BatchingResponse;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
+use Railt\Http\Request;
 
 /**
  * Class Format
  */
 class Format
 {
+    /**
+     * @return array|RequestInterface[]
+     */
+    private static function empty(): array
+    {
+        return [new Request('')];
+    }
+
     /**
      * @param iterable|RequestInterface|RequestInterface[] $requests
      * @return iterable|RequestInterface[]
@@ -35,7 +44,7 @@ class Format
             return self::requestsFromIterable($requests);
         }
 
-        throw self::invalidRequestException($requests, 2);
+        return self::empty();
     }
 
     /**
@@ -56,8 +65,7 @@ class Format
         }
 
         if (\count($result) === 0) {
-            $error = 'Number of Request objects must be more than zero';
-            throw new \InvalidArgumentException($error);
+            return self::empty();
         }
 
         return $result;
