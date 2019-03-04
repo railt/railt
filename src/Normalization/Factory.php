@@ -63,7 +63,7 @@ class Factory implements NormalizerInterface
      */
     public function addNormalizer(NormalizerInterface $normalizer): void
     {
-        $this->normalizers[] = $normalizer;
+        \array_unshift($this->normalizers, $normalizer);
     }
 
     /**
