@@ -62,6 +62,6 @@ trait HasConsoleApplication
     {
         $configs = $this->make(RepositoryInterface::class);
 
-        return $configs->get(RepositoryInterface::KEY_COMMANDS);
+        return (array)$configs->get(RepositoryInterface::KEY_COMMANDS, []);
     }
 }
