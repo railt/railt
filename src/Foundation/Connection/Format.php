@@ -11,10 +11,10 @@ namespace Railt\Foundation\Connection;
 
 use Railt\Dumper\TypeDumper;
 use Railt\Http\BatchingResponse;
+use Railt\Http\Request;
 use Railt\Http\RequestInterface;
 use Railt\Http\Response;
 use Railt\Http\ResponseInterface;
-use Railt\Http\Request;
 
 /**
  * Class Format
