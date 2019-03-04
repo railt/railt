@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
+use Psr\SimpleCache\CacheInterface;
 use Railt\Io\Readable;
 use Railt\Parser\ParserInterface;
 use Railt\SDL\Contracts\Definitions\Definition;
@@ -32,7 +33,6 @@ use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
 use Railt\SDL\Standard\GraphQLDocument;
 use Railt\SDL\Standard\StandardType;
-use Psr\SimpleCache\CacheInterface;
 
 /**
  * Class Compiler
