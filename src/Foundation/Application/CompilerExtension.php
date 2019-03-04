@@ -110,7 +110,7 @@ class CompilerExtension extends Extension
     private function autoloadFiles(RepositoryInterface $config, CompilerInterface $compiler): void
     {
         $compiler->autoload(function (string $type) use ($config) {
-            $files = (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_FILES);
+            $files = (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_FILES, []);
 
             foreach ($files as $file) {
                 $files[\pathinfo($file, \PATHINFO_FILENAME)] = $file;
@@ -132,8 +132,8 @@ class CompilerExtension extends Extension
     {
         $compiler->autoload(function (string $type) use ($config) {
             [$paths, $extensions] = [
-                (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_PATHS),
-                (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_EXTENSIONS),
+                (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_PATHS, []),
+                (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_EXTENSIONS, []),
             ];
 
             foreach ($paths as $path) {
@@ -167,7 +167,9 @@ class CompilerExtension extends Extension
                 return null;
             }
 
-            foreach ($config->get(RepositoryInterface::KEY_AUTOLOAD_EXTENSIONS) as $extension) {
+            $autoload = (array)$config->get(RepositoryInterface::KEY_AUTOLOAD_EXTENSIONS, []);
+
+            foreach ($autoload as $extension) {
                 $pathname = \dirname($file->getPathname()) . '/' . $type . '.' . $extension;
 
                 if (\is_file($pathname)) {
@@ -197,7 +199,7 @@ class CompilerExtension extends Extension
      */
     private function preloadFiles(RepositoryInterface $config, CompilerInterface $compiler): void
     {
-        $files = (array)$config->get(RepositoryInterface::KEY_PRELOAD_FILES);
+        $files = (array)$config->get(RepositoryInterface::KEY_PRELOAD_FILES, []);
 
         foreach ($files as $file) {
             $compiler->compile(File::fromPathname($file));
@@ -212,8 +214,8 @@ class CompilerExtension extends Extension
     private function preloadPaths(RepositoryInterface $config, CompilerInterface $compiler): void
     {
         [$paths, $extensions] = [
-            (array)$config->get(RepositoryInterface::KEY_PRELOAD_PATHS),
-            (array)$config->get(RepositoryInterface::KEY_PRELOAD_EXTENSIONS),
+            (array)$config->get(RepositoryInterface::KEY_PRELOAD_PATHS, []),
+            (array)$config->get(RepositoryInterface::KEY_PRELOAD_EXTENSIONS, []),
         ];
 
         foreach ($extensions as $extension) {
