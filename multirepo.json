@@ -14,6 +14,19 @@
         ".github": ".github"
     },
     "packages": {
+        "railt/compiler": {
+            "remote": "git@github.com:railt/compiler.git",
+            "files": {
+                ".multirepo/compiler/composer.json": "composer.json",
+                ".multirepo/compiler/README.md": "README.md",
+                ".multirepo/compiler/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Compiler": "src/Compiler",
+                "tests/Compiler": "tests",
+                "resources/pp2": "resources/pp2"
+            }
+        },
         "railt/container": {
             "remote": "git@github.com:railt/container.git",
             "files": {
@@ -24,6 +37,19 @@
             "dirs": {
                 "src/Container": "src/Container",
                 "tests/Container": "tests"
+            }
+        },
+        "railt/discovery": {
+            "remote": "git@github.com:railt/discovery.git",
+            "files": {
+                ".multirepo/discovery/composer.json": "composer.json",
+                ".multirepo/discovery/README.md": "README.md",
+                ".multirepo/discovery/.travis.yml": ".travis.yml",
+                "resources/discovery.schema.json5": "resources/discovery.schema.json5"
+            },
+            "dirs": {
+                "src/Discovery": "src/Discovery",
+                "tests/Discovery": "tests"
             }
         },
         "railt/dumper": {
