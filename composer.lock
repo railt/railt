@@ -896,12 +896,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/discovery.git",
-                "reference": "f998edea68b10a6787a01213f3bc6a34257af0b0"
+                "reference": "f96c648928d8cf43d872ebc7b9076f94283b8ffc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/discovery/zipball/f998edea68b10a6787a01213f3bc6a34257af0b0",
-                "reference": "f998edea68b10a6787a01213f3bc6a34257af0b0",
+                "url": "https://api.github.com/repos/railt/discovery/zipball/f96c648928d8cf43d872ebc7b9076f94283b8ffc",
+                "reference": "f96c648928d8cf43d872ebc7b9076f94283b8ffc",
                 "shasum": ""
             },
             "require": {
@@ -928,7 +928,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Railt\\Discovery\\": "src"
+                    "Railt\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -948,7 +948,7 @@
                 "console",
                 "dependency"
             ],
-            "time": "2019-03-04T21:52:04+00:00"
+            "time": "2019-03-04T22:53:47+00:00"
         },
         {
             "name": "symfony/console",
@@ -3045,12 +3045,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/railt/compiler.git",
-                "reference": "9bf8777bf07c20b8f3b7785dd6a85e748cd28d21"
+                "reference": "7af6d5967fc725b22c0c57704f24533cd9cad29a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/railt/compiler/zipball/9bf8777bf07c20b8f3b7785dd6a85e748cd28d21",
-                "reference": "9bf8777bf07c20b8f3b7785dd6a85e748cd28d21",
+                "url": "https://api.github.com/repos/railt/compiler/zipball/7af6d5967fc725b22c0c57704f24533cd9cad29a",
+                "reference": "7af6d5967fc725b22c0c57704f24533cd9cad29a",
                 "shasum": ""
             },
             "require": {
@@ -3084,7 +3084,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Railt\\Compiler\\": "src"
+                    "Railt\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3106,7 +3106,7 @@
                 "language",
                 "pp"
             ],
-            "time": "2019-03-04T21:52:11+00:00"
+            "time": "2019-03-04T22:54:38+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
