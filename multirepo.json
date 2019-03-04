@@ -109,7 +109,7 @@
             "dirs": {
                 "src/SDL": "src/SDL",
                 "tests/SDL": "tests",
-                "resources/grammar": "resources/grammar"
+                "resources/graphql": "resources/graphql"
             }
         },
         "railt/storage": {

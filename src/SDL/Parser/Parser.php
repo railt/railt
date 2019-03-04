@@ -17,7 +17,7 @@ final class Parser extends BaseParser
     /**
      * @var string
      */
-    public const GRAMMAR_PATHNAME = __DIR__ . '/../../../resources/grammar/sdl.pp';
+    public const GRAMMAR_PATHNAME = __DIR__ . '/../../../resources/graphql/sdl.pp';
 
     /**
      * Make tokens public

@@ -44,25 +44,24 @@
     },
     "replace": {
         "railt/container": "*",
+        "railt/dumper": "*",
         "railt/http": "*",
         "railt/io": "*",
         "railt/json": "*",
         "railt/lexer": "*",
         "railt/parser": "*",
         "railt/sdl": "*",
-        "railt/storage": "*",
-        "railt/subscriptions": "*",
-        "railt/dumper": "*"
+        "railt/storage": "*"
     },
     "autoload": {
         "psr-4": {
             "Railt\\": "src/"
         },
         "files": [
-            "./src/SDL/polyfill.php",
             "./src/Dumper/helpers.php",
-            "./src/Json/polyfill.php",
-            "./src/Json/helpers.php"
+            "./src/SDL/polyfill.php",
+            "./src/Json/helpers.php",
+            "./src/Json/polyfill.php"
         ]
     },
     "require-dev": {
