@@ -110,18 +110,6 @@
                 "tests/SDL": "tests",
                 "resources/graphql": "resources/graphql"
             }
-        },
-        "railt/storage": {
-            "remote": "git@github.com:railt/storage.git",
-            "files": {
-                ".multirepo/storage/composer.json": "composer.json",
-                ".multirepo/storage/README.md": "README.md",
-                ".multirepo/storage/.travis.yml": ".travis.yml"
-            },
-            "dirs": {
-                "src/Storage": "src/Storage",
-                "tests/Storage": "tests"
-            }
         }
     }
 }
