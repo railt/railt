@@ -21,8 +21,8 @@ class Factory implements NormalizerInterface
      * @var array|string[]
      */
     public const DEFAULT_NORMALIZERS = [
-        TraversableNormalizer::class,
         ObjectNormalizer::class,
+        TraversableNormalizer::class,
     ];
 
     /**
