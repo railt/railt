@@ -173,7 +173,7 @@ the [MIT license](https://opensource.org/licenses/MIT).
 | [`railt/json`](https://github.com/railt/json)                          | [![Latest Stable Version](https://poser.pugx.org/railt/json/version)](https://packagist.org/packages/railt/json)                         | [![Travis CI](https://travis-ci.org/railt/json.svg?branch=1.4.x)](https://travis-ci.org/railt/json)                          |
 | [`railt/dumper`](https://github.com/railt/dumper)                      | [![Latest Stable Version](https://poser.pugx.org/railt/dumper/version)](https://packagist.org/packages/railt/dumper)                     | [![Travis CI](https://travis-ci.org/railt/dumper.svg?branch=1.4.x)](https://travis-ci.org/railt/dumper)                      |
 
-## Help & Community [![https://img.shields.io/badge/discord-chat-6f4ca5.svg](Discord)](https://discord.gg/ND7SpD4)
+## Help & Community [![Discord](https://img.shields.io/badge/discord-chat-6f4ca5.svg)](https://discord.gg/ND7SpD4)
 
 Join our [Discord community](https://discord.gg/ND7SpD4) if you run into issues or have questions. We love talking to you!
 
