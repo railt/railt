@@ -173,7 +173,13 @@ the [MIT license](https://opensource.org/licenses/MIT).
 | [`railt/json`](https://github.com/railt/json)                          | [![Latest Stable Version](https://poser.pugx.org/railt/json/version)](https://packagist.org/packages/railt/json)                         | [![Travis CI](https://travis-ci.org/railt/json.svg?branch=1.4.x)](https://travis-ci.org/railt/json)                          |
 | [`railt/dumper`](https://github.com/railt/dumper)                      | [![Latest Stable Version](https://poser.pugx.org/railt/dumper/version)](https://packagist.org/packages/railt/dumper)                     | [![Travis CI](https://travis-ci.org/railt/dumper.svg?branch=1.4.x)](https://travis-ci.org/railt/dumper)                      |
 
-## Thanks To
+## Help & Community [![https://img.shields.io/badge/discord-chat-6f4ca5.svg](Discord)](https://discord.gg/ND7SpD4)
+
+Join our [Discord community](https://discord.gg/ND7SpD4) if you run into issues or have questions. We love talking to you!
+
+<p align="center"><a href="https://discord.gg/ND7SpD4"><img src="https://habrastorage.org/webt/mb/j2/pi/mbj2pi0-41ddglfgsib8zfgc0zu.png" /></a></p>
+
+## Supported By
 
 <p align="center">
     <a href="https://www.jetbrains.com/?from=Railt" target="_blank"><img src="https://habrastorage.org/webt/oc/-2/ek/oc-2eklcyr_ncszrzytmlu8_vky.png" alt="JetBrains" /></a>
