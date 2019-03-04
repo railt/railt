@@ -21,7 +21,6 @@ use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use Railt\Storage\Storage;
 
 /**
  * Class CompilerExtension
