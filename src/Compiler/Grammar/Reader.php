@@ -56,10 +56,10 @@ class Reader
      */
     public function __construct(Readable $file)
     {
-        $this->file     = $file;
-        $this->pp       = new Parser();
-        $this->lexer    = new NativeRegex();
-        $this->grammar  = new Grammar();
+        $this->file = $file;
+        $this->pp = new Parser();
+        $this->lexer = new NativeRegex();
+        $this->grammar = new Grammar();
         $this->analyzer = new Analyzer();
     }
 

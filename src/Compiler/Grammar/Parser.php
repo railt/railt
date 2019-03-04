@@ -31,32 +31,32 @@ use Railt\Parser\Rule\Terminal;
  */
 class Parser extends Stateful
 {
-    public const T_PRAGMA              = 'T_PRAGMA';
-    public const T_INCLUDE             = 'T_INCLUDE';
-    public const T_TOKEN               = 'T_TOKEN';
-    public const T_SKIP                = 'T_SKIP';
-    public const T_OR                  = 'T_OR';
-    public const T_TOKEN_SKIPPED       = 'T_TOKEN_SKIPPED';
-    public const T_TOKEN_KEPT          = 'T_TOKEN_KEPT';
-    public const T_TOKEN_STRING        = 'T_TOKEN_STRING';
-    public const T_INVOKE              = 'T_INVOKE';
-    public const T_GROUP_OPEN          = 'T_GROUP_OPEN';
-    public const T_GROUP_CLOSE         = 'T_GROUP_CLOSE';
-    public const T_REPEAT_ZERO_OR_ONE  = 'T_REPEAT_ZERO_OR_ONE';
-    public const T_REPEAT_ONE_OR_MORE  = 'T_REPEAT_ONE_OR_MORE';
+    public const T_PRAGMA = 'T_PRAGMA';
+    public const T_INCLUDE = 'T_INCLUDE';
+    public const T_TOKEN = 'T_TOKEN';
+    public const T_SKIP = 'T_SKIP';
+    public const T_OR = 'T_OR';
+    public const T_TOKEN_SKIPPED = 'T_TOKEN_SKIPPED';
+    public const T_TOKEN_KEPT = 'T_TOKEN_KEPT';
+    public const T_TOKEN_STRING = 'T_TOKEN_STRING';
+    public const T_INVOKE = 'T_INVOKE';
+    public const T_GROUP_OPEN = 'T_GROUP_OPEN';
+    public const T_GROUP_CLOSE = 'T_GROUP_CLOSE';
+    public const T_REPEAT_ZERO_OR_ONE = 'T_REPEAT_ZERO_OR_ONE';
+    public const T_REPEAT_ONE_OR_MORE = 'T_REPEAT_ONE_OR_MORE';
     public const T_REPEAT_ZERO_OR_MORE = 'T_REPEAT_ZERO_OR_MORE';
-    public const T_REPEAT_N_TO_M       = 'T_REPEAT_N_TO_M';
-    public const T_REPEAT_N_OR_MORE    = 'T_REPEAT_N_OR_MORE';
-    public const T_REPEAT_ZERO_TO_M    = 'T_REPEAT_ZERO_TO_M';
-    public const T_REPEAT_EXACTLY_N    = 'T_REPEAT_EXACTLY_N';
-    public const T_KEPT_NAME           = 'T_KEPT_NAME';
-    public const T_NAME                = 'T_NAME';
-    public const T_EQ                  = 'T_EQ';
-    public const T_DELEGATE            = 'T_DELEGATE';
-    public const T_END_OF_RULE         = 'T_END_OF_RULE';
-    public const T_WHITESPACE          = 'T_WHITESPACE';
-    public const T_COMMENT             = 'T_COMMENT';
-    public const T_BLOCK_COMMENT       = 'T_BLOCK_COMMENT';
+    public const T_REPEAT_N_TO_M = 'T_REPEAT_N_TO_M';
+    public const T_REPEAT_N_OR_MORE = 'T_REPEAT_N_OR_MORE';
+    public const T_REPEAT_ZERO_TO_M = 'T_REPEAT_ZERO_TO_M';
+    public const T_REPEAT_EXACTLY_N = 'T_REPEAT_EXACTLY_N';
+    public const T_KEPT_NAME = 'T_KEPT_NAME';
+    public const T_NAME = 'T_NAME';
+    public const T_EQ = 'T_EQ';
+    public const T_DELEGATE = 'T_DELEGATE';
+    public const T_END_OF_RULE = 'T_END_OF_RULE';
+    public const T_WHITESPACE = 'T_WHITESPACE';
+    public const T_COMMENT = 'T_COMMENT';
+    public const T_BLOCK_COMMENT = 'T_BLOCK_COMMENT';
 
     /**
      * Lexical tokens list.
