@@ -11,6 +11,10 @@ namespace Railt\Debug;
 
 use Clockwork\Clockwork;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Debug\Clockwork\ConnectionTimelineSubscriber;
+use Railt\Debug\Clockwork\FieldResolveTimelineSubscriber;
+use Railt\Debug\Clockwork\GraphQLUserDataSubscriber;
+use Railt\Debug\Clockwork\RequestTimelineSubscriber;
 use Railt\Debug\Formatter\PrettyResponseSubscriber;
 use Railt\Debug\MemoryProfiler\MemoryProfilerSubscriber;
 use Railt\Debug\PrismaTracing\PrismaTracingSubscriber;
@@ -79,6 +83,7 @@ class DebugExtension extends Extension
      * @param RepositoryInterface $config
      * @throws ContainerResolutionException
      * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \ReflectionException
      */
     public function boot(RepositoryInterface $config): void
     {
