@@ -75,4 +75,9 @@ interface RouteInterface
      * @return callable|mixed
      */
     public function getAction();
+
+    /**
+     * @return iterable
+     */
+    public function filters(): iterable;
 }

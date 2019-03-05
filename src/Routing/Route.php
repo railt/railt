@@ -33,6 +33,11 @@ class Route implements RouteInterface
     private $preferType;
 
     /**
+     * @var array
+     */
+    private $stringifyFilters = [];
+
+    /**
      * Route constructor.
      *
      * @param callable|mixed $action
@@ -48,6 +53,8 @@ class Route implements RouteInterface
      */
     public function whereType(string $name): RouteInterface
     {
+        $this->withStringifyFilter('type', $name);
+
         return $this->matches(function (RequestInterface $_, InputInterface $input) use ($name): bool {
             return $input->getTypeName() === $name;
         });
@@ -59,6 +66,8 @@ class Route implements RouteInterface
      */
     public function whereField(string $field): RouteInterface
     {
+        $this->withStringifyFilter('field', $field);
+
         return $this->matches(function (RequestInterface $_, InputInterface $input) use ($field): bool {
             return $input->getField() === $field;
         });
@@ -71,6 +80,8 @@ class Route implements RouteInterface
     public function wherePreferType(string $type): RouteInterface
     {
         $this->preferType = $type;
+
+        $this->withStringifyFilter('prefers', $type);
 
         return $this->matches(function (RequestInterface $_, InputInterface $input) use ($type): bool {
             return $input->wantsType($type);
@@ -91,6 +102,8 @@ class Route implements RouteInterface
      */
     public function whereOperation(string $operation): RouteInterface
     {
+        $this->withStringifyFilter('operation', $operation);
+
         return $this->matches(function (RequestInterface $request) use ($operation): bool {
             return $request->getOperation() === $operation;
         });
@@ -102,9 +115,20 @@ class Route implements RouteInterface
      */
     public function whereQueryType(string $queryType): RouteInterface
     {
+        $this->withStringifyFilter('queryType', $queryType);
+
         return $this->matches(function (RequestInterface $request) use ($queryType): bool {
             return $request->getQueryType() === $queryType;
         });
+    }
+
+    /**
+     * @param string $key
+     * @param string $value
+     */
+    private function withStringifyFilter(string $key, string $value): void
+    {
+        $this->stringifyFilters[$key] = \array_merge($this->stringifyFilters[$key] ?? [], [$value]);
     }
 
     /**
@@ -113,6 +137,8 @@ class Route implements RouteInterface
      */
     public function whereVariableExists(string $variable): RouteInterface
     {
+        $this->withStringifyFilter('variable', $variable);
+
         return $this->matches(function (RequestInterface $request) use ($variable): bool {
             return $request->hasVariable($variable);
         });
@@ -151,5 +177,13 @@ class Route implements RouteInterface
     public function getAction()
     {
         return $this->action;
+    }
+
+    /**
+     * @return iterable
+     */
+    public function filters(): iterable
+    {
+        return $this->stringifyFilters;
     }
 }
