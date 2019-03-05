@@ -214,27 +214,33 @@ class Compiler implements CompilerInterface, Configuration
      */
     public function compile(Readable $readable): Document
     {
-        if (! $this->storage->has($readable->getHash())) {
-            $this->storage->set($readable->getHash(), ($this->onCompile())($readable));
-        }
+        $document = $this->makeDocument($readable);
 
-        /** @var DocumentBuilder $document */
-        $document = $this->storage->get($readable->getHash());
         $this->load($document);
 
         return $document->withCompiler($this);
     }
 
     /**
-     * @return \Closure
+     * @param Readable $readable
+     * @return Document
+     * @throws CompilerException
+     * @throws Exceptions\TypeConflictException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    private function onCompile(): \Closure
+    private function makeDocument(Readable $readable): Document
     {
-        return function (Readable $readable): Document {
-            $ast = $this->parser->parse($readable);
+        if ($this->storage->has($readable->getHash())) {
+            return \unserialize($this->storage->get($readable->getHash()));
+        }
 
-            return $this->complete(new DocumentBuilder($ast, $readable, $this));
-        };
+        $ast = $this->parser->parse($readable);
+
+        $document = $this->complete(new DocumentBuilder($ast, $readable, $this));
+
+        $this->storage->set($readable->getHash(), \serialize($document), 60);
+
+        return $document;
     }
 
     /**
