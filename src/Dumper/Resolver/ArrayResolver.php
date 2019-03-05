@@ -46,7 +46,7 @@ class ArrayResolver extends Resolver
                 break;
             }
 
-            $result[] = $this->dumper->value($key) . ' => ' . $this->dumper->du($value);
+            $result[] = $this->dumper->value($key) . ' => ' . $this->dumper->dump($value);
             ++$i;
         }
 
