@@ -97,7 +97,7 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
         return [
             ConnectionEstablished::class => ['onConnect', -100],
             RequestReceived::class       => ['onRequest', -100],
-            ResponseProceed::class       => ['onResponse', 100]
+            ResponseProceed::class       => ['onResponse', 100],
         ];
     }
 
@@ -175,14 +175,14 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
 
             foreach ($router->all() as $route) {
                 $filter = [];
-                
+
                 foreach ($route->filters() as $name => $values) {
                     $filter[] = $name . ': ' . \implode(', ', $values);
                 }
 
                 $routes[] = [
-                    'Action' => TypeDumper::render($route->getAction()),
-                    'Filters' => \implode('; ', $filter)
+                    'Action'  => TypeDumper::render($route->getAction()),
+                    'Filters' => \implode('; ', $filter),
                 ];
             }
 
