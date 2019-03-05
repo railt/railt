@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Debug;
 
+use Clockwork\Clockwork;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Debug\Formatter\PrettyResponseSubscriber;
 use Railt\Debug\MemoryProfiler\MemoryProfilerSubscriber;
@@ -77,6 +78,7 @@ class DebugExtension extends Extension
     /**
      * @param RepositoryInterface $config
      * @throws ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function boot(RepositoryInterface $config): void
     {
@@ -84,8 +86,20 @@ class DebugExtension extends Extension
             return;
         }
 
+
         $this->subscribe(new PrettyResponseSubscriber());
         $this->subscribe(new PrismaTracingSubscriber());
         $this->subscribe(new MemoryProfilerSubscriber());
+
+
+        if ($this->app->has(Clockwork::class)) {
+            $clockwork = $this->app->make(Clockwork::class);
+
+            $this->subscribe(new ConnectionTimelineSubscriber($clockwork));
+            $this->subscribe(new RequestTimelineSubscriber($clockwork));
+            $this->subscribe(new FieldResolveTimelineSubscriber($clockwork));
+
+            $this->subscribe(new GraphQLUserDataSubscriber($clockwork, $this->app));
+        }
     }
 }
