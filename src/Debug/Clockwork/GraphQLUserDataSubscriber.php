@@ -16,6 +16,8 @@ use Railt\Container\Container;
 use Railt\Dumper\TypeDumper;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
+use Railt\Foundation\Event\Http\ResponseProceed;
+use Railt\Routing\RouterInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -57,6 +59,37 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param Container $container
+     * @return array
+     * @throws \ReflectionException
+     */
+    private function loadTableFromContainer(Container $container): array
+    {
+        $data = [];
+
+        foreach ($this->extractContainer($container) as $key => $service) {
+            $data[] = ['Service' => $key, 'Value' => TypeDumper::render($service)];
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param Container $container
+     * @return array
+     * @throws \ReflectionException
+     */
+    private function extractContainer(Container $container): array
+    {
+        $context = (new \ReflectionObject($container))->getParentClass();
+
+        $property = $context->getProperty('registered');
+        $property->setAccessible(true);
+
+        return $property->getValue($container);
+    }
+
+    /**
      * @return array
      */
     public static function getSubscribedEvents(): array
@@ -64,16 +97,19 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
         return [
             ConnectionEstablished::class => ['onConnect', -100],
             RequestReceived::class       => ['onRequest', -100],
+            ResponseProceed::class       => ['onResponse', 100]
         ];
     }
 
     /**
-     * @param Container $container
-     * @throws \ReflectionException
+     * @param ResponseProceed $event
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ParameterResolutionException
      */
-    private function shareContext(Container $container): void
+    public function onResponse(ResponseProceed $event): void
     {
-        $this->data->table('Context', $this->loadTableFromContainer($container));
+        $this->shareRouter();
     }
 
     /**
@@ -86,6 +122,15 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
         $connection = $event->getConnection();
 
         $this->shareContext($connection);
+    }
+
+    /**
+     * @param Container $container
+     * @throws \ReflectionException
+     */
+    private function shareContext(Container $container): void
+    {
+        $this->data->table('Context', $this->loadTableFromContainer($container));
     }
 
     /**
@@ -117,33 +162,33 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param Container $container
-     * @return array
-     * @throws \ReflectionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ParameterResolutionException
      */
-    private function loadTableFromContainer(Container $container): array
+    private function shareRouter(): void
     {
-        $data = [];
+        if ($this->app->has(RouterInterface::class)) {
+            $router = $this->app->make(RouterInterface::class);
 
-        foreach ($this->extractContainer($container) as $key => $service) {
-            $data[] = ['Service' => $key, 'Value' => TypeDumper::render($service)];
+            $routes = [];
+
+            foreach ($router->all() as $route) {
+                $filter = [];
+                
+                foreach ($route->filters() as $name => $values) {
+                    $filter[] = $name . ': ' . \implode(', ', $values);
+                }
+
+                $routes[] = [
+                    'Action' => TypeDumper::render($route->getAction()),
+                    'Filters' => \implode('; ', $filter)
+                ];
+            }
+
+            if (\count($routes)) {
+                $this->data->table('Routes', $routes);
+            }
         }
-
-        return $data;
-    }
-
-    /**
-     * @param Container $container
-     * @return array
-     * @throws \ReflectionException
-     */
-    private function extractContainer(Container $container): array
-    {
-        $context = (new \ReflectionObject($container))->getParentClass();
-
-        $property = $context->getProperty('registered');
-        $property->setAccessible(true);
-
-        return $property->getValue($container);
     }
 }
