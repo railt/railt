@@ -63,7 +63,7 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
     {
         return [
             ConnectionEstablished::class => ['onConnect', -100],
-            RequestReceived::class => ['onRequest', -100],
+            RequestReceived::class       => ['onRequest', -100],
         ];
     }
 
@@ -96,7 +96,7 @@ class GraphQLUserDataSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
 
         $this->data->counters([
-            'Variables' => \count($request->getVariables(), \COUNT_RECURSIVE)
+            'Variables' => \count($request->getVariables(), \COUNT_RECURSIVE),
         ]);
 
         $this->data->table('Request', [
