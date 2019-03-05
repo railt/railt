@@ -47,7 +47,7 @@ class FieldResolveTimelineSubscriber implements EventSubscriberInterface
             FieldResolve::class => [
                 ['fieldResolving', 100],
                 ['fieldResolved', -100],
-            ]
+            ],
         ];
     }
 
