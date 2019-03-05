@@ -35,4 +35,9 @@ interface RouterInterface
      * @return RouteInterface
      */
     public function create($action): RouteInterface;
+
+    /**
+     * @return iterable|RouteInterface[]
+     */
+    public function all(): iterable;
 }

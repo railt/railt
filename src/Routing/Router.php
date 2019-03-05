@@ -37,6 +37,14 @@ class Router implements RouterInterface, \Countable
     }
 
     /**
+     * @return iterable|RouteInterface[]
+     */
+    public function all(): iterable
+    {
+        return $this->routes;
+    }
+
+    /**
      * @param RouteInterface $route
      * @return RouterInterface
      */
