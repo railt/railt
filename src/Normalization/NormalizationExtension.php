@@ -16,9 +16,6 @@ use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 use Railt\Normalization\Context\Context;
-use Railt\SDL\Contracts\Definitions\EnumDefinition;
-use Railt\SDL\Contracts\Definitions\ScalarDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class SerializationExtension

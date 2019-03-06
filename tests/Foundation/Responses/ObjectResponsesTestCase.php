@@ -195,7 +195,7 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     public function testStringableObjectAsString(): void
     {
         $response = $this->request('a', '', function () {
-            return new class {
+            return new class() {
                 public function __toString()
                 {
                     return 'example value';

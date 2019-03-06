@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Normalization\Context;
 
-use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 
 /**
