@@ -12,8 +12,9 @@ namespace Railt\Debug;
 use Clockwork\Clockwork;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Debug\Clockwork\ConnectionTimelineSubscriber;
+use Railt\Debug\Clockwork\ApplicationUserDataSubscriber;
 use Railt\Debug\Clockwork\FieldResolveTimelineSubscriber;
-use Railt\Debug\Clockwork\GraphQLUserDataSubscriber;
+use Railt\Debug\Clockwork\HttpLifecycleUserDataSubscriber;
 use Railt\Debug\Clockwork\RequestTimelineSubscriber;
 use Railt\Debug\Formatter\PrettyResponseSubscriber;
 use Railt\Debug\MemoryProfiler\MemoryProfilerSubscriber;
@@ -104,7 +105,8 @@ class DebugExtension extends Extension
             $this->subscribe(new RequestTimelineSubscriber($clockwork));
             $this->subscribe(new FieldResolveTimelineSubscriber($clockwork));
 
-            $this->subscribe(new GraphQLUserDataSubscriber($clockwork, $this->app));
+            $this->subscribe(new ApplicationUserDataSubscriber($clockwork, $this->app));
+            $this->subscribe(new HttpLifecycleUserDataSubscriber($clockwork, $this->app));
         }
     }
 }
