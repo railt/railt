@@ -24,10 +24,10 @@ interface JsonEncoderInterface extends JsonRuntimeInterface
      * @see http://www.php.net/manual/en/function.json-encode.php
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param mixed $data
+     * @param int|null $options
      * @return string
-     * @throws JsonException
      */
-    public function encode($data): string;
+    public function encode($data, int $options = null): string;
 
     /**
      * Writes transferred data to the specified stream pathname.

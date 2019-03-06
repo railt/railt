@@ -12,7 +12,6 @@ namespace Railt\Json;
 use Railt\Io\Exception\NotAccessibleException;
 use Railt\Io\File\Physical;
 use Railt\Io\Readable;
-use Railt\Json\Exception\JsonException;
 
 /**
  * Class JsonEncoder
@@ -36,7 +35,6 @@ abstract class JsonEncoder extends JsonRuntime implements JsonEncoderInterface
      * @param array $data
      * @return Readable
      * @throws NotAccessibleException
-     * @throws JsonException
      */
     public function write(string $pathname, array $data): Readable
     {

@@ -29,7 +29,6 @@ abstract class JsonDecoder extends JsonRuntime implements JsonDecoderInterface
     /**
      * @param Readable $readable
      * @return array|object|mixed
-     * @throws JsonException
      */
     public function read(Readable $readable)
     {

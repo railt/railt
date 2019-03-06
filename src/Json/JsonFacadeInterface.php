@@ -15,12 +15,14 @@ namespace Railt\Json;
 interface JsonFacadeInterface
 {
     /**
+     * @param int|null $options
      * @return JsonEncoderInterface
      */
-    public static function encoder(): JsonEncoderInterface;
+    public static function encoder(int $options = null): JsonEncoderInterface;
 
     /**
+     * @param int|null $options
      * @return JsonDecoderInterface
      */
-    public static function decoder(): JsonDecoderInterface;
+    public static function decoder(int $options = null): JsonDecoderInterface;
 }

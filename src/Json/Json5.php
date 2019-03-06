@@ -28,10 +28,15 @@ class Json5 extends Json
     public const FORCE_JSON5_ENCODER = 8388608;
 
     /**
+     * @param int|null $options
      * @return JsonDecoderInterface
      */
-    public static function decoder(): JsonDecoderInterface
+    public static function decoder(int $options = null): JsonDecoderInterface
     {
-        return new Json5Decoder();
+        if ($options === null) {
+            return new Json5Decoder();
+        }
+
+        return (new Json5Decoder())->setOptions($options);
     }
 }

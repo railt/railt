@@ -24,10 +24,10 @@ interface JsonDecoderInterface extends JsonRuntimeInterface
      * @see http://www.php.net/manual/en/function.json-decode.php
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param string $json
+     * @param int|null $options
      * @return array|object|mixed
-     * @throws JsonException
      */
-    public function decode(string $json);
+    public function decode(string $json, int $options = null);
 
     /**
      * Reads and parses json data from the specified stream.

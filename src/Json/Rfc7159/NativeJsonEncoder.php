@@ -34,11 +34,16 @@ class NativeJsonEncoder extends JsonEncoder
      * @see http://www.php.net/manual/en/function.json-encode.php
      * @see http://php.net/manual/en/class.jsonexception.php
      * @param mixed $data
+     * @param int|null $options
      * @return string
      * @throws JsonException
      */
-    public function encode($data): string
+    public function encode($data, int $options = null): string
     {
+        if ($options !== null) {
+            return (clone $this)->encode($data);
+        }
+
         return $this->wrap(function () use ($data) {
             return @\json_encode($data, $this->getOptions(), $this->getRecursionDepth());
         });

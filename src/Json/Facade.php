@@ -12,7 +12,7 @@ namespace Railt\Json;
 use Railt\Io\Readable;
 
 /**
- * @method static string encode(mixed $data)
+ * @method static string encode(mixed $data, int $options = null)
  * @method static Readable write(string $pathname, array $data)
  * @method static bool hasEncodeOption(int $option)
  * @method static int getEncodeOptions()
@@ -20,7 +20,7 @@ use Railt\Io\Readable;
  * @method static JsonEncoderInterface withEncodeOptions(int ...$options)
  * @method static JsonEncoderInterface withoutEncodeOptions(int ...$options)
  *
- * @method static mixed decode(string $json)
+ * @method static mixed decode(string $json, int $options = null)
  * @method static array read(Readable $readable)
  * @method static bool hasDecodeOption(int $option)
  * @method static int getDecodeOptions()

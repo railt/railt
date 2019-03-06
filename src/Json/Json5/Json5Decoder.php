@@ -57,11 +57,16 @@ class Json5Decoder extends JsonDecoder
 
     /**
      * @param string $json
+     * @param int|null $options
      * @return mixed
      * @throws JsonException
      */
-    public function decode(string $json)
+    public function decode(string $json, int $options = null)
     {
+        if ($options !== null) {
+            return (clone $this)->decode($json);
+        }
+
         return $this->tryFallback($json, function (string $json) {
             return $this->tryParse($json);
         });

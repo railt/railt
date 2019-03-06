@@ -18,18 +18,28 @@ use Railt\Json\Rfc7159\NativeJsonEncoder;
 class Json extends Facade
 {
     /**
+     * @param int|null $options
      * @return JsonEncoderInterface
      */
-    public static function encoder(): JsonEncoderInterface
+    public static function encoder(int $options = null): JsonEncoderInterface
     {
-        return new NativeJsonEncoder();
+        if ($options === null) {
+            return new NativeJsonEncoder();
+        }
+
+        return (new NativeJsonEncoder())->setOptions($options);
     }
 
     /**
+     * @param int|null $options
      * @return JsonDecoderInterface
      */
-    public static function decoder(): JsonDecoderInterface
+    public static function decoder(int $options = null): JsonDecoderInterface
     {
-        return new NativeJsonDecoder();
+        if ($options === null) {
+            return new NativeJsonDecoder();
+        }
+
+        return (new NativeJsonDecoder())->setOptions($options);
     }
 }
