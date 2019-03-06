@@ -62,7 +62,7 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
         return [
             RequestReceived::class => ['onRequest', 100],
             ResponseProceed::class => ['onResponse', -100],
-            FieldResolve::class    => ['onResolve', -1]
+            FieldResolve::class    => ['onResolve', -1],
         ];
     }
 
@@ -103,7 +103,7 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
         $context->counters([
             'Connection ID' => $event->getConnection()->getId(),
             'Request ID'    => $request->getId(),
-            'Variables'     => \count($request->getVariables(), \COUNT_RECURSIVE)
+            'Variables'     => \count($request->getVariables(), \COUNT_RECURSIVE),
         ]);
 
         $context->table('Context Container', $this->getContainerTable($event->getConnection()));
@@ -122,7 +122,7 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
      * @param RequestInterface $request
      * @param UserData $context
      */
-    private function shareVariables(RequestInterface $request, UserData $context)
+    private function shareVariables(RequestInterface $request, UserData $context): void
     {
         $variables = [];
 
@@ -169,7 +169,7 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
 
                 $routes[] = [
                     'Action'  => TypeDumper::render($route->getAction()),
-                    'Filters' => \implode('; ', $filter)
+                    'Filters' => \implode('; ', $filter),
                 ];
             }
 

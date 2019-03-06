@@ -11,8 +11,8 @@ namespace Railt\Debug;
 
 use Clockwork\Clockwork;
 use Railt\Container\Exception\ContainerResolutionException;
-use Railt\Debug\Clockwork\ConnectionTimelineSubscriber;
 use Railt\Debug\Clockwork\ApplicationUserDataSubscriber;
+use Railt\Debug\Clockwork\ConnectionTimelineSubscriber;
 use Railt\Debug\Clockwork\FieldResolveTimelineSubscriber;
 use Railt\Debug\Clockwork\HttpLifecycleUserDataSubscriber;
 use Railt\Debug\Clockwork\RequestTimelineSubscriber;

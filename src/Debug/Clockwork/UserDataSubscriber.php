@@ -31,7 +31,7 @@ abstract class UserDataSubscriber implements EventSubscriberInterface
             $data[] = [
                 'Service' => $key,
                 'Value'   => TypeDumper::render($service),
-                'Aliases' => \implode(', ', $this->getAliases($container, $key))
+                'Aliases' => \implode(', ', $this->getAliases($container, $key)),
             ];
         }
 

@@ -17,7 +17,6 @@ use Railt\Dumper\TypeDumper;
 use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Railt\SDL\Reflection\Dictionary;
-use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Standard\StandardType;
 
 /**
@@ -80,7 +79,7 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
         $this->data->table('Config', $configs);
     }
 
-    private function shareGraphQLTypes()
+    private function shareGraphQLTypes(): void
     {
         $dictionary = $this->app->make(Dictionary::class);
 
@@ -91,8 +90,8 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
             $isFile = $type->getDocument()->getFile()->isFile();
 
             $types[] = [
-                'Type' => ($std ? '(builtin) ' : '') . (string)$type,
-                'Document' => $isFile ? $type->getDocument()->getFile()->getPathname() : 'runtime'
+                'Type'     => ($std ? '(builtin) ' : '') . (string)$type,
+                'Document' => $isFile ? $type->getDocument()->getFile()->getPathname() : 'runtime',
             ];
         }
 
@@ -113,7 +112,7 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
     public static function getSubscribedEvents(): array
     {
         return [
-            ResponseProceed::class => ['onResponse', -100]
+            ResponseProceed::class => ['onResponse', -100],
         ];
     }
 }
