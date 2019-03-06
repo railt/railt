@@ -11,6 +11,7 @@ namespace Railt\Normalization;
 
 use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Normalization\Context\ContextInterface;
 
 /**
  * Class Normalizer
@@ -21,14 +22,16 @@ class Factory implements NormalizerInterface
      * @var array|string[]
      */
     public const DEFAULT_NORMALIZERS = [
-        ObjectNormalizer::class,
-        TraversableNormalizer::class,
+        Normalizer\IterableAsListNormalizer::class,
+        Normalizer\IterableAsCompositeNormalizer::class,
+        Normalizer\ObjectAsCompositeNormalizer::class,
+        Normalizer\ObjectAsScalarNormalizer::class,
     ];
 
     /**
-     * @var array|NormalizerInterface[]
+     * @var \SplDoublyLinkedList|NormalizerInterface[]
      */
-    private $normalizers = [];
+    private $normalizers;
 
     /**
      * @var ContainerInterface
@@ -43,6 +46,7 @@ class Factory implements NormalizerInterface
      */
     public function __construct(ContainerInterface $container)
     {
+        $this->normalizers = new \SplDoublyLinkedList();
         $this->container = $container;
 
         $this->bootNormalizers();
@@ -54,27 +58,35 @@ class Factory implements NormalizerInterface
     private function bootNormalizers(): void
     {
         foreach (self::DEFAULT_NORMALIZERS as $class) {
-            $this->addNormalizer($this->container->make($class, [NormalizerInterface::class => $this]));
+            $this->append($this->container->make($class, [NormalizerInterface::class => $this]));
         }
     }
 
     /**
      * @param NormalizerInterface $normalizer
      */
-    public function addNormalizer(NormalizerInterface $normalizer): void
+    public function append(NormalizerInterface $normalizer): void
     {
-        \array_unshift($this->normalizers, $normalizer);
+        $this->normalizers->push($normalizer);
+    }
+
+    /**
+     * @param NormalizerInterface $normalizer
+     */
+    public function prepend(NormalizerInterface $normalizer): void
+    {
+        $this->normalizers->unshift($normalizer);
     }
 
     /**
      * @param mixed $result
-     * @param int $options
+     * @param ContextInterface $context
      * @return array|bool|float|int|mixed|string
      */
-    public function normalize($result, int $options = 0)
+    public function normalize($result, ContextInterface $context)
     {
         foreach ($this->normalizers as $normalizer) {
-            $result = $normalizer->normalize($result, $options);
+            $result = $normalizer->normalize($result, $context);
         }
 
         return $result;

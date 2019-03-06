@@ -9,35 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Normalization;
 
+use Railt\Normalization\Context\ContextInterface;
+
 /**
  * Interface NormalizerInterface
  */
 interface NormalizerInterface
 {
     /**
-     * @var int
-     */
-    public const LIST = 0x01;
-
-    /**
-     * @var int
-     */
-    public const NON_NULL = 0x02;
-
-    /**
-     * @var int
-     */
-    public const LIST_OF_NON_NULLS = 0x04;
-
-    /**
-     * @var int
-     */
-    public const TYPE_SCALAR = 0x08;
-
-    /**
      * @param mixed $result
-     * @param int $options
+     * @param ContextInterface $context
      * @return mixed|array|string|float|bool|int
      */
-    public function normalize($result, int $options = 0);
+    public function normalize($result, ContextInterface $context);
 }

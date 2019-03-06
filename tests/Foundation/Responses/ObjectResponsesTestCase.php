@@ -173,6 +173,56 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     }
 
     /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testObjectAsJsonString(): void
+    {
+        $response = $this->request('a', '', function () {
+            return new \ArrayObject(['example' => 42]);
+        });
+
+        $this->assertSame(['a' => '{"example":42}'], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testStringableObjectAsString(): void
+    {
+        $response = $this->request('a', '', function () {
+            return new class {
+                public function __toString()
+                {
+                    return 'example value';
+                }
+            };
+        });
+
+        $this->assertSame(['a' => 'example value'], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testObjectAsInt(): void
+    {
+        $response = $this->request('c', '', function () {
+            return new \ArrayObject(['example' => 42]);
+        });
+
+        $this->assertSame(['c' => null], $response->getData());
+        $this->assertGreaterThan(0, \count($response->getErrors()));
+    }
+
+    /**
      * @return string
      */
     protected function getSchema(): string
@@ -191,7 +241,7 @@ class ObjectResponsesTestCase extends ResponsesTestCase
                 non_null_list_of_non_nulls: [Query!]!
                 
                 ## VALUES
-                a: String, b: String
+                a: String, b: String, c: Int
             }
         ';
     }

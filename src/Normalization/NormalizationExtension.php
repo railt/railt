@@ -15,6 +15,7 @@ use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\Normalization\Context\Context;
 use Railt\SDL\Contracts\Definitions\EnumDefinition;
 use Railt\SDL\Contracts\Definitions\ScalarDefinition;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
@@ -65,7 +66,7 @@ class NormalizationExtension extends Extension
     }
 
     /**
-     * @throws ContainerInvocationException
+     * @return void
      */
     public function register(): void
     {
@@ -76,7 +77,7 @@ class NormalizationExtension extends Extension
 
     /**
      * @param NormalizerInterface $normalizer
-     * @return void
+     * @throws ContainerInvocationException
      * @throws \Railt\Container\Exception\ContainerResolutionException
      */
     public function boot(NormalizerInterface $normalizer): void
@@ -85,39 +86,10 @@ class NormalizationExtension extends Extension
             if ($event->hasResult()) {
                 $field = $event->getFieldDefinition();
 
-                $result = $normalizer->normalize($event->getResult(), $this->fieldToOptions($field));
+                $result = $normalizer->normalize($event->getResult(), new Context($field));
 
                 $event->withResult($result);
             }
         }, -100);
-    }
-
-    /**
-     * @param FieldDefinition $field
-     * @return int
-     */
-    private function fieldToOptions(FieldDefinition $field): int
-    {
-        $result = 0;
-
-        if ($field->isList()) {
-            $result |= NormalizerInterface::LIST;
-        }
-
-        if ($field->isNonNull()) {
-            $result |= NormalizerInterface::NON_NULL;
-        }
-
-        if ($field->isListOfNonNulls()) {
-            $result |= NormalizerInterface::LIST_OF_NON_NULLS;
-        }
-
-        $type = $field->getTypeDefinition();
-
-        if ($type instanceof ScalarDefinition || $type instanceof EnumDefinition) {
-            $result |= NormalizerInterface::TYPE_SCALAR;
-        }
-
-        return $result;
     }
 }
