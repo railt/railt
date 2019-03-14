@@ -15,6 +15,7 @@ use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
 use Railt\Dumper\TypeDumper;
+use Railt\Foundation\Webonyx\Exception\ParsingException;
 use Railt\Foundation\Webonyx\Exception\SerializationException;
 use Railt\SDL\Contracts\Definitions\ScalarDefinition;
 use Railt\SDL\Standard\Scalars\DateTimeType;
@@ -106,7 +107,7 @@ class ScalarBuilder extends Builder
 
             $error = '%s is not a valid DateTime type';
 
-            $exception = new SerializationException(\sprintf($error, TypeDumper::render($value)));
+            $exception = new ParsingException(\sprintf($error, TypeDumper::render($value)));
             $exception->publish();
 
             throw $exception;
