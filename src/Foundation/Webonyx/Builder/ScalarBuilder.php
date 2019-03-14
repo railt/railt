@@ -17,7 +17,6 @@ use GraphQL\Type\Definition\Type;
 use Railt\Dumper\TypeDumper;
 use Railt\Foundation\Webonyx\Exception\SerializationException;
 use Railt\SDL\Contracts\Definitions\ScalarDefinition;
-use Railt\SDL\Standard\Scalars\DateTimeType;
 
 /**
  * Class ScalarBuilder
