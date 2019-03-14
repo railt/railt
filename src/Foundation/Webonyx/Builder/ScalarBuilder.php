@@ -9,11 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use Carbon\Carbon;
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
+use Railt\Dumper\TypeDumper;
+use Railt\Foundation\Webonyx\Exception\SerializationException;
 use Railt\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\SDL\Standard\Scalars\DateTimeType;
 
 /**
  * Class ScalarBuilder
@@ -53,9 +57,74 @@ class ScalarBuilder extends Builder
 
             case 'Float':
                 return Type::float();
+
+            case 'DateTime':
+                return $this->createDateTime($reflection);
         }
 
         return $otherwise($reflection);
+    }
+
+    /**
+     * @param ScalarDefinition $reflection
+     * @return ScalarType
+     * @throws InvariantViolation
+     */
+    private function createDateTime(ScalarDefinition $reflection): ScalarType
+    {
+        $serializeDateTime = function ($value): string {
+            switch (true) {
+                case \is_string($value):
+                    return Carbon::parse($value)->toRfc3339String();
+
+                case \is_int($value):
+                    return Carbon::createFromTimestamp($value)->toRfc3339String();
+
+                case $value instanceof \DateTimeInterface:
+                    return Carbon::instance($value)->toRfc3339String();
+            }
+
+            $error = 'Can not serialize type %s to valida DateTime string';
+
+            $exception = new SerializationException(\sprintf($error, TypeDumper::render($value)));
+            $exception->publish();
+
+            throw $exception;
+        };
+
+        $parseDateTime = function ($value): \DateTimeInterface {
+            switch (true) {
+                case \is_string($value):
+                    return Carbon::parse($value);
+
+                case \is_int($value):
+                    return Carbon::createFromTimestamp($value);
+
+                case $value instanceof \DateTimeInterface:
+                    return Carbon::instance($value);
+            }
+
+            $error = '%s is not a valid DateTime type';
+
+            $exception = new SerializationException(\sprintf($error, TypeDumper::render($value)));
+            $exception->publish();
+
+            throw $exception;
+        };
+
+        return new CustomScalarType([
+            'name'         => $reflection->getName(),
+            'description'  => $reflection->getDescription(),
+            'serialize'    => function ($value) use ($serializeDateTime): string {
+                return $serializeDateTime($value);
+            },
+            'parseValue'   => function ($value) use ($parseDateTime): \DateTimeInterface {
+                return $parseDateTime($value);
+            },
+            'parseLiteral' => function ($value) use ($parseDateTime): \DateTimeInterface {
+                return $parseDateTime($value);
+            },
+        ]);
     }
 
     /**

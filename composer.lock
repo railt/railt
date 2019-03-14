@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66cd336bd1cca67de121eabb337b9aa1",
+    "content-hash": "912554c044944bae322a2ab9d7f1a479",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -384,7 +384,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.8.3",
+            "version": "v5.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -428,16 +428,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v5.8.3",
+            "version": "v5.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "0f0291d1bc2f036af3fceb8e46900b58812533c4"
+                "reference": "07062f5750872a31e086ff37a7c50ac18b8c417c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/0f0291d1bc2f036af3fceb8e46900b58812533c4",
-                "reference": "0f0291d1bc2f036af3fceb8e46900b58812533c4",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/07062f5750872a31e086ff37a7c50ac18b8c417c",
+                "reference": "07062f5750872a31e086ff37a7c50ac18b8c417c",
                 "shasum": ""
             },
             "require": {
@@ -485,7 +485,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2019-03-05T13:38:58+00:00"
+            "time": "2019-03-12T13:17:00+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -597,16 +597,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.14.2",
+            "version": "2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "a1f4f9abcde8241ce33bf5090896e9c16d0b4232"
+                "reference": "dd16fedc022180ea4292a03aabe95e9895677911"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/a1f4f9abcde8241ce33bf5090896e9c16d0b4232",
-                "reference": "a1f4f9abcde8241ce33bf5090896e9c16d0b4232",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/dd16fedc022180ea4292a03aabe95e9895677911",
+                "reference": "dd16fedc022180ea4292a03aabe95e9895677911",
                 "shasum": ""
             },
             "require": {
@@ -653,7 +653,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-02-28T09:07:12+00:00"
+            "time": "2019-03-12T09:31:40+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -1406,22 +1406,22 @@
         },
         {
             "name": "webonyx/graphql-php",
-            "version": "v0.13.0",
+            "version": "v0.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webonyx/graphql-php.git",
-                "reference": "9bb8e7327748fdc828f801001161e6b586ca96e5"
+                "reference": "0226b08429e5a102ea99cda9ddc4a7185006473f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/9bb8e7327748fdc828f801001161e6b586ca96e5",
-                "reference": "9bb8e7327748fdc828f801001161e6b586ca96e5",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/0226b08429e5a102ea99cda9ddc4a7185006473f",
+                "reference": "0226b08429e5a102ea99cda9ddc4a7185006473f",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": "^7.1"
+                "php": "^7.1||^8.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^5.0",
@@ -1429,6 +1429,7 @@
                 "phpstan/phpstan": "0.10.5",
                 "phpstan/phpstan-phpunit": "0.10.0",
                 "phpstan/phpstan-strict-rules": "0.10.1",
+                "phpunit/phpcov": "^5.0",
                 "phpunit/phpunit": "^7.2",
                 "psr/http-message": "^1.0",
                 "react/promise": "2.*"
@@ -1453,7 +1454,7 @@
                 "api",
                 "graphql"
             ],
-            "time": "2018-11-27T10:23:58+00:00"
+            "time": "2019-03-09T15:34:29+00:00"
         }
     ],
     "packages-dev": [
@@ -1926,7 +1927,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.8.3",
+            "version": "v5.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
