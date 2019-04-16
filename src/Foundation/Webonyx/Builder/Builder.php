@@ -13,11 +13,11 @@ use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
+use Railt\Component\SDL\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\Foundation\Event\Building\TypeBuilding;
 use Railt\Foundation\Webonyx\Exception\BuilderMissingException;
 use Railt\Foundation\Webonyx\TypeLoader;
-use Railt\Component\SDL\Contracts\Behavior\AllowsTypeIndication;
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Extension\ClassLoader;
 
+use Railt\Component\Io\File;
+use Railt\Component\SDL\Schema\CompilerInterface;
 use Railt\Foundation\Application;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
-use Railt\Component\Io\File;
-use Railt\Component\SDL\Schema\CompilerInterface;
 
 /**
  * Class KernelExtension

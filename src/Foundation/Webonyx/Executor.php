@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Schema;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\Http\ResponseInterface;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Reflection\Dictionary;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
 use Railt\Foundation\Webonyx\Executor\RequestResolver;
 use Railt\Foundation\Webonyx\Executor\ResponseResolver;
-use Railt\Component\Http\RequestInterface;
-use Railt\Component\Http\ResponseInterface;
-use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\Component\SDL\Reflection\Dictionary;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

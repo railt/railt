@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Responses;
 
-use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Component\Http\Request;
 use Railt\Component\Http\ResponseInterface;
+use Railt\Foundation\Event\Resolver\FieldResolve;
+use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Tests\Foundation\Stub\TraversableObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

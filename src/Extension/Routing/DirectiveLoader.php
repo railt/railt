@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing;
 
-use Railt\Extension\ClassLoader\ClassLoaderInterface;
 use Railt\Component\Container\ContainerInterface;
 use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Component\SDL\Contracts\Invocations\DirectiveInvocation;
+use Railt\Extension\ClassLoader\ClassLoaderInterface;
 
 /**
  * Class DirectiveLoader

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Routing;
 
-use Railt\Foundation\ConnectionInterface;
 use Railt\Component\Http\Request;
 use Railt\Component\Io\File;
+use Railt\Foundation\ConnectionInterface;
 
 /**
  * Class BasicRequestsTestCase

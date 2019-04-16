@@ -14,12 +14,12 @@ use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
 use Railt\Component\Container\Container;
 use Railt\Component\Dumper\TypeDumper;
+use Railt\Component\Http\RequestInterface;
+use Railt\Extension\Routing\RouterInterface;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Component\Http\RequestInterface;
-use Railt\Extension\Routing\RouterInterface;
 
 /**
  * Class RequestUserDataSubscriber

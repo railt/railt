@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Extension\Normalization;
 
 use Railt\Component\Container\Exception\ContainerInvocationException;
+use Railt\Extension\Normalization\Context\Context;
 use Railt\Foundation\Application;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
-use Railt\Extension\Normalization\Context\Context;
 
 /**
  * Class SerializationExtension

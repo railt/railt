@@ -11,11 +11,11 @@ namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
-use Railt\Foundation\Webonyx\Input\PathInfoLoader;
-use Railt\Foundation\Webonyx\Input\PreferTypesLoader;
 use Railt\Component\Http\Input as BaseInput;
 use Railt\Component\Http\RequestInterface;
 use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Foundation\Webonyx\Input\PathInfoLoader;
+use Railt\Foundation\Webonyx\Input\PreferTypesLoader;
 
 /**
  * Class Input

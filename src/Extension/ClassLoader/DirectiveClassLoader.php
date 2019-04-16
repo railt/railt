@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Extension\ClassLoader;
 
-use Railt\Extension\ClassLoader\Exception\UnknownClassException;
 use Railt\Component\Container\ContainerInterface;
 use Railt\Component\Container\SignatureResolver;
 use Railt\Component\SDL\Contracts\Document;
 use Railt\Component\SDL\Schema\CompilerInterface;
+use Railt\Extension\ClassLoader\Exception\UnknownClassException;
 
 /**
  * Class DirectiveClassLoader

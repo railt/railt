@@ -11,8 +11,8 @@ namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\UnionType;
-use Railt\Foundation\Webonyx\Builder\Common\TypeResolverTrait;
 use Railt\Component\SDL\Contracts\Definitions\UnionDefinition;
+use Railt\Foundation\Webonyx\Builder\Common\TypeResolverTrait;
 
 /**
  * Class InterfaceBuilder

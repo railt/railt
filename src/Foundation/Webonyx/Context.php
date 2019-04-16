@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
+use Railt\Component\Http\Identifiable;
+use Railt\Component\Http\RequestInterface;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Connection\ProvidesConnection;
 use Railt\Foundation\Event\Http\ProvidesRequest;
-use Railt\Component\Http\Identifiable;
-use Railt\Component\Http\RequestInterface;
 
 /**
  * Class Context

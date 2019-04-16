@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Resolver;
 
+use Railt\Component\Http\InputInterface;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Foundation\Event\Building\ProvidesTypeDefinition;
 use Railt\Foundation\Event\Connection\ProvidesConnection;
 use Railt\Foundation\Event\Http\ProvidesRequest;
-use Railt\Component\Http\InputInterface;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Interface ResolverEventInterface
