@@ -3,8 +3,8 @@
 </p>
 <p align="center">
     <a href="https://travis-ci.org/railt/position"><img src="https://travis-ci.org/railt/position.svg?branch=1.4.x" alt="Travis CI" /></a>
-    <a href="https://codeclimate.com/github/railt/position/test_coverage"><img src="https://api.codeclimate.com/v1/badges/8128b42973c66101b3c8/test_coverage" /></a>
-    <a href="https://codeclimate.com/github/railt/position/maintainability"><img src="https://api.codeclimate.com/v1/badges/8128b42973c66101b3c8/maintainability" /></a>
+    <a href="https://codeclimate.com/github/railt/position/test_coverage"><img src="https://api.codeclimate.com/v1/badges/e9a7df0e02d46aded5b3/test_coverage" /></a>
+    <a href="https://codeclimate.com/github/railt/position/maintainability"><img src="https://api.codeclimate.com/v1/badges/e9a7df0e02d46aded5b3/maintainability" /></a>
 </p>
 <p align="center">
     <a href="https://packagist.org/packages/railt/position"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>

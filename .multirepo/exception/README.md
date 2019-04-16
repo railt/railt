@@ -3,8 +3,8 @@
 </p>
 <p align="center">
     <a href="https://travis-ci.org/railt/exception"><img src="https://travis-ci.org/railt/exception.svg?branch=1.4.x" alt="Travis CI" /></a>
-    <a href="https://codeclimate.com/github/railt/exception/test_coverage"><img src="https://api.codeclimate.com/v1/badges/8128b42973c66101b3c8/test_coverage" /></a>
-    <a href="https://codeclimate.com/github/railt/exception/maintainability"><img src="https://api.codeclimate.com/v1/badges/8128b42973c66101b3c8/maintainability" /></a>
+    <a href="https://codeclimate.com/github/railt/exception/test_coverage"><img src="https://api.codeclimate.com/v1/badges/d66b1d1990649c523ec8/test_coverage" /></a>
+    <a href="https://codeclimate.com/github/railt/exception/maintainability"><img src="https://api.codeclimate.com/v1/badges/d66b1d1990649c523ec8/maintainability" /></a>
 </p>
 <p align="center">
     <a href="https://packagist.org/packages/railt/exception"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>

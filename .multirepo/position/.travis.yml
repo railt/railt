@@ -8,7 +8,7 @@ php:
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=4dd7e5c8193c84350e2c423e06c3455a02ff5c1556cb070aab7a873aef34de9a
+    - CC_TEST_REPORTER_ID=0c96147d40eed47c532c67e0af541eccff451ec3766016263e71db0e6d5b2a6a
 
 matrix:
   fast_finish: true
