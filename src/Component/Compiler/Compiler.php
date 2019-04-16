@@ -102,7 +102,7 @@ class Compiler extends Proxy
         \ob_start();
 
         try {
-            require __DIR__ . '/../../resources/pp2/templates/parser.tpl.php';
+            require __DIR__ . '/Resources/templates/parser.tpl.php';
 
             return \ob_get_contents();
         } catch (\Throwable $e) {

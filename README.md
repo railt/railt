@@ -42,7 +42,7 @@ Via [Composer](https://getcomposer.org/):
 {
     "scripts": {
         "post-autoload-dump": [
-            "Railt\\Discovery\\Manifest::discover"
+            "Railt\\Component\\Discovery\\Manifest::discover"
         ]
     }
 }

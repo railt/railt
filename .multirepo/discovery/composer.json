@@ -1,19 +1,17 @@
 {
-    "name": "railt/compiler",
+    "name": "railt/discovery",
     "type": "library",
-    "description": "The Railt Compiler Parser-Generator",
+    "description": "Cross-package composer-based configuration loader",
     "license": "MIT",
     "keywords": [
-        "compiler",
-        "grammar",
-        "language",
-        "pp",
-        "ast"
+        "console",
+        "autoloader",
+        "dependency"
     ],
     "homepage": "http://railt.org",
     "support": {
         "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/compiler"
+        "source": "https://github.com/railt/discovery"
     },
     "authors": [
         {
@@ -22,15 +20,13 @@
         }
     ],
     "require": {
-        "php": ">=7.1.3",
+        "php": "^7.1.3",
         "ext-json": "*",
-        "ext-mbstring": "*",
-        "ext-pcre": "*",
-        "ext-spl": "*",
+        "composer/semver": "^1.0",
         "railt/io": "1.4.*|1.4.x-dev",
-        "railt/lexer": "1.4.*|1.4.x-dev",
-        "railt/parser": "1.4.*|1.4.x-dev",
-        "zendframework/zend-code": "~3.0"
+        "railt/json": "1.4.*|1.4.x-dev",
+        "justinrainbow/json-schema": "~5.2",
+        "composer-plugin-api": "^1.1"
     },
     "autoload": {
         "psr-4": {
@@ -38,13 +34,14 @@
         }
     },
     "require-dev": {
-        "symfony/finder": "~4.0",
         "phpunit/phpunit": "^7.5",
-        "railt/discovery": "1.4.*|1.4.x-dev"
+        "railt/railt": "1.4.*|1.4.x-dev",
+        "composer/composer": "~1.1",
+        "symfony/var-dumper": "~3.4|~4.0"
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Tests\\Compiler\\": "tests"
+            "Railt\\Tests\\Discovery\\": "tests"
         }
     },
     "scripts": {
@@ -53,12 +50,6 @@
         ]
     },
     "extra": {
-        "railt": {
-            "commands": [
-                "Railt\\Component\\Compiler\\Console\\GrammarCompileCommand",
-                "Railt\\Component\\Compiler\\Console\\CompileCommand"
-            ]
-        },
         "branch-alias": {
             "1.3.x": "1.3.x-dev",
             "1.4.x": "1.4.x-dev"

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Config;
 
-use Railt\Discovery\Discovery;
+use Railt\Component\Discovery\Discovery;
 
 /**
  * Class DiscoveryRepository

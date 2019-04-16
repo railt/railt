@@ -69,8 +69,8 @@ In order to test the performance simply use the reading and
 playing grammar on the fly!
 
 ```php
-use Railt\Io\File;
-use Railt\Compiler\Compiler;
+use Railt\Component\Io\File;
+use Railt\Component\Compiler\Compiler;
 
 $parser = Compiler::load(File::fromSources('
 

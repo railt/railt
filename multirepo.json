@@ -36,6 +36,18 @@
                 "tests/Container": "tests"
             }
         },
+        "railt/discovery": {
+            "remote": "git@github.com:railt/discovery.git",
+            "files": {
+                ".multirepo/discovery/composer.json": "composer.json",
+                ".multirepo/discovery/README.md": "README.md",
+                ".multirepo/discovery/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Component/Discovery": "src/Discovery",
+                "tests/Discovery": "tests"
+            }
+        },
         "railt/dumper": {
             "remote": "git@github.com:railt/dumper.git",
             "files": {
