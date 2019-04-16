@@ -18,7 +18,6 @@ use Railt\Debug\Clockwork\HttpLifecycleUserDataSubscriber;
 use Railt\Debug\Clockwork\RequestTimelineSubscriber;
 use Railt\Debug\Formatter\PrettyResponseSubscriber;
 use Railt\Debug\MemoryProfiler\MemoryProfilerSubscriber;
-use Railt\Debug\PrismaTracing\PrismaTracingSubscriber;
 use Railt\Foundation\Application;
 use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Event\EventsExtension;
@@ -92,11 +91,8 @@ class DebugExtension extends Extension
             return;
         }
 
-
         $this->subscribe(new PrettyResponseSubscriber());
-        $this->subscribe(new PrismaTracingSubscriber());
         $this->subscribe(new MemoryProfilerSubscriber());
-
 
         if ($this->app->has(Clockwork::class)) {
             $clockwork = $this->app->make(Clockwork::class);
