@@ -52,7 +52,7 @@ class ExceptionTestCase extends TestCase
             $prev = new ExternalException()
         );
 
-        $this->assertEquals($prev, $exception->getPrevious());
+        $this->assertSame($prev, $exception->getPrevious());
     }
 
     /**

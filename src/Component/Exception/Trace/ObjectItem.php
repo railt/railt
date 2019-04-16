@@ -133,7 +133,7 @@ class ObjectItem extends FunctionItem implements ObjectItemInterface, MutableObj
             $this->getClass(),
             $this->getType(),
             $this->getFunction(),
-            $this->getArgumentsAsString()
+            $this->getArgumentsAsString(),
         ]);
     }
 }

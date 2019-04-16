@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Helpers;
 
-use Railt\Component\Io\File;
-use Railt\Component\SDL\Parser\Parser;
 use Railt\Component\Compiler\Grammar\Reader;
 use Railt\Component\Exception\ExternalException;
 use Railt\Component\Io\Exception\NotReadableException;
+use Railt\Component\Io\File;
+use Railt\Component\SDL\Parser\Parser;
 
 /**
  * Trait ParserStubs

@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Component\Compiler\Grammar\Delegate;
 
+use Railt\Component\Compiler\Exception\IncludeNotFoundException;
+use Railt\Component\Exception\ExternalException;
+use Railt\Component\Io\Exception\NotReadableException;
 use Railt\Component\Io\File;
 use Railt\Component\Io\Readable;
 use Railt\Component\Parser\Ast\Rule;
-use Railt\Component\Exception\ExternalException;
-use Railt\Component\Io\Exception\NotReadableException;
-use Railt\Component\Compiler\Exception\IncludeNotFoundException;
 
 /**
  * Class IncludeDelegate

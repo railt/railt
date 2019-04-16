@@ -256,7 +256,7 @@ class Item implements ItemInterface, MutableItemInterface, \JsonSerializable, \A
      * @param mixed $value
      * @throws \LogicException
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new \LogicException(static::class . ' is immutable');
     }
@@ -265,7 +265,7 @@ class Item implements ItemInterface, MutableItemInterface, \JsonSerializable, \A
      * @param mixed $offset
      * @throws \LogicException
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new \LogicException(static::class . ' is immutable');
     }

@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Syntax;
 
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Exception;
 use Railt\Component\Exception\ExternalException;
 use Railt\Component\Io\File;
-use PHPUnit\Framework\Exception;
+use Railt\Component\Parser\Exception\UnexpectedTokenException;
+use Railt\Component\Parser\ParserInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
-use PHPUnit\Framework\AssertionFailedError;
-use Railt\Component\Parser\ParserInterface;
-use Railt\Component\Parser\Exception\UnexpectedTokenException;
 
 /**
  * Class SpecTestCase
