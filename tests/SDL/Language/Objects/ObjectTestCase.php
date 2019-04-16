@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Objects;
 
-use Railt\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

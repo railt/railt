@@ -12,8 +12,8 @@ namespace Railt\Tests\Foundation\Events;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Http\Request;
-use Railt\Io\File;
+use Railt\Component\Http\Request;
+use Railt\Component\Io\File;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

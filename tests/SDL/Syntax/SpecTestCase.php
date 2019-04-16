@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Syntax;
 
-use Railt\Io\File;
-use Railt\Parser\Exception\UnexpectedTokenException;
-use Railt\Parser\ParserInterface;
+use Railt\Component\Io\File;
+use Railt\Component\Parser\Exception\UnexpectedTokenException;
+use Railt\Component\Parser\ParserInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 

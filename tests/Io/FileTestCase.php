@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Io;
 
-use Railt\Io\File;
+use Railt\Component\Io\File;
 
 /**
  * Class FactoryTestCase

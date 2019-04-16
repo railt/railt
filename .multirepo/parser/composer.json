@@ -42,7 +42,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\": "src/"
+            "Railt\\Component\\": "src/"
         }
     },
     "require-dev": {

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Io;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use Railt\Io\File;
+use Railt\Component\Io\File;
 
 /**
  * Class TestCase

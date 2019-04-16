@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http\Factory;
 
-use Railt\Http\Provider\DataProvider;
-use Railt\Http\Provider\ProviderInterface;
-use Railt\Http\Request;
+use Railt\Component\Http\Provider\DataProvider;
+use Railt\Component\Http\Provider\ProviderInterface;
+use Railt\Component\Http\Request;
 
 /**
  * Class GetProviderTestCase

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Io;
 
-use Railt\Io\PositionInterface;
-use Railt\Io\Readable;
+use Railt\Component\Io\PositionInterface;
+use Railt\Component\Io\Readable;
 
 /**
  * Class PositionTestCase

@@ -59,10 +59,10 @@
             "Railt\\": "src/"
         },
         "files": [
-            "./src/Dumper/helpers.php",
-            "./src/SDL/polyfill.php",
-            "./src/Json/helpers.php",
-            "./src/Json/polyfill.php"
+            "./src/Component/Dumper/helpers.php",
+            "./src/Component/SDL/polyfill.php",
+            "./src/Component/Json/helpers.php",
+            "./src/Component/Json/polyfill.php"
         ]
     },
     "require-dev": {
@@ -109,20 +109,20 @@
                     "graphql"
                 ],
                 "paths": [
-                    "${package.dir}/resources/routing",
-                    "${package.dir}/resources/class-loader"
+                    "${package.dir}/src/Extension/Routing/Resources/graphql",
+                    "${package.dir}/src/Extension/ClassLoader/Resources/graphql"
                 ]
             },
             "commands": [
-                "Railt\\Json\\Console\\Json5CompileCommand",
-                "Railt\\SDL\\Console\\SDLGrammarCompileCommand",
+                "Railt\\Component\\Json\\Console\\Json5CompileCommand",
+                "Railt\\Component\\SDL\\Console\\SDLGrammarCompileCommand",
                 "Railt\\Foundation\\Console\\ExtensionsListCommand"
             ],
             "extensions": [
-                "Railt\\Debug\\DebugExtension",
-                "Railt\\ClassLoader\\ClassLoaderExtension",
-                "Railt\\Routing\\RouterExtension",
-                "Railt\\Normalization\\NormalizationExtension"
+                "Railt\\Extension\\Debug\\DebugExtension",
+                "Railt\\Extension\\ClassLoader\\ClassLoaderExtension",
+                "Railt\\Extension\\Routing\\RouterExtension",
+                "Railt\\Extension\\Normalization\\NormalizationExtension"
             ]
         },
         "branch-alias": {

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Tests\Routing;
 
 use Railt\Foundation\ConnectionInterface;
-use Railt\Http\Request;
-use Railt\Io\File;
+use Railt\Component\Http\Request;
+use Railt\Component\Io\File;
 
 /**
  * Class BasicRequestsTestCase

@@ -25,7 +25,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\": "src/"
+            "Railt\\Component\\": "src/"
         },
         "files": [
             "./src/Dumper/helpers.php"

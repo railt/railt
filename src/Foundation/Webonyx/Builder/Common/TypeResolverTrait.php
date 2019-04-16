@@ -15,8 +15,8 @@ use GraphQL\Type\Definition\Type;
 use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Foundation\Webonyx\Context;
 use Railt\Foundation\Webonyx\Input;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Trait TypeResolverTrait

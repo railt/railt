@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Building;
 
-use Railt\SDL\Contracts\Definitions\InputDefinition;
-use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Component\SDL\Contracts\Definitions\InputDefinition;
+use Railt\Component\SDL\Contracts\Dependent\ArgumentDefinition;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class TypeBuilding

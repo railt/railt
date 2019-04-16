@@ -20,7 +20,7 @@ class DiscoveryRepository extends Repository
      * DiscoveryRepository constructor.
      *
      * @param Discovery|null $discovery
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      * @throws \ReflectionException
      */
     public function __construct(Discovery $discovery = null)

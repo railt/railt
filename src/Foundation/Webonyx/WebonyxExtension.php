@@ -16,7 +16,7 @@ use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Webonyx\Subscribers\TypeResolvingFixPathSubscriber;
-use Railt\SDL\Reflection\Dictionary;
+use Railt\Component\SDL\Reflection\Dictionary;
 
 /**
  * Class WebonyxExtension
@@ -79,8 +79,8 @@ class WebonyxExtension extends Extension
 
     /**
      * @param ApplicationInterface $app
-     * @throws \Railt\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     public function boot(ApplicationInterface $app): void
     {

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Connection;
 
-use Railt\Http\Identifiable;
-use Railt\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Reflection\Dictionary;
+use Railt\Component\Http\Identifiable;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Reflection\Dictionary;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

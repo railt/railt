@@ -11,8 +11,8 @@ namespace Railt\Tests\Foundation\Responses;
 
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Event\Resolver\TypeResolve;
-use Railt\Http\Request;
-use Railt\Http\ResponseInterface;
+use Railt\Component\Http\Request;
+use Railt\Component\Http\ResponseInterface;
 use Railt\Tests\Foundation\Stub\TraversableObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -122,7 +122,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @param string $field
      * @param \Closure $then
-     * @return \Railt\Http\ResponseInterface
+     * @return \Railt\Component\Http\ResponseInterface
      */
     protected function interface(string $query, \Closure $then, string $field = 'interface'): ResponseInterface
     {

@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Io;
 
-use Railt\Io\Exception\ExternalExceptionInterface;
-use Railt\Io\Exception\ExternalFileException;
-use Railt\Io\Exception\NotFoundException;
-use Railt\Io\Exception\NotReadableException;
-use Railt\Io\File;
-use Railt\Io\Readable;
+use Railt\Component\Io\Exception\ExternalExceptionInterface;
+use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Io\Exception\NotFoundException;
+use Railt\Component\Io\Exception\NotReadableException;
+use Railt\Component\Io\File;
+use Railt\Component\Io\Readable;
 
 /**
  * Class ErrorsTestCase

@@ -11,9 +11,9 @@ namespace Railt\Tests\Foundation\Responses;
 
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Http\Request;
-use Railt\Http\ResponseInterface;
-use Railt\Io\File;
+use Railt\Component\Http\Request;
+use Railt\Component\Http\ResponseInterface;
+use Railt\Component\Io\File;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -26,7 +26,7 @@ abstract class ResponsesTestCase extends TestCase
      * @param string $field
      * @param string $body
      * @param \Closure $then
-     * @return \Railt\Http\ResponseInterface
+     * @return \Railt\Component\Http\ResponseInterface
      */
     protected function request(string $field, string $body, \Closure $then): ResponseInterface
     {

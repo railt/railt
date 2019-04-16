@@ -27,9 +27,9 @@ compiler inside Travis CI. In this case, a gray badge will be displayed with the
 In order to quickly understand how it works - just write ~4 lines of code:
 
 ```php
-$lexer = Railt\Lexer\Factory::create(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE']);
+$lexer = Railt\Component\Lexer\Factory::create(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE']);
 
-foreach ($lexer->lex(Railt\Io\File::fromSources('23 42')) as $token) {
+foreach ($lexer->lex(Railt\Component\Io\File::fromSources('23 42')) as $token) {
     echo $token . "\n";
 }
 ```
@@ -54,7 +54,7 @@ speed between several implementations (Stateful vs Stateless) of the same algori
 it was decided to abandon the immutable stateful lexers.
 
 ```php
-use Railt\Lexer\Factory;
+use Railt\Component\Lexer\Factory;
 
 /**
  * List of available tokens in format "name => pcre"
@@ -114,8 +114,8 @@ The factory returns one of the available implementations, however you can create
 `NativeRegex` implementation is based on the built-in php PCRE functions.
 
 ```php
-use Railt\Lexer\Driver\NativeRegex;
-use Railt\Io\File;
+use Railt\Component\Lexer\Driver\NativeRegex;
+use Railt\Component\Io\File;
 
 $lexer = new NativeRegex(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE', 'T_EOI']);
 
@@ -135,8 +135,8 @@ Experimental lexer based on the
 need support for [Parle extension](http://php.net/manual/en/book.parle.php).
 
 ```php
-use Railt\Lexer\Driver\ParleLexer;
-use Railt\Io\File;
+use Railt\Component\Lexer\Driver\ParleLexer;
+use Railt\Component\Io\File;
 
 $lexer = new ParleLexer(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE', 'T_EOI']);
 

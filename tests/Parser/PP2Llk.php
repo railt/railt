@@ -9,16 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Railt\Lexer\Driver\NativeRegex;
-use Railt\Lexer\LexerInterface;
-use Railt\Parser\Driver\Llk;
-use Railt\Parser\Driver\Stateful;
-use Railt\Parser\Grammar;
-use Railt\Parser\ParserInterface;
-use Railt\Parser\Rule\Alternation;
-use Railt\Parser\Rule\Concatenation;
-use Railt\Parser\Rule\Repetition;
-use Railt\Parser\Rule\Terminal;
+use Railt\Component\Lexer\Driver\NativeRegex;
+use Railt\Component\Lexer\LexerInterface;
+use Railt\Component\Parser\Driver\Llk;
+use Railt\Component\Parser\Driver\Stateful;
+use Railt\Component\Parser\Grammar;
+use Railt\Component\Parser\ParserInterface;
+use Railt\Component\Parser\Rule\Alternation;
+use Railt\Component\Parser\Rule\Concatenation;
+use Railt\Component\Parser\Rule\Repetition;
+use Railt\Component\Parser\Rule\Terminal;
 
 /**
  * This is generated file.
@@ -29,7 +29,7 @@ class PP2Llk extends Stateful
 {
     /**
      * @return ParserInterface
-     * @throws \Railt\Parser\Exception\GrammarException
+     * @throws \Railt\Component\Parser\Exception\GrammarException
      */
     protected function boot(): ParserInterface
     {

@@ -11,7 +11,7 @@ namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface BuilderInterface

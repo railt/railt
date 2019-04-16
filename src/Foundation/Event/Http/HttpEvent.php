@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Http;
 
-use Railt\Http\Identifiable;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
+use Railt\Component\Http\Identifiable;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\Http\ResponseInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

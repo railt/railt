@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Executor;
 
 use GraphQL\Executor\ExecutionResult;
-use Railt\Http\Response;
-use Railt\Http\ResponseInterface;
+use Railt\Component\Http\Response;
+use Railt\Component\Http\ResponseInterface;
 
 /**
  * Class ResponseResolver

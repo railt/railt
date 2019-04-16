@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Foundation\Connection;
 
 use Railt\Foundation\ConnectionInterface;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\Http\ResponseInterface;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
 
 /**
  * Interface ExecutorInterface

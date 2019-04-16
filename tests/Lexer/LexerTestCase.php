@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Lexer;
 
-use Railt\Io\File;
-use Railt\Lexer\LexerInterface;
-use Railt\Lexer\Token\EndOfInput;
-use Railt\Lexer\Token\Unknown;
+use Railt\Component\Io\File;
+use Railt\Component\Lexer\LexerInterface;
+use Railt\Component\Lexer\Token\EndOfInput;
+use Railt\Component\Lexer\Token\Unknown;
 
 /**
  * Class LexerCompiler

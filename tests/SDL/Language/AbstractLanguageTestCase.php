@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language;
 
-use Railt\Io\File;
-use Railt\SDL\Contracts\Document;
-use Railt\SDL\Schema\CompilerInterface;
+use Railt\Component\Io\File;
+use Railt\Component\SDL\Contracts\Document;
+use Railt\Component\SDL\Schema\CompilerInterface;
 use Railt\Tests\SDL\Helpers\CompilerStubs;
 use Railt\Tests\SDL\TestCase;
 

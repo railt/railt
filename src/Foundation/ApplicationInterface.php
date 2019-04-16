@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
-use Railt\Container\ContainerInterface;
+use Railt\Component\Container\ContainerInterface;
 use Railt\Foundation\Application\ProvidesConsoleApplication;
 use Railt\Foundation\Application\ProvidesExtensions;
-use Railt\Io\Readable;
+use Railt\Component\Io\Readable;
 
 /**
  * Interface ApplicationInterface

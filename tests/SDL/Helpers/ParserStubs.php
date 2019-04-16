@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Tests\SDL\Helpers;
 
 use Railt\Compiler\Grammar\Reader;
-use Railt\Io\File;
-use Railt\SDL\Parser\Parser;
+use Railt\Component\Io\File;
+use Railt\Component\SDL\Parser\Parser;
 
 /**
  * Trait ParserStubs
@@ -20,8 +20,8 @@ trait ParserStubs
 {
     /**
      * @return \Traversable
-     * @throws \Railt\Io\Exception\ExternalFileException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\ExternalFileException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      */
     protected function getParsers(): \Traversable
     {

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Extend;
 
-use Railt\SDL\Contracts\Definitions\ObjectDefinition;
-use Railt\SDL\Contracts\Document;
-use Railt\SDL\Reflection\Builder\DocumentBuilder;
+use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\Component\SDL\Contracts\Document;
+use Railt\Component\SDL\Reflection\Builder\DocumentBuilder;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

@@ -16,11 +16,11 @@ use Railt\Foundation\Exception\BadResponseException;
 use Railt\Foundation\Webonyx\Builder\Common\FieldDefinitionResolverTrait;
 use Railt\Foundation\Webonyx\Context;
 use Railt\Foundation\Webonyx\Input;
-use Railt\Http\RequestInterface;
-use Railt\SDL\Contracts\Definitions\EnumDefinition;
-use Railt\SDL\Contracts\Definitions\ScalarDefinition;
-use Railt\SDL\Contracts\Dependent\Argument\HasArguments;
-use Railt\SDL\Contracts\Dependent\FieldDefinition as FieldDefinitionInterface;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\SDL\Contracts\Definitions\EnumDefinition;
+use Railt\Component\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\Component\SDL\Contracts\Dependent\Argument\HasArguments;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition as FieldDefinitionInterface;
 
 /**
  * Class FieldBuilder

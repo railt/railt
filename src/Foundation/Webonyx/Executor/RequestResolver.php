@@ -19,7 +19,7 @@ use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Webonyx\Context;
-use Railt\Http\RequestInterface;
+use Railt\Component\Http\RequestInterface;
 
 /**
  * Class RequestResolver

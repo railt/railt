@@ -16,10 +16,10 @@ use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Webonyx\Builder\SchemaBuilder;
 use Railt\Foundation\Webonyx\Executor\RequestResolver;
 use Railt\Foundation\Webonyx\Executor\ResponseResolver;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Reflection\Dictionary;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\Http\ResponseInterface;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Reflection\Dictionary;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -47,7 +47,7 @@ class Executor implements ExecutorInterface
      *
      * @param ApplicationInterface $app
      * @param Dictionary $dictionary
-     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
      */
     public function __construct(ApplicationInterface $app, Dictionary $dictionary)
     {

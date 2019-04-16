@@ -14,8 +14,8 @@ use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Connection\ProvidesConnection;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Event\Resolver\TypeResolve;
-use Railt\Http\Identifiable;
-use Railt\Http\InputInterface;
+use Railt\Component\Http\Identifiable;
+use Railt\Component\Http\InputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

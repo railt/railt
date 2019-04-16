@@ -9,26 +9,26 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
-use Railt\Container\Container;
-use Railt\Container\ContainerInterface;
-use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Component\Container\Container;
+use Railt\Component\Container\ContainerInterface;
+use Railt\Component\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\Connection\Format;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Http\HasIdentifier;
-use Railt\Http\Identifiable;
-use Railt\Http\RequestInterface;
-use Railt\Http\Response;
-use Railt\Http\ResponseInterface;
-use Railt\Io\Readable;
-use Railt\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Contracts\Document;
-use Railt\SDL\Reflection\Dictionary;
-use Railt\SDL\Schema\CompilerInterface;
-use Railt\SDL\Schema\Configuration;
+use Railt\Component\Http\HasIdentifier;
+use Railt\Component\Http\Identifiable;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\Http\Response;
+use Railt\Component\Http\ResponseInterface;
+use Railt\Component\Io\Readable;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Contracts\Document;
+use Railt\Component\SDL\Reflection\Dictionary;
+use Railt\Component\SDL\Schema\CompilerInterface;
+use Railt\Component\SDL\Schema\Configuration;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -60,7 +60,7 @@ class Connection extends Container implements ConnectionInterface
      * @param ApplicationInterface $app
      * @param Readable $schema
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     public function __construct(ApplicationInterface $app, Readable $schema)
     {
@@ -116,7 +116,7 @@ class Connection extends Container implements ConnectionInterface
     /**
      * @return void
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     private function connect(): void
     {
@@ -138,7 +138,7 @@ class Connection extends Container implements ConnectionInterface
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     private function fireOnConnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
     {
@@ -155,7 +155,7 @@ class Connection extends Container implements ConnectionInterface
      * @param Event $event
      * @return Event
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     private function fire(Event $event): Event
     {
@@ -167,7 +167,7 @@ class Connection extends Container implements ConnectionInterface
     /**
      * @return void
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     public function close(): void
     {
@@ -190,7 +190,7 @@ class Connection extends Container implements ConnectionInterface
      * @param Dictionary $dictionary
      * @param SchemaDefinition $schema
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     private function fireOnDisconnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
     {
@@ -202,7 +202,7 @@ class Connection extends Container implements ConnectionInterface
      * @return ResponseInterface
      * @throws \InvalidArgumentException
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     public function request($requests): ResponseInterface
     {
@@ -229,7 +229,7 @@ class Connection extends Container implements ConnectionInterface
      * @param RequestInterface $request
      * @return RequestInterface
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     private function fireOnRequestEvent(RequestInterface $request): RequestInterface
     {
@@ -248,8 +248,8 @@ class Connection extends Container implements ConnectionInterface
      * @param RequestInterface $request
      * @return ResponseInterface
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Container\Exception\ParameterResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ParameterResolutionException
      */
     private function execute(RequestInterface $request, SchemaDefinition $schema): ResponseInterface
     {
@@ -263,7 +263,7 @@ class Connection extends Container implements ConnectionInterface
      * @param ResponseInterface $response
      * @return ResponseInterface
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     private function fireOnResponseEvent(RequestInterface $request, ResponseInterface $response): ResponseInterface
     {
@@ -280,7 +280,7 @@ class Connection extends Container implements ConnectionInterface
     /**
      * @return void
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     public function __destruct()
     {

@@ -13,9 +13,9 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
 use Railt\Foundation\Webonyx\Input\PathInfoLoader;
 use Railt\Foundation\Webonyx\Input\PreferTypesLoader;
-use Railt\Http\Input as BaseInput;
-use Railt\Http\RequestInterface;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Component\Http\Input as BaseInput;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class Input

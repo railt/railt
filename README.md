@@ -90,10 +90,10 @@ So let's create it and write a simple logic:
 
 ```php
 <?php
-use Railt\Io\File;
-use Railt\Http\Factory;
+use Railt\Component\Io\File;
+use Railt\Component\Http\Factory;
 use Railt\Foundation\Application;
-use Railt\Http\Provider\GlobalsProvider;
+use Railt\Component\Http\Provider\GlobalsProvider;
 
 require __DIR__ . '/vendor/autoload.php';
 

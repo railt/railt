@@ -12,10 +12,10 @@ namespace Railt\Foundation\Webonyx\Builder;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
-use Railt\SDL\Contracts\Definitions\DirectiveDefinition;
-use Railt\SDL\Contracts\Definitions\ObjectDefinition;
-use Railt\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Reflection\Dictionary;
+use Railt\Component\SDL\Contracts\Definitions\DirectiveDefinition;
+use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Reflection\Dictionary;
 
 /**
  * Class SchemaBuilder

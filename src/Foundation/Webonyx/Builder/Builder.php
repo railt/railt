@@ -16,8 +16,8 @@ use GraphQL\Type\Schema;
 use Railt\Foundation\Event\Building\TypeBuilding;
 use Railt\Foundation\Webonyx\Exception\BuilderMissingException;
 use Railt\Foundation\Webonyx\TypeLoader;
-use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Component\SDL\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

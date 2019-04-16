@@ -16,11 +16,11 @@ use Railt\Foundation\Event\Building\BuildingEvent;
 use Railt\Foundation\Event\Building\TypeBuilding;
 use Railt\Foundation\Webonyx\Builder\BuilderInterface;
 use Railt\Foundation\Webonyx\Exception\BuilderMissingException;
-use Railt\SDL\Contracts\Definitions;
-use Railt\SDL\Contracts\Definitions\ObjectDefinition;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\SDL\Contracts\Dependent;
-use Railt\SDL\Reflection\Dictionary;
+use Railt\Component\SDL\Contracts\Definitions;
+use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Component\SDL\Contracts\Dependent;
+use Railt\Component\SDL\Reflection\Dictionary;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

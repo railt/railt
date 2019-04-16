@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Exception;
 
-use Railt\Http\Exception\GraphQLException;
+use Railt\Component\Http\Exception\GraphQLException;
 
 /**
  * Class SerializationException

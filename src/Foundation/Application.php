@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Psr\Container\ContainerInterface as PSRContainer;
-use Railt\Container\Container;
-use Railt\Container\ContainerInterface;
-use Railt\Container\Exception\ContainerInvocationException;
-use Railt\Container\Exception\ContainerResolutionException;
-use Railt\Container\Exception\ParameterResolutionException;
+use Railt\Component\Container\Container;
+use Railt\Component\Container\ContainerInterface;
+use Railt\Component\Container\Exception\ContainerInvocationException;
+use Railt\Component\Container\Exception\ContainerResolutionException;
+use Railt\Component\Container\Exception\ParameterResolutionException;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\Environment;
 use Railt\Foundation\Application\EnvironmentInterface;
@@ -27,7 +27,7 @@ use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Repository as ExtensionRepository;
 use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterface;
 use Railt\Foundation\Webonyx\WebonyxExtension;
-use Railt\Io\Readable;
+use Railt\Component\Io\Readable;
 
 /**
  * Class Application
@@ -63,7 +63,7 @@ class Application extends Container implements ApplicationInterface
      * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      * @throws ParameterResolutionException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      * @throws \ReflectionException
      */
     public function __construct(bool $debug = false, PSRContainer $container = null)
@@ -79,7 +79,7 @@ class Application extends Container implements ApplicationInterface
      * @throws ContainerInvocationException
      * @throws ContainerResolutionException
      * @throws ParameterResolutionException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      * @throws \ReflectionException
      */
     private function registerBaseBindings(bool $debug): void
@@ -102,7 +102,7 @@ class Application extends Container implements ApplicationInterface
     /**
      * @param bool $debug
      * @return void
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      * @throws \ReflectionException
      */
     private function registerConfigsRepository(bool $debug): void

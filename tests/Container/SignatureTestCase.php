@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Container;
 
-use Railt\Container\Container;
-use Railt\Container\Exception\ContainerInvocationException;
-use Railt\Container\SignatureResolver;
+use Railt\Component\Container\Container;
+use Railt\Component\Container\Exception\ContainerInvocationException;
+use Railt\Component\Container\SignatureResolver;
 
 // Preload mock files
 // Very-very-very bad practice, but...
@@ -134,7 +134,7 @@ class SignatureTestCase extends TestCase
      * @dataProvider negativeProvider
      * @param callable|mixed $signature
      * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testBadSignaturesIsNotCallable($signature): void
@@ -152,7 +152,7 @@ class SignatureTestCase extends TestCase
      * @dataProvider positiveProvider
      * @param callable|mixed $signature
      * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testPositiveSignatureInvocations($signature): void

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Foundation\Event\Subscribers;
 
 use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Http\Input;
-use Railt\Http\InputInterface;
+use Railt\Component\Http\Input;
+use Railt\Component\Http\InputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

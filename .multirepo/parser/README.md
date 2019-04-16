@@ -57,7 +57,7 @@ Let's create a primitive lexer that can handle spaces, numbers and the addition 
 > More information about the lexer can be found in [this repository](https://github.com/railt/lexer).
 
 ```php
-use Railt\Lexer\Driver\NativeRegex as Lexer;
+use Railt\Component\Lexer\Driver\NativeRegex as Lexer;
 
 $lexer = (new Lexer())
     ->add('T_WHITESPACE', '\\s+')
@@ -87,9 +87,9 @@ inside the product, this is the [concatenation](https://en.wikipedia.org/wiki/Co
 and definitions of the tokens.
 
 ```php
-use Railt\Parser\Grammar;
-use Railt\Parser\Rule\Concatenation;
-use Railt\Parser\Rule\Terminal;
+use Railt\Component\Parser\Grammar;
+use Railt\Component\Parser\Rule\Concatenation;
+use Railt\Component\Parser\Rule\Terminal;
 
 //
 // This (e)BNF construction:
@@ -110,8 +110,8 @@ $grammar = new Grammar([
 In order to test the grammar, we can simply parse the source.
 
 ```php
-use Railt\Io\File;
-use Railt\Parser\Driver\Llk as Parser;
+use Railt\Component\Io\File;
+use Railt\Component\Parser\Driver\Llk as Parser;
 
 $parser = new Parser($lexer, $grammar);
 
@@ -135,7 +135,7 @@ But if the source is wrong, the parser will tell you exactly where the error occ
 echo $parser->parse(File::fromSources('2 + + 2'));
 //                                         ^
 //
-// throws "Railt\Parser\Exception\UnexpectedTokenException" with message: 
+// throws "Railt\Component\Parser\Exception\UnexpectedTokenException" with message: 
 // "Unexpected token '+' (T_PLUS) at line 1 and column 5"
 ```
 
@@ -248,8 +248,8 @@ Result:
 An abstract syntax tree provides a set of classes 
 that can be represented in one of two ways:
 
-- `Railt\Parser\Ast\LeafInterface` - Terminal structures, which are represented inside the grammar as tokens.
-- `Railt\Parser\Ast\RuleInterface` - Non-terminal structures that are part of the production of grammar.
+- `Railt\Component\Parser\Ast\LeafInterface` - Terminal structures, which are represented inside the grammar as tokens.
+- `Railt\Component\Parser\Ast\RuleInterface` - Non-terminal structures that are part of the production of grammar.
 
 The name and location offset (in bytes) are part of their 
 common capabilities. However, terminals have the ability to retrieve 

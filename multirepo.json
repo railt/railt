@@ -21,7 +21,7 @@
                 ".multirepo/container/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/Container": "src/Container",
+                "src/Component/Container": "src/Container",
                 "tests/Container": "tests"
             }
         },
@@ -33,7 +33,7 @@
                 ".multirepo/dumper/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/Dumper": "src/Dumper",
+                "src/Component/Dumper": "src/Dumper",
                 "tests/Dumper": "tests"
             }
         },
@@ -45,7 +45,7 @@
                 ".multirepo/http/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/Http": "src/Http",
+                "src/Component/Http": "src/Http",
                 "tests/Http": "tests"
             }
         },
@@ -57,7 +57,7 @@
                 ".multirepo/io/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/Io": "src/Io",
+                "src/Component/Io": "src/Io",
                 "tests/Io": "tests"
             }
         },
@@ -69,9 +69,8 @@
                 ".multirepo/json/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/Json": "src/Json",
-                "tests/Json": "tests",
-                "resources/json5": "resources/json5"
+                "src/Component/Json": "src/Json",
+                "tests/Json": "tests"
             }
         },
         "railt/lexer": {
@@ -82,7 +81,7 @@
                 ".multirepo/lexer/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/Lexer": "src/Lexer",
+                "src/Component/Lexer": "src/Lexer",
                 "tests/Lexer": "tests"
             }
         },
@@ -94,7 +93,7 @@
                 ".multirepo/parser/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/Parser": "src/Parser",
+                "src/Component/Parser": "src/Parser",
                 "tests/Parser": "tests"
             }
         },
@@ -106,9 +105,8 @@
                 ".multirepo/sdl/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "src/SDL": "src/SDL",
-                "tests/SDL": "tests",
-                "resources/graphql": "resources/graphql"
+                "src/Component/SDL": "src/SDL",
+                "tests/SDL": "tests"
             }
         }
     }

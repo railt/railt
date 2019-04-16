@@ -11,7 +11,7 @@ namespace Railt\Testing\Interact;
 
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ConnectionInterface;
-use Railt\Io\File;
+use Railt\Component\Io\File;
 
 /**
  * Trait InteractWithConnection

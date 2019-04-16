@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Lexer;
 
-use Railt\Lexer\Driver\NativeRegex;
+use Railt\Component\Lexer\Driver\NativeRegex;
 
 /**
  * Class NativeCompilerTestCase

@@ -11,9 +11,9 @@ namespace Railt\Foundation\Webonyx\Executor;
 
 use GraphQL\Error\Error;
 use GraphQL\Error\InvariantViolation;
-use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
-use Railt\Http\Exception\GraphQLExceptionLocation;
+use Railt\Component\Http\Exception\GraphQLException;
+use Railt\Component\Http\Exception\GraphQLExceptionInterface;
+use Railt\Component\Http\Exception\GraphQLExceptionLocation;
 
 /**
  * Class ExceptionResolver
