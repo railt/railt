@@ -114,6 +114,8 @@
                 ]
             },
             "commands": [
+                "Railt\\Component\\Compiler\\Console\\CompileCommand",
+                "Railt\\Component\\Compiler\\Console\\GrammarCompileCommand",
                 "Railt\\Component\\Json\\Console\\Json5CompileCommand",
                 "Railt\\Component\\SDL\\Console\\SDLGrammarCompileCommand",
                 "Railt\\Foundation\\Console\\ExtensionsListCommand"

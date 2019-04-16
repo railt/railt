@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Component\Json\Console;
 
-use Railt\Compiler\Compiler;
+use Railt\Component\Compiler\Compiler;
 use Railt\Component\Io\File;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

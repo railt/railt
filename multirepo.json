@@ -13,6 +13,17 @@
         ".github": ".github"
     },
     "packages": {
+        "railt/compiler": {
+            "remote": "git@github.com:railt/compiler.git",
+            "files": {
+                ".multirepo/compiler/composer.json": "composer.json",
+                ".multirepo/compiler/README.md": "README.md",
+                ".multirepo/compiler/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Component/Compiler": "src/Compiler"
+            }
+        },
         "railt/container": {
             "remote": "git@github.com:railt/container.git",
             "files": {
