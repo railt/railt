@@ -13,7 +13,6 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7.3
     - php: nightly
 
 sudo: required
@@ -38,10 +37,6 @@ before_script:
   # Initialise Composer
   - composer self-update -q
   - composer global require hirak/prestissimo
-
-  # Installing the parle extension
-  # @see http://php.net/manual/ru/book.parle.php
-  - if [[ ${TRAVIS_PHP_VERSION:0:3} < "7.4" ]]; then pecl install -f parle; fi
 
   # Installing Composer dependencies
   - composer install --no-interaction --no-suggest --optimize-autoloader
