@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * @var string
      */
-    private const COMPOSER_PATH = __DIR__ . '/../composer.json';
+    private const COMPOSER_PATH = __DIR__ . '/../../composer.json';
 
     /**
      * @var string[]|array[]
