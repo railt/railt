@@ -13,18 +13,7 @@ env:
 matrix:
   fast_finish: true
   allow_failures:
-    - php: 7.3
     - php: nightly
-
-sudo: required
-
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gcc-5
-      - g++-5
 
 cache:
   directories:
