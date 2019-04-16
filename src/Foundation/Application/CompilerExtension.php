@@ -10,10 +10,6 @@ declare(strict_types=1);
 namespace Railt\Foundation\Application;
 
 use Psr\SimpleCache\CacheInterface;
-use Railt\Foundation\Application;
-use Railt\Foundation\Config\RepositoryInterface;
-use Railt\Foundation\Extension\Extension;
-use Railt\Foundation\Extension\Status;
 use Railt\Component\Io\Exception\NotReadableException;
 use Railt\Component\Io\File;
 use Railt\Component\SDL\Compiler;
@@ -21,6 +17,10 @@ use Railt\Component\SDL\Contracts\Definitions\Definition;
 use Railt\Component\SDL\Reflection\Dictionary;
 use Railt\Component\SDL\Schema\CompilerInterface;
 use Railt\Component\SDL\Schema\Configuration;
+use Railt\Foundation\Application;
+use Railt\Foundation\Config\RepositoryInterface;
+use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Extension\Status;
 
 /**
  * Class CompilerExtension

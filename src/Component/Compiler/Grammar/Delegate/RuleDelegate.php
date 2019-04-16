@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Component\Compiler\Grammar\Delegate;
 
-use Railt\Component\Parser\Ast\Rule;
+use Railt\Component\Compiler\Grammar\LookaheadIterator;
+use Railt\Component\Lexer\Token\EndOfInput;
 use Railt\Component\Lexer\Token\Token;
 use Railt\Component\Lexer\TokenInterface;
-use Railt\Component\Lexer\Token\EndOfInput;
-use Railt\Component\Parser\Ast\NodeInterface;
 use Railt\Component\Parser\Ast\LeafInterface;
+use Railt\Component\Parser\Ast\NodeInterface;
+use Railt\Component\Parser\Ast\Rule;
 use Railt\Component\Parser\Ast\RuleInterface;
-use Railt\Component\Compiler\Grammar\LookaheadIterator;
 
 /**
  * Class RuleDelegate

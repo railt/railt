@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Subscribers;
 
+use Railt\Component\Http\Identifiable;
+use Railt\Component\Http\InputInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Connection\ProvidesConnection;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Event\Resolver\TypeResolve;
-use Railt\Component\Http\Identifiable;
-use Railt\Component\Http\InputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

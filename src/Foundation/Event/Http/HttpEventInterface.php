@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Http;
 
-use Railt\Foundation\Event\Connection\ProvidesConnection;
 use Railt\Component\Http\ResponseInterface;
+use Railt\Foundation\Event\Connection\ProvidesConnection;
 
 /**
  * Interface ResponseEventInterface

@@ -12,11 +12,11 @@ namespace Railt\Foundation\Webonyx\Builder\Common;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Foundation\Webonyx\Context;
 use Railt\Foundation\Webonyx\Input;
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Trait TypeResolverTrait

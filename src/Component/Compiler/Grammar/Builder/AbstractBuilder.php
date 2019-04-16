@@ -44,9 +44,9 @@ abstract class AbstractBuilder
      */
     public function __construct($name, $children, string $nodeId = null)
     {
-        $this->name     = $name;
+        $this->name = $name;
         $this->children = $children;
-        $this->nodeId   = $nodeId;
+        $this->nodeId = $nodeId;
     }
 
     /**

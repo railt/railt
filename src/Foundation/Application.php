@@ -15,6 +15,7 @@ use Railt\Component\Container\ContainerInterface;
 use Railt\Component\Container\Exception\ContainerInvocationException;
 use Railt\Component\Container\Exception\ContainerResolutionException;
 use Railt\Component\Container\Exception\ParameterResolutionException;
+use Railt\Component\Io\Readable;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Application\Environment;
 use Railt\Foundation\Application\EnvironmentInterface;
@@ -27,7 +28,6 @@ use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Repository as ExtensionRepository;
 use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterface;
 use Railt\Foundation\Webonyx\WebonyxExtension;
-use Railt\Component\Io\Readable;
 
 /**
  * Class Application

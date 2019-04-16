@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Events;
 
+use Railt\Component\Io\File;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed as Closed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished as Established;
-use Railt\Component\Io\File;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

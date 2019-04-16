@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing\Subscribers;
 
-use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Extension\Routing\DirectiveLoader;
+use Railt\Foundation\Event\Resolver\FieldResolve;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

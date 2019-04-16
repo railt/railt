@@ -11,12 +11,12 @@ namespace Railt\Tests\Routing\Events;
 
 use Illuminate\Support\Arr;
 use Railt\Component\Dumper\TypeDumper;
-use Railt\Foundation\ApplicationInterface;
-use Railt\Foundation\ConnectionInterface;
 use Railt\Component\Http\Request;
 use Railt\Component\Io\File;
 use Railt\Extension\Routing\Events\ActionDispatch;
 use Railt\Extension\Routing\RouterInterface;
+use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

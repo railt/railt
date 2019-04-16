@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Component\Compiler\Grammar;
 
-use Railt\Component\Parser\Rule\Rule;
-use Railt\Component\Lexer\Token\EndOfInput;
-use Railt\Component\Compiler\Grammar\Builder\Terminal;
-use Railt\Component\Compiler\Grammar\Builder\Repetition;
 use Railt\Component\Compiler\Exception\GrammarException;
+use Railt\Component\Compiler\Grammar\Builder\AbstractBuilder;
 use Railt\Component\Compiler\Grammar\Builder\Alternation;
 use Railt\Component\Compiler\Grammar\Builder\Concatenation;
+use Railt\Component\Compiler\Grammar\Builder\Repetition;
+use Railt\Component\Compiler\Grammar\Builder\Terminal;
 use Railt\Component\Compiler\Grammar\Delegate\RuleDelegate;
-use Railt\Component\Compiler\Grammar\Builder\AbstractBuilder;
+use Railt\Component\Lexer\Token\EndOfInput;
+use Railt\Component\Parser\Rule\Rule;
 
 /**
  * Analyze rules and transform them into atomic rules operations.
