@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Component\Json;
 
 use Railt\Component\Io\Exception\NotAccessibleException;
-use Railt\Component\Io\File\Physical;
 use Railt\Component\Io\File\Virtual;
 use Railt\Component\Io\Readable;
 

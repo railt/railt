@@ -54,7 +54,7 @@ class Position implements ProvidesOffset, PositionInterface
     public function __construct(int $offset = 0, int $line = 1, int $column = 1)
     {
         $this->offset = $offset;
-        $this->line   = \max($line, static::MIN_CODE_LINE);
+        $this->line = \max($line, static::MIN_CODE_LINE);
         $this->column = \max($column, static::MIN_CODE_COLUMN);
     }
 

@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Component\Io\Tests;
 
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Component\Io\Exception\NotReadableException;
 use Railt\Component\Io\File;
 use Railt\Component\Io\Readable;
-use Railt\Component\Io\Exception\NotReadableException;
-use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Class FactoryTestCase

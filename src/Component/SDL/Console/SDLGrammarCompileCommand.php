@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Component\SDL\Console;
 
+use Railt\Component\Compiler\Compiler;
 use Railt\Component\Exception\ExternalException;
 use Railt\Component\Io\Exception\NotReadableException;
 use Railt\Component\Io\File;
-use Railt\Component\Compiler\Compiler;
 use Railt\Component\SDL\Parser\Parser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;

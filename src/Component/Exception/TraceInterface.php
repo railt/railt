@@ -16,5 +16,4 @@ use Railt\Component\Exception\Trace\Renderable;
  */
 interface TraceInterface extends \IteratorAggregate, Renderable
 {
-
 }

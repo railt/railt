@@ -144,7 +144,7 @@ class FunctionItem extends Item implements FunctionItemInterface, MutableFunctio
         return \vsprintf($template, [
             $this->fileToString(),
             $this->getFunction(),
-            $this->getArgumentsAsString()
+            $this->getArgumentsAsString(),
         ]);
     }
 

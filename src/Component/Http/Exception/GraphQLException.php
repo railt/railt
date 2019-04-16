@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Component\Http\Exception;
 
 use Railt\Component\Exception\ExternalException;
+use Railt\Component\Http\Exception\GraphQLExceptionLocation as Location;
 use Railt\Component\Http\Extension\DataExtension;
 use Railt\Component\Http\Extension\HasExtensions;
-use Railt\Component\Http\Exception\GraphQLExceptionLocation as Location;
 
 /**
  * Class GraphQLException

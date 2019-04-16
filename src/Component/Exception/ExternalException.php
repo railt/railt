@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Railt\Component\Exception;
 
+use Railt\Component\Exception\Trace\FunctionItemInterface;
+use Railt\Component\Exception\Trace\ItemInterface;
+use Railt\Component\Exception\Trace\ObjectItemInterface;
 use Railt\Component\Io\Readable;
 use Railt\Component\Position\Highlight;
 use Railt\Component\Position\HighlightInterface;
-use Railt\Component\Exception\Trace\ItemInterface;
-use Railt\Component\Exception\Trace\ObjectItemInterface;
-use Railt\Component\Exception\Trace\FunctionItemInterface;
 use Railt\Component\Position\PositionInterface;
 
 /**

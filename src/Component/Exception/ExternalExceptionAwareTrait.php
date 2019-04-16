@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Component\Exception;
 
-use Railt\Component\Position\HighlightInterface;
-
 /**
  * Trait ExternalExceptionAwareTrait
  */

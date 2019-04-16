@@ -14,5 +14,4 @@ namespace Railt\Component\Io\Exception;
  */
 class FileException extends \RuntimeException
 {
-
 }

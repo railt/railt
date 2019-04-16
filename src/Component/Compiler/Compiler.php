@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Component\Compiler;
 
+use Railt\Component\Compiler\Grammar\Reader;
+use Railt\Component\Exception\ExternalException;
+use Railt\Component\Io\Exception\NotReadableException;
 use Railt\Component\Io\Readable;
 use Railt\Component\Parser\Driver\Proxy;
 use Railt\Component\Parser\ParserInterface;
-use Railt\Component\Compiler\Grammar\Reader;
-use Zend\Code\Generator\ValueGenerator as Value;
 use Zend\Code\Exception\InvalidArgumentException;
 use Zend\Code\Generator\Exception\RuntimeException;
-use Railt\Component\Io\Exception\NotReadableException;
-use Railt\Component\Exception\ExternalException;
+use Zend\Code\Generator\ValueGenerator as Value;
 
 /**
  * Class Compiler

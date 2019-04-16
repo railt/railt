@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Component\Io;
 
-use Railt\Component\Io\File\Virtual;
-use Railt\Component\Io\File\Physical;
 use Railt\Component\Io\Exception\NotFoundException;
 use Railt\Component\Io\Exception\NotReadableException;
+use Railt\Component\Io\File\Physical;
+use Railt\Component\Io\File\Virtual;
 
 /**
  * Class File
