@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Component\SDL\Console;
 
-use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Exception\ExternalException;
 use Railt\Component\Io\Exception\NotReadableException;
 use Railt\Component\Io\File;
 use Railt\Component\Compiler\Compiler;
@@ -32,7 +32,7 @@ class SDLGrammarCompileCommand extends Command
     /**
      * @param InputInterface $in
      * @param OutputInterface $out
-     * @throws ExternalFileException
+     * @throws ExternalException
      * @throws NotReadableException
      * @throws \Throwable
      */

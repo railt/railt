@@ -9,16 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Component\Http\Exception;
 
-use Railt\Component\Http\Exception\GraphQLExceptionLocation as Location;
+use Railt\Component\Exception\ExternalException;
 use Railt\Component\Http\Extension\DataExtension;
 use Railt\Component\Http\Extension\HasExtensions;
-use Railt\Component\Io\Exception\ExternalFileException;
-use Throwable;
+use Railt\Component\Http\Exception\GraphQLExceptionLocation as Location;
 
 /**
  * Class GraphQLException
  */
-class GraphQLException extends ExternalFileException implements GraphQLExceptionInterface
+class GraphQLException extends ExternalException implements GraphQLExceptionInterface
 {
     use HasExtensions;
 
@@ -61,9 +60,9 @@ class GraphQLException extends ExternalFileException implements GraphQLException
      *
      * @param string $message
      * @param int $code
-     * @param Throwable|null $previous
+     * @param \Throwable|null $previous
      */
-    public function __construct(string $message = '', int $code = 0, Throwable $previous = null)
+    public function __construct(string $message = '', int $code = 0, \Throwable $previous = null)
     {
         $this->originalMessage = $message;
 
@@ -93,37 +92,6 @@ class GraphQLException extends ExternalFileException implements GraphQLException
         }
 
         return $exception;
-    }
-
-    /**
-     * @param \Throwable $throwable
-     * @return GraphQLExceptionInterface|self
-     */
-    public static function fromThrowable(\Throwable $throwable): GraphQLExceptionInterface
-    {
-        if ($throwable instanceof GraphQLExceptionInterface) {
-            return $throwable;
-        }
-
-        $root = static::getRootException($throwable);
-
-        $exception = new static($throwable->getMessage(), $throwable->getCode(), $root);
-        $exception->from($throwable);
-
-        return $exception;
-    }
-
-    /**
-     * @param \Throwable $throwable
-     * @return \Throwable
-     */
-    public static function getRootException(\Throwable $throwable): \Throwable
-    {
-        while ($throwable->getPrevious()) {
-            $throwable = $throwable->getPrevious();
-        }
-
-        return $throwable;
     }
 
     /**
@@ -162,24 +130,50 @@ class GraphQLException extends ExternalFileException implements GraphQLException
     }
 
     /**
+     * @param \Throwable $throwable
+     * @return GraphQLExceptionInterface|self
+     */
+    public static function fromThrowable(\Throwable $throwable): GraphQLExceptionInterface
+    {
+        if ($throwable instanceof GraphQLExceptionInterface) {
+            return $throwable;
+        }
+
+        $root = static::getRootException($throwable);
+
+        $exception = new static($throwable->getMessage(), $throwable->getCode(), $root);
+        $exception->from($throwable);
+
+        return $exception;
+    }
+
+    /**
+     * @param \Throwable $throwable
+     * @return \Throwable
+     */
+    public static function getRootException(\Throwable $throwable): \Throwable
+    {
+        while ($throwable->getPrevious()) {
+            $throwable = $throwable->getPrevious();
+        }
+
+        return $throwable;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
     {
         return \array_filter([
             static::FIELD_MESSAGE    => $this->getMessage(),
-            static::FIELD_LOCATIONS  => $this->getLocations() ?: null,
-            static::FIELD_PATH       => $this->getPath() ?: null,
-            static::FIELD_EXTENSIONS => $this->getExtensions() ?: null,
+            static::FIELD_LOCATIONS  => $this->getLocations()
+                ?: null,
+            static::FIELD_PATH       => $this->getPath()
+                ?: null,
+            static::FIELD_EXTENSIONS => $this->getExtensions()
+                ?: null,
         ]);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPublic(): bool
-    {
-        return $this->public;
     }
 
     /**
@@ -219,6 +213,14 @@ class GraphQLException extends ExternalFileException implements GraphQLException
 
             return $isScalar || $isStringable;
         });
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPublic(): bool
+    {
+        return $this->public;
     }
 
     /**

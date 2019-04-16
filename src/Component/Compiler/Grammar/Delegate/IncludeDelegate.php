@@ -12,8 +12,8 @@ namespace Railt\Component\Compiler\Grammar\Delegate;
 use Railt\Component\Io\File;
 use Railt\Component\Io\Readable;
 use Railt\Component\Parser\Ast\Rule;
+use Railt\Component\Exception\ExternalException;
 use Railt\Component\Io\Exception\NotReadableException;
-use Railt\Component\Io\Exception\ExternalFileException;
 use Railt\Component\Compiler\Exception\IncludeNotFoundException;
 
 /**
@@ -25,21 +25,26 @@ class IncludeDelegate extends Rule
      * @param Readable $from
      * @return Readable
      * @throws NotReadableException
-     * @throws ExternalFileException
+     * @throws ExternalException
      */
     public function getPathname(Readable $from): Readable
     {
-        $file = $this->getChild(0)->getValue(1);
+        $name = $this->getChild(0)->getValue(1);
+        $dir = \dirname($from->getPathname());
 
         foreach (['', '.pp', '.pp2'] as $ext) {
-            $path = \dirname($from->getPathname()) . '/' . $file . $ext;
+            $path = $dir . '/' . $name . $ext;
 
             if (\is_file($path)) {
                 return File::fromPathname($path);
             }
         }
 
-        throw (new IncludeNotFoundException(\sprintf('Grammar "%s" not found', $file)))
-            ->throwsIn($from, $this->getOffset());
+        $error = \sprintf('Can not find the grammar file "%s" in "%s"', $name, $dir);
+
+        $exception = new IncludeNotFoundException($error);
+        $exception->throwsIn($from, $this->getOffset());
+
+        throw $exception;
     }
 }

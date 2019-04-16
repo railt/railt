@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Extension\ClassLoader\Exception;
 
-use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Exception\ExternalException;
 
 /**
  * Class UnknownClassException
  */
-class UnknownClassException extends ExternalFileException
+class UnknownClassException extends ExternalException
 {
 }

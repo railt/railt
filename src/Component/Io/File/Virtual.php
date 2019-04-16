@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Component\Io\File;
 
-use Railt\Component\Io\File;
-
 /**
  * Class Virtual
  */
-class Virtual extends File
+class Virtual extends AbstractFile
 {
     /**
      * @var string A default file name which created from sources
@@ -22,19 +20,67 @@ class Virtual extends File
     public const DEFAULT_FILE_NAME = 'php://input';
 
     /**
+     * @var string
+     */
+    protected $content;
+
+    /**
      * @var string|null
      */
-    private $hash;
+    protected $hash;
 
     /**
      * Virtual constructor.
      *
-     * @param string $contents
+     * @param string $content
      * @param string|null $name
      */
-    public function __construct(string $contents, string $name = null)
+    public function __construct(string $content, string $name = null)
     {
-        parent::__construct($contents, $name ?? static::DEFAULT_FILE_NAME);
+        $this->content = $content;
+
+        parent::__construct($name ?? self::DEFAULT_FILE_NAME);
+    }
+
+    /**
+     * @return bool
+     */
+    public function exists(): bool
+    {
+        return \is_file($this->getPathname());
+    }
+
+    /**
+     * @return array
+     */
+    public function __sleep(): array
+    {
+        return \array_merge(parent::__sleep(), [
+            'hash',
+            'content',
+        ]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getContents(): string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param bool $exclusive
+     * @return resource
+     */
+    public function getStreamContents(bool $exclusive = false)
+    {
+        $stream = \fopen('php://memory', 'rb+');
+
+        \fwrite($stream, $this->getContents());
+        \rewind($stream);
+
+        return $stream;
     }
 
     /**
@@ -43,17 +89,9 @@ class Virtual extends File
     public function getHash(): string
     {
         if ($this->hash === null) {
-            $this->hash = \sha1($this->getContents());
+            $this->hash = \sha1($this->getPathname() . ':' . $this->content);
         }
 
         return $this->hash;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFile(): bool
-    {
-        return false;
     }
 }

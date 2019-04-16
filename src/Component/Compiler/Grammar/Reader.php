@@ -17,7 +17,7 @@ use Railt\Component\Parser\ParserInterface;
 use Railt\Component\Parser\GrammarInterface;
 use Railt\Component\Lexer\Driver\NativeRegex;
 use Railt\Component\Io\Exception\NotReadableException;
-use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Exception\ExternalException;
 use Railt\Component\Compiler\Grammar\Delegate\RuleDelegate;
 use Railt\Component\Compiler\Grammar\Delegate\TokenDelegate;
 use Railt\Component\Compiler\Grammar\Delegate\IncludeDelegate;
@@ -68,7 +68,7 @@ class Reader
 
     /**
      * @return ParserInterface
-     * @throws ExternalFileException
+     * @throws ExternalException
      * @throws NotReadableException
      */
     public function getParser(): ParserInterface
@@ -84,7 +84,7 @@ class Reader
 
     /**
      * @param Readable $file
-     * @throws ExternalFileException
+     * @throws ExternalException
      * @throws NotReadableException
      */
     private function addGrammar(Readable $file): void

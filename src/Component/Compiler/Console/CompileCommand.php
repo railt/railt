@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Railt\Component\Io\Exception\NotReadableException;
-use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Exception\ExternalException;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
@@ -28,7 +28,7 @@ class CompileCommand extends Command
     /**
      * @param InputInterface $in
      * @param OutputInterface $out
-     * @throws ExternalFileException
+     * @throws ExternalException
      * @throws NotReadableException
      * @throws \Throwable
      */

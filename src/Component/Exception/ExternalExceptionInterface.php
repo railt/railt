@@ -7,15 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Component\Io\Exception;
+namespace Railt\Component\Exception;
 
-use Railt\Component\Io\PositionInterface;
 use Railt\Component\Io\Readable;
+use Railt\Component\Position\PositionInterface;
 
 /**
  * Interface ExternalExceptionInterface
  */
-interface ExternalExceptionInterface extends PositionInterface
+interface ExternalExceptionInterface extends
+    \Throwable,
+    PositionInterface,
+    MutableTraceInterface,
+    MutableExceptionInterface
 {
     /**
      * @param Readable $file
@@ -24,4 +28,10 @@ interface ExternalExceptionInterface extends PositionInterface
      * @return ExternalExceptionInterface
      */
     public function throwsIn(Readable $file, int $offsetOrLine = 0, int $column = null): self;
+
+    /**
+     * @param \Throwable $exception
+     * @return ExternalExceptionInterface|$this
+     */
+    public function from(\Throwable $exception): self;
 }

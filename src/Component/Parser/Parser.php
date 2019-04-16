@@ -144,7 +144,7 @@ class Parser implements ParserInterface
     /**
      * @param Readable $input
      * @return RuleInterface|mixed
-     * @throws \Railt\Component\Io\Exception\ExternalFileException
+     * @throws \Railt\Component\Exception\ExternalException
      */
     public function parse(Readable $input)
     {
@@ -172,7 +172,7 @@ class Parser implements ParserInterface
     /**
      * @param Readable $input
      * @return array
-     * @throws \Railt\Component\Io\Exception\ExternalFileException
+     * @throws \Railt\Component\Exception\ExternalException
      */
     protected function trace(Readable $input): array
     {
@@ -192,7 +192,7 @@ class Parser implements ParserInterface
 
     /**
      * @param Readable $input
-     * @throws \Railt\Component\Io\Exception\ExternalFileException
+     * @throws \Railt\Component\Exception\ExternalException
      */
     private function reset(Readable $input): void
     {
@@ -207,7 +207,7 @@ class Parser implements ParserInterface
     /**
      * @param Readable $input
      * @return TokenStream
-     * @throws \Railt\Component\Io\Exception\ExternalFileException
+     * @throws \Railt\Component\Exception\ExternalException
      */
     protected function getStream(Readable $input): TokenStream
     {
@@ -449,7 +449,7 @@ class Parser implements ParserInterface
 
     /**
      * @param Readable $input
-     * @throws \Railt\Component\Io\Exception\ExternalFileException
+     * @throws \Railt\Component\Exception\ExternalException
      */
     private function verifyBacktrace(Readable $input): void
     {

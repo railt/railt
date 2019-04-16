@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Exception;
 
-use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Exception\ExternalException;
 
 /**
  * Class BuilderMissingException
  */
-class BuilderMissingException extends ExternalFileException
+class BuilderMissingException extends ExternalException
 {
 }

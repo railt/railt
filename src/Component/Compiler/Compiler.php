@@ -17,7 +17,7 @@ use Zend\Code\Generator\ValueGenerator as Value;
 use Zend\Code\Exception\InvalidArgumentException;
 use Zend\Code\Generator\Exception\RuntimeException;
 use Railt\Component\Io\Exception\NotReadableException;
-use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Exception\ExternalException;
 
 /**
  * Class Compiler
@@ -37,7 +37,7 @@ class Compiler extends Proxy
     /**
      * @param Readable $grammar
      * @return Compiler
-     * @throws ExternalFileException
+     * @throws ExternalException
      * @throws NotReadableException
      */
     public static function load(Readable $grammar): self

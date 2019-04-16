@@ -83,7 +83,7 @@ class DiscoveryConfiguration
     /**
      * @param Section $section
      * @throws \JsonException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      * @throws \Railt\Json\Exception\JsonException
      */
     public function validate(Section $section): void
@@ -96,7 +96,7 @@ class DiscoveryConfiguration
     /**
      * @return ValidatorInterface|null
      * @throws \JsonException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      */
     public function getValidator(): ?ValidatorInterface
     {

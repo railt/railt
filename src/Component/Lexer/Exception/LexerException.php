@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Component\Lexer\Exception;
 
-use Railt\Component\Io\Exception\ExternalFileException;
+use Railt\Component\Exception\ExternalException;
 
 /**
  * Class LexerException
  */
-abstract class LexerException extends ExternalFileException
+abstract class LexerException extends ExternalException
 {
 }

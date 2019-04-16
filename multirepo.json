@@ -60,6 +60,18 @@
                 "tests/Dumper": "tests"
             }
         },
+        "railt/exception": {
+            "remote": "git@github.com:railt/exception.git",
+            "files": {
+                ".multirepo/exception/composer.json": "composer.json",
+                ".multirepo/exception/README.md": "README.md",
+                ".multirepo/exception/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Component/Exception": "src/Exception",
+                "tests/Exception": "tests"
+            }
+        },
         "railt/http": {
             "remote": "git@github.com:railt/http.git",
             "files": {
@@ -118,6 +130,18 @@
             "dirs": {
                 "src/Component/Parser": "src/Parser",
                 "tests/Parser": "tests"
+            }
+        },
+        "railt/position": {
+            "remote": "git@github.com:railt/position.git",
+            "files": {
+                ".multirepo/position/composer.json": "composer.json",
+                ".multirepo/position/README.md": "README.md",
+                ".multirepo/position/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "src/Component/Position": "src/Position",
+                "tests/Position": "tests"
             }
         },
         "railt/sdl": {

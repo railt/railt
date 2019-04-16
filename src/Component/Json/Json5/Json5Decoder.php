@@ -102,7 +102,7 @@ class Json5Decoder extends JsonDecoder
      * @param string $json5
      * @return mixed|null
      * @throws JsonSyntaxException
-     * @throws \Railt\Component\Io\Exception\ExternalFileException
+     * @throws \Railt\Component\Exception\ExternalException
      */
     private function tryParse(string $json5)
     {

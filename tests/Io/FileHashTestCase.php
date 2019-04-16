@@ -17,6 +17,7 @@ class FileHashTestCase extends TestCase
     /**
      * @dataProvider provider
      * @param \Closure $factory
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testHashSize(\Closure $factory): void
     {
@@ -29,6 +30,7 @@ class FileHashTestCase extends TestCase
     /**
      * @dataProvider provider
      * @param \Closure $factory
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testHashIsConstant(\Closure $factory): void
     {

@@ -89,7 +89,7 @@ class Discovery
      * @param string $key
      * @param null $default
      * @return array|mixed|null
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      */
     public function get(string $key, $default = null)
     {
@@ -110,7 +110,7 @@ class Discovery
 
     /**
      * @return array
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      */
     public function all(): array
     {

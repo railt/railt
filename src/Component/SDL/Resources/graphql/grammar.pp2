@@ -9,7 +9,7 @@
  * @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0
  */
 
-%include lexer
+%include lexemes
 
 // ==========================================================================
 //                                  DOCUMENT

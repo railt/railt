@@ -50,12 +50,14 @@
         "railt/compiler": "*",
         "railt/container": "*",
         "railt/discovery": "*",
+        "railt/exception": "*",
         "railt/dumper": "*",
         "railt/http": "*",
         "railt/io": "*",
         "railt/json": "*",
         "railt/lexer": "*",
         "railt/parser": "*",
+        "railt/position": "*",
         "railt/sdl": "*"
     },
     "autoload": {

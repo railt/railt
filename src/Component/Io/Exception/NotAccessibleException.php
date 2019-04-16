@@ -12,6 +12,6 @@ namespace Railt\Component\Io\Exception;
 /**
  * Class NotAccessibleException
  */
-class NotAccessibleException extends \RuntimeException
+class NotAccessibleException extends FileException
 {
 }

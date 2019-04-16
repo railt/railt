@@ -77,7 +77,7 @@ class DiscoverySection implements \IteratorAggregate
     /**
      * @return ValidatorInterface
      * @throws \JsonException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      */
     public function getDiscoveryValidator(): ValidatorInterface
     {

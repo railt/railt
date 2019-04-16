@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Component\Io;
 
+use Railt\Component\Position\PositionInterface;
+
 /**
  * Interface Readable
  */
@@ -36,13 +38,32 @@ interface Readable
     public function getContents(): string;
 
     /**
-     * @param int $bytesOffset
-     * @return PositionInterface
+     * Returns content stream
+     *
+     * @param bool $exclusive Exclusive access to the file means that it
+     *      cannot be accessed by other programs while reading the sources.
+     * @return resource
      */
-    public function getPosition(int $bytesOffset): PositionInterface;
+    public function getStreamContents(bool $exclusive = false);
 
     /**
+     * Returns a position in the source text by offset in bytes.
+     *
+     * @param int $offset
+     * @return PositionInterface
+     */
+    public function getPosition(int $offset): PositionInterface;
+
+    /**
+     * @deprecated Use method "exists()" instead.
      * @return bool
      */
     public function isFile(): bool;
+
+    /**
+     * Returns information whether the file actually exists on the file system.
+     *
+     * @return bool
+     */
+    public function exists(): bool;
 }
