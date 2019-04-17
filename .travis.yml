@@ -6,10 +6,6 @@ php:
   - 7.3
   - nightly
 
-env:
-  global:
-    - CC_TEST_REPORTER_ID=46782ef0ec0fe8bfda0733a577c579e5b97a722caba9be1d7ed87ee94e96a3c3
-
 matrix:
   fast_finish: true
   allow_failures:
