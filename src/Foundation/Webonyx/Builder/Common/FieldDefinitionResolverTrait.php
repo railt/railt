@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Builder\Common;
 
 use GraphQL\Type\Definition\ResolveInfo;
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\Component\SDL\Contracts\Dependent\Field\HasFields;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Dependent\Field\HasFields;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Trait FieldDefinitionResolverTrait

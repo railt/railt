@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Scalars;
 
-use Railt\Component\SDL\Contracts\Definitions\ScalarDefinition;
-use Railt\Component\SDL\Contracts\Document;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\SDL\Contracts\Document;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

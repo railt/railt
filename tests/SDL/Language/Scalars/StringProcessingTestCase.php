@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Scalars;
 
-use Railt\Component\SDL\Contracts\Definitions\DirectiveDefinition;
-use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
-use Railt\Component\SDL\Contracts\Document;
-use Railt\Component\SDL\Contracts\Invocations\DirectiveInvocation;
+use Railt\SDL\Contracts\Definitions\DirectiveDefinition;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Document;
+use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

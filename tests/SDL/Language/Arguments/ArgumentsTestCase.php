@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Arguments;
 
-use Railt\Component\Io\File;
-use Railt\Component\SDL\Compiler;
-use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
-use Railt\Component\SDL\Contracts\Dependent\ArgumentDefinition;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
-use Railt\Component\SDL\Contracts\Invocations\DirectiveInvocation;
-use Railt\Component\SDL\Contracts\Invocations\InputInvocation;
-use Railt\Component\SDL\Exceptions\TypeConflictException;
-use Railt\Component\SDL\Schema\CompilerInterface;
+use Phplrt\Io\File;
+use Railt\SDL\Compiler;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
+use Railt\SDL\Contracts\Invocations\InputInvocation;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**
@@ -30,9 +30,9 @@ class ArgumentsTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Component\SDL\Exceptions\CompilerException
-     * @throws \Railt\Component\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Component\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function provider(): array
     {
@@ -42,9 +42,9 @@ class ArgumentsTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Component\SDL\Exceptions\CompilerException
-     * @throws \Railt\Component\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Component\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function positiveProvider(): array
     {
@@ -71,9 +71,9 @@ class ArgumentsTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Component\SDL\Exceptions\CompilerException
-     * @throws \Railt\Component\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Component\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function negativeProvider(): array
     {

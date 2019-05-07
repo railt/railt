@@ -1,7 +1,0 @@
-type TAny implements IFloat {
-    field(arg: Float): Any
-}
-
-interface IFloat {
-    field(arg: Any): Any
-}

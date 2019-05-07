@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Connection;
 
-use Railt\Component\Dumper\TypeDumper;
-use Railt\Component\Http\BatchingResponse;
-use Railt\Component\Http\Request;
-use Railt\Component\Http\RequestInterface;
-use Railt\Component\Http\Response;
-use Railt\Component\Http\ResponseInterface;
+use Railt\Dumper\TypeDumper;
+use Railt\Http\BatchingResponse;
+use Railt\Http\Request;
+use Railt\Http\RequestInterface;
+use Railt\Http\Response;
+use Railt\Http\ResponseInterface;
 
 /**
  * Class Format

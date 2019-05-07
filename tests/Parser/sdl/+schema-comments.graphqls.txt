@@ -1,9 +1,0 @@
->  Document
->  >  SchemaDefinition
->  >  >  token(T_SCHEMA, schema)
->  >  >  Query
->  >  >  >  Type
->  >  >  >  >  token(T_NAME, TestQuery)
->  >  >  Mutation
->  >  >  >  Type
->  >  >  >  >  token(T_NAME, TestMutation)

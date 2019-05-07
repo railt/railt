@@ -11,7 +11,7 @@ namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\EnumType;
-use Railt\Component\SDL\Contracts\Definitions\EnumDefinition;
+use Railt\SDL\Contracts\Definitions\EnumDefinition;
 
 /**
  * Class EnumBuilder

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Semantic;
 
-use Railt\Component\Io\File;
-use Railt\Component\SDL\Compiler;
+use Phplrt\Io\File;
+use Railt\SDL\Compiler;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 

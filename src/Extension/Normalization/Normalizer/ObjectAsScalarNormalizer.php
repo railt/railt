@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Normalization\Normalizer;
 
-use Railt\Component\Json\Json;
+use Railt\Json\Json;
 use Railt\Extension\Normalization\Context\ContextInterface;
 use Railt\Extension\Normalization\NormalizerInterface;
 

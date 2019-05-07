@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Debug\Clockwork;
 
-use Railt\Component\Container\Container;
-use Railt\Component\Dumper\TypeDumper;
+use Railt\Container\Container;
+use Railt\Dumper\TypeDumper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

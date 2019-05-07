@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing\Events;
 
-use Railt\Component\Http\Identifiable;
-use Railt\Component\Http\InputInterface;
-use Railt\Component\Http\RequestInterface;
-use Railt\Component\Json\Json;
+use Railt\Http\Identifiable;
+use Railt\Http\InputInterface;
+use Railt\Http\RequestInterface;
+use Railt\Json\Json;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

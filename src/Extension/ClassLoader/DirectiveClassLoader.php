@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Extension\ClassLoader;
 
-use Railt\Component\Container\ContainerInterface;
-use Railt\Component\Container\SignatureResolver;
-use Railt\Component\SDL\Contracts\Document;
-use Railt\Component\SDL\Schema\CompilerInterface;
+use Railt\Container\ContainerInterface;
+use Railt\Container\SignatureResolver;
+use Railt\SDL\Contracts\Document;
+use Railt\SDL\Schema\CompilerInterface;
 use Railt\Extension\ClassLoader\Exception\UnknownClassException;
 
 /**

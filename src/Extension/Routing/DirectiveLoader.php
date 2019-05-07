@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing;
 
-use Railt\Component\Container\ContainerInterface;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
-use Railt\Component\SDL\Contracts\Invocations\DirectiveInvocation;
+use Railt\Container\ContainerInterface;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
 use Railt\Extension\ClassLoader\ClassLoaderInterface;
 
 /**

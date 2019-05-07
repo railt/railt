@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Normalization;
 
-use Railt\Component\Container\ContainerInterface;
-use Railt\Component\Container\Exception\ContainerResolutionException;
+use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Extension\Normalization\Context\ContextInterface;
 
 /**

@@ -12,10 +12,10 @@ namespace Railt\Extension\Debug\Clockwork;
 use Clockwork\Clockwork;
 use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
-use Railt\Component\Container\Container;
-use Railt\Component\Dumper\TypeDumper;
-use Railt\Component\SDL\Reflection\Dictionary;
-use Railt\Component\SDL\Standard\StandardType;
+use Railt\Container\Container;
+use Railt\Dumper\TypeDumper;
+use Railt\SDL\Reflection\Dictionary;
+use Railt\SDL\Standard\StandardType;
 use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Event\Http\ResponseProceed;
 
@@ -59,9 +59,9 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
     }
 
     /**
-     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Component\Container\Exception\ParameterResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ParameterResolutionException
      */
     private function shareConfigs(): void
     {

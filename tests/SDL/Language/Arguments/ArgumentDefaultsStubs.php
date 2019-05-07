@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Arguments;
 
-use Railt\Component\Io\File;
+use Phplrt\Io\File;
 use Railt\Tests\SDL\Helpers\CompilerStubs;
 
 /**

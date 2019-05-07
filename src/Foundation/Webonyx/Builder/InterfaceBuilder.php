@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Type\Definition\InterfaceType;
-use Railt\Component\SDL\Contracts\Definitions\InterfaceDefinition;
+use Railt\SDL\Contracts\Definitions\InterfaceDefinition;
 use Railt\Foundation\Webonyx\Builder\Common\TypeResolverTrait;
 
 /**

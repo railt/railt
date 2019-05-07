@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Routing;
 
-use Railt\Component\Http\Request;
-use Railt\Component\Io\File;
+use Railt\Http\Request;
+use Phplrt\Io\File;
 use Railt\Foundation\ConnectionInterface;
 
 /**

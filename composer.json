@@ -35,6 +35,9 @@
         "psr/cache": "~1.0",
         "psr/container": "~1.0",
         "psr/simple-cache": "~1.0",
+        "phplrt/lexer": "~1.0",
+        "phplrt/parser": "~1.0",
+        "phplrt/exception": "~1.0.2",
         "composer/semver": "^1.0",
         "nesbot/carbon": "~1.0|~2.0",
         "cache/array-adapter": "~1.0",
@@ -42,22 +45,15 @@
         "illuminate/support": "~5.5",
         "webonyx/graphql-php": "~0.13",
         "symfony/console": "~3.4|~4.0",
-        "zendframework/zend-code": "~3.0",
         "justinrainbow/json-schema": "~5.2",
         "symfony/event-dispatcher": "~3.4|~4.0"
     },
     "replace": {
-        "railt/compiler": "*",
         "railt/container": "*",
         "railt/discovery": "*",
-        "railt/exception": "*",
         "railt/dumper": "*",
         "railt/http": "*",
-        "railt/io": "*",
         "railt/json": "*",
-        "railt/lexer": "*",
-        "railt/parser": "*",
-        "railt/position": "*",
         "railt/sdl": "*"
     },
     "autoload": {
@@ -65,16 +61,16 @@
             "Railt\\": "src/"
         },
         "files": [
-            "./src/Component/Dumper/helpers.php",
-            "./src/Component/SDL/polyfill.php",
-            "./src/Component/Json/helpers.php",
-            "./src/Component/Json/polyfill.php"
+            "src/Dumper/helpers.php",
+            "src/SDL/polyfill.php",
+            "src/Json/helpers.php",
+            "src/Json/polyfill.php"
         ]
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",
         "brianium/paratest": "^2.1",
-        "railt/compiler": "1.4.*|1.4.x-dev",
+        "phplrt/compiler": "1.0.*",
         "symfony/dependency-injection": "~3.4|~4.0",
         "symfony/var-dumper": "~3.4|~4.0",
         "symfony/finder": "~3.4|~4.0",
@@ -93,7 +89,7 @@
     },
     "scripts": {
         "post-autoload-dump": [
-            "Railt\\Component\\Discovery\\Manifest::discover"
+            "Railt\\Discovery\\Manifest::discover"
         ]
     },
     "extra": {
@@ -120,10 +116,8 @@
                 ]
             },
             "commands": [
-                "Railt\\Component\\Compiler\\Console\\CompileCommand",
-                "Railt\\Component\\Compiler\\Console\\GrammarCompileCommand",
-                "Railt\\Component\\Json\\Console\\Json5CompileCommand",
-                "Railt\\Component\\SDL\\Console\\SDLGrammarCompileCommand",
+                "Railt\\Json\\Console\\Json5CompileCommand",
+                "Railt\\SDL\\Console\\SDLGrammarCompileCommand",
                 "Railt\\Foundation\\Console\\ExtensionsListCommand"
             ],
             "extensions": [

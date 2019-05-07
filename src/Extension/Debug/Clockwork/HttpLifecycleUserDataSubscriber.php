@@ -12,9 +12,9 @@ namespace Railt\Extension\Debug\Clockwork;
 use Clockwork\Clockwork;
 use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
-use Railt\Component\Container\Container;
-use Railt\Component\Dumper\TypeDumper;
-use Railt\Component\Http\RequestInterface;
+use Railt\Container\Container;
+use Railt\Dumper\TypeDumper;
+use Railt\Http\RequestInterface;
 use Railt\Extension\Routing\RouterInterface;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
@@ -137,9 +137,9 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
 
     /**
      * @param ResponseProceed $event
-     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Component\Container\Exception\ParameterResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ParameterResolutionException
      */
     public function onResponse(ResponseProceed $event): void
     {
@@ -149,9 +149,9 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
     }
 
     /**
-     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Component\Container\Exception\ParameterResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ParameterResolutionException
      */
     private function shareRouter(UserData $context): void
     {

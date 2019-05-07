@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Unions;
 
-use Railt\Component\SDL\Contracts\Definitions\UnionDefinition;
-use Railt\Component\SDL\Contracts\Document;
+use Railt\SDL\Contracts\Definitions\UnionDefinition;
+use Railt\SDL\Contracts\Document;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

@@ -29,8 +29,8 @@ Small examples on working with the RFC-7159 specification.
 ```php
 <?php
 
-use Railt\Component\Json\Json;
-use Railt\Component\Json\Exception\JsonException;
+use Railt\Json\Json;
+use Railt\Json\Exception\JsonException;
 
 try {
     $json = Json::encode([1, 2, 3]);
@@ -44,8 +44,8 @@ try {
 ```php
 <?php
 
-use Railt\Component\Json\Json;
-use Railt\Component\Json\Exception\JsonException;
+use Railt\Json\Json;
+use Railt\Json\Exception\JsonException;
 
 try {
     $data = Json::decode(<<<'JSON'
@@ -69,8 +69,8 @@ JSON
 ```php
 <?php
 
-use Railt\Component\Json\Json5;
-use Railt\Component\Json\Exception\JsonException;
+use Railt\Json\Json5;
+use Railt\Json\Exception\JsonException;
 
 try {
     $json = Json5::encode([1, 2, 3]);
@@ -84,8 +84,8 @@ try {
 ```php
 <?php
 
-use Railt\Component\Json\Json5;
-use Railt\Component\Json\Exception\JsonException;
+use Railt\Json\Json5;
+use Railt\Json\Exception\JsonException;
 
 try {
     $data = Json5::decode(<<<'JSON5'

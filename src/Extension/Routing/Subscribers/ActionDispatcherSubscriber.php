@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing\Subscribers;
 
-use Railt\Component\Container\ContainerInterface;
+use Railt\Container\ContainerInterface;
 use Railt\Extension\Routing\Events\ActionDispatch;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

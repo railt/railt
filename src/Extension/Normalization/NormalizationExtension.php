@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Normalization;
 
-use Railt\Component\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Extension\Normalization\Context\Context;
 use Railt\Foundation\Application;
 use Railt\Foundation\Event\EventsExtension;
@@ -75,7 +75,7 @@ class NormalizationExtension extends Extension
     /**
      * @param NormalizerInterface $normalizer
      * @throws ContainerInvocationException
-     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
      */
     public function boot(NormalizerInterface $normalizer): void
     {

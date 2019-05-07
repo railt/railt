@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Component\Container\ContainerInterface;
+use Railt\Container\ContainerInterface;
 
 /**
  * @deprecated Use class `Railt\Foundation\Extension\Extension` instead.

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Debug\Formatter;
 
-use Railt\Component\Http\Exception\GraphQLExceptionInterface;
-use Railt\Component\Http\ResponseInterface;
+use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Http\ResponseInterface;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

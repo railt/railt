@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug;
 
 use Clockwork\Clockwork;
-use Railt\Component\Container\Exception\ContainerResolutionException;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Extension\Debug\Clockwork\ApplicationUserDataSubscriber;
 use Railt\Extension\Debug\Clockwork\ConnectionTimelineSubscriber;
 use Railt\Extension\Debug\Clockwork\FieldResolveTimelineSubscriber;
@@ -82,7 +82,7 @@ class DebugExtension extends Extension
     /**
      * @param RepositoryInterface $config
      * @throws ContainerResolutionException
-     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      * @throws \ReflectionException
      */
     public function boot(RepositoryInterface $config): void

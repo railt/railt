@@ -14,8 +14,8 @@ use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
-use Railt\Component\Dumper\TypeDumper;
-use Railt\Component\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\Dumper\TypeDumper;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
 use Railt\Foundation\Webonyx\Exception\ParsingException;
 use Railt\Foundation\Webonyx\Exception\SerializationException;
 

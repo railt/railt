@@ -1,7 +1,0 @@
-type TDateTime implements IInt {
-    field(arg: Int): DateTime
-}
-
-interface IInt {
-    field(arg: DateTime): DateTime
-}

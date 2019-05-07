@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language;
 
-use Railt\Component\Io\File;
-use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\Component\SDL\Contracts\Document;
-use Railt\Component\SDL\Exceptions\TypeConflictException;
-use Railt\Component\SDL\Schema\CompilerInterface;
+use Phplrt\Io\File;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Contracts\Document;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class SchemaTestCase

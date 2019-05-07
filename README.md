@@ -42,7 +42,7 @@ Via [Composer](https://getcomposer.org/):
 {
     "scripts": {
         "post-autoload-dump": [
-            "Railt\\Component\\Discovery\\Manifest::discover"
+            "Railt\\Discovery\\Manifest::discover"
         ]
     }
 }
@@ -90,10 +90,10 @@ So let's create it and write a simple logic:
 
 ```php
 <?php
-use Railt\Component\Io\File;
-use Railt\Component\Http\Factory;
+use Phplrt\Io\File;
+use Railt\Http\Factory;
 use Railt\Foundation\Application;
-use Railt\Component\Http\Provider\GlobalsProvider;
+use Railt\Http\Provider\GlobalsProvider;
 
 require __DIR__ . '/vendor/autoload.php';
 

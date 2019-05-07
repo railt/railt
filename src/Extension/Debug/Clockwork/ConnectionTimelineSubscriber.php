@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Railt\Component\Http\Identifiable;
+use Railt\Http\Identifiable;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;

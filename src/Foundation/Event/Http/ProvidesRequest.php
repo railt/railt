@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Http;
 
-use Railt\Component\Http\RequestInterface;
+use Railt\Http\RequestInterface;
 
 /**
  * Interface ProvidesRequest

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Responses;
 
-use Railt\Component\Http\Request;
-use Railt\Component\Http\ResponseInterface;
+use Railt\Http\Request;
+use Railt\Http\ResponseInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Tests\Foundation\Stub\TraversableObject;
@@ -122,7 +122,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @param string $field
      * @param \Closure $then
-     * @return \Railt\Component\Http\ResponseInterface
+     * @return \Railt\Http\ResponseInterface
      */
     protected function interface(string $query, \Closure $then, string $field = 'interface'): ResponseInterface
     {

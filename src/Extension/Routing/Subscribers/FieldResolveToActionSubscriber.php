@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing\Subscribers;
 
-use Railt\Component\Http\Identifiable;
-use Railt\Component\Http\InputInterface;
-use Railt\Component\Http\RequestInterface;
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Http\Identifiable;
+use Railt\Http\InputInterface;
+use Railt\Http\RequestInterface;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Extension\Routing\Events\ActionDispatch;
 use Railt\Extension\Routing\RouteInterface;
 use Railt\Extension\Routing\RouterInterface;

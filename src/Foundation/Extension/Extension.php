@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Component\Container\ContainerInterface;
-use Railt\Component\Container\Exception\ContainerInvocationException;
-use Railt\Component\Container\Exception\ContainerResolutionException;
+use Railt\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Foundation\Application;
 use Railt\Foundation\Application\EnvironmentInterface;
 use Railt\Foundation\ApplicationInterface;

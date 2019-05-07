@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Connection;
 
-use Railt\Component\Http\Identifiable;
+use Railt\Http\Identifiable;
 
 /**
  * Interface ProvidesConnection

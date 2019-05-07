@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language;
 
-use Railt\Component\Io\File;
-use Railt\Component\SDL\Compiler;
-use Railt\Component\SDL\Exceptions\TypeConflictException;
-use Railt\Component\SDL\Schema\CompilerInterface;
+use Phplrt\Io\File;
+use Railt\SDL\Compiler;
+use Railt\SDL\Exceptions\TypeConflictException;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class InheritanceTestCase
@@ -27,9 +27,9 @@ class InheritanceTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Component\SDL\Exceptions\CompilerException
-     * @throws \Railt\Component\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Component\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function provider(): array
     {
@@ -39,9 +39,9 @@ class InheritanceTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Component\SDL\Exceptions\CompilerException
-     * @throws \Railt\Component\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Component\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function positiveProvider(): array
     {
@@ -218,9 +218,9 @@ class InheritanceTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Psr\Cache\InvalidArgumentException
-     * @throws \Railt\Component\SDL\Exceptions\CompilerException
-     * @throws \Railt\Component\SDL\Exceptions\UnexpectedTokenException
-     * @throws \Railt\Component\SDL\Exceptions\UnrecognizedTokenException
+     * @throws \Railt\SDL\Exceptions\CompilerException
+     * @throws \Railt\SDL\Exceptions\UnexpectedTokenException
+     * @throws \Railt\SDL\Exceptions\UnrecognizedTokenException
      */
     public function negativeProvider(): array
     {

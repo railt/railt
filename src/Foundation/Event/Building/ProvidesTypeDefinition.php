@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Building;
 
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface ProvidesTypeDefinition

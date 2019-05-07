@@ -1,7 +1,0 @@
-type TBoolean implements IAny {
-    field: Boolean
-}
-
-interface IAny {
-  field: Any
-}

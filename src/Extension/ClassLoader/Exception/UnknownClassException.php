@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Extension\ClassLoader\Exception;
 
-use Railt\Component\Exception\ExternalException;
+use Phplrt\Exception\ExternalException;
 
 /**
  * Class UnknownClassException

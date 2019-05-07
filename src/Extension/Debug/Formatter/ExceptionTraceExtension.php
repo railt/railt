@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Debug\Formatter;
 
-use Railt\Component\Http\Exception\GraphQLException;
-use Railt\Component\Http\Extension\ExtensionInterface;
-use Railt\Component\Io\PositionInterface;
+use Railt\Http\Exception\GraphQLException;
+use Railt\Http\Extension\ExtensionInterface;
+use Phplrt\Io\PositionInterface;
 
 /**
  * Class ExceptionTraceExtension

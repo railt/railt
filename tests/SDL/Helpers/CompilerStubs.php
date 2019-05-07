@@ -15,8 +15,8 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use Illuminate\Support\Str;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use Railt\Component\SDL\Compiler;
-use Railt\Component\SDL\Schema\CompilerInterface;
+use Railt\SDL\Compiler;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Trait CompilerStubs

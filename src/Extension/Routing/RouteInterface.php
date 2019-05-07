@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing;
 
-use Railt\Component\Http\InputInterface;
-use Railt\Component\Http\RequestInterface;
+use Railt\Http\InputInterface;
+use Railt\Http\RequestInterface;
 
 /**
  * Interface RouteInterface

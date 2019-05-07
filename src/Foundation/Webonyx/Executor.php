@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Schema;
-use Railt\Component\Http\RequestInterface;
-use Railt\Component\Http\ResponseInterface;
-use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\Component\SDL\Reflection\Dictionary;
+use Railt\Http\RequestInterface;
+use Railt\Http\ResponseInterface;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Reflection\Dictionary;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\ConnectionInterface;
@@ -47,7 +47,7 @@ class Executor implements ExecutorInterface
      *
      * @param ApplicationInterface $app
      * @param Dictionary $dictionary
-     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
      */
     public function __construct(ApplicationInterface $app, Dictionary $dictionary)
     {

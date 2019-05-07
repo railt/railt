@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Normalization\Context;
 
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
 
 /**
  * Interface ContextInterface

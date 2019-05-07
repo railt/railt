@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\Component\\": "src/"
+            "Railt\\": "src/"
         },
         "files": [
             "./src/Json/polyfill.php",

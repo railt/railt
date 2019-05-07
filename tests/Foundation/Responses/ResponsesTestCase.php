@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Responses;
 
-use Railt\Component\Http\Request;
-use Railt\Component\Http\ResponseInterface;
-use Railt\Component\Io\File;
+use Railt\Http\Request;
+use Railt\Http\ResponseInterface;
+use Phplrt\Io\File;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Tests\Foundation\TestCase;
@@ -26,7 +26,7 @@ abstract class ResponsesTestCase extends TestCase
      * @param string $field
      * @param string $body
      * @param \Closure $then
-     * @return \Railt\Component\Http\ResponseInterface
+     * @return \Railt\Http\ResponseInterface
      */
     protected function request(string $field, string $body, \Closure $then): ResponseInterface
     {

@@ -27,7 +27,7 @@ abstract class TestCase extends BaseTestCase
     private const COMPOSER_EXTRA = [
         'scripts' => [
             'post-autoload-dump' => [
-                'Railt\\Component\\Discovery\\Manifest::discover',
+                'Railt\\Discovery\\Manifest::discover',
             ],
         ],
         'extra'   => [

@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Normalization\Context;
 
-use Railt\Component\SDL\Contracts\Definitions\EnumDefinition;
-use Railt\Component\SDL\Contracts\Definitions\ScalarDefinition;
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Definitions\EnumDefinition;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class Context

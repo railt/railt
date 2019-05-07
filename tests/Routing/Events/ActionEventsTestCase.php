@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Tests\Routing\Events;
 
 use Illuminate\Support\Arr;
-use Railt\Component\Dumper\TypeDumper;
-use Railt\Component\Http\Request;
-use Railt\Component\Io\File;
+use Railt\Dumper\TypeDumper;
+use Railt\Http\Request;
+use Phplrt\Io\File;
 use Railt\Extension\Routing\Events\ActionDispatch;
 use Railt\Extension\Routing\RouterInterface;
 use Railt\Foundation\ApplicationInterface;
@@ -32,9 +32,9 @@ class ActionEventsTestCase extends TestCase
 
     /**
      * @return array
-     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Component\Container\Exception\ParameterResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ParameterResolutionException
      */
     public function provider(): array
     {

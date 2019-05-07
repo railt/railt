@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Exception;
 
-use Railt\Component\Exception\ExternalException;
+use Phplrt\Exception\ExternalException;
 
 /**
  * Class BuilderMissingException

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Interfaces;
 
-use Railt\Component\SDL\Contracts\Definitions\InterfaceDefinition;
-use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
-use Railt\Component\SDL\Contracts\Document;
+use Railt\SDL\Contracts\Definitions\InterfaceDefinition;
+use Railt\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\SDL\Contracts\Document;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

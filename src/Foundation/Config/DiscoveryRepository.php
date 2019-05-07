@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Config;
 
-use Railt\Component\Discovery\Discovery;
+use Railt\Discovery\Discovery;
 
 /**
  * Class DiscoveryRepository
@@ -20,7 +20,7 @@ class DiscoveryRepository extends Repository
      * DiscoveryRepository constructor.
      *
      * @param Discovery|null $discovery
-     * @throws \Railt\Component\Io\Exception\NotReadableException
+     * @throws \Railt\Io\Exception\NotReadableException
      * @throws \ReflectionException
      */
     public function __construct(Discovery $discovery = null)

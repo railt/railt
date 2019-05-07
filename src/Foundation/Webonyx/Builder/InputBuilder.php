@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Type\Definition\InputObjectType;
-use Railt\Component\SDL\Contracts\Definitions\InputDefinition;
+use Railt\SDL\Contracts\Definitions\InputDefinition;
 
 /**
  * Class InputBuilder

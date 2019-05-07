@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Testing\Interact;
 
-use Railt\Component\Io\File;
+use Phplrt\Io\File;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ConnectionInterface;
 

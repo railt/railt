@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Extension\ClassLoader;
 
-use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\Component\SDL\Contracts\Document;
-use Railt\Component\SDL\Contracts\Invocations\DirectiveInvocation;
-use Railt\Component\SDL\Reflection\Dictionary;
-use Railt\Component\SDL\Schema\CompilerInterface;
-use Railt\Component\SDL\Schema\Configuration;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\SDL\Contracts\Document;
+use Railt\SDL\Contracts\Invocations\DirectiveInvocation;
+use Railt\SDL\Reflection\Dictionary;
+use Railt\SDL\Schema\CompilerInterface;
+use Railt\SDL\Schema\Configuration;
 
 /**
  * Class Repository

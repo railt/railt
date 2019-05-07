@@ -1,7 +1,0 @@
-type TDateTime implements IString {
-    field: DateTime
-}
-
-interface IString {
-  field: String
-}

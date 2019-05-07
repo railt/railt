@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Json;
 
-use Railt\Component\Json\Json;
+use Railt\Json\Json;
 
 /**
  * Class JsonDecoderTestCase
@@ -20,7 +20,7 @@ class JsonDecoderTestCase extends AbstractDecoderTestCase
      * @param string $value
      * @param int $options
      * @return array|mixed
-     * @throws \Railt\Component\Json\Exception\JsonException
+     * @throws \Railt\Json\Exception\JsonException
      */
     protected function decode(string $value, int $options = 0)
     {

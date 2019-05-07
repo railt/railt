@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Compiler;
 
-use Railt\Component\Io\File;
-use Railt\Component\SDL\Exceptions\TypeNotFoundException;
-use Railt\Component\SDL\Schema\CompilerInterface;
+use Phplrt\Io\File;
+use Railt\SDL\Exceptions\TypeNotFoundException;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class AutoloadingTestCase

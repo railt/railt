@@ -1,7 +1,0 @@
-type TFloat implements IBoolean {
-    field(arg: Boolean): Float
-}
-
-interface IBoolean {
-    field(arg: Float): Float
-}

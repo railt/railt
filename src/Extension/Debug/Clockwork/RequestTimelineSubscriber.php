@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Railt\Component\Http\RequestInterface;
+use Railt\Http\RequestInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

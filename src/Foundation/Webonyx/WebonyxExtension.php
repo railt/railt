@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
-use Railt\Component\SDL\Reflection\Dictionary;
+use Railt\SDL\Reflection\Dictionary;
 use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ExecutorInterface;
@@ -79,8 +79,8 @@ class WebonyxExtension extends Extension
 
     /**
      * @param ApplicationInterface $app
-     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Container\Exception\ContainerInvocationException
      */
     public function boot(ApplicationInterface $app): void
     {

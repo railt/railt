@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Connection;
 
-use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\Component\SDL\Reflection\Dictionary;
+use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Interface ConnectionEventInterface
