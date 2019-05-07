@@ -11,9 +11,9 @@ namespace Railt\Extension\ClassLoader;
 
 use Railt\Container\ContainerInterface;
 use Railt\Container\SignatureResolver;
+use Railt\Extension\ClassLoader\Exception\UnknownClassException;
 use Railt\SDL\Contracts\Document;
 use Railt\SDL\Schema\CompilerInterface;
-use Railt\Extension\ClassLoader\Exception\UnknownClassException;
 
 /**
  * Class DirectiveClassLoader

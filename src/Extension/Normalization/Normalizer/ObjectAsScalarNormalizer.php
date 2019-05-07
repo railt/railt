@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Normalization\Normalizer;
 
-use Railt\Json\Json;
 use Railt\Extension\Normalization\Context\ContextInterface;
 use Railt\Extension\Normalization\NormalizerInterface;
+use Railt\Json\Json;
 
 /**
  * Class ObjectAsStringNormalizer

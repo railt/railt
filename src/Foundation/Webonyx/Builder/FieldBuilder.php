@@ -11,16 +11,16 @@ namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\ResolveInfo;
-use Railt\Http\RequestInterface;
-use Railt\SDL\Contracts\Definitions\EnumDefinition;
-use Railt\SDL\Contracts\Definitions\ScalarDefinition;
-use Railt\SDL\Contracts\Dependent\Argument\HasArguments;
-use Railt\SDL\Contracts\Dependent\FieldDefinition as FieldDefinitionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Exception\BadResponseException;
 use Railt\Foundation\Webonyx\Builder\Common\FieldDefinitionResolverTrait;
 use Railt\Foundation\Webonyx\Context;
 use Railt\Foundation\Webonyx\Input;
+use Railt\Http\RequestInterface;
+use Railt\SDL\Contracts\Definitions\EnumDefinition;
+use Railt\SDL\Contracts\Definitions\ScalarDefinition;
+use Railt\SDL\Contracts\Dependent\Argument\HasArguments;
+use Railt\SDL\Contracts\Dependent\FieldDefinition as FieldDefinitionInterface;
 
 /**
  * Class FieldBuilder

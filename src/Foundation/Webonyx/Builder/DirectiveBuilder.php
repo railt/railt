@@ -12,9 +12,9 @@ namespace Railt\Foundation\Webonyx\Builder;
 use GraphQL\Language\DirectiveLocation;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\FieldArgument;
+use Railt\Foundation\Webonyx\Builder\Common\TypeResolverTrait;
 use Railt\SDL\Contracts\Definitions\Directive\Location;
 use Railt\SDL\Contracts\Definitions\DirectiveDefinition;
-use Railt\Foundation\Webonyx\Builder\Common\TypeResolverTrait;
 
 /**
  * Class DirectiveBuilder

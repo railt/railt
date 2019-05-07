@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace Railt\Tests\Routing\Events;
 
 use Illuminate\Support\Arr;
-use Railt\Dumper\TypeDumper;
-use Railt\Http\Request;
 use Phplrt\Io\File;
+use Railt\Dumper\TypeDumper;
 use Railt\Extension\Routing\Events\ActionDispatch;
 use Railt\Extension\Routing\RouterInterface;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\ConnectionInterface;
+use Railt\Http\Request;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

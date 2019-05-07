@@ -9,18 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
-use Psr\SimpleCache\CacheInterface;
 use Phplrt\Io\Exception\NotReadableException;
 use Phplrt\Io\File;
+use Psr\SimpleCache\CacheInterface;
+use Railt\Foundation\Application;
+use Railt\Foundation\Config\RepositoryInterface;
+use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Extension\Status;
 use Railt\SDL\Compiler;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use Railt\Foundation\Application;
-use Railt\Foundation\Config\RepositoryInterface;
-use Railt\Foundation\Extension\Extension;
-use Railt\Foundation\Extension\Status;
 
 /**
  * Class CompilerExtension

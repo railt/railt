@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Extension\ClassLoader;
 
 use Phplrt\Io\File;
-use Railt\SDL\Schema\CompilerInterface;
 use Railt\Foundation\Application;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class KernelExtension

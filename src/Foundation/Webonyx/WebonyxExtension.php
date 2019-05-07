@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
-use Railt\SDL\Reflection\Dictionary;
 use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Connection\ExecutorInterface;
@@ -17,6 +16,7 @@ use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Webonyx\Subscribers\TypeResolvingFixPathSubscriber;
+use Railt\SDL\Reflection\Dictionary;
 
 /**
  * Class WebonyxExtension

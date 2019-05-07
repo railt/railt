@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Tests\Foundation;
 
 use Illuminate\Support\Arr;
-use Railt\Http\Request;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
+use Railt\Http\Request;
 use Railt\Tests\Foundation\Responses\ResponsesTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

@@ -11,7 +11,6 @@ namespace Railt\Extension\Routing;
 
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
-use Railt\SDL\Schema\CompilerInterface;
 use Railt\Extension\ClassLoader\ClassLoaderExtension;
 use Railt\Extension\ClassLoader\ClassLoaderInterface;
 use Railt\Extension\Routing\Subscribers\ActionDispatcherSubscriber;
@@ -20,6 +19,7 @@ use Railt\Extension\Routing\Subscribers\FieldResolveToActionSubscriber;
 use Railt\Foundation\Application;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\SDL\Schema\CompilerInterface;
 
 /**
  * Class RouterExtension

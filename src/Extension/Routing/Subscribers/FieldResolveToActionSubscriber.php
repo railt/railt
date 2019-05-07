@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing\Subscribers;
 
+use Railt\Extension\Routing\Events\ActionDispatch;
+use Railt\Extension\Routing\RouteInterface;
+use Railt\Extension\Routing\RouterInterface;
+use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Http\Identifiable;
 use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
-use Railt\Extension\Routing\Events\ActionDispatch;
-use Railt\Extension\Routing\RouteInterface;
-use Railt\Extension\Routing\RouterInterface;
-use Railt\Foundation\Event\Resolver\FieldResolve;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

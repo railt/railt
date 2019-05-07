@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Responses;
 
-use Railt\Http\Request;
-use Railt\Http\ResponseInterface;
 use Phplrt\Io\File;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
+use Railt\Http\Request;
+use Railt\Http\ResponseInterface;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

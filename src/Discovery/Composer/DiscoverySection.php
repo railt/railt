@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Discovery\Composer;
 
+use Phplrt\Io\File;
 use Railt\Discovery\Exception\ConfigurationException;
 use Railt\Discovery\Exception\ValidationException;
-use Phplrt\Io\File;
 use Railt\Json\Exception\JsonValidationExceptionInterface;
 use Railt\Json\Validator;
 use Railt\Json\ValidatorInterface;

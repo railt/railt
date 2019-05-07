@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Reflection\Builder;
 
-use Phplrt\Io\Readable;
 use Phplrt\Ast\NodeInterface;
+use Phplrt\Io\Readable;
 use Railt\SDL\Base\BaseDocument;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;

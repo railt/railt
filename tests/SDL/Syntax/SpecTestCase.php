@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Syntax;
 
-use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\Exception;
 use Phplrt\Exception\ExternalException;
 use Phplrt\Io\File;
 use Phplrt\Parser\Exception\UnexpectedTokenException;
 use Phplrt\Parser\ParserInterface;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Exception;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 

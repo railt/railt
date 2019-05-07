@@ -14,10 +14,10 @@ use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
 use Railt\Container\Container;
 use Railt\Dumper\TypeDumper;
-use Railt\SDL\Reflection\Dictionary;
-use Railt\SDL\Standard\StandardType;
 use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Event\Http\ResponseProceed;
+use Railt\SDL\Reflection\Dictionary;
+use Railt\SDL\Standard\StandardType;
 
 /**
  * Class ApplicationUserDataSubscriber

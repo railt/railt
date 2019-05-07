@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Cache\Adapter\PHPArray\ArrayCachePool;
-use Psr\SimpleCache\CacheInterface;
 use Phplrt\Io\Readable;
 use Phplrt\Parser\ParserInterface;
+use Psr\SimpleCache\CacheInterface;
 use Railt\SDL\Contracts\Definitions\Definition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Document;

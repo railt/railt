@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Json\Json5\Decoder;
 
-use Railt\Json\Json5\Decoder\Ast\NodeInterface;
 use Phplrt\Parser\Builder as BaseAstBuilder;
 use Phplrt\Parser\GrammarInterface;
+use Railt\Json\Json5\Decoder\Ast\NodeInterface;
 
 /**
  * Class Builder

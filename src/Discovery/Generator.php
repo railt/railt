@@ -11,13 +11,13 @@ namespace Railt\Discovery;
 
 use Composer\Composer;
 use Composer\IO\IOInterface;
+use Phplrt\Io\Readable;
 use Railt\Discovery\Composer\DiscoveryConfiguration;
 use Railt\Discovery\Composer\DiscoverySection;
 use Railt\Discovery\Composer\Package;
 use Railt\Discovery\Composer\Reader;
 use Railt\Discovery\Composer\Section;
 use Railt\Discovery\Exception\ValidationException;
-use Phplrt\Io\Readable;
 use Railt\Json\Exception\JsonValidationExceptionInterface;
 use Railt\Json\Json;
 

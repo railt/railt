@@ -17,9 +17,9 @@ use GraphQL\Language\AST\OperationDefinitionNode;
 use GraphQL\Language\Parser;
 use GraphQL\Language\Source;
 use GraphQL\Type\Schema;
-use Railt\Http\RequestInterface;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Webonyx\Context;
+use Railt\Http\RequestInterface;
 
 /**
  * Class RequestResolver
