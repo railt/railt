@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Tests\Parser;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use Railt\Parser\Ast\NodeInterface;
+use Railt\Component\Parser\Ast\NodeInterface;
 
 /**
  * Class TestCase

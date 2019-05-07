@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx\Builder;
 
 use GraphQL\Type\Definition\ObjectType;
-use Railt\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
 
 /**
  * Class ObjectBuilder
@@ -20,7 +20,6 @@ class ObjectBuilder extends Builder
 {
     /**
      * @return ObjectType
-     * @throws \GraphQL\Error\Error
      */
     public function build(): ObjectType
     {

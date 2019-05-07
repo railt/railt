@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Application;
 
-use Railt\Container\ContainerInterface;
 use Railt\Foundation\Application;
+use Railt\Foundation\Config\RepositoryInterface;
 use Symfony\Component\Console\Application as ConsoleApplication;
+use Symfony\Component\Console\Exception\LogicException;
 
 /**
  * Trait HasConsoleApplication
@@ -19,25 +20,20 @@ use Symfony\Component\Console\Application as ConsoleApplication;
 trait HasConsoleApplication
 {
     /**
-     * @var array|string[]
+     * @var array
      */
     protected $commands = [];
 
     /**
-     * @return ContainerInterface
-     */
-    abstract public function getContainer(): ContainerInterface;
-
-    /**
      * @return ConsoleApplication
-     * @throws \Symfony\Component\Console\Exception\LogicException
+     * @throws LogicException
      */
     public function getConsoleApplication(): ConsoleApplication
     {
         $app = new ConsoleApplication('Railt Framework', Application::VERSION);
 
-        foreach ($this->commands as $command) {
-            $app->add($this->getContainer()->make($command));
+        foreach ($this->getCommands() as $command) {
+            $app->add($this->make($command));
         }
 
         return $app;
@@ -49,5 +45,23 @@ trait HasConsoleApplication
     protected function addCommand(string $command): void
     {
         $this->commands[] = $command;
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function getCommands(): array
+    {
+        return \array_merge($this->commands, $this->getConfigCommands());
+    }
+
+    /**
+     * @return array|string[]
+     */
+    private function getConfigCommands(): array
+    {
+        $configs = $this->make(RepositoryInterface::class);
+
+        return (array)$configs->get(RepositoryInterface::KEY_COMMANDS, []);
     }
 }

@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
-use Railt\Http\Identifiable;
-use Railt\Http\Provider\ProviderInterface;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
+use Railt\Component\Http\Identifiable;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\Http\ResponseInterface;
 
 /**
  * Interface ConnectionInterface
@@ -20,16 +19,10 @@ use Railt\Http\ResponseInterface;
 interface ConnectionInterface extends Identifiable
 {
     /**
-     * @param RequestInterface $request
+     * @param RequestInterface|RequestInterface[]|iterable $requests
      * @return ResponseInterface
      */
-    public function request(RequestInterface $request): ResponseInterface;
-
-    /**
-     * @param ProviderInterface $provider
-     * @return ResponseInterface
-     */
-    public function requests(ProviderInterface $provider): ResponseInterface;
+    public function request($requests): ResponseInterface;
 
     /**
      * @return void

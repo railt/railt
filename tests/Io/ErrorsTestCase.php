@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Io;
 
-use Railt\Io\Exception\ExternalExceptionInterface;
-use Railt\Io\Exception\NotFoundException;
-use Railt\Io\Exception\NotReadableException;
-use Railt\Io\File;
-use Railt\Io\Readable;
+use Railt\Component\Io\Exception\NotFoundException;
+use Railt\Component\Io\Exception\NotReadableException;
+use Railt\Component\Io\File;
 
 /**
  * Class ErrorsTestCase
@@ -23,7 +21,6 @@ class ErrorsTestCase extends TestCase
     /**
      * @return void
      * @throws NotReadableException
-     * @throws \PHPUnit\Framework\Exception
      */
     public function testNotFound(): void
     {
@@ -59,54 +56,6 @@ class ErrorsTestCase extends TestCase
 
         @\chmod($file, 0777);
         @\unlink($file);
-    }
-
-    /**
-     * @dataProvider provider
-     * @param \Closure $factory
-     * @return void
-     * @throws \Exception
-     */
-    public function testExternalErrorWithLineAndColumn(\Closure $factory): void
-    {
-        $this->expectException(ExternalExceptionInterface::class);
-        $this->expectExceptionMessage($message = 'Something went wrong ' . \random_int(\PHP_INT_MIN, \PHP_INT_MAX));
-
-        /** @var Readable $readable */
-        $readable = $factory();
-
-        try {
-            throw $readable->error($message, 23, 42);
-        } catch (ExternalExceptionInterface $e) {
-            $this->assertSame(23, $e->getLine());
-            $this->assertSame(42, $e->getColumn());
-
-            throw $e;
-        }
-    }
-
-    /**
-     * @dataProvider provider
-     * @param \Closure $factory
-     * @return void
-     * @throws \Exception
-     */
-    public function testExternalErrorWithOffset(\Closure $factory): void
-    {
-        $this->expectException(ExternalExceptionInterface::class);
-        $this->expectExceptionMessage($message = 'Something went wrong ' . \random_int(\PHP_INT_MIN, \PHP_INT_MAX));
-
-        /** @var Readable $readable */
-        $readable = $factory();
-
-        try {
-            throw $readable->error($message, 150);
-        } catch (ExternalExceptionInterface $e) {
-            $this->assertSame(2, $e->getLine());
-            $this->assertSame(39, $e->getColumn());
-
-            throw $e;
-        }
     }
 
     /**

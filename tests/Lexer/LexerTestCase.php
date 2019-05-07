@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Lexer;
 
-use Railt\Io\File;
-use Railt\Lexer\LexerInterface;
-use Railt\Lexer\Result\Eoi;
-use Railt\Lexer\Result\Unknown;
+use Railt\Component\Io\File;
+use Railt\Component\Lexer\LexerInterface;
+use Railt\Component\Lexer\Token\EndOfInput;
+use Railt\Component\Lexer\Token\Unknown;
 
 /**
  * Class LexerCompiler
@@ -36,7 +36,7 @@ abstract class LexerTestCase extends BaseTestCase
         $this->assertCount(3, $result);
         $this->assertSame('T_DIGIT', $result[0]->getName());
         $this->assertSame('T_DIGIT', $result[1]->getName());
-        $this->assertSame(Eoi::T_NAME, $result[2]->getName());
+        $this->assertSame(EndOfInput::T_NAME, $result[2]->getName());
     }
 
     /**
@@ -47,7 +47,7 @@ abstract class LexerTestCase extends BaseTestCase
     public function testDigitsWithSkipped(LexerInterface $lexer): void
     {
         $lexer = clone $lexer;
-        $lexer->skip(Eoi::T_NAME);
+        $lexer->skip(EndOfInput::T_NAME);
         $result = \iterator_to_array($lexer->lex(File::fromSources('23 42')));
 
         $this->assertCount(2, $result);
@@ -69,7 +69,7 @@ abstract class LexerTestCase extends BaseTestCase
         $this->assertSame('T_DIGIT', $result[0]->getName());
         $this->assertSame('T_UNKNOWN', $result[1]->getName());
         $this->assertSame('T_DIGIT', $result[2]->getName());
-        $this->assertSame(Eoi::T_NAME, $result[3]->getName());
+        $this->assertSame(EndOfInput::T_NAME, $result[3]->getName());
 
         /** @var Unknown $unknown */
         $unknown = $result[1];
@@ -100,7 +100,7 @@ abstract class LexerTestCase extends BaseTestCase
         }
 
         $lexer->add('T_WORD', '\w+');
-        $result = \iterator_to_array($lexer->lex(File::fromSources('23 42 word word'), ['T_WHITESPACE', Eoi::T_NAME]));
+        $result = \iterator_to_array($lexer->lex(File::fromSources('23 42 word word'), ['T_WHITESPACE', EndOfInput::T_NAME]));
 
         $this->assertCount(4, $result);
     }
@@ -118,7 +118,7 @@ abstract class LexerTestCase extends BaseTestCase
         }
 
         $lexer->add('T_WORD', '\w+');
-        $result = \iterator_to_array($lexer->lex(File::fromSources('23 word word 42'), ['T_WHITESPACE', Eoi::T_NAME]));
+        $result = \iterator_to_array($lexer->lex(File::fromSources('23 word word 42'), ['T_WHITESPACE', EndOfInput::T_NAME]));
 
         $this->assertCount(4, $result);
     }
@@ -141,7 +141,7 @@ abstract class LexerTestCase extends BaseTestCase
         $this->assertTrue($lexer->has('T_WHITESPACE'));
         $this->assertTrue($lexer->has('T_WORD'));
         $this->assertFalse($lexer->has(Unknown::T_NAME));
-        $this->assertFalse($lexer->has(Eoi::T_NAME));
+        $this->assertFalse($lexer->has(EndOfInput::T_NAME));
     }
 
     /**
@@ -162,6 +162,6 @@ abstract class LexerTestCase extends BaseTestCase
         $this->assertTrue($lexer->has('T_WHITESPACE'));
         $this->assertTrue($lexer->has('T_WORD'));
         $this->assertFalse($lexer->has(Unknown::T_NAME));
-        $this->assertFalse($lexer->has(Eoi::T_NAME));
+        $this->assertFalse($lexer->has(EndOfInput::T_NAME));
     }
 }

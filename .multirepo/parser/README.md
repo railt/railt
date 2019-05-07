@@ -1,13 +1,18 @@
 <p align="center">
     <img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" />
 </p>
-
 <p align="center">
-    <a href="https://travis-ci.org/railt/parser"><img src="https://travis-ci.org/railt/parser.svg?branch=master" alt="Travis CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/railt/parser/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/parser/badges/quality-score.png?b=master" alt="Scrutinizer CI" /></a>
+    <a href="https://travis-ci.org/railt/parser"><img src="https://travis-ci.org/railt/parser.svg?branch=1.4.x" alt="Travis CI" /></a>
+    <a href="https://codeclimate.com/github/railt/parser/test_coverage"><img src="https://api.codeclimate.com/v1/badges/69e87dcab05a47df928b/test_coverage" /></a>
+    <a href="https://codeclimate.com/github/railt/parser/maintainability"><img src="https://api.codeclimate.com/v1/badges/69e87dcab05a47df928b/maintainability" /></a>
+</p>
+<p align="center">
+    <a href="https://packagist.org/packages/railt/parser"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>
+    <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
+    <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/parser"><img src="https://poser.pugx.org/railt/parser/version" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/railt/parser"><img src="https://poser.pugx.org/railt/parser/v/unstable" alt="Latest Unstable Version"></a>
-    <a href="https://raw.githubusercontent.com/railt/parser/master/LICENSE.md"><img src="https://poser.pugx.org/railt/parser/license" alt="License MIT"></a>
+    <a href="https://packagist.org/packages/railt/parser"><img src="https://poser.pugx.org/railt/parser/downloads" alt="Total Downloads"></a>
+    <a href="https://raw.githubusercontent.com/railt/parser/1.4.x/LICENSE.md"><img src="https://poser.pugx.org/railt/parser/license" alt="License MIT"></a>
 </p>
 
 # Parser
@@ -52,7 +57,7 @@ Let's create a primitive lexer that can handle spaces, numbers and the addition 
 > More information about the lexer can be found in [this repository](https://github.com/railt/lexer).
 
 ```php
-use Railt\Lexer\Driver\NativeRegex as Lexer;
+use Railt\Component\Lexer\Driver\NativeRegex as Lexer;
 
 $lexer = (new Lexer())
     ->add('T_WHITESPACE', '\\s+')
@@ -82,9 +87,9 @@ inside the product, this is the [concatenation](https://en.wikipedia.org/wiki/Co
 and definitions of the tokens.
 
 ```php
-use Railt\Parser\Grammar;
-use Railt\Parser\Rule\Concatenation;
-use Railt\Parser\Rule\Terminal;
+use Railt\Component\Parser\Grammar;
+use Railt\Component\Parser\Rule\Concatenation;
+use Railt\Component\Parser\Rule\Terminal;
 
 //
 // This (e)BNF construction:
@@ -105,8 +110,8 @@ $grammar = new Grammar([
 In order to test the grammar, we can simply parse the source.
 
 ```php
-use Railt\Io\File;
-use Railt\Parser\Driver\Llk as Parser;
+use Railt\Component\Io\File;
+use Railt\Component\Parser\Driver\Llk as Parser;
 
 $parser = new Parser($lexer, $grammar);
 
@@ -130,7 +135,7 @@ But if the source is wrong, the parser will tell you exactly where the error occ
 echo $parser->parse(File::fromSources('2 + + 2'));
 //                                         ^
 //
-// throws "Railt\Parser\Exception\UnexpectedTokenException" with message: 
+// throws "Railt\Component\Parser\Exception\UnexpectedTokenException" with message: 
 // "Unexpected token '+' (T_PLUS) at line 1 and column 5"
 ```
 
@@ -243,8 +248,8 @@ Result:
 An abstract syntax tree provides a set of classes 
 that can be represented in one of two ways:
 
-- `Railt\Parser\Ast\LeafInterface` - Terminal structures, which are represented inside the grammar as tokens.
-- `Railt\Parser\Ast\RuleInterface` - Non-terminal structures that are part of the production of grammar.
+- `Railt\Component\Parser\Ast\LeafInterface` - Terminal structures, which are represented inside the grammar as tokens.
+- `Railt\Component\Parser\Ast\RuleInterface` - Non-terminal structures that are part of the production of grammar.
 
 The name and location offset (in bytes) are part of their 
 common capabilities. However, terminals have the ability to retrieve 

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Container;
 
-use Railt\Container\Container;
-use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Component\Container\Container;
+use Railt\Component\Container\Exception\ContainerResolutionException;
 
 /**
  * Class ProxyResolvingTestCase

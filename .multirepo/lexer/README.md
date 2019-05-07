@@ -1,13 +1,18 @@
 <p align="center">
     <img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" />
 </p>
-
 <p align="center">
-    <a href="https://travis-ci.org/railt/lexer"><img src="https://travis-ci.org/railt/lexer.svg?branch=master" alt="Travis CI" /></a>
-    <a href="https://scrutinizer-ci.com/g/railt/lexer/?branch=master"><img src="https://scrutinizer-ci.com/g/railt/lexer/badges/quality-score.png?b=master" alt="Scrutinizer CI" /></a>
+    <a href="https://travis-ci.org/railt/lexer"><img src="https://travis-ci.org/railt/lexer.svg?branch=1.4.x" alt="Travis CI" /></a>
+    <a href="https://codeclimate.com/github/railt/lexer/test_coverage"><img src="https://api.codeclimate.com/v1/badges/8f4b0e28928bf2b445b2/test_coverage" /></a>
+    <a href="https://codeclimate.com/github/railt/lexer/maintainability"><img src="https://api.codeclimate.com/v1/badges/8f4b0e28928bf2b445b2/maintainability" /></a>
+</p>
+<p align="center">
+    <a href="https://packagist.org/packages/railt/lexer"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>
+    <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
+    <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/lexer"><img src="https://poser.pugx.org/railt/lexer/version" alt="Latest Stable Version"></a>
-    <a href="https://packagist.org/packages/railt/lexer"><img src="https://poser.pugx.org/railt/lexer/v/unstable" alt="Latest Unstable Version"></a>
-    <a href="https://raw.githubusercontent.com/railt/lexer/master/LICENSE.md"><img src="https://poser.pugx.org/railt/lexer/license" alt="License MIT"></a>
+    <a href="https://packagist.org/packages/railt/lexer"><img src="https://poser.pugx.org/railt/lexer/downloads" alt="Total Downloads"></a>
+    <a href="https://raw.githubusercontent.com/railt/lexer/1.4.x/LICENSE.md"><img src="https://poser.pugx.org/railt/lexer/license" alt="License MIT"></a>
 </p>
 
 # Lexer
@@ -22,9 +27,9 @@ compiler inside Travis CI. In this case, a gray badge will be displayed with the
 In order to quickly understand how it works - just write ~4 lines of code:
 
 ```php
-$lexer = Railt\Lexer\Factory::create(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE']);
+$lexer = Railt\Component\Lexer\Factory::create(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE']);
 
-foreach ($lexer->lex(Railt\Io\File::fromSources('23 42')) as $token) {
+foreach ($lexer->lex(Railt\Component\Io\File::fromSources('23 42')) as $token) {
     echo $token . "\n";
 }
 ```
@@ -49,7 +54,7 @@ speed between several implementations (Stateful vs Stateless) of the same algori
 it was decided to abandon the immutable stateful lexers.
 
 ```php
-use Railt\Lexer\Factory;
+use Railt\Component\Lexer\Factory;
 
 /**
  * List of available tokens in format "name => pcre"
@@ -109,8 +114,8 @@ The factory returns one of the available implementations, however you can create
 `NativeRegex` implementation is based on the built-in php PCRE functions.
 
 ```php
-use Railt\Lexer\Driver\NativeRegex;
-use Railt\Io\File;
+use Railt\Component\Lexer\Driver\NativeRegex;
+use Railt\Component\Io\File;
 
 $lexer = new NativeRegex(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE', 'T_EOI']);
 
@@ -130,8 +135,8 @@ Experimental lexer based on the
 need support for [Parle extension](http://php.net/manual/en/book.parle.php).
 
 ```php
-use Railt\Lexer\Driver\ParleLexer;
-use Railt\Io\File;
+use Railt\Component\Lexer\Driver\ParleLexer;
+use Railt\Component\Io\File;
 
 $lexer = new ParleLexer(['T_WHITESPACE' => '\s+', 'T_DIGIT' => '\d+'], ['T_WHITESPACE', 'T_EOI']);
 

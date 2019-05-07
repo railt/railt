@@ -19,15 +19,13 @@ abstract class TestCase extends BaseTestCase
 {
     /**
      * @return array
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
      */
     public function eventsProvider(): array
     {
         $app = $this->app();
 
         return [
-            'Symfony Event Dispatcher' => [$app, $app->getContainer()->get(EventDispatcherInterface::class)],
+            'Symfony Event Dispatcher' => [$app, $app->get(EventDispatcherInterface::class)],
         ];
     }
 }

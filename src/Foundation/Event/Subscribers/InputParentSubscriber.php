@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Subscribers;
 
+use Railt\Component\Http\Input;
+use Railt\Component\Http\InputInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Http\Input;
-use Railt\Http\InputInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -26,6 +26,7 @@ class InputParentSubscriber implements EventSubscriberInterface
 
     /**
      * InputParentSubscriber constructor.
+     *
      * @param InputSubscriber $inputs
      */
     public function __construct(InputSubscriber $inputs)
@@ -79,7 +80,7 @@ class InputParentSubscriber implements EventSubscriberInterface
     {
         $id = $event->getConnection()->getId();
 
-        /** @var \Railt\Foundation\Webonyx\Input $input */
+        /** @var Input $input */
         $input = $event->getInput();
 
         $input->withParentInput(function (int $depth, InputInterface $input) use ($id) {

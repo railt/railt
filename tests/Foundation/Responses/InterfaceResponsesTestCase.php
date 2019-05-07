@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Responses;
 
+use Railt\Component\Http\Request;
+use Railt\Component\Http\ResponseInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Event\Resolver\TypeResolve;
-use Railt\Http\Request;
-use Railt\Http\ResponseInterface;
 use Railt\Tests\Foundation\Stub\TraversableObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -41,6 +41,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularResolving(string $type, string $field, string $query): void
     {
@@ -63,6 +64,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularFromArray(string $type, string $field, string $query): void
     {
@@ -81,6 +83,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularResolvingPriorityFromArray(string $type, string $field, string $query): void
     {
@@ -103,6 +106,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testSingularResolvingFromTraversable(string $type, string $field, string $query): void
     {
@@ -118,9 +122,7 @@ class InterfaceResponsesTestCase extends ResponsesTestCase
      * @param string $query
      * @param string $field
      * @param \Closure $then
-     * @return \Railt\Http\ResponseInterface
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
+     * @return \Railt\Component\Http\ResponseInterface
      */
     protected function interface(string $query, \Closure $then, string $field = 'interface'): ResponseInterface
     {

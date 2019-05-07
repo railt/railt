@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language;
 
-use Railt\Io\File;
-use Railt\SDL\Contracts\Document;
-use Railt\SDL\Schema\CompilerInterface;
+use Railt\Component\Io\File;
+use Railt\Component\SDL\Contracts\Document;
+use Railt\Component\SDL\Schema\CompilerInterface;
 use Railt\Tests\SDL\Helpers\CompilerStubs;
 use Railt\Tests\SDL\TestCase;
 
@@ -24,18 +24,23 @@ abstract class AbstractLanguageTestCase extends TestCase
 
     /**
      * @param string $body
-     * @return array|Document[][]
-     * @throws \Exception
+     * @return array
+     * @throws \Throwable
      */
     public function dataProviderDocuments(string $body): array
     {
-        $result = [];
+        try {
+            $result = [];
 
-        foreach ($this->getDocuments($body) as $document) {
-            $result[] = [$document];
+            foreach ($this->getDocuments($body) as $document) {
+                $result[] = [$document];
+            }
+
+            return $result;
+        } catch (\Throwable $e) {
+            echo $e;
+            throw $e;
         }
-
-        return $result;
     }
 
     /**

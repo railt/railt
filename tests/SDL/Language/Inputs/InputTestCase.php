@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Inputs;
 
-use Railt\SDL\Contracts\Definitions\InputDefinition;
-use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
-use Railt\SDL\Contracts\Document;
+use Railt\Component\SDL\Contracts\Definitions\InputDefinition;
+use Railt\Component\SDL\Contracts\Dependent\ArgumentDefinition;
+use Railt\Component\SDL\Contracts\Document;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

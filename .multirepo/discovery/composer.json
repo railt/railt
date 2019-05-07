@@ -1,0 +1,63 @@
+{
+    "name": "railt/discovery",
+    "type": "library",
+    "description": "Cross-package composer-based configuration loader",
+    "license": "MIT",
+    "keywords": [
+        "console",
+        "autoloader",
+        "dependency"
+    ],
+    "homepage": "http://railt.org",
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/discovery"
+    },
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ext-json": "*",
+        "composer/semver": "^1.0",
+        "railt/io": "1.4.*|1.4.x-dev",
+        "railt/json": "1.4.*|1.4.x-dev",
+        "justinrainbow/json-schema": "~5.2",
+        "composer-plugin-api": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Component\\": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "railt/railt": "1.4.*|1.4.x-dev",
+        "composer/composer": "~1.1",
+        "symfony/var-dumper": "~3.4|~4.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Tests\\Discovery\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Railt\\Component\\Discovery\\Manifest::discover"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -13,7 +13,7 @@ use GraphQL\Language\AST\FragmentSpreadNode;
 use GraphQL\Language\AST\InlineFragmentNode;
 use GraphQL\Language\AST\SelectionSetNode;
 use GraphQL\Type\Definition\ResolveInfo;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Trait PreferTypes

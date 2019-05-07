@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Events;
 
+use Railt\Component\Http\Request;
+use Railt\Component\Io\File;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Foundation\Exception\ConnectionException;
-use Railt\Http\Request;
-use Railt\Io\File;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -78,7 +77,7 @@ class RequestEventsTestCase extends TestCase
      */
     public function testQueryRequestType(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
-        $dispatcher->addListener(RequestReceived::class, function (RequestReceived $ev): void {
+        $dispatcher->addListener(ResponseProceed::class, function (ResponseProceed $ev): void {
             $request = $ev->getRequest();
 
             $this->assertSame(Request::TYPE_QUERY, $request->getQueryType());
@@ -96,7 +95,7 @@ class RequestEventsTestCase extends TestCase
      */
     public function testMutationRequestType(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
-        $dispatcher->addListener(RequestReceived::class, function (RequestReceived $ev): void {
+        $dispatcher->addListener(ResponseProceed::class, function (ResponseProceed $ev): void {
             $request = $ev->getRequest();
 
             $this->assertSame(Request::TYPE_MUTATION, $request->getQueryType());
@@ -114,7 +113,7 @@ class RequestEventsTestCase extends TestCase
      */
     public function testSubscriptionRequestType(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
-        $dispatcher->addListener(RequestReceived::class, function (RequestReceived $ev): void {
+        $dispatcher->addListener(ResponseProceed::class, function (ResponseProceed $ev): void {
             $request = $ev->getRequest();
 
             $this->assertSame(Request::TYPE_SUBSCRIPTION, $request->getQueryType());
@@ -123,48 +122,5 @@ class RequestEventsTestCase extends TestCase
 
         $app->connect(File::fromSources(self::EXAMPLE_QUERY))
             ->request(new Request('subscription { id }'));
-    }
-
-    /**
-     * @dataProvider eventsProvider
-     *
-     * @param ApplicationInterface $app
-     * @param EventDispatcherInterface $dispatcher
-     * @return void
-     * @throws \PHPUnit\Framework\Exception
-     */
-    public function testRequestPropagationWasStopped(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
-    {
-        $this->expectException(ConnectionException::class);
-        $this->expectExceptionMessage('The ability to process a request was blocked before generating a correct response.');
-
-        $dispatcher->addListener(RequestReceived::class, function (RequestReceived $event): void {
-            $event->stopPropagation();
-        });
-
-
-        $app->connect(File::fromSources(self::EXAMPLE_QUERY))
-            ->request(new Request('{}'));
-    }
-
-    /**
-     * @dataProvider eventsProvider
-     *
-     * @param ApplicationInterface $app
-     * @param EventDispatcherInterface $dispatcher
-     * @return void
-     * @throws \PHPUnit\Framework\Exception
-     */
-    public function testResponsePropagationWasStopped(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
-    {
-        $this->expectException(ConnectionException::class);
-        $this->expectExceptionMessage('The ability to send a generated response has been blocked.');
-
-        $dispatcher->addListener(ResponseProceed::class, function (ResponseProceed $event): void {
-            $event->stopPropagation();
-        });
-
-        $app->connect(File::fromSources(self::EXAMPLE_QUERY))
-            ->request(new Request('{}'));
     }
 }

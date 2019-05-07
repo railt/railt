@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Parser;
 
-use Railt\Io\File;
-use Railt\Io\Readable;
-use Railt\Parser\Dumper\HoaDumper;
-use Railt\Parser\ParserInterface;
+use Railt\Component\Io\File;
+use Railt\Component\Io\Readable;
+use Railt\Component\Parser\Dumper\HoaDumper;
+use Railt\Component\Parser\ParserInterface;
 
 /**
  * Class PP2ParserTestCase
@@ -21,7 +21,7 @@ class ParserTestCase extends TestCase
 {
     /**
      * @return array
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws \Railt\Component\Io\Exception\NotReadableException
      */
     public function grammars(): array
     {

@@ -9,33 +9,35 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Railt\Component\Container\Container;
+use Railt\Component\Container\ContainerInterface;
+use Railt\Component\Container\Exception\ContainerResolutionException;
+use Railt\Component\Http\HasIdentifier;
+use Railt\Component\Http\Identifiable;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\Http\Response;
+use Railt\Component\Http\ResponseInterface;
+use Railt\Component\Io\Readable;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Contracts\Document;
+use Railt\Component\SDL\Reflection\Dictionary;
+use Railt\Component\SDL\Schema\CompilerInterface;
+use Railt\Component\SDL\Schema\Configuration;
+use Railt\Foundation\Connection\ExecutorInterface;
+use Railt\Foundation\Connection\Format;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
-use Railt\Foundation\Event\Http\HttpEventInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Foundation\Exception\ConnectionException;
-use Railt\Http\Factory;
-use Railt\Http\HasIdentifier;
-use Railt\Http\Provider\ProviderInterface;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\SDL\Contracts\Definitions\SchemaDefinition;
-use Railt\SDL\Reflection\Dictionary;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class Connection
  */
-class Connection implements ConnectionInterface
+class Connection extends Container implements ConnectionInterface
 {
     use HasIdentifier;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $events;
 
     /**
      * @var bool
@@ -43,49 +45,106 @@ class Connection implements ConnectionInterface
     private $closed = true;
 
     /**
-     * @var SchemaDefinition
+     * @var CompilerInterface|Configuration
+     */
+    private $compiler;
+
+    /**
+     * @var Readable
      */
     private $schema;
 
     /**
-     * @var Dictionary
-     */
-    private $dictionary;
-
-    /**
      * Connection constructor.
-     * @param EventDispatcherInterface $events
-     * @param Dictionary $dictionary
-     * @param SchemaDefinition $schema
+     *
+     * @param ApplicationInterface $app
+     * @param Readable $schema
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
-    public function __construct(EventDispatcherInterface $events, Dictionary $dictionary, SchemaDefinition $schema)
+    public function __construct(ApplicationInterface $app, Readable $schema)
     {
-        $this->events = $events;
         $this->schema = $schema;
-        $this->dictionary = $dictionary;
+
+        parent::__construct($app);
 
         $this->connect();
     }
 
     /**
+     * @param Readable $schema
+     */
+    private function registerBaseBindings(Readable $schema): void
+    {
+        $this->instance(Identifiable::class, $this);
+        $this->instance(ContainerInterface::class, $this);
+        $this->instance(ConnectionInterface::class, $this);
+
+        $this->instance(Readable::class, $schema);
+
+        $this->registerDocument();
+        $this->registerSchemaDefinition();
+    }
+
+    /**
      * @return void
+     */
+    private function registerDocument(): void
+    {
+        $this->register(Document::class, function (CompilerInterface $compiler, Readable $schema) {
+            return $compiler->compile($schema);
+        });
+    }
+
+    /**
+     * @return void
+     */
+    private function registerSchemaDefinition(): void
+    {
+        $this->register(SchemaDefinition::class, function (Document $document) {
+            $schema = $document->getSchema();
+
+            if (! $schema) {
+                $error = 'The GraphQL SDL must define at least one Schema definition';
+                throw new \InvalidArgumentException($error);
+            }
+
+            return $schema;
+        });
+    }
+
+    /**
+     * @return void
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     private function connect(): void
     {
         if ($this->closed) {
             $this->closed = false;
 
-            $this->fireOnConnectEvent();
+            $this->registerBaseBindings($this->schema);
+
+            [$dictionary, $schema] = [
+                $this->make(Dictionary::class),
+                $this->make(SchemaDefinition::class),
+            ];
+
+            $this->fireOnConnectEvent($dictionary, $schema);
         }
     }
 
     /**
-     * @return void
+     * @param Dictionary $dictionary
+     * @param SchemaDefinition $schema
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
-    private function fireOnConnectEvent(): void
+    private function fireOnConnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
     {
-        $event = new ConnectionEstablished($this, $this->dictionary, $this->schema);
-        $event = $this->events->dispatch(ConnectionEstablished::class, $event);
+        $event = new ConnectionEstablished($this, $dictionary, $schema);
+
+        $event = $this->fire($event);
 
         if ($event->isPropagationStopped()) {
             $this->close();
@@ -93,118 +152,135 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * @param Event $event
+     * @return Event
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     */
+    private function fire(Event $event): Event
+    {
+        $events = $this->make(EventDispatcherInterface::class);
+
+        return $events->dispatch(\get_class($event), $event);
+    }
+
+    /**
      * @return void
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     public function close(): void
     {
         if ($this->closed === false) {
             $this->closed = true;
+
+            [$dictionary, $schema] = [
+                $this->make(Dictionary::class),
+                $this->make(SchemaDefinition::class),
+            ];
+
+            $this->fireOnDisconnectEvent($dictionary, $schema);
+            $this->clean();
+
             \gc_collect_cycles();
-
-            $this->fireOnDisconnect();
         }
     }
 
     /**
-     * @return void
+     * @param Dictionary $dictionary
+     * @param SchemaDefinition $schema
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
-    private function fireOnDisconnect(): void
+    private function fireOnDisconnectEvent(Dictionary $dictionary, SchemaDefinition $schema): void
     {
-        $event = new ConnectionClosed($this, $this->dictionary, $this->schema);
+        $this->fire(new ConnectionClosed($this, $dictionary, $schema));
+    }
 
-        $this->events->dispatch(ConnectionClosed::class, $event);
+    /**
+     * @param iterable|RequestInterface|RequestInterface[] $requests
+     * @return ResponseInterface
+     * @throws \InvalidArgumentException
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     */
+    public function request($requests): ResponseInterface
+    {
+        $this->connect();
+
+        $schema = $this->make(SchemaDefinition::class);
+
+        $responses = [];
+
+        foreach (Format::requests($requests) as $request) {
+            $this->fireOnRequestEvent($request);
+
+            $responses[] = $response = \trim($request->getQuery())
+                ? $this->execute($request, $schema)
+                : Response::empty();
+
+            $this->fireOnResponseEvent($request, $response);
+        }
+
+        return Format::responses($responses);
     }
 
     /**
      * @param RequestInterface $request
-     * @return ResponseInterface
-     * @throws ConnectionException
-     * @throws \Throwable
+     * @return RequestInterface
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
-    public function request(RequestInterface $request): ResponseInterface
+    private function fireOnRequestEvent(RequestInterface $request): RequestInterface
     {
-        if ($this->closed) {
-            throw new ConnectionException('Connection was closed and can no longer process requests');
-        }
-
-        try {
-            $before = $this->fireOnRequest($request);
-            $this->assertResponse($before);
-
-            $after = $this->fireOnResponse($before);
-            $this->assertResponse($after);
-
-            return $after->getResponse();
-        } catch (\Throwable $e) {
-            $this->close();
-
-            throw $e;
-        }
-    }
-
-    /**
-     * @param ProviderInterface $provider
-     * @return ResponseInterface
-     */
-    public function requests(ProviderInterface $provider): ResponseInterface
-    {
-        return Factory::create($provider)
-            ->through(function (RequestInterface $request) {
-                return $this->request($request);
-            });
-    }
-
-    /**
-     * @param HttpEventInterface $event
-     * @throws \RuntimeException
-     */
-    private function assertResponse(HttpEventInterface $event): void
-    {
-        $response = $event->getResponse();
-
-        if ($response === null) {
-            $error = \sprintf('The %s event should provide a response, but null given', \get_class($event));
-            throw new ConnectionException($error);
-        }
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return RequestReceived|Event
-     * @throws \RuntimeException
-     */
-    private function fireOnRequest(RequestInterface $request): RequestReceived
-    {
-        $event = new RequestReceived($this, $request);
-        $event = $this->events->dispatch(RequestReceived::class, $event);
+        /** @var RequestReceived $event */
+        $event = $this->fire(new RequestReceived($this, $request));
 
         if ($event->isPropagationStopped()) {
-            $error = 'The ability to process a request was blocked before generating a correct response.';
-            throw new ConnectionException($error);
+            return $request;
         }
 
-        return $event;
+        return $event->getRequest() ?? $request;
     }
 
     /**
-     * @param RequestReceived $event
-     * @return ResponseProceed|Event
-     * @throws \RuntimeException
+     * @param SchemaDefinition $schema
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     * @throws \Railt\Component\Container\Exception\ParameterResolutionException
      */
-    private function fireOnResponse(RequestReceived $event): ResponseProceed
+    private function execute(RequestInterface $request, SchemaDefinition $schema): ResponseInterface
     {
-        $after = new ResponseProceed($event->getConnection(), $event->getRequest(), $event->getResponse());
-        $after = $this->events->dispatch(ResponseProceed::class, $after);
+        $executor = $this->make(ExecutorInterface::class);
+
+        return $executor->execute($this, $request, $schema);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param ResponseInterface $response
+     * @return ResponseInterface
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     */
+    private function fireOnResponseEvent(RequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        /** @var ResponseProceed $after */
+        $after = $this->fire(new ResponseProceed($this, $request, $response));
 
         if ($after->isPropagationStopped()) {
-            throw new ConnectionException('The ability to send a generated response has been blocked.');
+            return $response;
         }
 
-        return $after;
+        return $after->getResponse() ?? $response;
     }
 
     /**
      * @return void
+     * @throws ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
      */
     public function __destruct()
     {

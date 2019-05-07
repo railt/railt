@@ -9,7 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Container\ContainerInterface;
+use Railt\Component\Container\ContainerInterface;
+use Railt\Component\Container\Exception\ContainerInvocationException;
+use Railt\Component\Container\Exception\ContainerResolutionException;
+use Railt\Foundation\Application;
+use Railt\Foundation\Application\EnvironmentInterface;
+use Railt\Foundation\ApplicationInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -21,29 +26,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 abstract class Extension implements ExtensionInterface
 {
     /**
-     * @var string
-     */
-    private const METHOD_REGISTER = 'register';
-
-    /**
-     * @var string
-     */
-    private const METHOD_BOOT = 'boot';
-
-    /**
-     * @var ContainerInterface
+     * @var ApplicationInterface|Application
      */
     protected $app;
-
-    /**
-     * @var bool
-     */
-    private $booted = false;
-
-    /**
-     * @var bool
-     */
-    private $registered = false;
 
     /**
      * @var EventDispatcherInterface|null
@@ -51,18 +36,26 @@ abstract class Extension implements ExtensionInterface
     private $events;
 
     /**
-     * BaseExtension constructor.
-     * @param ContainerInterface $container
+     * @var EnvironmentInterface
      */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->app = $container;
+    protected $env;
 
-        $this->onRegister();
+    /**
+     * Extension constructor.
+     *
+     * @param ApplicationInterface $app
+     * @param EnvironmentInterface $env
+     */
+    public function __construct(ApplicationInterface $app, EnvironmentInterface $env)
+    {
+        $this->app = $app;
+        $this->env = $env;
     }
 
     /**
      * @return EventDispatcherInterface
+     * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function events(): EventDispatcherInterface
     {
@@ -78,6 +71,8 @@ abstract class Extension implements ExtensionInterface
      * @param \Closure $then
      * @param int $priority
      * @return Extension|$this
+     * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function on(string $event, \Closure $then, int $priority = 0): self
     {
@@ -88,37 +83,15 @@ abstract class Extension implements ExtensionInterface
 
     /**
      * @param EventSubscriberInterface $subscriber
-     * @return Extension
+     * @return Extension|$this
+     * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function subscribe(EventSubscriberInterface $subscriber): self
     {
         $this->events()->addSubscriber($subscriber);
 
         return $this;
-    }
-
-    /**
-     * @return void
-     */
-    private function onRegister(): void
-    {
-        if (! $this->registered && \method_exists($this, self::METHOD_REGISTER)) {
-            $this->registered = true;
-
-            $this->app->call(\Closure::fromCallable([$this, self::METHOD_REGISTER]));
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function run(): void
-    {
-        if (! $this->booted && \method_exists($this, self::METHOD_BOOT)) {
-            $this->booted = true;
-
-            $this->app->call(\Closure::fromCallable([$this, self::METHOD_BOOT]));
-        }
     }
 
     /**
@@ -172,17 +145,11 @@ abstract class Extension implements ExtensionInterface
     /**
      * @param string $name
      * @param \Closure $registrar
-     * @return BaseExtension|$this
+     * @return Extension|$this
      */
     protected function registerIfNotRegistered(string $name, \Closure $registrar): self
     {
-        if (! $this->app->has($name) && $instance = $this->app->call($registrar)) {
-            $this->app->instance($name, $instance);
-
-            if ($name !== \get_class($instance)) {
-                $this->app->alias($name, \get_class($instance));
-            }
-        }
+        $this->app->registerIfNotRegistered($name, $registrar);
 
         return $this;
     }
@@ -191,6 +158,8 @@ abstract class Extension implements ExtensionInterface
      * @param string $locator
      * @param array $params
      * @return mixed|object
+     * @throws ContainerResolutionException
+     * @throws ContainerInvocationException
      */
     protected function make(string $locator, array $params = [])
     {

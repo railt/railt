@@ -10,10 +10,8 @@ declare(strict_types=1);
 namespace Railt\Testing\Interact;
 
 use Psr\Container\ContainerInterface;
-use Railt\Discovery\Discovery;
 use Railt\Foundation\Application;
 use Railt\Foundation\ApplicationInterface;
-use Railt\Foundation\Config\Composer;
 
 /**
  * Trait InteractWithApplication
@@ -30,16 +28,10 @@ trait InteractWithApplication
     /**
      * @param ContainerInterface|null $container
      * @return ApplicationInterface
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
      */
     protected function app(ContainerInterface $container = null): ApplicationInterface
     {
-        $app = new Application($this->isDebug(), $container);
-
-        $app->configure(Composer::fromDiscovery());
-
-        return $app;
+        return new Application($this->isDebug(), $container);
     }
 
     /**
@@ -48,14 +40,5 @@ trait InteractWithApplication
     protected function isDebug(): bool
     {
         return (bool)$this->env('RAILT_DEBUG', true);
-    }
-
-    /**
-     * @return Discovery
-     * @throws \LogicException
-     */
-    protected function getDiscovery(): Discovery
-    {
-        return Composer::getDiscovery();
     }
 }

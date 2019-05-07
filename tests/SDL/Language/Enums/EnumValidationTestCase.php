@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Language\Enums;
 
-use Railt\Io\File;
-use Railt\SDL\Exceptions\TypeConflictException;
-use Railt\SDL\Schema\CompilerInterface;
+use Railt\Component\Io\File;
+use Railt\Component\SDL\Exceptions\TypeConflictException;
+use Railt\Component\SDL\Schema\CompilerInterface;
 use Railt\Tests\SDL\Language\AbstractLanguageTestCase;
 
 /**

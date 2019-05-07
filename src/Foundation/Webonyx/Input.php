@@ -10,11 +10,12 @@ declare(strict_types=1);
 namespace Railt\Foundation\Webonyx;
 
 use GraphQL\Type\Definition\ResolveInfo;
+use Illuminate\Support\Arr;
+use Railt\Component\Http\Input as BaseInput;
+use Railt\Component\Http\RequestInterface;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Foundation\Webonyx\Input\PathInfoLoader;
 use Railt\Foundation\Webonyx\Input\PreferTypesLoader;
-use Railt\Http\Input as BaseInput;
-use Railt\Http\RequestInterface;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Class Input
@@ -35,7 +36,8 @@ class Input extends BaseInput
     private $reflection;
 
     /**
-     * WebonyxInput constructor.
+     * Input constructor.
+     *
      * @param RequestInterface $request
      * @param ResolveInfo $info
      * @param FieldDefinition $field
@@ -51,6 +53,35 @@ class Input extends BaseInput
 
         $this->withField($this->reflection->getName());
         $this->resolveDefaultArguments($field);
+    }
+
+    /**
+     * @return array
+     */
+    public function getRelatedFields(): array
+    {
+        $result = parent::getRelatedFields();
+
+        foreach ($this->info->fieldNodes as $fieldNode) {
+            $result[] = $fieldNode->name->value;
+        }
+
+        return \array_unique($result);
+    }
+
+    /**
+     * @param string $field
+     * @return bool
+     */
+    public function wants(string $field): bool
+    {
+        $depth = \substr_count($field, '.');
+
+        if ($depth === 0) {
+            return \in_array($field, $this->getRelatedFields(), true);
+        }
+
+        return Arr::has($this->info->getFieldSelection($depth), $field);
     }
 
     /**

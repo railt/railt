@@ -9,12 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Schema;
+use Railt\Component\SDL\Contracts\Behavior\AllowsTypeIndication;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\Foundation\Event\Building\TypeBuilding;
+use Railt\Foundation\Webonyx\Exception\BuilderMissingException;
 use Railt\Foundation\Webonyx\TypeLoader;
-use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -45,6 +48,7 @@ abstract class Builder implements BuilderInterface
 
     /**
      * Builder constructor.
+     *
      * @param TypeDefinition $type
      * @param EventDispatcherInterface $events
      * @param TypeLoader $loader
@@ -58,8 +62,8 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @param TypeDefinition $type
-     * @return Type|mixed
-     * @throws \Railt\Foundation\Webonyx\Exception\BuilderMissingException
+     * @return Type|Schema|null
+     * @throws BuilderMissingException
      */
     protected function buildType(TypeDefinition $type)
     {
@@ -100,9 +104,9 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @param string $type
-     * @return Type
+     * @return Type|Directive
      */
-    protected function loadType(string $type): Type
+    protected function loadType(string $type)
     {
         return $this->loader->get($type, $this->getReflection());
     }

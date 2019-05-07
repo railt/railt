@@ -9,24 +9,36 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Container\ContainerInterface;
-use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Component\Container\Exception\ContainerInvocationException;
+use Railt\Component\Container\Exception\ContainerResolutionException;
+use Railt\Component\Container\Exception\ParameterResolutionException;
+use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\Exception\ExtensionException;
 
 /**
  * Class Repository
  */
-class Repository
+class Repository implements RepositoryInterface
 {
+    /**
+     * @var string
+     */
+    protected const EXTENSION_REGISTER_METHOD = 'register';
+
+    /**
+     * @var string
+     */
+    protected const EXTENSION_BOOT_METHOD = 'boot';
+
     /**
      * @var array|ExtensionInterface[]
      */
     private $extensions = [];
 
     /**
-     * @var ContainerInterface
+     * @var ApplicationInterface
      */
-    private $container;
+    private $app;
 
     /**
      * @var array|string[]
@@ -35,40 +47,116 @@ class Repository
 
     /**
      * Repository constructor.
-     * @param ContainerInterface $container
+     *
+     * @param ApplicationInterface $app
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ApplicationInterface $app)
     {
-        $this->container = $container;
+        $this->app = $app;
     }
 
     /**
      * @param string $extension
      * @return void
-     * @throws \Railt\Foundation\Exception\ExtensionException
+     * @throws ExtensionException
+     * @throws ParameterResolutionException
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
      */
     public function add(string $extension): void
     {
-        /** @noinspection NotOptimalIfConditionsInspection */
-        if (isset($this->extensions[$extension]) || \array_key_exists($extension, $this->extensions)) {
+        if (isset($this->extensions[$extension])) {
             return;
         }
 
-        $this->extensions[$extension] = $this->instance($extension);
+        //
+        // Register an extension
+        //
+        $instance = \tap($this->create($extension), function (ExtensionInterface $instance) use ($extension): void {
+            $this->extensions[$extension] = $instance;
+        });
+
+        $this->loadDependencies($instance);
+        $this->fireRegistration($instance);
     }
 
     /**
      * @param string $extension
-     * @return mixed|object
-     * @throws \Railt\Foundation\Exception\ExtensionException
+     * @return ExtensionInterface
+     * @throws ContainerResolutionException
      */
-    private function instance(string $extension)
+    private function create(string $extension): ExtensionInterface
     {
         try {
-            return $this->container->make($extension);
+            return $this->app->make($extension);
+        } catch (ParameterResolutionException $e) {
+            throw $e;
         } catch (ContainerResolutionException $e) {
-            $error = \sprintf('Could not initialize extension %s', $extension);
+            $error = \sprintf('Could not initialize an extension %s', $extension);
             throw new ExtensionException($error, 0, $e);
+        }
+    }
+
+    /**
+     * @param ExtensionInterface $extension
+     * @throws ContainerInvocationException
+     * @throws ParameterResolutionException
+     * @throws ContainerResolutionException
+     */
+    private function loadDependencies(ExtensionInterface $extension): void
+    {
+        foreach ($extension->getDependencies() as $name => $dependency) {
+            if (! \class_exists($dependency)) {
+                throw $this->unmetDependency($extension, $dependency, $name);
+            }
+
+            if (! $this->isRegistered($dependency)) {
+                $this->add($dependency);
+            }
+        }
+    }
+
+    /**
+     * @param ExtensionInterface $from
+     * @param string $dependency
+     * @param $package
+     * @return ExtensionException
+     */
+    private function unmetDependency(ExtensionInterface $from, string $dependency, $package): ExtensionException
+    {
+        \assert(\is_int($package) || \is_string($package));
+
+        $message = 'Could not load extension "%s" from [%s %s].';
+        $message .= \is_string($package)
+            ? \sprintf('You need to require the project dependency "%s" using Composer', $package)
+            : \sprintf('Class %s not found or could not be loaded', $dependency);
+
+        return new ExtensionException(\sprintf($message, $dependency, $from->getName(), $from->getVersion()));
+    }
+
+    /**
+     * @param string|ExtensionInterface $extension
+     * @return bool
+     */
+    private function isRegistered($extension): bool
+    {
+        \assert(\is_object($extension) || \is_string($extension));
+
+        $extension = \is_object($extension) ? \get_class($extension) : $extension;
+
+        return isset($this->extensions[$extension]);
+    }
+
+    /**
+     * @param ExtensionInterface $extension
+     * @throws ContainerInvocationException
+     */
+    private function fireRegistration(ExtensionInterface $extension): void
+    {
+        $method = [$extension, self::EXTENSION_REGISTER_METHOD];
+
+        if (\method_exists(...$method)) {
+            $this->app->call($method);
         }
     }
 
@@ -81,83 +169,40 @@ class Repository
     }
 
     /**
-     * @return void
-     * @throws ExtensionException
+     * @throws ContainerInvocationException
      */
     public function boot(): void
     {
         foreach ($this->extensions as $extension) {
-            $this->bootIfNotBooted($extension);
+            if (! $this->isBooted($extension)) {
+                $this->fireBoot($extension);
+            }
         }
     }
 
     /**
-     * @param ExtensionInterface $extension
-     * @throws ExtensionException
-     */
-    private function bootIfNotBooted(ExtensionInterface $extension): void
-    {
-        $class = \get_class($extension);
-
-        if (! $this->booted($class)) {
-            $this->booted[] = $class;
-
-            $this->loadDependencies($extension);
-
-            $extension->run();
-        }
-    }
-
-    /**
-     * @param string $extension
+     * @param string|ExtensionInterface $extension
      * @return bool
      */
-    private function booted(string $extension): bool
+    private function isBooted($extension): bool
     {
-        return \in_array($extension, $this->booted, true);
+        \assert(\is_object($extension) || \is_string($extension));
+
+        $extension = \is_object($extension) ? \get_class($extension) : $extension;
+
+        return isset($this->booted[$extension]);
     }
 
     /**
      * @param ExtensionInterface $extension
-     * @throws ExtensionException
+     * @throws ContainerInvocationException
      */
-    private function loadDependencies(ExtensionInterface $extension): void
+    private function fireBoot(ExtensionInterface $extension): void
     {
-        foreach ($extension->getDependencies() as $package => $dependency) {
-            $this->loadDependency($extension, $dependency, $package);
+        $method = [$extension, self::EXTENSION_BOOT_METHOD];
+
+        if (\method_exists(...$method)) {
+            $this->app->call($method);
         }
-    }
-
-    /**
-     * @param ExtensionInterface $extension
-     * @param string $dependency
-     * @param int|string $package
-     * @throws ExtensionException
-     */
-    private function loadDependency(ExtensionInterface $extension, string $dependency, $package): void
-    {
-        if (! $this->booted($dependency)) {
-            if (! \class_exists($dependency)) {
-                throw $this->invalidDependency($extension, $dependency, $package);
-            }
-
-            $this->add($dependency);
-        }
-    }
-
-    /**
-     * @param ExtensionInterface $extension
-     * @param string $dependency
-     * @param int|string $package
-     * @return ExtensionException
-     */
-    private function invalidDependency(ExtensionInterface $extension, string $dependency, $package): ExtensionException
-    {
-        $message = 'Could not include dependent extension "%s" from [%s %s]';
-        $message .= \is_string($package)
-            ? \sprintf('. You need to set up the project dependency "%s" using Composer.', $package)
-            : '';
-
-        return new ExtensionException(\sprintf($message, $dependency, $extension->getName(), $extension->getVersion()));
     }
 }

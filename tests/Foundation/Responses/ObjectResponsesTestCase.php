@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation;
 
+use Railt\Component\Http\Request;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Http\Request;
 use Railt\Tests\Foundation\Responses\ResponsesTestCase;
 use Railt\Tests\Foundation\Stub\TraversableObject;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -24,6 +24,7 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNullableDefaultResponse(): void
     {
@@ -53,14 +54,13 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testNullableResponse(): void
     {
-        $response = $this->connection(function (FieldResolve $event): void {
-            if ($event->getPath() === 'nullable') {
-                $event->withResult(['a' => '42']);
-            }
-        })->request(new Request('{ nullable { a } }'));
+        $response = $this->request('nullable', '{ a }', function () {
+            return ['a' => '42'];
+        });
 
         $this->assertSame(['nullable' => ['a' => '42']], $response->getData());
         $this->assertSame([], $response->getErrors());
@@ -69,16 +69,15 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testObjectResponseWithPublicFields(): void
     {
-        $response = $this->connection(function (FieldResolve $event): void {
-            if ($event->getPath() === 'nullable') {
-                $event->withResult(new class() {
-                    public $a = 42;
-                });
-            }
-        })->request(new Request('{ nullable { a, b } }'));
+        $response = $this->request('nullable', '{ a, b }', function () {
+            return new class() {
+                public $a = 42;
+            };
+        });
 
         $this->assertSame(['nullable' => ['a' => '42', 'b' => null]], $response->getData());
         $this->assertSame([], $response->getErrors());
@@ -87,17 +86,140 @@ class ObjectResponsesTestCase extends ResponsesTestCase
     /**
      * @throws \InvalidArgumentException
      * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
      */
     public function testObjectResponseIsTraversable(): void
     {
-        $response = $this->connection(function (FieldResolve $event): void {
-            if ($event->getPath() === 'nullable') {
-                $event->withResult(new TraversableObject(['b' => 100500]));
-            }
-        })->request(new Request('{ nullable { a, b } }'));
+        $response = $this->request('nullable', '{ a, b }', function () {
+            return new TraversableObject(['b' => 100500]);
+        });
 
         $this->assertSame(['nullable' => ['a' => null, 'b' => '100500']], $response->getData());
         $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testListResponse(): void
+    {
+        $response = $this->request('list', '{ a, b }', function () {
+            return [
+                ['a' => 1, 'b' => 1],
+                ['a' => 2, 'b' => 2],
+                ['a' => 3],
+                ['b' => 4],
+            ];
+        });
+
+        $this->assertSame([
+            'list' => [
+                ['a' => '1', 'b' => '1'],
+                ['a' => '2', 'b' => '2'],
+                ['a' => '3', 'b' => null],
+                ['a' => null, 'b' => '4'],
+            ],
+        ], $response->getData());
+
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testIterableResponse(): void
+    {
+        $response = $this->request('list', '{ a, b }', function () {
+            return new \ArrayObject([
+                ['a' => '1', 'b' => '1'],
+                ['a' => '2', 'b' => null],
+                ['a' => null, 'b' => '3'],
+            ]);
+        });
+
+        $this->assertSame(['list' => [
+            ['a' => '1', 'b' => '1'],
+            ['a' => '2', 'b' => null],
+            ['a' => null, 'b' => '3'],
+        ]], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testIterableOfIterablesResponse(): void
+    {
+        $response = $this->request('list', '{ a, b }', function () {
+            return new \ArrayObject([
+                new \ArrayObject(['a' => '1', 'b' => '1']),
+                new \ArrayObject(['a' => '2', 'b' => null]),
+                new \ArrayObject(['a' => null, 'b' => '3']),
+            ]);
+        });
+
+        $this->assertSame(['list' => [
+            ['a' => '1', 'b' => '1'],
+            ['a' => '2', 'b' => null],
+            ['a' => null, 'b' => '3'],
+        ]], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testObjectAsJsonString(): void
+    {
+        $response = $this->request('a', '', function () {
+            return new \ArrayObject(['example' => 42]);
+        });
+
+        $this->assertSame(['a' => '{"example":42}'], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testStringableObjectAsString(): void
+    {
+        $response = $this->request('a', '', function () {
+            return new class() {
+                public function __toString()
+                {
+                    return 'example value';
+                }
+            };
+        });
+
+        $this->assertSame(['a' => 'example value'], $response->getData());
+        $this->assertSame([], $response->getErrors());
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     */
+    public function testObjectAsInt(): void
+    {
+        $response = $this->request('c', '', function () {
+            return new \ArrayObject(['example' => 42]);
+        });
+
+        $this->assertSame(['c' => null], $response->getData());
+        $this->assertGreaterThan(0, \count($response->getErrors()));
     }
 
     /**
@@ -119,7 +241,7 @@ class ObjectResponsesTestCase extends ResponsesTestCase
                 non_null_list_of_non_nulls: [Query!]!
                 
                 ## VALUES
-                a: String, b: String
+                a: String, b: String, c: Int
             }
         ';
     }

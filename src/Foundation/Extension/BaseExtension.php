@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Container\ContainerInterface;
+use Railt\Component\Container\ContainerInterface;
 
 /**
  * @deprecated Use class `Railt\Foundation\Extension\Extension` instead.
@@ -18,6 +18,7 @@ abstract class BaseExtension extends Extension
 {
     /**
      * BaseExtension constructor.
+     *
      * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)

@@ -9,9 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Tests\SDL\Syntax;
 
-use Railt\Io\File;
-use Railt\Parser\Exception\UnexpectedTokenException;
-use Railt\Parser\ParserInterface;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Exception;
+use Railt\Component\Exception\ExternalException;
+use Railt\Component\Io\File;
+use Railt\Component\Parser\Exception\UnexpectedTokenException;
+use Railt\Component\Parser\ParserInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -25,6 +28,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @throws \InvalidArgumentException
      * @throws \LogicException
      * @throws \RuntimeException
+     * @throws ExternalException
      */
     public function positiveProvider(): array
     {
@@ -47,6 +51,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @throws \InvalidArgumentException
      * @throws \LogicException
      * @throws \RuntimeException
+     * @throws ExternalException
      */
     public function negativeProvider(): array
     {
@@ -70,7 +75,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @param ParserInterface $parser
      * @param string $expected
      * @return void
-     * @throws \PHPUnit\Framework\AssertionFailedError
+     * @throws AssertionFailedError
      */
     public function testPositiveParserSpecs(ParserInterface $parser, string $expected): void
     {
@@ -85,7 +90,7 @@ class SpecTestCase extends AbstractSyntaxTestCase
      * @param ParserInterface $parser
      * @param string $expected
      * @return void
-     * @throws \PHPUnit\Framework\Exception
+     * @throws Exception
      */
     public function testNegativeParserSpecs(ParserInterface $parser, string $expected): void
     {

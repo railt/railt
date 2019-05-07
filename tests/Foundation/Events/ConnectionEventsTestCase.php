@@ -9,13 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Foundation\Events;
 
+use Railt\Component\Io\File;
 use Railt\Foundation\ApplicationInterface;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Connection\ConnectionClosed as Closed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished as Established;
-use Railt\Foundation\Exception\ConnectionException;
-use Railt\Http\Request;
-use Railt\Io\File;
 use Railt\Tests\Foundation\TestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -34,6 +32,8 @@ class ConnectionEventsTestCase extends TestCase
      *
      * @param ApplicationInterface $app
      * @param EventDispatcherInterface $dispatcher
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testConnection(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
@@ -61,37 +61,8 @@ class ConnectionEventsTestCase extends TestCase
      * @param ApplicationInterface $app
      * @param EventDispatcherInterface $dispatcher
      * @return void
-     */
-    public function testConnectionsClosedByGC(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
-    {
-        $established = $closed = 0;
-
-        $dispatcher->addListener(Established::class, function (Established $ev) use (&$established): void {
-            ++$established;
-        });
-
-        $dispatcher->addListener(Closed::class, function (Closed $ev) use (&$closed): void {
-            ++$closed;
-        });
-
-        for ($i = 0; $i < 10; ++$i) {
-            //
-            // In this case, the GC destroys the connection object, closing it.
-            //
-            $app->connect(File::fromSources(self::EXAMPLE_QUERY));
-        }
-
-        $this->assertSame(10, $established);
-        $this->assertSame(10, $closed);
-    }
-
-    /**
-     * @dataProvider eventsProvider
-     *
-     * @param ApplicationInterface $app
-     * @param EventDispatcherInterface $dispatcher
-     * @return void
      * @throws \PHPUnit\Framework\Exception
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testConnectionsClosedManually(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
     {
@@ -127,6 +98,8 @@ class ConnectionEventsTestCase extends TestCase
      *
      * @param ApplicationInterface $app
      * @return void
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testUniqueIdentifiers(ApplicationInterface $app): void
     {
@@ -146,50 +119,5 @@ class ConnectionEventsTestCase extends TestCase
                 }
             }
         }
-    }
-
-    /**
-     * @dataProvider eventsProvider
-     *
-     * @param ApplicationInterface $app
-     * @param EventDispatcherInterface $dispatcher
-     * @return void
-     * @throws \PHPUnit\Framework\Exception
-     */
-    public function testPropagationWasStopped(ApplicationInterface $app, EventDispatcherInterface $dispatcher): void
-    {
-        $this->expectException(ConnectionException::class);
-        $this->expectExceptionMessage('Connection was closed and can no longer process requests');
-
-        //
-        // Block the event.
-        //
-        $dispatcher->addListener(Established::class, function (Established $event): void {
-            $event->stopPropagation();
-        });
-
-        $established = null;
-
-        //
-        // This event never call because the event was blocked in the previous step.
-        //
-        $dispatcher->addListener(Established::class, function (Established $event) use (&$established): void {
-            $established = true;
-        });
-
-        //
-        // 1) During the closure of the connection, check that the second event was not triggered.
-        // 2) Update an "$established" variable in order to check that the closing event was generally caused.
-        //
-        $dispatcher->addListener(Closed::class, function () use (&$established): void {
-            $this->assertNull($established);
-
-            $established = false;
-        });
-
-        $app->connect(File::fromSources(self::EXAMPLE_QUERY))
-            ->request(new Request('{}'));
-
-        $this->assertFalse($established);
     }
 }

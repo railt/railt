@@ -1,0 +1,44 @@
+{
+    $id: "railt/discovery",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    description: "A representation of Discovery package configuration",
+    anyOf:  [
+        {
+            type: "object",
+            patternProperties: {
+                "^[A-Za-z_][A-Za-z0-9_]*$": {
+                    type: "object",
+                    description: "The name of the section exported to \
+                    Discovery",
+                    properties: {
+                        schema: {
+                            type: "string",
+                            description: "Link to the JSON Schema file \
+                            relative to the current location of the file \
+                            composer.json"
+                        },
+                        except: {
+                            type: "array",
+                            description: "A list of keys and values which \
+                            should be excluded from discovered data",
+                            items: {
+                                type: "string",
+                                description: 'Excluded field key in "dot" \
+                                format, like "key-1.key-2.value"'
+                            }
+                        }
+                    },
+                    additionalProperties: false
+                }
+            },
+            additionalProperties: false
+        },
+        {
+            type: "array",
+            items: {
+                type: "string",
+                description: "The name of the section exported to Discovery"
+            }
+        }
+    ]
+}

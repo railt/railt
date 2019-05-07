@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Routing;
 
+use Railt\Component\Http\Request;
+use Railt\Component\Io\File;
 use Railt\Foundation\ConnectionInterface;
-use Railt\Http\Request;
-use Railt\Io\File;
 
 /**
  * Class BasicRequestsTestCase
@@ -51,8 +51,6 @@ class BasicRequestsTestCase extends TestCase
     /**
      * @param string $schema
      * @return ConnectionInterface
-     * @throws \InvalidArgumentException
-     * @throws \LogicException
      */
     protected function connect(string $schema): ConnectionInterface
     {

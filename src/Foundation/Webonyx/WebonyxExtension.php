@@ -9,11 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
+use Railt\Component\SDL\Reflection\Dictionary;
 use Railt\Foundation\Application;
+use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Connection\ExecutorInterface;
 use Railt\Foundation\Event\EventsExtension;
 use Railt\Foundation\Extension\Extension;
-use Railt\Foundation\Webonyx\Subscribers\ConnectionSubscriber;
-use Railt\Foundation\Webonyx\Subscribers\RequestsSubscriber;
+use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Webonyx\Subscribers\TypeResolvingFixPathSubscriber;
 
 /**
@@ -48,31 +50,44 @@ class WebonyxExtension extends Extension
     /**
      * @return string
      */
+    public function getStatus(): string
+    {
+        return Status::STABLE;
+    }
+
+    /**
+     * @return string
+     */
     public function getDescription(): string
     {
         return 'Webonyx GraphQL reference implementation extension';
     }
 
     /**
-     * @param bool $debug
      * @return void
      */
-    public function boot(bool $debug = false): void
+    public function register(): void
     {
-        //
-        // Listen all connections.
-        //
-        $this->subscribe($connections = new ConnectionSubscriber($this->events(), $debug));
+        $handler = function (Dictionary $dictionary) {
+            return new Executor($this->app, $dictionary);
+        };
 
-        //
-        // Listen requests and delegate it to several connection.
-        //
-        $this->subscribe($requests = new RequestsSubscriber($debug, $connections));
+        $this->app->registerIfNotRegistered(ExecutorInterface::class, $handler);
 
+        $this->app->alias(ExecutorInterface::class, Executor::class);
+    }
+
+    /**
+     * @param ApplicationInterface $app
+     * @throws \Railt\Component\Container\Exception\ContainerResolutionException
+     * @throws \Railt\Component\Container\Exception\ContainerInvocationException
+     */
+    public function boot(ApplicationInterface $app): void
+    {
         //
         // Fix of https://github.com/webonyx/graphql-php/issues/396
         // Reproduced to Webonyx version < 0.12.6 (including)
         //
-        $this->subscribe(new TypeResolvingFixPathSubscriber($connections));
+        $this->subscribe(new TypeResolvingFixPathSubscriber());
     }
 }

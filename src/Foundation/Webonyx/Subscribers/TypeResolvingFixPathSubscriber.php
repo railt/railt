@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Subscribers;
 
+use Illuminate\Support\Arr;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Foundation\Webonyx\Input;
@@ -21,23 +22,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var ConnectionSubscriber
-     */
-    private $connections;
-
-    /**
      * @var array
      */
     private $indexes = [];
-
-    /**
-     * TypeResolvingFixPathSubscriber constructor.
-     * @param ConnectionSubscriber $connections
-     */
-    public function __construct(ConnectionSubscriber $connections)
-    {
-        $this->connections = $connections;
-    }
 
     /**
      * @return array
@@ -55,15 +42,6 @@ class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
      */
     public function onTypeResolve(TypeResolve $event): void
     {
-        $connection = $event->getConnection()->getId();
-
-        //
-        // Skip coercion in case there is no necessary Webonyx connection.
-        //
-        if (! $this->connections->hasConnection($connection)) {
-            return;
-        }
-
         //
         // The error is associated with List types only.
         // Skip coercion if a singular value is returned.
@@ -77,9 +55,9 @@ class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
         //
         [$input, $identifier] = [$event->getInput(), $this->getIndexIdentifier($event)];
 
-        $index = \array_get($this->indexes, $identifier, 0);
+        $index = Arr::get($this->indexes, $identifier, 0);
 
-        \array_set($this->indexes, $identifier, $index + 1);
+        Arr::set($this->indexes, $identifier, $index + 1);
 
         $input->withPath($input->getPath() . Input::PATH_DELIMITER . $index);
     }

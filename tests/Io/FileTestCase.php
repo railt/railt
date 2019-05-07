@@ -9,7 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Io;
 
-use Railt\Io\File;
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Component\Io\Exception\NotReadableException;
+use Railt\Component\Io\File;
+use Railt\Component\Io\Readable;
 
 /**
  * Class FactoryTestCase
@@ -17,16 +20,9 @@ use Railt\Io\File;
 class FileTestCase extends TestCase
 {
     /**
-     * @return string
-     */
-    public function getPathname(): string
-    {
-        return __FILE__;
-    }
-
-    /**
      * @dataProvider provider
      * @param \Closure $factory
+     * @throws ExpectationFailedException
      */
     public function testSources(\Closure $factory): void
     {
@@ -40,12 +36,20 @@ class FileTestCase extends TestCase
     /**
      * @dataProvider provider
      * @param \Closure $factory
+     * @throws ExpectationFailedException
      */
     public function testPathname(\Closure $factory): void
     {
+        /** @var Readable $readable */
         $readable = $factory();
 
-        $path = $readable->isFile() ? $this->getPathname() : 'php://input';
+        $path = $readable->getPathname();
+
+        if (! $readable->exists()) {
+            $this->markTestSkipped('Unable to test file with arbitrary name');
+
+            return;
+        }
 
         $this->assertSame($path, $readable->getPathname());
         $this->assertSame($path, (clone $readable)->getPathname());
@@ -53,8 +57,17 @@ class FileTestCase extends TestCase
     }
 
     /**
+     * @return string
+     */
+    public function getPathname(): string
+    {
+        return __FILE__;
+    }
+
+    /**
      * @dataProvider provider
      * @param \Closure $factory
+     * @throws ExpectationFailedException
      */
     public function testRenderable(\Closure $factory): void
     {
@@ -63,19 +76,22 @@ class FileTestCase extends TestCase
 
     /**
      * @return void
+     * @throws ExpectationFailedException
+     * @throws NotReadableException
      */
     public function testIsFile(): void
     {
-        $this->assertTrue(File::fromPathname($this->getPathname())->isFile());
-        $this->assertTrue(File::fromSources($this->getSources(), $this->getPathname())->isFile());
+        $this->assertTrue(File::fromPathname($this->getPathname())->exists());
+        $this->assertTrue(File::fromSources($this->getSources(), $this->getPathname())->exists());
     }
 
     /**
      * @return void
+     * @throws ExpectationFailedException
      */
     public function testNotFile(): void
     {
-        $this->assertFalse(File::fromSources($this->getSources())->isFile());
-        $this->assertFalse(File::fromSources($this->getSources(), 'not a path')->isFile());
+        $this->assertFalse(File::fromSources($this->getSources())->exists());
+        $this->assertFalse(File::fromSources($this->getSources(), 'not a path')->exists());
     }
 }

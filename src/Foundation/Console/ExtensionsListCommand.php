@@ -11,6 +11,8 @@ namespace Railt\Foundation\Console;
 
 use Railt\Foundation\Extension\Repository;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Exception\LogicException;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -27,8 +29,9 @@ class ExtensionsListCommand extends Command
 
     /**
      * ExtensionsListCommand constructor.
+     *
      * @param Repository $extensions
-     * @throws \Symfony\Component\Console\Exception\LogicException
+     * @throws LogicException
      */
     public function __construct(Repository $extensions)
     {
@@ -40,7 +43,7 @@ class ExtensionsListCommand extends Command
     /**
      * @param InputInterface $in
      * @param OutputInterface $out
-     * @throws \Throwable
+     * @throws InvalidArgumentException
      */
     public function execute(InputInterface $in, OutputInterface $out): void
     {
@@ -62,7 +65,7 @@ class ExtensionsListCommand extends Command
 
     /**
      * @return void
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function configure(): void
     {

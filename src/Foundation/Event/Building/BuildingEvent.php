@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Building;
 
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -24,6 +24,7 @@ abstract class BuildingEvent extends Event implements BuildingEventInterface
 
     /**
      * BuildingEvent constructor.
+     *
      * @param TypeDefinition $definition
      */
     public function __construct(TypeDefinition $definition)

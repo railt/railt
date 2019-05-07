@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Tests\Container;
 
 use Psr\Container\NotFoundExceptionInterface;
-use Railt\Container\Container;
-use Railt\Container\ContainerInterface;
-use Railt\Container\Exception\ParameterResolutionException;
+use Railt\Component\Container\Container;
+use Railt\Component\Container\ContainerInterface;
+use Railt\Component\Container\Exception\ParameterResolutionException;
 
 /**
  * Class ResolvingTestCase

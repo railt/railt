@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder\Common;
 
+use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Railt\Component\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Component\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\Foundation\Event\Resolver\TypeResolve;
 use Railt\Foundation\Webonyx\Context;
 use Railt\Foundation\Webonyx\Input;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
-use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Trait TypeResolverTrait
@@ -32,9 +32,9 @@ trait TypeResolverTrait
 
     /**
      * @param string $type
-     * @return Type
+     * @return Type|Directive
      */
-    abstract protected function loadType(string $type): Type;
+    abstract protected function loadType(string $type);
 
     /**
      * @return \Closure
@@ -59,7 +59,7 @@ trait TypeResolverTrait
     }
 
     /**
-     * @param \Railt\Foundation\Event\Resolver\TypeResolve $resolving
+     * @param TypeResolve $resolving
      * @return \LogicException
      */
     private function throwInvalidResolveType(TypeResolve $resolving): \LogicException
@@ -75,7 +75,7 @@ trait TypeResolverTrait
      * @param Context $ctx
      * @param FieldDefinition $field
      * @param ResolveInfo $info
-     * @return TypeResolve|Event
+     * @return TypeResolve
      */
     private function fireTypeResolving($value, Context $ctx, FieldDefinition $field, ResolveInfo $info): TypeResolve
     {

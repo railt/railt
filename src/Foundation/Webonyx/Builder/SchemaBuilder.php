@@ -9,20 +9,33 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx\Builder;
 
+use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
-use Railt\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Contracts\Definitions\DirectiveDefinition;
+use Railt\Component\SDL\Contracts\Definitions\ObjectDefinition;
+use Railt\Component\SDL\Contracts\Definitions\SchemaDefinition;
+use Railt\Component\SDL\Reflection\Dictionary;
 
 /**
  * Class SchemaBuilder
+ *
  * @property SchemaDefinition $reflection
  */
 class SchemaBuilder extends Builder
 {
     /**
+     * @var array
+     */
+    private $types = [];
+
+    /**
+     * @var array|Directive[]
+     */
+    private $directives = [];
+
+    /**
      * @return Schema
-     * @throws \GraphQL\Error\Error
-     * @throws \GraphQL\Error\InvariantViolation
      */
     public function build(): Schema
     {
@@ -31,6 +44,8 @@ class SchemaBuilder extends Builder
             'mutation'     => $this->getMutation(),
             'subscription' => $this->getSubscription(),
             'typeLoader'   => $this->loader,
+            'types'        => $this->types,
+            'directives'   => $this->directives,
         ]));
     }
 
@@ -64,5 +79,21 @@ class SchemaBuilder extends Builder
         }
 
         return null;
+    }
+
+    /**
+     * @param Dictionary $dictionary
+     */
+    public function preload(Dictionary $dictionary): void
+    {
+        foreach ($dictionary->all() as $type) {
+            if ($type instanceof ObjectDefinition && $type->getNumberOfInterfaces() > 0) {
+                $this->types[] = $this->loadType($type->getName());
+            }
+
+            if ($type instanceof DirectiveDefinition && $type->isAllowedForQueries()) {
+                $this->directives[] = $this->loadType($type->getName());
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Lexer;
 
-use Railt\Lexer\Driver\ParleLexer;
+use Railt\Component\Lexer\Driver\ParleLexer;
 
 /**
  * Class ParleTestCase
@@ -18,7 +18,7 @@ class ParleTestCase extends LexerTestCase
 {
     /**
      * @return array
-     * @throws \Railt\Lexer\Exception\BadLexemeException
+     * @throws \Railt\Component\Lexer\Exception\BadLexemeException
      * @throws \PHPUnit\Framework\SkippedTestError
      */
     public function provider(): array

@@ -26,8 +26,11 @@ use Railt\Foundation\Config\Composer;
 
 $autoloadPaths = [
     __DIR__ . '/../../autoload.php',
-    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+    __DIR__ . '/../../../../autoload.php',
     __DIR__ . '/vendor/autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
 ];
 
 
@@ -65,7 +68,6 @@ if (! isset($classLoader) || ! $classLoader) {
 
 try {
     $railt = new Railt();
-    $railt->configure(Composer::fromDiscovery());
 } catch (\Throwable $e) {
     throw new \LogicException('Could not start an application: ' . $e->getMessage());
 }

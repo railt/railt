@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Http;
 
+use Railt\Component\Http\ResponseInterface;
 use Railt\Foundation\Event\Connection\ProvidesConnection;
-use Railt\Http\ResponseInterface;
 
 /**
  * Interface ResponseEventInterface
@@ -18,7 +18,7 @@ use Railt\Http\ResponseInterface;
 interface HttpEventInterface extends ProvidesConnection, ProvidesRequest
 {
     /**
-     * @return null|ResponseInterface
+     * @return ResponseInterface|null
      */
     public function getResponse(): ?ResponseInterface;
 }
