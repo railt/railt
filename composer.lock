@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d0e45baa311600ca06f134344ada4539",
+    "content-hash": "5f435d1c293319fe236c5b6129266c10",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -384,16 +384,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.8.15",
+            "version": "v5.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "0b3cbe19051c9a8c247091cc0867d3b65250d093"
+                "reference": "acd524087bcebcc0979748e84ccc0876395ae497"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/0b3cbe19051c9a8c247091cc0867d3b65250d093",
-                "reference": "0b3cbe19051c9a8c247091cc0867d3b65250d093",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/acd524087bcebcc0979748e84ccc0876395ae497",
+                "reference": "acd524087bcebcc0979748e84ccc0876395ae497",
                 "shasum": ""
             },
             "require": {
@@ -424,20 +424,20 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2019-04-21T18:51:09+00:00"
+            "time": "2019-05-14T10:54:47+00:00"
         },
         {
             "name": "illuminate/support",
-            "version": "v5.8.15",
+            "version": "v5.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "7fbf8d76946ee53587955b670bd8a47e3d48e854"
+                "reference": "128c6aaa1599811a04fd10c2d68e1213e433da3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/7fbf8d76946ee53587955b670bd8a47e3d48e854",
-                "reference": "7fbf8d76946ee53587955b670bd8a47e3d48e854",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/128c6aaa1599811a04fd10c2d68e1213e433da3f",
+                "reference": "128c6aaa1599811a04fd10c2d68e1213e433da3f",
                 "shasum": ""
             },
             "require": {
@@ -485,7 +485,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2019-04-25T14:06:24+00:00"
+            "time": "2019-05-14T13:37:34+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -702,16 +702,16 @@
         },
         {
             "name": "phplrt/ast",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phplrt/ast.git",
-                "reference": "0bf25ffb1b70be77b5bbaa2791b7e610c4fb097d"
+                "reference": "fb5052c83fd336bdeb6b9935c7af4570ac53e21a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/ast/zipball/0bf25ffb1b70be77b5bbaa2791b7e610c4fb097d",
-                "reference": "0bf25ffb1b70be77b5bbaa2791b7e610c4fb097d",
+                "url": "https://api.github.com/repos/phplrt/ast/zipball/fb5052c83fd336bdeb6b9935c7af4570ac53e21a",
+                "reference": "fb5052c83fd336bdeb6b9935c7af4570ac53e21a",
                 "shasum": ""
             },
             "require": {
@@ -723,7 +723,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.0.x-dev"
+                    "master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -748,31 +748,31 @@
                 "dump",
                 "tree"
             ],
-            "time": "2019-05-05T18:10:48+00:00"
+            "time": "2019-05-14T16:41:12+00:00"
         },
         {
             "name": "phplrt/exception",
-            "version": "1.0.2",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phplrt/exception.git",
-                "reference": "e451670fb662bbb1fedb36d2563f707ced0e9ac2"
+                "reference": "f09e8bc79d095bdd537338ef1864c41cbb734750"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/exception/zipball/e451670fb662bbb1fedb36d2563f707ced0e9ac2",
-                "reference": "e451670fb662bbb1fedb36d2563f707ced0e9ac2",
+                "url": "https://api.github.com/repos/phplrt/exception/zipball/f09e8bc79d095bdd537338ef1864c41cbb734750",
+                "reference": "f09e8bc79d095bdd537338ef1864c41cbb734750",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.3",
-                "phplrt/io": "~1.0|1.0.x-dev",
-                "phplrt/position": "~1.0|1.0.x-dev"
+                "phplrt/io": "1.1.*|1.1.x-dev",
+                "phplrt/position": "1.1.*|1.1.x-dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.0.x-dev"
+                    "master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -796,30 +796,32 @@
                 "exception",
                 "formatting"
             ],
-            "time": "2019-05-07T14:19:08+00:00"
+            "time": "2019-05-14T16:41:20+00:00"
         },
         {
             "name": "phplrt/io",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phplrt/io.git",
-                "reference": "9051ea5c5c010233962c77257c299244f05d2e02"
+                "reference": "f277a6c8c65fd8b1552b839267de337264a0163f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/io/zipball/9051ea5c5c010233962c77257c299244f05d2e02",
-                "reference": "9051ea5c5c010233962c77257c299244f05d2e02",
+                "url": "https://api.github.com/repos/phplrt/io/zipball/f277a6c8c65fd8b1552b839267de337264a0163f",
+                "reference": "f277a6c8c65fd8b1552b839267de337264a0163f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.3",
-                "phplrt/position": "~1.0|1.0.x-dev"
+                "phplrt/exception": "1.1.*|1.1.x-dev",
+                "phplrt/position": "1.1.*|1.1.x-dev",
+                "phplrt/stream": "1.1.*|1.1.x-dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.0.x-dev"
+                    "master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -847,27 +849,27 @@
                 "fs",
                 "reader"
             ],
-            "time": "2019-05-05T18:11:02+00:00"
+            "time": "2019-05-14T16:41:24+00:00"
         },
         {
             "name": "phplrt/lexer",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phplrt/lexer.git",
-                "reference": "166591fc252a585664fc3937d1c87d74716d048c"
+                "reference": "d9268dab61abb5f86bb735d5078385988490125f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/lexer/zipball/166591fc252a585664fc3937d1c87d74716d048c",
-                "reference": "166591fc252a585664fc3937d1c87d74716d048c",
+                "url": "https://api.github.com/repos/phplrt/lexer/zipball/d9268dab61abb5f86bb735d5078385988490125f",
+                "reference": "d9268dab61abb5f86bb735d5078385988490125f",
                 "shasum": ""
             },
             "require": {
                 "ext-pcre": "*",
                 "php": ">=7.1.3",
-                "phplrt/exception": "~1.0|1.0.x-dev",
-                "phplrt/io": "~1.0|1.0.x-dev"
+                "phplrt/exception": "1.1.*|1.1.x-dev",
+                "phplrt/io": "1.1.*|1.1.x-dev"
             },
             "suggest": {
                 "ext-parle": "Parle extension fallback"
@@ -875,7 +877,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.0.x-dev"
+                    "master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -903,33 +905,33 @@
                 "token",
                 "tokenizer"
             ],
-            "time": "2019-05-05T18:11:07+00:00"
+            "time": "2019-05-14T16:41:28+00:00"
         },
         {
             "name": "phplrt/parser",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phplrt/parser.git",
-                "reference": "29c74a7bd23e250b0d1419082efe1476dc4761d7"
+                "reference": "00ca1c1eccf7cbd06e5532aefb4234e2e957d6b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/parser/zipball/29c74a7bd23e250b0d1419082efe1476dc4761d7",
-                "reference": "29c74a7bd23e250b0d1419082efe1476dc4761d7",
+                "url": "https://api.github.com/repos/phplrt/parser/zipball/00ca1c1eccf7cbd06e5532aefb4234e2e957d6b7",
+                "reference": "00ca1c1eccf7cbd06e5532aefb4234e2e957d6b7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.3",
-                "phplrt/ast": "~1.0|1.0.x-dev",
-                "phplrt/exception": "~1.0|1.0.x-dev",
-                "phplrt/io": "~1.0|1.0.x-dev",
-                "phplrt/lexer": "~1.0|1.0.x-dev"
+                "phplrt/ast": "1.1.*|1.1.x-dev",
+                "phplrt/exception": "1.1.*|1.1.x-dev",
+                "phplrt/io": "1.1.*|1.1.x-dev",
+                "phplrt/lexer": "1.1.*|1.1.x-dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.0.x-dev"
+                    "master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -958,20 +960,20 @@
                 "php",
                 "slr"
             ],
-            "time": "2019-05-05T18:11:12+00:00"
+            "time": "2019-05-14T16:41:31+00:00"
         },
         {
             "name": "phplrt/position",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phplrt/position.git",
-                "reference": "c71a28d02c70a1aa10d9ed9d8de97f64bc699369"
+                "reference": "dfc37c5849eaa760708e1e840aba31166a7b45d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/position/zipball/c71a28d02c70a1aa10d9ed9d8de97f64bc699369",
-                "reference": "c71a28d02c70a1aa10d9ed9d8de97f64bc699369",
+                "url": "https://api.github.com/repos/phplrt/position/zipball/dfc37c5849eaa760708e1e840aba31166a7b45d1",
+                "reference": "dfc37c5849eaa760708e1e840aba31166a7b45d1",
                 "shasum": ""
             },
             "require": {
@@ -980,7 +982,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.0.x-dev"
+                    "master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -1010,7 +1012,56 @@
                 "utils",
                 "visualization"
             ],
-            "time": "2019-05-05T18:11:17+00:00"
+            "time": "2019-05-14T16:41:35+00:00"
+        },
+        {
+            "name": "phplrt/stream",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phplrt/stream.git",
+                "reference": "2aeda5abfbdcd6813ffb6520a7d08eea4c5769f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phplrt/stream/zipball/2aeda5abfbdcd6813ffb6520a7d08eea4c5769f0",
+                "reference": "2aeda5abfbdcd6813ffb6520a7d08eea4c5769f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "phplrt/exception": "1.1.*|1.1.x-dev",
+                "psr/http-message": "1.0.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phplrt\\Stream\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "description": "The PHPLRT Stream package.",
+            "homepage": "https://github.com/phplrt",
+            "keywords": [
+                "reader",
+                "resource",
+                "streaming"
+            ],
+            "time": "2019-05-14T16:41:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -1106,6 +1157,56 @@
                 "psr"
             ],
             "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -1276,16 +1377,16 @@
         },
         {
             "name": "symfony/contracts",
-            "version": "v1.0.2",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/contracts.git",
-                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf"
+                "reference": "d3636025e8253c6144358ec0a62773cae588395b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/contracts/zipball/1aa7ab2429c3d594dd70689604b5cf7421254cdf",
-                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf",
+                "url": "https://api.github.com/repos/symfony/contracts/zipball/d3636025e8253c6144358ec0a62773cae588395b",
+                "reference": "d3636025e8253c6144358ec0a62773cae588395b",
                 "shasum": ""
             },
             "require": {
@@ -1293,19 +1394,22 @@
             },
             "require-dev": {
                 "psr/cache": "^1.0",
-                "psr/container": "^1.0"
+                "psr/container": "^1.0",
+                "symfony/polyfill-intl-idn": "^1.10"
             },
             "suggest": {
                 "psr/cache": "When using the Cache contracts",
                 "psr/container": "When using the Service contracts",
                 "symfony/cache-contracts-implementation": "",
+                "symfony/event-dispatcher-implementation": "",
+                "symfony/http-client-contracts-implementation": "",
                 "symfony/service-contracts-implementation": "",
                 "symfony/translation-contracts-implementation": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -1340,7 +1444,7 @@
                 "interoperability",
                 "standards"
             ],
-            "time": "2018-12-05T08:06:11+00:00"
+            "time": "2019-04-27T14:29:50+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
@@ -1661,16 +1765,16 @@
         },
         {
             "name": "webonyx/graphql-php",
-            "version": "v0.13.1",
+            "version": "v0.13.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webonyx/graphql-php.git",
-                "reference": "0226b08429e5a102ea99cda9ddc4a7185006473f"
+                "reference": "e55c7d72cb2d852322ebad8ce30705ae90f20717"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/0226b08429e5a102ea99cda9ddc4a7185006473f",
-                "reference": "0226b08429e5a102ea99cda9ddc4a7185006473f",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/e55c7d72cb2d852322ebad8ce30705ae90f20717",
+                "reference": "e55c7d72cb2d852322ebad8ce30705ae90f20717",
                 "shasum": ""
             },
             "require": {
@@ -1679,11 +1783,11 @@
                 "php": "^7.1||^8.0"
             },
             "require-dev": {
-                "doctrine/coding-standard": "^5.0",
+                "doctrine/coding-standard": "^6.0",
                 "phpbench/phpbench": "^0.14.0",
-                "phpstan/phpstan": "0.10.5",
-                "phpstan/phpstan-phpunit": "0.10.0",
-                "phpstan/phpstan-strict-rules": "0.10.1",
+                "phpstan/phpstan": "^0.11.4",
+                "phpstan/phpstan-phpunit": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
                 "phpunit/phpcov": "^5.0",
                 "phpunit/phpunit": "^7.2",
                 "psr/http-message": "^1.0",
@@ -1709,7 +1813,7 @@
                 "api",
                 "graphql"
             ],
-            "time": "2019-03-09T15:34:29+00:00"
+            "time": "2019-05-13T07:12:05+00:00"
         }
     ],
     "packages-dev": [
@@ -2183,7 +2287,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.8.15",
+            "version": "v5.8.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -2692,32 +2796,32 @@
         },
         {
             "name": "phplrt/compiler",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phplrt/compiler.git",
-                "reference": "2f02530cd12457ce28d22ca010333a21643d129c"
+                "reference": "7fa1d57dc41047716e7fe5800c03fe9522736073"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/compiler/zipball/2f02530cd12457ce28d22ca010333a21643d129c",
-                "reference": "2f02530cd12457ce28d22ca010333a21643d129c",
+                "url": "https://api.github.com/repos/phplrt/compiler/zipball/7fa1d57dc41047716e7fe5800c03fe9522736073",
+                "reference": "7fa1d57dc41047716e7fe5800c03fe9522736073",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.3",
-                "phplrt/ast": "~1.0|1.0.x-dev",
-                "phplrt/exception": "~1.0|1.0.x-dev",
-                "phplrt/io": "~1.0|1.0.x-dev",
-                "phplrt/lexer": "~1.0|1.0.x-dev",
-                "phplrt/parser": "~1.0|1.0.x-dev",
+                "phplrt/ast": "1.1.*|1.1.x-dev",
+                "phplrt/exception": "1.1.*|1.1.x-dev",
+                "phplrt/io": "1.1.*|1.1.x-dev",
+                "phplrt/lexer": "1.1.*|1.1.x-dev",
+                "phplrt/parser": "1.1.*|1.1.x-dev",
                 "symfony/console": "~3.4|~4.0",
                 "zendframework/zend-code": "~3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.0.x-dev"
+                    "master": "1.1.x-dev"
                 }
             },
             "autoload": {
@@ -2743,7 +2847,7 @@
                 "language",
                 "pp"
             ],
-            "time": "2019-05-05T18:10:53+00:00"
+            "time": "2019-05-14T16:41:16+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -3062,16 +3166,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.9",
+            "version": "7.5.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "134669cf0eeac3f79bc7f0c793efbc158bffc160"
+                "reference": "64cb33f5b520da490a7b13149d39b43cf3c890c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/134669cf0eeac3f79bc7f0c793efbc158bffc160",
-                "reference": "134669cf0eeac3f79bc7f0c793efbc158bffc160",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/64cb33f5b520da490a7b13149d39b43cf3c890c6",
+                "reference": "64cb33f5b520da490a7b13149d39b43cf3c890c6",
                 "shasum": ""
             },
             "require": {
@@ -3142,7 +3246,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-04-19T15:50:46+00:00"
+            "time": "2019-05-14T04:53:02+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
