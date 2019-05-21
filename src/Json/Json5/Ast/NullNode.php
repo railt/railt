@@ -7,15 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
+namespace Railt\Json\Json5\Ast;
 
 /**
- * @internal Internal interface for json5 abstract syntax tree node representation
+ * @internal Internal class for json5 abstract syntax tree node representation
  */
-interface NodeInterface
+class NullNode implements NodeInterface
 {
     /**
-     * @return mixed
+     * @return void
      */
-    public function reduce();
+    public function reduce(): void
+    {
+    }
 }

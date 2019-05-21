@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Json\Console;
 
+use Phplrt\Io\File;
 use Phplrt\Compiler\Compiler;
 use Phplrt\Exception\ExternalException;
 use Phplrt\Io\Exception\NotReadableException;
-use Phplrt\Io\File;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
 
 /**
  * Class Json5CompileCommand
@@ -41,8 +41,8 @@ class Json5CompileCommand extends Command
 
         Compiler::load(File::fromPathname(self::JSON5_GRAMMAR))
             ->setClassName('BaseParser')
-            ->setNamespace('Railt\\Json\\Json5\\Decoder')
-            ->saveTo(__DIR__ . '/../Json5/Decoder');
+            ->setNamespace('Railt\\Json\\Json5')
+            ->saveTo(__DIR__ . '/../Json5');
 
         $out->writeln('<info>OK</info>');
     }

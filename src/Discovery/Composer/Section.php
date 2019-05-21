@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Discovery\Composer;
 
-use Railt\Discovery\Parser\ParserInterface;
-use Railt\Json\Exception\JsonException;
 use Railt\Json\Json;
+use Railt\Json\Exception\JsonException;
 use Railt\Json\Validator\ResultInterface;
-use Railt\Json\ValidatorInterface;
+use Railt\Discovery\Parser\ParserInterface;
+use Railt\Json\Validator\ValidatorInterface;
 
 /**
  * Class Section
@@ -73,16 +73,6 @@ class Section
     }
 
     /**
-     * @param ValidatorInterface $validator
-     * @return ResultInterface
-     * @throws JsonException
-     */
-    public function validate(ValidatorInterface $validator): ResultInterface
-    {
-        return $validator->validate($this->getData());
-    }
-
-    /**
      * @param iterable $validators
      * @throws JsonException
      */
@@ -94,18 +84,27 @@ class Section
     }
 
     /**
+     * @param ValidatorInterface $validator
+     * @return ResultInterface
+     * @throws JsonException
+     */
+    public function validate(ValidatorInterface $validator): ResultInterface
+    {
+        return $validator->validateJson($this->getJson());
+    }
+
+    /**
      * @return array|mixed|object
      * @throws JsonException
      */
     public function getData()
     {
-        return Json::decoder()
-            ->setOption(\JSON_OBJECT_AS_ARRAY, false)
-            ->decode($this->getJson());
+        return Json::decode($this->getJson(), \JSON_OBJECT_AS_ARRAY);
     }
 
     /**
      * @return string
+     * @throws JsonException
      */
     public function getJson(): string
     {

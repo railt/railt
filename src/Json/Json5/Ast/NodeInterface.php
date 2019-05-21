@@ -7,11 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json;
+namespace Railt\Json\Json5\Ast;
 
 /**
- * Interface JsonFacadeInterface
+ * @internal Internal interface for json5 abstract syntax tree node representation
  */
-interface JsonFacadeInterface extends JsonEncoderInterface, JsonDecoderInterface
+interface NodeInterface
 {
+    /**
+     * @return mixed
+     */
+    public function reduce();
 }

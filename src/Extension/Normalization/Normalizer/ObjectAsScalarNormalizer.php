@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Normalization\Normalizer;
 
-use Railt\Extension\Normalization\Context\ContextInterface;
-use Railt\Extension\Normalization\NormalizerInterface;
 use Railt\Json\Json;
+use Railt\Json\Exception\JsonException;
+use Railt\Extension\Normalization\NormalizerInterface;
+use Railt\Extension\Normalization\Context\ContextInterface;
 
 /**
  * Class ObjectAsStringNormalizer
@@ -22,6 +23,7 @@ class ObjectAsScalarNormalizer implements NormalizerInterface
      * @param mixed $result
      * @param ContextInterface $context
      * @return array|bool|float|int|mixed|string
+     * @throws JsonException
      */
     public function normalize($result, ContextInterface $context)
     {

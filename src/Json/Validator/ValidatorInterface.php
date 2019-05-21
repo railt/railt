@@ -7,34 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json;
+namespace Railt\Json\Validator;
 
 use Phplrt\Io\Readable;
-use Railt\Json\Validator\ResultInterface;
 
 /**
  * Interface ValidatorInterface
  */
 interface ValidatorInterface
 {
-    /**
-     * @param object|array $schema
-     * @return ValidatorInterface
-     */
-    public static function fromData($schema): self;
-
-    /**
-     * @param Readable $schema
-     * @return ValidatorInterface
-     */
-    public static function fromFile(Readable $schema): self;
-
-    /**
-     * @param bool $enable
-     * @return ValidatorInterface
-     */
-    public function throwOnErrors(bool $enable = true): self;
-
     /**
      * @param array|object|mixed $data
      * @return ResultInterface

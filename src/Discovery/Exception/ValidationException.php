@@ -11,7 +11,7 @@ namespace Railt\Discovery\Exception;
 
 use Railt\Discovery\Composer\Package;
 use Railt\Discovery\Composer\Section;
-use Railt\Json\Exception\JsonValidationExceptionInterface as E;
+use Railt\Json\Exception\JsonValidationException;
 
 /**
  * Class ValidationException
@@ -34,12 +34,12 @@ class ValidationException extends \LogicException
     }
 
     /**
-     * @param E $e
+     * @param JsonValidationException $e
      * @param Package $package
      * @param Section $section
      * @return static|$this
      */
-    public static function fromJsonException(E $e, Package $package, Section $section): self
+    public static function fromJsonException(JsonValidationException $e, Package $package, Section $section): self
     {
         $message = \vsprintf('An error has been detected in configuration of %s package: %s in "%s"', [
             $package->getName(),
@@ -51,11 +51,11 @@ class ValidationException extends \LogicException
     }
 
     /**
-     * @param E $e
+     * @param JsonValidationException $e
      * @param Section $section
      * @return string
      */
-    public static function getKeyPath(E $e, Section $section): string
+    public static function getKeyPath(JsonValidationException $e, Section $section): string
     {
         $path = \trim($e->getPathString(), '.');
         $path = \sprintf('extra.%s.%s', $section->getName(), $path);

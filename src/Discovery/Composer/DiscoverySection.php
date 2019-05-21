@@ -10,11 +10,12 @@ declare(strict_types=1);
 namespace Railt\Discovery\Composer;
 
 use Phplrt\Io\File;
-use Railt\Discovery\Exception\ConfigurationException;
+use Railt\Json\Validator\Validator;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Validator\ValidatorInterface;
+use Railt\Json\Exception\JsonValidationException;
 use Railt\Discovery\Exception\ValidationException;
-use Railt\Json\Exception\JsonValidationExceptionInterface;
-use Railt\Json\Validator;
-use Railt\Json\ValidatorInterface;
+use Railt\Discovery\Exception\ConfigurationException;
 
 /**
  * Class DiscoverySection
@@ -60,14 +61,14 @@ class DiscoverySection implements \IteratorAggregate
     public function getIterator()
     {
         try {
-            $this->section->validate($this->getDiscoveryValidator());
+            $this->section->validate($this->getDiscoveryValidator())->throwOnError();
 
             foreach ($this->section->get() as $name => $configs) {
                 [$name, $configs] = \is_int($name) ? [$configs, null] : [$name, $configs];
 
                 yield $name => new DiscoveryConfiguration((array)$configs);
             }
-        } catch (JsonValidationExceptionInterface $e) {
+        } catch (JsonValidationException $e) {
             throw ConfigurationException::fromJsonException($e, $this->package, $this->section);
         } catch (\Throwable $e) {
             throw ConfigurationException::fromException($e, $this->package);
@@ -76,8 +77,7 @@ class DiscoverySection implements \IteratorAggregate
 
     /**
      * @return ValidatorInterface
-     * @throws \JsonException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws JsonException
      */
     public function getDiscoveryValidator(): ValidatorInterface
     {

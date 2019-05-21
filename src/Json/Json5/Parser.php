@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder;
+namespace Railt\Json\Json5;
 
 use Phplrt\Parser\BuilderInterface;
 
@@ -46,6 +46,6 @@ class Parser extends BaseParser
      */
     protected function getBuilder(array $trace): BuilderInterface
     {
-        return new Builder($trace, $this->grammar, $this->options);
+        return new Builder($trace, $this->getGrammar(), $this->options);
     }
 }

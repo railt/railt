@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Json\Validator;
 
-use Railt\Json\Exception\JsonValidationExceptionInterface;
+use Railt\Json\Exception\JsonValidationException;
 
 /**
  * Interface ResultInterface
@@ -27,7 +27,12 @@ interface ResultInterface
     public function hasErrors(): bool;
 
     /**
-     * @return iterable|JsonValidationExceptionInterface[]
+     * @return iterable|JsonValidationException[]
      */
     public function getErrors(): iterable;
+
+    /**
+     * @return void
+     */
+    public function throwOnError(): void;
 }

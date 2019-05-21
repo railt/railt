@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
+namespace Railt\Json\Json5\Ast;
 
 use Phplrt\Ast\LeafInterface;
 use Phplrt\Ast\RuleInterface;

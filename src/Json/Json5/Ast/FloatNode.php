@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
+namespace Railt\Json\Json5\Ast;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation

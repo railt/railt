@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing\Events;
 
+use Railt\Json\Json;
 use Railt\Http\Identifiable;
 use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
-use Railt\Json\Json;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -50,6 +50,17 @@ abstract class BaseActionEvent extends Event implements ActionEventInterface
     {
         $this->action = $action;
         $this->withArguments($arguments);
+    }
+
+    /**
+     * @param array $arguments
+     * @return ActionEventInterface
+     */
+    public function withArguments(array $arguments): ActionEventInterface
+    {
+        $this->arguments = \array_merge($this->arguments, $arguments);
+
+        return $this;
     }
 
     /**
@@ -114,25 +125,6 @@ abstract class BaseActionEvent extends Event implements ActionEventInterface
     }
 
     /**
-     * @param array $arguments
-     * @return ActionEventInterface
-     */
-    public function withArguments(array $arguments): ActionEventInterface
-    {
-        $this->arguments = \array_merge($this->arguments, $arguments);
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResponse()
-    {
-        return $this->response;
-    }
-
-    /**
      * @return bool
      */
     public function hasResponse(): bool
@@ -162,5 +154,13 @@ abstract class BaseActionEvent extends Event implements ActionEventInterface
         } catch (\JsonException $e) {
             return '';
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

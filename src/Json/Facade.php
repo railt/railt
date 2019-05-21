@@ -9,105 +9,57 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
+use Phplrt\Io\File;
 use Phplrt\Io\Readable;
+use Railt\Json\Exception\JsonException;
 
 /**
- * @method static string encode(mixed $data, int $options = null)
- * @method static Readable write(string $pathname, array $data)
- * @method static bool hasEncodeOption(int $option)
- * @method static int getEncodeOptions()
- * @method static JsonEncoderInterface setEncodeOptions(int ...$options)
- * @method static JsonEncoderInterface withEncodeOptions(int ...$options)
- * @method static JsonEncoderInterface withoutEncodeOptions(int ...$options)
- *
- * @method static mixed decode(string $json, int $options = null)
- * @method static array read(Readable $readable)
- * @method static bool hasDecodeOption(int $option)
- * @method static int getDecodeOptions()
- * @method static JsonDecoderInterface setDecodeOptions(int ...$options)
- * @method static JsonDecoderInterface withDecodeOptions(int ...$options)
- * @method static JsonDecoderInterface withoutDecodeOptions(int ...$options)
+ * Class Facade
  */
 abstract class Facade implements JsonFacadeInterface
 {
     /**
-     * @var array|string[]
+     * @var int
      */
-    private static $encoderMethods = [];
+    private const ENC = self::DEFAULT_ENCODING_OPTIONS;
 
     /**
-     * @var array|string[]
+     * @var int
      */
-    private static $decoderMethods = [];
+    private const DEC = self::DEFAULT_DECODING_OPTIONS;
 
     /**
-     * @param string $method
-     * @param array $arguments
-     * @return mixed
-     * @throws \BadMethodCallException
+     * @param Readable $json
+     * @param int $options
+     * @param int $depth
+     * @return array|object
+     * @throws JsonException
      */
-    public static function __callStatic(string $method, array $arguments = [])
+    public static function read(Readable $json, int $options = self::DEC, int $depth = 512)
     {
-        self::bootIfNotBooted();
-
-        if (\in_array($method, self::$encoderMethods, true)) {
-            return static::encoder()->{$method}(...$arguments);
-        }
-
-        if (\in_array($method, self::$decoderMethods, true)) {
-            return static::decoder()->{$method}(...$arguments);
-        }
-
-        $error = 'Method %s not found or not accessible';
-        throw new \BadMethodCallException(\sprintf($error, $method));
+        return static::decode($json->getContents(), $options, $depth);
     }
 
     /**
-     * @return void
+     * @param string $pathname
+     * @param array|object|mixed $value
+     * @param int $options
+     * @param int $depth
+     * @return Readable
+     * @throws JsonException
      */
-    private static function bootIfNotBooted(): void
+    public static function write(string $pathname, $value, int $options = self::ENC, int $depth = 512): Readable
     {
-        self::bootEncoderMethods();
-        self::bootDecoderMethods();
-    }
+        $json = static::encode($value, $options, $depth);
 
-    /**
-     * @return void
-     */
-    private static function bootEncoderMethods(): void
-    {
-        if (\count(self::$encoderMethods) === 0) {
-            self::$encoderMethods = self::methods(JsonEncoderInterface::class);
+        \error_clear_last();
+
+        $result = @\file_put_contents($pathname, $json);
+
+        if (\is_bool($result)) {
+            throw new JsonException('Could not write JSON data into ' . $pathname);
         }
-    }
 
-    /**
-     * @param string $interface
-     * @return array|string[]
-     */
-    private static function methods(string $interface): array
-    {
-        \assert(\interface_exists($interface), \sprintf('Given interface %s not found', $interface));
-
-        try {
-            $reflection = new \ReflectionClass($interface);
-            $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
-
-            return \array_map(function (\ReflectionMethod $method): string {
-                return $method->getName();
-            }, $methods);
-        } catch (\ReflectionException $e) {
-            return [];
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private static function bootDecoderMethods(): void
-    {
-        if (\count(self::$decoderMethods) === 0) {
-            self::$decoderMethods = self::methods(JsonDecoderInterface::class);
-        }
+        return File::fromPathname($pathname);
     }
 }

@@ -7,33 +7,35 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
+namespace Railt\Json\Json5\Ast;
+
+use Phplrt\Ast\LeafInterface;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation
  */
-class Json5Node implements NodeInterface
+class BoolNode implements NodeInterface
 {
     /**
-     * @var NodeInterface
+     * @var LeafInterface
      */
-    private $child;
+    private $value;
 
     /**
-     * Json5Node constructor.
+     * BoolNode constructor.
      *
      * @param array $children
      */
     public function __construct(array $children = [])
     {
-        $this->child = \reset($children);
+        $this->value = \reset($children);
     }
 
     /**
-     * @return mixed|null
+     * @return bool
      */
-    public function reduce()
+    public function reduce(): bool
     {
-        return $this->child instanceof NodeInterface ? $this->child->reduce() : null;
+        return $this->value->getName() === 'T_BOOL_TRUE';
     }
 }

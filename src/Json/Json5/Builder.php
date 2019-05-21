@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder;
+namespace Railt\Json\Json5;
 
 use Phplrt\Parser\Builder as BaseAstBuilder;
 use Phplrt\Parser\GrammarInterface;
-use Railt\Json\Json5\Decoder\Ast\NodeInterface;
+use Railt\Json\Json5\Ast\NodeInterface;
 
 /**
  * Class Builder

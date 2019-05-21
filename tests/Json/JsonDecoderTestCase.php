@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace Railt\Tests\Json;
 
 use Railt\Json\Json;
+use Railt\Json\JsonDecoderInterface;
+use Railt\Json\Exception\JsonException;
 
 /**
  * Class JsonDecoderTestCase
@@ -20,12 +22,10 @@ class JsonDecoderTestCase extends AbstractDecoderTestCase
      * @param string $value
      * @param int $options
      * @return array|mixed
-     * @throws \Railt\Json\Exception\JsonException
+     * @throws JsonException
      */
     protected function decode(string $value, int $options = 0)
     {
-        return Json::decoder()
-            ->setOptions($options)
-            ->decode($value);
+        return Json::decode($value, $options);
     }
 }

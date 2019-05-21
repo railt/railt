@@ -9,17 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Discovery;
 
-use Composer\Composer;
-use Composer\IO\IOInterface;
-use Phplrt\Io\Readable;
-use Railt\Discovery\Composer\DiscoveryConfiguration;
-use Railt\Discovery\Composer\DiscoverySection;
-use Railt\Discovery\Composer\Package;
-use Railt\Discovery\Composer\Reader;
-use Railt\Discovery\Composer\Section;
-use Railt\Discovery\Exception\ValidationException;
-use Railt\Json\Exception\JsonValidationExceptionInterface;
+use Phplrt\Io\File;
+use Railt\Json\Exception\JsonException;
 use Railt\Json\Json;
+use Composer\Composer;
+use Phplrt\Io\Readable;
+use Composer\IO\IOInterface;
+use Railt\Discovery\Composer\Reader;
+use Railt\Discovery\Composer\Package;
+use Railt\Discovery\Composer\Section;
+use Railt\Discovery\Composer\DiscoverySection;
+use Railt\Discovery\Exception\ValidationException;
+use Railt\Discovery\Composer\DiscoveryConfiguration;
 
 /**
  * Class Generator
@@ -51,14 +52,16 @@ class Generator
     /**
      * @param array $data
      * @return Readable
-     * @throws \RuntimeException
+     * @throws JsonException
      */
     public function save(array $data): Readable
     {
         $config = $this->composer->getConfig();
         $directory = $config->get('vendor-dir');
 
-        return Json::write($directory . '/discovery.json', $data);
+        Json::write($directory . '/discovery.json', $data);
+
+        return File::fromPathname($directory . '/discovery.json');
     }
 
     /**
@@ -122,9 +125,9 @@ class Generator
                         $config->validate($section);
                     }
                     $io->write('<info>OK</info>');
-                } catch (JsonValidationExceptionInterface $e) {
-                    $io->write('<error> ERROR: ' . $e->getMessage() . ' </error>');
-                    throw ValidationException::fromJsonException($e, $package, $section);
+                } catch (ValidationException $e) {
+                    // TODO
+                    throw $e;
                 } catch (\Throwable $e) {
                     $io->write('<error> ERROR </error>');
 
@@ -132,22 +135,6 @@ class Generator
                 }
 
                 yield $section => $configs;
-            }
-        }
-    }
-
-    /**
-     * @param string $name
-     * @param Reader $reader
-     * @return \Traversable
-     */
-    private function readSection(string $name, Reader $reader): \Traversable
-    {
-        foreach ($reader->getPackages() as $package) {
-            $section = $package->getSection($name);
-
-            if ($section) {
-                yield $package => $section;
             }
         }
     }
@@ -182,6 +169,22 @@ class Generator
 
             if ($section !== null) {
                 yield from $section->getConfiguration();
+            }
+        }
+    }
+
+    /**
+     * @param string $name
+     * @param Reader $reader
+     * @return \Traversable
+     */
+    private function readSection(string $name, Reader $reader): \Traversable
+    {
+        foreach ($reader->getPackages() as $package) {
+            $section = $package->getSection($name);
+
+            if ($section) {
+                yield $package => $section;
             }
         }
     }

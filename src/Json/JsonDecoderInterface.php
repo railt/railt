@@ -15,26 +15,33 @@ use Railt\Json\Exception\JsonException;
 /**
  * Interface JsonDecoderInterface
  */
-interface JsonDecoderInterface extends JsonRuntimeInterface
+interface JsonDecoderInterface
 {
     /**
-     * Wrapper for json_decode with predefined options that throws
-     * a \JsonException when an error occurs.
+     * Automatically enables object to array convertation.
      *
-     * @see http://www.php.net/manual/en/function.json-decode.php
-     * @see http://php.net/manual/en/class.jsonexception.php
-     * @param string $json
-     * @param int|null $options
-     * @return array|object|mixed
+     * <code>
+     *  const JSON_THROW_ON_ERROR = 4194304;
+     * </code>
+     * @var int
      */
-    public function decode(string $json, int $options = null);
+    public const DEFAULT_DECODING_OPTIONS = 4194304;
 
     /**
-     * Reads and parses json data from the specified stream.
-     *
-     * @param Readable $readable
-     * @return array|object|mixed
-     * @throws \JsonException
+     * @param string $json
+     * @param int $options
+     * @param int $depth
+     * @return array|object
+     * @throws JsonException
      */
-    public function read(Readable $readable);
+    public static function decode(string $json, int $options = self::DEFAULT_DECODING_OPTIONS, int $depth = 512);
+
+    /**
+     * @param Readable $json
+     * @param int $options
+     * @param int $depth
+     * @return array|object
+     * @throws JsonException
+     */
+    public static function read(Readable $json, int $options = self::DEFAULT_DECODING_OPTIONS, int $depth = 512);
 }

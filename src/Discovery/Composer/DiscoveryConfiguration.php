@@ -10,8 +10,9 @@ declare(strict_types=1);
 namespace Railt\Discovery\Composer;
 
 use Phplrt\Io\File;
-use Railt\Json\Validator;
-use Railt\Json\ValidatorInterface;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Validator\Validator;
+use Railt\Json\Validator\ValidatorInterface;
 
 /**
  * Class Configuration
@@ -69,7 +70,7 @@ class DiscoveryConfiguration
                 return \in_array((string)$data, $haystack, true) ? null : $data;
 
             case \is_array($data):
-                $walker = new ArrayWalker(function (array $current) use ($haystack) {
+                $walker = new ArrayWalker(static function (array $current) use ($haystack) {
                     return ! \in_array(\implode(self::EXCEPT_DEPTH_DELIMITER, $current), $haystack, true);
                 });
 
@@ -83,20 +84,18 @@ class DiscoveryConfiguration
     /**
      * @param Section $section
      * @throws \JsonException
-     * @throws \Railt\Io\Exception\NotReadableException
-     * @throws \Railt\Json\Exception\JsonException
+     * @throws JsonException
      */
     public function validate(Section $section): void
     {
         if ($validator = $this->getValidator()) {
-            $section->validate($validator);
+            $section->validate($validator)->throwOnError();
         }
     }
 
     /**
      * @return ValidatorInterface|null
-     * @throws \JsonException
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws JsonException
      */
     public function getValidator(): ?ValidatorInterface
     {

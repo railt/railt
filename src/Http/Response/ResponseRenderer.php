@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Response;
 
-use Railt\Http\Exception\GraphQLExceptionInterface;
-use Railt\Http\ResponseInterface;
 use Railt\Json\Json;
+use Railt\Http\ResponseInterface;
+use Railt\Json\Exception\JsonException;
+use Railt\Http\Exception\GraphQLExceptionInterface;
 
 /**
  * Trait ResponseRenderer
@@ -21,35 +22,13 @@ use Railt\Json\Json;
 trait ResponseRenderer
 {
     /**
-     * @return array
-     */
-    abstract public function toArray(): array;
-
-    /**
-     * @return int
-     */
-    abstract public function getStatusCode(): int;
-
-    /**
      * @var int
      */
     protected $options = \JSON_HEX_TAG
-        | \JSON_HEX_APOS
-        | \JSON_HEX_AMP
-        | \JSON_HEX_QUOT
-        | \JSON_PARTIAL_OUTPUT_ON_ERROR;
-
-    /**
-     * @param int|null $jsonOptions
-     * @return string
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    public function render(int $jsonOptions = null): string
-    {
-        return Json::encoder()
-            ->setOptions($jsonOptions ?? $this->options)
-            ->encode((object)$this->toArray());
-    }
+    | \JSON_HEX_APOS
+    | \JSON_HEX_AMP
+    | \JSON_HEX_QUOT
+    | \JSON_PARTIAL_OUTPUT_ON_ERROR;
 
     /**
      * @param int $options
@@ -74,16 +53,8 @@ trait ResponseRenderer
     }
 
     /**
-     * @return int
-     */
-    public function getJsonOptions(): int
-    {
-        return $this->options;
-    }
-
-    /**
      * @return void
-     * @throws \Railt\Json\Exception\JsonException
+     * @throws JsonException
      */
     public function send(): void
     {
@@ -99,6 +70,26 @@ trait ResponseRenderer
     }
 
     /**
+     * @return int
+     */
+    abstract public function getStatusCode(): int;
+
+    /**
+     * @param int|null $jsonOptions
+     * @return string
+     * @throws JsonException
+     */
+    public function render(int $jsonOptions = null): string
+    {
+        return Json::encode($this->toArray(), $jsonOptions ?? $this->options);
+    }
+
+    /**
+     * @return array
+     */
+    abstract public function toArray(): array;
+
+    /**
      * @return object|mixed
      */
     public function jsonSerialize()
@@ -108,7 +99,6 @@ trait ResponseRenderer
 
     /**
      * @return string
-     * @throws \Railt\Json\Exception\JsonException
      */
     public function __toString(): string
     {
@@ -117,13 +107,19 @@ trait ResponseRenderer
         } catch (\JsonException $e) {
             // We should not use the `toArray()` method,
             // because it may throw similar exceptions.
-            return Json::encoder()
-                ->setOptions($this->getJsonOptions())
-                ->encode((object)[
-                    ResponseInterface::FIELD_ERRORS => [
-                        [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal JSON encoding error'],
-                    ],
-                ]);
+            return Json::encode([
+                ResponseInterface::FIELD_ERRORS => [
+                    [GraphQLExceptionInterface::FIELD_MESSAGE => 'Fatal JSON encoding error'],
+                ],
+            ], $this->getJsonOptions());
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getJsonOptions(): int
+    {
+        return $this->options;
     }
 }

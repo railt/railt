@@ -11,7 +11,6 @@ namespace Railt\Json\Validator;
 
 use JsonSchema\Validator;
 use Railt\Json\Exception\JsonValidationException;
-use Railt\Json\Exception\JsonValidationExceptionInterface;
 
 /**
  * Class Result
@@ -40,13 +39,25 @@ class Result implements ResultInterface
     }
 
     /**
-     * @throws JsonValidationExceptionInterface
+     * @throws JsonValidationException
      */
-    public function throw(): void
+    public function throwOnError(): void
     {
         /** @noinspection LoopWhichDoesNotLoopInspection */
         foreach ($this->getErrors() as $error) {
             throw $error;
+        }
+    }
+
+    /**
+     * @return iterable|JsonValidationException[]
+     */
+    public function getErrors(): iterable
+    {
+        foreach ($this->errors as $error) {
+            $path = \explode('.', $error['property']);
+
+            yield new JsonValidationException($error['message'], $path);
         }
     }
 
@@ -64,17 +75,5 @@ class Result implements ResultInterface
     public function hasErrors(): bool
     {
         return \count($this->errors) > 0;
-    }
-
-    /**
-     * @return iterable|JsonValidationExceptionInterface[]
-     */
-    public function getErrors(): iterable
-    {
-        foreach ($this->errors as $error) {
-            $path = \explode('.', $error['property']);
-
-            yield new JsonValidationException($error['message'], $path);
-        }
     }
 }

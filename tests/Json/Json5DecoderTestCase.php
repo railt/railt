@@ -10,6 +10,10 @@ declare(strict_types=1);
 namespace Railt\Tests\Json;
 
 use Railt\Json\Json5;
+use Railt\Json\JsonDecoderInterface;
+use Railt\Json\Exception\JsonException;
+use PHPUnit\Framework\ExpectationFailedException;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
  * Class Json5DecoderTestCase
@@ -17,23 +21,9 @@ use Railt\Json\Json5;
 class Json5DecoderTestCase extends AbstractDecoderTestCase
 {
     /**
-     * @param string $value
-     * @param int $options
-     * @return array|mixed
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    protected function decode(string $value, int $options = 0)
-    {
-        return Json5::decoder()
-            ->setOptions($options)
-            ->withOptions(Json5::FORCE_JSON5_DECODER)
-            ->decode($value);
-    }
-
-    /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testVerticalTabChar(): void
     {
@@ -41,9 +31,20 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @param string $value
+     * @param int $options
+     * @return array|mixed
+     * @throws JsonException
+     */
+    protected function decode(string $value, int $options = 0)
+    {
+        return Json5::decode($value, $options);
+    }
+
+    /**
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testHexValueUpperCase(): void
     {
@@ -51,9 +52,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testHexValueLowerCase(): void
     {
@@ -61,9 +62,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testHexNegativeValueUpperCase(): void
     {
@@ -71,9 +72,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testHexNegativeValueLowerCase(): void
     {
@@ -81,9 +82,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testFloatValueWithLeadingFloatingPoint(): void
     {
@@ -91,9 +92,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testFloatValueWithTrailingFloatingPoint(): void
     {
@@ -101,9 +102,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testFloatNegativeValueWithLeadingFloatingPoint(): void
     {
@@ -111,9 +112,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testFloatNegativeValueWithTrailingFloatingPoint(): void
     {
@@ -121,9 +122,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testInfValue(): void
     {
@@ -131,9 +132,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testInfNegativeValue(): void
     {
@@ -141,9 +142,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testNaNValue(): void
     {
@@ -151,9 +152,9 @@ class Json5DecoderTestCase extends AbstractDecoderTestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \Railt\Json\Exception\JsonException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws JsonException
+     * @throws InvalidArgumentException
      */
     public function testNaNNegativeValue(): void
     {

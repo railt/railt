@@ -9,10 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Discovery;
 
-use Composer\Autoload\ClassLoader;
-use Composer\Composer;
 use Phplrt\Io\File;
 use Railt\Json\Json;
+use Composer\Composer;
+use Composer\Autoload\ClassLoader;
+use Railt\Json\Exception\JsonException;
 
 /**
  * Class Discovery
@@ -69,6 +70,15 @@ class Discovery
      * @return Discovery
      * @throws \ReflectionException
      */
+    public static function auto(): self
+    {
+        return static::fromClassLoader();
+    }
+
+    /**
+     * @return Discovery
+     * @throws \ReflectionException
+     */
     public static function fromClassLoader(): self
     {
         $reflection = new \ReflectionClass(ClassLoader::class);
@@ -77,19 +87,10 @@ class Discovery
     }
 
     /**
-     * @return Discovery
-     * @throws \ReflectionException
-     */
-    public static function auto(): self
-    {
-        return static::fromClassLoader();
-    }
-
-    /**
      * @param string $key
      * @param null $default
      * @return array|mixed|null
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws JsonException
      */
     public function get(string $key, $default = null)
     {
@@ -110,12 +111,14 @@ class Discovery
 
     /**
      * @return array
-     * @throws \Railt\Io\Exception\NotReadableException
+     * @throws JsonException
      */
     public function all(): array
     {
         if ($this->data === null) {
-            $this->data = \is_file($this->pathname) ? Json::read(File::fromPathname($this->pathname)) : [];
+            $this->data = \is_file($this->pathname)
+                ? Json::read(File::fromPathname($this->pathname), \JSON_OBJECT_AS_ARRAY)
+                : [];
         }
 
         return $this->data;

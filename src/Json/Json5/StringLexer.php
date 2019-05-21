@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder;
+namespace Railt\Json\Json5;
 
 use Phplrt\Io\Readable;
 use Phplrt\Lexer\Factory;

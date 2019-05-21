@@ -7,20 +7,18 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
+namespace Railt\Json\Json5\Ast;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation
  */
-class HexNode extends NumberNode
+class InfNode extends NumberNode
 {
     /**
-     * @return int
+     * @return float
      */
-    public function reduce(): int
+    public function reduce(): float
     {
-        $value = \hexdec($this->getValue(1));
-
-        return $this->isPositive() ? $value : -$value;
+        return $this->isPositive() ? \INF : -\INF;
     }
 }

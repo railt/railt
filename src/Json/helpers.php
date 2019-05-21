@@ -7,40 +7,73 @@
  */
 declare(strict_types=1);
 
-use Railt\Json\Json5;
 
-if (! \function_exists('\\json5_decode')) {
-    /**
-     * @param string $json
-     * @param bool $assoc
-     * @param int $depth
-     * @param int $options
-     * @return mixed
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    function json5_decode(string $json, bool $assoc = false, int $depth = 512, int $options = 0)
-    {
-        return Json5::decoder()
-            ->setOption(\JSON_OBJECT_AS_ARRAY, $assoc)
-            ->withRecursionDepth($depth)
-            ->withOptions($options)
-            ->decode($json);
+namespace Railt\Json {
+
+    use Railt\Json\Exception\JsonException;
+
+    const DECODE_OPT = JsonDecoderInterface::DEFAULT_DECODING_OPTIONS;
+    const ENCODE_OPT = JsonEncoderInterface::DEFAULT_ENCODING_OPTIONS;
+
+    if (! \function_exists('\\Railt\\Json\\json5_decode')) {
+        /**
+         * @param string $json
+         * @param bool $assoc
+         * @param int $depth
+         * @param int $options
+         * @return array|mixed|object
+         * @throws JsonException|\JsonException
+         */
+        function json5_decode(string $json, bool $assoc = false, int $depth = 512, int $options = DECODE_OPT)
+        {
+            $options |= ($assoc ? \JSON_OBJECT_AS_ARRAY : 0);
+
+            return Json5::decode($json, $options, $depth);
+        }
     }
-}
 
-if (! \function_exists('\\json5_encode')) {
-    /**
-     * @param mixed $value
-     * @param int $options
-     * @param int $depth
-     * @return string
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    function json5_encode($value, int $options = 0, int $depth = 512): string
-    {
-        return Json5::encoder()
-            ->withRecursionDepth($depth)
-            ->withOptions($options)
-            ->encode($value);
+    if (! \function_exists('\\Railt\\Json\\json5_encode')) {
+        /**
+         * @param mixed $value
+         * @param int $options
+         * @param int $depth
+         * @return string
+         * @throws JsonException|\JsonException
+         */
+        function json5_encode($value, int $options = ENCODE_OPT, int $depth = 512): string
+        {
+            return Json5::encode($value, $options, $depth);
+        }
+    }
+
+    if (! \function_exists('\\Railt\\Json\\json_decode')) {
+        /**
+         * @param string $json
+         * @param bool $assoc
+         * @param int $depth
+         * @param int $options
+         * @return array|mixed|object
+         * @throws JsonException|\JsonException
+         */
+        function json_decode(string $json, bool $assoc = false, int $depth = 512, int $options = DECODE_OPT)
+        {
+            $options |= ($assoc ? \JSON_OBJECT_AS_ARRAY : 0);
+
+            return Json::decode($json, $options, $depth);
+        }
+    }
+
+    if (! \function_exists('\\Railt\\Json\\json_encode')) {
+        /**
+         * @param mixed $value
+         * @param int $options
+         * @param int $depth
+         * @return string
+         * @throws JsonException|\JsonException
+         */
+        function json_encode($value, int $options = ENCODE_OPT, int $depth = 512): string
+        {
+            return Json::encode($value, $options, $depth);
+        }
     }
 }

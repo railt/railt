@@ -53,16 +53,13 @@ abstract class BaseParser implements ResolverInterface
 
     /**
      * @param string $json
-     * @param bool $throws
      * @return array
      * @throws \LogicException
      */
-    protected function parseJson(string $json, bool $throws = false): array
+    protected function parseJson(string $json): array
     {
         try {
-            return Json::decoder()
-                ->withOptions(\JSON_OBJECT_AS_ARRAY)
-                ->decode($json);
+            return Json::decode($json, \JSON_OBJECT_AS_ARRAY);
         } catch (\JsonException $e) {
             return [];
         }

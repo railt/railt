@@ -9,6 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Json;
 
+use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\SkippedTestError;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
+
 /**
  * Class AbstractDecoderTestCase
  */
@@ -55,24 +59,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     protected const PHP_INT_MIN_X64_OVERFLOWS = '-9223372036854775809';
 
     /**
-     * @return bool
-     */
-    protected function isX64Platform(): bool
-    {
-        return \PHP_INT_SIZE === 8;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isX32Platform(): bool
-    {
-        return \PHP_INT_SIZE === 4;
-    }
-
-    /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testString(): void
     {
@@ -87,8 +75,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     abstract protected function decode(string $value, int $options = 0);
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testUtfString(): void
     {
@@ -96,8 +84,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testNewLineChar(): void
     {
@@ -105,8 +93,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBackspaceChar(): void
     {
@@ -114,8 +102,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFormFeedChar(): void
     {
@@ -123,8 +111,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testCarriageReturnChar(): void
     {
@@ -132,8 +120,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testHorizontalTabChar(): void
     {
@@ -141,8 +129,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testIntegerValue(): void
     {
@@ -150,8 +138,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testIntegerExponentValue(): void
     {
@@ -159,8 +147,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testNegativeIntegerValue(): void
     {
@@ -168,8 +156,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testNegativeIntegerExponentValue(): void
     {
@@ -177,8 +165,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testIntegerNegativeExponentValue(): void
     {
@@ -186,8 +174,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testNegativeIntegerNegativeExponentValue(): void
     {
@@ -195,8 +183,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBooleanTrueValue(): void
     {
@@ -204,8 +192,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBooleanFalseValue(): void
     {
@@ -213,8 +201,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBooleanNullValue(): void
     {
@@ -222,8 +210,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testArrayValue(): void
     {
@@ -241,8 +229,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testObjectParsedAsArrayValue(): void
     {
@@ -251,8 +239,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBigintValueAsFloat(): void
     {
@@ -261,8 +249,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBigintValueAsString(): void
     {
@@ -271,8 +259,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBigintExponentValueAsFloat(): void
     {
@@ -281,8 +269,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBigintExponentValueAsString(): void
     {
@@ -291,8 +279,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testIntMaxValue(): void
     {
@@ -301,9 +289,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt32MaxValue(): void
     {
@@ -316,9 +304,17 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @return bool
+     */
+    protected function isX32Platform(): bool
+    {
+        return \PHP_INT_SIZE === 4;
+    }
+
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt64MaxValue(): void
     {
@@ -331,9 +327,17 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @return bool
+     */
+    protected function isX64Platform(): bool
+    {
+        return \PHP_INT_SIZE === 8;
+    }
+
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt32MaxOverflowValue(): void
     {
@@ -346,9 +350,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt32MaxOverflowValueAsFloat(): void
     {
@@ -361,9 +365,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt64MaxOverflowValue(): void
     {
@@ -376,9 +380,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt64MaxOverflowValueAsFloat(): void
     {
@@ -391,8 +395,8 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testIntMinValue(): void
     {
@@ -401,9 +405,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt32MinValue(): void
     {
@@ -416,9 +420,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt64MinValue(): void
     {
@@ -431,9 +435,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt32MinOverflowValue(): void
     {
@@ -446,9 +450,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt32MinOverflowValueAsFloat(): void
     {
@@ -461,9 +465,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt64MinOverflowValue(): void
     {
@@ -476,9 +480,9 @@ abstract class AbstractDecoderTestCase extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \PHPUnit\Framework\SkippedTestError
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws SkippedTestError
      */
     public function testInt64MinOverflowValueAsFloat(): void
     {

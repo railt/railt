@@ -12,7 +12,7 @@ namespace Railt\Json\Exception;
 /**
  * Class JsonValidationException
  */
-class JsonValidationException extends JsonException implements JsonValidationExceptionInterface
+class JsonValidationException extends JsonException
 {
     /**
      * @var array|string[]

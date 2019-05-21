@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
+namespace Railt\Json\Json5\Ast;
 
 use Phplrt\Ast\LeafInterface;
 use Phplrt\Io\File;
@@ -15,7 +15,7 @@ use Phplrt\Io\Readable;
 use Phplrt\Lexer\TokenInterface;
 use Railt\Json\Exception\JsonSyntaxException;
 use Railt\Json\Json;
-use Railt\Json\Json5\Decoder\StringLexer;
+use Railt\Json\Json5\StringLexer;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation

@@ -9,12 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use Railt\Json\Exception\JsonException;
 use Railt\Json\Json;
-use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 use Railt\SDL\Contracts\Definitions\Definition;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 
 /**
  * Trait Support
@@ -45,6 +48,77 @@ trait Support
      * @var string
      */
     private static $syntaxNonNull = '%s!';
+
+    /**
+     * @param mixed $value
+     * @return string
+     * @throws JsonException
+     */
+    protected function valueWithType($value): string
+    {
+        return \mb_strtolower(\gettype($value)) . ' ' . $this->valueToString($value);
+    }
+
+    /**
+     * @param mixed|iterable|null $value
+     * @return string
+     * @throws JsonException
+     */
+    protected function valueToString($value): string
+    {
+        $result = $this->valueToScalar($value);
+
+        if (\is_array($result)) {
+            $result = Json::encode($result);
+            $result = \preg_replace('/"([_A-Za-z][_0-9A-Za-z]*)":/u', '$1: ', $result);
+            $result = \preg_replace('/:\s+(.*?),/u', ': $1, ', $result);
+
+            return $result;
+        }
+
+        return (string)$result;
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     * @throws JsonException
+     */
+    protected function valueToScalar($value)
+    {
+        if (\is_scalar($value)) {
+            return $value;
+        }
+
+        if (\is_iterable($value)) {
+            $result = [];
+
+            /** @var iterable $value */
+            foreach ($value as $key => $sub) {
+                $result[$key] = $this->valueToScalar($sub);
+            }
+
+            return $result;
+        }
+
+        if ($value instanceof Definition) {
+            return $this->typeToString($value);
+        }
+
+        if ($value instanceof Arrayable) {
+            return $this->valueToScalar($value->toArray());
+        }
+
+        if ($value instanceof Jsonable) {
+            return Json::decode($value->toJson(), \JSON_OBJECT_AS_ARRAY);
+        }
+
+        if ($value instanceof \JsonSerializable) {
+            return $this->valueToScalar(Json::encode($value->jsonSerialize()));
+        }
+
+        return \ucfirst(\strtolower(\gettype($value)));
+    }
 
     /**
      * @param AllowsTypeIndication&Definition $type
@@ -98,78 +172,5 @@ trait Support
         } catch (\Throwable $e) {
             return '?';
         }
-    }
-
-    /**
-     * @param mixed $value
-     * @return string
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    protected function valueWithType($value): string
-    {
-        return \mb_strtolower(\gettype($value)) . ' ' . $this->valueToString($value);
-    }
-
-    /**
-     * @param mixed $value
-     * @return mixed
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    protected function valueToScalar($value)
-    {
-        if (\is_scalar($value)) {
-            return $value;
-        }
-
-        if (\is_iterable($value)) {
-            $result = [];
-
-            /** @var iterable $value */
-            foreach ($value as $key => $sub) {
-                $result[$key] = $this->valueToScalar($sub);
-            }
-
-            return $result;
-        }
-
-        if ($value instanceof Definition) {
-            return $this->typeToString($value);
-        }
-
-        if ($value instanceof \Illuminate\Contracts\Support\Arrayable) {
-            return $this->valueToScalar($value->toArray());
-        }
-
-        if ($value instanceof \Illuminate\Contracts\Support\Jsonable) {
-            $decoder = Json::decoder()->withOptions(\JSON_OBJECT_AS_ARRAY);
-
-            return $this->valueToScalar($decoder->decode($value->toJson()));
-        }
-
-        if ($value instanceof \JsonSerializable) {
-            return $this->valueToScalar(Json::encode($value->jsonSerialize()));
-        }
-
-        return \ucfirst(\strtolower(\gettype($value)));
-    }
-
-    /**
-     * @param mixed|iterable|null $value
-     * @return string
-     * @throws \Railt\Json\Exception\JsonException
-     */
-    protected function valueToString($value): string
-    {
-        $result = $this->valueToScalar($value);
-
-        if (\is_array($result)) {
-            $result = Json::encode($result);
-            $result = \preg_replace('/"([_A-Za-z][_0-9A-Za-z]*)":/u', '$1: ', $result);
-            $result = \preg_replace('/:\s+(.*?),/u', ': $1, ', $result);
-
-            return $result;
-        }
-
-        return (string)$result;
     }
 }

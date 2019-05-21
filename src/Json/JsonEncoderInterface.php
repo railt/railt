@@ -15,26 +15,48 @@ use Railt\Json\Exception\JsonException;
 /**
  * Interface JsonEncoderInterface
  */
-interface JsonEncoderInterface extends JsonRuntimeInterface
+interface JsonEncoderInterface
 {
     /**
-     * Wrapper for JSON encoding logic with predefined options that
-     * throws a \JsonException when an error occurs.
+     * Encode <, >, ', &, and " characters in the JSON, making it also safe to
+     * be embedded into HTML.
      *
-     * @see http://www.php.net/manual/en/function.json-encode.php
-     * @see http://php.net/manual/en/class.jsonexception.php
-     * @param mixed $data
-     * @param int|null $options
-     * @return string
+     * <code>
+     *  const JSON_HEX_TAG = 1;
+     *  const JSON_HEX_APOS = 4;
+     *  const JSON_HEX_AMP = 2;
+     *  const JSON_HEX_QUOT = 8;
+     *  const JSON_PRESERVE_ZERO_FRACTION = 1024;
+     *  const JSON_THROW_ON_ERROR = 4194304;
+     *
+     *  // 1 | 4 | 2 | 8 | 1024 | 4194304 === 4195343
+     * </code>
+     *
+     * @var int
      */
-    public function encode($data, int $options = null): string;
+    public const DEFAULT_ENCODING_OPTIONS = 4195343;
 
     /**
-     * Writes transferred data to the specified stream pathname.
-     *
-     * @param string $pathname
-     * @param array $data
-     * @return Readable
+     * @param array|object|mixed $value
+     * @param int $options
+     * @param int $depth
+     * @return string
+     * @throws JsonException
      */
-    public function write(string $pathname, array $data): Readable;
+    public static function encode($value, int $options = self::DEFAULT_ENCODING_OPTIONS, int $depth = 512): string;
+
+    /**
+     * @param string $pathname
+     * @param array|object|mixed $value
+     * @param int $options
+     * @param int $depth
+     * @return Readable
+     * @throws JsonException
+     */
+    public static function write(
+        string $pathname,
+        $value,
+        int $options = self::DEFAULT_ENCODING_OPTIONS,
+        int $depth = 512
+    ): Readable;
 }

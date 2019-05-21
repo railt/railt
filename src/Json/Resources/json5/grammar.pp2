@@ -31,7 +31,7 @@
 %include lexemes.pp2
 
 
-#Json -> Railt\Json\Json5\Decoder\Ast\Json5Node
+#Json -> Railt\Json\Json5\Ast\Json5Node
   : Value()
   ;
 
@@ -48,7 +48,7 @@ Value
   | Int()
   ;
 
-#Object -> Railt\Json\Json5\Decoder\Ast\ObjectNode
+#Object -> Railt\Json\Json5\Ast\ObjectNode
   : ::T_BRACE_OPEN::
       ObjectBody()? ::T_COMMA::?
     ::T_BRACE_CLOSE::
@@ -71,7 +71,7 @@ ObjectValue
   : Value()
   ;
 
-#Array -> Railt\Json\Json5\Decoder\Ast\ArrayNode
+#Array -> Railt\Json\Json5\Ast\ArrayNode
   : ::T_BRACKET_OPEN::
       ArrayBody()? ::T_COMMA::?
     ::T_BRACKET_CLOSE::
@@ -81,21 +81,21 @@ ArrayBody
   : (Value() ::T_COMMA::)* Value()
   ;
 
-#String -> Railt\Json\Json5\Decoder\Ast\StringNode
+#String -> Railt\Json\Json5\Ast\StringNode
   : <T_DOUBLE_QUOTED_STRING>
   | <T_SINGLE_QUOTED_STRING>
   ;
 
-#Boolean -> Railt\Json\Json5\Decoder\Ast\BoolNode
+#Boolean -> Railt\Json\Json5\Ast\BoolNode
   : <T_BOOL_TRUE>
   | <T_BOOL_FALSE>
   ;
 
-#Null -> Railt\Json\Json5\Decoder\Ast\NullNode
+#Null -> Railt\Json\Json5\Ast\NullNode
   : ::T_NULL::
   ;
 
-#Identifier -> Railt\Json\Json5\Decoder\Ast\IdentifierNode
+#Identifier -> Railt\Json\Json5\Ast\IdentifierNode
   : <T_IDENTIFIER>
   ;
 
@@ -112,22 +112,22 @@ ArrayBody
   : <T_EXPONENT_PART>
   ;
 
-#Inf -> Railt\Json\Json5\Decoder\Ast\InfNode
+#Inf -> Railt\Json\Json5\Ast\InfNode
   : Sign()? <T_INF>
   ;
 
-#NaN -> Railt\Json\Json5\Decoder\Ast\NaNNode
+#NaN -> Railt\Json\Json5\Ast\NaNNode
   : Sign()? <T_NAN>
   ;
 
-#Float -> Railt\Json\Json5\Decoder\Ast\FloatNode
+#Float -> Railt\Json\Json5\Ast\FloatNode
   : Sign()? (<T_FLOAT_LD_NUMBER> | <T_FLOAT_TG_NUMBER>) ExponentPart()?
   ;
 
-#Int -> Railt\Json\Json5\Decoder\Ast\IntNode
+#Int -> Railt\Json\Json5\Ast\IntNode
   : Sign()? <T_INT_NUMBER> ExponentPart()?
   ;
 
-#Hex -> Railt\Json\Json5\Decoder\Ast\HexNode
+#Hex -> Railt\Json\Json5\Ast\HexNode
   : Sign()? <T_HEX_NUMBER>
   ;

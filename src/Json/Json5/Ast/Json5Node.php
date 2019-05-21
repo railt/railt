@@ -7,40 +7,33 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
+namespace Railt\Json\Json5\Ast;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation
  */
-class ArrayNode implements NodeInterface
+class Json5Node implements NodeInterface
 {
     /**
-     * @var array
+     * @var NodeInterface
      */
-    private $children;
+    private $child;
 
     /**
-     * ObjectNode constructor.
+     * Json5Node constructor.
      *
      * @param array $children
      */
     public function __construct(array $children = [])
     {
-        $this->children = $children;
+        $this->child = \reset($children);
     }
 
     /**
-     * @return array
+     * @return mixed|null
      */
-    public function reduce(): array
+    public function reduce()
     {
-        $result = [];
-
-        /** @var NodeInterface $child */
-        foreach ($this->children as $child) {
-            $result[] = $child->reduce();
-        }
-
-        return $result;
+        return $this->child instanceof NodeInterface ? $this->child->reduce() : null;
     }
 }

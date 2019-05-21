@@ -7,35 +7,40 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Json\Json5\Decoder\Ast;
-
-use Phplrt\Ast\LeafInterface;
+namespace Railt\Json\Json5\Ast;
 
 /**
  * @internal Internal class for json5 abstract syntax tree node representation
  */
-class BoolNode implements NodeInterface
+class ArrayNode implements NodeInterface
 {
     /**
-     * @var LeafInterface
+     * @var array
      */
-    private $value;
+    private $children;
 
     /**
-     * BoolNode constructor.
+     * ObjectNode constructor.
      *
      * @param array $children
      */
     public function __construct(array $children = [])
     {
-        $this->value = \reset($children);
+        $this->children = $children;
     }
 
     /**
-     * @return bool
+     * @return array
      */
-    public function reduce(): bool
+    public function reduce(): array
     {
-        return $this->value->getName() === 'T_BOOL_TRUE';
+        $result = [];
+
+        /** @var NodeInterface $child */
+        foreach ($this->children as $child) {
+            $result[] = $child->reduce();
+        }
+
+        return $result;
     }
 }
