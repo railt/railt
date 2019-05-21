@@ -9,16 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Json;
 
-use Phplrt\Io\File;
-use Railt\Json\Json5\Parser;
-use Phplrt\Lexer\LexerInterface;
-use Phplrt\Parser\ParserInterface;
-use Railt\Json\Json5\Ast\Json5Node;
 use Phplrt\Exception\ExternalException;
-use Railt\Json\Exception\JsonException;
-use Railt\Json\Exception\JsonSyntaxException;
+use Phplrt\Io\File;
+use Phplrt\Lexer\LexerInterface;
 use Phplrt\Parser\Exception\UnexpectedTokenException;
 use Phplrt\Parser\Exception\UnrecognizedTokenException;
+use Phplrt\Parser\ParserInterface;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Exception\JsonSyntaxException;
+use Railt\Json\Json5\Ast\Json5Node;
+use Railt\Json\Json5\Parser;
 
 /**
  * Class Json5

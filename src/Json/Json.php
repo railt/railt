@@ -28,7 +28,7 @@ class Json extends Facade
     {
         \assert(\function_exists('\\json_encode'), 'PHP JSON extension required');
 
-        return self::wrap(static function() use ($value, $options, $depth) {
+        return self::wrap(static function () use ($value, $options, $depth) {
             return @\json_encode($value, $options, $depth);
         });
     }
@@ -44,7 +44,7 @@ class Json extends Facade
     {
         \assert(\function_exists('\\json_decode'), 'PHP JSON extension required');
 
-        return self::wrap(static function() use ($json, $options, $depth) {
+        return self::wrap(static function () use ($json, $options, $depth) {
             return @\json_decode($json, (bool)($options & \JSON_OBJECT_AS_ARRAY), $depth, $options);
         });
     }

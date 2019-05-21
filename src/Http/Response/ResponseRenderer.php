@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Response;
 
-use Railt\Json\Json;
+use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Json\Exception\JsonException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Json\Json;
 
 /**
  * Trait ResponseRenderer

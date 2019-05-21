@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace Railt\Discovery\Composer;
 
 use Phplrt\Io\File;
-use Railt\Json\Validator\Validator;
-use Railt\Json\Exception\JsonException;
-use Railt\Json\Validator\ValidatorInterface;
-use Railt\Json\Exception\JsonValidationException;
-use Railt\Discovery\Exception\ValidationException;
 use Railt\Discovery\Exception\ConfigurationException;
+use Railt\Discovery\Exception\ValidationException;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Exception\JsonValidationException;
+use Railt\Json\Validator\Validator;
+use Railt\Json\Validator\ValidatorInterface;
 
 /**
  * Class DiscoverySection

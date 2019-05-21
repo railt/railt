@@ -9,9 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Json;
 
-use Railt\Json\Json;
-use Railt\Json\JsonDecoderInterface;
 use Railt\Json\Exception\JsonException;
+use Railt\Json\Json;
 
 /**
  * Class JsonDecoderTestCase

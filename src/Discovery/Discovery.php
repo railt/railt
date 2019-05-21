@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Discovery;
 
-use Phplrt\Io\File;
-use Railt\Json\Json;
-use Composer\Composer;
 use Composer\Autoload\ClassLoader;
+use Composer\Composer;
+use Phplrt\Io\File;
 use Railt\Json\Exception\JsonException;
+use Railt\Json\Json;
 
 /**
  * Class Discovery
