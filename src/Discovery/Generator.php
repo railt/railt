@@ -9,18 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Discovery;
 
+use Composer\Composer;
+use Composer\IO\IOInterface;
 use Phplrt\Io\File;
+use Phplrt\Io\Readable;
+use Railt\Discovery\Composer\DiscoveryConfiguration;
+use Railt\Discovery\Composer\DiscoverySection;
+use Railt\Discovery\Composer\Package;
+use Railt\Discovery\Composer\Reader;
+use Railt\Discovery\Composer\Section;
+use Railt\Discovery\Exception\ValidationException;
 use Railt\Json\Exception\JsonException;
 use Railt\Json\Json;
-use Composer\Composer;
-use Phplrt\Io\Readable;
-use Composer\IO\IOInterface;
-use Railt\Discovery\Composer\Reader;
-use Railt\Discovery\Composer\Package;
-use Railt\Discovery\Composer\Section;
-use Railt\Discovery\Composer\DiscoverySection;
-use Railt\Discovery\Exception\ValidationException;
-use Railt\Discovery\Composer\DiscoveryConfiguration;
 
 /**
  * Class Generator

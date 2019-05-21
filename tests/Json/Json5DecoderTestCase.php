@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Json;
 
-use Railt\Json\Json5;
-use Railt\Json\JsonDecoderInterface;
-use Railt\Json\Exception\JsonException;
 use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Json5;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**

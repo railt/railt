@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Json\Validator;
 
-use Railt\Json\Json5;
-use Phplrt\Io\Readable;
 use JsonSchema\Constraints\Constraint;
-use Railt\Json\Exception\JsonException;
 use JsonSchema\Validator as JsonValidator;
+use Phplrt\Io\Readable;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Json5;
 
 /**
  * Class Validator

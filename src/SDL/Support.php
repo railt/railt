@@ -13,11 +13,11 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Railt\Json\Exception\JsonException;
 use Railt\Json\Json;
+use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 use Railt\SDL\Contracts\Definitions\Definition;
-use Railt\SDL\Contracts\Dependent\FieldDefinition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\ArgumentDefinition;
-use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
+use Railt\SDL\Contracts\Dependent\FieldDefinition;
 
 /**
  * Trait Support

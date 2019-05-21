@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Discovery\Composer;
 
-use Railt\Json\Json;
-use Railt\Json\Exception\JsonException;
-use Railt\Json\Validator\ResultInterface;
 use Railt\Discovery\Parser\ParserInterface;
+use Railt\Json\Exception\JsonException;
+use Railt\Json\Json;
+use Railt\Json\Validator\ResultInterface;
 use Railt\Json\Validator\ValidatorInterface;
 
 /**

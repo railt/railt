@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Json\Validator;
 
-use Railt\Json\Json5;
 use Phplrt\Io\Readable;
 use Railt\Json\Exception\JsonException;
+use Railt\Json\Json5;
 
 /**
  * Trait FactoryTrait
