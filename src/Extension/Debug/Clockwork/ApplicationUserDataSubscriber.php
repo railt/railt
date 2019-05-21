@@ -13,6 +13,9 @@ use Clockwork\Clockwork;
 use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
 use Railt\Container\Container;
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Dumper\TypeDumper;
 use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Foundation\Event\Http\ResponseProceed;
@@ -59,9 +62,9 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
     }
 
     /**
-     * @throws \Railt\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Container\Exception\ParameterResolutionException
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     private function shareConfigs(): void
     {
@@ -79,6 +82,17 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
         $this->data->table('Config', $configs);
     }
 
+    /**
+     * @param ResponseProceed $response
+     */
+    public function onResponse(ResponseProceed $response): void
+    {
+        $this->shareGraphQLTypes();
+    }
+
+    /**
+     * @return void
+     */
     private function shareGraphQLTypes(): void
     {
         $dictionary = $this->app->make(Dictionary::class);
@@ -87,7 +101,7 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
 
         foreach ($dictionary->all() as $type) {
             $std = $type instanceof StandardType;
-            $isFile = $type->getDocument()->getFile()->isFile();
+            $isFile = $type->getDocument()->getFile()->exists();
 
             $types[] = [
                 'Type'     => ($std ? '(builtin) ' : '') . (string)$type,
@@ -96,14 +110,6 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
         }
 
         $this->data->table('GraphQL SDL', $types);
-    }
-
-    /**
-     * @param ResponseProceed $response
-     */
-    public function onResponse(ResponseProceed $response): void
-    {
-        $this->shareGraphQLTypes();
     }
 
     /**

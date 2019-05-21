@@ -156,14 +156,14 @@ class CompilerExtension extends Extension
      */
     private function autoloadFromSameFile(RepositoryInterface $config, CompilerInterface $compiler): void
     {
-        $compiler->autoload(function (string $type, ?Definition $from) use ($config) {
+        $compiler->autoload(static function (string $type, ?Definition $from) use ($config) {
             if ($from === null) {
                 return null;
             }
 
             $file = $from->getDocument()->getFile();
 
-            if (! $file->isFile()) {
+            if (! $file->exists()) {
                 return null;
             }
 
