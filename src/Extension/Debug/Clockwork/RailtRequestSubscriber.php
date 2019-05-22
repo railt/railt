@@ -10,19 +10,19 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
+use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
+use Railt\Container\Container;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Dumper\TypeDumper;
-use Railt\Container\Container;
-use Clockwork\Request\UserData;
-use Railt\Http\RequestInterface;
 use Railt\Extension\Routing\RouterInterface;
+use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Foundation\Event\Connection\ConnectionEstablished;
+use Railt\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

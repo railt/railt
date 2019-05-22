@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Railt\Http\Identifiable;
-use Railt\Http\RequestInterface;
 use Railt\Foundation\ConnectionInterface;
-use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Foundation\Event\Http\RequestReceived;
-use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
+use Railt\Foundation\Event\Http\RequestReceived;
+use Railt\Foundation\Event\Http\ResponseProceed;
+use Railt\Foundation\Event\Resolver\FieldResolve;
+use Railt\Http\Identifiable;
+use Railt\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**

@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Railt\Container\Container;
 use Clockwork\Request\UserData;
+use Railt\Container\Container;
+use Railt\Foundation\Event\Http\ResponseProceed;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Standard\StandardType;
-use Railt\Foundation\Event\Http\ResponseProceed;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
