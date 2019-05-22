@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\AST\Common;
 
-use Railt\GraphQL\AST\Node;
 use Phplrt\Ast\NodeInterface;
+use Railt\GraphQL\AST\Node;
 
 /**
  * Class Name
