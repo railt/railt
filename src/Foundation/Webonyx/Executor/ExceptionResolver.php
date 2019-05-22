@@ -41,18 +41,12 @@ class ExceptionResolver
     {
         $root = self::getRootException($error);
 
-        if ($root instanceof GraphQLExceptionInterface) {
-            return $root;
-        }
-
-        $exception = GraphQLException::from($root, $error)
-            ->withMessage(self::resolveMessage($error))
-            ->withCode($error->getCode());
+        $exception = $root instanceof GraphQLExceptionInterface
+            ? $root
+            : new GraphQLException(self::resolveMessage($error), $error->getCode(), $error);
 
         if ($error->isClientSafe() || $error->getCategory() === Error::CATEGORY_GRAPHQL) {
             $exception->publish();
-        } else {
-            $exception->hide();
         }
 
         foreach ($error->getLocations() as $location) {
