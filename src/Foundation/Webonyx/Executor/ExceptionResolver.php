@@ -51,6 +51,8 @@ class ExceptionResolver
 
         if ($error->isClientSafe() || $error->getCategory() === Error::CATEGORY_GRAPHQL) {
             $exception->publish();
+        } else {
+            $exception->hide();
         }
 
         foreach ($error->getLocations() as $location) {
