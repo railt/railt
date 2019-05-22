@@ -41,8 +41,13 @@ class ExceptionResolver
     {
         $root = self::getRootException($error);
 
-        $exception = new GraphQLException(self::resolveMessage($error), $error->getCode(), $root);
-        $exception->from($root);
+        if ($root instanceof GraphQLExceptionInterface) {
+            return $root;
+        }
+
+        $exception = GraphQLException::from($root, $error)
+            ->withMessage(self::resolveMessage($error))
+            ->withCode($error->getCode());
 
         if ($error->isClientSafe() || $error->getCategory() === Error::CATEGORY_GRAPHQL) {
             $exception->publish();
@@ -66,6 +71,10 @@ class ExceptionResolver
     private static function getRootException(\Throwable $error): \Throwable
     {
         while ($error->getPrevious()) {
+            if ($error instanceof GraphQLExceptionInterface) {
+                return $error;
+            }
+
             $error = $error->getPrevious();
         }
 
