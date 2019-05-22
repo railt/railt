@@ -1,6 +1,8 @@
 {
     $id: "railt/discovery",
-    $schema: "http://json-schema.org/draft-07/schema#",
+    $schema: {
+        $ref: "railt/discovery",
+    },
     description: "A representation of Discovery package configuration",
     anyOf:  [
         {

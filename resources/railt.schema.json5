@@ -1,6 +1,8 @@
 {
     $id: "railt/railt",
-    $schema: "http://json-schema.org/draft-07/schema#",
+    $schema: {
+        $ref: "railt/railt",
+    },
     type: "object",
     description: "Railt framework configuration schema",
     definitions: {
