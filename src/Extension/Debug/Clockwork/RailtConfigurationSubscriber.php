@@ -10,22 +10,20 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
+use Railt\Dumper\TypeDumper;
 use Railt\Container\Container;
+use Clockwork\Request\UserData;
+use Railt\Foundation\Config\RepositoryInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;
-use Railt\Dumper\TypeDumper;
-use Railt\Foundation\Config\RepositoryInterface;
-use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\SDL\Reflection\Dictionary;
-use Railt\SDL\Standard\StandardType;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class ApplicationUserDataSubscriber
+ * Class RailtConfigurationSubscriber
  */
-class ApplicationUserDataSubscriber extends UserDataSubscriber
+class RailtConfigurationSubscriber implements EventSubscriberInterface
 {
     /**
      * @var Container
@@ -47,18 +45,9 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
     public function __construct(Clockwork $clockwork, Container $app)
     {
         $this->app = $app;
-        $this->data = $clockwork->userData('railt')->title('Railt');
+        $this->data = $clockwork->userData('railt:config')->title('Configuration');
 
-        $this->shareContainer();
         $this->shareConfigs();
-    }
-
-    /**
-     * @throws \ReflectionException
-     */
-    private function shareContainer(): void
-    {
-        $this->data->table('Application Container', $this->getContainerTable($this->app));
     }
 
     /**
@@ -83,42 +72,10 @@ class ApplicationUserDataSubscriber extends UserDataSubscriber
     }
 
     /**
-     * @param ResponseProceed $response
-     */
-    public function onResponse(ResponseProceed $response): void
-    {
-        $this->shareGraphQLTypes();
-    }
-
-    /**
-     * @return void
-     */
-    private function shareGraphQLTypes(): void
-    {
-        $dictionary = $this->app->make(Dictionary::class);
-
-        $types = [];
-
-        foreach ($dictionary->all() as $type) {
-            $std = $type instanceof StandardType;
-            $isFile = $type->getDocument()->getFile()->exists();
-
-            $types[] = [
-                'Type'     => ($std ? '(builtin) ' : '') . (string)$type,
-                'Document' => $isFile ? $type->getDocument()->getFile()->getPathname() : 'runtime',
-            ];
-        }
-
-        $this->data->table('GraphQL SDL', $types);
-    }
-
-    /**
      * @return array
      */
     public static function getSubscribedEvents(): array
     {
-        return [
-            ResponseProceed::class => ['onResponse', -100],
-        ];
+        return [];
     }
 }

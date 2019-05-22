@@ -10,19 +10,20 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug;
 
 use Clockwork\Clockwork;
-use Railt\Container\Exception\ContainerResolutionException;
-use Railt\Extension\Debug\Clockwork\ApplicationUserDataSubscriber;
-use Railt\Extension\Debug\Clockwork\ConnectionTimelineSubscriber;
-use Railt\Extension\Debug\Clockwork\FieldResolveTimelineSubscriber;
-use Railt\Extension\Debug\Clockwork\HttpLifecycleUserDataSubscriber;
-use Railt\Extension\Debug\Clockwork\RequestTimelineSubscriber;
-use Railt\Extension\Debug\Formatter\PrettyResponseSubscriber;
-use Railt\Extension\Debug\MemoryProfiler\MemoryProfilerSubscriber;
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application;
-use Railt\Foundation\Config\RepositoryInterface;
-use Railt\Foundation\Event\EventsExtension;
-use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
+use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Event\EventsExtension;
+use Railt\Foundation\Config\RepositoryInterface;
+use Railt\Extension\Debug\Clockwork\RailtSchemaSubscriber;
+use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Extension\Debug\Clockwork\RailtRequestSubscriber;
+use Railt\Extension\Debug\Clockwork\RailtContainerSubscriber;
+use Railt\Extension\Debug\Formatter\PrettyResponseSubscriber;
+use Railt\Extension\Debug\Clockwork\RailtConfigurationSubscriber;
+use Railt\Extension\Debug\Clockwork\PerformanceTimelineSubscriber;
+use Railt\Extension\Debug\MemoryProfiler\MemoryProfilerSubscriber;
 
 /**
  * Class DebugExtension
@@ -82,7 +83,7 @@ class DebugExtension extends Extension
     /**
      * @param RepositoryInterface $config
      * @throws ContainerResolutionException
-     * @throws \Railt\Container\Exception\ContainerInvocationException
+     * @throws ContainerInvocationException
      * @throws \ReflectionException
      */
     public function boot(RepositoryInterface $config): void
@@ -97,12 +98,11 @@ class DebugExtension extends Extension
         if ($this->app->has(Clockwork::class)) {
             $clockwork = $this->app->make(Clockwork::class);
 
-            $this->subscribe(new ConnectionTimelineSubscriber($clockwork));
-            $this->subscribe(new RequestTimelineSubscriber($clockwork));
-            $this->subscribe(new FieldResolveTimelineSubscriber($clockwork));
-
-            $this->subscribe(new ApplicationUserDataSubscriber($clockwork, $this->app));
-            $this->subscribe(new HttpLifecycleUserDataSubscriber($clockwork, $this->app));
+            $this->subscribe(new PerformanceTimelineSubscriber($clockwork));
+            $this->subscribe(new RailtContainerSubscriber($clockwork, $this->app));
+            $this->subscribe(new RailtConfigurationSubscriber($clockwork, $this->app));
+            $this->subscribe(new RailtSchemaSubscriber($clockwork, $this->app));
+            $this->subscribe(new RailtRequestSubscriber($clockwork, $this->app));
         }
     }
 }

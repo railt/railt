@@ -10,21 +10,25 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
-use Railt\Container\Container;
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Dumper\TypeDumper;
+use Railt\Container\Container;
+use Clockwork\Request\UserData;
+use Railt\Http\RequestInterface;
 use Railt\Extension\Routing\RouterInterface;
-use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
 use Railt\Foundation\Event\Resolver\FieldResolve;
-use Railt\Http\RequestInterface;
+use Railt\Foundation\Event\Connection\ConnectionEstablished;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class RequestUserDataSubscriber
+ * Class RailtRequestSubscriber
  */
-class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
+class RailtRequestSubscriber implements EventSubscriberInterface
 {
     /**
      * @var Container
@@ -46,7 +50,6 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
      *
      * @param Clockwork $clockwork
      * @param Container $app
-     * @throws \ReflectionException
      */
     public function __construct(Clockwork $clockwork, Container $app)
     {
@@ -77,16 +80,18 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
         /** @var UserData $context */
         $context = $this->clockwork->userData('railt:request:' . $request->getId());
 
-        $context->table('Dispatch [' . $input->getPath() . ']', [
-            ['Name' => 'GraphQL Type', 'Value' => $input->getTypeName()],
-            ['Name' => 'GraphQL Field', 'Value' => $input->getField()],
-            ['Name' => 'Alias', 'Value' => $input->getAlias()],
-            ['Name' => 'Path', 'Value' => $input->getPath()],
-            ['Name' => 'Arguments', 'Value' => $input->all()],
-            ['Name' => 'Prefer Types', 'Value' => $input->getPreferTypes()],
-            ['Name' => 'Result', 'Value' => TypeDumper::render($event->getResult())],
-            ['Name' => 'Related Fields', 'Value' => $input->getRelatedFields()],
-        ]);
+        if ($event->hasResult()) {
+            $context->table('GraphQL Field [' . $input->getPath() . ']', [
+                ['Name' => 'Path', 'Value' => $input->getPath()],
+                ['Name' => 'Type', 'Value' => $input->getTypeName()],
+                ['Name' => 'Field', 'Value' => $input->getField()],
+                ['Name' => 'Alias', 'Value' => $input->getAlias()],
+                ['Name' => 'Arguments', 'Value' => $input->all()],
+                ['Name' => 'Prefer Types', 'Value' => $input->getPreferTypes()],
+                ['Name' => 'Result', 'Value' => TypeDumper::render($event->getResult())],
+                ['Name' => 'Related Fields', 'Value' => $input->getRelatedFields()],
+            ]);
+        }
     }
 
     /**
@@ -105,8 +110,6 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
             'Request ID'    => $request->getId(),
             'Variables'     => \count($request->getVariables(), \COUNT_RECURSIVE),
         ]);
-
-        $context->table('Context Container', $this->getContainerTable($event->getConnection()));
 
         $context->table('Request', [
             ['Description' => 'ID', 'Value' => $request->getId()],
@@ -132,14 +135,16 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
             $variables[] = ['Name' => $key, 'Value' => $value];
         }
 
-        $context->table('Variables', $variables);
+        if (\count($variables)) {
+            $context->table('Variables', $variables);
+        }
     }
 
     /**
      * @param ResponseProceed $event
-     * @throws \Railt\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Container\Exception\ParameterResolutionException
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     public function onResponse(ResponseProceed $event): void
     {
@@ -149,9 +154,9 @@ class HttpLifecycleUserDataSubscriber extends UserDataSubscriber
     }
 
     /**
-     * @throws \Railt\Container\Exception\ContainerInvocationException
-     * @throws \Railt\Container\Exception\ContainerResolutionException
-     * @throws \Railt\Container\Exception\ParameterResolutionException
+     * @throws ContainerInvocationException
+     * @throws ContainerResolutionException
+     * @throws ParameterResolutionException
      */
     private function shareRouter(UserData $context): void
     {

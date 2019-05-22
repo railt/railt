@@ -9,15 +9,51 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Debug\Clockwork;
 
-use Railt\Container\Container;
+use Clockwork\Clockwork;
 use Railt\Dumper\TypeDumper;
+use Railt\Container\Container;
+use Clockwork\Request\UserData;
+use Railt\Foundation\Event\Http\RequestReceived;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Class UserDataSubscriber
+ * Class RailtContainerSubscriber
  */
-abstract class UserDataSubscriber implements EventSubscriberInterface
+class RailtContainerSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var UserData
+     */
+    private $context;
+
+    /**
+     * @var Container
+     */
+    private $app;
+
+    /**
+     * FieldResolveSubscriber constructor.
+     *
+     * @param Clockwork $clockwork
+     * @param Container $app
+     * @throws \ReflectionException
+     */
+    public function __construct(Clockwork $clockwork, Container $app)
+    {
+        $this->app = $app;
+        $this->context = $clockwork->userData('railt:container')->title('Container');
+    }
+
+    /**
+     * @param RequestReceived $event
+     * @throws \ReflectionException
+     */
+    public function onRequest(RequestReceived $event): void
+    {
+        $this->context->table('Global Services', $this->getContainerTable($this->app));
+        $this->context->table('Lifecycle Services', $this->getContainerTable($event->getConnection()));
+    }
+
     /**
      * @param Container $container
      * @return array
@@ -29,7 +65,7 @@ abstract class UserDataSubscriber implements EventSubscriberInterface
 
         foreach ($this->extractContainer($container) as $key => $service) {
             $data[] = [
-                'Service' => $key,
+                'Name'    => $key,
                 'Value'   => TypeDumper::render($service),
                 'Aliases' => \implode(', ', $this->getAliases($container, $key)),
             ];
@@ -85,5 +121,15 @@ abstract class UserDataSubscriber implements EventSubscriberInterface
         $property->setAccessible(true);
 
         return $property->getValue($container);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            RequestReceived::class => ['onRequest', 100],
+        ];
     }
 }
