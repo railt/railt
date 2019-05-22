@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Illuminate\Support\Arr;
-use Railt\Dumper\TypeDumper;
-use Railt\Container\Container;
 use Clockwork\Request\UserData;
-use Railt\Foundation\Config\RepositoryInterface;
+use Illuminate\Support\Arr;
+use Railt\Container\Container;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;
+use Railt\Dumper\TypeDumper;
+use Railt\Foundation\Config\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
