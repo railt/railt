@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Extension\Routing;
 
 use Railt\Container\Exception\ContainerInvocationException;
-use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Extension\ClassLoader\ClassLoaderExtension;
 use Railt\Extension\ClassLoader\ClassLoaderInterface;
 use Railt\Extension\Routing\Subscribers\ActionDispatcherSubscriber;
