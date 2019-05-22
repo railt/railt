@@ -47,11 +47,6 @@ class Compiler implements CompilerInterface, Configuration
     private $loader;
 
     /**
-     * @var ParserInterface
-     */
-    private $parser;
-
-    /**
      * @var CacheInterface|null
      */
     private $storage;
@@ -80,7 +75,6 @@ class Compiler implements CompilerInterface, Configuration
      */
     public function __construct(CacheInterface $cache = null)
     {
-        $this->parser = new Parser();
         $this->stack = new CallStack();
         $this->loader = new Loader($this, $this->stack);
         $this->typeValidator = new Validator($this->stack);
@@ -234,7 +228,7 @@ class Compiler implements CompilerInterface, Configuration
             return \unserialize($this->storage->get($readable->getHash()));
         }
 
-        $ast = $this->parser->parse($readable);
+        $ast = $this->getParser()->parse($readable);
 
         $document = $this->complete(new DocumentBuilder($ast, $readable, $this));
 
@@ -258,7 +252,7 @@ class Compiler implements CompilerInterface, Configuration
      */
     public function getParser(): ParserInterface
     {
-        return $this->parser;
+        return new Parser();
     }
 
     /**
