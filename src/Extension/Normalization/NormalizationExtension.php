@@ -64,22 +64,17 @@ class NormalizationExtension extends Extension
 
     /**
      * @return void
+     * @throws ContainerInvocationException
      */
     public function register(): void
     {
         $this->registerIfNotRegistered(NormalizerInterface::class, function () {
             return new Factory($this->app());
         });
-    }
 
-    /**
-     * @param NormalizerInterface $normalizer
-     * @throws ContainerInvocationException
-     * @throws \Railt\Container\Exception\ContainerResolutionException
-     */
-    public function boot(NormalizerInterface $normalizer): void
-    {
-        $this->on(FieldResolve::class, function (FieldResolve $event) use ($normalizer): void {
+        $normalizer = $this->make(NormalizerInterface::class);
+
+        $this->on(FieldResolve::class, static function (FieldResolve $event) use ($normalizer): void {
             if ($event->hasResult()) {
                 $field = $event->getFieldDefinition();
 

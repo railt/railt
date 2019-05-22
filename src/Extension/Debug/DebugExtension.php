@@ -10,20 +10,20 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug;
 
 use Clockwork\Clockwork;
+use Railt\Foundation\Application;
+use Railt\Foundation\Extension\Status;
+use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Event\EventsExtension;
+use Railt\Foundation\Config\RepositoryInterface;
+use Railt\Extension\Debug\Clockwork\RailtSchemaSubscriber;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
-use Railt\Extension\Debug\Clockwork\PerformanceTimelineSubscriber;
-use Railt\Extension\Debug\Clockwork\RailtConfigurationSubscriber;
-use Railt\Extension\Debug\Clockwork\RailtContainerSubscriber;
 use Railt\Extension\Debug\Clockwork\RailtRequestSubscriber;
-use Railt\Extension\Debug\Clockwork\RailtSchemaSubscriber;
+use Railt\Extension\Debug\Clockwork\RailtContainerSubscriber;
 use Railt\Extension\Debug\Formatter\PrettyResponseSubscriber;
+use Railt\Extension\Debug\Clockwork\RailtConfigurationSubscriber;
+use Railt\Extension\Debug\Clockwork\PerformanceTimelineSubscriber;
 use Railt\Extension\Debug\MemoryProfiler\MemoryProfilerSubscriber;
-use Railt\Foundation\Application;
-use Railt\Foundation\Config\RepositoryInterface;
-use Railt\Foundation\Event\EventsExtension;
-use Railt\Foundation\Extension\Extension;
-use Railt\Foundation\Extension\Status;
 
 /**
  * Class DebugExtension
@@ -72,21 +72,10 @@ class DebugExtension extends Extension
 
     /**
      * @param RepositoryInterface $config
-     */
-    public function register(RepositoryInterface $config): void
-    {
-        if (! $config->get(RepositoryInterface::KEY_DEBUG, false)) {
-            return;
-        }
-    }
-
-    /**
-     * @param RepositoryInterface $config
-     * @throws ContainerResolutionException
      * @throws ContainerInvocationException
      * @throws \ReflectionException
      */
-    public function boot(RepositoryInterface $config): void
+    public function register(RepositoryInterface $config): void
     {
         if (! $config->get(RepositoryInterface::KEY_DEBUG, false)) {
             return;

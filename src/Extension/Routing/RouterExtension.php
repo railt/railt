@@ -67,11 +67,13 @@ class RouterExtension extends Extension
     }
 
     /**
+     * @param CompilerInterface $compiler
      * @return void
+     * @throws ContainerInvocationException
      */
-    public function register(): void
+    public function register(CompilerInterface $compiler): void
     {
-        $this->registerIfNotRegistered(RouterInterface::class, function () {
+        $this->registerIfNotRegistered(RouterInterface::class, static function () {
             return new Router();
         });
 
@@ -80,15 +82,7 @@ class RouterExtension extends Extension
         };
 
         $this->registerIfNotRegistered(DirectiveLoader::class, $directiveLoaderResolver);
-    }
 
-    /**
-     * @param CompilerInterface $compiler
-     * @throws ContainerResolutionException
-     * @throws ContainerInvocationException
-     */
-    public function boot(CompilerInterface $compiler): void
-    {
         $router = $this->make(RouterInterface::class);
         $loader = $this->make(DirectiveLoader::class);
 
