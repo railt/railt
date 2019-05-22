@@ -12,7 +12,7 @@ namespace Railt\Dumper\Resolver;
 /**
  * Class ClosureResolver
  */
-class ClosureResolver extends Resolver
+class ClosureResolver extends Resolver implements SelfDisplayed
 {
     /**
      * @param mixed $value
@@ -33,6 +33,16 @@ class ClosureResolver extends Resolver
     }
 
     /**
+     * @param string $type
+     * @param string $value
+     * @return string
+     */
+    public function render(string $type, string $value): string
+    {
+        return $type . $value;
+    }
+
+    /**
      * @param mixed $value
      * @return string
      * @throws \ReflectionException
@@ -44,7 +54,7 @@ class ClosureResolver extends Resolver
         $type = $reflection->getReturnType();
         $suffix = $type ? $this->dumper->value($type) : 'mixed';
 
-        return \sprintf('(%s) -> %s', $this->arguments($reflection), $suffix);
+        return \sprintf('(%s): %s', $this->arguments($reflection), $suffix);
     }
 
     /**
