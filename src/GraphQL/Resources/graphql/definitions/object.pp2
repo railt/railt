@@ -1,0 +1,35 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Objects
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL queries are hierarchical and composed, describing a tree of
+ * information. While Scalar types describe the leaf values of these
+ * hierarchical queries, Objects describe the intermediate levels.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Objects
+ */
+
+#ObjectDefinition -> Railt\GraphQL\AST\Definition\ObjectNode
+  : Description()?
+    ObjectDefinitionExceptDescription()
+  ;
+
+ObjectDefinitionExceptDescription
+  : ObjectDefinitionHead()
+    ObjectDefinitionBody()?
+  ;
+
+ObjectDefinitionHead
+  : ::T_TYPE:: TypeName()
+    TypeDefinitionImplements()?
+    Directive()*
+  ;
+
+ObjectDefinitionBody
+  : ::T_BRACE_OPEN::
+      FieldDefinition()*
+    ::T_BRACE_CLOSE::
+  ;

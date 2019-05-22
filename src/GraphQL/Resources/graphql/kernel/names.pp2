@@ -1,0 +1,8 @@
+
+
+%include names/type-name
+%include names/with-reserved
+%include names/without-reserved
+%include names/without-values
+
+#Name -> Railt\GraphQL\AST\Common\Name = TypeName();

@@ -1,0 +1,136 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  Railt GraphQL Grammar
+ * --------------------------------------------------------------------------
+ *
+ * This file provides PP language grammar for GraphQL and GraphQL SDL
+ *
+ * @see https://facebook.github.io/graphql/June2018/
+ * @see https://facebook.github.io/graphql/draft/
+ * @see https://github.com/facebook/graphql/pull/90
+ * @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0
+ */
+
+%pragma root Document
+%pragma parser.lookahead 1024
+
+%include lexemes
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Document
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL Document describes a complete file or request string operated
+ * on by a GraphQL service or client. A document contains multiple
+ * definitions, either executable or representative of a GraphQL
+ * type system.
+ *
+ * Documents are only executable by a GraphQL service if they contain
+ * an OperationDefinition and otherwise only contain ExecutableDefinition.
+ * However documents which do not contain OperationDefinition or do
+ * contain TypeSystemDefinition or TypeSystemExtension may still be parsed
+ * and validated to allow client tools to represent many GraphQL uses
+ * which may appear across many individual files.
+ *
+ * If a Document contains only one operation, that operation may be unnamed
+ * or represented in the shorthand form, which omits both the query keyword
+ * and operation name. Otherwise, if a GraphQL Document contains multiple
+ * operations, each operation must be named. When submitting a Document with
+ * multiple operations to a GraphQL service, the name of the desired
+ * operation to be executed must also be provided.
+ *
+ * GraphQL services which only seek to provide GraphQL query execution may
+ * choose to only include ExecutableDefinition and omit the
+ * TypeSystemDefinition and TypeSystemExtension rules from Definition.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Language.Document
+ */
+
+#Document
+  : TypeSystemLanguage()
+  | ExecutableLanguage()
+  ;
+
+
+%include kernel/names
+%include kernel/values
+
+%include common
+%include executable
+%include extensions
+%include definitions
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Language
+ * --------------------------------------------------------------------------
+ *
+ * Clients use the GraphQL query language to make requests to a GraphQL
+ * service. We refer to these request sources as documents. A document
+ * may contain operations (queries, mutations, and subscriptions) as well
+ * as fragments, a common unit of composition allowing for query reuse.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Language
+ */
+
+ExecutableLanguage
+  : ExecutableDefinition()*
+  ;
+
+ExecutableDefinition
+  : OperationDefinition()
+  | FragmentDefinition()
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Type System (SDL)
+ * --------------------------------------------------------------------------
+ *
+ * The GraphQL Type system describes the capabilities of a GraphQL server
+ * and is used to determine if a query is valid. The type system also
+ * describes the input types of query variables to determine if values
+ * provided at runtime are valid.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Type-System
+ */
+
+TypeSystemLanguage
+  : TypeSystemHeader()*
+    TypeSystemBody()*
+  ;
+
+TypeSystemHeader
+  : Directive()
+  ;
+
+TypeSystemBody
+  : TypeSystemDefinition()
+  | TypeSystemExtension()
+  ;
+
+TypeSystemExtension
+  : EnumExtension()
+  | InputExtension()
+  | InterfaceExtension()
+  | ObjectExtension()
+  | ScalarExtension()
+  | SchemaExtension()
+  | UnionExtension()
+  ;
+
+TypeSystemDefinition
+  : DirectiveDefinition()
+  | SchemaDefinition()
+  | EnumDefinition()
+  | InputDefinition()
+  | InterfaceDefinition()
+  | ObjectDefinition()
+  | ScalarDefinition()
+  | UnionDefinition()
+  ;

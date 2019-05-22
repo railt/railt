@@ -1,0 +1,7 @@
+
+//
+// Extends
+//
+#TypeDefinitionExtends
+  : ::T_EXTENDS:: TypeName()
+  ;

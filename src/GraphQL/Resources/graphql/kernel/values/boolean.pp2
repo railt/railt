@@ -1,0 +1,17 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Boolean Values
+ * --------------------------------------------------------------------------
+ *
+ * The two keywords true and false represent the two boolean values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Boolean-Value
+ */
+
+
+#BooleanValue -> Railt\GraphQL\AST\Value\BooleanValue
+  : <T_FALSE>
+  | <T_TRUE>
+  ;

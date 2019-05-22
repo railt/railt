@@ -1,0 +1,107 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Punctuators and Keywords
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL documents include punctuation in order to describe structure.
+ * GraphQL is a data description language and not a programming language,
+ * therefore GraphQL lacks the punctuation often used to describe
+ * mathematical expressions.
+ *
+ * @see http://facebook.github.io/graphql/#sec-Punctuators
+ */
+
+
+%token T_AND                    &
+%token T_OR                     \|
+%token T_PARENTHESIS_OPEN       \(
+%token T_PARENTHESIS_CLOSE      \)
+%token T_BRACKET_OPEN           \[
+%token T_BRACKET_CLOSE          \]
+%token T_BRACE_OPEN             {
+%token T_BRACE_CLOSE            }
+%token T_NON_NULL               !
+%token T_THREE_DOTS             \.\.\.
+%token T_EQUAL                  =
+%token T_DIRECTIVE_AT           @
+%token T_COLON                  :
+%token T_COMMA                  ,
+
+/**
+ * Values
+ */
+%token T_HEX_NUMBER             \-?0x([0-9a-fA-F]+)
+%token T_BIN_NUMBER             \-?0b([0-1]+)
+%token T_NUMBER                 \-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)?(?:[eE][\+\-]?[0-9]+)?
+%token T_TRUE                   (?<=\b)true\b
+%token T_FALSE                  (?<=\b)false\b
+%token T_NULL                   (?<=\b)null\b
+%token T_BLOCK_STRING           """((?:\\"""|(?!""").)*)"""
+%token T_STRING                 "([^"\\]*(?:\\.[^"\\]*)*)"
+
+/**
+ * Common
+ */
+%token T_TYPE                   (?<=\b)type\b
+%token T_ENUM                   (?<=\b)enum\b
+%token T_UNION                  (?<=\b)union\b
+%token T_INTERFACE              (?<=\b)interface\b
+%token T_SCHEMA                 (?<=\b)schema\b
+%token T_SCALAR                 (?<=\b)scalar\b
+%token T_DIRECTIVE              (?<=\b)directive\b
+%token T_INPUT                  (?<=\b)input\b
+%token T_QUERY                  (?<=\b)query\b
+%token T_MUTATION               (?<=\b)mutation\b
+%token T_SUBSCRIPTION           (?<=\b)subscription\b
+%token T_FRAGMENT               (?<=\b)fragment\b
+%token T_EXTEND                 (?<=\b)extend\b
+%token T_EXTENDS                (?<=\b)extends\b
+%token T_IMPLEMENTS             (?<=\b)implements\b
+%token T_ON                     (?<=\b)on\b
+
+/**
+ * Math
+ */
+%token T_PLUS                   \\+
+%token T_MINUS                  \\-
+%token T_DIV                    \\/
+%token T_MUL                    \\*
+
+/**
+ * Common
+ */
+%token T_VARIABLE               \$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)
+%token T_NAME                   [a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Ignored Tokens
+ * --------------------------------------------------------------------------
+ *
+ * Before and after every lexical token may be any amount of ignored
+ * tokens including WhiteSpace and Comment. No ignored regions of a source
+ * document are significant, however ignored source characters may appear
+ * within a lexical token in a significant way, for example a String may
+ * contain white space characters.
+ *
+ * No characters are ignored while parsing a given token, as an example no white
+ * space characters are permitted between the characters defining a FloatValue.
+ *
+ * @see http://facebook.github.io/graphql/#sec-Source-Text.Ignored-Tokens
+ * @see http://facebook.github.io/graphql/#sec-Appendix-Grammar-Summary.Ignored-Tokens
+ */
+
+%skip T_COMMENT                #[^\n]*
+
+%skip T_HTAB                   \x09
+%skip T_LF                     \x0A
+%skip T_CR                     \x0D
+%skip T_WHITESPACE             \x20
+%skip T_UTF32BE_BOM            ^\x00\x00\xFE\xFF
+%skip T_UTF32LE_BOM            ^\xFE\xFF\x00\x00
+%skip T_UTF16BE_BOM            ^\xFE\xFF
+%skip T_UTF16LE_BOM            ^\xFF\xFE
+%skip T_UTF8_BOM               ^\xEF\xBB\xBF
+%skip T_UTF7_BOM               ^\x2B\x2F\x76\x38\x2B\x2F\x76\x39\x2B\x2F\x76\x2B\x2B\x2F\x76\x2F

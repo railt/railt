@@ -1,0 +1,17 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Fragment Spread
+ * --------------------------------------------------------------------------
+ *
+ * Field selection is also determined by spreading fragments into one
+ * another. The selection set of the target fragment is unioned with the
+ * selection set at the level at which the target fragment is referenced.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Fragment-Spreads
+ */
+
+#FragmentSpread -> Railt\GraphQL\AST\Executable\FragmentSpread
+  : ::T_THREE_DOTS:: NameWithReserved() Directives()?
+  ;

@@ -1,0 +1,19 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Boolean Values
+ * --------------------------------------------------------------------------
+ *
+ * Enum values are represented as unquoted names (ex. MOBILE_WEB). It is
+ * recommended that Enum values be “all caps”. Enum values are only used
+ * in contexts where the precise enumeration type is known. Therefore it’s
+ * not necessary to supply an enumeration type name in the literal.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#EnumValue
+ */
+
+
+#EnumValue -> Railt\GraphQL\AST\Value\EnumValue
+  : NameWithoutValues()
+  ;

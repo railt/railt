@@ -84,6 +84,18 @@
                 "../src/SDL": "src/SDL",
                 "../tests/SDL": "tests"
             }
+        },
+        "railt/graphql": {
+            "remote": "git@github.com:railt/graphql.git",
+            "files": {
+                "sdl/composer.json": "composer.json",
+                "sdl/README.md": "README.md",
+                "sdl/.travis.yml": ".travis.yml"
+            },
+            "dirs": {
+                "../src/GraphQL": "src/GraphQL",
+                "../tests/GraphQL": "tests"
+            }
         }
     }
 }

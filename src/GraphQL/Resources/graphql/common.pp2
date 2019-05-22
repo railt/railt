@@ -1,0 +1,7 @@
+
+
+%include common/extends
+%include common/implements
+%include common/description
+%include common/default-value
+%include common/type-condition

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f435d1c293319fe236c5b6129266c10",
+    "content-hash": "f8914cfec7b1386968b257e64cbf3b86",
     "packages": [
         {
             "name": "cache/adapter-common",
@@ -384,16 +384,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.8.17",
+            "version": "v5.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "acd524087bcebcc0979748e84ccc0876395ae497"
+                "reference": "8e2466437516edaa30201a8b5d4eaa56fa99eacd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/acd524087bcebcc0979748e84ccc0876395ae497",
-                "reference": "acd524087bcebcc0979748e84ccc0876395ae497",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/8e2466437516edaa30201a8b5d4eaa56fa99eacd",
+                "reference": "8e2466437516edaa30201a8b5d4eaa56fa99eacd",
                 "shasum": ""
             },
             "require": {
@@ -424,20 +424,20 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2019-05-14T10:54:47+00:00"
+            "time": "2019-05-15T00:29:13+00:00"
         },
         {
             "name": "illuminate/support",
-            "version": "v5.8.17",
+            "version": "v5.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "128c6aaa1599811a04fd10c2d68e1213e433da3f"
+                "reference": "eb6ad85fd80163fdaa5b97983e0e32d811128242"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/128c6aaa1599811a04fd10c2d68e1213e433da3f",
-                "reference": "128c6aaa1599811a04fd10c2d68e1213e433da3f",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/eb6ad85fd80163fdaa5b97983e0e32d811128242",
+                "reference": "eb6ad85fd80163fdaa5b97983e0e32d811128242",
                 "shasum": ""
             },
             "require": {
@@ -485,7 +485,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2019-05-14T13:37:34+00:00"
+            "time": "2019-05-17T18:49:15+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -597,16 +597,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.17.1",
+            "version": "2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066"
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/96acbc0c03782e8115156dd4dd8b736267155066",
-                "reference": "96acbc0c03782e8115156dd4dd8b736267155066",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8322b7bd1805be31867c13bf3cdaab948a0dd406",
+                "reference": "8322b7bd1805be31867c13bf3cdaab948a0dd406",
                 "shasum": ""
             },
             "require": {
@@ -653,7 +653,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2019-04-27T18:04:27+00:00"
+            "time": "2019-05-16T18:44:35+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -701,188 +701,56 @@
             "time": "2018-07-02T15:55:56+00:00"
         },
         {
-            "name": "phplrt/ast",
+            "name": "phplrt/phplrt",
             "version": "1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phplrt/ast.git",
-                "reference": "fb5052c83fd336bdeb6b9935c7af4570ac53e21a"
+                "url": "https://github.com/phplrt/phplrt.git",
+                "reference": "b3395852d7023542a42fd773caebce11c23f2ab0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/ast/zipball/fb5052c83fd336bdeb6b9935c7af4570ac53e21a",
-                "reference": "fb5052c83fd336bdeb6b9935c7af4570ac53e21a",
+                "url": "https://api.github.com/repos/phplrt/phplrt/zipball/b3395852d7023542a42fd773caebce11c23f2ab0",
+                "reference": "b3395852d7023542a42fd773caebce11c23f2ab0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.3"
-            },
-            "suggest": {
-                "ext-dom": "Dumping abstract syntax tree as XML"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phplrt\\Ast\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "The PHPLRT Ast package.",
-            "homepage": "https://github.com/phplrt",
-            "keywords": [
-                "ast",
-                "dump",
-                "tree"
-            ],
-            "time": "2019-05-14T16:41:12+00:00"
-        },
-        {
-            "name": "phplrt/exception",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phplrt/exception.git",
-                "reference": "f09e8bc79d095bdd537338ef1864c41cbb734750"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/exception/zipball/f09e8bc79d095bdd537338ef1864c41cbb734750",
-                "reference": "f09e8bc79d095bdd537338ef1864c41cbb734750",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "phplrt/io": "1.1.*|1.1.x-dev",
-                "phplrt/position": "1.1.*|1.1.x-dev"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phplrt\\Exception\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "The PHPLRT Exception package.",
-            "homepage": "https://github.com/phplrt",
-            "keywords": [
-                "exception",
-                "formatting"
-            ],
-            "time": "2019-05-14T16:41:20+00:00"
-        },
-        {
-            "name": "phplrt/io",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phplrt/io.git",
-                "reference": "f277a6c8c65fd8b1552b839267de337264a0163f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/io/zipball/f277a6c8c65fd8b1552b839267de337264a0163f",
-                "reference": "f277a6c8c65fd8b1552b839267de337264a0163f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "phplrt/exception": "1.1.*|1.1.x-dev",
-                "phplrt/position": "1.1.*|1.1.x-dev",
-                "phplrt/stream": "1.1.*|1.1.x-dev"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phplrt\\Io\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "The PHPLRT Io package.",
-            "homepage": "https://github.com/phplrt",
-            "keywords": [
-                "abstraction",
-                "directory",
-                "file",
-                "file system",
-                "fs",
-                "reader"
-            ],
-            "time": "2019-05-14T16:41:24+00:00"
-        },
-        {
-            "name": "phplrt/lexer",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phplrt/lexer.git",
-                "reference": "d9268dab61abb5f86bb735d5078385988490125f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/lexer/zipball/d9268dab61abb5f86bb735d5078385988490125f",
-                "reference": "d9268dab61abb5f86bb735d5078385988490125f",
-                "shasum": ""
-            },
-            "require": {
+                "ext-mbstring": "*",
                 "ext-pcre": "*",
+                "ext-spl": "*",
                 "php": ">=7.1.3",
-                "phplrt/exception": "1.1.*|1.1.x-dev",
-                "phplrt/io": "1.1.*|1.1.x-dev"
+                "psr/http-message": "1.0.*",
+                "symfony/console": "~3.4|~4.0",
+                "zendframework/zend-code": "~3.0"
             },
-            "suggest": {
-                "ext-parle": "Parle extension fallback"
+            "replace": {
+                "phplrt/ast": "*",
+                "phplrt/compiler": "*",
+                "phplrt/exception": "*",
+                "phplrt/io": "*",
+                "phplrt/lexer": "*",
+                "phplrt/parser": "*",
+                "phplrt/position": "*",
+                "phplrt/stream": "*"
             },
+            "require-dev": {
+                "brianium/paratest": "^2.1",
+                "phpunit/phpunit": "^7.5",
+                "squizlabs/php_codesniffer": "~3.0",
+                "symfony/var-dumper": "~3.4|~4.0"
+            },
+            "bin": [
+                "bin/phplrt"
+            ],
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "master": "1.1.x-dev"
+                    "master": "1.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Phplrt\\Lexer\\": ""
+                    "Phplrt\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -895,173 +763,20 @@
                     "email": "nesk@xakep.ru"
                 }
             ],
-            "description": "The PHPLRT Lexer package.",
+            "description": "PHP Language Recognition Tool",
             "homepage": "https://github.com/phplrt",
             "keywords": [
-                "lexer",
-                "parsing",
-                "regex",
-                "stream",
-                "token",
-                "tokenizer"
-            ],
-            "time": "2019-05-14T16:41:28+00:00"
-        },
-        {
-            "name": "phplrt/parser",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phplrt/parser.git",
-                "reference": "00ca1c1eccf7cbd06e5532aefb4234e2e957d6b7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/parser/zipball/00ca1c1eccf7cbd06e5532aefb4234e2e957d6b7",
-                "reference": "00ca1c1eccf7cbd06e5532aefb4234e2e957d6b7",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "phplrt/ast": "1.1.*|1.1.x-dev",
-                "phplrt/exception": "1.1.*|1.1.x-dev",
-                "phplrt/io": "1.1.*|1.1.x-dev",
-                "phplrt/lexer": "1.1.*|1.1.x-dev"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phplrt\\Parser\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "The PHPLRT Parser package.",
-            "homepage": "https://github.com/phplrt",
-            "keywords": [
-                "language",
+                "Buffer",
+                "ast",
+                "compiler",
+                "grammar",
                 "ll1",
                 "llk",
-                "lr",
+                "lookahead",
                 "parser",
-                "php",
-                "slr"
+                "trace"
             ],
-            "time": "2019-05-14T16:41:31+00:00"
-        },
-        {
-            "name": "phplrt/position",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phplrt/position.git",
-                "reference": "dfc37c5849eaa760708e1e840aba31166a7b45d1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/position/zipball/dfc37c5849eaa760708e1e840aba31166a7b45d1",
-                "reference": "dfc37c5849eaa760708e1e840aba31166a7b45d1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phplrt\\Position\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "The PHPLRT Position package.",
-            "homepage": "https://github.com/phplrt",
-            "keywords": [
-                "analyzing",
-                "column",
-                "input",
-                "line",
-                "offset",
-                "position",
-                "utils",
-                "visualization"
-            ],
-            "time": "2019-05-14T16:41:35+00:00"
-        },
-        {
-            "name": "phplrt/stream",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phplrt/stream.git",
-                "reference": "2aeda5abfbdcd6813ffb6520a7d08eea4c5769f0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/stream/zipball/2aeda5abfbdcd6813ffb6520a7d08eea4c5769f0",
-                "reference": "2aeda5abfbdcd6813ffb6520a7d08eea4c5769f0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "phplrt/exception": "1.1.*|1.1.x-dev",
-                "psr/http-message": "1.0.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phplrt\\Stream\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "The PHPLRT Stream package.",
-            "homepage": "https://github.com/phplrt",
-            "keywords": [
-                "reader",
-                "resource",
-                "streaming"
-            ],
-            "time": "2019-05-14T16:41:39+00:00"
+            "time": "2019-05-14T16:39:56+00:00"
         },
         {
             "name": "psr/cache",
@@ -1814,6 +1529,113 @@
                 "graphql"
             ],
             "time": "2019-05-13T07:12:05+00:00"
+        },
+        {
+            "name": "zendframework/zend-code",
+            "version": "3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-code.git",
+                "reference": "c21db169075c6ec4b342149f446e7b7b724f95eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/c21db169075c6ec4b342149f446e7b7b724f95eb",
+                "reference": "c21db169075c6ec4b342149f446e7b7b724f95eb",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "zendframework/zend-eventmanager": "^2.6 || ^3.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "~1.0",
+                "ext-phar": "*",
+                "phpunit/phpunit": "^6.2.3",
+                "zendframework/zend-coding-standard": "^1.0.0",
+                "zendframework/zend-stdlib": "^2.7 || ^3.0"
+            },
+            "suggest": {
+                "doctrine/annotations": "Doctrine\\Common\\Annotations >=1.0 for annotation features",
+                "zendframework/zend-stdlib": "Zend\\Stdlib component"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3.x-dev",
+                    "dev-develop": "3.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Code\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "provides facilities to generate arbitrary code using an object oriented interface",
+            "homepage": "https://github.com/zendframework/zend-code",
+            "keywords": [
+                "code",
+                "zf2"
+            ],
+            "time": "2018-08-13T20:36:59+00:00"
+        },
+        {
+            "name": "zendframework/zend-eventmanager",
+            "version": "3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zendframework/zend-eventmanager.git",
+                "reference": "a5e2583a211f73604691586b8406ff7296a946dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/a5e2583a211f73604691586b8406ff7296a946dd",
+                "reference": "a5e2583a211f73604691586b8406ff7296a946dd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "athletic/athletic": "^0.1",
+                "container-interop/container-interop": "^1.1.0",
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2",
+                "zendframework/zend-coding-standard": "~1.0.0",
+                "zendframework/zend-stdlib": "^2.7.3 || ^3.0"
+            },
+            "suggest": {
+                "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
+                "zendframework/zend-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev",
+                    "dev-develop": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zend\\EventManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Trigger and listen to events within a PHP application",
+            "homepage": "https://github.com/zendframework/zend-eventmanager",
+            "keywords": [
+                "event",
+                "eventmanager",
+                "events",
+                "zf2"
+            ],
+            "time": "2018-04-25T15:33:34+00:00"
         }
     ],
     "packages-dev": [
@@ -2287,7 +2109,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.8.17",
+            "version": "v5.8.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -2332,16 +2154,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.51",
+            "version": "1.0.52",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "755ba7bf3fb9031e6581d091db84d78275874396"
+                "reference": "c5a5097156387970e6f0ccfcdf03f752856f3391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/755ba7bf3fb9031e6581d091db84d78275874396",
-                "reference": "755ba7bf3fb9031e6581d091db84d78275874396",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/c5a5097156387970e6f0ccfcdf03f752856f3391",
+                "reference": "c5a5097156387970e6f0ccfcdf03f752856f3391",
                 "shasum": ""
             },
             "require": {
@@ -2412,7 +2234,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-03-30T13:22:34+00:00"
+            "time": "2019-05-20T20:21:14+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2793,61 +2615,6 @@
                 }
             ],
             "time": "2017-07-14T14:27:02+00:00"
-        },
-        {
-            "name": "phplrt/compiler",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phplrt/compiler.git",
-                "reference": "7fa1d57dc41047716e7fe5800c03fe9522736073"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phplrt/compiler/zipball/7fa1d57dc41047716e7fe5800c03fe9522736073",
-                "reference": "7fa1d57dc41047716e7fe5800c03fe9522736073",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.3",
-                "phplrt/ast": "1.1.*|1.1.x-dev",
-                "phplrt/exception": "1.1.*|1.1.x-dev",
-                "phplrt/io": "1.1.*|1.1.x-dev",
-                "phplrt/lexer": "1.1.*|1.1.x-dev",
-                "phplrt/parser": "1.1.*|1.1.x-dev",
-                "symfony/console": "~3.4|~4.0",
-                "zendframework/zend-code": "~3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phplrt\\Compiler\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "The PHPLRT Compiler package.",
-            "homepage": "https://github.com/phplrt",
-            "keywords": [
-                "compiler",
-                "grammar",
-                "language",
-                "pp"
-            ],
-            "time": "2019-05-14T16:41:16+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -4294,113 +4061,6 @@
                 "validate"
             ],
             "time": "2018-12-25T11:19:39+00:00"
-        },
-        {
-            "name": "zendframework/zend-code",
-            "version": "3.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-code.git",
-                "reference": "c21db169075c6ec4b342149f446e7b7b724f95eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/c21db169075c6ec4b342149f446e7b7b724f95eb",
-                "reference": "c21db169075c6ec4b342149f446e7b7b724f95eb",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1",
-                "zendframework/zend-eventmanager": "^2.6 || ^3.0"
-            },
-            "require-dev": {
-                "doctrine/annotations": "~1.0",
-                "ext-phar": "*",
-                "phpunit/phpunit": "^6.2.3",
-                "zendframework/zend-coding-standard": "^1.0.0",
-                "zendframework/zend-stdlib": "^2.7 || ^3.0"
-            },
-            "suggest": {
-                "doctrine/annotations": "Doctrine\\Common\\Annotations >=1.0 for annotation features",
-                "zendframework/zend-stdlib": "Zend\\Stdlib component"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3.x-dev",
-                    "dev-develop": "3.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\Code\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "provides facilities to generate arbitrary code using an object oriented interface",
-            "homepage": "https://github.com/zendframework/zend-code",
-            "keywords": [
-                "code",
-                "zf2"
-            ],
-            "time": "2018-08-13T20:36:59+00:00"
-        },
-        {
-            "name": "zendframework/zend-eventmanager",
-            "version": "3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zend-eventmanager.git",
-                "reference": "a5e2583a211f73604691586b8406ff7296a946dd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/a5e2583a211f73604691586b8406ff7296a946dd",
-                "reference": "a5e2583a211f73604691586b8406ff7296a946dd",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0"
-            },
-            "require-dev": {
-                "athletic/athletic": "^0.1",
-                "container-interop/container-interop": "^1.1.0",
-                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2",
-                "zendframework/zend-coding-standard": "~1.0.0",
-                "zendframework/zend-stdlib": "^2.7.3 || ^3.0"
-            },
-            "suggest": {
-                "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
-                "zendframework/zend-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2-dev",
-                    "dev-develop": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Zend\\EventManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Trigger and listen to events within a PHP application",
-            "homepage": "https://github.com/zendframework/zend-eventmanager",
-            "keywords": [
-                "event",
-                "eventmanager",
-                "events",
-                "zf2"
-            ],
-            "time": "2018-04-25T15:33:34+00:00"
         }
     ],
     "aliases": [],

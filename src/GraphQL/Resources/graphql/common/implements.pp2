@@ -1,0 +1,15 @@
+
+
+//
+// Implements
+//
+#TypeDefinitionImplements -> Railt\GraphQL\AST\Common\ImplementInterfaces
+  : ::T_IMPLEMENTS::
+    __implementsDelimiter()? TypeName()
+    ( __implementsDelimiter() TypeName() )*
+  ;
+
+__implementsDelimiter
+  : ::T_COMMA::
+  | ::T_AND::
+  ;

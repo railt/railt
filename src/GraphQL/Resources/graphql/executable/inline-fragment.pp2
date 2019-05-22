@@ -1,0 +1,18 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Inline Fragments
+ * --------------------------------------------------------------------------
+ *
+ * Fragments can be defined inline within a selection set. This is done to
+ * conditionally include fields based on their runtime type.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Inline-Fragments
+ */
+
+
+#InlineFragment -> Railt\GraphQL\AST\Executable\InlineFragment
+  : ::T_THREE_DOTS:: TypeCondition()? Directives()?
+    SelectionSet()
+  ;

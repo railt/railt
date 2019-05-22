@@ -1,0 +1,27 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Selection Sets
+ * --------------------------------------------------------------------------
+ *
+ * An operation selects the set of information it needs, and will receive
+ * exactly that information and nothing more, avoiding over‐fetching and
+ * under‐fetching data.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Selection-Sets
+ */
+
+SelectionSet
+  : ::T_BRACE_OPEN:: __selection()* ::T_BRACE_CLOSE::
+  ;
+
+__selection
+  : Selection() ::T_COMMA::?
+  ;
+
+Selection
+  : Field()
+  | InlineFragment()
+  | FragmentSpread()
+  ;

@@ -1,0 +1,24 @@
+//
+// TypeHint
+//
+TypeHint
+  : ListType()
+  | NonNullType()
+  | Type()
+  ;
+
+#ListType -> Railt\GraphQL\AST\TypeHint\ListType
+  : ::T_BRACKET_OPEN::
+      ( NonNullType() | Type() )
+    ::T_BRACKET_CLOSE::
+  ;
+
+#NonNullType -> Railt\GraphQL\AST\TypeHint\NonNullType
+  : ( ListType() | Type() ) ::T_NON_NULL::
+  ;
+
+#Type -> Railt\GraphQL\AST\TypeHint\Type
+  : TypeName()
+  ;
+
+

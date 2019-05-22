@@ -1,0 +1,29 @@
+
+//
+// Any name includes reserved keywords but except values: NULL, TRUE and FALSE.
+//
+
+NameWithoutValues
+  : __nameWithoutValues() #Name
+  ;
+
+__nameWithoutValues
+  : __nameWithoutReserved()
+  | <T_TYPE>
+  | <T_ENUM>
+  | <T_UNION>
+  | <T_INPUT_UNION>
+  | <T_INTERFACE>
+  | <T_SCHEMA>
+  | <T_SCALAR>
+  | <T_DIRECTIVE>
+  | <T_INPUT>
+  | <T_FRAGMENT>
+  | <T_EXTEND>
+  | <T_EXTENDS>
+  | <T_IMPLEMENTS>
+  | <T_ON>
+  | <T_QUERY>
+  | <T_MUTATION>
+  | <T_SUBSCRIPTION>
+  ;

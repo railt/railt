@@ -1,0 +1,15 @@
+
+//
+// Any name includes reserved keywords.
+//
+
+NameWithReserved
+  : __nameWithReserved() #Name
+  ;
+
+__nameWithReserved
+  : __nameWithoutValues()
+  | <T_TRUE>
+  | <T_FALSE>
+  | <T_NULL>
+  ;

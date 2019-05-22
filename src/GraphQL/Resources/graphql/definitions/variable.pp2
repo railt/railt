@@ -1,0 +1,13 @@
+
+VariableDefinitions
+  : ::T_PARENTHESIS_OPEN:: __variableDefinition()* ::T_PARENTHESIS_CLOSE::
+  ;
+
+__variableDefinition
+  : VariableDefinition() ::T_COMMA::?
+  ;
+
+#VariableDefinition -> Railt\GraphQL\AST\Definition\VariableNode
+  : Variable() ::T_COLON:: TypeHint()
+    DefaultValue()?
+  ;

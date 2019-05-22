@@ -1,0 +1,21 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Null Values
+ * --------------------------------------------------------------------------
+ *
+ * Null values are represented as the keyword null.
+ *
+ * GraphQL has two semantically different ways to represent the lack
+ * of a value:
+ *     - Explicitly providing the literal value: null.
+ *     - Implicitly not providing a value at all.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Null-Value
+ */
+
+
+#NullValue -> Railt\GraphQL\AST\Value\NullValue
+  : ::T_NULL::
+  ;

@@ -1,0 +1,9 @@
+
+
+%include executable/argument
+%include executable/directive
+%include executable/field
+%include executable/fragment
+%include executable/inline-fragment
+%include executable/operation
+%include executable/selection-set

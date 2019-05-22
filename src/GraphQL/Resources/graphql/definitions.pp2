@@ -1,0 +1,17 @@
+
+
+%include definitions/argument
+%include definitions/directive
+%include definitions/enum
+%include definitions/enum-value
+%include definitions/fragment
+%include definitions/input
+%include definitions/input-field
+%include definitions/interface
+%include definitions/object
+%include definitions/object-field
+%include definitions/scalar
+%include definitions/schema
+%include definitions/schema-field
+%include definitions/union
+%include definitions/variable

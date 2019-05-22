@@ -1,0 +1,20 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Schema Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Schema extensions are used to represent a schema which has been extended
+ * from an original schema. For example, this might be used by a GraphQL
+ * service which adds additional operation types, or additional directives
+ * to an existing schema.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Schema-Extension
+ */
+
+
+#SchemaExtension -> Railt\GraphQL\AST\Extension\SchemaExtensionNode
+  : Description()?
+    ::T_EXTEND:: SchemaDefinitionExceptDescription()
+  ;

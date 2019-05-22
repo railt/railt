@@ -1,0 +1,20 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Interface Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Interface type extensions are used to represent an interface which has
+ * been extended from some original interface. For example, this might be
+ * used to represent common local data on many types, or by a GraphQL
+ * service which is itself an extension of another GraphQL service.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Interface-Extensions
+ */
+
+
+#InterfaceExtension -> Railt\GraphQL\AST\Extension\InterfaceExtensionNode
+  : Description()?
+    ::T_EXTEND:: InterfaceDefinitionExceptDescription()
+  ;

@@ -1,0 +1,42 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Fields
+ * --------------------------------------------------------------------------
+ *
+ * A selection set is primarily composed of fields. A field describes
+ * one discrete piece of information available to request within a
+ * selection set.
+ *
+ * Some fields describe complex data or relationships to other data.
+ * In order to further explore this data, a field may itself contain a
+ * selection set, allowing for deeply nested requests. All GraphQL
+ * operations must specify their selections down to fields which return
+ * scalar values to ensure an unambiguously shaped response.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#Field
+ */
+
+#Field -> Railt\GraphQL\AST\Executable\Field
+  : Alias()? NameWithReserved()
+    Arguments()?
+    Directives()?
+    SelectionSet()?
+  ;
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Aliases
+ * --------------------------------------------------------------------------
+ *
+ * By default, the key in the response object will use the field name
+ * queried. However, you can define a different name by specifying an alias.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#Alias
+ */
+
+#Alias -> Railt\GraphQL\AST\Executable\Alias
+  : NameWithReserved() ::T_COLON::
+  ;
+

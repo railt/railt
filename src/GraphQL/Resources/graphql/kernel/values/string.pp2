@@ -1,0 +1,23 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Strings and Block Strings
+ * --------------------------------------------------------------------------
+ *
+ * Strings are sequences of characters wrapped in double‐quotes (").
+ * (ex. "Hello World"). White space and other otherwise‐ignored characters
+ * are significant within a string value.
+ *
+ * Block strings are sequences of characters wrapped in triple‐quotes
+ * ("""). White space, line terminators, quote, and backslash characters
+ * may all be used unescaped to enable verbatim text.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-String-Value
+ */
+
+
+#StringValue -> Railt\GraphQL\AST\Value\StringValue
+  : <T_BLOCK_STRING>
+  | <T_STRING>
+  ;

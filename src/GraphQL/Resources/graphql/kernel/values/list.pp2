@@ -1,0 +1,25 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL List Values
+ * --------------------------------------------------------------------------
+ *
+ * Lists are ordered sequences of values wrapped in square‐brackets [ ].
+ * The values of a List literal may be any value literal or variable
+ * (ex. [1, 2, 3]).
+ *
+ * Commas are optional throughout GraphQL so trailing commas are allowed
+ * and repeated commas do not represent missing values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-List-Value
+ */
+
+
+#ListValue -> Railt\GraphQL\AST\Value\ListValue
+  : ::T_BRACKET_OPEN:: __listValue()* ::T_BRACKET_CLOSE::
+  ;
+
+__listValue
+  : Value() ::T_COMMA::?
+  ;

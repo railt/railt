@@ -1,0 +1,22 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Number Values (Int and Float)
+ * --------------------------------------------------------------------------
+ *
+ * 1) An Int number is specified without a decimal point or exponent (ex. 1).
+ *
+ * 2) A Float number includes either a decimal point (ex. 1.0) or an
+ *    exponent (ex. 1e50) or both (ex. 6.0221413e23).
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Int-Value
+ * @see https://facebook.github.io/graphql/June2018/#sec-Float-Value
+ */
+
+
+#NumberValue -> Railt\GraphQL\AST\Value\NumberValue
+  : <T_NUMBER>
+  | <T_HEX_NUMBER>
+  | <T_BIN_NUMBER>
+  ;

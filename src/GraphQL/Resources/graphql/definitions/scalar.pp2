@@ -1,0 +1,31 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Scalars
+ * --------------------------------------------------------------------------
+ *
+ * Scalar types represent primitive leaf values in a GraphQL type system.
+ * GraphQL responses take the form of a hierarchical tree; the leaves
+ * on these trees are GraphQL scalars.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Scalars
+ */
+
+#ScalarDefinition -> Railt\GraphQL\AST\Definition\ScalarNode
+  : Description()?
+    ScalarDefinitionExceptDescription()
+  ;
+
+ScalarDefinitionExceptDescription
+  : ScalarDefinitionBody()
+  ;
+
+ScalarDefinitionBody
+  : ::T_SCALAR:: TypeName() Directive()*
+    ScalarDefinitionExtends()?
+  ;
+
+#ScalarDefinitionExtends -> Railt\GraphQL\AST\Common\ExtendTypes
+  : ::T_EXTENDS:: TypeName()
+  ;

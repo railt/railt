@@ -1,0 +1,61 @@
+{
+    "name": "railt/graphql",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "http://railt.org",
+    "description": "The GraphQL grammar and compiler",
+    "keywords": [
+        "graphql",
+        "idl",
+        "sdl",
+        "otd",
+        "ast",
+        "reflection",
+        "compiler"
+    ],
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/graphql"
+    },
+    "require": {
+        "php": ">=7.1.3",
+        "ext-mbstring": "*",
+        "phplrt/parser": "~1.1",
+        "phplrt/lexer": "~1.1",
+        "phplrt/io": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\": "src/"
+        },
+        "files": [
+            "./src/GraphQL/helpers.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "phplrt/compiler": "~1.1"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Tests\\GraphQL\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
