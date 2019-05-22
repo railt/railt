@@ -12,7 +12,6 @@ use Phplrt\Io\File;
 use Phplrt\Io\Readable;
 use Railt\GraphQL\Parser;
 
-
 if (! \function_exists('\\graphql')) {
     /**
      * @param string|Readable|\SplFileInfo $sources

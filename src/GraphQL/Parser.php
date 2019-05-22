@@ -14,5 +14,4 @@ namespace Railt\GraphQL;
  */
 class Parser extends BaseParser
 {
-
 }
