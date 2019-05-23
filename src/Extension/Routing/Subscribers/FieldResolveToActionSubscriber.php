@@ -9,15 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Routing\Subscribers;
 
-use Railt\Extension\Routing\Events\ActionDispatch;
-use Railt\Extension\Routing\RouteInterface;
-use Railt\Extension\Routing\RouterInterface;
-use Railt\Foundation\Event\Resolver\FieldResolve;
 use Railt\Http\Identifiable;
 use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
-use Railt\SDL\Contracts\Definitions\TypeDefinition;
+use Railt\Extension\Routing\RouteInterface;
+use Railt\Extension\Routing\RouterInterface;
+use Symfony\Component\EventDispatcher\Event;
+use Railt\Foundation\Event\Resolver\FieldResolve;
+use Railt\Extension\Routing\Events\ActionDispatch;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
+use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -93,7 +94,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
 
     /**
      * @param iterable|RouteInterface[] $routes
-     * @param \Railt\Foundation\Event\Resolver\FieldResolve $event
+     * @param FieldResolve $event
      * @return array
      */
     private function list(iterable $routes, FieldResolve $event): array
@@ -107,8 +108,10 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
                 continue;
             }
 
-            foreach ($before->getResponse() as $response) {
-                $result[] = $this->result($route, $response);
+            if (\is_iterable($before->getResponse())) {
+                foreach ($before->getResponse() as $response) {
+                    $result[] = $this->result($route, $response);
+                }
             }
         }
 
@@ -118,7 +121,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
     /**
      * @param RouteInterface $route
      * @param FieldResolve $resolving
-     * @return ActionDispatch|\Symfony\Component\EventDispatcher\Event
+     * @return ActionDispatch|Event
      */
     private function fireDispatch(RouteInterface $route, FieldResolve $resolving): ActionDispatch
     {
@@ -172,7 +175,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param \Railt\Extension\Routing\RouteInterface $route
+     * @param RouteInterface $route
      * @param mixed $result
      * @return mixed
      */
@@ -187,7 +190,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
 
     /**
      * @param iterable|RouteInterface[] $routes
-     * @param \Railt\Foundation\Event\Resolver\FieldResolve $event
+     * @param FieldResolve $event
      * @return mixed
      */
     private function singular(iterable $routes, FieldResolve $event)
