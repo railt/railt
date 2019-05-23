@@ -127,6 +127,10 @@ class FieldBuilder extends Builder
      */
     private function default(): ?array
     {
+        if ($this->reflection->isNonNull() && $this->reflection->isList()) {
+            return [];
+        }
+
         return $this->reflection->isNonNull() && ! $this->isScalar() ? [] : null;
     }
 
