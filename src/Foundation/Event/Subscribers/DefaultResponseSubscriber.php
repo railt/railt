@@ -36,11 +36,13 @@ class DefaultResponseSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $default = function ($result) use ($event): void {
+        $default = static function ($result) use ($event): void {
             $event->withParentResult($result);
         };
 
-        if ($result = Attribute::read($event->getParentResult(), $this->getFieldName($event), $default)) {
+        $result = Attribute::read($event->getParentResult(), $this->getFieldName($event), $default);
+
+        if ($result !== null) {
             $event->withResult($result);
         }
     }
