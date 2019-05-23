@@ -48,9 +48,9 @@ class GeneratorResolver extends ObjectResolver
     private function getReturn(\Generator $generator): string
     {
         if ($generator->valid()) {
-            return $this->dumper->du($generator->current()) . ' … ';
+            return $this->dumper->dump($generator->current()) . ' … ';
         }
 
-        return ' … ' . $this->dumper->du($generator->getReturn());
+        return ' … ' . $this->dumper->dump($generator->getReturn());
     }
 }
