@@ -67,7 +67,7 @@ class CallableResolver extends ClosureResolver
                 return \get_class($value);
 
             default:
-                return $this->dumper->du($value);
+                return $this->dumper->dump($value);
         }
     }
 }
