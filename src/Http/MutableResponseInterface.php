@@ -20,5 +20,9 @@ interface MutableResponseInterface extends
     MutableExceptionsProviderInterface,
     ResponseInterface
 {
-
+    /**
+     * @param array|null $data
+     * @return MutableResponseInterface|$this
+     */
+    public function withData(?array $data): self;
 }

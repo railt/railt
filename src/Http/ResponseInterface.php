@@ -26,16 +26,6 @@ interface ResponseInterface extends
     public function getData(): ?array;
 
     /**
-     * @return array|null
-     */
-    public function getErrors(): ?array;
-
-    /**
-     * @return array
-     */
-    public function getExtensions(): array;
-
-    /**
      * @return bool
      */
     public function isValid(): bool;

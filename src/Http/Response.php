@@ -59,7 +59,7 @@ class Response implements MutableResponseInterface
     public function toArray(): array
     {
         return [
-            static::ERRORS_KEY     => $this->getErrors(),
+            static::ERRORS_KEY     => $this->getExceptions(),
             static::DATA_KEY       => $this->getData(),
             static::EXTENSIONS_KEY => $this->getExtensions(),
         ];
@@ -68,23 +68,20 @@ class Response implements MutableResponseInterface
     /**
      * @return array|null
      */
-    public function getErrors(): ?array
-    {
-        $result = [];
-
-        foreach ($this->getExceptions() as $e) {
-            $result[] = $e->jsonSerialize();
-        }
-
-        return $result ?: null;
-    }
-
-    /**
-     * @return array|null
-     */
     public function getData(): ?array
     {
         return $this->data;
+    }
+
+    /**
+     * @param array|null $data
+     * @return MutableResponseInterface|$this
+     */
+    public function withData(?array $data): MutableResponseInterface
+    {
+        $this->data = $data;
+
+        return $this;
     }
 
     /**
