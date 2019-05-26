@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Exception;
 
-use Railt\Exception\Path\MutablePathProviderInterface;
 use Phplrt\Exception\MutableException\MutableFileInterface;
-use Railt\Exception\Location\MutableLocationsProviderInterface;
 use Phplrt\Exception\MutableException\MutablePositionInterface;
+use Railt\Exception\Location\MutableLocationsProviderInterface;
+use Railt\Exception\Path\MutablePathProviderInterface;
 
 /**
  * Interface MutableGraphQLExceptionInterface

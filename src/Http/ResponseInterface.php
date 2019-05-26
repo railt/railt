@@ -24,14 +24,4 @@ interface ResponseInterface extends
      * @return array|null
      */
     public function getData(): ?array;
-
-    /**
-     * @return bool
-     */
-    public function isValid(): bool;
-
-    /**
-     * @return bool
-     */
-    public function isInvalid(): bool;
 }

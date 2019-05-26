@@ -11,7 +11,6 @@ namespace Railt\Http\Response;
 
 use Railt\Dumper\TypeDumper;
 use Railt\Exception\Factory;
-use Railt\Exception\GraphQLExceptionInterface;
 
 /**
  * Trait MutableExceptionsProviderTrait

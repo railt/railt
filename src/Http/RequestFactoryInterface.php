@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**

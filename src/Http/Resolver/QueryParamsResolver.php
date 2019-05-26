@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Http\Resolver;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Railt\Http\Request;
 use Railt\Http\RequestInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class QueryParamsResolver

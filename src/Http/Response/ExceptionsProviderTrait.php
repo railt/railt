@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Http\Response;
 
-use Railt\Dumper\TypeDumper;
-use Railt\Exception\Factory;
 use Railt\Exception\GraphQLExceptionInterface;
 
 /**
