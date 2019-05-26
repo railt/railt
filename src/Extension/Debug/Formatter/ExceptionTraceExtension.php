@@ -11,7 +11,7 @@ namespace Railt\Extension\Debug\Formatter;
 
 use Phplrt\Io\PositionInterface;
 use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Extension\ExtensionInterface;
+use Railt\HttpExtension\ExtensionInterface;
 
 /**
  * Class ExceptionTraceExtension

@@ -7,19 +7,24 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Resolver;
+namespace Railt\Http;
 
 use Railt\Http\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Interface ResolverInterface
+ * Interface RequestFactoryInterface
  */
-interface ResolverInterface
+interface RequestFactoryInterface
 {
     /**
      * @param ServerRequestInterface $request
      * @return RequestInterface|null
      */
-    public function resolve(ServerRequestInterface $request): ?RequestInterface;
+    public function fromServerRequest(ServerRequestInterface $request): ?RequestInterface;
+
+    /**
+     * @return RequestInterface
+     */
+    public function empty(): RequestInterface;
 }

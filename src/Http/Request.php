@@ -9,19 +9,20 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Request\HasOperation;
-use Railt\Http\Request\HasQueryType;
-use Railt\Http\Request\HasVariables;
+use Railt\Json\Json;
+use Railt\Http\Request\QueryTypeTrait;
+use Railt\Http\Request\MutableVariablesTrait;
+use Railt\Http\Request\MutableOperationNameTrait;
 
 /**
  * Class Request
  */
-class Request implements RequestInterface
+class Request implements MutableRequestInterface
 {
-    use HasVariables;
-    use HasQueryType;
-    use HasOperation;
-    use HasIdentifier;
+    use QueryTypeTrait;
+    use RenderableTrait;
+    use MutableVariablesTrait;
+    use MutableOperationNameTrait;
 
     /**
      * @var string
@@ -33,24 +34,64 @@ class Request implements RequestInterface
      *
      * @param string $query
      * @param array $variables
-     * @param string|null $operation
+     * @param string|null $operationName
      */
-    public function __construct(string $query, array $variables = [], string $operation = null)
+    public function __construct(string $query, array $variables = [], string $operationName = null)
     {
+        $this->variables = $variables;
+
         $this->withQuery($query);
-        $this->withVariables($variables);
-        $this->withOperation($operation);
+        $this->renameOperation($operationName);
     }
 
     /**
      * @param string $query
-     * @return RequestInterface|$this
+     * @return MutableRequestInterface|$this
      */
-    public function withQuery(string $query): RequestInterface
+    public function withQuery(string $query): MutableRequestInterface
     {
-        $this->query = $query;
+        $this->query = \trim($query);
+        $this->type = $this->resolveType($this->query);
 
         return $this;
+    }
+
+    /**
+     * @param string $query
+     * @return string
+     */
+    private function resolveType(string $query): string
+    {
+        switch (true) {
+            case \stripos($query, self::TYPE_MUTATION, 0) === 0:
+                return self::TYPE_MUTATION;
+
+            case \stripos($query, self::TYPE_SUBSCRIPTION, 0) === 0:
+                return self::TYPE_SUBSCRIPTION;
+
+            default:
+                return self::TYPE_QUERY;
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return \trim($this->query) === '';
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            self::FIELD_QUERY          => $this->getQuery(),
+            self::FIELD_VARIABLES      => $this->getVariables(),
+            self::FIELD_OPERATION_NAME => $this->getOperationName(),
+        ];
     }
 
     /**
@@ -59,16 +100,5 @@ class Request implements RequestInterface
     public function getQuery(): string
     {
         return $this->query;
-    }
-
-    /**
-     * @param string $query
-     * @param array $variables
-     * @param string|null $operation
-     * @return Request
-     */
-    public static function create(string $query, array $variables = [], string $operation = null): self
-    {
-        return new static($query, $variables, $operation);
     }
 }

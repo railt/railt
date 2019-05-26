@@ -12,8 +12,8 @@ namespace Railt\Foundation\Webonyx\Executor;
 use GraphQL\Error\Error;
 use GraphQL\Error\InvariantViolation;
 use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
-use Railt\Http\Exception\GraphQLExceptionLocation;
+use Railt\Http\Exception\GraphQLProviderProviderInterface;
+use Railt\Http\Exception\Location;
 
 /**
  * Class ExceptionResolver
@@ -22,9 +22,9 @@ class ExceptionResolver
 {
     /**
      * @param \Throwable $exception
-     * @return GraphQLExceptionInterface
+     * @return GraphQLProviderProviderInterface
      */
-    public static function resolve(\Throwable $exception): GraphQLExceptionInterface
+    public static function resolve(\Throwable $exception): GraphQLProviderProviderInterface
     {
         if ($exception instanceof Error) {
             return self::createFromWebonyx($exception);
@@ -35,13 +35,13 @@ class ExceptionResolver
 
     /**
      * @param Error $error
-     * @return GraphQLExceptionInterface
+     * @return GraphQLProviderProviderInterface
      */
-    private static function createFromWebonyx(Error $error): GraphQLExceptionInterface
+    private static function createFromWebonyx(Error $error): GraphQLProviderProviderInterface
     {
         $root = self::getRootException($error);
 
-        $exception = $root instanceof GraphQLExceptionInterface
+        $exception = $root instanceof GraphQLProviderProviderInterface
             ? $root
             : new GraphQLException(self::resolveMessage($error), $error->getCode(), $error);
 
@@ -50,7 +50,7 @@ class ExceptionResolver
         }
 
         foreach ($error->getLocations() as $location) {
-            $exception->addLocation(new GraphQLExceptionLocation($location->line, $location->column));
+            $exception->addLocation(new Location($location->line, $location->column));
         }
 
         foreach ((array)$error->getPath() as $chunk) {
@@ -67,7 +67,7 @@ class ExceptionResolver
     private static function getRootException(\Throwable $error): \Throwable
     {
         while ($error->getPrevious()) {
-            if ($error instanceof GraphQLExceptionInterface) {
+            if ($error instanceof GraphQLProviderProviderInterface) {
                 return $error;
             }
 

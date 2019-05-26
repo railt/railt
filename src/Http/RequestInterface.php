@@ -9,23 +9,41 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Request\ProvideOperation;
-use Railt\Http\Request\ProvideQueryType;
-use Railt\Http\Request\ProvideVariables;
+use Railt\Http\Request\QueryTypeInterface;
+use Railt\Http\Request\VariablesInterface;
+use Railt\Http\Request\OperationNameInterface;
 
 /**
  * Interface RequestInterface
  */
-interface RequestInterface extends ProvideQueryType, ProvideOperation, ProvideVariables, Identifiable
+interface RequestInterface extends
+    VariablesInterface,
+    QueryTypeInterface,
+    RenderableInterface,
+    OperationNameInterface
 {
+    /**
+     * @var string
+     */
+    public const FIELD_QUERY = 'query';
+
+    /**
+     * @var string
+     */
+    public const FIELD_VARIABLES = 'variables';
+
+    /**
+     * @var string
+     */
+    public const FIELD_OPERATION_NAME = 'operationName';
+
     /**
      * @return string
      */
     public function getQuery(): string;
 
     /**
-     * @param string $query
-     * @return RequestInterface|$this
+     * @return bool
      */
-    public function withQuery(string $query): self;
+    public function isEmpty(): bool;
 }

@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Dumper;
 
+use Railt\Dumper\Resolver\SelfDisplayed;
 use Railt\Dumper\Resolver\GenericResolver;
 use Railt\Dumper\Resolver\ResolverInterface;
-use Railt\Dumper\Resolver\SelfDisplayed;
 
 /**
  * Class TypeDumper
  */
-class TypeDumper implements TypeDumperInterface
+class TypeDumper implements TypeDumperInterface, FacadeInterface
 {
     /**
      * @var string[]
@@ -68,7 +68,7 @@ class TypeDumper implements TypeDumperInterface
     }
 
     /**
-     * @param string $resolver
+     * @param string|ResolverInterface $resolver
      * @return TypeDumperInterface
      */
     public function add(string $resolver): TypeDumperInterface
@@ -76,6 +76,15 @@ class TypeDumper implements TypeDumperInterface
         $this->resolvers[] = new $resolver($this);
 
         return $this;
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    public static function render($value): string
+    {
+        return static::getInstance()->dump($value);
     }
 
     /**
@@ -99,9 +108,18 @@ class TypeDumper implements TypeDumperInterface
      * @param mixed $value
      * @return string
      */
-    public static function render($value): string
+    public static function renderValue($value): string
     {
-        return static::getInstance()->dump($value);
+        return static::getInstance()->value($value);
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
+    public static function renderType($value): string
+    {
+        return static::getInstance()->type($value);
     }
 
     /**
@@ -124,15 +142,6 @@ class TypeDumper implements TypeDumperInterface
 
     /**
      * @param mixed $value
-     * @return string
-     */
-    public function type($value): string
-    {
-        return $this->resolve($value)->type($value);
-    }
-
-    /**
-     * @param mixed $value
      * @return string|ResolverInterface
      */
     private function resolve($value): ResolverInterface
@@ -150,8 +159,35 @@ class TypeDumper implements TypeDumperInterface
      * @param mixed $value
      * @return string
      */
+    public function type($value): string
+    {
+        return $this->resolve($value)->type($value);
+    }
+
+    /**
+     * @param mixed $value
+     * @return string
+     */
     public function value($value): string
     {
         return $this->resolve($value)->value($value);
+    }
+
+    /**
+     * @param int $depth
+     * @return array
+     */
+    public static function trace(int $depth = 1): array
+    {
+        $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
+
+        while (! isset($trace[$depth])) {
+            $depth--;
+        }
+
+        return [
+            'file' => $trace[$depth]['file'] ?? '{unknown}',
+            'line' => $trace[$depth]['line'] ?? 0,
+        ];
     }
 }

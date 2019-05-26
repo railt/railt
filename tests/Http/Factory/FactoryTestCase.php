@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http\Factory;
 
-use Railt\Http\Factory;
+use Railt\Http\RequestFactory;
 use Railt\Http\Provider\ProviderInterface;
 use Railt\Http\RequestInterface;
 use Railt\Tests\Http\TestCase;
@@ -46,7 +46,7 @@ abstract class FactoryTestCase extends TestCase
      */
     private function requests(): iterable
     {
-        return Factory::create($this->getProvider());
+        return RequestFactory::create($this->getProvider());
     }
 
     /**

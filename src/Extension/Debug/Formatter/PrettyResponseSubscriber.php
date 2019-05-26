@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Formatter;
 
 use Railt\Foundation\Event\Http\ResponseProceed;
-use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Http\Exception\GraphQLProviderProviderInterface;
 use Railt\Http\ResponseInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -58,7 +58,7 @@ class PrettyResponseSubscriber implements EventSubscriberInterface
     private function shareExceptionTrace(ResponseInterface $response): void
     {
         foreach ($response->getExceptions() as $exception) {
-            if ($exception instanceof GraphQLExceptionInterface) {
+            if ($exception instanceof GraphQLProviderProviderInterface) {
                 $exception->withExtension(new ExceptionTraceExtension($exception));
             }
 

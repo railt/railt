@@ -9,64 +9,39 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Extension\ProvidesExtensions;
-use Railt\Http\Response\ProvideExceptions;
-use Railt\Http\Response\Renderable;
+use Railt\Http\Response\ExceptionsProviderInterface;
+use Railt\HttpExtension\ExtensionProviderInterface;
 
 /**
  * Interface ResponseInterface
  */
-interface ResponseInterface extends ProvideExceptions, ProvidesExtensions, Renderable
+interface ResponseInterface extends
+    ExtensionProviderInterface,
+    ExceptionsProviderInterface,
+    RenderableInterface
 {
-    /**
-     * @var string Data field name
-     */
-    public const FIELD_DATA = 'data';
-
-    /**
-     * @var string Errors field name
-     */
-    public const FIELD_ERRORS = 'errors';
-
-    /**
-     * @var int Positive status code
-     */
-    public const STATUS_CODE_SUCCESS = 200;
-
-    /**
-     * @var int Negative status code
-     */
-    public const STATUS_CODE_ERROR = 500;
-
-    /**
-     * @return bool
-     */
-    public function isSuccessful(): bool;
-
-    /**
-     * @return int
-     */
-    public function getStatusCode(): int;
-
-    /**
-     * @param int $code
-     * @return ResponseInterface|$this
-     */
-    public function withStatusCode(int $code): self;
-
     /**
      * @return array|null
      */
     public function getData(): ?array;
 
     /**
-     * @param array|null $data
-     * @return ResponseInterface|$this
+     * @return array|null
      */
-    public function withData(?array $data): self;
+    public function getErrors(): ?array;
 
     /**
      * @return array
      */
-    public function toArray(): array;
+    public function getExtensions(): array;
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool;
+
+    /**
+     * @return bool
+     */
+    public function isInvalid(): bool;
 }
