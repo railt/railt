@@ -20,5 +20,4 @@ interface MutableResponseInterface extends
     MutableExceptionsProviderInterface,
     ResponseInterface
 {
-
 }

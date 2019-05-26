@@ -9,9 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Response;
 use Railt\Exception\Factory;
-use Railt\Http\ResponseInterface;
 use Railt\Exception\Location\Location;
 use Railt\Exception\Location\MutableLocationsProviderInterface;
 

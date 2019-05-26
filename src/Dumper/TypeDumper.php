@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Dumper;
 
-use Railt\Dumper\Resolver\SelfDisplayed;
 use Railt\Dumper\Resolver\GenericResolver;
 use Railt\Dumper\Resolver\ResolverInterface;
+use Railt\Dumper\Resolver\SelfDisplayed;
 
 /**
  * Class TypeDumper
@@ -182,7 +182,7 @@ class TypeDumper implements TypeDumperInterface, FacadeInterface
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
 
         while (! isset($trace[$depth])) {
-            $depth--;
+            --$depth;
         }
 
         return [

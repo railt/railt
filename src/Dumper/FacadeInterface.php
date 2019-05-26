@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Dumper;
 
-use Railt\Dumper\Resolver\ResolverInterface;
-
 /**
  * Interface FacadeInterface
  */

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Request\MutableVariablesInterface;
 use Railt\Http\Request\MutableOperationNameInterface;
+use Railt\Http\Request\MutableVariablesInterface;
 
 /**
  * Interface MutableRequestInterface

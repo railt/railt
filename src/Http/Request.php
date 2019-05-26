@@ -9,10 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Json\Json;
-use Railt\Http\Request\QueryTypeTrait;
-use Railt\Http\Request\MutableVariablesTrait;
 use Railt\Http\Request\MutableOperationNameTrait;
+use Railt\Http\Request\MutableVariablesTrait;
+use Railt\Http\Request\QueryTypeTrait;
 
 /**
  * Class Request

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http\Factory;
 
-use Railt\Http\RequestFactory;
 use Railt\Http\Provider\ProviderInterface;
+use Railt\Http\RequestFactory;
 use Railt\Http\RequestInterface;
 use Railt\Tests\Http\TestCase;
 
