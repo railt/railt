@@ -95,7 +95,7 @@ class Input extends BaseInput
      * @param int $descend
      * @return bool[]
      */
-    private function foldSelectionSet(SelectionSetNode $selectionSet, int $descend) : array
+    private function foldSelectionSet(SelectionSetNode $selectionSet, int $descend): array
     {
         $fields = [];
 
@@ -104,7 +104,6 @@ class Input extends BaseInput
                 $fields[$selectionNode->name->value] = $descend > 0 && $selectionNode->selectionSet
                     ? $this->foldSelectionSet($selectionNode->selectionSet, $descend - 1)
                     : true;
-
             } elseif ($selectionNode instanceof FragmentSpreadNode) {
                 $spreadName = $selectionNode->name->value;
 
@@ -117,7 +116,6 @@ class Input extends BaseInput
                     /** @noinspection SlowArrayOperationsInLoopInspection */
                     $fields = \array_merge_recursive($fold, $fields);
                 }
-
             } elseif ($selectionNode instanceof InlineFragmentNode) {
                 $fold = $this->foldSelectionSet($selectionNode->selectionSet, $descend);
 
