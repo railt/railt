@@ -51,7 +51,7 @@ trait HasArguments
         $value = $this->get($argument);
 
         if ($value !== null) {
-            $then($this, $value);
+            $then($value, $this);
 
             return true;
         }
