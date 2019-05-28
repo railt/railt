@@ -89,7 +89,7 @@ class RailtRequestSubscriber implements EventSubscriberInterface
                 ['Name' => 'Arguments', 'Value' => $input->all()],
                 ['Name' => 'Prefer Types', 'Value' => $input->getPreferTypes()],
                 ['Name' => 'Result', 'Value' => TypeDumper::render($event->getResult())],
-                ['Name' => 'Related Fields', 'Value' => $input->getRelatedFields()],
+                ['Name' => 'Relations', 'Value' => $input->getRelations()],
             ]);
         }
     }
