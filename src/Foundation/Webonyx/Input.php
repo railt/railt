@@ -136,10 +136,6 @@ class Input extends BaseInput
     {
         $depth = \substr_count($field, '.');
 
-        if ($depth === 0) {
-            return \in_array($field, $this->getRelations(), true);
-        }
-
         $result = Arr::has($this->getFieldSelection($depth), $field);
 
         if ($result && $then) {
