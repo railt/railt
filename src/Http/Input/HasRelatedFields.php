@@ -17,46 +17,30 @@ namespace Railt\Http\Input;
 trait HasRelatedFields
 {
     /**
-     * @var array|string[]
-     */
-    protected $relations = [];
-
-    /**
+     * @param int $depth
      * @return array|string[]
      */
-    public function getRelatedFields(): array
+    public function getRelations(int $depth = 0): array
     {
-        return $this->relations;
-    }
-
-    /**
-     * @param array $fields
-     * @return ProvideRelatedFields|$this
-     */
-    public function withRelatedFields(array $fields): ProvideRelatedFields
-    {
-        $this->relations = \array_unique(\array_merge($this->relations, $fields));
-
-        return $this;
-    }
-
-    /**
-     * @param array $fields
-     * @return ProvideRelatedFields|$this
-     */
-    public function setRelatedFields(array $fields): ProvideRelatedFields
-    {
-        $this->relations = $fields;
-
-        return $this;
+        return [];
     }
 
     /**
      * @param string $field
+     * @param \Closure|null $then
      * @return bool
      */
-    public function wants(string $field): bool
+    public function wants(string $field, \Closure $then = null): bool
     {
-        return \in_array($field, $this->relations, true);
+        $relations = $this->getRelations();
+
+        $result = \in_array($field, $relations, true) ||
+            \array_key_exists($field, $relations);
+
+        if ($result && $then) {
+            $then($this, $field);
+        }
+
+        return $result;
     }
 }

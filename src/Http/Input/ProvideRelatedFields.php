@@ -15,25 +15,15 @@ namespace Railt\Http\Input;
 interface ProvideRelatedFields
 {
     /**
+     * @param int $depth
      * @return array|string[]
      */
-    public function getRelatedFields(): array;
-
-    /**
-     * @param array $fields
-     * @return ProvideRelatedFields|$this
-     */
-    public function withRelatedFields(array $fields): self;
-
-    /**
-     * @param array $fields
-     * @return ProvideRelatedFields|$this
-     */
-    public function setRelatedFields(array $fields): self;
+    public function getRelations(int $depth = 0): array;
 
     /**
      * @param string $field
+     * @param \Closure|null $then
      * @return bool
      */
-    public function wants(string $field): bool;
+    public function wants(string $field, \Closure $then = null): bool;
 }

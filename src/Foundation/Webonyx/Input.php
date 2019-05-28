@@ -9,6 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Webonyx;
 
+use GraphQL\Language\AST\FieldNode;
+use GraphQL\Language\AST\FragmentDefinitionNode;
+use GraphQL\Language\AST\FragmentSpreadNode;
+use GraphQL\Language\AST\InlineFragmentNode;
+use GraphQL\Language\AST\SelectionSetNode;
 use GraphQL\Type\Definition\ResolveInfo;
 use Illuminate\Support\Arr;
 use Railt\Foundation\Webonyx\Input\PathInfoLoader;
@@ -56,32 +61,94 @@ class Input extends BaseInput
     }
 
     /**
+     * @param int $depth
      * @return array
      */
-    public function getRelatedFields(): array
+    public function getRelations(int $depth = 0): array
     {
-        $result = parent::getRelatedFields();
+        return $this->getFieldSelection($depth);
+    }
 
+    /**
+     * @param int $depth
+     * @return array
+     */
+    private function getFieldSelection(int $depth = 0): array
+    {
+        $fields = [];
+
+        /** @var FieldNode $fieldNode */
         foreach ($this->info->fieldNodes as $fieldNode) {
-            $result[] = $fieldNode->name->value;
+            if ($fieldNode->selectionSet) {
+                $fold = $this->foldSelectionSet($fieldNode->selectionSet, $depth);
+
+                /** @noinspection SlowArrayOperationsInLoopInspection */
+                $fields = \array_merge_recursive($fields, $fold);
+            }
         }
 
-        return \array_unique($result);
+        return $fields;
+    }
+
+    /**
+     * @param SelectionSetNode $selectionSet
+     * @param int $descend
+     * @return bool[]
+     */
+    private function foldSelectionSet(SelectionSetNode $selectionSet, int $descend) : array
+    {
+        $fields = [];
+
+        foreach ($selectionSet->selections as $selectionNode) {
+            if ($selectionNode instanceof FieldNode) {
+                $fields[$selectionNode->name->value] = $descend > 0 && $selectionNode->selectionSet
+                    ? $this->foldSelectionSet($selectionNode->selectionSet, $descend - 1)
+                    : true;
+
+            } elseif ($selectionNode instanceof FragmentSpreadNode) {
+                $spreadName = $selectionNode->name->value;
+
+                if (isset($this->info->fragments[$spreadName])) {
+                    /** @var FragmentDefinitionNode $fragment */
+                    $fragment = $this->info->fragments[$spreadName];
+
+                    $fold = $this->foldSelectionSet($fragment->selectionSet, $descend);
+
+                    /** @noinspection SlowArrayOperationsInLoopInspection */
+                    $fields = \array_merge_recursive($fold, $fields);
+                }
+
+            } elseif ($selectionNode instanceof InlineFragmentNode) {
+                $fold = $this->foldSelectionSet($selectionNode->selectionSet, $descend);
+
+                /** @noinspection SlowArrayOperationsInLoopInspection */
+                $fields = \array_merge_recursive($fold, $fields);
+            }
+        }
+
+        return $fields;
     }
 
     /**
      * @param string $field
+     * @param \Closure|null $then
      * @return bool
      */
-    public function wants(string $field): bool
+    public function wants(string $field, \Closure $then = null): bool
     {
         $depth = \substr_count($field, '.');
 
         if ($depth === 0) {
-            return \in_array($field, $this->getRelatedFields(), true);
+            return \in_array($field, $this->getRelations(), true);
         }
 
-        return Arr::has($this->info->getFieldSelection($depth), $field);
+        $result = Arr::has($this->getFieldSelection($depth), $field);
+
+        if ($result && $then) {
+            $then($this, $field);
+        }
+
+        return $result;
     }
 
     /**
