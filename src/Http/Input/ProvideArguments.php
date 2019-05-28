@@ -28,6 +28,13 @@ interface ProvideArguments extends \Countable, \IteratorAggregate, \ArrayAccess
 
     /**
      * @param string $argument
+     * @param \Closure|null $then
+     * @return bool
+     */
+    public function provides(string $argument, \Closure $then = null): bool;
+
+    /**
+     * @param string $argument
      * @return bool
      */
     public function has(string $argument): bool;

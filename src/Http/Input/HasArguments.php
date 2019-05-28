@@ -43,6 +43,24 @@ trait HasArguments
 
     /**
      * @param string $argument
+     * @param \Closure|null $then
+     * @return bool
+     */
+    public function provides(string $argument, \Closure $then = null): bool
+    {
+        $value = $this->get($argument);
+
+        if ($value !== null) {
+            $then($this, $value);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $argument
      * @return bool
      */
     public function has(string $argument): bool
