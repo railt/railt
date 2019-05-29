@@ -5,57 +5,57 @@
 #
 
 """
-# This directive is used to specify the resolver for type fields.
+This directive is used to specify the resolver for type fields.
 """
 directive @route(
     """
-    # Argument must contain a reference to the class and
-    #   method in the format `action: "Namespace\\Class@action"`.
+    Argument must contain a reference to the class and
+    method in the format `action: "Namespace\\Class@action"`.
     """
     action: String!
 
     """
-    # Argument indicates in what type of case it is necessary
-    # to react to the routing for this action.
-    #
-    # This argument will be needed when using Union and Interface types
-    # as field type definitions.
-    #
-    # Unions:
-    #
-    # ```
-    # union ExampleUnion = A | B | C
-    #
-    # type ExampleType {
-    #     field: ExampleUnion!
-    #         @route(on: "A", action: "Namespace\\Class@findA")
-    #         @route(on: "B", action: "Namespace\\Class@findB")
-    #         @route(on: "C", action: "Namespace\\Class@findC")
-    # }
-    # ```
-    #
-    # Interfaces:
-    #
-    # ```
-    # interface ExampleInterface {}
-    #
-    # type A implements ExampleInterface {}
-    # type B implements ExampleInterface {}
-    # type C implements ExampleInterface {}
-    #
-    # type ExampleType {
-    #     field: ExampleInterface!
-    #         @route(on: "A", action: "Namespace\\Class@findA")
-    #         @route(on: "B", action: "Namespace\\Class@findB")
-    #         @route(on: "C", action: "Namespace\\Class@findC")
-    # }
-    # ```
+    Argument indicates in what type of case it is necessary
+    to react to the routing for this action.
+
+    This argument will be needed when using Union and Interface types
+    as field type definitions.
+
+    Unions:
+
+    ```
+    union ExampleUnion = A | B | C
+
+    type ExampleType {
+        field: ExampleUnion!
+            @route(on: "A", action: "Namespace\\Class@findA")
+            @route(on: "B", action: "Namespace\\Class@findB")
+            @route(on: "C", action: "Namespace\\Class@findC")
+    }
+    ```
+
+    Interfaces:
+
+    ```
+    interface ExampleInterface {}
+
+    type A implements ExampleInterface {}
+    type B implements ExampleInterface {}
+    type C implements ExampleInterface {}
+
+    type ExampleType {
+        field: ExampleInterface!
+            @route(on: "A", action: "Namespace\\Class@findA")
+            @route(on: "B", action: "Namespace\\Class@findB")
+            @route(on: "C", action: "Namespace\\Class@findC")
+    }
+    ```
     """
     on: String = null
 
-    #
-    # Indicates that the controller specified as an action should be
-    # created only once for all time.
-    #
+    """
+    Indicates that the controller specified as an action should be
+    created only once for all time.
+    """
     singleton: Boolean = true
 ) on FIELD_DEFINITION

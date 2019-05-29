@@ -4,4 +4,36 @@
 # -----------------------------------------------------------------
 #
 
-directive @use(class: String!, as: String, scope: Scope = DOCUMENT) on DOCUMENT
+"""
+Вefines a set of scopes in which a
+php class can be used.
+"""
+enum Scope {
+    """Single inclusion that applies only to the current file"""
+    DOCUMENT
+
+    """Global inclusion that applies to the all application files"""
+    GLOBAL
+}
+
+"""
+Includes support for the specified class in the document.
+
+```
+@use(class: "App\\GraphQL\\ExampleController" as: "Exmaple")
+
+# ...
+
+type Example @exampleDirective(class: "Example") { ... }
+```
+"""
+directive @use(
+    """Class name"""
+    class: String!
+
+    """Optional class alias"""
+    as: String
+
+    """Inclusion scope"""
+    scope: Scope = DOCUMENT
+) on DOCUMENT
