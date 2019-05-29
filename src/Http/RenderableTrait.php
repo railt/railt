@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Exception\GraphQLException;
 use Railt\Json\Json;
+use Railt\Exception\GraphQLException;
 
 /**
  * Trait RenderableTrait

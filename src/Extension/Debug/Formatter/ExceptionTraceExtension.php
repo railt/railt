@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Debug\Formatter;
 
-use Phplrt\Io\PositionInterface;
+use Phplrt\Position\PositionInterface;
+use Railt\Http\Exception\Factory;
 use Railt\Http\Exception\GraphQLException;
-use Railt\HttpExtension\ExtensionInterface;
+use Railt\Http\Extension\ExtensionInterface;
 
 /**
  * Class ExceptionTraceExtension
@@ -59,7 +60,7 @@ class ExceptionTraceExtension implements ExtensionInterface
      */
     private function errorToArray(\Throwable $error): array
     {
-        $error = GraphQLException::getRootException($error);
+        $error = Factory::first($error);
 
         return \array_filter([
             'message'   => $error->getMessage(),

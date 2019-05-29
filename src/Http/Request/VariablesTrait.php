@@ -29,7 +29,7 @@ trait VariablesTrait
 
     /**
      * @param string $name
-     * @param null $default
+     * @param mixed|null $default
      * @return mixed
      */
     public function getVariable(string $name, $default = null)

@@ -11,7 +11,6 @@ namespace Railt\Http\Request;
 
 /**
  * Trait MutableVariablesTrait
- * @mixin MutableVariablesInterface
  */
 trait MutableVariablesTrait
 {

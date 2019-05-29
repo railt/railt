@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Debug\MemoryProfiler;
 
-use Railt\HttpExtension\ExtensionInterface;
+use Railt\Http\Extension\ExtensionInterface;
 
 /**
  * Class MemoryProfilerExtension
