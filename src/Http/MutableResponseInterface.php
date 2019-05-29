@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Response\MutableExceptionsProviderInterface;
 use Railt\Http\Extension\MutableExtensionProviderInterface;
+use Railt\Http\Response\MutableExceptionsProviderInterface;
 
 /**
  * Interface MutableResponseInterface

@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory;
 
-use Railt\Http\Response;
 use Railt\Http\Exception\Factory;
-use Railt\Http\ResponseInterface;
 use Railt\Http\Exception\Location\Location;
 use Railt\Http\Exception\Location\MutableLocationsProviderInterface;
+use Railt\Http\Response;
+use Railt\Http\ResponseInterface;
 
 /**
  * Class ResponseFactory

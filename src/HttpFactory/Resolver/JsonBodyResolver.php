@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory\Resolver;
 
-use Railt\Json\Json;
-use Railt\Http\Request;
-use Railt\HttpFactory\Resolver;
-use Railt\Http\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Railt\Http\Request;
+use Railt\Http\RequestInterface;
+use Railt\HttpFactory\Resolver;
+use Railt\Json\Json;
 
 /**
  * Class JsonBodyResolver
