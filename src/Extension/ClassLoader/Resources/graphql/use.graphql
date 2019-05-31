@@ -32,7 +32,7 @@ directive @use(
     class: String!
 
     """Optional class alias"""
-    as: String
+    as: String = null
 
     """Inclusion scope"""
     scope: Scope = DOCUMENT
