@@ -37,10 +37,14 @@ class ArgumentCoercion extends BaseTypeCoercion
             return;
         }
 
-        if (! $type->hasDefaultValue()) {
-            $this->inferenceValue($type);
-            return;
-        }
+        //
+        // NOTE: Do not inference default values
+        //
+        // if (! $type->hasDefaultValue()) {
+        //     $this->inferenceValue($type);
+        //
+        //     return;
+        // }
     }
 
     /**
@@ -123,6 +127,7 @@ class ArgumentCoercion extends BaseTypeCoercion
          */
         if (! $argument->isNonNull()) {
             $this->set($argument, null);
+
             return;
         }
     }
