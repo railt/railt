@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Exception\GraphQLException;
 use Railt\Json\Json;
-use Railt\Exception\GraphQLException;
 
 /**
  * Trait RenderableTrait
@@ -18,14 +18,17 @@ use Railt\Exception\GraphQLException;
 trait RenderableTrait
 {
     /**
-     * @var int
+     * @return array
      */
-    protected $jsonEncodingOptions =
-        \JSON_HEX_TAG |
-        \JSON_HEX_APOS |
-        \JSON_HEX_AMP |
-        \JSON_HEX_QUOT |
-        \JSON_THROW_ON_ERROR;
+    abstract public function toArray(): array;
+
+    /**
+     * @return int
+     */
+    protected function getJsonOptions(): int
+    {
+        return \JSON_HEX_TAG | \JSON_HEX_APOS | \JSON_HEX_AMP | \JSON_HEX_QUOT | \JSON_THROW_ON_ERROR;
+    }
 
     /**
      * @return string
@@ -33,7 +36,7 @@ trait RenderableTrait
     public function __toString(): string
     {
         try {
-            return Json::encode($this->jsonSerialize(), $this->jsonEncodingOptions);
+            return Json::encode($this->jsonSerialize(), $this->getJsonOptions());
         } catch (\JsonException $e) {
             return $this->jsonEncodingError($e);
         }
@@ -54,11 +57,13 @@ trait RenderableTrait
     private function jsonEncodingError(\JsonException $e): string
     {
         try {
-            return Json::encode([
+            $response = [
                 Response::ERRORS_KEY => [
                     [GraphQLException::MESSAGE_KEY => $this->formatErrorMessage($e)],
                 ],
-            ], $this->jsonEncodingOptions);
+            ];
+
+            return Json::encode($response, $this->getJsonOptions());
         } catch (\JsonException $e) {
             return $this->formatErrorMessage($e);
         }

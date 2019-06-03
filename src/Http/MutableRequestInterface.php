@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Request\MutableOperationNameInterface;
+use Railt\Http\Request\MutableQueryInterface;
 use Railt\Http\Request\MutableVariablesInterface;
 
 /**
@@ -17,12 +18,8 @@ use Railt\Http\Request\MutableVariablesInterface;
  */
 interface MutableRequestInterface extends
     RequestInterface,
+    MutableQueryInterface,
     MutableVariablesInterface,
     MutableOperationNameInterface
 {
-    /**
-     * @param string $query
-     * @return MutableRequestInterface
-     */
-    public function withQuery(string $query): self;
 }

@@ -10,19 +10,19 @@ declare(strict_types=1);
 namespace Railt\Http\Request;
 
 /**
- * Trait MutableOperationNameTrait
+ * Trait MutableQueryTrait
  */
-trait MutableOperationNameTrait
+trait MutableQueryTrait
 {
-    use OperationNameTrait;
+    use QueryTrait;
 
     /**
-     * @param string|null $name
-     * @return MutableOperationNameInterface|$this
+     * @param string $query
+     * @return MutableQueryInterface|$this
      */
-    public function withOperation(?string $name): MutableOperationNameInterface
+    public function withQuery(string $query): MutableQueryInterface
     {
-        $this->operationName = $name;
+        $this->query = \trim($query);
 
         return $this;
     }

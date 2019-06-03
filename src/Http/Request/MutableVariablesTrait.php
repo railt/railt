@@ -40,12 +40,12 @@ trait MutableVariablesTrait
     }
 
     /**
-     * @param array $variables
+     * @param iterable $variables
      * @return MutableVariablesInterface|$this
      */
-    public function withVariables(array $variables): MutableVariablesInterface
+    public function withVariables(iterable $variables): MutableVariablesInterface
     {
-        $this->variables = \array_merge($this->variables, $variables);
+        $this->variables = \array_merge($this->variables, $this->iterableToArray($variables));
 
         return $this;
     }
@@ -54,10 +54,19 @@ trait MutableVariablesTrait
      * @param array $variables
      * @return MutableVariablesInterface|$this
      */
-    public function setVariables(array $variables): MutableVariablesInterface
+    public function setVariables(iterable $variables): MutableVariablesInterface
     {
-        $this->variables = $variables;
+        $this->variables = $this->iterableToArray($variables);
 
         return $this;
+    }
+
+    /**
+     * @param iterable $iterable
+     * @return array
+     */
+    private function iterableToArray(iterable $iterable): array
+    {
+        return $iterable instanceof \Traversable ? \iterator_to_array($iterable) : $iterable;
     }
 }

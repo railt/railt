@@ -28,14 +28,14 @@ interface MutableVariablesInterface extends VariablesInterface
     public function withoutVariable(string $name): self;
 
     /**
-     * @param array $variables
+     * @param iterable $variables
      * @return MutableVariablesInterface|$this
      */
-    public function withVariables(array $variables): self;
+    public function withVariables(iterable $variables): self;
 
     /**
-     * @param array $variables
+     * @param iterable $variables
      * @return MutableVariablesInterface|$this
      */
-    public function setVariables(array $variables): self;
+    public function setVariables(iterable $variables): self;
 }

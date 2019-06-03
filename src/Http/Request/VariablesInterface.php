@@ -12,7 +12,7 @@ namespace Railt\Http\Request;
 /**
  * Interface VariablesInterface
  */
-interface VariablesInterface
+interface VariablesInterface extends \Countable
 {
     /**
      * @return array

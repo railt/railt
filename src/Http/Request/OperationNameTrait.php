@@ -24,6 +24,8 @@ trait OperationNameTrait
      */
     public function getOperationName(): ?string
     {
+        \assert(\is_string($this->operationName) || $this->operationName === null);
+
         return $this->operationName;
     }
 

@@ -10,13 +10,17 @@ declare(strict_types=1);
 namespace Railt\Http\Request;
 
 /**
- * Interface MutableOperationNameInterface
+ * Interface QueryInterface
  */
-interface MutableOperationNameInterface extends OperationNameInterface
+interface QueryInterface
 {
     /**
-     * @param string|null $name
-     * @return MutableOperationNameInterface|$this
+     * @return string
      */
-    public function withOperation(?string $name): self;
+    public function getQuery(): string;
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool;
 }

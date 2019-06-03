@@ -24,6 +24,8 @@ trait VariablesTrait
      */
     public function getVariables(): array
     {
+        \assert(\is_array($this->variables));
+
         return $this->variables;
     }
 
@@ -34,6 +36,8 @@ trait VariablesTrait
      */
     public function getVariable(string $name, $default = null)
     {
+        \assert(\is_array($this->variables));
+
         return $this->variables[$name] ?? $default;
     }
 
@@ -43,6 +47,18 @@ trait VariablesTrait
      */
     public function hasVariable(string $name): bool
     {
+        \assert(\is_array($this->variables));
+
         return isset($this->variables[$name]) || \array_key_exists($name, $this->variables);
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        \assert(\is_array($this->variables));
+
+        return \count($this->variables);
     }
 }
