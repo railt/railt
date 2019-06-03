@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory;
 
-use Railt\Http\Contracts\Resolver\ResolverInterface;
 use Railt\Http\Contracts\Resolver\MutableResolversProviderInterface;
+use Railt\Http\Contracts\Resolver\ResolverInterface;
 
 /**
  * Trait MutableResolverProviderTrait

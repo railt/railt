@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception;
 
-use Railt\Http\Extension\ExtensionProviderTrait;
-use Railt\Http\Exception\Path\MutablePathProviderTrait;
 use Phplrt\Exception\MutableException\MutableFileTrait;
 use Phplrt\Exception\MutableException\MutablePositionTrait;
 use Railt\Http\Exception\Location\MutableLocationsProviderTrait;
+use Railt\Http\Exception\Path\MutablePathProviderTrait;
+use Railt\Http\Extension\ExtensionProviderTrait;
 
 /**
  * Class GraphQLException

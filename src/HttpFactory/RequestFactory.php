@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory;
 
-use Railt\Http\Contracts\Resolver\MutableResolversProviderInterface;
-use Railt\Http\Resolver\JsonBodyResolver;
-use Railt\Http\Contracts\RequestInterface;
-use Railt\Http\Resolver\BodyParamsResolver;
 use Psr\Http\Message\ServerRequestInterface;
-use Railt\Http\Resolver\QueryParamsResolver;
 use Railt\Http\Contracts\RequestFactoryInterface;
+use Railt\Http\Contracts\RequestInterface;
+use Railt\Http\Contracts\Resolver\MutableResolversProviderInterface;
+use Railt\Http\Resolver\BodyParamsResolver;
+use Railt\Http\Resolver\JsonBodyResolver;
 use Railt\Http\Resolver\MutableResolverProviderTrait;
+use Railt\Http\Resolver\QueryParamsResolver;
 
 /**
  * Class RequestFactory

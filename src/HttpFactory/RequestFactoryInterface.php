@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory;
 
-use Railt\Http\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Railt\Http\RequestInterface;
 
 /**
  * Interface RequestFactoryInterface
