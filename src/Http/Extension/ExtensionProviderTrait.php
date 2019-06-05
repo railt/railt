@@ -24,7 +24,7 @@ trait ExtensionProviderTrait
      */
     public function getOriginalExtensions(): array
     {
-        return $this->extensions;
+        return \array_values($this->extensions);
     }
 
     /**

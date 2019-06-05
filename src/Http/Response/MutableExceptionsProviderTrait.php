@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http\Response;
 
 use Railt\Dumper\TypeDumper;
-use Railt\Exception\Factory;
+use Railt\Http\Exception\Factory;
 
 /**
  * Trait MutableExceptionsProviderTrait
@@ -38,7 +38,11 @@ trait MutableExceptionsProviderTrait
      */
     public function withoutException(\Closure $filter): MutableExceptionsProviderInterface
     {
-        $this->exceptions = \array_filter($this->exceptions, $filter);
+        $callback = static function (\Throwable $e) use ($filter): bool {
+            return ! $filter($e->getPrevious());
+        };
+
+        $this->exceptions = \array_filter($this->exceptions, $callback);
 
         return $this;
     }

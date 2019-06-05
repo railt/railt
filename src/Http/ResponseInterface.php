@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Extension\ExtensionProviderInterface;
+use Railt\Http\Response\DataProviderInterface;
 use Railt\Http\Response\ExceptionsProviderInterface;
 
 /**
@@ -18,10 +19,7 @@ use Railt\Http\Response\ExceptionsProviderInterface;
 interface ResponseInterface extends
     ExtensionProviderInterface,
     ExceptionsProviderInterface,
+    DataProviderInterface,
     RenderableInterface
 {
-    /**
-     * @return array|null
-     */
-    public function getData(): ?array;
 }

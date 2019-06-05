@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Extension\MutableExtensionProviderInterface;
+use Railt\Http\Response\MutableDataProviderInterface;
 use Railt\Http\Response\MutableExceptionsProviderInterface;
 
 /**
@@ -18,11 +19,7 @@ use Railt\Http\Response\MutableExceptionsProviderInterface;
 interface MutableResponseInterface extends
     MutableExtensionProviderInterface,
     MutableExceptionsProviderInterface,
+    MutableDataProviderInterface,
     ResponseInterface
 {
-    /**
-     * @param array|null $data
-     * @return MutableResponseInterface|$this
-     */
-    public function withData(?array $data): self;
 }

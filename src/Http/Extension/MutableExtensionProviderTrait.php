@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Extension;
 
+use Railt\Dumper\TypeDumper;
+
 /**
  * Trait MutableExtensionProviderTrait
  */
@@ -27,13 +29,36 @@ trait MutableExtensionProviderTrait
         foreach ($extensions as $k => $v) {
             if (\is_string($k)) {
                 $this->withExtension($k, $v);
-                continue;
+            } else {
+                $this->withExtension($v);
             }
-
-            $this->withExtension($v);
         }
 
         return $this;
+    }
+
+    /**
+     * @param string|ExtensionInterface $nameOrExtension
+     * @param mixed $value
+     * @return ExtensionInterface
+     */
+    private function resolveExtension($nameOrExtension, $value = null): ExtensionInterface
+    {
+        switch (true) {
+            case \is_string($nameOrExtension):
+                return new Extension($nameOrExtension, $value);
+
+            case $nameOrExtension instanceof ExtensionInterface:
+                return $nameOrExtension;
+
+            case $value instanceof ExtensionInterface:
+                return $value;
+        }
+
+        $error = 'First argument should be a name of extension or extension instance, but %s given';
+        $error = \sprintf($error, TypeDumper::render($nameOrExtension));
+
+        throw new \InvalidArgumentException($error);
     }
 
     /**
@@ -43,19 +68,9 @@ trait MutableExtensionProviderTrait
      */
     public function withExtension($nameOrExtension, $value = null): MutableExtensionProviderInterface
     {
-        switch (true) {
-            case \is_string($nameOrExtension):
-                $this->extensions[] = new Extension($nameOrExtension, $value);
-                break;
+        $extension = $this->resolveExtension($nameOrExtension, $value);
 
-            case $nameOrExtension instanceof ExtensionInterface:
-                $this->extensions[] = $nameOrExtension;
-                break;
-
-            default:
-                $error = 'First argument should be a name of extension or extension instance';
-                throw new \InvalidArgumentException($error);
-        }
+        $this->extensions[$extension->getName()] = $extension;
 
         return $this;
     }

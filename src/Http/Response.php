@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Extension\MutableExtensionProviderTrait;
+use Railt\Http\Response\MutableDataProviderTrait;
 use Railt\Http\Response\MutableExceptionsProviderTrait;
 
 /**
@@ -18,6 +19,7 @@ use Railt\Http\Response\MutableExceptionsProviderTrait;
 class Response implements MutableResponseInterface
 {
     use RenderableTrait;
+    use MutableDataProviderTrait;
     use MutableExtensionProviderTrait;
     use MutableExceptionsProviderTrait;
 
@@ -35,11 +37,6 @@ class Response implements MutableResponseInterface
      * @var string
      */
     public const EXTENSIONS_KEY = 'extensions';
-
-    /**
-     * @var array|null
-     */
-    private $data;
 
     /**
      * Response constructor.
@@ -63,25 +60,6 @@ class Response implements MutableResponseInterface
             static::DATA_KEY       => $this->getData(),
             static::EXTENSIONS_KEY => $this->getExtensions(),
         ];
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getData(): ?array
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param array|null $data
-     * @return MutableResponseInterface|$this
-     */
-    public function withData(?array $data): MutableResponseInterface
-    {
-        $this->data = $data;
-
-        return $this;
     }
 
     /**
