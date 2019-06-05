@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http\Request;
 
-use Railt\Http\Request;
-use Railt\Tests\Http\TestCase;
 use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Http\Request;
 use Railt\Http\Request\MutableVariablesInterface;
+use Railt\Tests\Http\TestCase;
 
 /**
  * Class VariablesTestCase
@@ -98,7 +98,7 @@ class VariablesTestCase extends TestCase
     {
         $request = $this->request($iterator);
 
-        $this->assertEquals(42, $request->getVariable('a'));
+        $this->assertSame(42, $request->getVariable('a'));
         $this->assertNull($request->getVariable('xxx'));
     }
 
@@ -113,7 +113,7 @@ class VariablesTestCase extends TestCase
     {
         $request = $this->request($iterator);
 
-        $this->assertEquals(['a' => 42], $request->getVariables());
+        $this->assertSame(['a' => 42], $request->getVariables());
     }
 
     /**
@@ -128,7 +128,7 @@ class VariablesTestCase extends TestCase
         $request = $this->request($iterator);
         $request->setVariables(['b' => 23]);
 
-        $this->assertEquals(['b' => 23], $request->getVariables());
+        $this->assertSame(['b' => 23], $request->getVariables());
     }
 
     /**
@@ -142,10 +142,10 @@ class VariablesTestCase extends TestCase
     {
         $request = $this->request($iterator);
         $request->withVariable('b', 23);
-        $this->assertEquals(['a' => 42, 'b' => 23], $request->getVariables());
+        $this->assertSame(['a' => 42, 'b' => 23], $request->getVariables());
 
         $request->withVariables(['a' => 23, 'c' => 0]);
-        $this->assertEquals(['a' => 23, 'b' => 23, 'c' => 0], $request->getVariables());
+        $this->assertSame(['a' => 23, 'b' => 23, 'c' => 0], $request->getVariables());
     }
 
     /**
@@ -160,6 +160,6 @@ class VariablesTestCase extends TestCase
         $request = $this->request($iterator);
         $request->withoutVariable('a');
 
-        $this->assertEquals([], $request->getVariables());
+        $this->assertSame([], $request->getVariables());
     }
 }

@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Http\Exception;
 
 use Phplrt\Position\PositionInterface;
+use Railt\Http\Exception\Location\LocationsProviderInterface;
 use Railt\Http\Exception\Path\PathProviderInterface;
 use Railt\Http\Extension\ExtensionProviderInterface;
-use Railt\Http\Exception\Location\LocationsProviderInterface;
 
 /**
  * Interface GraphQLExceptionInterface

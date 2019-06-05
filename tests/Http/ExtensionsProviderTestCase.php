@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http;
 
-use Railt\Http\Extension\Extension;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Http\Extension\MutableExtensionProviderTrait;
+use Railt\Http\Extension\Extension;
 use Railt\Http\Extension\MutableExtensionProviderInterface;
+use Railt\Http\Extension\MutableExtensionProviderTrait;
 
 /**
  * Class ExtensionsProviderTestCase
@@ -41,8 +41,7 @@ class ExtensionsProviderTestCase extends TestCase
      */
     protected function provider(array $extensions = []): MutableExtensionProviderInterface
     {
-        return new class($extensions) implements MutableExtensionProviderInterface
-        {
+        return new class($extensions) implements MutableExtensionProviderInterface {
             use MutableExtensionProviderTrait;
 
             public function __construct(array $extensions)

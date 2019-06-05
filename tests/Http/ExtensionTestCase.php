@@ -26,7 +26,7 @@ class ExtensionTestCase extends TestCase
     {
         $extension = $this->extension('name');
 
-        $this->assertEquals('name', $extension->getName());
+        $this->assertSame('name', $extension->getName());
     }
 
     /**
@@ -38,7 +38,7 @@ class ExtensionTestCase extends TestCase
         $extension = $this->extension('name');
         $extension->rename('test');
 
-        $this->assertEquals('test', $extension->getName());
+        $this->assertSame('test', $extension->getName());
     }
 
     /**
@@ -49,7 +49,7 @@ class ExtensionTestCase extends TestCase
     {
         $extension = $this->extension('a', 42);
 
-        $this->assertEquals(42, $extension->getValue());
+        $this->assertSame(42, $extension->getValue());
     }
 
     /**
@@ -61,7 +61,7 @@ class ExtensionTestCase extends TestCase
         $extension = $this->extension('a', 42);
         $extension->update(23);
 
-        $this->assertEquals(23, $extension->getValue());
+        $this->assertSame(23, $extension->getValue());
     }
 
     /**

@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http\Request;
 
-use Railt\Http\Request;
-use Railt\Tests\Http\TestCase;
-use Railt\Http\Request\MutableQueryInterface;
 use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Http\Request;
+use Railt\Http\Request\MutableQueryInterface;
+use Railt\Tests\Http\TestCase;
 
 /**
  * Class QueryTestCase
@@ -26,7 +26,7 @@ class QueryTestCase extends TestCase
     public function testQuerySelection(): void
     {
         $request = $this->request('query');
-        $this->assertEquals('query', $request->getQuery());
+        $this->assertSame('query', $request->getQuery());
     }
 
     /**
@@ -48,7 +48,7 @@ class QueryTestCase extends TestCase
             query
         ');
 
-        $this->assertEquals('query', $request->getQuery());
+        $this->assertSame('query', $request->getQuery());
     }
 
     /**
@@ -58,10 +58,10 @@ class QueryTestCase extends TestCase
     public function testQueryMutation(): void
     {
         $request = $this->request('a');
-        $this->assertEquals('a', $request->getQuery());
+        $this->assertSame('a', $request->getQuery());
 
         $request->withQuery('b');
-        $this->assertEquals('b', $request->getQuery());
+        $this->assertSame('b', $request->getQuery());
     }
 
     /**
@@ -71,10 +71,10 @@ class QueryTestCase extends TestCase
     public function testQueryMutationTrim(): void
     {
         $request = $this->request(' a ');
-        $this->assertEquals('a', $request->getQuery());
+        $this->assertSame('a', $request->getQuery());
 
         $request = $request->withQuery(' b ');
-        $this->assertEquals('b', $request->getQuery());
+        $this->assertSame('b', $request->getQuery());
     }
 
     /**

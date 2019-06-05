@@ -11,8 +11,8 @@ namespace Railt\Tests\Http\Request;
 
 use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Request;
-use Railt\Tests\Http\TestCase;
 use Railt\Http\Request\MutableOperationNameInterface;
+use Railt\Tests\Http\TestCase;
 
 /**
  * Class OperationTestCase
@@ -48,7 +48,7 @@ class OperationTestCase extends TestCase
     {
         $request = $this->request('name');
 
-        $this->assertEquals('name', $request->getOperationName());
+        $this->assertSame('name', $request->getOperationName());
         $this->assertTrue($request->hasOperationName());
     }
 
@@ -61,6 +61,6 @@ class OperationTestCase extends TestCase
         $request = $this->request('name');
         $request->withOperation('some');
 
-        $this->assertEquals('some', $request->getOperationName());
+        $this->assertSame('some', $request->getOperationName());
     }
 }
