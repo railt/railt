@@ -13,7 +13,6 @@ use Phplrt\Exception\MutableException\MutableFileTrait;
 use Phplrt\Exception\MutableException\MutablePositionTrait;
 use Railt\Http\Exception\Location\MutableLocationsProviderTrait;
 use Railt\Http\Exception\Path\MutablePathProviderTrait;
-use Railt\Http\Extension\ExtensionProviderTrait;
 use Railt\Http\Extension\MutableExtensionProviderTrait;
 
 /**
