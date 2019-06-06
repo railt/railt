@@ -28,7 +28,7 @@ class Factory
         }
 
         $exception = new GraphQLException($e->getMessage(), $e->getCode(), $e);
-        $exception->withColumn($e instanceof PositionInterface ? $e->getColumn() : 0);
+        $exception->withColumn($e instanceof PositionInterface ? $e->getColumn() : 1);
         $exception->withLine($e->getLine());
         $exception->withFile($e->getFile());
 
