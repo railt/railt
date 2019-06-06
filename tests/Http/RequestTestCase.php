@@ -25,7 +25,7 @@ class RequestTestCase extends TestCase
     {
         $request = new Request('query', ['vars'], 'operation');
 
-        $this->assertEquals([
+        $this->assertSame([
             Request::FIELD_QUERY          => 'query',
             Request::FIELD_VARIABLES      => [0 => 'vars'],
             Request::FIELD_OPERATION_NAME => 'operation',
