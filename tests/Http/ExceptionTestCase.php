@@ -26,7 +26,7 @@ class ExceptionTestCase extends TestCase
     private function assertInternal(GraphQLExceptionInterface $exception): void
     {
         $this->assertFalse($exception->isPublic());
-        $this->assertEquals(GraphQLException::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
+        $this->assertSame(GraphQLException::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
     }
 
     /**
@@ -61,7 +61,7 @@ class ExceptionTestCase extends TestCase
     {
         $exception = new GraphQLException('', 42);
 
-        $this->assertEquals(42, $exception->getCode());
+        $this->assertSame(42, $exception->getCode());
     }
 
     /**
