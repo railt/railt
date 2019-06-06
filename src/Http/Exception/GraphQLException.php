@@ -14,6 +14,7 @@ use Phplrt\Exception\MutableException\MutablePositionTrait;
 use Railt\Http\Exception\Location\MutableLocationsProviderTrait;
 use Railt\Http\Exception\Path\MutablePathProviderTrait;
 use Railt\Http\Extension\ExtensionProviderTrait;
+use Railt\Http\Extension\MutableExtensionProviderTrait;
 
 /**
  * Class GraphQLException
@@ -24,7 +25,7 @@ class GraphQLException extends \Exception implements MutableGraphQLExceptionInte
     use MutablePositionTrait;
     use MutablePathProviderTrait;
     use MutableLocationsProviderTrait;
-    use ExtensionProviderTrait;
+    use MutableExtensionProviderTrait;
 
     /**
      * For all errors that reflect the internal state of the application
@@ -79,9 +80,9 @@ class GraphQLException extends \Exception implements MutableGraphQLExceptionInte
      */
     public function __construct(string $message = '', int $code = 0, \Throwable $previous = null)
     {
-        $this->withPublicMode(false);
+        $this->originalMessage = $message;
 
-        parent::__construct($this->originalMessage = $message, $code, $previous);
+        parent::__construct(static::INTERNAL_EXCEPTION_MESSAGE, $code, $previous);
     }
 
     /**
@@ -90,11 +91,9 @@ class GraphQLException extends \Exception implements MutableGraphQLExceptionInte
      */
     private function withPublicMode(bool $value): self
     {
-        if ($this->public = $value) {
-            $this->message = $this->originalMessage;
-        } else {
-            $this->message = static::INTERNAL_EXCEPTION_MESSAGE;
-        }
+        $this->message = ($this->public = $value)
+            ? $this->originalMessage
+            : static::INTERNAL_EXCEPTION_MESSAGE;
 
         return $this;
     }
@@ -134,8 +133,8 @@ class GraphQLException extends \Exception implements MutableGraphQLExceptionInte
             self::PATH_KEY      => $this->getPath(),
         ];
 
-        if (\count($this->getExtensions())) {
-            $result[self::EXTENSIONS_KEY] = $this->getExtensionsAsArray();
+        if (\count($this->getOriginalExtensions())) {
+            $result[self::EXTENSIONS_KEY] = $this->getExtensions();
         }
 
         return $result;

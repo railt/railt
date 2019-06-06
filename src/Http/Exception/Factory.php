@@ -21,7 +21,7 @@ class Factory
      * @param \Throwable $e
      * @return GraphQLExceptionInterface
      */
-    public static function wrap(\Throwable $e): ExceptionInterface
+    public static function create(\Throwable $e): ExceptionInterface
     {
         if ($e instanceof ExceptionInterface) {
             return $e;
@@ -61,9 +61,9 @@ class Factory
 
     /**
      * @param \Throwable $e
-     * @return GraphQLExceptionInterface|null
+     * @return GraphQLExceptionInterface
      */
-    public static function lastGraphQLException(\Throwable $e): ?ExceptionInterface
+    public static function lastGraphQLException(\Throwable $e): ExceptionInterface
     {
         foreach (static::expand($e) as $exception) {
             if ($exception instanceof ExceptionInterface) {
@@ -71,14 +71,14 @@ class Factory
             }
         }
 
-        return null;
+        return static::create($e);
     }
 
     /**
      * @param \Throwable $e
-     * @return GraphQLExceptionInterface|null
+     * @return GraphQLExceptionInterface
      */
-    public static function firstGraphQLException(\Throwable $e): ?ExceptionInterface
+    public static function firstGraphQLException(\Throwable $e): ExceptionInterface
     {
         $exceptions = \iterator_to_array(static::expand($e), false);
 
@@ -88,7 +88,7 @@ class Factory
             }
         }
 
-        return null;
+        return static::create(static::first($e));
     }
 
     /**

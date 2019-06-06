@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL\Exception;
 
-use Railt\Io\Exception\ExternalFileException;
+use Phplrt\Exception\ExternalException;
 
 /**
  * Class GraphQLException
  */
-abstract class GraphQLException extends ExternalFileException
+abstract class GraphQLException extends ExternalException
 {
 }

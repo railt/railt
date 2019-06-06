@@ -26,7 +26,7 @@ trait MutableExceptionsProviderTrait
     public function withException(\Throwable ...$exceptions): MutableExceptionsProviderInterface
     {
         foreach ($exceptions as $exception) {
-            $this->exceptions[] = Factory::wrap($exception);
+            $this->exceptions[] = Factory::create($exception);
         }
 
         return $this;
@@ -56,7 +56,7 @@ trait MutableExceptionsProviderTrait
         $this->exceptions = \array_map(static function ($e) {
             \assert($e instanceof \Throwable, TypeDumper::render($e) . ' not a \Throwable');
 
-            return Factory::wrap($e);
+            return Factory::create($e);
         }, $exceptions);
 
         return $this;

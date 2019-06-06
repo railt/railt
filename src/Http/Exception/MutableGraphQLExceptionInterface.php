@@ -13,6 +13,7 @@ use Phplrt\Exception\MutableException\MutableFileInterface;
 use Railt\Http\Exception\Path\MutablePathProviderInterface;
 use Phplrt\Exception\MutableException\MutablePositionInterface;
 use Railt\Http\Exception\Location\MutableLocationsProviderInterface;
+use Railt\Http\Extension\MutableExtensionProviderInterface;
 
 /**
  * Interface MutableGraphQLExceptionInterface
@@ -22,7 +23,8 @@ interface MutableGraphQLExceptionInterface extends
     MutablePathProviderInterface,
     MutableLocationsProviderInterface,
     MutableFileInterface,
-    MutablePositionInterface
+    MutablePositionInterface,
+    MutableExtensionProviderInterface
 {
     /**
      * @return MutableGraphQLExceptionInterface|$this
