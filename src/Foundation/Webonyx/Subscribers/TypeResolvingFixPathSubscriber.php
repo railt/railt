@@ -59,7 +59,8 @@ class TypeResolvingFixPathSubscriber implements EventSubscriberInterface
 
         Arr::set($this->indexes, $identifier, $index + 1);
 
-        $input->withPath($input->getPath() . Input::PATH_DELIMITER . $index);
+        /** @var InputInterface $input */
+        $input->withPathChunks(\array_merge($input->getPathChunks(), [$index]));
     }
 
     /**
