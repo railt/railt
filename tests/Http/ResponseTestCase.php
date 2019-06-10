@@ -9,14 +9,26 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http;
 
-use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Response;
+use Railt\Http\Extension\Extension;
+use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Class ResponseTestCase
  */
 class ResponseTestCase extends TestCase
 {
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testValidResponse(): void
+    {
+        $response = new Response();
+
+        $this->assertValid($response);
+    }
+
     /**
      * @param Response $response
      * @return void
@@ -27,6 +39,32 @@ class ResponseTestCase extends TestCase
         $this->assertTrue($response->isValid());
         $this->assertFalse($response->isInvalid());
         $this->assertCount(0, $response->getExceptions());
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testResponseData(): void
+    {
+        $response = new Response([42]);
+
+        $this->assertSame([42], $response->getData());
+
+        $response->withData([1, 2, 3]);
+
+        $this->assertSame([1, 2, 3], $response->getData());
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testInvalidResponseUsingConstructor(): void
+    {
+        $response = new Response(null, [new \Error('error')]);
+
+        $this->assertInvalid($response);
     }
 
     /**
@@ -46,20 +84,13 @@ class ResponseTestCase extends TestCase
      * @return void
      * @throws ExpectationFailedException
      */
-    public function testValidResponse(): void
+    public function testExceptionsOverwriting(): void
     {
         $response = new Response();
 
         $this->assertValid($response);
-    }
 
-    /**
-     * @return void
-     * @throws ExpectationFailedException
-     */
-    public function testInvalidResponseUsingConstructor(): void
-    {
-        $response = new Response(null, [new \Error('error')]);
+        $response->setExceptions([new \InvalidArgumentException()]);
 
         $this->assertInvalid($response);
     }
@@ -113,5 +144,142 @@ class ResponseTestCase extends TestCase
         });
 
         $this->assertValid($response);
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testOriginalExtensionsUsingObjects(): void
+    {
+        $extensions = [
+            new Extension('a', 42),
+            new Extension('b', 23),
+        ];
+
+        $response = new Response(null, [], $extensions);
+
+        $this->assertSame($extensions, $response->getOriginalExtensions());
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testOriginalExtensionsUsingArrays(): void
+    {
+        $extensions = [
+            'a' => 42,
+            'b' => 23,
+        ];
+
+        $response = new Response(null, [], $extensions);
+
+        [$first, $second] = $response->getOriginalExtensions();
+
+        $this->assertSame('a', $first->getName());
+        $this->assertSame(42, $first->getValue());
+
+        $this->assertSame('b', $second->getName());
+        $this->assertSame(23, $second->getValue());
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testExtensionsUniqueKeys(): void
+    {
+        $response = new Response(null, [], [
+            new Extension('a', 23),
+            new Extension('a', 42),
+        ]);
+
+        $this->assertCount(1, $response->getExtensions());
+        $this->assertCount(1, $response->getOriginalExtensions());
+
+        $this->assertArrayHasKey('a', $response->getExtensions());
+        $this->assertSame(42, $response->getExtensions()['a']);
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testRenderableExtensions(): void
+    {
+        $response = new Response(null, [], [
+            new Extension('a', 23),
+            new Extension('b', 42),
+        ]);
+
+        $this->assertSame(['a' => 23, 'b' => 42], $response->getExtensions());
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testRemovingExtension(): void
+    {
+        $response = (new Response(null, [], [
+            new Extension('a', 23),
+            new Extension('b', 42),
+        ]))
+            ->withoutExtension('a');
+
+        $this->assertSame(['b' => 42], $response->getExtensions());
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testRewritingExtension(): void
+    {
+        $response = (new Response(null, [], [
+            new Extension('a', 23),
+            new Extension('b', 42),
+        ]))
+            ->setExtensions([
+                new Extension('c', 23),
+                new Extension('d', 42),
+            ]);
+
+        $this->assertSame(['c' => 23, 'd' => 42], $response->getExtensions());
+    }
+
+    /**
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    public function testRewritingExtensionUsingArrays(): void
+    {
+        $response = (new Response(null, [], [
+            new Extension('a', 23),
+            new Extension('b', 42),
+        ]))
+            ->setExtensions([
+                'c' => 23,
+                'd' => 42,
+            ]);
+
+        $this->assertSame(['c' => 23, 'd' => 42], $response->getExtensions());
+    }
+
+    /**
+     * @return void
+     */
+    public function testInvalidExtension(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageRegExp(
+            '/^First argument should be a name of extension or extension ' .
+            'instance, but object\(stdClass\#\d+\) given$/'
+        );
+
+        $response = new Response();
+
+        $response->withExtension(new \stdClass());
     }
 }

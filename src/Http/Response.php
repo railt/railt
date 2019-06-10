@@ -43,11 +43,16 @@ class Response implements MutableResponseInterface
      *
      * @param array|null $data
      * @param array $exceptions
+     * @param array $extensions
      */
-    public function __construct(array $data = null, array $exceptions = [])
+    public function __construct(array $data = null, array $exceptions = [], array $extensions = [])
     {
-        $this->data = $data;
-        $this->exceptions = $exceptions;
+        $this->withData($data);
+        $this->withException(...$exceptions);
+
+        foreach ($extensions as $name => $value) {
+            $this->withExtension($name, $value);
+        }
     }
 
     /**

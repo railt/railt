@@ -7,10 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\Http;
+namespace Railt\Tests\Http\Response;
 
-use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Tests\Http\TestCase;
 use Railt\Http\Extension\Extension;
+use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Extension\MutableExtensionInterface;
 
 /**
@@ -27,6 +28,16 @@ class ExtensionTestCase extends TestCase
         $extension = $this->extension('name');
 
         $this->assertSame('name', $extension->getName());
+    }
+
+    /**
+     * @param string $name
+     * @param null $value
+     * @return MutableExtensionInterface
+     */
+    protected function extension(string $name, $value = null): MutableExtensionInterface
+    {
+        return new Extension($name, $value);
     }
 
     /**
@@ -62,15 +73,5 @@ class ExtensionTestCase extends TestCase
         $extension->update(23);
 
         $this->assertSame(23, $extension->getValue());
-    }
-
-    /**
-     * @param string $name
-     * @param null $value
-     * @return MutableExtensionInterface
-     */
-    protected function extension(string $name, $value = null): MutableExtensionInterface
-    {
-        return new Extension($name, $value);
     }
 }

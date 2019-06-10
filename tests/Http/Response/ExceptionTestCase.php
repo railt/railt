@@ -7,10 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\Http;
+namespace Railt\Tests\Http\Response;
 
-use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Tests\Http\TestCase;
 use Railt\Http\Exception\GraphQLException;
+use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Exception\GraphQLExceptionInterface;
 
 /**
@@ -18,29 +19,6 @@ use Railt\Http\Exception\GraphQLExceptionInterface;
  */
 class ExceptionTestCase extends TestCase
 {
-    /**
-     * @param GraphQLExceptionInterface $exception
-     * @return void
-     * @throws ExpectationFailedException
-     */
-    private function assertInternal(GraphQLExceptionInterface $exception): void
-    {
-        $this->assertFalse($exception->isPublic());
-        $this->assertSame(GraphQLException::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
-    }
-
-    /**
-     * @param GraphQLExceptionInterface $exception
-     * @param string $message
-     * @return void
-     * @throws ExpectationFailedException
-     */
-    private function assertPublic(GraphQLExceptionInterface $exception, string $message): void
-    {
-        $this->assertTrue($exception->isPublic());
-        $this->assertSame($message, $exception->getMessage());
-    }
-
     /**
      * @return void
      * @throws ExpectationFailedException
@@ -51,6 +29,17 @@ class ExceptionTestCase extends TestCase
         $exception->hide();
 
         $this->assertInternal($exception);
+    }
+
+    /**
+     * @param GraphQLExceptionInterface $exception
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    private function assertInternal(GraphQLExceptionInterface $exception): void
+    {
+        $this->assertFalse($exception->isPublic());
+        $this->assertSame(GraphQLException::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
     }
 
     /**
@@ -87,6 +76,18 @@ class ExceptionTestCase extends TestCase
         $exception->publish();
 
         $this->assertPublic($exception, 'message');
+    }
+
+    /**
+     * @param GraphQLExceptionInterface $exception
+     * @param string $message
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    private function assertPublic(GraphQLExceptionInterface $exception, string $message): void
+    {
+        $this->assertTrue($exception->isPublic());
+        $this->assertSame($message, $exception->getMessage());
     }
 
     /**

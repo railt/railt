@@ -9,8 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception\Location;
 
+use Railt\Dumper\TypeDumper;
+
 /**
  * Trait MutableLocationsProviderTrait
+ *
+ * @mixin MutableLocationsProviderInterface
  */
 trait MutableLocationsProviderTrait
 {
@@ -24,17 +28,46 @@ trait MutableLocationsProviderTrait
     {
         $this->locations = [];
 
-        return $this->withLocation(...$locations);
+        foreach ($locations as $name => $value) {
+            $this->withLocation($name, $value);
+        }
+
+        return $this;
     }
 
     /**
-     * @param LocationInterface ...$locations
-     * @return MutableLocationsProviderInterface|$this
+     * @param int|LocationInterface $lineOrLocation
+     * @param int $column
+     * @return MutableLocationsProviderInterface
      */
-    public function withLocation(LocationInterface ...$locations): MutableLocationsProviderInterface
+    public function withLocation($lineOrLocation, $column = 1): MutableLocationsProviderInterface
     {
-        $this->locations = \array_merge($this->locations, $locations);
+        $this->locations[] = $this->resolveLocation($lineOrLocation, $column);
 
         return $this;
+    }
+
+    /**
+     * @param int|LocationInterface $lineOrLocation
+     * @param int $column
+     * @return LocationInterface
+     */
+    private function resolveLocation($lineOrLocation, $column): LocationInterface
+    {
+        switch (true) {
+            case $lineOrLocation instanceof LocationInterface:
+                return $lineOrLocation;
+
+            case $column instanceof LocationInterface:
+                return $column;
+
+            case \is_int($lineOrLocation) && \is_int($column):
+                return new Location($lineOrLocation, $column);
+        }
+
+        $error = 'First argument should be a location line or location instance, but %s given';
+        $error = \sprintf($error, TypeDumper::render($lineOrLocation));
+
+        throw new \InvalidArgumentException($error);
     }
 }

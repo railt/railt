@@ -7,19 +7,19 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Tests\Http\Exception;
+namespace Railt\Tests\Http\Response;
 
-use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Tests\Http\TestCase;
 use Railt\Http\Exception\Factory;
 use Railt\Http\Exception\GraphQLException;
+use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Exception\GraphQLExceptionInterface;
 use Railt\Http\Exception\MutableGraphQLExceptionInterface;
-use Railt\Tests\Http\TestCase;
 
 /**
- * Class FactoryTestCase
+ * Class ExceptionFactoryTestCase
  */
-class FactoryTestCase extends TestCase
+class ExceptionFactoryTestCase extends TestCase
 {
     /**
      * @return void
@@ -45,6 +45,17 @@ class FactoryTestCase extends TestCase
     }
 
     /**
+     * @param GraphQLExceptionInterface $exception
+     * @return void
+     * @throws ExpectationFailedException
+     */
+    private function assertInternal(GraphQLExceptionInterface $exception): void
+    {
+        $this->assertFalse($exception->isPublic());
+        $this->assertSame(GraphQLException::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
+    }
+
+    /**
      * @return void
      * @throws ExpectationFailedException
      */
@@ -54,17 +65,6 @@ class FactoryTestCase extends TestCase
         $exception->publish();
 
         $this->assertSame($exception, Factory::create($exception));
-    }
-
-    /**
-     * @param GraphQLExceptionInterface $exception
-     * @return void
-     * @throws ExpectationFailedException
-     */
-    private function assertInternal(GraphQLExceptionInterface $exception): void
-    {
-        $this->assertFalse($exception->isPublic());
-        $this->assertSame(GraphQLException::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
     }
 
     /**

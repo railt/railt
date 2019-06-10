@@ -30,10 +30,10 @@ class Location implements LocationInterface
      * @param int $line
      * @param int $column
      */
-    public function __construct(int $line, int $column = 0)
+    public function __construct(int $line, int $column = 1)
     {
-        $this->line = $line;
-        $this->column = $column;
+        $this->line = \max(1, $line);
+        $this->column = \max(1, $column);
     }
 
     /**

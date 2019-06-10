@@ -15,13 +15,14 @@ namespace Railt\Http\Exception\Location;
 interface MutableLocationsProviderInterface extends LocationsProviderInterface
 {
     /**
-     * @param LocationInterface ...$locations
-     * @return MutableLocationsProviderInterface|$this
+     * @param int|LocationInterface $lineOrLocation
+     * @param int $column
+     * @return MutableLocationsProviderInterface
      */
-    public function withLocation(LocationInterface ...$locations): self;
+    public function withLocation($lineOrLocation, $column = 1): self;
 
     /**
-     * @param array $locations
+     * @param array|int[]|LocationInterface[] $locations
      * @return MutableLocationsProviderInterface|$this
      */
     public function setLocations(array $locations): self;

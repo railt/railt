@@ -9,11 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory;
 
-use Railt\Http\Exception\Factory;
-use Railt\Http\Exception\Location\Location;
-use Railt\Http\Exception\Location\MutableLocationsProviderInterface;
 use Railt\Http\Response;
+use Railt\Http\Exception\Factory;
 use Railt\Http\ResponseInterface;
+use Railt\Http\Exception\Location\MutableLocationsProviderInterface;
 
 /**
  * Class ResponseFactory
@@ -28,7 +27,7 @@ class ResponseFactory implements ResponseFactoryInterface
         $exception = Factory::public('GraphQL request must contain a valid query data, but it came empty');
 
         if ($exception instanceof MutableLocationsProviderInterface) {
-            $exception->withLocation(new Location(0, 0));
+            $exception->withLocation(0, 0);
         }
 
         return (new Response())->withException($exception);
