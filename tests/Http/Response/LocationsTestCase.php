@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http\Response;
 
-use Railt\Tests\Http\TestCase;
+use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Exception\Location\Location;
-use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Tests\Http\TestCase;
 
 /**
  * Class LocationsTestCase
