@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Exception\Location;
+namespace Railt\Contracts\Exception\Location;
 
 /**
  * Interface MutableLocationsProviderInterface

@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception\Location;
 
+use Railt\Contracts\Exception\Location\LocationInterface;
+
 /**
  * Class Location
  */

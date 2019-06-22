@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Exception;
+namespace Railt\Contracts\Exception;
 
 use Phplrt\Exception\MutableException\MutableFileInterface;
 use Phplrt\Exception\MutableException\MutablePositionInterface;
-use Railt\Http\Exception\Location\MutableLocationsProviderInterface;
-use Railt\Http\Exception\Path\MutablePathProviderInterface;
-use Railt\Http\Extension\MutableExtensionProviderInterface;
+use Railt\Contracts\Exception\Location\MutableLocationsProviderInterface;
+use Railt\Contracts\Exception\Path\MutablePathProviderInterface;
+use Railt\Contracts\Extension\MutableExtensionProviderInterface;
 
 /**
  * Interface MutableGraphQLExceptionInterface

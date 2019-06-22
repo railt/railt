@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception\Location;
 
+use Railt\Contracts\Exception\Location\LocationInterface;
 use Railt\Dumper\TypeDumper;
+use Railt\Contracts\Exception\Location\MutableLocationsProviderInterface;
 
 /**
  * Trait MutableLocationsProviderTrait

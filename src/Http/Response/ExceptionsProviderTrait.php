@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Response;
 
-use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Contracts\Exception\GraphQLExceptionInterface;
 
 /**
  * Trait ExceptionsProviderTrait

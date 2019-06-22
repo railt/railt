@@ -7,20 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Extension;
+namespace Railt\Contracts\Http\Request;
 
 /**
- * Interface ExtensionInterface
+ * Interface OperationNameInterface
  */
-interface ExtensionInterface
+interface OperationNameInterface
 {
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string;
+    public function getOperationName(): ?string;
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getValue();
+    public function hasOperationName(): bool;
 }

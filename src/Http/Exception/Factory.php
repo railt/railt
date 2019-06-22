@@ -10,13 +10,42 @@ declare(strict_types=1);
 namespace Railt\Http\Exception;
 
 use Phplrt\Position\PositionInterface;
-use Railt\Http\Exception\GraphQLExceptionInterface as ExceptionInterface;
+use Railt\Contracts\Exception\GraphQLExceptionInterface;
+use Railt\Contracts\Exception\GraphQLExceptionInterface as ExceptionInterface;
 
 /**
  * Class Factory
  */
 class Factory
 {
+    /**
+     * @param \Throwable $e
+     * @return GraphQLExceptionInterface
+     */
+    public static function lastGraphQLException(\Throwable $e): ExceptionInterface
+    {
+        foreach (static::expand($e) as $exception) {
+            if ($exception instanceof ExceptionInterface) {
+                return $exception;
+            }
+        }
+
+        return static::create($e);
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return \Traversable|\Throwable[]
+     */
+    public static function expand(\Throwable $e): \Traversable
+    {
+        yield $e;
+
+        while ($e->getPrevious()) {
+            yield $e = $e->getPrevious();
+        }
+    }
+
     /**
      * @param \Throwable $e
      * @return GraphQLExceptionInterface
@@ -37,45 +66,6 @@ class Factory
 
     /**
      * @param \Throwable $e
-     * @return \Throwable
-     */
-    public static function first(\Throwable $e): \Throwable
-    {
-        $exceptions = \iterator_to_array(static::expand($e), false);
-
-        return \end($exceptions);
-    }
-
-    /**
-     * @param \Throwable $e
-     * @return \Traversable|\Throwable[]
-     */
-    public static function expand(\Throwable $e): \Traversable
-    {
-        yield $e;
-
-        while ($e->getPrevious()) {
-            yield $e = $e->getPrevious();
-        }
-    }
-
-    /**
-     * @param \Throwable $e
-     * @return GraphQLExceptionInterface
-     */
-    public static function lastGraphQLException(\Throwable $e): ExceptionInterface
-    {
-        foreach (static::expand($e) as $exception) {
-            if ($exception instanceof ExceptionInterface) {
-                return $exception;
-            }
-        }
-
-        return static::create($e);
-    }
-
-    /**
-     * @param \Throwable $e
      * @return GraphQLExceptionInterface
      */
     public static function firstGraphQLException(\Throwable $e): ExceptionInterface
@@ -89,6 +79,17 @@ class Factory
         }
 
         return static::create(static::first($e));
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return \Throwable
+     */
+    public static function first(\Throwable $e): \Throwable
+    {
+        $exceptions = \iterator_to_array(static::expand($e), false);
+
+        return \end($exceptions);
     }
 
     /**

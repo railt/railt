@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\Contracts\Http;
 
-use Railt\Http\Extension\ExtensionProviderInterface;
-use Railt\Http\Response\DataProviderInterface;
-use Railt\Http\Response\ExceptionsProviderInterface;
+use Railt\Contracts\Http\Response\DataProviderInterface;
+use Railt\Contracts\Extension\ExtensionProviderInterface;
+use Railt\Contracts\Http\Response\ExceptionsProviderInterface;
 
 /**
  * Interface ResponseInterface

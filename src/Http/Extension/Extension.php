@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Extension;
 
+use Railt\Contracts\Extension\MutableExtensionInterface;
+
 /**
  * Class Extension
  */

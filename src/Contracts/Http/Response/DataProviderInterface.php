@@ -7,20 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Request;
+namespace Railt\Contracts\Http\Response;
 
 /**
- * Interface QueryInterface
+ * Interface DataProviderInterface
  */
-interface QueryInterface
+interface DataProviderInterface
 {
     /**
-     * @return string
+     * @return array|null
      */
-    public function getQuery(): string;
-
-    /**
-     * @return bool
-     */
-    public function isEmpty(): bool;
+    public function getData(): ?array;
 }

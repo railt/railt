@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Http\Extension;
 
+use Railt\Contracts\Extension\ExtensionInterface;
 use Railt\Dumper\TypeDumper;
+use Railt\Contracts\Extension\MutableExtensionProviderInterface;
 
 /**
  * Trait MutableExtensionProviderTrait
@@ -40,6 +42,20 @@ trait MutableExtensionProviderTrait
     /**
      * @param string|ExtensionInterface $nameOrExtension
      * @param mixed $value
+     * @return MutableExtensionProviderInterface|$this
+     */
+    public function withExtension($nameOrExtension, $value = null): MutableExtensionProviderInterface
+    {
+        $extension = $this->resolveExtension($nameOrExtension, $value);
+
+        $this->extensions[$extension->getName()] = $extension;
+
+        return $this;
+    }
+
+    /**
+     * @param string|ExtensionInterface $nameOrExtension
+     * @param mixed $value
      * @return ExtensionInterface
      */
     private function resolveExtension($nameOrExtension, $value = null): ExtensionInterface
@@ -59,20 +75,6 @@ trait MutableExtensionProviderTrait
         $error = \sprintf($error, TypeDumper::render($nameOrExtension));
 
         throw new \InvalidArgumentException($error);
-    }
-
-    /**
-     * @param string|ExtensionInterface $nameOrExtension
-     * @param mixed $value
-     * @return MutableExtensionProviderInterface|$this
-     */
-    public function withExtension($nameOrExtension, $value = null): MutableExtensionProviderInterface
-    {
-        $extension = $this->resolveExtension($nameOrExtension, $value);
-
-        $this->extensions[$extension->getName()] = $extension;
-
-        return $this;
     }
 
     /**

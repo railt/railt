@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\Contracts\Http;
 
-use Railt\Http\Request\OperationNameInterface;
-use Railt\Http\Request\QueryInterface;
-use Railt\Http\Request\VariablesInterface;
+use Railt\Contracts\Http\Request\QueryInterface;
+use Railt\Contracts\Http\Request\VariablesInterface;
+use Railt\Contracts\Http\Request\OperationNameInterface;
 
 /**
  * Interface RequestInterface

@@ -12,7 +12,7 @@ namespace Railt\Tests\Http\Response;
 use Railt\Tests\Http\TestCase;
 use Railt\Http\Extension\Extension;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Http\Extension\MutableExtensionInterface;
+use Railt\Contracts\Extension\MutableExtensionInterface;
 
 /**
  * Class ExtensionTestCase

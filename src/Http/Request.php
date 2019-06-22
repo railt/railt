@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Request\MutableOperationNameTrait;
 use Railt\Http\Request\MutableQueryTrait;
 use Railt\Http\Request\MutableVariablesTrait;
+use Railt\Contracts\Http\MutableRequestInterface;
+use Railt\Http\Request\MutableOperationNameTrait;
 
 /**
  * Class Request

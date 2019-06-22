@@ -9,12 +9,25 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception\Path;
 
+use Railt\Contracts\Exception\Path\MutablePathProviderInterface;
+
 /**
  * Trait MutablePathProviderTrait
  */
 trait MutablePathProviderTrait
 {
     use PathProviderTrait;
+
+    /**
+     * @param array $path
+     * @return MutablePathProviderInterface|$this
+     */
+    public function setPath(array $path): MutablePathProviderInterface
+    {
+        $this->path = [];
+
+        return $this->withPath(...$path);
+    }
 
     /**
      * @param mixed ...$paths
@@ -29,16 +42,5 @@ trait MutablePathProviderTrait
         }
 
         return $this;
-    }
-
-    /**
-     * @param array $path
-     * @return MutablePathProviderInterface|$this
-     */
-    public function setPath(array $path): MutablePathProviderInterface
-    {
-        $this->path = [];
-
-        return $this->withPath(...$path);
     }
 }

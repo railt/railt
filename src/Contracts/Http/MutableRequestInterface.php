@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\Contracts\Http;
 
-use Railt\Http\Request\MutableOperationNameInterface;
-use Railt\Http\Request\MutableQueryInterface;
-use Railt\Http\Request\MutableVariablesInterface;
+use Railt\Contracts\Http\Request\MutableOperationNameInterface;
+use Railt\Contracts\Http\Request\MutableQueryInterface;
+use Railt\Contracts\Http\Request\MutableVariablesInterface;
 
 /**
  * Interface MutableRequestInterface

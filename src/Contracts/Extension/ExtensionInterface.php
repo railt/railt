@@ -7,15 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Response;
+namespace Railt\Contracts\Extension;
 
 /**
- * Interface DataProviderInterface
+ * Interface ExtensionInterface
  */
-interface DataProviderInterface
+interface ExtensionInterface
 {
     /**
-     * @return array|null
+     * @return string
      */
-    public function getData(): ?array;
+    public function getName(): string;
+
+    /**
+     * @return mixed
+     */
+    public function getValue();
 }

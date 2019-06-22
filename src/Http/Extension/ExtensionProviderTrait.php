@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Extension;
 
+use Railt\Contracts\Extension\ExtensionInterface;
+
 /**
  * Trait ExtensionProviderTrait
  */
@@ -18,14 +20,6 @@ trait ExtensionProviderTrait
      * @var array|ExtensionInterface[]
      */
     protected $extensions = [];
-
-    /**
-     * @return array|ExtensionInterface[]
-     */
-    public function getOriginalExtensions(): array
-    {
-        return \array_values($this->extensions);
-    }
 
     /**
      * @return array
@@ -39,5 +33,13 @@ trait ExtensionProviderTrait
         }
 
         return $result;
+    }
+
+    /**
+     * @return array|ExtensionInterface[]
+     */
+    public function getOriginalExtensions(): array
+    {
+        return \array_values($this->extensions);
     }
 }

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Exception\Path;
+namespace Railt\Contracts\Exception\Path;
 
 /**
  * Interface MutablePathProviderInterface

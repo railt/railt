@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Exception;
+namespace Railt\Contracts\Exception;
 
 use Phplrt\Position\PositionInterface;
-use Railt\Http\Exception\Location\LocationsProviderInterface;
-use Railt\Http\Exception\Path\PathProviderInterface;
-use Railt\Http\Extension\ExtensionProviderInterface;
+use Railt\Contracts\Exception\Location\LocationsProviderInterface;
+use Railt\Contracts\Exception\Path\PathProviderInterface;
+use Railt\Contracts\Extension\ExtensionProviderInterface;
 
 /**
  * Interface GraphQLExceptionInterface

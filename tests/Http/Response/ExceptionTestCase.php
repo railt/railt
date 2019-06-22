@@ -12,7 +12,7 @@ namespace Railt\Tests\Http\Response;
 use Railt\Tests\Http\TestCase;
 use Railt\Http\Exception\GraphQLException;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Contracts\Exception\GraphQLExceptionInterface;
 
 /**
  * Class ExceptionTestCase

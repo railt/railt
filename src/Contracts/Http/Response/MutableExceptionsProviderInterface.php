@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Response;
+namespace Railt\Contracts\Http\Response;
 
 /**
  * Interface MutableExceptionsProviderInterface

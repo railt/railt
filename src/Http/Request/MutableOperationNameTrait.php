@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Request;
 
+use Railt\Contracts\Http\Request\MutableOperationNameInterface;
+
 /**
  * Trait MutableOperationNameTrait
  */

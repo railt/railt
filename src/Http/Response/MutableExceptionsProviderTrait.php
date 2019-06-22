@@ -11,6 +11,7 @@ namespace Railt\Http\Response;
 
 use Railt\Dumper\TypeDumper;
 use Railt\Http\Exception\Factory;
+use Railt\Contracts\Http\Response\MutableExceptionsProviderInterface;
 
 /**
  * Trait MutableExceptionsProviderTrait

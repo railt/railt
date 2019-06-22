@@ -7,20 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Exception\Path;
+namespace Railt\Contracts\Http;
 
 /**
- * Interface PathProviderInterface
+ * Interface RenderableInterface
  */
-interface PathProviderInterface
+interface RenderableInterface extends \JsonSerializable
 {
     /**
-     * @return array|string[]|int[]
+     * @return string
      */
-    public function getPath(): array;
+    public function __toString(): string;
 
     /**
-     * @return bool
+     * @return array
      */
-    public function hasPath(): bool;
+    public function toArray(): array;
 }

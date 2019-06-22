@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Request;
+namespace Railt\Contracts\Http\Request;
 
 /**
  * Interface VariablesInterface

@@ -10,10 +10,11 @@ declare(strict_types=1);
 namespace Railt\Http\Exception;
 
 use Phplrt\Exception\MutableException\MutableFileTrait;
-use Phplrt\Exception\MutableException\MutablePositionTrait;
-use Railt\Http\Exception\Location\MutableLocationsProviderTrait;
 use Railt\Http\Exception\Path\MutablePathProviderTrait;
 use Railt\Http\Extension\MutableExtensionProviderTrait;
+use Phplrt\Exception\MutableException\MutablePositionTrait;
+use Railt\Contracts\Exception\MutableGraphQLExceptionInterface;
+use Railt\Http\Exception\Location\MutableLocationsProviderTrait;
 
 /**
  * Class GraphQLException
@@ -85,19 +86,6 @@ class GraphQLException extends \Exception implements MutableGraphQLExceptionInte
     }
 
     /**
-     * @param bool $value
-     * @return GraphQLException|$this
-     */
-    private function withPublicMode(bool $value): self
-    {
-        $this->message = ($this->public = $value)
-            ? $this->originalMessage
-            : static::INTERNAL_EXCEPTION_MESSAGE;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function isPublic(): bool
@@ -111,6 +99,19 @@ class GraphQLException extends \Exception implements MutableGraphQLExceptionInte
     public function publish(): MutableGraphQLExceptionInterface
     {
         return $this->withPublicMode(true);
+    }
+
+    /**
+     * @param bool $value
+     * @return GraphQLException|$this
+     */
+    private function withPublicMode(bool $value): self
+    {
+        $this->message = ($this->public = $value)
+            ? $this->originalMessage
+            : static::INTERNAL_EXCEPTION_MESSAGE;
+
+        return $this;
     }
 
     /**

@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Response;
 
+use Railt\Contracts\Http\Response\MutableDataProviderInterface;
+
 /**
  * Trait MutableDataProviderTrait
  */

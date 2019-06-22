@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Request;
 
+use Railt\Contracts\Http\Request\MutableVariablesInterface;
+
 /**
  * Trait MutableVariablesTrait
  */
@@ -51,6 +53,15 @@ trait MutableVariablesTrait
     }
 
     /**
+     * @param iterable $iterable
+     * @return array
+     */
+    private function iterableToArray(iterable $iterable): array
+    {
+        return $iterable instanceof \Traversable ? \iterator_to_array($iterable) : $iterable;
+    }
+
+    /**
      * @param array $variables
      * @return MutableVariablesInterface|$this
      */
@@ -59,14 +70,5 @@ trait MutableVariablesTrait
         $this->variables = $this->iterableToArray($variables);
 
         return $this;
-    }
-
-    /**
-     * @param iterable $iterable
-     * @return array
-     */
-    private function iterableToArray(iterable $iterable): array
-    {
-        return $iterable instanceof \Traversable ? \iterator_to_array($iterable) : $iterable;
     }
 }

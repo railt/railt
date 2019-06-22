@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\Contracts\Http;
 
-use Railt\Http\Extension\MutableExtensionProviderInterface;
-use Railt\Http\Response\MutableDataProviderInterface;
-use Railt\Http\Response\MutableExceptionsProviderInterface;
+use Railt\Contracts\Extension\MutableExtensionProviderInterface;
+use Railt\Contracts\Http\Response\MutableDataProviderInterface;
+use Railt\Contracts\Http\Response\MutableExceptionsProviderInterface;
 
 /**
  * Interface MutableResponseInterface

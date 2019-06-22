@@ -7,20 +7,20 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Request;
+namespace Railt\Contracts\Exception\Location;
 
 /**
- * Interface OperationNameInterface
+ * Interface LocationsProviderInterface
  */
-interface OperationNameInterface
+interface LocationsProviderInterface
 {
     /**
-     * @return string|null
+     * @return array|LocationInterface[]
      */
-    public function getOperationName(): ?string;
+    public function getLocations(): array;
 
     /**
      * @return bool
      */
-    public function hasOperationName(): bool;
+    public function hasLocations(): bool;
 }

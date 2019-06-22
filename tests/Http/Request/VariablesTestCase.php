@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Tests\Http\Request;
 
-use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Request;
-use Railt\Http\Request\MutableVariablesInterface;
 use Railt\Tests\Http\TestCase;
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Contracts\Http\Request\MutableVariablesInterface;
 
 /**
  * Class VariablesTestCase
