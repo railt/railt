@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Http;
 
-use Railt\Contracts\Http\Response\DataProviderInterface;
 use Railt\Contracts\Extension\ExtensionProviderInterface;
+use Railt\Contracts\Http\Response\DataProviderInterface;
 use Railt\Contracts\Http\Response\ExceptionsProviderInterface;
 
 /**

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Extension\ClassLoader;
 
-use Phplrt\Io\File;
 use Railt\Foundation\Application;
 use Railt\Foundation\Application\CompilerExtension;
 use Railt\Foundation\Extension\Extension;

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Http\Extension;
 
 use Railt\Contracts\Extension\ExtensionInterface;
-use Railt\Dumper\TypeDumper;
 use Railt\Contracts\Extension\MutableExtensionProviderInterface;
+use Railt\Dumper\TypeDumper;
 
 /**
  * Trait MutableExtensionProviderTrait

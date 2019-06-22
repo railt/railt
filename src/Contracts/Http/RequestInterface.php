@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Http;
 
+use Railt\Contracts\Http\Request\OperationNameInterface;
 use Railt\Contracts\Http\Request\QueryInterface;
 use Railt\Contracts\Http\Request\VariablesInterface;
-use Railt\Contracts\Http\Request\OperationNameInterface;
 
 /**
  * Interface RequestInterface
