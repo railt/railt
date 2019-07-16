@@ -10,13 +10,11 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
+use Clockwork\Request\UserData;
 use Illuminate\Support\Arr;
 use Railt\Dumper\TypeDumper;
-use Railt\Container\Container;
-use Clockwork\Request\UserData;
-use Railt\Http\RequestInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
-use Railt\Foundation\Event\Resolver\FieldResolve;
+use Railt\Http\RequestInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -45,7 +43,7 @@ class RailtRequestSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            RequestReceived::class => ['onRequest', 100]
+            RequestReceived::class => ['onRequest', 100],
         ];
     }
 

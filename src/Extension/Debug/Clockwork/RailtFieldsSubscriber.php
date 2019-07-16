@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Extension\Debug\Clockwork;
 
 use Clockwork\Clockwork;
-use Railt\Dumper\TypeDumper;
 use Clockwork\Request\UserData;
+use Railt\Dumper\TypeDumper;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Resolver\FieldResolve;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
