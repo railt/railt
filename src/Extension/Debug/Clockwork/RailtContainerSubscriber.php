@@ -36,12 +36,14 @@ class RailtContainerSubscriber implements EventSubscriberInterface
      *
      * @param Clockwork $clockwork
      * @param Container $app
-     * @throws \ReflectionException
      */
     public function __construct(Clockwork $clockwork, Container $app)
     {
         $this->app = $app;
-        $this->context = $clockwork->userData('railt:container')->title('Container');
+
+        $this->context = $clockwork
+            ->userData('railt-container')
+            ->title('Container');
     }
 
     /**

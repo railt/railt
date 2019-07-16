@@ -40,12 +40,13 @@ class RailtConfigurationSubscriber implements EventSubscriberInterface
      *
      * @param Clockwork $clockwork
      * @param Container $app
-     * @throws \ReflectionException
      */
     public function __construct(Clockwork $clockwork, Container $app)
     {
         $this->app = $app;
-        $this->data = $clockwork->userData('railt:config')->title('Configuration');
+        $this->data = $clockwork
+            ->userData('railt-config')
+            ->title('Configuration');
 
         $this->shareConfigs();
     }
@@ -68,7 +69,7 @@ class RailtConfigurationSubscriber implements EventSubscriberInterface
             $configs[] = ['Name' => $key, 'Value' => $value];
         }
 
-        $this->data->table('Config', $configs);
+        $this->data->table('', $configs);
     }
 
     /**

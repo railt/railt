@@ -41,7 +41,10 @@ class RailtSchemaSubscriber implements EventSubscriberInterface
     public function __construct(Clockwork $clockwork, Container $app)
     {
         $this->app = $app;
-        $this->data = $clockwork->userData('railt:sdl')->title('Schema');
+
+        $this->data = $clockwork
+            ->userData('railt-sdl')
+            ->title('Schema');
     }
 
     /**
@@ -75,7 +78,7 @@ class RailtSchemaSubscriber implements EventSubscriberInterface
             ];
         }
 
-        $this->data->table('Registered Types', $types);
+        $this->data->table('', $types);
     }
 
     /**

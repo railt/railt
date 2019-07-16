@@ -28,17 +28,17 @@ class PerformanceTimelineSubscriber implements EventSubscriberInterface
     /**
      * @var string
      */
-    private const RAILT_PROCESS_CONNECTION = 'railt:connection:%s';
+    private const RAILT_PROCESS_CONNECTION = 'railt-connection-%s';
 
     /**
      * @var string
      */
-    private const RAILT_PROCESS_HTTP = 'railt:request:%s';
+    private const RAILT_PROCESS_HTTP = 'railt-request-%s';
 
     /**
      * @var string
      */
-    private const RAILT_PROCESS_FIELD = 'railt:resolving:%s';
+    private const RAILT_PROCESS_FIELD = 'railt-resolving-%s';
 
     /**
      * @var Clockwork
