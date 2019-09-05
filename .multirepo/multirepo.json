@@ -93,8 +93,7 @@
                 "sdl/.travis.yml": ".travis.yml"
             },
             "dirs": {
-                "../src/GraphQL": "src/GraphQL",
-                "../tests/GraphQL": "tests"
+                "../src/GraphQL": "src/GraphQL"
             }
         }
     }
