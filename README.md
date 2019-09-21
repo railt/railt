@@ -7,6 +7,7 @@
     <a href="https://codeclimate.com/github/railt/railt/maintainability"><img src="https://api.codeclimate.com/v1/badges/07b06e5fc97ecbfaafb6/maintainability" /></a>
 </p>
 <p align="center">
+    <a href="https://opencollective.com/railt" alt="Financial Contributors on Open Collective"><img src="https://opencollective.com/railt/all/badge.svg?label=financial+contributors" />
     <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>
     <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
     <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
@@ -145,6 +146,37 @@ The contribution guide can be found in the [documentation](https://railt.org/doc
 
 If you discover a security vulnerability within Railt, please send an e-mail to maintainer 
 at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/railt/railt/graphs/contributors"><img src="https://opencollective.com/railt/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/railt/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/railt"><img src="https://opencollective.com/railt/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/railt/contribute)]
+
+<a href="https://opencollective.com/railt/organization/0/website"><img src="https://opencollective.com/railt/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/1/website"><img src="https://opencollective.com/railt/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/2/website"><img src="https://opencollective.com/railt/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/3/website"><img src="https://opencollective.com/railt/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/4/website"><img src="https://opencollective.com/railt/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/5/website"><img src="https://opencollective.com/railt/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/6/website"><img src="https://opencollective.com/railt/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/7/website"><img src="https://opencollective.com/railt/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/8/website"><img src="https://opencollective.com/railt/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/9/website"><img src="https://opencollective.com/railt/organization/9/avatar.svg"></a>
+
 
 ## License
 
