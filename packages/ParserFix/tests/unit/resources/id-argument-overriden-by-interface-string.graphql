@@ -1,0 +1,7 @@
+type TID implements IString {
+    field(arg: String): ID
+}
+
+interface IString {
+    field(arg: ID): ID
+}

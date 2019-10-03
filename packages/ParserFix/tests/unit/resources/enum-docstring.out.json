@@ -1,0 +1,43 @@
+[
+    {
+        "kind": "EnumTypeDefinition",
+        "values": [
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "Red"
+                },
+                "description": {
+                    "kind": "StringValue",
+                    "block": true,
+                    "value": "\n    Value \"Red\" description\n    "
+                },
+                "directives": null
+            },
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "Green"
+                },
+                "description": {
+                    "kind": "StringValue",
+                    "block": true,
+                    "value": "\n    Value 'Green' description\n    "
+                },
+                "directives": null
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Colour"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nColour enum description\n"
+        },
+        "directives": null
+    }
+]

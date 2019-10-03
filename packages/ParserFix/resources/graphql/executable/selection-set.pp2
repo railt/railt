@@ -1,0 +1,33 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Selection Sets
+ * --------------------------------------------------------------------------
+ *
+ * An operation selects the set of information it needs, and will receive
+ * exactly that information and nothing more, avoiding over‐fetching and
+ * under‐fetching data.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Selection-Sets
+ */
+
+#SelectionSet -> {
+    return new \Railt\Parser\Node\Executable\Definition\SelectionSetNode(\reset($children));
+}
+  : ::T_BRACE_OPEN:: Selections() ::T_BRACE_CLOSE::
+  ;
+
+
+#Selections -> {
+    return new \Railt\Parser\Node\Generic\SelectionCollection($children);
+}
+  : (Selection() ::T_COMMA::?)*
+  ;
+
+
+#Selection
+  : Field()
+  | InlineFragment()
+  | FragmentSpread()
+  ;

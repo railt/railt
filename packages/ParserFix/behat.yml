@@ -1,0 +1,10 @@
+default:
+    formatters:
+        pretty: true
+    suites:
+        parser:
+            paths:
+                - '%paths.base%/tests/feature'
+                - '%paths.base%/packages/Parser/tests/feature'
+            contexts:
+                - Railt\Parser\Tests\Feature\FeatureContext

@@ -1,0 +1,1149 @@
+[
+    {
+        "kind": "SchemaDefinition",
+        "description": null,
+        "directives": null,
+        "operationTypes": [
+            {
+                "kind": "OperationTypeDefinition",
+                "operation": "query",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "QueryType"
+                    }
+                }
+            },
+            {
+                "kind": "OperationTypeDefinition",
+                "operation": "mutation",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "MutationType"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "kind": "SchemaDefinition",
+        "description": null,
+        "directives": null,
+        "operationTypes": [
+            {
+                "kind": "OperationTypeDefinition",
+                "operation": "mutation",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "MutationType"
+                    }
+                }
+            },
+            {
+                "kind": "OperationTypeDefinition",
+                "operation": "query",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "QueryType"
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "Bar"
+                }
+            }
+        ],
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "one"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": null
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "two"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "InputType"
+                                }
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "three"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Int"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "InputType"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "other"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "String"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "four"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "String"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": {
+                            "kind": "StringValue",
+                            "block": false,
+                            "value": "string"
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "five"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "String"
+                                }
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": {
+                            "kind": "ListValue",
+                            "values": [
+                                {
+                                    "kind": "StringValue",
+                                    "block": false,
+                                    "value": "string"
+                                },
+                                {
+                                    "kind": "StringValue",
+                                    "block": false,
+                                    "value": "string"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "six"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "InputType"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": {
+                            "kind": "ObjectValue",
+                            "fields": [
+                                {
+                                    "kind": "ObjectField",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "key"
+                                    },
+                                    "value": {
+                                        "kind": "StringValue",
+                                        "block": false,
+                                        "value": "value"
+                                    }
+                                },
+                                {
+                                    "kind": "ObjectField",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "key2"
+                                    },
+                                    "value": {
+                                        "kind": "ListValue",
+                                        "values": [
+                                            {
+                                                "kind": "StringValue",
+                                                "block": false,
+                                                "value": "value1"
+                                            },
+                                            {
+                                                "kind": "StringValue",
+                                                "block": false,
+                                                "value": "value2"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "seven"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "Int"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Foo"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "annotatedField"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": [
+                    {
+                        "kind": "Directive",
+                        "name": {
+                            "kind": "Name",
+                            "value": "onField"
+                        },
+                        "arguments": null
+                    }
+                ],
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "Type"
+                            }
+                        },
+                        "description": null,
+                        "directives": [
+                            {
+                                "kind": "Directive",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "onArg"
+                                },
+                                "arguments": null
+                            }
+                        ],
+                        "defaultValue": {
+                            "kind": "StringValue",
+                            "block": false,
+                            "value": "default"
+                        }
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedObject"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onObject"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg"
+                        },
+                        "value": {
+                            "kind": "StringValue",
+                            "block": false,
+                            "value": "value"
+                        }
+                    },
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg2"
+                        },
+                        "value": {
+                            "kind": "ListValue",
+                            "values": [
+                                {
+                                    "kind": "EnumValue",
+                                    "value": "Relation"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "one"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": null
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "four"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "String"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": {
+                            "kind": "StringValue",
+                            "block": false,
+                            "value": "string"
+                        }
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Bar"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "annotatedField"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": [
+                    {
+                        "kind": "Directive",
+                        "name": {
+                            "kind": "Name",
+                            "value": "onField"
+                        },
+                        "arguments": null
+                    }
+                ],
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "Type"
+                            }
+                        },
+                        "description": null,
+                        "directives": [
+                            {
+                                "kind": "Directive",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "onArg"
+                                },
+                                "arguments": null
+                            }
+                        ],
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedInterface"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onInterface"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "Story"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "Article"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "Advert"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Feed"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "A"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "B"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedUnion"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onUnion"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "A"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "B"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedUnionTwo"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onUnion"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "ScalarTypeDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "CustomScalar"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "ScalarTypeDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedScalar"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onScalar"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "EnumTypeDefinition",
+        "values": [
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "DESKTOP"
+                },
+                "description": null,
+                "directives": null
+            },
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "MOBILE"
+                },
+                "description": null,
+                "directives": null
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Site"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "EnumTypeDefinition",
+        "values": [
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "ANNOTATED_VALUE"
+                },
+                "description": null,
+                "directives": [
+                    {
+                        "kind": "Directive",
+                        "name": {
+                            "kind": "Name",
+                            "value": "onEnumValue"
+                        },
+                        "arguments": null
+                    }
+                ]
+            },
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "OTHER_VALUE"
+                },
+                "description": null,
+                "directives": null
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedEnum"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onEnum"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "InputObjectTypeDefinition",
+        "fields": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "key"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "String"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": null
+            },
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "answer"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Int"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": {
+                    "kind": "IntValue",
+                    "value": 42
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "InputType"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "InputObjectTypeDefinition",
+        "fields": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "annotatedField"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": [
+                    {
+                        "kind": "Directive",
+                        "name": {
+                            "kind": "Name",
+                            "value": "onField"
+                        },
+                        "arguments": null
+                    }
+                ],
+                "defaultValue": null
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedInput"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onInputObjectType"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeExtension",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "seven"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "String"
+                                }
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Foo"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "ObjectTypeExtension",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Name",
+            "value": "Foo"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onType"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Name",
+            "value": "NoFields"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "skip"
+        },
+        "repeatable": true,
+        "locations": [
+            {
+                "kind": "Name",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Name",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Name",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": null,
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "include"
+        },
+        "repeatable": true,
+        "locations": [
+            {
+                "kind": "Name",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Name",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Name",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": null,
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "include2"
+        },
+        "repeatable": true,
+        "locations": [
+            {
+                "kind": "Name",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Name",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Name",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": null,
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": null
+            }
+        ]
+    }
+]

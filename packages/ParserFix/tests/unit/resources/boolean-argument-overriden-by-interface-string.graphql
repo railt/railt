@@ -1,0 +1,7 @@
+type TBoolean implements IString {
+    field(arg: String): Boolean
+}
+
+interface IString {
+    field(arg: Boolean): Boolean
+}

@@ -1,0 +1,37 @@
+[
+    {
+        "kind": "ScalarTypeDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "Test"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"scalar Test\" type\n"
+        },
+        "directives": null
+    },
+    {
+        "kind": "ScalarTypeDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "Test2"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"scalar Test2\" type\n"
+        },
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "Directive"
+                },
+                "arguments": null
+            }
+        ]
+    }
+]

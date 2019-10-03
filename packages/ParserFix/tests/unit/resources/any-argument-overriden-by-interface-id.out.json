@@ -1,0 +1,103 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "IID"
+                }
+            }
+        ],
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Any"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "ID"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "TAny"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Any"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "Any"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "IID"
+        },
+        "description": null,
+        "directives": null
+    }
+]

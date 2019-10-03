@@ -1,0 +1,7 @@
+type TFloat implements IDateTime {
+    field(arg: DateTime): Float
+}
+
+interface IDateTime {
+    field(arg: Float): Float
+}

@@ -1,0 +1,7 @@
+type TFloat implements IFloat {
+    field: Float
+}
+
+interface IFloat {
+  field: Float
+}

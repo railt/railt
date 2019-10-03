@@ -1,0 +1,12 @@
+#
+# Skip
+#
+
+# DocBlock: Test
+scalar Test
+
+# DocBlock: Test2
+# DocBlock2:Test2
+scalar Test2 @Directive # Skip
+# Skip
+# Skip

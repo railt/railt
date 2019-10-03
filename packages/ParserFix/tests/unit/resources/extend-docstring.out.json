@@ -1,0 +1,80 @@
+[
+    {
+        "kind": "ObjectTypeExtension",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "seven"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "argument"
+                        },
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "String"
+                                }
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Foo"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"extend type Foo\"\n"
+        },
+        "directives": null
+    },
+    {
+        "kind": "ObjectTypeExtension",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Name",
+            "value": "Foo2"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"extend type Foo2\"\n"
+        },
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onType"
+                },
+                "arguments": null
+            }
+        ]
+    }
+]

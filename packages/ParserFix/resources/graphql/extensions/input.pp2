@@ -1,0 +1,41 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Input Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Input object type extensions are used to represent an input object type
+ * which has been extended from some original input object type. For
+ * example, this might be used by a GraphQL service which is itself an
+ * extension of another GraphQL service.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Object-Extensions
+ */
+
+#InputObjectTypeExtension -> {
+    $input = new \Railt\Parser\Node\TypeSystem\Extension\InputObjectTypeExtensionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\Description:
+                $input->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $input->directives = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\InputValueDefinitionCollection:
+                $input->fields = $child;
+                break;
+        }
+    }
+
+    return $input;
+}
+  : Description()
+    ::T_EXTEND:: InputObjectTypeDefinitionExceptDescription()
+  ;

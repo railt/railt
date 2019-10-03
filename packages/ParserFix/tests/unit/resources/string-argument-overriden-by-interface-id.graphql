@@ -1,0 +1,7 @@
+type TString implements IID {
+    field(arg: ID): String
+}
+
+interface IID {
+    field(arg: String): String
+}

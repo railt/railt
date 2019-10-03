@@ -1,0 +1,103 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "IFloat"
+                }
+            }
+        ],
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Boolean"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "Float"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "TBoolean"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Boolean"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "Boolean"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "IFloat"
+        },
+        "description": null,
+        "directives": null
+    }
+]

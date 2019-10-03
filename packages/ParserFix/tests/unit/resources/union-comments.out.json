@@ -1,0 +1,102 @@
+[
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "Story"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "Article"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "Advert"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Feed"
+        },
+        "description": null,
+        "directives": null
+    },
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "A"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "B"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedUnion"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onUnion"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "A"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Name",
+                    "value": "B"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedUnionTwo"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onUnion"
+                },
+                "arguments": null
+            }
+        ]
+    }
+]

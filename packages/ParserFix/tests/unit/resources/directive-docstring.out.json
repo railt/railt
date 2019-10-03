@@ -1,0 +1,157 @@
+[
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "skip"
+        },
+        "repeatable": true,
+        "locations": [
+            {
+                "kind": "Name",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Name",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Name",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDirective @skip desciption\n"
+        },
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": {
+                    "kind": "StringValue",
+                    "block": true,
+                    "value": "\n    Attribute 'if' description\n    "
+                },
+                "directives": null,
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "include"
+        },
+        "repeatable": true,
+        "locations": [
+            {
+                "kind": "Name",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Name",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Name",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDirective @include desciption\n"
+        },
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": {
+                    "kind": "StringValue",
+                    "block": true,
+                    "value": "\n    Attribute \"if\" description\n    "
+                },
+                "directives": null,
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "include2"
+        },
+        "repeatable": true,
+        "locations": [
+            {
+                "kind": "Name",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Name",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Name",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDirective @include2 desciption\n"
+        },
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": null
+            }
+        ]
+    }
+]

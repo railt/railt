@@ -1,0 +1,98 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enums
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL Enum types, like scalar types, also represent leaf values in
+ * a GraphQL type system. However Enum types describe the set of
+ * possible values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Enums
+ */
+
+#EnumTypeDefinition -> {
+    $enum = new \Railt\Parser\Node\TypeSystem\Definition\EnumTypeDefinitionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\Description:
+                $enum->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $enum->directives = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\EnumValueDefinitionCollection:
+                $enum->values = $child;
+                break;
+        }
+    }
+
+    return $enum;
+}
+  : Description()
+    EnumTypeDefinitionExceptDescription()
+  ;
+
+#EnumTypeDefinitionExceptDescription
+  : EnumTypeDefinitionHead()
+    EnumTypeDefinitionBody()?
+  ;
+
+#EnumTypeDefinitionHead
+  : ::T_ENUM:: TypeName() Directives()?
+  ;
+
+#EnumTypeDefinitionBody
+  : ::T_BRACE_OPEN::
+      EnumTypeDefinitions()?
+    ::T_BRACE_CLOSE::
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enum Values
+ * --------------------------------------------------------------------------
+ *
+ * Enums are not references for a numeric value, but are unique values
+ * in their own right. They may serialize as a string: the name of the
+ * represented value.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#EnumValuesDefinition
+ */
+
+#EnumTypeDefinitions -> {
+    return new \Railt\Parser\Node\Generic\EnumValueDefinitionCollection($children);
+}
+    : EnumValueDefinition()+
+    ;
+
+#EnumValueDefinition -> {
+    $value = new \Railt\Parser\Node\TypeSystem\Definition\EnumValueDefinitionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\Description:
+                $value->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $value->directives = $child;
+                break;
+        }
+    }
+
+    return $value;
+}
+  : Description()
+    NameWithoutValues()
+    Directives()? ::T_COMMA::?
+  ;

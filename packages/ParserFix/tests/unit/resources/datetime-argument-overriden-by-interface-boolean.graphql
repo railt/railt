@@ -1,0 +1,7 @@
+type TDateTime implements IBoolean {
+    field(arg: Boolean): DateTime
+}
+
+interface IBoolean {
+    field(arg: DateTime): DateTime
+}

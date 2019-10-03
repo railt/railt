@@ -1,0 +1,31 @@
+[
+    {
+        "kind": "SchemaDefinition",
+        "description": null,
+        "directives": null,
+        "operationTypes": [
+            {
+                "kind": "OperationTypeDefinition",
+                "operation": "query",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "TestQuery"
+                    }
+                }
+            },
+            {
+                "kind": "OperationTypeDefinition",
+                "operation": "mutation",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "TestMutation"
+                    }
+                }
+            }
+        ]
+    }
+]

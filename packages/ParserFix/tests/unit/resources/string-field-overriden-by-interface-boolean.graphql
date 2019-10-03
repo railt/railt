@@ -1,0 +1,7 @@
+type TString implements IBoolean {
+    field: String
+}
+
+interface IBoolean {
+  field: Boolean
+}

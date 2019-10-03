@@ -1,0 +1,7 @@
+type TFloat implements IID {
+    field(arg: ID): Float
+}
+
+interface IID {
+    field(arg: Float): Float
+}

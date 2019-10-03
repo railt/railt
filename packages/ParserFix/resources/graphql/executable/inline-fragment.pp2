@@ -1,0 +1,33 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Inline Fragments
+ * --------------------------------------------------------------------------
+ *
+ * Fragments can be defined inline within a selection set. This is done to
+ * conditionally include fields based on their runtime type.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Inline-Fragments
+ */
+
+#InlineFragment -> {
+    $fragment = new \Railt\Parser\Node\Executable\Definition\InlineFragmentNode(\end($children));
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $fragment->directives = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Type\NamedTypeNode:
+                $fragment->typeCondition = $child;
+                break;
+        }
+    }
+
+    return $fragment;
+}
+  : ::T_THREE_DOTS:: (::T_ON:: NamedType())? Directives()?
+    SelectionSet()
+  ;

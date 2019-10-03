@@ -1,0 +1,852 @@
+[
+    {
+        "kind": "FragmentDefinition",
+        "name": {
+            "kind": "Name",
+            "value": "comparisonFields"
+        },
+        "typeCondition": {
+            "kind": "NamedType",
+            "name": {
+                "kind": "Name",
+                "value": "Character"
+            }
+        },
+        "directives": null,
+        "selectionSet": {
+            "kind": "SelectionSet",
+            "selections": [
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "name"
+                    },
+                    "alias": null,
+                    "arguments": null,
+                    "selectionSet": null,
+                    "directives": null
+                },
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "friendsConnection"
+                    },
+                    "alias": null,
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "first"
+                            },
+                            "value": {
+                                "kind": "Variable",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "first"
+                                }
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "totalCount"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": null,
+                                "directives": null
+                            },
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "edges"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "node"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": {
+                                                "kind": "SelectionSet",
+                                                "selections": [
+                                                    {
+                                                        "kind": "Field",
+                                                        "name": {
+                                                            "kind": "Name",
+                                                            "value": "name"
+                                                        },
+                                                        "alias": null,
+                                                        "arguments": null,
+                                                        "selectionSet": null,
+                                                        "directives": null
+                                                    }
+                                                ]
+                                            },
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                }
+            ]
+        }
+    },
+    {
+        "kind": "OperationDefinition",
+        "operation": "query",
+        "selectionSet": {
+            "kind": "SelectionSet",
+            "selections": [
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "hero"
+                    },
+                    "alias": {
+                        "kind": "Name",
+                        "value": "leftComparison"
+                    },
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "episode"
+                            },
+                            "value": {
+                                "kind": "EnumValue",
+                                "value": "EMPIRE"
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "FragmentSpread",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "comparisonFields"
+                                },
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                },
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "hero"
+                    },
+                    "alias": {
+                        "kind": "Name",
+                        "value": "rightComparison"
+                    },
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "episode"
+                            },
+                            "value": {
+                                "kind": "EnumValue",
+                                "value": "JEDI"
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "FragmentSpread",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "comparisonFields"
+                                },
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                }
+            ]
+        },
+        "name": {
+            "kind": "Name",
+            "value": "HeroComparison"
+        },
+        "variables": [
+            {
+                "kind": "VariableDefinition",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Int"
+                    }
+                },
+                "variable": {
+                    "kind": "Variable",
+                    "name": {
+                        "kind": "Name",
+                        "value": "first"
+                    }
+                },
+                "defaultValue": {
+                    "kind": "IntValue",
+                    "value": 3
+                },
+                "directives": null
+            }
+        ],
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "test"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "OperationDefinition",
+        "operation": "query",
+        "selectionSet": {
+            "kind": "SelectionSet",
+            "selections": [
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "hero"
+                    },
+                    "alias": null,
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "episode"
+                            },
+                            "value": {
+                                "kind": "Variable",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "episode"
+                                }
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "name"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": null,
+                                "directives": null
+                            },
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "friends"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "name"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": null,
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                }
+            ]
+        },
+        "name": {
+            "kind": "Name",
+            "value": "HeroNameAndFriends"
+        },
+        "variables": [
+            {
+                "kind": "VariableDefinition",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Episode"
+                    }
+                },
+                "variable": {
+                    "kind": "Variable",
+                    "name": {
+                        "kind": "Name",
+                        "value": "episode"
+                    }
+                },
+                "defaultValue": {
+                    "kind": "EnumValue",
+                    "value": "JEDI"
+                },
+                "directives": null
+            }
+        ],
+        "directives": null
+    },
+    {
+        "kind": "OperationDefinition",
+        "operation": "query",
+        "selectionSet": {
+            "kind": "SelectionSet",
+            "selections": [
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "hero"
+                    },
+                    "alias": null,
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "episode"
+                            },
+                            "value": {
+                                "kind": "Variable",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "episode"
+                                }
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "name"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": null,
+                                "directives": null
+                            },
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "friends"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "name"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": null,
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                }
+            ]
+        },
+        "name": {
+            "kind": "Name",
+            "value": "Hero"
+        },
+        "variables": [
+            {
+                "kind": "VariableDefinition",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Episode"
+                    }
+                },
+                "variable": {
+                    "kind": "Variable",
+                    "name": {
+                        "kind": "Name",
+                        "value": "episode"
+                    }
+                },
+                "defaultValue": null,
+                "directives": null
+            },
+            {
+                "kind": "VariableDefinition",
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "variable": {
+                    "kind": "Variable",
+                    "name": {
+                        "kind": "Name",
+                        "value": "withFriends"
+                    }
+                },
+                "defaultValue": null,
+                "directives": null
+            }
+        ],
+        "directives": null
+    },
+    {
+        "kind": "OperationDefinition",
+        "operation": "mutation",
+        "selectionSet": {
+            "kind": "SelectionSet",
+            "selections": [
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "createReview"
+                    },
+                    "alias": null,
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "episode"
+                            },
+                            "value": {
+                                "kind": "Variable",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "ep"
+                                }
+                            }
+                        },
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "review"
+                            },
+                            "value": {
+                                "kind": "Variable",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "review"
+                                }
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "stars"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": null,
+                                "directives": null
+                            },
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "commentary"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": null,
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                }
+            ]
+        },
+        "name": {
+            "kind": "Name",
+            "value": "CreateReviewForEpisode"
+        },
+        "variables": [
+            {
+                "kind": "VariableDefinition",
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Episode"
+                        }
+                    }
+                },
+                "variable": {
+                    "kind": "Variable",
+                    "name": {
+                        "kind": "Name",
+                        "value": "ep"
+                    }
+                },
+                "defaultValue": null,
+                "directives": null
+            },
+            {
+                "kind": "VariableDefinition",
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "ReviewInput"
+                        }
+                    }
+                },
+                "variable": {
+                    "kind": "Variable",
+                    "name": {
+                        "kind": "Name",
+                        "value": "review"
+                    }
+                },
+                "defaultValue": null,
+                "directives": null
+            }
+        ],
+        "directives": null
+    },
+    {
+        "kind": "OperationDefinition",
+        "operation": "query",
+        "selectionSet": {
+            "kind": "SelectionSet",
+            "selections": [
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "hero"
+                    },
+                    "alias": null,
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "episode"
+                            },
+                            "value": {
+                                "kind": "Variable",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "ep"
+                                }
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "name"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": null,
+                                "directives": null
+                            },
+                            {
+                                "kind": "InlineFragment",
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "primaryFunction"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": null,
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "typeCondition": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "Droid"
+                                    }
+                                },
+                                "directives": null
+                            },
+                            {
+                                "kind": "InlineFragment",
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "height"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": null,
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "typeCondition": null,
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                }
+            ]
+        },
+        "name": {
+            "kind": "Name",
+            "value": "HeroForEpisode"
+        },
+        "variables": [
+            {
+                "kind": "VariableDefinition",
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "Episode"
+                        }
+                    }
+                },
+                "variable": {
+                    "kind": "Variable",
+                    "name": {
+                        "kind": "Name",
+                        "value": "ep"
+                    }
+                },
+                "defaultValue": null,
+                "directives": null
+            }
+        ],
+        "directives": null
+    },
+    {
+        "kind": "OperationDefinition",
+        "operation": "query",
+        "selectionSet": {
+            "kind": "SelectionSet",
+            "selections": [
+                {
+                    "kind": "Field",
+                    "name": {
+                        "kind": "Name",
+                        "value": "search"
+                    },
+                    "alias": null,
+                    "arguments": [
+                        {
+                            "kind": "Argument",
+                            "name": {
+                                "kind": "Name",
+                                "value": "text"
+                            },
+                            "value": {
+                                "kind": "StringValue",
+                                "block": false,
+                                "value": "an"
+                            }
+                        }
+                    ],
+                    "selectionSet": {
+                        "kind": "SelectionSet",
+                        "selections": [
+                            {
+                                "kind": "Field",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "__typename"
+                                },
+                                "alias": null,
+                                "arguments": null,
+                                "selectionSet": null,
+                                "directives": null
+                            },
+                            {
+                                "kind": "InlineFragment",
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "name"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": null,
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "typeCondition": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "Human"
+                                    }
+                                },
+                                "directives": null
+                            },
+                            {
+                                "kind": "InlineFragment",
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "name"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": null,
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "typeCondition": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "Droid"
+                                    }
+                                },
+                                "directives": null
+                            },
+                            {
+                                "kind": "InlineFragment",
+                                "selectionSet": {
+                                    "kind": "SelectionSet",
+                                    "selections": [
+                                        {
+                                            "kind": "Field",
+                                            "name": {
+                                                "kind": "Name",
+                                                "value": "name"
+                                            },
+                                            "alias": null,
+                                            "arguments": null,
+                                            "selectionSet": null,
+                                            "directives": null
+                                        }
+                                    ]
+                                },
+                                "typeCondition": {
+                                    "kind": "NamedType",
+                                    "name": {
+                                        "kind": "Name",
+                                        "value": "Starship"
+                                    }
+                                },
+                                "directives": null
+                            }
+                        ]
+                    },
+                    "directives": null
+                }
+            ]
+        },
+        "name": null,
+        "variables": null,
+        "directives": null
+    }
+]

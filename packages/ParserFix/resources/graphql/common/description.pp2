@@ -1,0 +1,10 @@
+
+//
+// Types description/documentation
+//
+
+#Description -> {
+    return new \Railt\Parser\Node\Description($children ?: null);
+}
+  : StringValue()?
+  ;

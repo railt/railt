@@ -1,0 +1,72 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Operations
+ * --------------------------------------------------------------------------
+ *
+ * There are three types of operations that GraphQL models:
+ *     - "query" – a read‐only fetch.
+ *     - "mutation" – a write followed by a fetch.
+ *     - "subscription" – a long‐lived request that fetches data in response
+ *       to source events.
+ *
+ * Each operation is represented by an optional operation name and
+ * a selection set.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Language.Operations
+ */
+
+#OperationDefinition -> {
+    $operation = \array_shift($children);
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\NameNode:
+                $operation->name = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\VariableDefinitionCollection:
+                $operation->variables = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $operation->directives = $child;
+                break;
+        }
+    }
+
+    return $operation;
+}
+  : QueryOperation()
+  | MutationOperation()
+  | SubscriptionOperation()
+  ;
+
+#QueryOperation -> {
+    return [new \Railt\Parser\Node\Executable\Definition\OperationDefinitionNode('query', \array_pop($children)), ...$children];
+}
+  : (::T_QUERY:: NameWithReserved()?)?
+    OperationDefinitionBody()
+  ;
+
+
+#MutationOperation -> {
+    return [new \Railt\Parser\Node\Executable\Definition\OperationDefinitionNode('mutation', \array_pop($children)), ...$children];
+}
+  : ::T_MUTATION:: NameWithReserved()?
+    OperationDefinitionBody()
+  ;
+
+
+#SubscriptionOperation -> {
+    return [new \Railt\Parser\Node\Executable\Definition\OperationDefinitionNode('subscription', \array_pop($children)), $children];
+}
+  : ::T_SUBSCRIPTION:: NameWithReserved()?
+    OperationDefinitionBody()
+  ;
+
+#OperationDefinitionBody
+  : VariableDefinitions()? Directives()?
+    SelectionSet()
+  ;

@@ -1,0 +1,32 @@
+
+#VariableDefinitions -> {
+    return new \Railt\Parser\Node\Generic\VariableDefinitionCollection($children);
+}
+  : ::T_PARENTHESIS_OPEN::
+      (VariableDefinition() ::T_COMMA::?)*
+    ::T_PARENTHESIS_CLOSE::
+  ;
+
+#VariableDefinition -> {
+    $variable = new \Railt\Parser\Node\Executable\Definition\VariableDefinitionNode(
+        \array_shift($children),
+        \array_shift($children)
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $variable->directives = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Value\ValueNode:
+                $variable->defaultValue = $child;
+                break;
+        }
+    }
+
+    return $variable;
+}
+  : Variable() ::T_COLON:: TypeHint() (::T_EQUAL:: Value())?
+    Directives()?
+  ;

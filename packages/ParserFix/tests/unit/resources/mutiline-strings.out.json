@@ -1,0 +1,53 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "first"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Name",
+                            "value": "value"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Name",
+                                "value": "String"
+                            }
+                        },
+                        "description": null,
+                        "directives": null,
+                        "defaultValue": {
+                            "kind": "StringValue",
+                            "block": true,
+                            "value": "\n        Mutiline text\n    "
+                        }
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "Some"
+        },
+        "description": null,
+        "directives": null
+    }
+]

@@ -1,0 +1,105 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Inputs
+ * --------------------------------------------------------------------------
+ *
+ * Fields may accept arguments to configure their behavior. These inputs
+ * are often scalars or enums, but they sometimes need to represent more
+ * complex values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Objects
+ */
+
+#InputObjectTypeDefinition -> {
+    $input = new \Railt\Parser\Node\TypeSystem\Definition\InputObjectTypeDefinitionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\Description:
+                $input->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $input->directives = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\InputValueDefinitionCollection:
+                $input->fields = $child;
+                break;
+        }
+    }
+
+    return $input;
+}
+  : Description()
+    InputObjectTypeDefinitionExceptDescription()
+  ;
+
+#InputObjectTypeDefinitionExceptDescription
+  : InputObjectTypeDefinitionHead()
+    InputObjectTypeDefinitionBody()?
+  ;
+
+#InputObjectTypeDefinitionHead
+  : ::T_INPUT:: TypeName() Directives()?
+  ;
+
+#InputObjectTypeDefinitionBody
+  : ::T_BRACE_OPEN::
+      InputValueDefinitions()?
+    ::T_BRACE_CLOSE::
+  ;
+
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Input Fields
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL Input Object defines a set of input fields; the input fields
+ * are either scalars, enums, or other input objects. This allows
+ * arguments to accept arbitrarily complex structs.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#InputFieldsDefinition
+ */
+
+#InputValueDefinitions -> {
+    return new \Railt\Parser\Node\Generic\InputValueDefinitionCollection($children);
+}
+  : InputValueDefinition()+
+  ;
+
+#InputValueDefinition -> {
+    $value = new \Railt\Parser\Node\TypeSystem\Definition\InputValueDefinitionNode(
+        $children[1],
+        $children[2]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\Parser\Node\Description:
+                $value->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                $value->directives = $child;
+                break;
+
+            case $child instanceof \Railt\Parser\Node\Value\ValueNode:
+                $value->defaultValue = $child;
+                break;
+        }
+    }
+
+    return $value;
+}
+  : Description()
+    NameWithReserved() ::T_COLON:: TypeHint()
+    (::T_EQUAL:: Value())?
+    Directives()? ::T_COMMA::?
+  ;

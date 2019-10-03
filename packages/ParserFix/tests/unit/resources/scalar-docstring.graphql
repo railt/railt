@@ -1,0 +1,10 @@
+
+"""
+Description of "scalar Test" type
+"""
+scalar Test
+
+"""
+Description of "scalar Test2" type
+"""
+scalar Test2 @Directive

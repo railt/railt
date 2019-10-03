@@ -1,0 +1,7 @@
+type TFloat implements IBoolean {
+    field: Float
+}
+
+interface IBoolean {
+  field: Boolean
+}

@@ -1,0 +1,161 @@
+[
+    {
+        "kind": "InputObjectTypeDefinition",
+        "fields": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "key"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Name",
+                            "value": "String"
+                        }
+                    }
+                },
+                "description": {
+                    "kind": "StringValue",
+                    "block": true,
+                    "value": "\n    Description of \"key\" field\n    "
+                },
+                "directives": null,
+                "defaultValue": null
+            },
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "answer"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Int"
+                    }
+                },
+                "description": {
+                    "kind": "StringValue",
+                    "block": true,
+                    "value": "\n    Description of \"answer\" field\n    "
+                },
+                "directives": null,
+                "defaultValue": {
+                    "kind": "IntValue",
+                    "value": 42
+                }
+            },
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": {
+                    "kind": "StringValue",
+                    "block": false,
+                    "value": "Default"
+                }
+            },
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "field2"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": null,
+                "defaultValue": {
+                    "kind": "StringValue",
+                    "block": false,
+                    "value": ""
+                }
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "InputType"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"input InputType\"\n"
+        },
+        "directives": null
+    },
+    {
+        "kind": "InputObjectTypeDefinition",
+        "fields": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Name",
+                    "value": "annotatedField"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Name",
+                        "value": "Type"
+                    }
+                },
+                "description": {
+                    "kind": "StringValue",
+                    "block": true,
+                    "value": "\n    Description of \"annotatedField\" field\n    "
+                },
+                "directives": [
+                    {
+                        "kind": "Directive",
+                        "name": {
+                            "kind": "Name",
+                            "value": "onField"
+                        },
+                        "arguments": null
+                    }
+                ],
+                "defaultValue": null
+            }
+        ],
+        "name": {
+            "kind": "Name",
+            "value": "AnnotatedInput"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"input AnnotatedInput\" type\n"
+        },
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Name",
+                    "value": "onInputObjectType"
+                },
+                "arguments": null
+            }
+        ]
+    }
+]
