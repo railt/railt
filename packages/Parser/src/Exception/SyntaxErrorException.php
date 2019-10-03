@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Exception;
 
-use Phplrt\Position\Position;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
+use Phplrt\Position\Position;
 use Phplrt\Source\Exception\NotAccessibleException;
 
 /**

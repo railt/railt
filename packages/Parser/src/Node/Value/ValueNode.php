@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Node\Value;
 
-use Railt\Parser\Node\Node;
 use Railt\Parser\Node\DefinitionNode;
 
 /**

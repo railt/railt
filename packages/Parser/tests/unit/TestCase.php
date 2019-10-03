@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Tests\Unit;
 
-use Railt\Parser\Generator\Generator;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use Railt\Parser\Generator\Generator;
 
 /**
  * Class TestCase

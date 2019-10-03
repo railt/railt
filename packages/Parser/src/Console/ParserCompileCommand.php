@@ -39,7 +39,7 @@ class ParserCompileCommand extends Command
      * {@inheritDoc}
      * @throws \Throwable
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('<comment>Generating</comment>');
 
