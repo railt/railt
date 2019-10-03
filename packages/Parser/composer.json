@@ -40,7 +40,6 @@
     "require-dev": {
         "twig/twig": "~2.11",
         "phplrt/compiler": "~2.2",
-        "railt/console": "^2.0",
         "symfony/console": "~3.4|~4.0|~5.0",
         "zendframework/zend-code": "~3.3",
         "ocramius/package-versions": "~1.5"

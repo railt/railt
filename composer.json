@@ -28,6 +28,7 @@
         "phplrt/lexer": "~2.2",
         "phplrt/parser": "~2.2",
         "phplrt/position": "~2.2",
+        "phplrt/source": "~2.2",
         "phplrt/visitor": "~2.2",
         "psr/container": "~1.0",
         "ramsey/collection": "~1.0"
@@ -39,7 +40,6 @@
         "ocramius/package-versions": "~1.5",
         "phplrt/compiler": "~2.2",
         "phpunit/phpunit": "^8.3",
-        "railt/console": "^2.0",
         "symfony/console": "~3.4|~4.0|~5.0",
         "symfony/dependency-injection": "~3.4|~4.0|~5.0",
         "symfony/http-foundation": "~3.4|~4.0|~5.0",
@@ -89,15 +89,14 @@
         }
     },
     "replace": {
-        "railt/parser": "self.version",
-        "railt/sdl": "self.version",
-        "railt/container": "self.version",
-        "railt/dumper": "self.version",
-        "railt/console": "self.version",
         "railt/config": "self.version",
+        "railt/container": "self.version",
         "railt/discovery": "self.version",
+        "railt/dumper": "self.version",
         "railt/extension": "self.version",
-        "railt/http": "self.version"
+        "railt/http": "self.version",
+        "railt/parser": "self.version",
+        "railt/sdl": "self.version"
     },
     "provide": {
         "psr/container": "1.0",
