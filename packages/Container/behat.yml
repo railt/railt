@@ -1,0 +1,10 @@
+default:
+    formatters:
+        pretty: true
+    suites:
+        container:
+            paths:
+                - '%paths.base%/tests/feature'
+                - '%paths.base%/packages/Container/tests/feature'
+            contexts:
+                - Railt\Container\Tests\Feature\FeatureContext

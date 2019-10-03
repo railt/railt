@@ -1,0 +1,10 @@
+default:
+    formatters:
+        pretty: true
+    suites:
+        dumper:
+            paths:
+                - '%paths.base%/tests/feature'
+                - '%paths.base%/packages/Dumper/tests/feature'
+            contexts:
+                - Railt\Dumper\Tests\Feature\FeatureContext
