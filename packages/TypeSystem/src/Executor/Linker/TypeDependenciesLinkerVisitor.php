@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Executor\Linker;
 
-use Railt\Parser\Node\NameNode;
 use Phplrt\Contracts\Ast\NodeInterface;
-use Railt\Parser\Node\Type\NamedTypeNode;
 use Phplrt\Source\Exception\NotAccessibleException;
+use Railt\Parser\Node\NameNode;
+use Railt\Parser\Node\Type\NamedTypeNode;
 use Railt\TypeSystem\Exception\TypeNotFoundException;
 
 /**

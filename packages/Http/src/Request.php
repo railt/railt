@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Request\OperationNameTrait;
 use Railt\Http\Request\QueryTrait;
 use Railt\Http\Request\VariablesTrait;
-use Railt\Http\Request\OperationNameTrait;
 
 /**
  * Class Request

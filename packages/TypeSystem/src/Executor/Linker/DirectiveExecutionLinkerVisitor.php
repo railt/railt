@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Executor\Linker;
 
-use Railt\Parser\Node\NameNode;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\TypeSystem\Exception\TypeNotFoundException;
 use Railt\Parser\Node\Executable\Definition\DirectiveNode;
+use Railt\Parser\Node\NameNode;
+use Railt\TypeSystem\Exception\TypeNotFoundException;
 
 /**
  * Class DirectiveExecutionLinkerVisitor

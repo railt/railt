@@ -14,5 +14,4 @@ namespace Railt\TypeSystem\Exception;
  */
 class TypeNotFoundException extends GraphQLException
 {
-
 }

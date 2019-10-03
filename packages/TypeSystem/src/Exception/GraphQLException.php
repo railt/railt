@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Exception;
 
-use Railt\Parser\Node\Node;
-use Phplrt\Position\Position;
 use Phplrt\Contracts\Source\FileInterface;
+use Phplrt\Position\Position;
 use Phplrt\Source\Exception\NotAccessibleException;
+use Railt\Parser\Node\Node;
 
 /**
  * Class GraphQLException

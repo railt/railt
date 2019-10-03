@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Extension\Status;
+use Railt\Config\MutableRepositoryInterface;
 use Railt\Config\Repository;
 use Railt\Discovery\Manifest;
 use Railt\Extension\Extension;
-use Railt\Config\MutableRepositoryInterface;
+use Railt\Extension\Status;
 
 /**
  * Class DiscoveryConfigurationExtension

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception;
 
-use Railt\Http\Exception\Path\PathProviderInterface;
 use Railt\Http\Exception\Location\LocationsProviderInterface;
+use Railt\Http\Exception\Path\PathProviderInterface;
 
 /**
  * Interface GraphQLExceptionInterface
@@ -25,5 +25,4 @@ interface GraphQLExceptionInterface extends
      * @return bool
      */
     public function isPublic(): bool;
-
 }
