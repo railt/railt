@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Extension;
 
+use Phplrt\Parser\Rule\Alternation;
+use Phplrt\Parser\Rule\Concatenation;
 use Phplrt\Parser\Rule\Lexeme;
 use Phplrt\Parser\Rule\Optional;
 use Phplrt\Parser\Rule\Repetition;
-use Phplrt\Parser\Rule\Alternation;
-use Phplrt\Parser\Rule\Concatenation;
 
 /**
  * Class Extension

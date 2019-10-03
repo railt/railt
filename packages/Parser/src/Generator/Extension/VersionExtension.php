@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Parser\Generator\Extension;
 
-use Twig\TwigFilter;
-use Twig\TwigFunction;
 use PackageVersions\Versions;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Class VersionExtension
