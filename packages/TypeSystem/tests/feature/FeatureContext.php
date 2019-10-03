@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Tests\Feature;
 
-use Railt\TypeSystem\Compiler;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
-use Railt\TypeSystem\Tests\Feature\FeatureContext\ErrorAssertionsTrait;
+use Railt\TypeSystem\Compiler;
 use Railt\TypeSystem\Tests\Feature\FeatureContext\DocumentAssertionsTrait;
+use Railt\TypeSystem\Tests\Feature\FeatureContext\ErrorAssertionsTrait;
 
 /**
  * Defines application features from the specific context.

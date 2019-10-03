@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Extension\Status;
-use Railt\Extension\Extension;
-use Railt\Container\ContainerInterface;
+use Railt\Config\MutableRepositoryInterface as MutableConfigRepositoryInterface;
 use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 use Railt\Console\RepositoryInterface as CommandsRepositoryInterface;
+use Railt\Container\ContainerInterface;
+use Railt\Extension\Extension;
 use Railt\Extension\RepositoryInterface as ExtensionsRepositoryInterface;
-use Railt\Config\MutableRepositoryInterface as MutableConfigRepositoryInterface;
+use Railt\Extension\Status;
 
 /**
  * Class DefaultBindingsExtension
@@ -25,17 +25,17 @@ class DefaultBindingsExtension extends Extension
     /**
      * @var string
      */
-    public const APP_LOCATOR        = '$app';
+    public const APP_LOCATOR = '$app';
 
     /**
      * @var string
      */
-    public const CONFIG_LOCATOR     = '$config';
+    public const CONFIG_LOCATOR = '$config';
 
     /**
      * @var string
      */
-    public const COMMANDS_LOCATOR   = '$commands';
+    public const COMMANDS_LOCATOR = '$commands';
 
     /**
      * @var string

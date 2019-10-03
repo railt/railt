@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit;
 
-use Railt\Http\Response;
 use PHPUnit\Framework\Exception;
-use Railt\Http\Extension\Extension;
 use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Http\Extension\Extension;
+use Railt\Http\Response;
 
 /**
  * Class ResponseTestCase

@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Executor\Loader;
 
 use Phplrt\Contracts\Ast\NodeInterface;
-use Railt\TypeSystem\Document\MutableDocument;
-use Railt\TypeSystem\Exception\TypeErrorException;
 use Phplrt\Source\Exception\NotAccessibleException;
 use Railt\Parser\Node\Generic\RootDirectiveCollection;
+use Railt\TypeSystem\Document\MutableDocument;
+use Railt\TypeSystem\Exception\TypeErrorException;
 
 /**
  * Class DirectivesRegistrarVisitor
@@ -43,7 +43,7 @@ class DirectivesRegistrarVisitor extends RegistrarVisitor
      */
     private function registerDirective(RootDirectiveCollection $directives): void
     {
-        $this->mutate(static function (MutableDocument $document) use ($directives) {
+        $this->mutate(static function (MutableDocument $document) use ($directives): void {
             foreach ($directives as $directive) {
                 $document->withExecution($directive);
             }

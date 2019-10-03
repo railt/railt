@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Document;
 
 use Railt\Parser\Node\DefinitionNode;
-use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
-use Railt\Parser\Node\TypeSystem\Definition\SchemaDefinitionNode;
 use Railt\Parser\Node\TypeSystem\Definition\DirectiveDefinitionNode;
+use Railt\Parser\Node\TypeSystem\Definition\SchemaDefinitionNode;
+use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
 
 /**
  * Class MutableTypeSystemDocument

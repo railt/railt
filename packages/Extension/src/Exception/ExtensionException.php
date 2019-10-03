@@ -14,5 +14,4 @@ namespace Railt\Extension\Exception;
  */
 class ExtensionException extends \RuntimeException
 {
-
 }

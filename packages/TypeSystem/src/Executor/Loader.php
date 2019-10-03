@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Executor;
 
-use Phplrt\Visitor\Traverser;
 use Phplrt\Contracts\Ast\NodeInterface;
+use Phplrt\Visitor\Traverser;
 use Railt\TypeSystem\Document\DocumentInterface;
-use Railt\TypeSystem\Executor\Loader\TypeNamesFilterVisitor;
-use Railt\TypeSystem\Executor\Loader\SchemaRegistrarVisitor;
-use Railt\TypeSystem\Executor\Loader\TypeSystemRegistrarVisitor;
-use Railt\TypeSystem\Executor\Loader\DirectivesRegistrarVisitor;
 use Railt\TypeSystem\Executor\Loader\DirectiveDefinitionRegistrarVisitor;
+use Railt\TypeSystem\Executor\Loader\DirectivesRegistrarVisitor;
+use Railt\TypeSystem\Executor\Loader\SchemaRegistrarVisitor;
+use Railt\TypeSystem\Executor\Loader\TypeNamesFilterVisitor;
+use Railt\TypeSystem\Executor\Loader\TypeSystemRegistrarVisitor;
 
 /**
  * Class Loader

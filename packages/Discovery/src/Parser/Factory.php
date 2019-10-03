@@ -11,8 +11,8 @@ namespace Railt\Discovery\Parser;
 
 use Composer\Composer;
 use Composer\Package\PackageInterface;
-use Railt\Discovery\Parser\Variables\EnvVariables;
 use Railt\Discovery\Parser\Variables\ComposerVariables;
+use Railt\Discovery\Parser\Variables\EnvVariables;
 use Railt\Discovery\Parser\Variables\RootPackageVariables;
 use Railt\Discovery\Parser\Variables\VendorPackageVariables;
 

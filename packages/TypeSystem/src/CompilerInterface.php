@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-use Railt\TypeSystem\Linker\LinkerInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Railt\TypeSystem\Document\DocumentInterface;
+use Railt\TypeSystem\Linker\LinkerInterface;
 
 /**
  * Interface CompilerInterface

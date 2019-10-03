@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Request;
 
-use Railt\Http\Request;
-use Railt\Http\Tests\Unit\TestCase;
-use Railt\Http\Request\ProvidesQueryInterface;
 use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Http\Request;
+use Railt\Http\Request\ProvidesQueryInterface;
+use Railt\Http\Tests\Unit\TestCase;
 
 /**
  * Class QueryTestCase

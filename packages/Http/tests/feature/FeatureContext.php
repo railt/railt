@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Http\Tests\Feature;
 
 use Behat\Behat\Context\Context;
-use Railt\Http\Tests\Feature\Support\DepthTrait;
-use Railt\Http\Tests\Feature\Support\TypeCastTrait;
-use Railt\Http\Tests\Feature\Support\NumericalTrait;
 use Railt\Http\Tests\Feature\RequestFeatureContext\RequestFeatureTrait;
+use Railt\Http\Tests\Feature\Support\DepthTrait;
+use Railt\Http\Tests\Feature\Support\NumericalTrait;
+use Railt\Http\Tests\Feature\Support\TypeCastTrait;
 
 /**
  * Defines application features from the specific context.
@@ -23,6 +23,5 @@ class FeatureContext implements Context
     use DepthTrait;
     use TypeCastTrait;
     use NumericalTrait;
-
     use RequestFeatureTrait;
 }
