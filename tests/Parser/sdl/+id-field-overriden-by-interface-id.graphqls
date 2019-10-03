@@ -1,7 +1,0 @@
-type TID implements IID {
-    field: ID
-}
-
-interface IID {
-  field: ID
-}

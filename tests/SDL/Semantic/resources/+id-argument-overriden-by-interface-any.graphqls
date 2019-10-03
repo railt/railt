@@ -1,7 +1,0 @@
-type TID implements IAny {
-    field(arg: Any): ID
-}
-
-interface IAny {
-    field(arg: ID): ID
-}

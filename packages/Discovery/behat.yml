@@ -1,0 +1,10 @@
+default:
+    formatters:
+        pretty: true
+    suites:
+        discovery:
+            paths:
+                - '%paths.base%/tests/feature'
+                - '%paths.base%/packages/Discovery/tests/feature'
+            contexts:
+                - Railt\Discovery\Tests\Feature\FeatureContext

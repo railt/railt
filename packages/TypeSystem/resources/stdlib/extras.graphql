@@ -1,0 +1,7 @@
+
+"""
+The DateTime scalar conforms to the
+[RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) profile of the
+[ISO 8601](https://www.iso.org/iso-8601-date-and-time-format.html) standard.
+"""
+scalar DateTime

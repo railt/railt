@@ -1,7 +1,0 @@
-type TInt implements IAny {
-    field: Int
-}
-
-interface IAny {
-  field: Any
-}

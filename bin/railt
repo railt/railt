@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * This file is part of Railt package.
@@ -8,9 +7,8 @@
  */
 declare(strict_types=1);
 
-use Railt\Foundation\Application as Railt;
-use Railt\Foundation\Config\Composer;
-
+use Railt\Foundation\Application;
+use Composer\Autoload\ClassLoader;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,35 +22,43 @@ use Railt\Foundation\Config\Composer;
 |
 */
 
-$autoloadPaths = [
+$paths = [
+    __DIR__ . '/../vendor/autoload.php',
     __DIR__ . '/../../autoload.php',
     __DIR__ . '/../../../autoload.php',
-    __DIR__ . '/../../../../autoload.php',
-    __DIR__ . '/vendor/autoload.php',
-    __DIR__ . '/../vendor/autoload.php',
-    __DIR__ . '/../../vendor/autoload.php',
 ];
 
 
-foreach ($autoloadPaths as $path) {
+foreach ($paths as $path) {
     if (\is_file($path) && \is_readable($path)) {
-        /** @var \Composer\Autoload\ClassLoader $classLoader */
-        $classLoader = require_once $path;
+        /**
+         * @noinspection PhpIncludeInspection
+         * @var ClassLoader $classLoader
+         */
+        $classLoader = require $path;
         break;
     }
 }
 
 
 if (! isset($classLoader) || ! $classLoader) {
-    $error =
-        'Could not find autoload.php file.' . \PHP_EOL .
-        'You need to set up the project dependencies using Composer:' . \PHP_EOL . \PHP_EOL .
-        '    composer install' . \PHP_EOL . \PHP_EOL .
-        'You can learn all about Composer on https://getcomposer.org/.' . \PHP_EOL;
+    throw new \LogicException(<<<'ERROR_MESSAGE'
+Could not find autoload.php file.
+You need to set up the project dependencies using Composer:
 
-    throw new \LogicException($error);
+    composer install
+
+You can learn all about Composer on https://getcomposer.org/
+ERROR_MESSAGE
+    );
 }
 
+//
+// phpstorm bugfix
+//
+if (isset($argv[1]) && $argv[1] === '-V') {
+    exit('Symfony version 3.0.0');
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -67,9 +73,11 @@ if (! isset($classLoader) || ! $classLoader) {
 */
 
 try {
-    $railt = new Railt();
+    $app = new Application();
 } catch (\Throwable $e) {
-    throw new \LogicException('Could not start an application: ' . $e->getMessage());
+    $message = 'The application could not be started because %s';
+
+    throw new \LogicException(\sprintf($message, \lcfirst($e->getMessage())), 0, $e);
 }
 
 
@@ -84,11 +92,4 @@ try {
 |
 */
 
-try {
-    $code = $railt->getConsoleApplication()->run();
-} catch (\Throwable $e) {
-    \fwrite(\STDERR, $e->getMessage());
-    $code = $e->getCode() ?: 1;
-} finally {
-    exit($code);
-}
+$app->cli();

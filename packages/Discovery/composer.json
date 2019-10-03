@@ -1,0 +1,62 @@
+{
+    "name": "railt/discovery",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "http://railt.org",
+    "description": "Railt Discovery package",
+    "keywords": [
+        "console",
+        "autoloader",
+        "dependency"
+    ],
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/config"
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "justinrainbow/json-schema": "~5.2",
+        "composer-plugin-api": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Discovery\\": "src"
+        }
+    },
+    "require-dev": {
+        "behat/behat": "^3.5",
+        "vimeo/psalm": "^3.5",
+        "phpunit/phpunit": "^8.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Discovery\\Tests\\Unit\\": "tests/unit",
+            "Railt\\Discovery\\Tests\\Feature\\": "tests/feature"
+        }
+    },
+    "extra": {
+        "discovery": {
+            "discovery": "${package.dir}/resources/discovery.schema.json"
+        },
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev",
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

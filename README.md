@@ -2,20 +2,21 @@
     <a href="https://railt.org"><img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" /></a>
 </p>
 <p align="center">
-    <a href="https://travis-ci.org/railt/railt"><img src="https://travis-ci.org/railt/railt.svg?branch=1.4.x" alt="Travis CI" /></a>
-    <a href="https://codeclimate.com/github/railt/railt/test_coverage"><img src="https://api.codeclimate.com/v1/badges/07b06e5fc97ecbfaafb6/test_coverage" /></a>
-    <a href="https://codeclimate.com/github/railt/railt/maintainability"><img src="https://api.codeclimate.com/v1/badges/07b06e5fc97ecbfaafb6/maintainability" /></a>
+    <a href="https://github.com/railt/railt/actions?workflow=Unit+Testing"><img src="https://github.com/railt/railt/workflows/.github/workflows/unit.yml/badge.svg" alt="Unit Testing" /></a>
+    <a href="https://github.com/railt/railt/actions?workflow=Feature+Testing"><img src="https://github.com/railt/railt/workflows/.github/workflows/feature.yml/badge.svg" alt="Feature Testing" /></a>
+    <a href="https://github.com/railt/railt/actions?workflow=Static+Analysis"><img src="https://github.com/railt/railt/workflows/.github/workflows/static-analysis.yml/badge.svg" alt="Static Analysis" /></a>
 </p>
 <p align="center">
-    <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-7.1+-6f4ca5.svg" alt="PHP 7.1+"></a>
+    <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-7.4+-6f4ca5.svg" alt="PHP 7.4+"></a>
     <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
     <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/version" alt="Latest Stable Version"></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/downloads" alt="Total Downloads"></a>
-    <a href="https://raw.githubusercontent.com/railt/railt/1.4.x/LICENSE.md"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
+    <a href="https://raw.githubusercontent.com/railt/railt/master/LICENSE.md"><img src="https://poser.pugx.org/railt/railt/license" alt="License MIT"></a>
 </p>
 
 ## Introduction
+
 
 Project idea is clean and high-quality code.
 Unlike most (all at the moment) implementations, like [webonyx](https://github.com/webonyx/graphql-php), 
@@ -35,111 +36,56 @@ Goal of Railt:
 
 ## Installation
 
-Via [Composer](https://getcomposer.org/):
-
-- Add into your `composer.json`:
-```json
-{
-    "scripts": {
-        "post-autoload-dump": [
-            "Railt\\Component\\Discovery\\Manifest::discover"
-        ]
-    }
-}
-```
-
 - `composer require railt/railt`
 
-## Quick Start
+// TBD
 
-Let's create our first GraphQL schema!
+## Quick start
 
-```graphql
-schema {
-    query: Example
-}
+The documentation is in the process of writing, therefore, 
+in order to understand how it works, a quick start.
 
-type Example {
-    say(message: String = "Hello"): String! 
-        @route(action: "ExampleController@say")
-}
-```
-
-In order to return the correct answer from the `say` field let's create an 
-`ExampleController` controller with the desired method `say`.
-
-```php
-class ExampleController
-{
-    public function say(string $message): string
-    {
-        return $message;
-    }
-}
-```
-
-That's all we need to know 🚀
-
-But I think we should still run the application. For the [Symfony](https://github.com/railt/symfony-bundle) 
-and [Laravel](https://github.com/railt/laravel-provider) there are appropriate 
-packages, but if you do not use (or do not want to use) frameworks, it is not 
-difficult to do it from scratch.
-
-The `index.php` is the main file that handles all requests to the application. 
-So let's create it and write a simple logic:
-
-```php
-<?php
-use Railt\Component\Io\File;
-use Railt\Component\Http\Factory;
-use Railt\Foundation\Application;
-use Railt\Component\Http\Provider\GlobalsProvider;
-
-require __DIR__ . '/vendor/autoload.php';
-
-// Creating a new Application in debug mode information
-// about which is passed in the first argument.
-$app = new Application(true);
-
-// Create a connection
-$connection = $app->connect(File::fromPathname(__DIR__ . '/schema.graphqls'));
-
-// Processing of HTTP Request
-$responses = $connection->request(Factory::create(new GlobalsProvider()));
-
-// And send the HTTP Response
-$responses->send();
-```
-
-...send request
-
-```graphql
-{
-    say(message: "Something is awesome!")
-}
-```
-
-...and get the answer!
-
-```json
-{
-    "say": "Something is awesome!"
-}
-```
-
-That's how simple it is 🎈
+// TBD
 
 ## Learning Railt
 
 > This documentation can contain NOT RELEVANT information and currently in progress.
 
-- [English](https://en.railt.org)
 - [Russian](https://ru.railt.org)
+- [English](https://en.railt.org)
 
 ## Contributing
 
 Thank you for considering contributing to the Railt Framework! 
 The contribution guide can be found in the [documentation](https://railt.org/docs/contributions).
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](.github/CONTRIBUTING.md)].
+<a href="https://github.com/railt/railt/graphs/contributors"><img src="https://opencollective.com/railt/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/railt/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/railt"><img src="https://opencollective.com/railt/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/railt/contribute)]
+
+<a href="https://opencollective.com/railt/organization/0/website"><img src="https://opencollective.com/railt/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/1/website"><img src="https://opencollective.com/railt/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/2/website"><img src="https://opencollective.com/railt/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/3/website"><img src="https://opencollective.com/railt/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/4/website"><img src="https://opencollective.com/railt/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/5/website"><img src="https://opencollective.com/railt/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/6/website"><img src="https://opencollective.com/railt/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/7/website"><img src="https://opencollective.com/railt/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/8/website"><img src="https://opencollective.com/railt/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/railt/organization/9/website"><img src="https://opencollective.com/railt/organization/9/avatar.svg"></a>
 
 ## Security Vulnerabilities
 
@@ -151,6 +97,8 @@ at nesk@xakep.ru. All security vulnerabilities will be promptly addressed.
 The Railt Framework is open-sourced software licensed under 
 the [MIT license](https://opensource.org/licenses/MIT).
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frailt%2Frailt.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frailt%2Frailt?ref=badge_large)
+
 ## Help & Community [![Discord](https://img.shields.io/badge/discord-chat-6f4ca5.svg)](https://discord.gg/ND7SpD4)
 
 Join our [Discord community](https://discord.gg/ND7SpD4) if you run into issues or have questions. We love talking to you!
@@ -160,6 +108,6 @@ Join our [Discord community](https://discord.gg/ND7SpD4) if you run into issues 
 ## Supported By
 
 <p align="center">
-    <a href="https://www.jetbrains.com/?from=Railt" target="_blank"><img src="https://habrastorage.org/webt/oc/-2/ek/oc-2eklcyr_ncszrzytmlu8_vky.png" alt="JetBrains" /></a>
+    <a href="https://www.jetbrains.com/" target="_blank"><img src="https://habrastorage.org/webt/oc/-2/ek/oc-2eklcyr_ncszrzytmlu8_vky.png" alt="JetBrains" /></a>
     <a href="https://rambler-co.ru/" target="_blank"><img src="https://habrastorage.org/webt/wp/wu/wp/wpwuwpqpkskjfs0yjdjry5jvoog.png" alt="Rambler&Co" /></a>
 </p>

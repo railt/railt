@@ -1,4 +1,0 @@
->  object
->  >  pair
->  >  >  token(string, "a")
->  >  >  token(number, 23)

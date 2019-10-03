@@ -1,7 +1,0 @@
-type TID implements IFloat {
-    field(arg: Float): ID
-}
-
-interface IFloat {
-    field(arg: ID): ID
-}

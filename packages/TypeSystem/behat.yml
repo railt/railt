@@ -1,0 +1,10 @@
+default:
+    formatters:
+        pretty: true
+    suites:
+        typesystem:
+            paths:
+                - '%paths.base%/tests/feature'
+                - '%paths.base%/packages/TypeSystem/tests/feature'
+            contexts:
+                - Railt\TypeSystem\Tests\Feature\FeatureContext

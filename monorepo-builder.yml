@@ -1,0 +1,37 @@
+parameters:
+    package_alias_format: '<major>.<minor>.x-dev'
+    merge_sections:
+        - 'provide'
+        - 'require'
+        - 'require-dev'
+        - 'autoload'
+        - 'autoload-dev'
+        - 'repositories'
+        - 'scripts'
+    package_directories:
+        - 'packages'
+    data_to_append:
+        autoload:
+            psr-4:
+                Railt\Foundation\: 'src'
+        require:
+            ocramius/package-versions: "~1.5"
+            ramsey/collection: "~1.0"
+        require-dev:
+            # Testing
+            behat/behat: "^3.5"
+            phpunit/phpunit: "^8.3"
+            vimeo/psalm: "^3.5"
+            # Development
+            symfony/process: '~3.4|~4.0|~5.0'
+            symfony/var-dumper: '~3.4|~4.0|~5.0'
+            symplify/monorepo-builder: '^6.1'
+    directories_to_repositories:
+        packages/Config: 'git@github.com:railt/config.git'
+        packages/Console: 'git@github.com:railt/console.git'
+        packages/Container: 'git@github.com:railt/container.git'
+        packages/Discovery: 'git@github.com:railt/discovery.git'
+        packages/Dumper: 'git@github.com:railt/dumper.git'
+        packages/Extension: 'git@github.com:railt/extension.git'
+        packages/Parser: 'git@github.com:railt/parser.git'
+        packages/TypeSystem: 'git@github.com:railt/sdl.git'

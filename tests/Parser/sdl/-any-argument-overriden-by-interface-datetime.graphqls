@@ -1,7 +1,0 @@
-type TAny implements IDateTime {
-    field(arg: DateTime): Any
-}
-
-interface IDateTime {
-    field(arg: Any): Any
-}

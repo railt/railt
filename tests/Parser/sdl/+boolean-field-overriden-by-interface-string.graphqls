@@ -1,7 +1,0 @@
-type TBoolean implements IString {
-    field: Boolean
-}
-
-interface IString {
-  field: String
-}

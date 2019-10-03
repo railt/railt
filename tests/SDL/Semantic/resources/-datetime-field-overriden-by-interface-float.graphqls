@@ -1,7 +1,0 @@
-type TDateTime implements IFloat {
-    field: DateTime
-}
-
-interface IFloat {
-  field: Float
-}

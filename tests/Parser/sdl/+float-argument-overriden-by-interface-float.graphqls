@@ -1,7 +1,0 @@
-type TFloat implements IFloat {
-    field(arg: Float): Float
-}
-
-interface IFloat {
-    field(arg: Float): Float
-}

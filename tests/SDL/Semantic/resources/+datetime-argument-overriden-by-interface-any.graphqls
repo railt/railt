@@ -1,7 +1,0 @@
-type TDateTime implements IAny {
-    field(arg: Any): DateTime
-}
-
-interface IAny {
-    field(arg: DateTime): DateTime
-}

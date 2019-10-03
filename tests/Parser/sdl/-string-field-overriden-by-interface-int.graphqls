@@ -1,7 +1,0 @@
-type TString implements IInt {
-    field: String
-}
-
-interface IInt {
-  field: Int
-}

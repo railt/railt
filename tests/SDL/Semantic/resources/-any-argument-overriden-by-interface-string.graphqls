@@ -1,7 +1,0 @@
-type TAny implements IString {
-    field(arg: String): Any
-}
-
-interface IString {
-    field(arg: Any): Any
-}
