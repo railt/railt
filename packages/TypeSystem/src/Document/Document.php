@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Document;
 
-use Railt\Parser\Node\DefinitionNode;
-use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
-use Railt\Parser\Node\Executable\Definition\DirectiveNode;
-use Railt\Parser\Node\TypeSystem\Definition\SchemaDefinitionNode;
-use Railt\Parser\Node\TypeSystem\Definition\DirectiveDefinitionNode;
+use Railt\Ast\DefinitionNode;
+use Railt\Ast\TypeSystem\TypeDefinitionNode;
+use Railt\Ast\Executable\Definition\DirectiveNode;
+use Railt\Ast\TypeSystem\Definition\SchemaDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\DirectiveDefinitionNode;
 
 /**
  * Class Document

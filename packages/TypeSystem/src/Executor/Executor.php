@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Executor;
 
-use Railt\Parser\Node\Node;
+use Railt\Ast\Node;
 use Railt\TypeSystem\CompilerInterface;
 use Railt\TypeSystem\Linker\LinkerInterface;
 use Railt\TypeSystem\Document\DocumentInterface;

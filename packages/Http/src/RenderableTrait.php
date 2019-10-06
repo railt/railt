@@ -27,7 +27,7 @@ trait RenderableTrait
         try {
             return \json_encode($this->toArray(), \JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
-            return '{}';
+            return '{"errors": "JSON Error: ' . \addcslashes($e->getMessage(), '"') . '"}';
         }
     }
 

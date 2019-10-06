@@ -12,7 +12,7 @@ namespace Railt\TypeSystem\Exception;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Position\Position;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\Parser\Node\Node;
+use Railt\Ast\Node;
 
 /**
  * Class GraphQLException

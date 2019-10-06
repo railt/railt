@@ -11,8 +11,8 @@ namespace Railt\TypeSystem\Executor\Linker;
 
 use Phplrt\Contracts\Ast\NodeInterface;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\Parser\Node\Executable\Definition\DirectiveNode;
-use Railt\Parser\Node\NameNode;
+use Railt\Ast\Executable\Definition\DirectiveNode;
+use Railt\Ast\NameNode;
 use Railt\TypeSystem\Exception\TypeNotFoundException;
 
 /**

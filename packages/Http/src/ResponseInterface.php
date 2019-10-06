@@ -9,32 +9,25 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Extension\ExtensionProviderInterface;
-use Railt\Http\Response\DataProviderInterface;
-use Railt\Http\Response\ExceptionsProviderInterface;
-
 /**
  * Interface ResponseInterface
  */
-interface ResponseInterface extends
-    ExtensionProviderInterface,
-    ExceptionsProviderInterface,
-    DataProviderInterface
+interface ResponseInterface
 {
     /**
      * @var string
      */
-    public const KEY_DATA = 'data';
+    public const FIELD_DATA = 'data';
 
     /**
      * @var string
      */
-    public const KEY_ERRORS = 'errors';
+    public const FIELD_ERRORS = 'errors';
 
     /**
      * @var string
      */
-    public const KEY_EXTENSIONS = 'extensions';
+    public const FIELD_EXTENSIONS = 'extensions';
 
     /**
      * @return array

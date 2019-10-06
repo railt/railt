@@ -25,6 +25,7 @@
         "composer-plugin-api": "^1.1",
         "justinrainbow/json-schema": "~5.2",
         "ocramius/package-versions": "~1.5",
+        "phplrt/ast-contracts": "~2.2",
         "phplrt/lexer": "~2.2",
         "phplrt/parser": "~2.2",
         "phplrt/position": "~2.2",
@@ -57,6 +58,7 @@
             "packages/Dumper/src/helpers.php"
         ],
         "psr-4": {
+            "Railt\\Ast\\": "packages/Ast/src",
             "Railt\\Config\\": "packages/Config/src",
             "Railt\\Container\\": "packages/Container/src",
             "Railt\\Discovery\\": "packages/Discovery/src",
@@ -70,6 +72,8 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Railt\\Ast\\Tests\\Feature\\": "packages/Ast/tests/feature",
+            "Railt\\Ast\\Tests\\Unit\\": "packages/Ast/tests/unit",
             "Railt\\Config\\Tests\\Feature\\": "packages/Config/tests/feature",
             "Railt\\Config\\Tests\\Unit\\": "packages/Config/tests/unit",
             "Railt\\Container\\Tests\\Feature\\": "packages/Container/tests/feature",
@@ -96,7 +100,8 @@
         "railt/extension": "self.version",
         "railt/http": "self.version",
         "railt/parser": "self.version",
-        "railt/sdl": "self.version"
+        "railt/sdl": "self.version",
+        "railt/ast": "self.version"
     },
     "provide": {
         "psr/container": "1.0",

@@ -34,6 +34,11 @@
             "Railt\\TypeSystem\\": "src"
         }
     },
+    "require-dev": {
+        "behat/behat": "^3.5",
+        "vimeo/psalm": "^3.5",
+        "phpunit/phpunit": "^8.3"
+    },
     "autoload-dev": {
         "psr-4": {
             "Railt\\TypeSystem\\Tests\\Unit\\": "tests/unit",

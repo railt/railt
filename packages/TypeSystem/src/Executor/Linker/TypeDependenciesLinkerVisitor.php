@@ -11,8 +11,8 @@ namespace Railt\TypeSystem\Executor\Linker;
 
 use Phplrt\Contracts\Ast\NodeInterface;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\Type\NamedTypeNode;
+use Railt\Ast\NameNode;
+use Railt\Ast\Type\NamedTypeNode;
 use Railt\TypeSystem\Exception\TypeNotFoundException;
 
 /**

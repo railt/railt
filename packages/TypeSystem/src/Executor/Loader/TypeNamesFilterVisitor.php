@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Executor\Loader;
 
-use Railt\Parser\Node\Node;
-use Railt\Parser\Node\TypeSystem\Definition\DirectiveDefinitionNode;
-use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
+use Railt\Ast\Node;
+use Railt\Ast\TypeSystem\Definition\DirectiveDefinitionNode;
+use Railt\Ast\TypeSystem\TypeDefinitionNode;
 
 /**
  * Class TypeNamesFilterVisitor

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Executor\Linker;
 
 use Phplrt\Visitor\Visitor;
-use Railt\Parser\Node\Node;
-use Railt\Parser\Node\NameNode;
+use Railt\Ast\Node;
+use Railt\Ast\NameNode;
 use Railt\TypeSystem\CompilerInterface;
 use Railt\TypeSystem\Executor\Linker\LinkerInterface;
 use Railt\TypeSystem\Document\DocumentInterface;

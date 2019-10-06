@@ -9,23 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Tests\Feature\FeatureContext;
 
-use Railt\Parser\Node\Node;
+use Railt\Ast\Node;
 use PHPUnit\Framework\Assert;
 use Phplrt\Visitor\Traverser;
 use PHPUnit\Framework\Exception;
-use Railt\Parser\Node\DefinitionNode;
+use Railt\Ast\DefinitionNode;
 use Railt\TypeSystem\Document\DocumentInterface;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
+use Railt\Ast\TypeSystem\TypeDefinitionNode;
 use Railt\TypeSystem\Tests\Feature\FeatureContext\Visitor\SearchVisitor;
 use Railt\TypeSystem\Tests\Feature\FeatureContext\Support\TypeCastTrait;
 use Railt\TypeSystem\Tests\Feature\FeatureContext\Support\NumericalTrait;
-use Railt\Parser\Node\TypeSystem\Definition\EnumTypeDefinitionNode;
-use Railt\Parser\Node\TypeSystem\Definition\UnionTypeDefinitionNode;
-use Railt\Parser\Node\TypeSystem\Definition\ObjectTypeDefinitionNode;
-use Railt\Parser\Node\TypeSystem\Definition\ScalarTypeDefinitionNode;
-use Railt\Parser\Node\TypeSystem\Definition\InterfaceTypeDefinitionNode;
-use Railt\Parser\Node\TypeSystem\Definition\InputObjectTypeDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\EnumTypeDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\UnionTypeDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\ObjectTypeDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\ScalarTypeDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\InterfaceTypeDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\InputObjectTypeDefinitionNode;
 
 /**
  * Trait DocumentAssertionsTrait

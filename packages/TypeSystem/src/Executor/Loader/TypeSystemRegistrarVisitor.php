@@ -13,7 +13,7 @@ use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\TypeSystem\Document\MutableDocument;
 use Railt\TypeSystem\Exception\TypeErrorException;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
+use Railt\Ast\TypeSystem\TypeDefinitionNode;
 
 /**
  * Class TypeSystemRegistrarVisitor

@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Linker;
 
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\Node;
+use Railt\Ast\NameNode;
+use Railt\Ast\Node;
 use Railt\TypeSystem\CompilerInterface;
 
 /**

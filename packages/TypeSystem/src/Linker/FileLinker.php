@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Linker;
 
 use Phplrt\Source\File;
-use Railt\Parser\Node\Node;
-use Railt\Parser\Node\NameNode;
+use Railt\Ast\Node;
+use Railt\Ast\NameNode;
 use Phplrt\Contracts\Source\FileInterface;
 use Railt\TypeSystem\CompilerInterface;
 use Phplrt\Source\Exception\NotFoundException;

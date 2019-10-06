@@ -1,0 +1,6 @@
+.idea/
+
+composer.phar
+
+.phpunit.result.cache
+vendor/

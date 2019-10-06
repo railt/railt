@@ -11,7 +11,7 @@ namespace Railt\TypeSystem\Executor\Loader;
 
 use Phplrt\Contracts\Ast\NodeInterface;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\Parser\Node\Generic\RootDirectiveCollection;
+use Railt\Ast\Generic\RootDirectiveCollection;
 use Railt\TypeSystem\Document\MutableDocument;
 use Railt\TypeSystem\Exception\TypeErrorException;
 
