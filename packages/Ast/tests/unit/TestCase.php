@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\Ast\Tests\Unit;
 
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use Railt\Parser\Generator\Generator;
 
 /**
  * Class TestCase

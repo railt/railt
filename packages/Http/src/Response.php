@@ -25,6 +25,5 @@ final class Response implements ResponseInterface
      */
     public function __construct(array $data = null, array $exceptions = [], array $extensions = [])
     {
-
     }
 }
