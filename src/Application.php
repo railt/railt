@@ -12,19 +12,19 @@ namespace Railt\Foundation;
 use PackageVersions\Versions;
 use Railt\Container\Container;
 use Psr\Container\ContainerInterface;
-use Railt\Extension\ExtensionInterface;
-use Railt\Extension\Exception\ExtensionException;
-use Railt\Foundation\Extension\CompilerExtension;
+use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Config\MutableRepository as ConfigRepository;
-use Railt\Foundation\Extension\DefaultBindingsExtension;
+use Railt\Foundation\Extension\Builtin\CompilerExtension;
 use Railt\Container\Exception\ContainerInvocationException;
 use Symfony\Component\Console\Application as CliApplication;
-use Railt\Foundation\Extension\DiscoveryConfigurationExtension;
+use Railt\Foundation\Extension\Exception\ExtensionException;
+use Railt\Foundation\Extension\Builtin\DefaultBindingsExtension;
 use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
-use Railt\Extension\ConfigurationRepository as ExtensionRepository;
-use Railt\Extension\RepositoryInterface as ExtensionRepositoryInterface;
+use Railt\Foundation\Extension\Builtin\DiscoveryConfigurationExtension;
 use Railt\Foundation\Console\ConfigurationRepository as ConsoleRepository;
+use Railt\Foundation\Extension\ConfigurationRepository as ExtensionRepository;
 use Railt\Foundation\Console\RepositoryInterface as ConsoleRepositoryInterface;
+use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterface;
 
 /**
  * Class Application

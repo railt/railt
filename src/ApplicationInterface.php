@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Railt\Container\ContainerInterface;
-use Railt\Extension\ExtensionInterface;
+use Railt\Foundation\Extension\ExtensionInterface;
 
 /**
  * Interface ApplicationInterface

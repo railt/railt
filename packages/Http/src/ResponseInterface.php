@@ -10,43 +10,18 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Common\RenderableInterface;
-use Ramsey\Collection\CollectionInterface;
-use Ramsey\Collection\Map\TypedMapInterface;
-use Railt\Contracts\Exception\GraphQLExceptionInterface;
+use Railt\Http\Response\DataProviderInterface;
+use Railt\Http\Extension\ExtensionsProviderInterface;
+use Railt\Http\Exception\ExceptionsProviderInterface;
 
 /**
  * Interface ResponseInterface
  */
 interface ResponseInterface extends
-    RenderableInterface
+    RenderableInterface,
+    ExtensionsProviderInterface,
+    ExceptionsProviderInterface,
+    DataProviderInterface
 {
-    /**
-     * @var string
-     */
-    public const FIELD_DATA = 'data';
 
-    /**
-     * @var string
-     */
-    public const FIELD_ERRORS = 'errors';
-
-    /**
-     * @var string
-     */
-    public const FIELD_EXTENSIONS = 'extensions';
-
-    /**
-     * @return array|null
-     */
-    public function getData(): ?array;
-
-    /**
-     * @return TypedMapInterface|mixed[]
-     */
-    public function getExtensions(): TypedMapInterface;
-
-    /**
-     * @return CollectionInterface|GraphQLExceptionInterface[]
-     */
-    public function getExceptions(): CollectionInterface;
 }

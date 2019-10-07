@@ -9,13 +9,17 @@ declare(strict_types=1);
 
 namespace Railt\Http\Extension;
 
+use Railt\Http\Common\RenderableTrait;
+use Railt\Http\Common\RenderableInterface;
 use Ramsey\Collection\Map\AbstractTypedMap;
 
 /**
  * Class ExtensionsCollection
  */
-final class ExtensionsCollection extends AbstractTypedMap
+final class ExtensionsCollection extends AbstractTypedMap implements RenderableInterface
 {
+    use RenderableTrait;
+
     /**
      * ExtensionsCollection constructor.
      *

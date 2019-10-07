@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Console\Command;
 
-use Railt\Extension\ExtensionInterface;
-use Railt\Extension\RepositoryInterface;
+use Railt\Foundation\Extension\ExtensionInterface;
+use Railt\Foundation\Extension\RepositoryInterface;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

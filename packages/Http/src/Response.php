@@ -9,33 +9,22 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Ramsey\Collection\Set;
+use Railt\Http\Response\DataTrait;
 use Railt\Http\Common\RenderableTrait;
-use Ramsey\Collection\CollectionInterface;
-use Ramsey\Collection\Map\TypedMapInterface;
-use Railt\Http\Extension\ExtensionsCollection;
+use Railt\Http\Extension\ExtensionsTrait;
+use Railt\Http\Exception\ExceptionsTrait;
 
 /**
  * Class Response
  */
 final class Response implements ResponseInterface
 {
-    use RenderableTrait;
-
-    /**
-     * @var array|null
-     */
-    private ?array $data;
-
-    /**
-     * @var TypedMapInterface|mixed[]
-     */
-    private TypedMapInterface $extensions;
-
-    /**
-     * @var CollectionInterface|\Throwable[]
-     */
-    private CollectionInterface $exceptions;
+    use DataTrait;
+    use ExtensionsTrait;
+    use ExceptionsTrait;
+    use RenderableTrait {
+        jsonSerialize as private _renderAsJson;
+    }
 
     /**
      * Response constructor.
@@ -46,17 +35,9 @@ final class Response implements ResponseInterface
      */
     public function __construct(array $data = null, array $exceptions = [], array $extensions = [])
     {
-        $this->data = $data;
-        $this->extensions = new ExtensionsCollection($extensions);
-        $this->exceptions = new Set(\Throwable::class, $exceptions);
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return \array_filter($this->toArray(), $this->filter());
+        $this->setData($data);
+        $this->setExtensions($extensions);
+        $this->setExceptions($exceptions);
     }
 
     /**
@@ -66,40 +47,19 @@ final class Response implements ResponseInterface
     {
         return [
             self::FIELD_DATA       => $this->getData(),
-            self::FIELD_ERRORS     => $this->getExceptions(),
+            self::FIELD_EXCEPTIONS => $this->getExceptions(),
             self::FIELD_EXTENSIONS => $this->getExtensions(),
         ];
     }
 
     /**
-     * @return array|null
+     * @return array
      */
-    public function getData(): ?array
+    public function jsonSerialize(): array
     {
-        return $this->data;
-    }
+        $result = \array_filter($this->toArray(),
+            fn ($entry) => \is_countable($entry) ? \count($entry) > 0 : (bool)$entry);
 
-    /**
-     * @return CollectionInterface|\Throwable[]
-     */
-    public function getExceptions(): CollectionInterface
-    {
-        return $this->exceptions;
-    }
-
-    /**
-     * @return TypedMapInterface
-     */
-    public function getExtensions(): TypedMapInterface
-    {
-        return $this->extensions;
-    }
-
-    /**
-     * @return \Closure
-     */
-    private function filter(): \Closure
-    {
-        return fn ($entry) => \is_iterable($entry) ? \count($entry) > 0 : (bool)$entry;
+        return \count($result) ? $result : [static::FIELD_DATA => null];
     }
 }
