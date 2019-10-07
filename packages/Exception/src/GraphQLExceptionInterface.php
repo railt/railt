@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Exception;
 
-use Ramsey\Collection\CollectionInterface;
 use Railt\Exception\Location\LocationInterface;
+use Ramsey\Collection\CollectionInterface;
 
 /**
  * Interface GraphQLExceptionInterface

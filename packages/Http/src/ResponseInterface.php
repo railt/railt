@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Contracts\Exception\GraphQLExceptionInterface;
 use Railt\Http\Common\RenderableInterface;
 use Ramsey\Collection\CollectionInterface;
 use Ramsey\Collection\Map\TypedMapInterface;
-use Railt\Contracts\Exception\GraphQLExceptionInterface;
 
 /**
  * Interface ResponseInterface

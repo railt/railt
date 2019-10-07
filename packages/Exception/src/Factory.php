@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Exception;
 
-use Phplrt\Position\PositionInterface;
-
 /**
  * Class Factory
  */
