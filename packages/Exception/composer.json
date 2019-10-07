@@ -1,12 +1,12 @@
 {
-    "name": "railt/ast",
+    "name": "railt/exception",
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "The Railt Framework implementation of GraphQL abstract syntax tree",
+    "description": "The Railt Framework implementation of GraphQL exceptions",
     "keywords": [
-        "ast",
-        "nodes"
+        "exception",
+        "graphql"
     ],
     "authors": [
         {
@@ -16,29 +16,28 @@
     ],
     "support": {
         "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/ast"
+        "source": "https://github.com/railt/exception"
     },
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "ext-mbstring": "*",
-        "phplrt/ast-contracts": "~2.2"
+        "ramsey/collection": "~1.0"
     },
     "autoload": {
         "psr-4": {
-            "Railt\\Ast\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Railt\\Ast\\Tests\\Unit\\": "tests/unit",
-            "Railt\\Ast\\Tests\\Feature\\": "tests/feature"
+            "Railt\\Exception\\": "src"
         }
     },
     "require-dev": {
         "behat/behat": "^3.5",
         "vimeo/psalm": "^3.5",
         "phpunit/phpunit": "^8.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Exception\\Tests\\Unit\\": "tests/unit",
+            "Railt\\Exception\\Tests\\Feature\\": "tests/feature"
+        }
     },
     "extra": {
         "branch-alias": {

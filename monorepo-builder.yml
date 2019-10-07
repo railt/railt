@@ -33,6 +33,8 @@ parameters:
         packages/Container: 'git@github.com:railt/container.git'
         packages/Discovery: 'git@github.com:railt/discovery.git'
         packages/Dumper: 'git@github.com:railt/dumper.git'
+        packages/Exception: 'git@github.com:railt/exception.git'
         packages/Extension: 'git@github.com:railt/extension.git'
+        packages/Http: 'git@github.com:railt/http.git'
         packages/Parser: 'git@github.com:railt/parser.git'
         packages/TypeSystem: 'git@github.com:railt/sdl.git'

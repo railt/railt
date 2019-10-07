@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "The Railt HTTP component provides objects to build GraphQL requests from the client.",
+    "description": "The Railt Framework implementation of GraphQL HTTP component library",
     "keywords": [
         "http",
         "http response",
@@ -33,7 +33,8 @@
         "ext-mbstring": "*",
         "phplrt/source": "~2.2",
         "phplrt/position": "~2.2",
-        "railt/dumper": "^2.0"
+        "railt/dumper": "^2.0",
+        "ramsey/collection": "~1.0"
     },
     "autoload": {
         "psr-4": {

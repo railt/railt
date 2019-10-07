@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "Simple Dependency Injection Container",
+    "description": "The Railt Framework dependency injection container",
     "keywords": [
         "di",
         "container",

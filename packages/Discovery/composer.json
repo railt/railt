@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "Railt Discovery package",
+    "description": "The Railt Framework Composer-based configuration library",
     "keywords": [
         "console",
         "autoloader",

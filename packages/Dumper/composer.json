@@ -17,7 +17,7 @@
     ],
     "support": {
         "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/support"
+        "source": "https://github.com/railt/dumper"
     },
     "require": {
         "php": ">=7.4"

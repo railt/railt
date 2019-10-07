@@ -9,14 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Request\ProvidesOperationNameInterface;
+use Railt\Http\Common\RenderableInterface;
 use Railt\Http\Request\ProvidesQueryInterface;
 use Railt\Http\Request\ProvidesVariablesInterface;
+use Railt\Http\Request\ProvidesOperationNameInterface;
 
 /**
  * Interface RequestInterface
  */
 interface RequestInterface extends
+    RenderableInterface,
     ProvidesQueryInterface,
     ProvidesVariablesInterface,
     ProvidesOperationNameInterface
@@ -35,9 +37,4 @@ interface RequestInterface extends
      * @var string
      */
     public const FIELD_OPERATION_NAME = 'operationName';
-
-    /**
-     * @return array
-     */
-    public function toArray(): array;
 }

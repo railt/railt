@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\Http\Common;
 
 /**
- * Trait RenderableTrait
+ * @mixin RenderableInterface
  */
 trait RenderableTrait
 {
@@ -36,6 +36,6 @@ trait RenderableTrait
      */
     public function jsonSerialize(): array
     {
-        return \array_filter($this->toArray());
+        return $this->toArray();
     }
 }

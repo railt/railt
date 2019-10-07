@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "Railt Config package",
+    "description": "The Railt Framework configuration package",
     "keywords": [
         "config",
         "repository",

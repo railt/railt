@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "The GraphQL parser",
+    "description": "The Railt Framework implementation of GraphQL type-system parser",
     "keywords": [
         "graphql",
         "idl",
