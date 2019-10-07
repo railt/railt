@@ -21,21 +21,21 @@ class Manifest extends ManifestFallback
     /**
      * @var array[]
      */
-    protected const CONFIGURATION = array (
-  'discovery' => 
-  array (
+    protected const CONFIGURATION = [
+  'discovery' =>
+  [
     'discovery' => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/packages/Discovery/resources/discovery.schema.json',
-    'railt' => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/resources/railt.schema.json',
-  ),
-  'railt' => 
-  array (
-    'commands' => 
-    array (
+    'railt'     => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/resources/railt.schema.json',
+  ],
+  'railt' =>
+  [
+    'commands' =>
+    [
       0 => \Railt\Foundation\Console\Command\RepoSyncCommand::class,
       1 => \Railt\Foundation\Console\Command\RepoMergeCommand::class,
       2 => \Railt\Foundation\Console\Command\ExtensionsListCommand::class,
       3 => \Railt\Parser\Console\ParserCompileCommand::class,
-    ),
-  ),
-);
+    ],
+  ],
+];
 }
