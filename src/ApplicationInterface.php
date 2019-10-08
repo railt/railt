@@ -10,26 +10,24 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Railt\Container\ContainerInterface;
-use Railt\Extension\ExtensionInterface;
+use Railt\Foundation\Extension\ExtendableInterface;
+use Railt\Foundation\Console\ConsoleExecutableInterface;
 
 /**
  * Interface ApplicationInterface
  */
-interface ApplicationInterface extends ContainerInterface
+interface ApplicationInterface extends
+    ConsoleExecutableInterface,
+    ExtendableInterface,
+    ContainerInterface
 {
+    /**
+     * @return void
+     */
+    public function boot(): void;
+
     /**
      * @return string
      */
     public function getVersion(): string;
-
-    /**
-     * @param string|ExtensionInterface $extension
-     * @return void
-     */
-    public function extend(string $extension): void;
-
-    /**
-     * @return int
-     */
-    public function cli(): int;
 }

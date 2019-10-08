@@ -7,11 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Generic;
+namespace Railt\Foundation\Console;
 
 /**
- * Class RootDirectiveCollection
+ * Interface ConsoleExecutableInterface
  */
-final class RootDirectiveCollection extends DirectiveCollection
+interface ConsoleExecutableInterface
 {
+    /**
+     * @return int
+     */
+    public function cli(): int;
 }

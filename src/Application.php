@@ -9,28 +9,34 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Railt\Ast\Node;
 use PackageVersions\Versions;
 use Railt\Container\Container;
 use Psr\Container\ContainerInterface;
-use Railt\Extension\ExtensionInterface;
-use Railt\Extension\Exception\ExtensionException;
-use Railt\Foundation\Extension\CompilerExtension;
+use Railt\TypeSystem\CompilerInterface;
+use Phplrt\Contracts\Source\ReadableInterface;
+use Railt\TypeSystem\Document\DocumentInterface;
+use Railt\Foundation\Extension\ExtensionInterface;
+use Railt\Foundation\Console\ConsoleExecutorTrait;
+use Railt\Foundation\Application\DefaultExtensionsTrait;
+use Railt\Foundation\Extension\Exception\ExtensionException;
 use Railt\Config\MutableRepository as ConfigRepository;
-use Railt\Foundation\Extension\DefaultBindingsExtension;
+use Railt\Foundation\Application\DefaultBindingsTrait;
 use Railt\Container\Exception\ContainerInvocationException;
 use Symfony\Component\Console\Application as CliApplication;
-use Railt\Foundation\Extension\DiscoveryConfigurationExtension;
 use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
-use Railt\Extension\ConfigurationRepository as ExtensionRepository;
-use Railt\Extension\RepositoryInterface as ExtensionRepositoryInterface;
-use Railt\Foundation\Console\ConfigurationRepository as ConsoleRepository;
-use Railt\Foundation\Console\RepositoryInterface as ConsoleRepositoryInterface;
+use Railt\Foundation\Extension\ConfigurationRepository as ExtensionRepository;
+use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterface;
 
 /**
  * Class Application
  */
 class Application extends Container implements ApplicationInterface
 {
+    use DefaultBindingsTrait;
+    use ConsoleExecutorTrait;
+    use DefaultExtensionsTrait;
+
     /**
      * @var ConfigRepositoryInterface
      */
@@ -40,11 +46,6 @@ class Application extends Container implements ApplicationInterface
      * @var ExtensionRepositoryInterface
      */
     protected ExtensionRepositoryInterface $extensions;
-
-    /**
-     * @var ConsoleRepositoryInterface
-     */
-    protected ConsoleRepositoryInterface $commands;
 
     /**
      * Application constructor.
@@ -58,20 +59,20 @@ class Application extends Container implements ApplicationInterface
     {
         parent::__construct($container);
 
-        $this->config = $this->bootConfig($config);
+        $this->bootConfig($config);
 
         $this->extensions = new ExtensionRepository($this, $this->config);
-        $this->commands = new ConsoleRepository($this, $this->config);
 
-        $this->registerDefaultBindings();
-        $this->registerDefaultExtensions();
+        $this->bootConsoleExecutorTrait($this, $this->config);
+        $this->bootDefaultBindingsTrait();
+        $this->bootDefaultExtensionsTrait();
     }
 
     /**
      * @param ConfigRepositoryInterface|null $config
-     * @return ConfigRepositoryInterface
+     * @return void
      */
-    private function bootConfig(ConfigRepositoryInterface $config = null): ConfigRepositoryInterface
+    private function bootConfig(ConfigRepositoryInterface $config = null): void
     {
         $result = new ConfigRepository();
 
@@ -79,36 +80,7 @@ class Application extends Container implements ApplicationInterface
             $result->merge($config);
         }
 
-        return $result;
-    }
-
-    /**
-     * @return void
-     */
-    private function registerDefaultBindings(): void
-    {
-        $locators = [
-            DefaultBindingsExtension::APP_LOCATOR        => $this,
-            DefaultBindingsExtension::CONFIG_LOCATOR     => $this->config,
-            DefaultBindingsExtension::COMMANDS_LOCATOR   => $this->commands,
-            DefaultBindingsExtension::EXTENSIONS_LOCATOR => $this->extensions,
-        ];
-
-        foreach ($locators as $name => $instance) {
-            $this->instance($name, $instance);
-        }
-    }
-
-    /**
-     * @return void
-     * @throws ContainerInvocationException
-     * @throws ExtensionException
-     */
-    private function registerDefaultExtensions(): void
-    {
-        $this->extend(DefaultBindingsExtension::class);
-        $this->extend(DiscoveryConfigurationExtension::class);
-        $this->extend(CompilerExtension::class);
+        $this->config = $result;
     }
 
     /**
@@ -125,12 +97,15 @@ class Application extends Container implements ApplicationInterface
     }
 
     /**
-     * @return mixed
+     * @param string|resource|ReadableInterface $schema
+     * @return DocumentInterface
      * @throws ContainerInvocationException
      */
-    public function handle()
+    public function connect($schema)
     {
         $this->boot();
+
+        return $this->compile($schema);
 
         // TODO
     }
@@ -145,20 +120,19 @@ class Application extends Container implements ApplicationInterface
     }
 
     /**
-     * @return int
-     * @throws \Exception
+     * @param string|resource|ReadableInterface $schema
+     * @return DocumentInterface
+     * @throws ContainerInvocationException
      */
-    public function cli(): int
+    public function compile($schema): DocumentInterface
     {
-        $cli = new CliApplication('Railt Framework', $this->getVersion());
-
-        $this->boot();
-
-        foreach ($this->commands as $command) {
-            $cli->add($command);
+        if (! $this->has(CompilerInterface::class)) {
+            $message = 'Can not run application: GraphQL type system compiler not defined';
+            throw new \LogicException($message);
         }
 
-        return $cli->run();
+        return $this->make(CompilerInterface::class)
+            ->compile($schema);
     }
 
     /**
