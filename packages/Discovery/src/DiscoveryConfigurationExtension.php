@@ -7,13 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Extension;
+namespace Railt\Discovery;
 
-use Railt\Config\MutableRepositoryInterface;
+use Railt\Foundation\Extension\Status;
 use Railt\Config\Repository;
-use Railt\Discovery\Manifest;
-use Railt\Extension\Extension;
-use Railt\Extension\Status;
+use Railt\Foundation\Extension\Extension;
+use Railt\Config\MutableRepositoryInterface;
 
 /**
  * Class DiscoveryConfigurationExtension

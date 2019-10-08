@@ -7,13 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Extension;
+namespace Railt\TypeSystem;
 
 use Railt\Parser\Factory;
-use Railt\Extension\Status;
-use Railt\Extension\Extension;
-use Railt\TypeSystem\Compiler;
-use Railt\TypeSystem\CompilerInterface;
+use Railt\Foundation\Extension\Status;
+use Railt\Foundation\Extension\Extension;
 
 /**
  * Class CompilerExtension
@@ -25,12 +23,11 @@ class CompilerExtension extends Extension
      */
     public function register(): void
     {
-        $this->app->register(Factory::class, fn () =>
-            new Factory()
+        $this->app->register(Factory::class, fn () => new Factory()
         );
 
-        $this->app->register(CompilerInterface::class, fn (Factory $factory) =>
-            new Compiler(Compiler::MODE_EXTENDED, $factory)
+        $this->app->register(CompilerInterface::class,
+            fn (Factory $factory) => new Compiler(Compiler::MODE_EXTENDED, $factory)
         );
     }
 
