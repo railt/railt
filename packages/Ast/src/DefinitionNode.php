@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\Ast;
 
-use Phplrt\Contracts\Ast\NodeInterface;
-
 /**
  * Class DefinitionNode
  *
