@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Extension;
+namespace Railt\Foundation\Extension;
 
 use Railt\Container\Container;
 use Railt\Container\ContainerInterface;

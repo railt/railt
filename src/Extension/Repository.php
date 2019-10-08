@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Extension;
+namespace Railt\Foundation\Extension;
 
 use Ramsey\Collection\Map\TypedMap;
 use Railt\Container\ContainerInterface;
-use Railt\Extension\Exception\ExtensionException;
+use Railt\Foundation\Extension\Exception\ExtensionException;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;

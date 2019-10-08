@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Extension;
+namespace Railt\Foundation\Extension;
 
 /**
  * Class Status

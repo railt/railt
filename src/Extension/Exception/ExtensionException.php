@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Extension\Exception;
+namespace Railt\Foundation\Extension\Exception;
 
 /**
  * Class ExtensionException

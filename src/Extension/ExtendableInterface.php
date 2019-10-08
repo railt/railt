@@ -7,22 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Extension;
+namespace Railt\Foundation\Extension;
 
 /**
- * Interface RepositoryInterface
- *
- * @method \Traversable|ExtensionInterface getIterator()
+ * Interface ExtendableInterface
  */
-interface RepositoryInterface extends \IteratorAggregate
+interface ExtendableInterface
 {
     /**
      * @param string|ExtensionInterface $extension
-     */
-    public function add($extension): void;
-
-    /**
      * @return void
      */
-    public function boot(): void;
+    public function extend(string $extension): void;
 }

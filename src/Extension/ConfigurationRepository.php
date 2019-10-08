@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Extension;
+namespace Railt\Foundation\Extension;
 
 use Railt\Container\ContainerInterface;
 use Railt\Config\MutableRepositoryInterface;
-use Railt\Extension\Exception\ExtensionException;
+use Railt\Foundation\Extension\Exception\ExtensionException;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 
