@@ -14,21 +14,21 @@
  */
 
 #EnumTypeExtension -> {
-    $enum = new \Railt\Parser\Node\TypeSystem\Extension\EnumTypeExtensionNode(
+    $enum = new \Railt\Ast\TypeSystem\Extension\EnumTypeExtensionNode(
         $children[1]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Parser\Node\Description:
+            case $child instanceof \Railt\Ast\Description:
                 $enum->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                 $enum->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Parser\Node\Generic\EnumValueDefinitionCollection:
+            case $child instanceof \Railt\Ast\Generic\EnumValueDefinitionCollection:
                 $enum->values = $child;
                 break;
         }

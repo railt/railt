@@ -14,24 +14,24 @@
  */
 
 #FieldDefinitions -> {
-    return new \Railt\Parser\Node\Generic\FieldDefinitionCollection($children);
+    return new \Railt\Ast\Generic\FieldDefinitionCollection($children);
 }
   : FieldDefinition()+
   ;
 
 #FieldDefinition -> {
-    $field = new \Railt\Parser\Node\TypeSystem\Definition\FieldDefinitionNode(
+    $field = new \Railt\Ast\TypeSystem\Definition\FieldDefinitionNode(
         $children[1],
-        \Railt\Parser\Node\Type\TypeNode::resolve($children)
+        \Railt\Ast\Type\TypeNode::resolve($children)
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                 $field->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Parser\Node\Generic\InputValueDefinitionCollection:
+            case $child instanceof \Railt\Ast\Generic\InputValueDefinitionCollection:
                 $field->arguments = $child;
                 break;
         }

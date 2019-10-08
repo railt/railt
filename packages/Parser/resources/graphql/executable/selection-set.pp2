@@ -13,14 +13,14 @@
  */
 
 #SelectionSet -> {
-    return new \Railt\Parser\Node\Executable\Definition\SelectionSetNode(\reset($children));
+    return new \Railt\Ast\Executable\Definition\SelectionSetNode(\reset($children));
 }
   : ::T_BRACE_OPEN:: Selections() ::T_BRACE_CLOSE::
   ;
 
 
 #Selections -> {
-    return new \Railt\Parser\Node\Generic\SelectionCollection($children);
+    return new \Railt\Ast\Generic\SelectionCollection($children);
 }
   : (Selection() ::T_COMMA::?)*
   ;
