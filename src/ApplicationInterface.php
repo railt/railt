@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Railt\Container\ContainerInterface;
-use Railt\Foundation\Extension\ExtendableInterface;
 use Railt\Foundation\Console\ConsoleExecutableInterface;
+use Railt\Foundation\Extension\ExtendableInterface;
 
 /**
  * Interface ApplicationInterface
