@@ -9,17 +9,16 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Pipeline\Pipeline;
-use Railt\Config\RepositoryInterface;
-use Railt\Foundation\Extension\Status;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Extension\Extension;
-use Railt\Http\Pipeline\PipelineInterface;
-use Railt\Http\Pipeline\Middleware\RequestDumpMiddleware;
-use Railt\Http\Pipeline\Middleware\ExecutionTimeMiddleware;
+use Railt\Foundation\Extension\Status;
 use Railt\Http\Pipeline\Middleware\ErrorUnwrapperMiddleware;
-use Railt\Http\Pipeline\Middleware\ExecutionMemoryMiddleware;
 use Railt\Http\Pipeline\Middleware\ExceptionHandlerMiddleware;
+use Railt\Http\Pipeline\Middleware\ExecutionMemoryMiddleware;
+use Railt\Http\Pipeline\Middleware\ExecutionTimeMiddleware;
+use Railt\Http\Pipeline\Middleware\RequestDumpMiddleware;
+use Railt\Http\Pipeline\Pipeline;
+use Railt\Http\Pipeline\PipelineInterface;
 
 /**
  * Class HttpServiceExtension

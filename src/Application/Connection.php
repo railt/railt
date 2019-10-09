@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace Railt\Foundation\Application;
 
 use Railt\Container\ContainerInterface;
-use Railt\Http\Pipeline\PipelineInterface;
-use Railt\Http\Connection as HttpConnection;
-use Railt\TypeSystem\Document\DocumentInterface;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Http\Connection as HttpConnection;
+use Railt\Http\Pipeline\PipelineInterface;
+use Railt\TypeSystem\Document\DocumentInterface;
 
 /**
  * Class Connection

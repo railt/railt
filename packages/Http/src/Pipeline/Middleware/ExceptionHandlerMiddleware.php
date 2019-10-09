@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Middleware;
 
-use Railt\Http\Response;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\Http\Pipeline\RequestMiddlewareInterface;
 use Railt\Http\Pipeline\RequestHandlerInterface;
+use Railt\Http\Pipeline\RequestMiddlewareInterface;
+use Railt\Http\RequestInterface;
+use Railt\Http\Response;
+use Railt\Http\ResponseInterface;
 
 /**
  * Class ExceptionHandlerMiddleware
@@ -34,4 +34,3 @@ class ExceptionHandlerMiddleware implements RequestMiddlewareInterface
         }
     }
 }
-
