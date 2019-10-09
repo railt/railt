@@ -9,20 +9,24 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception;
 
+use Railt\Dumper\Facade;
 use Ramsey\Collection\Set;
 use Railt\Http\Common\RenderableTrait;
 use Railt\Http\Extension\ExtensionsTrait;
 use Ramsey\Collection\CollectionInterface;
 use Railt\Http\Exception\Location\Location;
-use Railt\Http\Exception\Location\LocationsCollection;
 use Railt\Http\Extension\ExtensionsCollection;
+use Railt\Http\Exception\Location\LocationsTrait;
 use Railt\Http\Exception\Location\LocationInterface;
+use Railt\Http\Exception\Location\LocationsCollection;
+use Railt\Http\Exception\Location\LocationsProviderInterface;
 
 /**
  * Class GraphQLException
  */
 class GraphQLException extends \Exception implements GraphQLExceptionInterface
 {
+    use LocationsTrait;
     use ExtensionsTrait;
     use RenderableTrait {
         __toString as private render;
@@ -41,11 +45,6 @@ class GraphQLException extends \Exception implements GraphQLExceptionInterface
      * @var string
      */
     protected string $original;
-
-    /**
-     * @var CollectionInterface|LocationInterface[]
-     */
-    protected CollectionInterface $locations;
 
     /**
      * @var CollectionInterface|string[]|int[]
@@ -68,28 +67,16 @@ class GraphQLException extends \Exception implements GraphQLExceptionInterface
     {
         $this->original = $message;
 
-        $this->path = new Set('scalar');
-        $this->locations = new LocationsCollection();
+        $this->setLocations();
+        $this->setExtensions();
 
-        $this->extensions = new ExtensionsCollection();
+        $this->path = new Set('scalar');
 
         if ($prev instanceof \Throwable) {
             $prev = $this->lookup($prev);
         }
 
         parent::__construct(static::INTERNAL_EXCEPTION_MESSAGE, $code, $prev);
-    }
-
-    /**
-     * @param int $line
-     * @param int $column
-     * @return GraphQLException|$this
-     */
-    public function in(int $line, int $column = 1): self
-    {
-        $this->locations->add(new Location($line, $column));
-
-        return $this;
     }
 
     /**
@@ -141,19 +128,6 @@ class GraphQLException extends \Exception implements GraphQLExceptionInterface
     }
 
     /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        return [
-            static::FIELD_MESSAGE    => $this->getMessage(),
-            static::FIELD_LOCATIONS  => $this->getLocations(),
-            static::FIELD_PATH       => $this->getPath()->toArray(),
-            static::FIELD_EXTENSIONS => $this->getExtensions(),
-        ];
-    }
-
-    /**
      * @return GraphQLExceptionInterface
      */
     public function publish(): GraphQLExceptionInterface
@@ -190,11 +164,16 @@ class GraphQLException extends \Exception implements GraphQLExceptionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @return array
      */
-    public function getLocations(): CollectionInterface
+    public function toArray(): array
     {
-        return $this->locations;
+        return [
+            static::FIELD_MESSAGE    => $this->getMessage(),
+            static::FIELD_LOCATIONS  => $this->getLocations()->toArray(),
+            static::FIELD_PATH       => $this->getPath()->toArray(),
+            static::FIELD_EXTENSIONS => $this->getExtensions(),
+        ];
     }
 
     /**

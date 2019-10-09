@@ -14,7 +14,7 @@ use Ramsey\Collection\Set;
 /**
  * Class LocationsCollection
  */
-final class LocationsCollection extends Set
+final class LocationsCollection extends Set implements \JsonSerializable
 {
     /**
      * Collection constructor.
@@ -57,5 +57,13 @@ final class LocationsCollection extends Set
     public function add($element): bool
     {
         return parent::add($this->transform($element));
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->data;
     }
 }

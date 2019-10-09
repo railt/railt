@@ -13,6 +13,7 @@ use Railt\Http\Response\DataTrait;
 use Railt\Http\Common\RenderableTrait;
 use Railt\Http\Extension\ExtensionsTrait;
 use Railt\Http\Exception\ExceptionsTrait;
+use Ramsey\Collection\CollectionInterface;
 
 /**
  * Class Response
@@ -30,14 +31,25 @@ final class Response implements ResponseInterface
      * Response constructor.
      *
      * @param array|null $data
-     * @param array $exceptions
-     * @param array $extensions
+     * @param array|\Throwable[]|CollectionInterface $exceptions
+     * @param array|CollectionInterface $extensions
      */
-    public function __construct(array $data = null, array $exceptions = [], array $extensions = [])
+    public function __construct(array $data = null, iterable $exceptions = [], iterable $extensions = [])
     {
         $this->setData($data);
         $this->setExtensions($extensions);
         $this->setExceptions($exceptions);
+    }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        $result = \array_filter($this->toArray(),
+            fn ($entry) => \is_countable($entry) ? \count($entry) > 0 : (bool)$entry);
+
+        return \count($result) ? $result : [static::FIELD_DATA => null];
     }
 
     /**
@@ -53,13 +65,18 @@ final class Response implements ResponseInterface
     }
 
     /**
-     * @return array
+     * @return bool
      */
-    public function jsonSerialize(): array
+    public function isValid(): bool
     {
-        $result = \array_filter($this->toArray(),
-            fn ($entry) => \is_countable($entry) ? \count($entry) > 0 : (bool)$entry);
+        return $this->getExceptions()->isEmpty();
+    }
 
-        return \count($result) ? $result : [static::FIELD_DATA => null];
+    /**
+     * @return bool
+     */
+    public function isInvalid(): bool
+    {
+        return $this->hasExceptions();
     }
 }

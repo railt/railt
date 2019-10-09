@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Response;
 
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Exception\GraphQLException;
 use Railt\Http\Exception\Location\Location;
@@ -36,6 +37,7 @@ class LocationsTestCase extends TestCase
      * @param mixed $location
      * @return void
      * @throws ExpectationFailedException
+     * @throws Exception
      */
     public function testExceptionLocation($location): void
     {
@@ -84,22 +86,7 @@ class LocationsTestCase extends TestCase
     /**
      * @return void
      * @throws ExpectationFailedException
-     */
-    public function testExceptionLocationsOverwriting(): void
-    {
-        $exception = new GraphQLException();
-
-        $exception->setLocations([
-            $a = new Location(1, 1),
-            $b = new Location(2, 2),
-        ]);
-
-        $this->assertSame([$a, $b], $exception->getLocations());
-    }
-
-    /**
-     * @return void
-     * @throws ExpectationFailedException
+     * @throws Exception
      */
     public function testInvalidLocation(): void
     {

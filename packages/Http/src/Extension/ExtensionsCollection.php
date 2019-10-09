@@ -21,16 +21,6 @@ final class ExtensionsCollection extends AbstractTypedMap implements RenderableI
     use RenderableTrait;
 
     /**
-     * ExtensionsCollection constructor.
-     *
-     * @param array $data
-     */
-    public function __construct(array $data = [])
-    {
-        parent::__construct($data);
-    }
-
-    /**
      * @return string
      */
     public function getKeyType(): string

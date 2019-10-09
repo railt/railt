@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Http\Exception;
 
 use Railt\Http\Common\RenderableInterface;
-use Railt\Http\Exception\Location\LocationInterface;
 use Railt\Http\Extension\ExtensionsProviderInterface;
 use Ramsey\Collection\CollectionInterface;
+use Railt\Http\Exception\Location\LocationsProviderInterface;
 
 /**
  * Interface GraphQLExceptionInterface
@@ -20,6 +20,7 @@ use Ramsey\Collection\CollectionInterface;
 interface GraphQLExceptionInterface extends
     \Throwable,
     RenderableInterface,
+    LocationsProviderInterface,
     ExtensionsProviderInterface
 {
     /**
@@ -51,11 +52,6 @@ interface GraphQLExceptionInterface extends
      * @return GraphQLExceptionInterface|$this
      */
     public function hide(): self;
-
-    /**
-     * @return CollectionInterface|LocationInterface[]
-     */
-    public function getLocations(): CollectionInterface;
 
     /**
      * @return CollectionInterface|string[]|int[]

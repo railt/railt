@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Extension;
 
+use Ramsey\Collection\CollectionInterface;
 use Ramsey\Collection\Map\TypedMapInterface;
 
 /**
@@ -24,11 +25,15 @@ trait ExtensionsTrait
     protected TypedMapInterface $extensions;
 
     /**
-     * @param array $extensions
+     * @param array|iterable|CollectionInterface $extensions
      * @return void
      */
-    protected function setExtensions(array $extensions): void
+    protected function setExtensions(iterable $extensions = []): void
     {
+        if ($extensions instanceof CollectionInterface) {
+            $extensions = $extensions->toArray();
+        }
+
         $this->extensions = new ExtensionsCollection($extensions);
     }
 
@@ -38,5 +43,30 @@ trait ExtensionsTrait
     public function getExtensions(): TypedMapInterface
     {
         return $this->extensions;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return ExtensionsProviderInterface
+     */
+    public function withExtension(string $name, $value): ExtensionsProviderInterface
+    {
+        $this->extensions->put($name, $value);
+
+        return $this;
+    }
+
+    /**
+     * @param iterable|CollectionInterface[] $extensions
+     * @return ExtensionsProviderInterface
+     */
+    public function withExtensions(iterable $extensions): ExtensionsProviderInterface
+    {
+        foreach ($extensions as $name => $value) {
+            $this->withExtension($name, $value);
+        }
+
+        return $this;
     }
 }

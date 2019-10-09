@@ -14,7 +14,6 @@ use Phplrt\Position\PositionInterface;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\Ast\Common\ReadOnlyAttributesTrait;
 
 /**
  * Contains a range of byte offsets that identify the region of the source
@@ -27,8 +26,6 @@ use Railt\Ast\Common\ReadOnlyAttributesTrait;
  */
 final class Location implements \JsonSerializable
 {
-    use ReadOnlyAttributesTrait;
-
     /**
      * @var ReadableInterface|FileInterface
      */

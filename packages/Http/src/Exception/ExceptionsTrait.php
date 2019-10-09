@@ -24,12 +24,44 @@ trait ExceptionsTrait
     private CollectionInterface $exceptions;
 
     /**
-     * @param array|\Throwable[] $exceptions
+     * @param array|\Throwable[]|CollectionInterface $exceptions
      * @return void
      */
-    protected function setExceptions(array $exceptions): void
+    protected function setExceptions(iterable $exceptions): void
     {
+        if ($exceptions instanceof CollectionInterface) {
+            $exceptions = $exceptions->toArray();
+        }
+
         $this->exceptions = new ExceptionsCollection($exceptions);
+    }
+
+    /**
+     * @param \Throwable $exception
+     * @return ExceptionsProviderInterface
+     */
+    public function withException(\Throwable $exception): ExceptionsProviderInterface
+    {
+        $self = clone $this;
+
+        $self->exceptions->add($exception);
+
+        return $self;
+    }
+
+    /**
+     * @param iterable|\Throwable[]|CollectionInterface $exceptions
+     * @return ExceptionsProviderInterface
+     */
+    public function withExceptions(iterable $exceptions): ExceptionsProviderInterface
+    {
+        $self = clone $this;
+
+        foreach ($exceptions as $exception) {
+            $self->exceptions->add($exception);
+        }
+
+        return $self;
     }
 
     /**
@@ -38,5 +70,13 @@ trait ExceptionsTrait
     public function getExceptions(): CollectionInterface
     {
         return $this->exceptions;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasExceptions(): bool
+    {
+        return ! $this->exceptions->isEmpty();
     }
 }

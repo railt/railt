@@ -25,4 +25,21 @@ interface ExceptionsProviderInterface
      * @return CollectionInterface|GraphQLExceptionInterface[]
      */
     public function getExceptions(): CollectionInterface;
+
+    /**
+     * @param \Throwable $e
+     * @return $this|ExceptionsProviderInterface
+     */
+    public function withException(\Throwable $e): self;
+
+    /**
+     * @param iterable|CollectionInterface|\Throwable[] $exceptions
+     * @return $this|ExceptionsProviderInterface
+     */
+    public function withExceptions(iterable $exceptions): self;
+
+    /**
+     * @return bool
+     */
+    public function hasExceptions(): bool;
 }

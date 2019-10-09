@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace Railt\Ast;
 
 use Phplrt\Contracts\Ast\NodeInterface;
-use Railt\Ast\Common\ResolvableTrait;
-use Railt\Ast\Common\ReadOnlyAttributesTrait;
 
 /**
  * Class Node
@@ -21,7 +19,6 @@ use Railt\Ast\Common\ReadOnlyAttributesTrait;
 abstract class Node implements NodeInterface, \JsonSerializable
 {
     use ResolvableTrait;
-    use ReadOnlyAttributesTrait;
 
     /**
      * @var Location|null
