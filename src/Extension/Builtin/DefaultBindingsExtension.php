@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension\Builtin;
 
-use Railt\Foundation\Extension\Status;
-use Railt\Container\ContainerInterface;
-use Railt\Foundation\Extension\Extension;
-use Railt\Foundation\ApplicationInterface;
-use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
-use Railt\Foundation\Console\RepositoryInterface as CommandsRepositoryInterface;
 use Railt\Config\MutableRepositoryInterface as MutableConfigRepositoryInterface;
+use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Container\ContainerInterface;
+use Railt\Foundation\ApplicationInterface;
+use Railt\Foundation\Console\RepositoryInterface as CommandsRepositoryInterface;
+use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\RepositoryInterface as ExtensionsRepositoryInterface;
+use Railt\Foundation\Extension\Status;
 
 /**
  * Class DefaultBindingsExtension

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception;
 
-use Ramsey\Collection\AbstractSet;
-use Railt\Http\Common\RenderableTrait;
 use Railt\Http\Common\RenderableInterface;
+use Railt\Http\Common\RenderableTrait;
+use Ramsey\Collection\AbstractSet;
 
 /**
  * Class ExceptionsCollection

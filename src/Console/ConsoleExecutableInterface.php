@@ -12,6 +12,6 @@ namespace Railt\Ast\Generic;
 /**
  * Class RootDirectiveCollection
  */
-final class RootDirectiveCollection extends DirectiveCollection
+final class ConsoleExecutableInterface extends DirectiveCollection
 {
 }

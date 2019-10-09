@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Exception;
 
-use Ramsey\Collection\CollectionInterface;
 use Railt\Http\Common\RenderableInterface;
 use Railt\Http\Exception\Location\LocationInterface;
 use Railt\Http\Extension\ExtensionsProviderInterface;
+use Ramsey\Collection\CollectionInterface;
 
 /**
  * Interface GraphQLExceptionInterface

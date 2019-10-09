@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Common\RenderableInterface;
-use Railt\Http\Response\DataProviderInterface;
-use Railt\Http\Extension\ExtensionsProviderInterface;
 use Railt\Http\Exception\ExceptionsProviderInterface;
+use Railt\Http\Extension\ExtensionsProviderInterface;
+use Railt\Http\Response\DataProviderInterface;
 
 /**
  * Interface ResponseInterface
@@ -23,5 +23,4 @@ interface ResponseInterface extends
     ExceptionsProviderInterface,
     DataProviderInterface
 {
-
 }

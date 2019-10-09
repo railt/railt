@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Extension;
 
-use Railt\Http\Common\RenderableTrait;
 use Railt\Http\Common\RenderableInterface;
+use Railt\Http\Common\RenderableTrait;
 use Ramsey\Collection\Map\AbstractTypedMap;
 
 /**
