@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Type;
+namespace Railt\Ast\Type;
 
-use Railt\Parser\Node\DefinitionNode;
+use Railt\Ast\DefinitionNode;
 
 /**
  * Class TypeHint

@@ -7,14 +7,14 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node;
+namespace Railt\Ast;
 
 use Phplrt\Position\Position;
 use Phplrt\Position\PositionInterface;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\Parser\Node\Common\ReadOnlyAttributesTrait;
+use Railt\Ast\Common\ReadOnlyAttributesTrait;
 
 /**
  * Contains a range of byte offsets that identify the region of the source

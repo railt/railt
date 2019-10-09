@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Generic;
+namespace Railt\Ast\Generic;
 
-use Railt\Parser\Node\TypeSystem\Definition\InputValueDefinitionNode;
+use Railt\Ast\TypeSystem\Definition\InputValueDefinitionNode;
 
 /**
  * Class InputValueDefinitionCollection

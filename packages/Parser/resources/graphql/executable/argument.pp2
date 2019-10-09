@@ -13,7 +13,7 @@
  */
 
 #Arguments -> {
-    return new \Railt\Parser\Node\Generic\ArgumentCollection($children);
+    return new \Railt\Ast\Generic\ArgumentCollection($children);
 }
  : ::T_PARENTHESIS_OPEN::
       (Argument() ::T_COMMA::?)*
@@ -21,7 +21,7 @@
  ;
 
 #Argument -> {
-    return new \Railt\Parser\Node\Executable\Definition\ArgumentNode(...$children);
+    return new \Railt\Ast\Executable\Definition\ArgumentNode(...$children);
 }
  : NameWithReserved() ::T_COLON:: Value()
  ;

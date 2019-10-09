@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Definition;
+namespace Railt\Ast\TypeSystem\Definition;
 
-use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
-use Railt\Parser\Node\Generic\FieldDefinitionCollection;
-use Railt\Parser\Node\Generic\InterfaceTypeDefinitionCollection;
+use Railt\Ast\TypeSystem\TypeDefinitionNode;
+use Railt\Ast\Generic\FieldDefinitionCollection;
+use Railt\Ast\Generic\InterfaceTypeDefinitionCollection;
 
 /**
  * Class ObjectTypeDefinitionNode

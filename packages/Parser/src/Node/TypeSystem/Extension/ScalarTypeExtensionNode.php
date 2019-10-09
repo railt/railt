@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Extension;
+namespace Railt\Ast\TypeSystem\Extension;
 
-use Railt\Parser\Node\TypeSystem\TypeExtensionNode;
+use Railt\Ast\TypeSystem\TypeExtensionNode;
 
 /**
  * Class ScalarTypeExtensionNode

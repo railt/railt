@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Executable\Definition;
+namespace Railt\Ast\Executable\Definition;
 
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\Generic\DirectiveCollection;
-use Railt\Parser\Node\Executable\ExecutableDefinitionNode;
-use Railt\Parser\Node\Generic\VariableDefinitionCollection;
+use Railt\Ast\NameNode;
+use Railt\Ast\Generic\DirectiveCollection;
+use Railt\Ast\Executable\ExecutableDefinitionNode;
+use Railt\Ast\Generic\VariableDefinitionCollection;
 
 /**
  * Class OperationDefinitionNode

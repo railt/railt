@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Generic;
+namespace Railt\Ast\Generic;
 
-use Railt\Parser\Node\Value\ValueNode;
+use Railt\Ast\Value\ValueNode;
 
 /**
  * Class ValueCollection

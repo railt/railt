@@ -13,11 +13,11 @@
  */
 
 #FragmentSpread -> {
-    $fragment = new \Railt\Parser\Node\Executable\Definition\FragmentSpreadNode($children[0]);
+    $fragment = new \Railt\Ast\Executable\Definition\FragmentSpreadNode($children[0]);
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                 $fragment->directives = $child;
                 break;
         }

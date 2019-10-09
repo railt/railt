@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Executable;
+namespace Railt\Ast\Executable;
 
-use Railt\Parser\Node\Node;
-use Railt\Parser\Node\Generic\DirectiveCollection;
+use Railt\Ast\Node;
+use Railt\Ast\Generic\DirectiveCollection;
 
 /**
  * Class SelectionNode

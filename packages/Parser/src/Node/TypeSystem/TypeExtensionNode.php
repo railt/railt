@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem;
+namespace Railt\Ast\TypeSystem;
 
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\Value\StringValueNode;
-use Railt\Parser\Node\Generic\DirectiveCollection;
+use Railt\Ast\NameNode;
+use Railt\Ast\Value\StringValueNode;
+use Railt\Ast\Generic\DirectiveCollection;
 
 /**
  * Class TypeExtensionNode

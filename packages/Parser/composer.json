@@ -23,6 +23,7 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "railt/ast": "^2.0",
         "phplrt/lexer": "~2.2",
         "phplrt/parser": "~2.2"
     },
@@ -38,6 +39,9 @@
         }
     },
     "require-dev": {
+        "behat/behat": "^3.5",
+        "vimeo/psalm": "^3.5",
+        "phpunit/phpunit": "^8.3",
         "twig/twig": "~2.11",
         "phplrt/compiler": "~2.2",
         "symfony/console": "~3.4|~4.0|~5.0",

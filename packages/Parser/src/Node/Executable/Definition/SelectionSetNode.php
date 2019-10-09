@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Executable\Definition;
+namespace Railt\Ast\Executable\Definition;
 
-use Railt\Parser\Node\DefinitionNode;
-use Railt\Parser\Node\Generic\SelectionCollection;
+use Railt\Ast\DefinitionNode;
+use Railt\Ast\Generic\SelectionCollection;
 
 /**
  * Class SelectionSetNode

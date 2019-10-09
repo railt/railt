@@ -218,7 +218,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
     protected function reduceTypeName($children)
     {
         if ($children instanceof \Phplrt\Contracts\Lexer\TokenInterface) {
-            return new \Railt\Parser\Node\NameNode($children->getValue());
+            return new \Railt\Ast\NameNode($children->getValue());
         }
 
         return $children;
@@ -232,7 +232,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
     protected function reduceNameWithReserved($children)
     {
         if ($children instanceof \Phplrt\Contracts\Lexer\TokenInterface) {
-            return new \Railt\Parser\Node\NameNode($children->getValue());
+            return new \Railt\Ast\NameNode($children->getValue());
         }
 
         return $children;
@@ -246,7 +246,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
     protected function reduceNameWithoutValues($children)
     {
         if ($children instanceof \Phplrt\Contracts\Lexer\TokenInterface) {
-            return new \Railt\Parser\Node\NameNode($children->getValue());
+            return new \Railt\Ast\NameNode($children->getValue());
         }
 
         return $children;
@@ -259,7 +259,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceNameWithoutReserved($children)
     {
-        return new \Railt\Parser\Node\NameNode($children->getValue());
+        return new \Railt\Ast\NameNode($children->getValue());
     }
 
     /**
@@ -269,7 +269,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceListType($children)
     {
-        return new \Railt\Parser\Node\Type\ListTypeNode($children[0]);
+        return new \Railt\Ast\Type\ListTypeNode($children[0]);
     }
 
     /**
@@ -279,7 +279,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceNonNullType($children)
     {
-        return new \Railt\Parser\Node\Type\NonNullTypeNode($children[0]);
+        return new \Railt\Ast\Type\NonNullTypeNode($children[0]);
     }
 
     /**
@@ -289,7 +289,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceNamedType($children)
     {
-        return new \Railt\Parser\Node\Type\NamedTypeNode($children[0]);
+        return new \Railt\Ast\Type\NamedTypeNode($children[0]);
     }
 
     /**
@@ -299,7 +299,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceBooleanValue($children)
     {
-        return \Railt\Parser\Node\Value\BooleanValueNode::parse($children->getValue());
+        return \Railt\Ast\Value\BooleanValueNode::parse($children->getValue());
     }
 
     /**
@@ -312,9 +312,9 @@ final class Builder implements BuilderInterface, ExtendableInterface
         $first = $children[0];
 
         switch (true) {
-            case $first instanceof \Railt\Parser\Node\Value\ValueNode:
-            case $first instanceof \Railt\Parser\Node\NameNode:
-                return new \Railt\Parser\Node\Value\EnumValueNode($first->value);
+            case $first instanceof \Railt\Ast\Value\ValueNode:
+            case $first instanceof \Railt\Ast\NameNode:
+                return new \Railt\Ast\Value\EnumValueNode($first->value);
 
             default:
                 throw new \InvalidArgumentException('Unrecognized Enum value type: ' . \gettype($first));
@@ -328,7 +328,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceListValue($children)
     {
-        return new \Railt\Parser\Node\Value\ListValueNode($children[0]);
+        return new \Railt\Ast\Value\ListValueNode($children[0]);
     }
 
     /**
@@ -338,7 +338,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceListValues($children)
     {
-        return new \Railt\Parser\Node\Generic\ValueCollection($children);
+        return new \Railt\Ast\Generic\ValueCollection($children);
     }
 
     /**
@@ -348,7 +348,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceNullValue($children)
     {
-        return new \Railt\Parser\Node\Value\NullValueNode();
+        return new \Railt\Ast\Value\NullValueNode();
     }
 
     /**
@@ -358,7 +358,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceIntValue($children)
     {
-        return \Railt\Parser\Node\Value\IntValueNode::parse($children->getValue());
+        return \Railt\Ast\Value\IntValueNode::parse($children->getValue());
     }
 
     /**
@@ -368,7 +368,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceFloatValue($children)
     {
-        return \Railt\Parser\Node\Value\FloatValueNode::parse($children->getValue());
+        return \Railt\Ast\Value\FloatValueNode::parse($children->getValue());
     }
 
     /**
@@ -378,7 +378,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceObjectValue($children)
     {
-        return new \Railt\Parser\Node\Value\ObjectValueNode($children[0]);
+        return new \Railt\Ast\Value\ObjectValueNode($children[0]);
     }
 
     /**
@@ -388,7 +388,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceObjectFields($children)
     {
-        return new \Railt\Parser\Node\Generic\ObjectFieldCollection($children);
+        return new \Railt\Ast\Generic\ObjectFieldCollection($children);
     }
 
     /**
@@ -398,7 +398,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceObjectField($children)
     {
-        return new \Railt\Parser\Node\Value\ObjectFieldNode($children[0], $children[1]);
+        return new \Railt\Ast\Value\ObjectFieldNode($children[0], $children[1]);
     }
 
     /**
@@ -408,7 +408,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceBlockStringValue($children)
     {
-        return \Railt\Parser\Node\Value\StringValueNode::parse($children[0]->getValue(), true);
+        return \Railt\Ast\Value\StringValueNode::parse($children[0]->getValue(), true);
     }
 
     /**
@@ -418,7 +418,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInlineStringValue($children)
     {
-        return \Railt\Parser\Node\Value\StringValueNode::parse($children[0]->getValue(), false);
+        return \Railt\Ast\Value\StringValueNode::parse($children[0]->getValue(), false);
     }
 
     /**
@@ -428,7 +428,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceVariable($children)
     {
-        return new \Railt\Parser\Node\Value\VariableNode($children[0]);
+        return new \Railt\Ast\Value\VariableNode($children[0]);
     }
 
     /**
@@ -438,7 +438,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceVariableName($children)
     {
-        return new \Railt\Parser\Node\NameNode($children[0]->getValue());
+        return new \Railt\Ast\NameNode($children[0]->getValue());
     }
 
     /**
@@ -448,7 +448,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceDescription($children)
     {
-        return new \Railt\Parser\Node\Description($children ?: null);
+        return new \Railt\Ast\Description($children ?: null);
     }
 
     /**
@@ -458,14 +458,14 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceDirectiveDefinition($children)
     {
-        $directive = new \Railt\Parser\Node\TypeSystem\Definition\DirectiveDefinitionNode(
+        $directive = new \Railt\Ast\TypeSystem\Definition\DirectiveDefinitionNode(
             $children[1],
             \end($children)
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $directive->description = $child->value;
                     break;
 
@@ -473,7 +473,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
                     $directive->repeatable = true;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\InputValueDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\InputValueDefinitionCollection:
                     $directive->arguments = $child;
                     break;
             }
@@ -499,7 +499,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceDirectiveDefinitionBody($children)
     {
-        return new \Railt\Parser\Node\Generic\DirectiveLocationCollection($children);
+        return new \Railt\Ast\Generic\DirectiveLocationCollection($children);
     }
 
     /**
@@ -509,21 +509,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceEnumTypeDefinition($children)
     {
-        $enum = new \Railt\Parser\Node\TypeSystem\Definition\EnumTypeDefinitionNode(
+        $enum = new \Railt\Ast\TypeSystem\Definition\EnumTypeDefinitionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $enum->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $enum->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\EnumValueDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\EnumValueDefinitionCollection:
                     $enum->values = $child;
                     break;
             }
@@ -539,7 +539,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceEnumTypeDefinitions($children)
     {
-        return new \Railt\Parser\Node\Generic\EnumValueDefinitionCollection($children);
+        return new \Railt\Ast\Generic\EnumValueDefinitionCollection($children);
     }
 
     /**
@@ -549,17 +549,17 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceEnumValueDefinition($children)
     {
-        $value = new \Railt\Parser\Node\TypeSystem\Definition\EnumValueDefinitionNode(
+        $value = new \Railt\Ast\TypeSystem\Definition\EnumValueDefinitionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $value->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $value->directives = $child;
                     break;
             }
@@ -575,15 +575,15 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceFragmentDefinition($children)
     {
-        $fragment = new \Railt\Parser\Node\Executable\Definition\FragmentDefinitionNode(
+        $fragment = new \Railt\Ast\Executable\Definition\FragmentDefinitionNode(
             $children[0],
             $children[1],
-            \Railt\Parser\Node\Executable\Definition\SelectionSetNode::resolve($children)
+            \Railt\Ast\Executable\Definition\SelectionSetNode::resolve($children)
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $fragment->directives = $child;
                     break;
             }
@@ -599,21 +599,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInputObjectTypeDefinition($children)
     {
-        $input = new \Railt\Parser\Node\TypeSystem\Definition\InputObjectTypeDefinitionNode(
+        $input = new \Railt\Ast\TypeSystem\Definition\InputObjectTypeDefinitionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $input->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $input->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\InputValueDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\InputValueDefinitionCollection:
                     $input->fields = $child;
                     break;
             }
@@ -629,7 +629,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInputValueDefinitions($children)
     {
-        return new \Railt\Parser\Node\Generic\InputValueDefinitionCollection($children);
+        return new \Railt\Ast\Generic\InputValueDefinitionCollection($children);
     }
 
     /**
@@ -639,22 +639,22 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInputValueDefinition($children)
     {
-        $value = new \Railt\Parser\Node\TypeSystem\Definition\InputValueDefinitionNode(
+        $value = new \Railt\Ast\TypeSystem\Definition\InputValueDefinitionNode(
             $children[1],
             $children[2]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $value->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $value->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Value\ValueNode:
+                case $child instanceof \Railt\Ast\Value\ValueNode:
                     $value->defaultValue = $child;
                     break;
             }
@@ -670,21 +670,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInterfaceTypeDefinition($children)
     {
-        $interface = new \Railt\Parser\Node\TypeSystem\Definition\InterfaceTypeDefinitionNode(
+        $interface = new \Railt\Ast\TypeSystem\Definition\InterfaceTypeDefinitionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $interface->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\FieldDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\FieldDefinitionCollection:
                     $interface->fields = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $interface->directives = $child;
                     break;
             }
@@ -700,7 +700,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceImplementsInterfaces($children)
     {
-        return new \Railt\Parser\Node\Generic\InterfaceTypeDefinitionCollection($children);
+        return new \Railt\Ast\Generic\InterfaceTypeDefinitionCollection($children);
     }
 
     /**
@@ -710,25 +710,25 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceObjectTypeDefinition($children)
     {
-        $object = new \Railt\Parser\Node\TypeSystem\Definition\ObjectTypeDefinitionNode(
+        $object = new \Railt\Ast\TypeSystem\Definition\ObjectTypeDefinitionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $object->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\FieldDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\FieldDefinitionCollection:
                     $object->fields = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $object->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\InterfaceTypeDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\InterfaceTypeDefinitionCollection:
                     $object->interfaces = $child;
                     break;
             }
@@ -744,7 +744,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceFieldDefinitions($children)
     {
-        return new \Railt\Parser\Node\Generic\FieldDefinitionCollection($children);
+        return new \Railt\Ast\Generic\FieldDefinitionCollection($children);
     }
 
     /**
@@ -754,18 +754,18 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceFieldDefinition($children)
     {
-        $field = new \Railt\Parser\Node\TypeSystem\Definition\FieldDefinitionNode(
+        $field = new \Railt\Ast\TypeSystem\Definition\FieldDefinitionNode(
             $children[1],
-            \Railt\Parser\Node\Type\TypeNode::resolve($children)
+            \Railt\Ast\Type\TypeNode::resolve($children)
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $field->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\InputValueDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\InputValueDefinitionCollection:
                     $field->arguments = $child;
                     break;
             }
@@ -781,17 +781,17 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceScalarTypeDefinition($children)
     {
-        $scalar = new \Railt\Parser\Node\TypeSystem\Definition\ScalarTypeDefinitionNode(
+        $scalar = new \Railt\Ast\TypeSystem\Definition\ScalarTypeDefinitionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $scalar->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $scalar->directives = $child;
                     break;
             }
@@ -808,20 +808,20 @@ final class Builder implements BuilderInterface, ExtendableInterface
     protected function reduceSchemaDefinition($children)
     {
         $operations = \array_filter($children, static function ($child): bool {
-            return $child instanceof \Railt\Parser\Node\Generic\OperationTypeDefinitionCollection;
+            return $child instanceof \Railt\Ast\Generic\OperationTypeDefinitionCollection;
         });
 
-        $schema = new \Railt\Parser\Node\TypeSystem\Definition\SchemaDefinitionNode(
-            \reset($operations) ?: new \Railt\Parser\Node\Generic\OperationTypeDefinitionCollection([])
+        $schema = new \Railt\Ast\TypeSystem\Definition\SchemaDefinitionNode(
+            \reset($operations) ?: new \Railt\Ast\Generic\OperationTypeDefinitionCollection([])
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $schema->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $schema->directives = $child;
                     break;
             }
@@ -837,7 +837,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceOperationTypeDefinitions($children)
     {
-        return new \Railt\Parser\Node\Generic\OperationTypeDefinitionCollection($children);
+        return new \Railt\Ast\Generic\OperationTypeDefinitionCollection($children);
     }
 
     /**
@@ -847,7 +847,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceOperationTypeDefinition($children)
     {
-        $operation = new \Railt\Parser\Node\TypeSystem\Definition\OperationTypeDefinitionNode(
+        $operation = new \Railt\Ast\TypeSystem\Definition\OperationTypeDefinitionNode(
             $children[0]->getValue(),
             $children[1]
         );
@@ -866,21 +866,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceUnionTypeDefinition($children)
     {
-        $union = new \Railt\Parser\Node\TypeSystem\Definition\UnionTypeDefinitionNode(
+        $union = new \Railt\Ast\TypeSystem\Definition\UnionTypeDefinitionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $union->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $union->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\TypeDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\TypeDefinitionCollection:
                     $union->types = $child;
                     break;
             }
@@ -896,7 +896,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceUnionTypeDefinitionTargets($children)
     {
-        return new \Railt\Parser\Node\Generic\TypeDefinitionCollection($children);
+        return new \Railt\Ast\Generic\TypeDefinitionCollection($children);
     }
 
     /**
@@ -906,7 +906,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceVariableDefinitions($children)
     {
-        return new \Railt\Parser\Node\Generic\VariableDefinitionCollection($children);
+        return new \Railt\Ast\Generic\VariableDefinitionCollection($children);
     }
 
     /**
@@ -916,18 +916,18 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceVariableDefinition($children)
     {
-        $variable = new \Railt\Parser\Node\Executable\Definition\VariableDefinitionNode(
+        $variable = new \Railt\Ast\Executable\Definition\VariableDefinitionNode(
             \array_shift($children),
             \array_shift($children)
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $variable->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Value\ValueNode:
+                case $child instanceof \Railt\Ast\Value\ValueNode:
                     $variable->defaultValue = $child;
                     break;
             }
@@ -943,7 +943,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceArguments($children)
     {
-        return new \Railt\Parser\Node\Generic\ArgumentCollection($children);
+        return new \Railt\Ast\Generic\ArgumentCollection($children);
     }
 
     /**
@@ -953,7 +953,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceArgument($children)
     {
-        return new \Railt\Parser\Node\Executable\Definition\ArgumentNode(...$children);
+        return new \Railt\Ast\Executable\Definition\ArgumentNode(...$children);
     }
 
     /**
@@ -963,7 +963,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceRootDirectives($children)
     {
-        return new \Railt\Parser\Node\Generic\RootDirectiveCollection($children);
+        return new \Railt\Ast\Generic\RootDirectiveCollection($children);
     }
 
     /**
@@ -973,7 +973,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceDirectives($children)
     {
-        return new \Railt\Parser\Node\Generic\DirectiveCollection($children);
+        return new \Railt\Ast\Generic\DirectiveCollection($children);
     }
 
     /**
@@ -983,7 +983,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceDirective($children)
     {
-        $directive = new \Railt\Parser\Node\Executable\Definition\DirectiveNode($children[0]);
+        $directive = new \Railt\Ast\Executable\Definition\DirectiveNode($children[0]);
 
         if (isset($children[1])) {
             $directive->arguments = $children[1];
@@ -999,18 +999,18 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceField($children)
     {
-        [$alias, $name] = isset($children[1]) && $children[1] instanceof \Railt\Parser\Node\NameNode
+        [$alias, $name] = isset($children[1]) && $children[1] instanceof \Railt\Ast\NameNode
             ? $children
             : [null, $children[0]];
 
-        $field = new \Railt\Parser\Node\Executable\Definition\FieldNode($name, $alias);
+        $field = new \Railt\Ast\Executable\Definition\FieldNode($name, $alias);
 
          foreach ($children as $child) {
              switch (true) {
-                 case $child instanceof \Railt\Parser\Node\Generic\ArgumentCollection:
+                 case $child instanceof \Railt\Ast\Generic\ArgumentCollection:
                      $field->arguments = $child;
                      break;
-                 case $child instanceof \Railt\Parser\Node\Executable\Definition\SelectionSetNode:
+                 case $child instanceof \Railt\Ast\Executable\Definition\SelectionSetNode:
                      $field->selectionSet = $child;
                      break;
              }
@@ -1026,11 +1026,11 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceFragmentSpread($children)
     {
-        $fragment = new \Railt\Parser\Node\Executable\Definition\FragmentSpreadNode($children[0]);
+        $fragment = new \Railt\Ast\Executable\Definition\FragmentSpreadNode($children[0]);
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $fragment->directives = $child;
                     break;
             }
@@ -1046,15 +1046,15 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInlineFragment($children)
     {
-        $fragment = new \Railt\Parser\Node\Executable\Definition\InlineFragmentNode(\end($children));
+        $fragment = new \Railt\Ast\Executable\Definition\InlineFragmentNode(\end($children));
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $fragment->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Type\NamedTypeNode:
+                case $child instanceof \Railt\Ast\Type\NamedTypeNode:
                     $fragment->typeCondition = $child;
                     break;
             }
@@ -1074,15 +1074,15 @@ final class Builder implements BuilderInterface, ExtendableInterface
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\NameNode:
+                case $child instanceof \Railt\Ast\NameNode:
                     $operation->name = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\VariableDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\VariableDefinitionCollection:
                     $operation->variables = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $operation->directives = $child;
                     break;
             }
@@ -1098,7 +1098,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceQueryOperation($children)
     {
-        return [new \Railt\Parser\Node\Executable\Definition\OperationDefinitionNode('query', \array_pop($children)), ...$children];
+        return [new \Railt\Ast\Executable\Definition\OperationDefinitionNode('query', \array_pop($children)), ...$children];
     }
 
     /**
@@ -1108,7 +1108,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceMutationOperation($children)
     {
-        return [new \Railt\Parser\Node\Executable\Definition\OperationDefinitionNode('mutation', \array_pop($children)), ...$children];
+        return [new \Railt\Ast\Executable\Definition\OperationDefinitionNode('mutation', \array_pop($children)), ...$children];
     }
 
     /**
@@ -1118,7 +1118,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceSubscriptionOperation($children)
     {
-        return [new \Railt\Parser\Node\Executable\Definition\OperationDefinitionNode('subscription', \array_pop($children)), $children];
+        return [new \Railt\Ast\Executable\Definition\OperationDefinitionNode('subscription', \array_pop($children)), $children];
     }
 
     /**
@@ -1128,7 +1128,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceSelectionSet($children)
     {
-        return new \Railt\Parser\Node\Executable\Definition\SelectionSetNode(\reset($children));
+        return new \Railt\Ast\Executable\Definition\SelectionSetNode(\reset($children));
     }
 
     /**
@@ -1138,7 +1138,7 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceSelections($children)
     {
-        return new \Railt\Parser\Node\Generic\SelectionCollection($children);
+        return new \Railt\Ast\Generic\SelectionCollection($children);
     }
 
     /**
@@ -1148,21 +1148,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceEnumTypeExtension($children)
     {
-        $enum = new \Railt\Parser\Node\TypeSystem\Extension\EnumTypeExtensionNode(
+        $enum = new \Railt\Ast\TypeSystem\Extension\EnumTypeExtensionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $enum->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $enum->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\EnumValueDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\EnumValueDefinitionCollection:
                     $enum->values = $child;
                     break;
             }
@@ -1178,21 +1178,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInputObjectTypeExtension($children)
     {
-        $input = new \Railt\Parser\Node\TypeSystem\Extension\InputObjectTypeExtensionNode(
+        $input = new \Railt\Ast\TypeSystem\Extension\InputObjectTypeExtensionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $input->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $input->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\InputValueDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\InputValueDefinitionCollection:
                     $input->fields = $child;
                     break;
             }
@@ -1208,21 +1208,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceInterfaceTypeExtension($children)
     {
-        $interface = new \Railt\Parser\Node\TypeSystem\Extension\InterfaceTypeExtensionNode(
+        $interface = new \Railt\Ast\TypeSystem\Extension\InterfaceTypeExtensionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $interface->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\FieldDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\FieldDefinitionCollection:
                     $interface->fields = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $interface->directives = $child;
                     break;
             }
@@ -1238,25 +1238,25 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceObjectTypeExtension($children)
     {
-        $object = new \Railt\Parser\Node\TypeSystem\Extension\ObjectTypeExtensionNode(
+        $object = new \Railt\Ast\TypeSystem\Extension\ObjectTypeExtensionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $object->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\FieldDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\FieldDefinitionCollection:
                     $object->fields = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $object->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\InterfaceTypeDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\InterfaceTypeDefinitionCollection:
                     $object->interfaces = $child;
                     break;
             }
@@ -1272,17 +1272,17 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceScalarTypeExtension($children)
     {
-        $scalar = new \Railt\Parser\Node\TypeSystem\Extension\ScalarTypeExtensionNode(
+        $scalar = new \Railt\Ast\TypeSystem\Extension\ScalarTypeExtensionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $scalar->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $scalar->directives = $child;
                     break;
             }
@@ -1298,19 +1298,19 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceSchemaExtension($children)
     {
-        $schema = new \Railt\Parser\Node\TypeSystem\Extension\SchemaExtensionNode();
+        $schema = new \Railt\Ast\TypeSystem\Extension\SchemaExtensionNode();
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $schema->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $schema->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\OperationTypeDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\OperationTypeDefinitionCollection:
                     $schema->operationTypes = $child;
                     break;
             }
@@ -1326,21 +1326,21 @@ final class Builder implements BuilderInterface, ExtendableInterface
      */
     protected function reduceUnionTypeExtension($children)
     {
-        $union = new \Railt\Parser\Node\TypeSystem\Extension\UnionTypeExtensionNode(
+        $union = new \Railt\Ast\TypeSystem\Extension\UnionTypeExtensionNode(
             $children[1]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\Parser\Node\Description:
+                case $child instanceof \Railt\Ast\Description:
                     $union->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\DirectiveCollection:
+                case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
                     $union->directives = $child;
                     break;
 
-                case $child instanceof \Railt\Parser\Node\Generic\TypeDefinitionCollection:
+                case $child instanceof \Railt\Ast\Generic\TypeDefinitionCollection:
                     $union->types = $child;
                     break;
             }

@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node;
+namespace Railt\Ast;
 
 use Phplrt\Contracts\Ast\NodeInterface;
 

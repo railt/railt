@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Type;
+namespace Railt\Ast\Type;
 
 /**
  * Class NonNullTypeNode

@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Definition;
+namespace Railt\Ast\TypeSystem\Definition;
 
-use Railt\Parser\Node\Value\StringValueNode;
-use Railt\Parser\Node\Generic\DirectiveCollection;
-use Railt\Parser\Node\TypeSystem\TypeSystemDefinitionNode;
-use Railt\Parser\Node\Generic\OperationTypeDefinitionCollection;
+use Railt\Ast\Value\StringValueNode;
+use Railt\Ast\Generic\DirectiveCollection;
+use Railt\Ast\TypeSystem\TypeSystemDefinitionNode;
+use Railt\Ast\Generic\OperationTypeDefinitionCollection;
 
 /**
  * Class SchemaDefinitionNode

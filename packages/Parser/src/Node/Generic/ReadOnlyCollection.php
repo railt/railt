@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Generic;
+namespace Railt\Ast\Generic;
 
 /**
  * Class ReadOnlyCollection

@@ -26,18 +26,18 @@
  */
 
 #RootDirectives -> {
-    return new \Railt\Parser\Node\Generic\RootDirectiveCollection($children);
+    return new \Railt\Ast\Generic\RootDirectiveCollection($children);
 }
   : Directive()+
 
 #Directives -> {
-    return new \Railt\Parser\Node\Generic\DirectiveCollection($children);
+    return new \Railt\Ast\Generic\DirectiveCollection($children);
 }
   : Directive()+
   ;
 
 #Directive -> {
-    $directive = new \Railt\Parser\Node\Executable\Definition\DirectiveNode($children[0]);
+    $directive = new \Railt\Ast\Executable\Definition\DirectiveNode($children[0]);
 
     if (isset($children[1])) {
         $directive->arguments = $children[1];

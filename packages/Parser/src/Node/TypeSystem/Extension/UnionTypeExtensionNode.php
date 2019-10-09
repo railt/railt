@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Extension;
+namespace Railt\Ast\TypeSystem\Extension;
 
-use Railt\Parser\Node\TypeSystem\TypeExtensionNode;
-use Railt\Parser\Node\Generic\TypeDefinitionCollection;
+use Railt\Ast\TypeSystem\TypeExtensionNode;
+use Railt\Ast\Generic\TypeDefinitionCollection;
 
 /**
  * Class UnionTypeExtensionNode

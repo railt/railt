@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Executable\Definition;
+namespace Railt\Ast\Executable\Definition;
 
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\Executable\SelectionNode;
+use Railt\Ast\NameNode;
+use Railt\Ast\Executable\SelectionNode;
 
 /**
  * Class FragmentSpreadNode

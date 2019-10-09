@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Executable\Definition;
+namespace Railt\Ast\Executable\Definition;
 
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\DefinitionNode;
-use Railt\Parser\Node\Generic\ArgumentCollection;
+use Railt\Ast\NameNode;
+use Railt\Ast\DefinitionNode;
+use Railt\Ast\Generic\ArgumentCollection;
 
 /**
  * Class DirectiveNode

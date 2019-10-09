@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Value;
+namespace Railt\Ast\Value;
 
-use Railt\Parser\Node\Generic\ObjectFieldCollection;
+use Railt\Ast\Generic\ObjectFieldCollection;
 
 /**
  * Class ObjectValueNode

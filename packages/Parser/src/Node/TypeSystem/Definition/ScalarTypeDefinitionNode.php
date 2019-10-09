@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Definition;
+namespace Railt\Ast\TypeSystem\Definition;
 
-use Railt\Parser\Node\TypeSystem\TypeDefinitionNode;
+use Railt\Ast\TypeSystem\TypeDefinitionNode;
 
 /**
  * Class ScalarTypeDefinitionNode

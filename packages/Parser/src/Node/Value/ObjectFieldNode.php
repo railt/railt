@@ -7,10 +7,10 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Value;
+namespace Railt\Ast\Value;
 
-use Railt\Parser\Node\Node;
-use Railt\Parser\Node\NameNode;
+use Railt\Ast\Node;
+use Railt\Ast\NameNode;
 
 /**
  * Class ObjectFieldNode

@@ -7,12 +7,12 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Definition;
+namespace Railt\Ast\TypeSystem\Definition;
 
-use Railt\Parser\Node\Node;
-use Railt\Parser\Node\DefinitionNode;
-use Railt\Parser\Node\Type\NamedTypeNode;
-use Railt\Parser\Node\Generic\DirectiveCollection;
+use Railt\Ast\Node;
+use Railt\Ast\DefinitionNode;
+use Railt\Ast\Type\NamedTypeNode;
+use Railt\Ast\Generic\DirectiveCollection;
 
 /**
  * Class OperationTypeDefinitionNode

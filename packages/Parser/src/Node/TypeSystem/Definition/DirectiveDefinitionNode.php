@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Definition;
+namespace Railt\Ast\TypeSystem\Definition;
 
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\Value\StringValueNode;
-use Railt\Parser\Node\Generic\DirectiveLocationCollection;
-use Railt\Parser\Node\TypeSystem\TypeSystemDefinitionNode;
-use Railt\Parser\Node\Generic\InputValueDefinitionCollection;
+use Railt\Ast\NameNode;
+use Railt\Ast\Value\StringValueNode;
+use Railt\Ast\Generic\DirectiveLocationCollection;
+use Railt\Ast\TypeSystem\TypeSystemDefinitionNode;
+use Railt\Ast\Generic\InputValueDefinitionCollection;
 
 /**
  * Class DirectiveDefinitionNode

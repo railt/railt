@@ -7,11 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node;
+namespace Railt\Ast;
 
 use Phplrt\Contracts\Ast\NodeInterface;
-use Railt\Parser\Node\Common\ResolvableTrait;
-use Railt\Parser\Node\Common\ReadOnlyAttributesTrait;
+use Railt\Ast\Common\ResolvableTrait;
+use Railt\Ast\Common\ReadOnlyAttributesTrait;
 
 /**
  * Class Node

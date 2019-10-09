@@ -4,7 +4,7 @@
 //
 
 #Description -> {
-    return new \Railt\Parser\Node\Description($children ?: null);
+    return new \Railt\Ast\Description($children ?: null);
 }
   : StringValue()?
   ;

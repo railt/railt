@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem;
+namespace Railt\Ast\TypeSystem;
 
-use Railt\Parser\Node\DefinitionNode;
+use Railt\Ast\DefinitionNode;
 
 /**
  * Class TypeSystemDefinitionNode

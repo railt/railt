@@ -7,9 +7,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Generic;
+namespace Railt\Ast\Generic;
 
-use Railt\Parser\Node\Type\NamedTypeNode;
+use Railt\Ast\Type\NamedTypeNode;
 
 /**
  * Class TypeDefinitionCollection

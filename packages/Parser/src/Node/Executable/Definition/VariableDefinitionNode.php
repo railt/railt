@@ -7,13 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Executable\Definition;
+namespace Railt\Ast\Executable\Definition;
 
-use Railt\Parser\Node\Type\TypeNode;
-use Railt\Parser\Node\DefinitionNode;
-use Railt\Parser\Node\Value\ValueNode;
-use Railt\Parser\Node\Value\VariableNode;
-use Railt\Parser\Node\Generic\DirectiveCollection;
+use Railt\Ast\Type\TypeNode;
+use Railt\Ast\DefinitionNode;
+use Railt\Ast\Value\ValueNode;
+use Railt\Ast\Value\VariableNode;
+use Railt\Ast\Generic\DirectiveCollection;
 
 /**
  * Class VariableDefinitionNode

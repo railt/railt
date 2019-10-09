@@ -7,7 +7,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\Common;
+namespace Railt\Ast\Common;
 
 /**
  * Trait ReadOnlyAttributesTrait

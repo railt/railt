@@ -7,15 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Parser\Node\TypeSystem\Definition;
+namespace Railt\Ast\TypeSystem\Definition;
 
-use Railt\Parser\Node\Node;
-use Railt\Parser\Node\NameNode;
-use Railt\Parser\Node\Type\TypeNode;
-use Railt\Parser\Node\DefinitionNode;
-use Railt\Parser\Node\Value\StringValueNode;
-use Railt\Parser\Node\Generic\DirectiveCollection;
-use Railt\Parser\Node\Generic\InputValueDefinitionCollection;
+use Railt\Ast\Node;
+use Railt\Ast\NameNode;
+use Railt\Ast\Type\TypeNode;
+use Railt\Ast\DefinitionNode;
+use Railt\Ast\Value\StringValueNode;
+use Railt\Ast\Generic\DirectiveCollection;
+use Railt\Ast\Generic\InputValueDefinitionCollection;
 
 /**
  * Class FieldDefinition

@@ -7,7 +7,7 @@
 
 #TypeName -> {
     if ($children instanceof \Phplrt\Contracts\Lexer\TokenInterface) {
-        return new \Railt\Parser\Node\NameNode($children->getValue());
+        return new \Railt\Ast\NameNode($children->getValue());
     }
 
     return $children;
@@ -21,7 +21,7 @@
 
 #NameWithReserved -> {
     if ($children instanceof \Phplrt\Contracts\Lexer\TokenInterface) {
-        return new \Railt\Parser\Node\NameNode($children->getValue());
+        return new \Railt\Ast\NameNode($children->getValue());
     }
 
     return $children;
@@ -38,7 +38,7 @@
 
 #NameWithoutValues -> {
     if ($children instanceof \Phplrt\Contracts\Lexer\TokenInterface) {
-        return new \Railt\Parser\Node\NameNode($children->getValue());
+        return new \Railt\Ast\NameNode($children->getValue());
     }
 
     return $children;
@@ -68,7 +68,7 @@
 //
 
 #NameWithoutReserved -> {
-    return new \Railt\Parser\Node\NameNode($children->getValue());
+    return new \Railt\Ast\NameNode($children->getValue());
 }
   : <T_NAME>
   ;
