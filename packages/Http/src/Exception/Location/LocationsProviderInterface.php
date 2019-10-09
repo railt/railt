@@ -24,9 +24,15 @@ interface LocationsProviderInterface
     /**
      * @param int|LocationInterface $lineOrLocation
      * @param int $column
-     * @return $this
+     * @return LocationsProviderInterface|$this
      */
     public function withLocation($lineOrLocation, int $column = 1): self;
+
+    /**
+     * @param iterable|int[]|LocationInterface[] $locations
+     * @return LocationsProviderInterface|$this
+     */
+    public function withLocations(iterable $locations = []): self;
 
     /**
      * @return bool

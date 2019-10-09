@@ -52,9 +52,11 @@ trait ExtensionsTrait
      */
     public function withExtension(string $name, $value): ExtensionsProviderInterface
     {
-        $this->extensions->put($name, $value);
+        $self = clone $this;
 
-        return $this;
+        $self->extensions->put($name, $value);
+
+        return $self;
     }
 
     /**
@@ -63,10 +65,12 @@ trait ExtensionsTrait
      */
     public function withExtensions(iterable $extensions): ExtensionsProviderInterface
     {
+        $self = clone $this;
+
         foreach ($extensions as $name => $value) {
-            $this->withExtension($name, $value);
+            $self->extensions->put($name, $value);
         }
 
-        return $this;
+        return $self;
     }
 }

@@ -54,6 +54,25 @@ trait LocationsTrait
     }
 
     /**
+     * @param iterable|LocationInterface[]|int[] $locations
+     * @return LocationsProviderInterface
+     */
+    public function withLocations(iterable $locations = []): LocationsProviderInterface
+    {
+        foreach ($locations as $line => $column) {
+            if ($column instanceof LocationInterface) {
+                $this->withLocation($column);
+
+                continue;
+            }
+
+            $this->withLocation($line, $column);
+        }
+
+        return $this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function hasLocations(): bool
