@@ -22,9 +22,9 @@ abstract class Collection extends Node implements \ArrayAccess, \Countable
     private array $items = [];
 
     /**
-     * @var \Closure
+     * @var \Closure|null
      */
-    private \Closure $generic;
+    private ?\Closure $generic = null;
 
     /**
      * Collection constructor.
@@ -40,6 +40,16 @@ abstract class Collection extends Node implements \ArrayAccess, \Countable
         foreach ($items as $key => $item) {
             $this->items[$key] = $this->assert($item);
         }
+    }
+
+    /**
+     * @param int $name
+     * @param mixed $value
+     * @return void
+     */
+    public function __set(int $name, $value): void
+    {
+        $this->items[$name] = $value;
     }
 
     /**
