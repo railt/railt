@@ -18,8 +18,9 @@ trait DefaultExtensionsTrait
      * @var array|string[]
      */
     private array $defaultExtensions = [
-        \Railt\Discovery\DiscoveryConfigurationExtension::class,
-        \Railt\TypeSystem\CompilerExtension::class,
+        \Railt\Discovery\DiscoveryServiceExtension::class,
+        \Railt\TypeSystem\TypeSystemServiceExtension::class,
+        \Railt\Http\HttpServiceExtension::class,
     ];
 
     /**

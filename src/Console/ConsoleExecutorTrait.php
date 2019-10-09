@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Console;
 
 use Railt\Container\ContainerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Application as CliApplication;
 use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 use Railt\Foundation\Console\ConfigurationRepository as ConsoleRepository;
@@ -24,6 +25,21 @@ trait ConsoleExecutorTrait
      * @var ConsoleRepositoryInterface
      */
     protected ConsoleRepositoryInterface $commands;
+
+    /**
+     * @var array|Command[]
+     */
+    protected array $defaultCommands = [
+        \Railt\Foundation\Console\Command\ExtensionsListCommand::class,
+    ];
+
+    /**
+     * @var array|Command[]
+     */
+    protected array $developmentCommands = [
+        \Railt\Foundation\Console\Command\RepoMergeCommand::class,
+        \Railt\Foundation\Console\Command\RepoSyncCommand::class,
+    ];
 
     /**
      * @return int
@@ -62,5 +78,13 @@ trait ConsoleExecutorTrait
         ConfigRepositoryInterface $config
     ): void {
         $this->commands = new ConsoleRepository($app, $config);
+
+        foreach ($this->defaultCommands as $command) {
+            $this->commands->add($command);
+        }
+
+        foreach ($this->developmentCommands as $command) {
+            $this->commands->add($command);
+        }
     }
 }

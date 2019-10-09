@@ -48,7 +48,7 @@ trait ExtensionsTrait
     /**
      * @param string $name
      * @param mixed $value
-     * @return ExtensionsProviderInterface
+     * @return ExtensionsProviderInterface|$this
      */
     public function withExtension(string $name, $value): ExtensionsProviderInterface
     {
@@ -61,7 +61,7 @@ trait ExtensionsTrait
 
     /**
      * @param iterable|CollectionInterface[] $extensions
-     * @return ExtensionsProviderInterface
+     * @return ExtensionsProviderInterface|$this
      */
     public function withExtensions(iterable $extensions): ExtensionsProviderInterface
     {

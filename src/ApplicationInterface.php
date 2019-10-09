@@ -9,27 +9,33 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Railt\Http\ConnectionInterface;
 use Railt\Container\ContainerInterface;
-use Railt\Foundation\Extension\ExtensionInterface;
+use Phplrt\Contracts\Source\ReadableInterface;
+use Railt\Foundation\Console\ConsoleExecutableInterface;
+use Railt\Foundation\Extension\ExtendableInterface;
 
 /**
  * Interface ApplicationInterface
  */
-interface ApplicationInterface extends ContainerInterface
+interface ApplicationInterface extends
+    ConsoleExecutableInterface,
+    ExtendableInterface,
+    ContainerInterface
 {
+    /**
+     * @return void
+     */
+    public function boot(): void;
+
+    /**
+     * @param string|resource|ReadableInterface $schema
+     * @return ConnectionInterface
+     */
+    public function connect($schema): ConnectionInterface;
+
     /**
      * @return string
      */
     public function getVersion(): string;
-
-    /**
-     * @param string|ExtensionInterface $extension
-     * @return void
-     */
-    public function extend(string $extension): void;
-
-    /**
-     * @return int
-     */
-    public function cli(): int;
 }

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\Foundation\Application;
 
 use Railt\Config;
-use Railt\Foundation\Extension;
 use Railt\Foundation\Console;
+use Railt\Foundation\Extension;
 use Railt\Foundation\Application;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\ApplicationInterface;
@@ -59,14 +59,14 @@ trait DefaultBindingsTrait
     private function registerServiceLocators(): void
     {
         $locators = [
-            Application::class          => $this,
-            Config\Repository::class    => $this->config,
-            Console\Repository::class   => $this->commands,
-            Extension\Repository::class => $this->extensions,
+            Application::class          => fn () => $this,
+            Config\Repository::class    => fn () => $this->config,
+            Console\Repository::class   => fn () => $this->commands,
+            Extension\Repository::class => fn () => $this->extensions,
         ];
 
-        foreach ($locators as $name => $instance) {
-            $this->instance($name, $instance);
+        foreach ($locators as $name => $cb) {
+            $this->register($name, $cb);
         }
     }
 

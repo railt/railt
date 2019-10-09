@@ -7,18 +7,16 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Extension\Builtin;
+namespace Railt\TypeSystem;
 
 use Railt\Parser\Factory;
-use Railt\TypeSystem\Compiler;
 use Railt\Foundation\Extension\Status;
-use Railt\TypeSystem\CompilerInterface;
 use Railt\Foundation\Extension\Extension;
 
 /**
- * Class CompilerExtension
+ * Class TypeSystemServiceExtension
  */
-class CompilerExtension extends Extension
+class TypeSystemServiceExtension extends Extension
 {
     /**
      * @return void
@@ -38,7 +36,7 @@ class CompilerExtension extends Extension
      */
     public function getName(): string
     {
-        return 'GraphQL';
+        return 'GraphQL TypeSystem';
     }
 
     /**
@@ -62,6 +60,6 @@ class CompilerExtension extends Extension
      */
     public function getDescription(): string
     {
-        return 'Registers the GraphQL parser and compiler';
+        return 'Registers the GraphQL TypeSystem (SDL) parser and compiler';
     }
 }

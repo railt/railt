@@ -97,6 +97,8 @@ class Repository implements RepositoryInterface
      */
     protected function register($extension): ExtensionInterface
     {
+        \assert(\is_subclass_of($extension, ExtensionInterface::class));
+
         $this->extensions->put($this->key($extension), $instance = $this->make($extension));
 
         $this->loadDependencies($instance);

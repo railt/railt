@@ -11,9 +11,11 @@ namespace Railt\Http;
 
 use Railt\Http\Response\DataTrait;
 use Railt\Http\Common\RenderableTrait;
+use Psr\Http\Message\MessageInterface;
 use Railt\Http\Extension\ExtensionsTrait;
 use Railt\Http\Exception\ExceptionsTrait;
 use Ramsey\Collection\CollectionInterface;
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
 /**
  * Class Response
@@ -78,5 +80,19 @@ final class Response implements ResponseInterface
     public function isInvalid(): bool
     {
         return $this->hasExceptions();
+    }
+
+    /**
+     * @param PsrResponseInterface|MessageInterface $response
+     * @return PsrResponseInterface
+     * @throws \RuntimeException
+     */
+    public function toPsr(PsrResponseInterface $response): PsrResponseInterface
+    {
+        $response = $response->withHeader('Content-Type', 'application/json');
+
+        $response->getBody()->write(\json_encode($this, \JSON_THROW_ON_ERROR));
+
+        return $response;
     }
 }

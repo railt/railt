@@ -38,7 +38,7 @@ trait ExceptionsTrait
 
     /**
      * @param \Throwable $exception
-     * @return ExceptionsProviderInterface
+     * @return ExceptionsProviderInterface|$this
      */
     public function withException(\Throwable $exception): ExceptionsProviderInterface
     {
@@ -51,7 +51,7 @@ trait ExceptionsTrait
 
     /**
      * @param iterable|\Throwable[]|CollectionInterface $exceptions
-     * @return ExceptionsProviderInterface
+     * @return ExceptionsProviderInterface|$this
      */
     public function withExceptions(iterable $exceptions): ExceptionsProviderInterface
     {

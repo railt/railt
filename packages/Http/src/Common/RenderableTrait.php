@@ -25,10 +25,18 @@ trait RenderableTrait
     public function __toString(): string
     {
         try {
-            return \json_encode($this->toArray(), \JSON_THROW_ON_ERROR);
+            return (string)\json_encode($this->toArray(), $this->toStringJsonOptions());
         } catch (\JsonException $e) {
             return '{"errors": "JSON Error: ' . \addcslashes($e->getMessage(), '"') . '"}';
         }
+    }
+
+    /**
+     * @return int
+     */
+    protected function toStringJsonOptions(): int
+    {
+        return \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT;
     }
 
     /**

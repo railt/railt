@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b05ba485f14a5bbb9204c4c029b0323c",
+    "content-hash": "cf5aa63eef5ed620df1286cac5306498",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -4104,6 +4104,93 @@
                 "type"
             ],
             "time": "2019-07-04T18:12:22+00:00"
+        },
+        {
+            "name": "spiral/goridge",
+            "version": "v2.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spiral/goridge.git",
+                "reference": "4d5c763886dd0a1e45b1a7d1f99d180cf1a7a7c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spiral/goridge/zipball/4d5c763886dd0a1e45b1a7d1f99d180cf1a7a7c4",
+                "reference": "4d5c763886dd0a1e45b1a7d1f99d180cf1a7a7c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "goridge",
+            "autoload": {
+                "psr-4": {
+                    "Spiral\\Goridge\\": "php-src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anton Titov / Wolfy-J",
+                    "email": "wolfy.jd@gmail.com"
+                }
+            ],
+            "description": "High-performance PHP-to-Golang RPC bridge",
+            "time": "2019-04-01T14:30:26+00:00"
+        },
+        {
+            "name": "spiral/roadrunner",
+            "version": "v1.4.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spiral/roadrunner.git",
+                "reference": "dcd03789d7f8e1dd31ddf63e6ee66aebf89b1605"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spiral/roadrunner/zipball/dcd03789d7f8e1dd31ddf63e6ee66aebf89b1605",
+                "reference": "dcd03789d7f8e1dd31ddf63e6ee66aebf89b1605",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0",
+                "spiral/goridge": "^2.0",
+                "symfony/console": "^2.5.0 || ^3.0.0 || ^4.0.0",
+                "zendframework/zend-diactoros": "^1.3 || ^2.0"
+            },
+            "bin": [
+                "bin/rr"
+            ],
+            "type": "server",
+            "autoload": {
+                "psr-4": {
+                    "Spiral\\RoadRunner\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anton Titov / Wolfy-J",
+                    "email": "wolfy.jd@gmail.com"
+                },
+                {
+                    "name": "RoadRunner Community",
+                    "homepage": "https://github.com/spiral/roadrunner/graphs/contributors"
+                }
+            ],
+            "description": "High-performance PHP application server, load-balancer and process manager written in Golang",
+            "time": "2019-09-06T11:02:08+00:00"
         },
         {
             "name": "symfony/class-loader",

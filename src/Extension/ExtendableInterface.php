@@ -18,5 +18,5 @@ interface ExtendableInterface
      * @param string|ExtensionInterface $extension
      * @return void
      */
-    public function extend(string $extension): void;
+    public function extend($extension): void;
 }

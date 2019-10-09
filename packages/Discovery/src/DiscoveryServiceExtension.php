@@ -7,18 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Foundation\Extension\Builtin;
+namespace Railt\Discovery;
 
 use Railt\Config\MutableRepositoryInterface;
 use Railt\Config\Repository;
-use Railt\Discovery\Manifest;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 
 /**
- * Class DiscoveryConfigurationExtension
+ * Class DiscoveryServiceExtension
  */
-class DiscoveryConfigurationExtension extends Extension
+class DiscoveryServiceExtension extends Extension
 {
     /**
      * @var string
@@ -31,7 +30,9 @@ class DiscoveryConfigurationExtension extends Extension
      */
     public function register(MutableRepositoryInterface $config): void
     {
-        $config->merge(new Repository(Manifest::get(self::MANIFEST_KEY)));
+        $manifest = Manifest::get(self::MANIFEST_KEY, []);
+
+        $config->merge(new Repository((array)$manifest));
     }
 
     /**

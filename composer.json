@@ -20,6 +20,7 @@
     ],
     "require": {
         "php": ">=7.4",
+        "ext-csprng": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
         "composer-plugin-api": "^1.1",
