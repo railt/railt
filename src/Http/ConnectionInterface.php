@@ -7,14 +7,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\Foundation\Http;
 
-use Railt\Http\Pipeline\RequestHandlerInterface;
+use Railt\Http\RequestInterface;
+use Railt\Http\ResponseInterface;
 
 /**
  * Interface ConnectionInterface
  */
-interface ConnectionInterface extends RequestHandlerInterface
+interface ConnectionInterface
 {
     /**
      * @return int
@@ -45,8 +46,8 @@ interface ConnectionInterface extends RequestHandlerInterface
 
     /**
      * @param RequestInterface $request
-     * @param \Closure $notifier
+     * @param \Closure|null $notifier
      * @return \Generator|ResponseInterface[]
      */
-    public function listen(RequestInterface $request, \Closure $notifier): \Generator;
+    public function listen(RequestInterface $request, \Closure $notifier = null): \Generator;
 }

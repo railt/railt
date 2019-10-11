@@ -9,23 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Middleware;
 
-use Railt\Http\Pipeline\RequestHandlerInterface;
-use Railt\Http\Pipeline\RequestMiddlewareInterface;
-use Railt\Http\RequestInterface;
 use Railt\Http\Response;
+use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
+use Railt\Http\Pipeline\MiddlewareInterface;
+use Railt\Http\Pipeline\Handler\HandlerInterface;
 
 /**
  * Class ExceptionHandlerMiddleware
  */
-class ExceptionHandlerMiddleware implements RequestMiddlewareInterface
+class ExceptionHandlerMiddleware implements MiddlewareInterface
 {
     /**
      * @param RequestInterface $request
-     * @param RequestHandlerInterface $next
+     * @param HandlerInterface $next
      * @return ResponseInterface
      */
-    public function handle(RequestInterface $request, RequestHandlerInterface $next): ResponseInterface
+    public function handle(RequestInterface $request, HandlerInterface $next): ResponseInterface
     {
         try {
             return $next->handle($request);
@@ -34,3 +34,4 @@ class ExceptionHandlerMiddleware implements RequestMiddlewareInterface
         }
     }
 }
+

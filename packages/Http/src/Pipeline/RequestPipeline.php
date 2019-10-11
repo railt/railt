@@ -9,25 +9,26 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline;
 
+use Railt\Http\RequestInterface;
+use Railt\Http\ResponseInterface;
 use Railt\Container\ContainerInterface;
 use Railt\Http\Pipeline\Handler\HandlerInterface;
 
 /**
- * Interface PipelineInterface
+ * Class Pipeline
  */
-interface PipelineInterface
+class RequestPipeline extends Pipeline
 {
     /**
-     * @param MiddlewareInterface|string ...$middleware
-     * @return PipelineInterface|$this
-     */
-    public function through(...$middleware): self;
-
-    /**
      * @param ContainerInterface $app
-     * @param mixed $payload
+     * @param RequestInterface $request
      * @param HandlerInterface $handler
-     * @return mixed
+     * @return ResponseInterface
      */
-    public function send(ContainerInterface $app, $payload, HandlerInterface $handler);
+    public function send(ContainerInterface $app, $request, HandlerInterface $handler): ResponseInterface
+    {
+        \assert($request instanceof RequestInterface);
+
+        return $this->handler($app, $handler)->handle($request);
+    }
 }

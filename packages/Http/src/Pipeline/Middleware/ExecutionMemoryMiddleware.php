@@ -12,13 +12,13 @@ namespace Railt\Http\Pipeline\Middleware;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Config\RepositoryInterface;
-use Railt\Http\Pipeline\RequestHandlerInterface;
-use Railt\Http\Pipeline\RequestMiddlewareInterface;
+use Railt\Http\Pipeline\MiddlewareInterface;
+use Railt\Http\Pipeline\Handler\HandlerInterface;
 
 /**
  * Class ExecutionMemoryMiddleware
  */
-class ExecutionMemoryMiddleware implements RequestMiddlewareInterface
+class ExecutionMemoryMiddleware implements MiddlewareInterface
 {
     /**
      * @var RepositoryInterface
@@ -37,15 +37,15 @@ class ExecutionMemoryMiddleware implements RequestMiddlewareInterface
 
     /**
      * @param RequestInterface $request
-     * @param RequestHandlerInterface $next
+     * @param HandlerInterface $next
      * @return ResponseInterface
      */
-    public function handle(RequestInterface $request, RequestHandlerInterface $next): ResponseInterface
+    public function handle(RequestInterface $request, HandlerInterface $next): ResponseInterface
     {
         $response = $next->handle($request);
 
         if ($this->config->get('debug', false)) {
-            $response->withExtension('memory', $this->getMemory());
+            return $response->extend('memory', $this->getMemory());
         }
 
         return $response;

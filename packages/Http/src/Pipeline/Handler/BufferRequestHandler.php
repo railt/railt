@@ -11,12 +11,11 @@ namespace Railt\Http\Pipeline\Handler;
 
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Http\Pipeline\RequestHandlerInterface;
 
 /**
- * Class RequestBufferHandler
+ * Class BufferRequestHandler
  */
-final class RequestBufferHandler implements RequestHandlerInterface
+final class BufferRequestHandler implements HandlerInterface
 {
     /**
      * @var ResponseInterface
@@ -40,7 +39,7 @@ final class RequestBufferHandler implements RequestHandlerInterface
 
     /**
      * @param ResponseInterface $response
-     * @return RequestBufferHandler|$this
+     * @return BufferRequestHandler|$this
      */
     public function withResponse(ResponseInterface $response): self
     {
@@ -51,7 +50,7 @@ final class RequestBufferHandler implements RequestHandlerInterface
 
     /**
      * @param \Throwable $exception
-     * @return RequestBufferHandler|$this
+     * @return BufferRequestHandler|$this
      */
     public function withException(\Throwable $exception): self
     {

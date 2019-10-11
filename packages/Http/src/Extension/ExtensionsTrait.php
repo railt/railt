@@ -52,7 +52,7 @@ trait ExtensionsTrait
      */
     public function withExtension(string $name, $value): ExtensionsProviderInterface
     {
-        $self = clone $this;
+        $self = $this instanceof \Throwable ? $this : clone $this;
 
         $self->extensions->put($name, $value);
 

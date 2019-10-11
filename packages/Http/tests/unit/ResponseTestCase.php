@@ -11,6 +11,7 @@ namespace Railt\Http\Tests\Unit;
 
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Http\Extension\Extension;
 use Railt\Http\Response;
 
 /**

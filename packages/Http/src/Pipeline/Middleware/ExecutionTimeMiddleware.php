@@ -12,13 +12,13 @@ namespace Railt\Http\Pipeline\Middleware;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 use Railt\Config\RepositoryInterface;
-use Railt\Http\Pipeline\RequestMiddlewareInterface;
-use Railt\Http\Pipeline\RequestHandlerInterface;
+use Railt\Http\Pipeline\MiddlewareInterface;
+use Railt\Http\Pipeline\Handler\HandlerInterface;
 
 /**
  * Class ExecutionTimeMiddleware
  */
-class ExecutionTimeMiddleware implements RequestMiddlewareInterface
+class ExecutionTimeMiddleware implements MiddlewareInterface
 {
     /**
      * @var RepositoryInterface
@@ -37,18 +37,19 @@ class ExecutionTimeMiddleware implements RequestMiddlewareInterface
 
     /**
      * @param RequestInterface $request
-     * @param RequestHandlerInterface $next
+     * @param HandlerInterface $next
      * @return ResponseInterface
      */
-    public function handle(RequestInterface $request, RequestHandlerInterface $next): ResponseInterface
+    public function handle(RequestInterface $request, HandlerInterface $next): ResponseInterface
     {
         $timings = \microtime(true);
 
         $response = $next->handle($request);
 
         if ($this->config->get('debug', false)) {
-            $response->withExtension('time', $this->collect($timings));
+            return $response->extend('time', $this->collect($timings));
         }
+
 
         return $response;
     }

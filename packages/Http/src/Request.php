@@ -17,7 +17,7 @@ use Railt\Http\Request\VariablesTrait;
 /**
  * Class Request
  */
-final class Request implements RequestInterface, \JsonSerializable
+final class Request implements RequestInterface
 {
     use QueryTrait;
     use VariablesTrait;
@@ -36,6 +36,25 @@ final class Request implements RequestInterface, \JsonSerializable
         $this->setQuery($query);
         $this->setVariables($variables);
         $this->setOperationName($operationName);
+    }
+
+    /**
+     * @param string $variable
+     * @param mixed|null $default
+     * @return mixed
+     */
+    public function get(string $variable, $default = null)
+    {
+        return $this->getVariable($variable, $default);
+    }
+
+    /**
+     * @param string $variable
+     * @return bool
+     */
+    public function has(string $variable): bool
+    {
+        return $this->hasVariable($variable);
     }
 
     /**

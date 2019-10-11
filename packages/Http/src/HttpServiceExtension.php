@@ -9,16 +9,18 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
+use Railt\Http\Pipeline\RequestPipeline;
+use Railt\Foundation\Extension\Status;
 use Railt\Container\ContainerInterface;
 use Railt\Foundation\Extension\Extension;
-use Railt\Foundation\Extension\Status;
-use Railt\Http\Pipeline\Middleware\ErrorUnwrapperMiddleware;
-use Railt\Http\Pipeline\Middleware\ExceptionHandlerMiddleware;
-use Railt\Http\Pipeline\Middleware\ExecutionMemoryMiddleware;
-use Railt\Http\Pipeline\Middleware\ExecutionTimeMiddleware;
-use Railt\Http\Pipeline\Middleware\RequestDumpMiddleware;
-use Railt\Http\Pipeline\Pipeline;
 use Railt\Http\Pipeline\PipelineInterface;
+use Railt\Http\Pipeline\RequestPipelineInterface;
+use Railt\Http\Pipeline\Handler\EmptyRequestHandler;
+use Railt\Http\Pipeline\Middleware\RequestDumpMiddleware;
+use Railt\Http\Pipeline\Middleware\ExecutionTimeMiddleware;
+use Railt\Http\Pipeline\Middleware\ErrorUnwrapperMiddleware;
+use Railt\Http\Pipeline\Middleware\ExecutionMemoryMiddleware;
+use Railt\Http\Pipeline\Middleware\ExceptionHandlerMiddleware;
 
 /**
  * Class HttpServiceExtension
@@ -30,17 +32,9 @@ class HttpServiceExtension extends Extension
      */
     public function register(): void
     {
-        $handler = static function (ContainerInterface $app) {
-            return (new Pipeline($app))
-                ->through(ExceptionHandlerMiddleware::class)
-                ->through(ErrorUnwrapperMiddleware::class)
-                ->through(RequestDumpMiddleware::class)
-                ->through(ExecutionTimeMiddleware::class)
-                ->through(ExecutionMemoryMiddleware::class)
-            ;
-        };
-
-        $this->app->register(PipelineInterface::class, $handler);
+        $this->app->register(HttpKernelInterface::class,
+            fn() => new HttpKernel(new EmptyRequestHandler(static::class))
+        );
     }
 
     /**

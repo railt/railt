@@ -11,88 +11,47 @@ namespace Railt\Foundation;
 
 use PackageVersions\Versions;
 use Railt\Container\Container;
-use Railt\Http\ConnectionInterface;
+use Railt\Http\HttpKernelInterface;
 use Psr\Container\ContainerInterface;
 use Railt\TypeSystem\CompilerInterface;
-use Railt\Foundation\Application\Connection;
+use Railt\Foundation\Http\GraphQLConnection;
 use Phplrt\Contracts\Source\ReadableInterface;
+use Railt\Foundation\Http\ConnectionInterface;
+use Railt\Foundation\Extension\ExtensionsTrait;
 use Railt\TypeSystem\Document\DocumentInterface;
-use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Console\ConsoleExecutorTrait;
-use Railt\Config\MutableRepository as ConfigRepository;
+use Railt\Foundation\Application\ConfigurationTrait;
 use Railt\Foundation\Application\DefaultBindingsTrait;
-use Railt\Foundation\Application\DefaultExtensionsTrait;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Extension\Exception\ExtensionException;
 use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
-use Railt\Foundation\Extension\ConfigurationRepository as ExtensionRepository;
-use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterface;
 
 /**
  * Class Application
  */
 class Application extends Container implements ApplicationInterface
 {
+    use ExtensionsTrait;
+    use ConfigurationTrait;
     use DefaultBindingsTrait;
     use ConsoleExecutorTrait;
-    use DefaultExtensionsTrait;
-
-    /**
-     * @var ConfigRepositoryInterface
-     */
-    protected ConfigRepositoryInterface $config;
-
-    /**
-     * @var ExtensionRepositoryInterface
-     */
-    protected ExtensionRepositoryInterface $extensions;
 
     /**
      * Application constructor.
      *
-     * @param ConfigRepositoryInterface $config
+     * @param ConfigRepositoryInterface|array $config
      * @param ContainerInterface|null $container
      * @throws ContainerInvocationException
      * @throws ExtensionException
      */
-    public function __construct(ConfigRepositoryInterface $config = null, ContainerInterface $container = null)
+    public function __construct($config = null, ContainerInterface $container = null)
     {
         parent::__construct($container);
 
-        $this->bootConfig($config);
-
-        $this->extensions = new ExtensionRepository($this, $this->config);
-
+        $this->bootConfigurationTrait($config);
         $this->bootDefaultBindingsTrait();
-        $this->bootDefaultExtensionsTrait();
+        $this->bootExtendableTrait($this, $this->config);
         $this->bootConsoleExecutorTrait($this, $this->config);
-    }
-
-    /**
-     * @param ConfigRepositoryInterface|null $config
-     * @return void
-     */
-    private function bootConfig(ConfigRepositoryInterface $config = null): void
-    {
-        $result = new ConfigRepository();
-
-        if ($config !== null) {
-            $result->merge($config);
-        }
-
-        $this->config = $result;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws ContainerInvocationException
-     * @throws ExtensionException
-     */
-    public function extend($extension): void
-    {
-        \assert(\is_subclass_of($extension, ExtensionInterface::class));
-
-        $this->extensions->add($extension);
     }
 
     /**
@@ -104,12 +63,13 @@ class Application extends Container implements ApplicationInterface
     {
         $this->boot();
 
-        return new Connection($this, $this->compile($schema));
+        $kernel = $this->make(HttpKernelInterface::class);
+
+        return new GraphQLConnection($this, $kernel, $this->compile($schema));
     }
 
     /**
      * @return void
-     * @throws ContainerInvocationException
      */
     public function boot(): void
     {
@@ -121,7 +81,7 @@ class Application extends Container implements ApplicationInterface
      * @return DocumentInterface
      * @throws ContainerInvocationException
      */
-    public function compile($schema): DocumentInterface
+    protected function compile($schema): DocumentInterface
     {
         if (! $this->has(CompilerInterface::class)) {
             $message = 'Can not run application: GraphQL type system compiler not defined';

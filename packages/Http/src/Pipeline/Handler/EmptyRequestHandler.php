@@ -11,12 +11,11 @@ namespace Railt\Http\Pipeline\Handler;
 
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Http\Pipeline\RequestHandlerInterface;
 
 /**
- * Class RequestEmptyHandler
+ * Class EmptyRequestHandler
  */
-final class RequestEmptyHandler implements RequestHandlerInterface
+final class EmptyRequestHandler implements HandlerInterface
 {
     /**
      * @var string

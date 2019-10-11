@@ -7,21 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Pipeline;
+namespace Railt\Http\Pipeline\Handler;
 
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
 
 /**
- * Interface RequestHandlerInterface
+ * Interface HandlerInterface
  */
-interface RequestHandlerInterface
+interface HandlerInterface
 {
     /**
-     * Handles a request and produces a response.
-     *
-     * May call other collaborating code to generate the response.
-     *
      * @param RequestInterface $request
      * @return ResponseInterface
      */

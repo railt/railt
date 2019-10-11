@@ -66,7 +66,7 @@
     "extra": {
         "railt": {
             "extensions": [
-                "Railt\\Http\\HttpExtension"
+                "Railt\\Http\\HttpServiceExtension"
             ]
         },
         "branch-alias": {

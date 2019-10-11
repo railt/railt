@@ -26,7 +26,6 @@ parameters:
             symfony/process: '~3.4|~4.0|~5.0'
             symfony/var-dumper: '~3.4|~4.0|~5.0'
             symplify/monorepo-builder: '^6.1'
-            serafim/pipe: '~0.1'
     directories_to_repositories:
         packages/Ast: 'git@github.com:railt/ast.git'
         packages/Config: 'git@github.com:railt/config.git'
@@ -36,4 +35,5 @@ parameters:
         packages/Dumper: 'git@github.com:railt/dumper.git'
         packages/Http: 'git@github.com:railt/http.git'
         packages/Parser: 'git@github.com:railt/parser.git'
+        packages/Pipeline: 'git@github.com:railt/pipeline.git'
         packages/TypeSystem: 'git@github.com:railt/sdl.git'

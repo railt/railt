@@ -11,16 +11,17 @@ namespace Railt\Http\Pipeline;
 
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
+use Railt\Http\Pipeline\Handler\HandlerInterface;
 
 /**
- * Interface RequestMiddlewareInterface
+ * Interface MiddlewareInterface
  */
-interface RequestMiddlewareInterface
+interface MiddlewareInterface
 {
     /**
-     * @param RequestInterface $request
-     * @param RequestHandlerInterface $next
+     * @param RequestInterface $payload
+     * @param HandlerInterface $next
      * @return ResponseInterface
      */
-    public function handle(RequestInterface $request, RequestHandlerInterface $next): ResponseInterface;
+    public function handle(RequestInterface $payload, HandlerInterface $next): ResponseInterface;
 }

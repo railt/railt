@@ -7,33 +7,34 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Pipeline;
+namespace Railt\Http\Pipeline\Handler;
 
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
+use Railt\Http\Pipeline\MiddlewareInterface;
 
 /**
  * Class Next
  */
-class Next implements RequestHandlerInterface
+class Next implements HandlerInterface
 {
     /**
-     * @var RequestHandlerInterface
+     * @var HandlerInterface
      */
-    private RequestHandlerInterface $handler;
+    private HandlerInterface $handler;
 
     /**
-     * @var RequestMiddlewareInterface
+     * @var MiddlewareInterface
      */
-    private RequestMiddlewareInterface $middleware;
+    private MiddlewareInterface $middleware;
 
     /**
      * Next constructor.
      *
-     * @param RequestMiddlewareInterface $middleware
-     * @param RequestHandlerInterface $handler
+     * @param MiddlewareInterface $middleware
+     * @param HandlerInterface $handler
      */
-    public function __construct(RequestMiddlewareInterface $middleware, RequestHandlerInterface $handler)
+    public function __construct(MiddlewareInterface $middleware, HandlerInterface $handler)
     {
         $this->middleware = $middleware;
         $this->handler = $handler;
