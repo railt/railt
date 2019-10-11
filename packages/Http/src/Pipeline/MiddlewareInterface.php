@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline;
 
+use Railt\Http\Pipeline\Handler\HandlerInterface;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Http\Pipeline\Handler\HandlerInterface;
 
 /**
  * Interface MiddlewareInterface

@@ -10,21 +10,21 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use PackageVersions\Versions;
-use Railt\Container\Container;
-use Railt\Http\HttpKernelInterface;
-use Psr\Container\ContainerInterface;
-use Railt\TypeSystem\CompilerInterface;
-use Railt\Foundation\Http\GraphQLConnection;
 use Phplrt\Contracts\Source\ReadableInterface;
-use Railt\Foundation\Http\ConnectionInterface;
-use Railt\Foundation\Extension\ExtensionsTrait;
-use Railt\TypeSystem\Document\DocumentInterface;
-use Railt\Foundation\Console\ConsoleExecutorTrait;
+use Psr\Container\ContainerInterface;
+use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Container\Container;
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Application\ConfigurationTrait;
 use Railt\Foundation\Application\DefaultBindingsTrait;
-use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Foundation\Console\ConsoleExecutorTrait;
 use Railt\Foundation\Extension\Exception\ExtensionException;
-use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Foundation\Extension\ExtensionsTrait;
+use Railt\Foundation\Http\ConnectionInterface;
+use Railt\Foundation\Http\GraphQLConnection;
+use Railt\Http\HttpKernelInterface;
+use Railt\TypeSystem\CompilerInterface;
+use Railt\TypeSystem\Document\DocumentInterface;
 
 /**
  * Class Application
