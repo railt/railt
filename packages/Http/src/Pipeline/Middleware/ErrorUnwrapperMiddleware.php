@@ -45,7 +45,7 @@ class ErrorUnwrapperMiddleware implements MiddlewareInterface
         $response = $next->handle($request);
 
         if ($this->config->get('debug', false)) {
-            foreach ($response->exceptions() as $exception) {
+            foreach ($response->getExceptions() as $exception) {
                 $exception->publish();
             }
         }

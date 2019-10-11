@@ -47,7 +47,7 @@ class ExecutionTimeMiddleware implements MiddlewareInterface
         $response = $next->handle($request);
 
         if ($this->config->get('debug', false)) {
-            return $response->extend('time', $this->collect($timings));
+            return $response->withExtension('time', $this->collect($timings));
         }
 
 

@@ -45,7 +45,7 @@ class RequestDumpMiddleware implements MiddlewareInterface
         $response = $next->handle($request);
 
         if ($this->config->get('debug', false)) {
-            return $response->extend('request', $request->toArray());
+            return $response->withExtension('request', $request->toArray());
         }
 
         return $response;

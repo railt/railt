@@ -51,7 +51,8 @@
         "vimeo/psalm": "^3.5",
         "zendframework/zend-code": "~3.3",
         "zendframework/zend-diactoros": "~1.7|~2.0",
-        "zendframework/zend-http": "~2.8"
+        "zendframework/zend-http": "~2.8",
+        "webonyx/graphql-php": "~0.13"
     },
     "autoload": {
         "files": [
@@ -66,7 +67,6 @@
             "Railt\\Foundation\\": "src",
             "Railt\\Http\\": "packages/Http/src/",
             "Railt\\Parser\\": "packages/Parser/src",
-            "Railt\\Pipeline\\": "packages/Pipeline/src/",
             "Railt\\TypeSystem\\": "packages/TypeSystem/src"
         }
     },
@@ -86,8 +86,6 @@
             "Railt\\Http\\Tests\\Unit\\": "packages/Http/tests/unit",
             "Railt\\Parser\\Tests\\Feature\\": "packages/Parser/tests/feature",
             "Railt\\Parser\\Tests\\Unit\\": "packages/Parser/tests/unit",
-            "Railt\\Pipeline\\Tests\\Feature\\": "packages/Pipeline/tests/feature",
-            "Railt\\Pipeline\\Tests\\Unit\\": "packages/Pipeline/tests/unit",
             "Railt\\TypeSystem\\Tests\\Feature\\": "packages/TypeSystem/tests/feature",
             "Railt\\TypeSystem\\Tests\\Unit\\": "packages/TypeSystem/tests/unit"
         }
@@ -102,8 +100,7 @@
         "railt/parser": "self.version",
         "railt/sdl": "self.version",
         "railt/ast": "self.version",
-        "railt/exception": "self.version",
-        "railt/pipeline": "self.version"
+        "railt/exception": "self.version"
     },
     "provide": {
         "psr/container": "1.0",

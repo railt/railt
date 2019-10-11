@@ -45,7 +45,7 @@ class ExecutionMemoryMiddleware implements MiddlewareInterface
         $response = $next->handle($request);
 
         if ($this->config->get('debug', false)) {
-            return $response->extend('memory', $this->getMemory());
+            return $response->withExtension('memory', $this->getMemory());
         }
 
         return $response;

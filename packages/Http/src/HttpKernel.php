@@ -14,7 +14,6 @@ use Railt\Http\Pipeline\RequestPipeline;
 use Railt\Http\Pipeline\PipelineInterface;
 use Railt\Http\Pipeline\MiddlewareInterface;
 use Railt\Http\Pipeline\Handler\HandlerInterface;
-use Railt\Http\Exception\GraphQLExceptionInterface;
 
 /**
  * Class HttpKernel
@@ -57,7 +56,7 @@ class HttpKernel implements HttpKernelInterface
         return $this->request->send($app, $request, $handler);
     }
 
-    public function call(ContainerInterface $app, $input, HandlerInterface $action)
+    public function call(ContainerInterface $app, InputInterface $input, HandlerInterface $action): OutputInterface
     {
         throw new \LogicException(\sprintf('%s not implemented yet', __METHOD__));
     }
