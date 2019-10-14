@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace Railt\HttpFactory\Resolver;
 
 use Railt\Http\Request;
-use Railt\Http\RequestInterface;
 use Railt\HttpFactory\Provider\ProviderInterface;
 
 /**

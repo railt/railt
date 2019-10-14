@@ -25,7 +25,7 @@ abstract class Resolver implements ResolverInterface
     public function resolve(ProviderInterface $provider): ?RequestInterface
     {
         if (! $this->match($provider)) {
-           return null;
+            return null;
         }
 
         $body = $this->read($provider);

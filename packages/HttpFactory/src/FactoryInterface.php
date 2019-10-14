@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\HttpFactory;
 
 use Railt\Http\RequestInterface;
-use Railt\HttpFactory\Resolver\ResolverInterface;
 use Railt\HttpFactory\Provider\ProviderInterface;
+use Railt\HttpFactory\Resolver\ResolverInterface;
 
 /**
  * Interface FactoryInterface

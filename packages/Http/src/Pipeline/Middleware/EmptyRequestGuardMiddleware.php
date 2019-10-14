@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Middleware;
 
-use Railt\Http\Response;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\Http\Pipeline\MiddlewareInterface;
 use Railt\Http\Exception\GraphQLClientException;
 use Railt\Http\Pipeline\Handler\HandlerInterface;
+use Railt\Http\Pipeline\MiddlewareInterface;
+use Railt\Http\RequestInterface;
+use Railt\Http\Response;
+use Railt\Http\ResponseInterface;
 
 /**
  * Class EmptyRequestGuardMiddleware
@@ -46,7 +46,7 @@ class EmptyRequestGuardMiddleware implements MiddlewareInterface
     protected function getException(): \Throwable
     {
         $exception = new GraphQLClientException(self::ERROR_EMPTY_QUERY);
-        $exception->withLocation(0,0);
+        $exception->withLocation(0, 0);
 
         return $exception;
     }

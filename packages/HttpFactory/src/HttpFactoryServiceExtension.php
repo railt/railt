@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory;
 
-use Railt\Http\RequestInterface;
-use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Extension\Status;
+use Railt\Http\RequestInterface;
 use Railt\HttpFactory\Provider\ProviderInterface;
 
 /**
