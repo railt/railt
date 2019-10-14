@@ -29,6 +29,7 @@ trait ExtensionsTrait
     private array $defaultExtensions = [
         \Railt\Discovery\DiscoveryServiceExtension::class,
         \Railt\TypeSystem\TypeSystemServiceExtension::class,
+        \Railt\HttpFactory\HttpFactoryServiceExtension::class,
         \Railt\Http\HttpServiceExtension::class,
     ];
 

@@ -7,25 +7,34 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\HttpFactory;
 
+use Railt\Http\RequestInterface;
 use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Extension\Extension;
-use Railt\Http\Pipeline\Handler\EmptyRequestHandler;
+use Railt\HttpFactory\Provider\ProviderInterface;
 
 /**
- * Class HttpServiceExtension
+ * Class HttpFactoryServiceExtension
  */
-class HttpServiceExtension extends Extension
+class HttpFactoryServiceExtension extends Extension
 {
     /**
      * @return void
      */
     public function register(): void
     {
-        $this->app->register(HttpKernelInterface::class,
-            fn () => new HttpKernel()
-        );
+        $this->app->register(FactoryInterface::class, static function () {
+            return new Factory();
+        });
+
+        $this->app->register(RequestInterface::class, function (FactoryInterface $factory) {
+            if ($this->app->has(ProviderInterface::class)) {
+                return $factory->create($this->app->make(ProviderInterface::class));
+            }
+
+            return $factory->fromGlobals();
+        });
     }
 
     /**
@@ -33,7 +42,7 @@ class HttpServiceExtension extends Extension
      */
     public function getName(): string
     {
-        return 'Http';
+        return 'Http Factory';
     }
 
     /**
@@ -41,7 +50,7 @@ class HttpServiceExtension extends Extension
      */
     public function getDescription(): string
     {
-        return 'Provides GraphQL HTTP Kernel services';
+        return 'Provides GraphQL HTTP Factory Kernel services';
     }
 
     /**

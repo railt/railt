@@ -19,9 +19,14 @@ use Railt\Http\Pipeline\Handler\HandlerInterface;
 abstract class Pipeline implements PipelineInterface
 {
     /**
+     * @var array|string[]|MiddlewareInterface[]
+     */
+    private array $registered = [];
+
+    /**
      * @var array|MiddlewareInterface[]
      */
-    protected array $middleware = [];
+    private ?array $booted = null;
 
     /**
      * @param MiddlewareInterface|string ...$middleware
@@ -32,7 +37,8 @@ abstract class Pipeline implements PipelineInterface
         foreach ($middleware as $item) {
             \assert(\is_subclass_of($item, MiddlewareInterface::class));
 
-            $this->middleware[] = $item;
+            $this->booted = null;
+            $this->registered[] = $item;
         }
 
         return $this;
@@ -45,7 +51,9 @@ abstract class Pipeline implements PipelineInterface
      */
     protected function handler(ContainerInterface $app, HandlerInterface $handler): HandlerInterface
     {
-        foreach ($this->getMiddleware($app) as $item) {
+        $this->boot($app);
+
+        foreach ($this->booted as $item) {
             $handler = new Next($item, $handler);
         }
 
@@ -54,12 +62,18 @@ abstract class Pipeline implements PipelineInterface
 
     /**
      * @param ContainerInterface $container
-     * @return \Traversable|MiddlewareInterface[]
+     * @return void
      */
-    private function getMiddleware(ContainerInterface $container): \Traversable
+    private function boot(ContainerInterface $container): void
     {
-        foreach ($this->middleware as $middleware) {
-            yield \is_string($middleware) ? $container->make($middleware) : $middleware;
+        if ($this->booted === null) {
+            $this->booted = [];
+
+            foreach ($this->registered as $middleware) {
+                $this->booted[] = $middleware instanceof MiddlewareInterface
+                    ? $middleware
+                    : $container->make($middleware);
+            }
         }
     }
 }

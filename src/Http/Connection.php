@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Http;
 
+use Amp\Producer;
 use Railt\Container\Container;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
@@ -89,20 +90,10 @@ abstract class Connection implements ConnectionInterface
                 }
             } catch (\Throwable $error) {
                 yield $this->sendTo($request, $buffer->withException($error));
+            } finally {
+                yield;
             }
         }
-    }
-
-    /**
-     * @return HandlerInterface
-     */
-    private function getHandler(): HandlerInterface
-    {
-        if ($this->app->has(HandlerInterface::class)) {
-            return $this->app->make(HandlerInterface::class);
-        }
-
-        return new EmptyRequestHandler(self::class);
     }
 
     /**
@@ -141,6 +132,18 @@ abstract class Connection implements ConnectionInterface
         $container->instance(RequestInterface::class, $request);
 
         return $container;
+    }
+
+    /**
+     * @return HandlerInterface
+     */
+    private function getHandler(): HandlerInterface
+    {
+        if ($this->app->has(HandlerInterface::class)) {
+            return $this->app->make(HandlerInterface::class);
+        }
+
+        return new EmptyRequestHandler(self::class);
     }
 
     /**

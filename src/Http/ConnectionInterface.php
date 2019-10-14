@@ -47,7 +47,7 @@ interface ConnectionInterface
     /**
      * @param RequestInterface $request
      * @param \Closure|null $notifier
-     * @return \Generator|ResponseInterface[]
+     * @return \Generator|ResponseInterface[]|null[]
      */
     public function listen(RequestInterface $request, \Closure $notifier = null): \Generator;
 }

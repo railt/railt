@@ -7,34 +7,17 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http\Pipeline\Middleware;
+namespace Railt\Http\Pipeline\Middleware\Debug;
 
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Railt\Config\RepositoryInterface;
-use Railt\Http\Pipeline\MiddlewareInterface;
 use Railt\Http\Pipeline\Handler\HandlerInterface;
 
 /**
- * Class RequestDumpMiddleware
+ * Class ErrorUnwrapperMiddleware
  */
-class RequestDumpMiddleware implements MiddlewareInterface
+class ErrorUnwrapperMiddleware extends DebuggingMiddleware
 {
-    /**
-     * @var RepositoryInterface
-     */
-    private RepositoryInterface $config;
-
-    /**
-     * ErrorUnwrapperMiddleware constructor.
-     *
-     * @param RepositoryInterface $config
-     */
-    public function __construct(RepositoryInterface $config)
-    {
-        $this->config = $config;
-    }
-
     /**
      * @param RequestInterface $request
      * @param HandlerInterface $next
@@ -44,8 +27,10 @@ class RequestDumpMiddleware implements MiddlewareInterface
     {
         $response = $next->handle($request);
 
-        if ($this->config->get('debug', false)) {
-            return $response->withExtension('request', $request->toArray());
+        if ($this->isDebug()) {
+            foreach ($response->getExceptions() as $exception) {
+                $exception->publish();
+            }
         }
 
         return $response;

@@ -17,6 +17,7 @@ parameters:
         require:
             ocramius/package-versions: "~1.5"
             ramsey/collection: "~1.0"
+            amphp/amp: "~2.3"
         require-dev:
             # Testing
             behat/behat: "^3.5"
@@ -29,11 +30,9 @@ parameters:
     directories_to_repositories:
         packages/Ast: 'git@github.com:railt/ast.git'
         packages/Config: 'git@github.com:railt/config.git'
-        packages/Console: 'git@github.com:railt/console.git'
         packages/Container: 'git@github.com:railt/container.git'
         packages/Discovery: 'git@github.com:railt/discovery.git'
         packages/Dumper: 'git@github.com:railt/dumper.git'
         packages/Http: 'git@github.com:railt/http.git'
         packages/Parser: 'git@github.com:railt/parser.git'
-        packages/Pipeline: 'git@github.com:railt/pipeline.git'
         packages/TypeSystem: 'git@github.com:railt/sdl.git'

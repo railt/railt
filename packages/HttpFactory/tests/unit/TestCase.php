@@ -7,16 +7,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Http;
+namespace Railt\HttpFactory\Tests\Unit;
 
-use Railt\Http\Input\ProvidesArgumentsInterface;
+use PHPUnit\Framework\TestCase as BaseTestCase;
 
 /**
- * Interface InputInterface
+ * Class TestCase
  */
-interface InputInterface extends
-    ProvidesPathInterface,
-    ProvidesTypeInfoInterface,
-    ProvidesArgumentsInterface
+abstract class TestCase extends BaseTestCase
 {
 }

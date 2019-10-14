@@ -21,14 +21,30 @@ use Railt\Http\Pipeline\Handler\HandlerInterface;
 class HttpKernel implements HttpKernelInterface
 {
     /**
+     * The application's global HTTP middleware stack.
+     *
+     * These middleware are run during every http request to
+     * your application.
+     *
      * @var array|MiddlewareInterface[]
      */
     protected array $middleware = [
         \Railt\Http\Pipeline\Middleware\ExceptionHandlerMiddleware::class,
-        \Railt\Http\Pipeline\Middleware\ExecutionMemoryMiddleware::class,
-        \Railt\Http\Pipeline\Middleware\ErrorUnwrapperMiddleware::class,
-        \Railt\Http\Pipeline\Middleware\ExecutionTimeMiddleware::class,
-        \Railt\Http\Pipeline\Middleware\RequestDumpMiddleware::class,
+        \Railt\Http\Pipeline\Middleware\EmptyRequestGuardMiddleware::class,
+        'debug'
+    ];
+
+    /**
+     * The application's middleware groups.
+     *
+     * @var array|MiddlewareInterface[][]
+     */
+    protected array $middlewareGroups = [
+        'debug' => [
+            \Railt\Http\Pipeline\Middleware\Debug\ExecutionMiddleware::class,
+
+            \Railt\Http\Pipeline\Middleware\Debug\ErrorUnwrapperMiddleware::class,
+        ]
     ];
 
     /**
@@ -41,8 +57,15 @@ class HttpKernel implements HttpKernelInterface
      */
     public function __construct()
     {
-        $this->request = (new RequestPipeline())
-            ->through(...$this->middleware);
+        $this->request = new RequestPipeline();
+
+        foreach ($this->middleware as $name) {
+            if (\is_array($this->middlewareGroups[$name] ?? null)) {
+                $this->request->through(...$this->middlewareGroups[$name]);
+            } else {
+                $this->request->through($name);
+            }
+        }
     }
 
     /**
