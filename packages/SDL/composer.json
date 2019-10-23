@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\TypeSystem\\": "src"
+            "Railt\\SDL\\": "src"
         }
     },
     "require-dev": {
@@ -42,14 +42,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\TypeSystem\\Tests\\Unit\\": "tests/unit",
-            "Railt\\TypeSystem\\Tests\\Feature\\": "tests/feature"
+            "Railt\\SDL\\Tests\\Unit\\": "tests/unit",
+            "Railt\\SDL\\Tests\\Feature\\": "tests/feature"
         }
     },
     "extra": {
         "railt": {
             "extensions": [
-                "Railt\\TypeSystem\\CompilerExtension"
+                "Railt\\SDL\\TypeSystemServiceExtension"
             ]
         },
         "branch-alias": {
