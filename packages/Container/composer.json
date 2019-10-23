@@ -22,7 +22,7 @@
     },
     "require": {
         "php": ">=7.4",
-        "psr/container": "~1.0",
+        "railt/contracts": "^2.0",
         "railt/dumper": "^2.0"
     },
     "autoload": {
@@ -41,7 +41,11 @@
         "psr-4": {
             "Railt\\Container\\Tests\\Unit\\": "tests/unit",
             "Railt\\Container\\Tests\\Feature\\": "tests/feature"
-        }
+        },
+        "files": [
+            "tests/unit/Mock/global_test_function.php",
+            "tests/unit/Mock/test_function.php"
+        ]
     },
     "provide": {
         "psr/container-implementation": "1.0",

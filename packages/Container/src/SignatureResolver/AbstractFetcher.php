@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,9 +10,9 @@ declare(strict_types=1);
 
 namespace Railt\Container\SignatureResolver;
 
-use Railt\Container\ContainerInterface;
-use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\SignatureResolver;
+use Railt\Contracts\Container\ContainerInterface;
+use Railt\Container\Exception\ContainerInvocationException;
 
 /**
  * Class AbstractFetcher

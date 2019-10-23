@@ -13,21 +13,21 @@
  */
 
 #EnumTypeDefinition -> {
-    $enum = new \Railt\Ast\TypeSystem\Definition\EnumTypeDefinitionNode(
+    $enum = new \Railt\Parser\Ast\TypeSystem\Definition\EnumTypeDefinitionNode(
         $children[1]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $enum->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $enum->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\EnumValueDefinitionCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\EnumValueDefinitionCollection:
                 $enum->values = $child;
                 break;
         }
@@ -68,23 +68,23 @@
  */
 
 #EnumTypeDefinitions -> {
-    return new \Railt\Ast\Generic\EnumValueDefinitionCollection($children);
+    return new \Railt\Parser\Ast\Generic\EnumValueDefinitionCollection($children);
 }
     : EnumValueDefinition()+
     ;
 
 #EnumValueDefinition -> {
-    $value = new \Railt\Ast\TypeSystem\Definition\EnumValueDefinitionNode(
+    $value = new \Railt\Parser\Ast\TypeSystem\Definition\EnumValueDefinitionNode(
         $children[1]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $value->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $value->directives = $child;
                 break;
         }

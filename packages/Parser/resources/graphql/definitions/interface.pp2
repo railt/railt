@@ -13,21 +13,21 @@
  */
 
 #InterfaceTypeDefinition -> {
-    $interface = new \Railt\Ast\TypeSystem\Definition\InterfaceTypeDefinitionNode(
+    $interface = new \Railt\Parser\Ast\TypeSystem\Definition\InterfaceTypeDefinitionNode(
         $children[1]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $interface->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\FieldDefinitionCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\FieldDefinitionCollection:
                 $interface->fields = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $interface->directives = $child;
                 break;
         }
@@ -60,7 +60,7 @@
 //
 
 #ImplementsInterfaces -> {
-    return new \Railt\Ast\Generic\InterfaceTypeDefinitionCollection($children);
+    return new \Railt\Parser\Ast\Generic\InterfaceTypeDefinitionCollection($children);
 }
   : ::T_IMPLEMENTS::
     ImplementsInterfacesDelimiter()? NamedType()

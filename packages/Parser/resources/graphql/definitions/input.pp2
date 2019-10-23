@@ -13,21 +13,21 @@
  */
 
 #InputObjectTypeDefinition -> {
-    $input = new \Railt\Ast\TypeSystem\Definition\InputObjectTypeDefinitionNode(
+    $input = new \Railt\Parser\Ast\TypeSystem\Definition\InputObjectTypeDefinitionNode(
         $children[1]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $input->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $input->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\InputValueDefinitionCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\InputValueDefinitionCollection:
                 $input->fields = $child;
                 break;
         }
@@ -69,28 +69,28 @@
  */
 
 #InputValueDefinitions -> {
-    return new \Railt\Ast\Generic\InputValueDefinitionCollection($children);
+    return new \Railt\Parser\Ast\Generic\InputValueDefinitionCollection($children);
 }
   : InputValueDefinition()+
   ;
 
 #InputValueDefinition -> {
-    $value = new \Railt\Ast\TypeSystem\Definition\InputValueDefinitionNode(
+    $value = new \Railt\Parser\Ast\TypeSystem\Definition\InputValueDefinitionNode(
         $children[1],
         $children[2]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $value->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $value->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Value\ValueNode:
+            case $child instanceof \Railt\Parser\Ast\Value\ValueNode:
                 $value->defaultValue = $child;
                 break;
         }

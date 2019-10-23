@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,7 +10,7 @@ declare(strict_types=1);
 
 namespace Railt\Discovery;
 
-use Railt\Config\MutableRepositoryInterface;
+use Railt\Contracts\Config\MutableRepositoryInterface;
 use Railt\Config\Repository;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;

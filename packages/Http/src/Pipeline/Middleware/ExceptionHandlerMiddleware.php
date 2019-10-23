@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,16 +10,16 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Middleware;
 
-use Railt\Http\Pipeline\Handler\HandlerInterface;
-use Railt\Http\Pipeline\MiddlewareInterface;
-use Railt\Http\RequestInterface;
 use Railt\Http\Response;
-use Railt\Http\ResponseInterface;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Contracts\Http\ResponseInterface;
+use Railt\Contracts\Pipeline\Http\HandlerInterface;
+use Railt\Contracts\Pipeline\Http\HttpMiddlewareInterface;
 
 /**
  * Class ExceptionHandlerMiddleware
  */
-class ExceptionHandlerMiddleware implements MiddlewareInterface
+class ExceptionHandlerMiddleware implements HttpMiddlewareInterface
 {
     /**
      * @param RequestInterface $request
@@ -30,7 +31,11 @@ class ExceptionHandlerMiddleware implements MiddlewareInterface
         try {
             return $next->handle($request);
         } catch (\Throwable $e) {
-            return (new Response())->withException($e);
+            $response = new Response();
+            $response = $response->withException($e);
+
+            /** @var ResponseInterface $response */
+            return $response;
         }
     }
 }

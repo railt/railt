@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,11 +11,13 @@ declare(strict_types=1);
 namespace Railt\Foundation\Http;
 
 use Railt\Container\Container;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\Http\HttpKernelInterface;
-use Railt\Container\ContainerInterface;
-use Railt\Http\Pipeline\Handler\HandlerInterface;
+use Railt\Foundation\HttpKernel;
+use Railt\SDL\Document\Document;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Contracts\Http\ResponseInterface;
+use Railt\Contracts\GraphQL\FactoryInterface;
+use Railt\Contracts\Container\ContainerInterface;
+use Railt\Contracts\Pipeline\Http\HandlerInterface;
 use Railt\Http\Pipeline\Handler\EmptyRequestHandler;
 use Railt\Http\Pipeline\Handler\BufferRequestHandler;
 
@@ -46,20 +49,20 @@ abstract class Connection implements ConnectionInterface
     /**
      * @var ContainerInterface
      */
-    private ContainerInterface $app;
+    protected ContainerInterface $app;
 
     /**
-     * @var HttpKernelInterface
+     * @var HttpKernel
      */
-    private HttpKernelInterface $kernel;
+    private HttpKernel $kernel;
 
     /**
      * Connection constructor.
      *
      * @param ContainerInterface $app
-     * @param HttpKernelInterface $kernel
+     * @param HttpKernel $kernel
      */
-    public function __construct(ContainerInterface $app, HttpKernelInterface $kernel)
+    public function __construct(ContainerInterface $app, HttpKernel $kernel)
     {
         $this->app = $app;
         $this->kernel = $kernel;
@@ -89,30 +92,10 @@ abstract class Connection implements ConnectionInterface
                 }
             } catch (\Throwable $error) {
                 yield $this->sendTo($request, $buffer->withException($error));
+            } finally {
+                yield;
             }
         }
-    }
-
-    /**
-     * @return HandlerInterface
-     */
-    private function getHandler(): HandlerInterface
-    {
-        if ($this->app->has(HandlerInterface::class)) {
-            return $this->app->make(HandlerInterface::class);
-        }
-
-        return new EmptyRequestHandler(self::class);
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     * @throws \Exception
-     */
-    public function handle(RequestInterface $request): ResponseInterface
-    {
-        return $this->sendTo($request, $this->getHandler());
     }
 
     /**
@@ -120,7 +103,7 @@ abstract class Connection implements ConnectionInterface
      * @param HandlerInterface $handler
      * @return ResponseInterface
      */
-    private function sendTo(RequestInterface $request, HandlerInterface $handler): ResponseInterface
+    protected function sendTo(RequestInterface $request, HandlerInterface $handler): ResponseInterface
     {
         $app = $this->getContainer($request, $handler);
 
@@ -141,6 +124,14 @@ abstract class Connection implements ConnectionInterface
         $container->instance(RequestInterface::class, $request);
 
         return $container;
+    }
+
+    /**
+     * @return HandlerInterface
+     */
+    protected function getDefaultHandler(): HandlerInterface
+    {
+        return new EmptyRequestHandler(self::class);
     }
 
     /**

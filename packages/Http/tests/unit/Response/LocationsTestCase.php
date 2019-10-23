@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Response;
 
+use Railt\Http\GraphQLError;
 use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Exception\Location\Location;
 use Railt\Http\Tests\Unit\TestCase;
+use Railt\Http\Error\SourceLocation;
+use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Class LocationsTestCase
@@ -27,7 +28,7 @@ class LocationsTestCase extends TestCase
     {
         return [
             'int position' => [[23, 42]],
-            'location'     => [[new Location(23, 42)]],
+            'location'     => [[new SourceLocation(23, 42)]],
         ];
     }
 
@@ -41,7 +42,7 @@ class LocationsTestCase extends TestCase
      */
     public function testExceptionLocation($location): void
     {
-        $exception = new GraphQLException();
+        $exception = new GraphQLError();
 
         $exception->withLocation(...$location);
 
@@ -61,7 +62,7 @@ class LocationsTestCase extends TestCase
      */
     public function testExceptionLocationSerialization($location): void
     {
-        $exception = new GraphQLException();
+        $exception = new GraphQLError();
 
         $exception->withLocation(...$location);
 
@@ -76,7 +77,7 @@ class LocationsTestCase extends TestCase
      */
     public function testExceptionLocationsExisting($location): void
     {
-        $exception = new GraphQLException();
+        $exception = new GraphQLError();
 
         $exception->withLocation(...$location);
 
@@ -90,7 +91,7 @@ class LocationsTestCase extends TestCase
      */
     public function testInvalidLocation(): void
     {
-        $exception = new GraphQLException();
+        $exception = new GraphQLError();
 
         $exception->withLocation(-1);
 
@@ -108,7 +109,7 @@ class LocationsTestCase extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $exception = new GraphQLException();
+        $exception = new GraphQLError();
 
         $exception->withLocation('some');
     }

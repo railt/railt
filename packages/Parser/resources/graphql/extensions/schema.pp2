@@ -14,19 +14,19 @@
  */
 
 #SchemaExtension -> {
-    $schema = new \Railt\Ast\TypeSystem\Extension\SchemaExtensionNode();
+    $schema = new \Railt\Parser\Ast\TypeSystem\Extension\SchemaExtensionNode();
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $schema->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $schema->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\OperationTypeDefinitionCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\OperationTypeDefinitionCollection:
                 $schema->operationTypes = $child;
                 break;
         }

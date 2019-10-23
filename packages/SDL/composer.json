@@ -1,0 +1,66 @@
+{
+    "name": "railt/sdl",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "http://railt.org",
+    "description": "The Railt Framework implementation of GraphQL type-system parser",
+    "keywords": [
+        "graphql",
+        "idl",
+        "sdl",
+        "otd",
+        "ast",
+        "reflection",
+        "compiler"
+    ],
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/sdl"
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "railt/parser": "^2.0",
+        "railt/contracts": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\TypeSystem\\": "src"
+        }
+    },
+    "require-dev": {
+        "behat/behat": "^3.5",
+        "vimeo/psalm": "^3.5",
+        "phpunit/phpunit": "^8.3"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\TypeSystem\\Tests\\Unit\\": "tests/unit",
+            "Railt\\TypeSystem\\Tests\\Feature\\": "tests/feature"
+        }
+    },
+    "extra": {
+        "railt": {
+            "extensions": [
+                "Railt\\TypeSystem\\CompilerExtension"
+            ]
+        },
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev",
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

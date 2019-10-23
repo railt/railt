@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,13 +10,13 @@ declare(strict_types=1);
 
 namespace Railt\Container\Tests\Unit;
 
+use Railt\Container\Container;
 use PHPUnit\Framework\Exception;
+use Railt\Contracts\Container\Registrable;
+use Railt\Contracts\Container\Autowireable;
+use Railt\Contracts\Container\ContainerInterface;
 use PHPUnit\Framework\ExpectationFailedException;
 use Psr\Container\ContainerInterface as PSRContainer;
-use Railt\Container\Autowireable;
-use Railt\Container\Container;
-use Railt\Container\ContainerInterface;
-use Railt\Container\Registrable;
 
 /**
  * Class ContainerCompatibilityTestCase

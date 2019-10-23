@@ -4,7 +4,7 @@
 //
 
 #Description -> {
-    return new \Railt\Ast\Description($children ?: null);
+    return new \Railt\Parser\Ast\Description($children ?: null);
 }
   : StringValue()?
   ;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Container\ContainerInterface;
-use Railt\Config\MutableRepositoryInterface;
-use Railt\Foundation\Extension\Exception\ExtensionException;
+use Railt\Contracts\Container\ContainerInterface;
+use Railt\Contracts\Observer\ObservableInterface;
 use Railt\Container\Exception\ContainerInvocationException;
-use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Foundation\Extension\Exception\ExtensionException;
+use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
 
 /**
  * Class ConfigurationRepository
@@ -32,8 +33,8 @@ class ConfigurationRepository extends Repository
     {
         parent::__construct($app);
 
-        if ($config instanceof MutableRepositoryInterface) {
-            $config->onUpdate(fn () => $this->load($config));
+        if ($config instanceof ObservableInterface) {
+            $config->subscribe(fn () => $this->load($config));
         }
 
         $this->load($config);

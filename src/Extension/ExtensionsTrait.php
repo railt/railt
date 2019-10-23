@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,13 +11,16 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Railt\Dumper\Facade;
-use Railt\Config\RepositoryInterface;
-use Railt\Container\ContainerInterface;
+use Railt\GraphQL\ExecutorExtension;
+use Railt\Discovery\DiscoveryServiceExtension;
+use Railt\Contracts\Config\RepositoryInterface;
+use Railt\SDL\TypeSystemServiceExtension;
+use Railt\Contracts\Container\ContainerInterface;
+use Railt\HttpFactory\HttpFactoryServiceExtension;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Extension\Exception\ExtensionException;
 use Railt\Foundation\Extension\ConfigurationRepository as ExtensionRepository;
 use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterface;
-
 
 /**
  * @mixin ExtendableInterface
@@ -24,27 +28,26 @@ use Railt\Foundation\Extension\RepositoryInterface as ExtensionRepositoryInterfa
 trait ExtensionsTrait
 {
     /**
-     * @var array|string[]
-     */
-    private array $defaultExtensions = [
-        \Railt\Discovery\DiscoveryServiceExtension::class,
-        \Railt\TypeSystem\TypeSystemServiceExtension::class,
-        \Railt\Http\HttpServiceExtension::class,
-    ];
-
-    /**
      * @var ExtensionRepositoryInterface
      */
     protected ExtensionRepositoryInterface $extensions;
 
     /**
-     * {@inheritDoc}
+     * @var array|string[]
      */
-    public function extend($extension): void
-    {
-        \assert(\is_subclass_of($extension, ExtensionInterface::class), Facade::dump($extension));
+    private array $defaultExtensions = [
+        DiscoveryServiceExtension::class,
+        TypeSystemServiceExtension::class,
+        HttpFactoryServiceExtension::class,
+        ExecutorExtension::class,
+    ];
 
-        $this->extensions->add($extension);
+    /**
+     * @return ExtensionRepositoryInterface
+     */
+    public function extensions(): ExtensionRepositoryInterface
+    {
+        return $this->extensions;
     }
 
     /**
@@ -59,7 +62,24 @@ trait ExtensionsTrait
         $this->extensions = new ExtensionRepository($app, $config);
 
         foreach ($this->defaultExtensions as $extension) {
+            if (! \class_exists($extension)) {
+                $message = 'Can not load kernel console command %s';
+                \trigger_error(\sprintf($message, $extension), \E_USER_WARNING);
+
+                continue;
+            }
+
             $this->extend($extension);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function extend($extension): void
+    {
+        \assert(\is_subclass_of($extension, ExtensionInterface::class), Facade::dump($extension));
+
+        $this->extensions->add($extension);
     }
 }

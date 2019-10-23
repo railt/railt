@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,21 +10,27 @@ declare(strict_types=1);
 
 namespace Railt\Config;
 
+use Railt\Observer\ObservableTrait;
+use Railt\Observer\NotifiableObserverTrait;
+use Railt\Contracts\Config\RepositoryInterface;
+use Railt\Contracts\Observer\NotifiableInterface;
+use Railt\Contracts\Config\MutableRepositoryInterface;
+
 /**
  * Class MutableRepository
  */
-class MutableRepository extends Repository implements MutableRepositoryInterface
+class MutableRepository extends Repository implements
+    MutableRepositoryInterface,
+    NotifiableInterface
 {
-    /**
-     * @var array|\Closure[]
-     */
-    private array $observers = [];
+    use NotifiableObserverTrait;
 
     /**
      * {@inheritDoc}
      */
     public function set(string $key, $value = null): void
     {
+        $before = $this->items;
         $result =& $this->items;
 
         $chunks = $this->chunks($key);
@@ -40,34 +47,46 @@ class MutableRepository extends Repository implements MutableRepositoryInterface
 
         $result[\array_shift($chunks)] = $value;
 
-        $this->fireObservers();
+        $this->notifyWith($this->items, $before);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function merge(RepositoryInterface $repository): void
+    public function merge(iterable $items): void
     {
-        $this->items = \array_merge_recursive($this->items, $repository->all());
+        $this->items = \array_merge_recursive(
+            $before = $this->items,
+            $this->iterableToArray($items)
+        );
 
-        $this->fireObservers();
+        $this->notifyWith($this->items, $before);
     }
 
     /**
      * @return void
      */
-    private function fireObservers(): void
+    public function notify(): void
     {
-        foreach ($this->observers as $observer) {
-            $observer($this);
-        }
+        $this->notifyWith($this->items);
     }
 
     /**
-     * {@inheritDoc}
+     * @param iterable $items
+     * @return array
      */
-    public function onUpdate(\Closure $then): void
+    private function iterableToArray(iterable $items): array
     {
-        $this->observers[] = $then;
+        switch (true) {
+            case $items instanceof RepositoryInterface:
+                $items = $items->all();
+                break;
+
+            case $items instanceof \Traversable:
+                $items = \iterator_to_array($items);
+                break;
+        }
+
+        return $items;
     }
 }

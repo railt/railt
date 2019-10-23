@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Request;
 
-use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Request;
-use Railt\Http\Request\ProvidesOperationNameInterface;
-use Railt\Http\RequestInterface;
 use Railt\Http\Tests\Unit\TestCase;
+use Railt\Contracts\Http\RequestInterface;
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Contracts\Http\Request\OperationNameInterface;
 
 /**
  * Class OperationTestCase
@@ -36,7 +37,7 @@ class OperationTestCase extends TestCase
      * @param string|null $operation
      * @return RequestInterface
      */
-    private function request(?string $operation): ProvidesOperationNameInterface
+    private function request(?string $operation): OperationNameInterface
     {
         return new Request('', [], $operation);
     }

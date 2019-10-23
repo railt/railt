@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,26 +10,26 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline;
 
-use Railt\Container\ContainerInterface;
-use Railt\Http\Pipeline\Handler\HandlerInterface;
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Contracts\Http\ResponseInterface;
+use Railt\Contracts\Container\ContainerInterface;
+use Railt\Contracts\Pipeline\Http\HandlerInterface;
+use Railt\Contracts\Pipeline\Http\RequestPipelineInterface;
 
 /**
  * Class Pipeline
  */
-class RequestPipeline extends Pipeline
+class RequestPipeline extends Pipeline implements RequestPipelineInterface
 {
     /**
-     * @param ContainerInterface $app
      * @param RequestInterface $request
      * @param HandlerInterface $handler
      * @return ResponseInterface
      */
-    public function send(ContainerInterface $app, $request, HandlerInterface $handler): ResponseInterface
+    public function send(RequestInterface $request, HandlerInterface $handler): ResponseInterface
     {
         \assert($request instanceof RequestInterface);
 
-        return $this->handler($app, $handler)->handle($request);
+        return $this->handler($this->app, $handler)->handle($request);
     }
 }

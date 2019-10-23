@@ -15,14 +15,14 @@
 
 
 #DirectiveDefinition -> {
-    $directive = new \Railt\Ast\TypeSystem\Definition\DirectiveDefinitionNode(
+    $directive = new \Railt\Parser\Ast\TypeSystem\Definition\DirectiveDefinitionNode(
         $children[1],
         \end($children)
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $directive->description = $child->value;
                 break;
 
@@ -30,7 +30,7 @@
                 $directive->repeatable = true;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\InputValueDefinitionCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\InputValueDefinitionCollection:
                 $directive->arguments = $child;
                 break;
         }
@@ -56,7 +56,7 @@
   ;
 
 #DirectiveDefinitionBody -> {
-    return new \Railt\Ast\Generic\DirectiveLocationCollection($children);
+    return new \Railt\Parser\Ast\Generic\DirectiveLocationCollection($children);
 }
   : ::T_ON:: DirectiveLocations()
   ;

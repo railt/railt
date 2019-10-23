@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,8 +11,8 @@ declare(strict_types=1);
 namespace Railt\Foundation\Console;
 
 use Ramsey\Collection\Map\TypedMap;
-use Railt\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
+use Railt\Contracts\Container\ContainerInterface;
 
 /**
  * Class Repository

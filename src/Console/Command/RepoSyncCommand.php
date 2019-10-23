@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -41,6 +42,33 @@ class RepoSyncCommand extends Command
     ];
 
     /**
+     * @var string[]
+     */
+    private const IGNORED = [
+        'Contracts',
+    ];
+
+    /**
+     * @var string
+     */
+    private const MESSAGE_IGNORE = ' <error> SKIP </error>';
+
+    /**
+     * @var string
+     */
+    private const MESSAGE_OK = ' <info> OK </info>';
+
+    /**
+     * @var string
+     */
+    private const MESSAGE_PACKAGE = 'Package <<info>%s</info>>';
+
+    /**
+     * @var string
+     */
+    private const MESSAGE_FILE = '  | File <comment>%s</comment>';
+
+    /**
      * {@inheritDoc}
      */
     public function getName(): string
@@ -62,37 +90,37 @@ class RepoSyncCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        foreach ($this->getFiles() as $name => $file) {
-            $output->writeln('Sync <info>' . $name . '</info>');
+        foreach ($this->getDirectories() as $directory) {
+            $output->writeln(\sprintf(self::MESSAGE_PACKAGE, \basename($directory)));
 
-            foreach ($this->getDirectories() as $directory) {
-                $output->write(' - <comment>' . \basename($directory) . '</comment>');
+            foreach ($this->getFiles() as $name => $file) {
+                $outDirectory = $directory;
 
-                $result = $this->render(File::fromPathname($file), $directory);
+                $output->write(\vsprintf(self::MESSAGE_FILE, [
+                    './packages/' . \basename($directory) . '/' . $name,
+                ]));
+
+                if (\in_array(\basename($outDirectory), self::IGNORED, true)) {
+                    $output->writeln(self::MESSAGE_IGNORE);
+
+                    continue;
+                }
+
+                $result = $this->render(File::fromPathname($file), $outDirectory);
 
                 if (isset(self::DIR_OUTPUT[$name])) {
-                    $directory .= self::DIR_OUTPUT[$name];
+                    $outDirectory .= self::DIR_OUTPUT[$name];
                 }
 
-                if (! @\mkdir($directory, 0777, true) && ! \is_dir($directory)) {
-                    throw new \LogicException($directory . ' directory is not writable');
+                if (! @\mkdir($outDirectory, 0777, true) && ! \is_dir($outDirectory)) {
+                    throw new \LogicException($outDirectory . ' directory is not writable');
                 }
 
-                \file_put_contents($directory . '/' . $name, $result);
+                \file_put_contents($outDirectory . '/' . $name, $result);
 
-                $output->writeln(' [<info>OK</info>]');
+                $output->writeln(self::MESSAGE_OK);
             }
         }
-    }
-
-    /**
-     * @return array|string[]
-     */
-    private function getFiles(): array
-    {
-        $mapper = static fn (string $value): array => [\basename($value, '.stub'), $value];
-
-        return \array_column(\array_map($mapper, \glob(self::DIR_STUBS . '/*.stub')), 1, 0);
     }
 
     /**
@@ -103,6 +131,16 @@ class RepoSyncCommand extends Command
         $directories = \glob(self::DIR_PACKAGES . '/*');
 
         return \array_map(fn (string $dir): string => \realpath($dir), $directories);
+    }
+
+    /**
+     * @return array|string[]
+     */
+    private function getFiles(): array
+    {
+        $mapper = static fn (string $value): array => [\basename($value, '.stub'), $value];
+
+        return \array_column(\array_map($mapper, \glob(self::DIR_STUBS . '/*.stub')), 1, 0);
     }
 
     /**

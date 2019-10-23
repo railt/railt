@@ -3,7 +3,7 @@
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "The GraphQL parser",
+    "description": "The Railt Framework GraphQL parser implementation",
     "keywords": [
         "graphql",
         "sdl",
@@ -23,7 +23,6 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "railt/ast": "^2.0",
         "phplrt/lexer": "~2.2",
         "phplrt/parser": "~2.2"
     },

@@ -14,17 +14,17 @@
  */
 
 #ScalarTypeExtension -> {
-    $scalar = new \Railt\Ast\TypeSystem\Extension\ScalarTypeExtensionNode(
+    $scalar = new \Railt\Parser\Ast\TypeSystem\Extension\ScalarTypeExtensionNode(
         $children[1]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $scalar->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $scalar->directives = $child;
                 break;
         }

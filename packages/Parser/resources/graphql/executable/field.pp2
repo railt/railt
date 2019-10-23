@@ -19,18 +19,18 @@
  */
 
 #Field -> {
-    [$alias, $name] = isset($children[1]) && $children[1] instanceof \Railt\Ast\NameNode
+    [$alias, $name] = isset($children[1]) && $children[1] instanceof \Railt\Parser\Ast\NameNode
         ? $children
         : [null, $children[0]];
 
-    $field = new \Railt\Ast\Executable\Definition\FieldNode($name, $alias);
+    $field = new \Railt\Parser\Ast\Executable\Definition\FieldNode($name, $alias);
 
      foreach ($children as $child) {
          switch (true) {
-             case $child instanceof \Railt\Ast\Generic\ArgumentCollection:
+             case $child instanceof \Railt\Parser\Ast\Generic\ArgumentCollection:
                  $field->arguments = $child;
                  break;
-             case $child instanceof \Railt\Ast\Executable\Definition\SelectionSetNode:
+             case $child instanceof \Railt\Parser\Ast\Executable\Definition\SelectionSetNode:
                  $field->selectionSet = $child;
                  break;
          }

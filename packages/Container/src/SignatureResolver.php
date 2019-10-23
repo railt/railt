@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,15 +10,16 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
-use Railt\Container\Exception\ContainerInvocationException;
-use Railt\Container\SignatureResolver\CallableArrayFetcher;
-use Railt\Container\SignatureResolver\CallableFunctionFetcher;
-use Railt\Container\SignatureResolver\CallableStaticMethodFetcher;
+use Railt\Contracts\Container\ContainerInterface;
 use Railt\Container\SignatureResolver\ClosureFetcher;
 use Railt\Container\SignatureResolver\FetcherInterface;
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\SignatureResolver\CallableArrayFetcher;
 use Railt\Container\SignatureResolver\InstanceMethodFetcher;
 use Railt\Container\SignatureResolver\InvocableClassFetcher;
 use Railt\Container\SignatureResolver\InvocableObjectFetcher;
+use Railt\Container\SignatureResolver\CallableFunctionFetcher;
+use Railt\Container\SignatureResolver\CallableStaticMethodFetcher;
 
 /**
  * Class SignatureResolver

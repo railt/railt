@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -11,7 +12,7 @@ namespace Railt\Foundation\Application;
 
 use Railt\Dumper\Facade;
 use Railt\Config\MutableRepository as ConfigRepository;
-use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
 
 /**
  * Trait ConfigurationTrait
@@ -30,6 +31,16 @@ trait ConfigurationTrait
     protected function bootConfigurationTrait($config = null): void
     {
         $this->config = $this->createConfiguration($config);
+    }
+
+    /**
+     * @param string $key
+     * @param null $default
+     * @return mixed
+     */
+    public function config(string $key, $default = null)
+    {
+        return $this->config->get($key, $default);
     }
 
     /**

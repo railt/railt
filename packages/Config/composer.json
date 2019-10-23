@@ -20,7 +20,8 @@
         "source": "https://github.com/railt/config"
     },
     "require": {
-        "php": ">=7.4"
+        "php": ">=7.4",
+        "railt/contracts": "^2.0"
     },
     "autoload": {
         "psr-4": {

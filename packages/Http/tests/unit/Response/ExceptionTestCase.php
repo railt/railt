@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,10 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Response;
 
-use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Http\Exception\GraphQLException;
-use Railt\Http\Exception\GraphQLExceptionInterface;
+use Railt\Http\GraphQLError;
 use Railt\Http\Tests\Unit\TestCase;
+use Railt\Contracts\Http\GraphQLErrorInterface;
+use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Class ExceptionTestCase
@@ -25,21 +26,21 @@ class ExceptionTestCase extends TestCase
      */
     public function testInternalExceptionMessage(): void
     {
-        $exception = new GraphQLException('message');
+        $exception = new GraphQLError('message');
         $exception->hide();
 
         $this->assertInternal($exception);
     }
 
     /**
-     * @param GraphQLExceptionInterface $exception
+     * @param GraphQLErrorInterface $exception
      * @return void
      * @throws ExpectationFailedException
      */
-    private function assertInternal(GraphQLExceptionInterface $exception): void
+    private function assertInternal(GraphQLErrorInterface $exception): void
     {
         $this->assertFalse($exception->isPublic());
-        $this->assertSame(GraphQLException::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
+        $this->assertSame(GraphQLError::INTERNAL_EXCEPTION_MESSAGE, $exception->getMessage());
     }
 
     /**
@@ -48,7 +49,7 @@ class ExceptionTestCase extends TestCase
      */
     public function testExceptionCode(): void
     {
-        $exception = new GraphQLException('', 42);
+        $exception = new GraphQLError('', 42);
 
         $this->assertSame(42, $exception->getCode());
     }
@@ -61,7 +62,7 @@ class ExceptionTestCase extends TestCase
     {
         $prev = new \InvalidArgumentException('error');
 
-        $exception = new GraphQLException('message', 42, $prev);
+        $exception = new GraphQLError('message', 42, $prev);
 
         $this->assertSame($prev, $exception->getPrevious());
     }
@@ -72,19 +73,19 @@ class ExceptionTestCase extends TestCase
      */
     public function testPublicExceptionMessage(): void
     {
-        $exception = new GraphQLException('message');
+        $exception = new GraphQLError('message');
         $exception->publish();
 
         $this->assertPublic($exception, 'message');
     }
 
     /**
-     * @param GraphQLExceptionInterface $exception
+     * @param GraphQLErrorInterface $exception
      * @param string $message
      * @return void
      * @throws ExpectationFailedException
      */
-    private function assertPublic(GraphQLExceptionInterface $exception, string $message): void
+    private function assertPublic(GraphQLErrorInterface $exception, string $message): void
     {
         $this->assertTrue($exception->isPublic());
         $this->assertSame($message, $exception->getMessage());
@@ -96,7 +97,7 @@ class ExceptionTestCase extends TestCase
      */
     public function testExceptionMessage(): void
     {
-        $exception = new GraphQLException('message');
+        $exception = new GraphQLError('message');
 
         $this->assertInternal($exception);
     }
@@ -107,7 +108,7 @@ class ExceptionTestCase extends TestCase
      */
     public function testExceptionMultipleStateChanges(): void
     {
-        $exception = new GraphQLException('message');
+        $exception = new GraphQLError('message');
 
         $this->assertInternal($exception);
 
@@ -126,9 +127,9 @@ class ExceptionTestCase extends TestCase
      */
     public function testExceptionJsonSerialization(): void
     {
-        $expected = '{"message":"Internal Server Error","locations":[],"path":[]}';
+        $expected = '{"message":"Internal Server Error","locations":[{"line":1,"column":1}],"path":[]}';
 
-        $this->assertSame($expected, \json_encode(new GraphQLException('message')));
+        $this->assertSame($expected, \json_encode(new GraphQLError('message')));
     }
 
     /**
@@ -137,10 +138,10 @@ class ExceptionTestCase extends TestCase
      */
     public function testExceptionWithExtensionJsonSerialization(): void
     {
-        $expected = '{"message":"Internal Server Error","locations":[],"path":[],"extensions":{"name":"value"}}';
+        $expected = '{"message":"Internal Server Error","locations":[{"line":1,"column":1}],"path":[],"extensions":{"name":"value"}}';
 
         $this->assertSame($expected, \json_encode(
-            (new GraphQLException('message'))
+            (new GraphQLError('message'))
                 ->withExtension('name', 'value')
         ));
     }

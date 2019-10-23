@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,7 +11,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Railt\Container\Container;
-use Railt\Container\ContainerInterface;
+use Railt\Contracts\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerResolutionException;
 
 /**

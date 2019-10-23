@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,10 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Container\Tests\Unit;
 
+use Railt\Container\Container;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Container\Container;
 use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Container\Exception\ContainerInvocationException;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 /**
@@ -48,7 +50,7 @@ class ProxyResolvingTestCase extends TestCase
      * @param Container $container
      * @throws Exception
      * @throws ExpectationFailedException
-     * @throws \ReflectionException
+     * @throws ContainerInvocationException
      */
     public function testSelectionByLocatorThroughProxy(Container $container): void
     {
@@ -60,7 +62,7 @@ class ProxyResolvingTestCase extends TestCase
      * @param Container $container
      * @throws Exception
      * @throws ExpectationFailedException
-     * @throws \ReflectionException
+     * @throws ContainerInvocationException
      */
     public function testSelectionByClassThroughProxy(Container $container): void
     {
@@ -70,8 +72,7 @@ class ProxyResolvingTestCase extends TestCase
     /**
      * @dataProvider containerDataProvider
      * @param Container $container
-     * @throws Exception
-     * @throws \ReflectionException
+     * @throws ContainerInvocationException
      */
     public function testServiceNotAllowed(Container $container): void
     {
@@ -85,7 +86,7 @@ class ProxyResolvingTestCase extends TestCase
      * @dataProvider containerDataProvider
      * @param Container $container
      * @throws Exception
-     * @throws \ReflectionException
+     * @throws ContainerInvocationException
      */
     public function testServiceOverriding(Container $container): void
     {

@@ -22,15 +22,15 @@
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\NameNode:
+            case $child instanceof \Railt\Parser\Ast\NameNode:
                 $operation->name = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\VariableDefinitionCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\VariableDefinitionCollection:
                 $operation->variables = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $operation->directives = $child;
                 break;
         }
@@ -44,7 +44,7 @@
   ;
 
 #QueryOperation -> {
-    return [new \Railt\Ast\Executable\Definition\OperationDefinitionNode('query', \array_pop($children)), ...$children];
+    return [new \Railt\Parser\Ast\Executable\Definition\OperationDefinitionNode('query', \array_pop($children)), ...$children];
 }
   : (::T_QUERY:: NameWithReserved()?)?
     OperationDefinitionBody()
@@ -52,7 +52,7 @@
 
 
 #MutationOperation -> {
-    return [new \Railt\Ast\Executable\Definition\OperationDefinitionNode('mutation', \array_pop($children)), ...$children];
+    return [new \Railt\Parser\Ast\Executable\Definition\OperationDefinitionNode('mutation', \array_pop($children)), ...$children];
 }
   : ::T_MUTATION:: NameWithReserved()?
     OperationDefinitionBody()
@@ -60,7 +60,7 @@
 
 
 #SubscriptionOperation -> {
-    return [new \Railt\Ast\Executable\Definition\OperationDefinitionNode('subscription', \array_pop($children)), $children];
+    return [new \Railt\Parser\Ast\Executable\Definition\OperationDefinitionNode('subscription', \array_pop($children)), $children];
 }
   : ::T_SUBSCRIPTION:: NameWithReserved()?
     OperationDefinitionBody()

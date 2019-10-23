@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="true"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+>
+    <testsuites>
+        <testsuite name="SDL Test Suite">
+            <directory suffix="TestCase.php">tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <ini name="memory_limit" value="-1" />
+        <env name="APP_ENV" value="testing" />
+        <env name="RAILT_DEBUG" value="1" />
+    </php>
+</phpunit>

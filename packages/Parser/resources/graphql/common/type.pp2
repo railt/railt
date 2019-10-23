@@ -9,7 +9,7 @@
 
 
 #ListType -> {
-    return new \Railt\Ast\Type\ListTypeNode($children[0]);
+    return new \Railt\Parser\Ast\Type\ListTypeNode($children[0]);
 }
   : ::T_BRACKET_OPEN::
       TypeHint()
@@ -18,14 +18,14 @@
 
 
 #NonNullType -> {
-    return new \Railt\Ast\Type\NonNullTypeNode($children[0]);
+    return new \Railt\Parser\Ast\Type\NonNullTypeNode($children[0]);
 }
   : (ListType() | NamedType()) ::T_NON_NULL::
   ;
 
 
 #NamedType -> {
-    return new \Railt\Ast\Type\NamedTypeNode($children[0]);
+    return new \Railt\Parser\Ast\Type\NamedTypeNode($children[0]);
 }
   : TypeName()
   ;

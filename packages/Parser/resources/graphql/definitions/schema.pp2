@@ -16,20 +16,20 @@
 
 #SchemaDefinition -> {
     $operations = \array_filter($children, static function ($child): bool {
-        return $child instanceof \Railt\Ast\Generic\OperationTypeDefinitionCollection;
+        return $child instanceof \Railt\Parser\Ast\Generic\OperationTypeDefinitionCollection;
     });
 
-    $schema = new \Railt\Ast\TypeSystem\Definition\SchemaDefinitionNode(
-        \reset($operations) ?: new \Railt\Ast\Generic\OperationTypeDefinitionCollection([])
+    $schema = new \Railt\Parser\Ast\TypeSystem\Definition\SchemaDefinitionNode(
+        \reset($operations) ?: new \Railt\Parser\Ast\Generic\OperationTypeDefinitionCollection([])
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $schema->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $schema->directives = $child;
                 break;
         }
@@ -71,12 +71,12 @@
  */
 
 #OperationTypeDefinitions -> {
-    return new \Railt\Ast\Generic\OperationTypeDefinitionCollection($children);
+    return new \Railt\Parser\Ast\Generic\OperationTypeDefinitionCollection($children);
 }
   : (OperationTypeDefinition() ::T_COMMA::?)+
 
 #OperationTypeDefinition -> {
-    return new \Railt\Ast\TypeSystem\Definition\OperationTypeDefinitionNode(
+    return new \Railt\Parser\Ast\TypeSystem\Definition\OperationTypeDefinitionNode(
         $children[0]->getValue(),
         $children[1]
     );

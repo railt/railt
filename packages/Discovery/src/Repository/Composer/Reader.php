@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -96,7 +97,7 @@ class Reader implements ReaderInterface
                     throw new \LogicException($schema . ' file not readable');
                 }
 
-                $data = \json_decode(\file_get_contents($schema), true, 512,\JSON_THROW_ON_ERROR);
+                $data = \json_decode(\file_get_contents($schema), true, 512, \JSON_THROW_ON_ERROR);
 
                 $this->shouldValidate($name, $data);
             }

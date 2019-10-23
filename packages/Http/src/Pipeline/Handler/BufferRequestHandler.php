@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,8 +10,9 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Handler;
 
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Contracts\Http\ResponseInterface;
+use Railt\Contracts\Pipeline\Http\HandlerInterface;
 
 /**
  * Class BufferRequestHandler

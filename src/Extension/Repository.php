@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,11 +11,11 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Ramsey\Collection\Map\TypedMap;
-use Railt\Container\ContainerInterface;
-use Railt\Foundation\Extension\Exception\ExtensionException;
+use Railt\Contracts\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\Exception\ParameterResolutionException;
+use Railt\Foundation\Extension\Exception\ExtensionException;
 
 /**
  * Class Repository

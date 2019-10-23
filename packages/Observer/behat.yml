@@ -1,0 +1,10 @@
+default:
+    formatters:
+        pretty: true
+    suites:
+        observer:
+            paths:
+                - '%paths.base%/tests/feature'
+                - '%paths.base%/packages/Observer/tests/feature'
+            contexts:
+                - Railt\Observer\Tests\Feature\FeatureContext

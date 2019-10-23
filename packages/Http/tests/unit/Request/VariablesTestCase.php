@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Request;
 
-use PHPUnit\Framework\Exception;
-use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Request;
-use Railt\Http\Request\ProvidesVariablesInterface;
+use PHPUnit\Framework\Exception;
 use Railt\Http\Tests\Unit\TestCase;
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Contracts\Http\Request\VariablesInterface;
 
 /**
  * Class VariablesTestCase
@@ -53,9 +54,9 @@ class VariablesTestCase extends TestCase
 
     /**
      * @param iterable $variables
-     * @return ProvidesVariablesInterface
+     * @return VariablesInterface
      */
-    private function request(iterable $variables): ProvidesVariablesInterface
+    private function request(iterable $variables): VariablesInterface
     {
         return new Request('', $variables);
     }

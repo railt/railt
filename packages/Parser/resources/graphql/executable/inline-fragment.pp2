@@ -12,15 +12,15 @@
  */
 
 #InlineFragment -> {
-    $fragment = new \Railt\Ast\Executable\Definition\InlineFragmentNode(\end($children));
+    $fragment = new \Railt\Parser\Ast\Executable\Definition\InlineFragmentNode(\end($children));
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $fragment->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Type\NamedTypeNode:
+            case $child instanceof \Railt\Parser\Ast\Type\NamedTypeNode:
                 $fragment->typeCondition = $child;
                 break;
         }

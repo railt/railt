@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,10 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Common\RenderableTrait;
-use Railt\Http\Request\OperationNameTrait;
 use Railt\Http\Request\QueryTrait;
+use Railt\Http\Common\RenderableTrait;
 use Railt\Http\Request\VariablesTrait;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Http\Request\OperationNameTrait;
 
 /**
  * Class Request
@@ -21,8 +23,23 @@ final class Request implements RequestInterface
 {
     use QueryTrait;
     use VariablesTrait;
-    use RenderableTrait;
     use OperationNameTrait;
+    use RenderableTrait;
+
+    /**
+     * @var string
+     */
+    public const FIELD_QUERY = 'query';
+
+    /**
+     * @var string
+     */
+    public const FIELD_VARIABLES = 'variables';
+
+    /**
+     * @var string
+     */
+    public const FIELD_OPERATION_NAME = 'operationName';
 
     /**
      * Request constructor.
@@ -39,33 +56,14 @@ final class Request implements RequestInterface
     }
 
     /**
-     * @param string $variable
-     * @param mixed|null $default
-     * @return mixed
-     */
-    public function get(string $variable, $default = null)
-    {
-        return $this->getVariable($variable, $default);
-    }
-
-    /**
-     * @param string $variable
-     * @return bool
-     */
-    public function has(string $variable): bool
-    {
-        return $this->hasVariable($variable);
-    }
-
-    /**
      * @return array
      */
     public function toArray(): array
     {
-        return [
+        return $this->mapToArray([
             self::FIELD_QUERY          => $this->getQuery(),
             self::FIELD_VARIABLES      => $this->getVariables(),
             self::FIELD_OPERATION_NAME => $this->getOperationName(),
-        ];
+        ]);
     }
 }

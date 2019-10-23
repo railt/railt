@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,8 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Request;
 
+use Railt\Contracts\Http\Request\VariablesInterface;
+
 /**
- * Trait VariablesTrait
+ * @mixin VariablesInterface
  */
 trait VariablesTrait
 {
@@ -18,19 +21,6 @@ trait VariablesTrait
      * @var array
      */
     protected array $variables = [];
-
-    /**
-     * @param iterable|array|\Traversable $variables
-     * @return void
-     */
-    private function setVariables(iterable $variables): void
-    {
-        if ($variables instanceof \Traversable) {
-            $variables = \iterator_to_array($variables);
-        }
-
-        $this->variables = $variables;
-    }
 
     /**
      * @return array
@@ -73,5 +63,18 @@ trait VariablesTrait
         \assert(\is_array($this->variables));
 
         return \count($this->variables);
+    }
+
+    /**
+     * @param iterable|array|\Traversable $variables
+     * @return void
+     */
+    private function setVariables(iterable $variables): void
+    {
+        if ($variables instanceof \Traversable) {
+            $variables = \iterator_to_array($variables);
+        }
+
+        $this->variables = $variables;
     }
 }

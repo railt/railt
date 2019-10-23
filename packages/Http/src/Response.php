@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,12 +11,11 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Http\Response\DataTrait;
+use Railt\Http\Response\ErrorsTrait;
 use Railt\Http\Common\RenderableTrait;
-use Psr\Http\Message\MessageInterface;
-use Railt\Http\Extension\ExtensionsTrait;
-use Railt\Http\Exception\ExceptionsTrait;
-use Ramsey\Collection\CollectionInterface;
-use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
+use Railt\Http\Response\ExceptionsTrait;
+use Railt\Http\Response\ExtensionsTrait;
+use Railt\Contracts\Http\ResponseInterface;
 
 /**
  * Class Response
@@ -23,35 +23,47 @@ use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 final class Response implements ResponseInterface
 {
     use DataTrait;
-    use ExtensionsTrait;
+    use ErrorsTrait;
     use ExceptionsTrait;
-    use RenderableTrait {
-        jsonSerialize as private _renderAsJson;
-    }
+    use ExtensionsTrait;
+    use RenderableTrait;
+
+    /**
+     * @var string
+     */
+    public const FIELD_DATA = 'data';
+
+    /**
+     * @var string
+     */
+    public const FIELD_ERRORS = 'errors';
+
+    /**
+     * @var string
+     */
+    public const FIELD_EXTENSIONS = 'extensions';
 
     /**
      * Response constructor.
      *
-     * @param array|null $data
-     * @param array|\Throwable[]|CollectionInterface $exceptions
-     * @param array|CollectionInterface $extensions
+     * @param mixed|null $data
+     * @param iterable|\Throwable[] $exceptions
+     * @param iterable|mixed $extensions
      */
-    public function __construct(array $data = null, iterable $exceptions = [], iterable $extensions = [])
+    public function __construct($data = null, iterable $exceptions = [], iterable $extensions = [])
     {
         $this->setData($data);
-        $this->setExtensions($extensions);
         $this->setExceptions($exceptions);
+        $this->setExtensions($extensions);
     }
 
     /**
-     * @return array
+     * @param mixed|null $data
+     * @return static
      */
-    public function jsonSerialize(): array
+    public static function create($data = null): self
     {
-        $result = \array_filter($this->toArray(),
-            fn ($entry) => \is_countable($entry) ? \count($entry) > 0 : (bool)$entry);
-
-        return \count($result) ? $result : [static::FIELD_DATA => null];
+        return new static($data);
     }
 
     /**
@@ -59,40 +71,16 @@ final class Response implements ResponseInterface
      */
     public function toArray(): array
     {
-        return [
+        $result = \array_filter($this->mapToArray([
+            self::FIELD_ERRORS     => $this->getErrors(),
             self::FIELD_DATA       => $this->getData(),
-            self::FIELD_EXCEPTIONS => $this->getExceptions(),
             self::FIELD_EXTENSIONS => $this->getExtensions(),
-        ];
-    }
+        ]));
 
-    /**
-     * @return bool
-     */
-    public function isValid(): bool
-    {
-        return $this->getExceptions()->isEmpty();
-    }
+        if (! isset($result[self::FIELD_ERRORS])) {
+            $result[self::FIELD_DATA] = $this->getData();
+        }
 
-    /**
-     * @return bool
-     */
-    public function isInvalid(): bool
-    {
-        return $this->hasExceptions();
-    }
-
-    /**
-     * @param PsrResponseInterface|MessageInterface $response
-     * @return PsrResponseInterface
-     * @throws \RuntimeException
-     */
-    public function toPsr(PsrResponseInterface $response): PsrResponseInterface
-    {
-        $response = $response->withHeader('Content-Type', 'application/json');
-
-        $response->getBody()->write(\json_encode($this, \JSON_THROW_ON_ERROR));
-
-        return $response;
+        return $result;
     }
 }

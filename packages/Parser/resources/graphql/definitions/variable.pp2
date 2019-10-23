@@ -1,6 +1,6 @@
 
 #VariableDefinitions -> {
-    return new \Railt\Ast\Generic\VariableDefinitionCollection($children);
+    return new \Railt\Parser\Ast\Generic\VariableDefinitionCollection($children);
 }
   : ::T_PARENTHESIS_OPEN::
       (VariableDefinition() ::T_COMMA::?)*
@@ -8,18 +8,18 @@
   ;
 
 #VariableDefinition -> {
-    $variable = new \Railt\Ast\Executable\Definition\VariableDefinitionNode(
+    $variable = new \Railt\Parser\Ast\Executable\Definition\VariableDefinitionNode(
         \array_shift($children),
         \array_shift($children)
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $variable->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Value\ValueNode:
+            case $child instanceof \Railt\Parser\Ast\Value\ValueNode:
                 $variable->defaultValue = $child;
                 break;
         }

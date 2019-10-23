@@ -27,7 +27,7 @@
  */
 
 #BooleanValue -> {
-    return \Railt\Ast\Value\BooleanValueNode::parse($children->getValue());
+    return \Railt\Parser\Ast\Value\BooleanValueNode::parse($children->getValue());
 }
   : <T_FALSE>
   | <T_TRUE>
@@ -51,9 +51,9 @@
     $first = $children[0];
 
     switch (true) {
-        case $first instanceof \Railt\Ast\Value\ValueNode:
-        case $first instanceof \Railt\Ast\NameNode:
-            return new \Railt\Ast\Value\EnumValueNode($first->value);
+        case $first instanceof \Railt\Parser\Ast\Value\ValueNode:
+        case $first instanceof \Railt\Parser\Ast\NameNode:
+            return new \Railt\Parser\Ast\Value\EnumValueNode($first->value);
 
         default:
             throw new \InvalidArgumentException('Unrecognized Enum value type: ' . \gettype($first));
@@ -79,7 +79,7 @@
  */
 
 #ListValue -> {
-    return new \Railt\Ast\Value\ListValueNode($children[0]);
+    return new \Railt\Parser\Ast\Value\ListValueNode($children[0]);
 }
   : ::T_BRACKET_OPEN::
       ListValues()
@@ -87,7 +87,7 @@
   ;
 
 #ListValues -> {
-    return new \Railt\Ast\Generic\ValueCollection($children);
+    return new \Railt\Parser\Ast\Generic\ValueCollection($children);
 }
   : (Value() ::T_COMMA::?)*
   ;
@@ -108,7 +108,7 @@
  */
 
 #NullValue -> {
-    return new \Railt\Ast\Value\NullValueNode();
+    return new \Railt\Parser\Ast\Value\NullValueNode();
 }
   : ::T_NULL::
   ;
@@ -125,7 +125,7 @@
  */
 
 #IntValue -> {
-    return \Railt\Ast\Value\IntValueNode::parse($children->getValue());
+    return \Railt\Parser\Ast\Value\IntValueNode::parse($children->getValue());
 }
   : <T_INT>
   ;
@@ -142,7 +142,7 @@
  */
 
 #FloatValue -> {
-    return \Railt\Ast\Value\FloatValueNode::parse($children->getValue());
+    return \Railt\Parser\Ast\Value\FloatValueNode::parse($children->getValue());
 }
   : <T_FLOAT> | <T_FLOAT_EXP>
   ;
@@ -165,19 +165,19 @@
  */
 
 #ObjectValue -> {
-    return new \Railt\Ast\Value\ObjectValueNode($children[0]);
+    return new \Railt\Parser\Ast\Value\ObjectValueNode($children[0]);
 }
   : ::T_BRACE_OPEN:: ObjectFields() ::T_BRACE_CLOSE::
   ;
 
 #ObjectFields -> {
-    return new \Railt\Ast\Generic\ObjectFieldCollection($children);
+    return new \Railt\Parser\Ast\Generic\ObjectFieldCollection($children);
 }
   : ObjectField()*
   ;
 
 #ObjectField  -> {
-    return new \Railt\Ast\Value\ObjectFieldNode($children[0], $children[1]);
+    return new \Railt\Parser\Ast\Value\ObjectFieldNode($children[0], $children[1]);
 }
   : NameWithReserved() ::T_COLON:: Value()
     ::T_COMMA::?
@@ -206,13 +206,13 @@
   ;
 
 #BlockStringValue -> {
-    return \Railt\Ast\Value\StringValueNode::parse($children[0]->getValue(), true);
+    return \Railt\Parser\Ast\Value\StringValueNode::parse($children[0]->getValue(), true);
 }
   : <T_BLOCK_STRING>
   ;
 
 #InlineStringValue -> {
-    return \Railt\Ast\Value\StringValueNode::parse($children[0]->getValue(), false);
+    return \Railt\Parser\Ast\Value\StringValueNode::parse($children[0]->getValue(), false);
 }
   : <T_STRING>
   ;
@@ -235,13 +235,13 @@
  */
 
 #Variable -> {
-    return new \Railt\Ast\Value\VariableNode($children[0]);
+    return new \Railt\Parser\Ast\Value\VariableNode($children[0]);
 }
   : VariableName()
   ;
 
 #VariableName -> {
-    return new \Railt\Ast\NameNode($children[0]->getValue());
+    return new \Railt\Parser\Ast\NameNode($children[0]->getValue());
 }
   : <T_VARIABLE>
   ;

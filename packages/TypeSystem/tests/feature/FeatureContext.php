@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,68 +11,21 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Tests\Feature;
 
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Railt\TypeSystem\Compiler;
-use Railt\TypeSystem\Tests\Feature\FeatureContext\DocumentAssertionsTrait;
-use Railt\TypeSystem\Tests\Feature\FeatureContext\ErrorAssertionsTrait;
 
 /**
  * Defines application features from the specific context.
  */
 class FeatureContext implements Context
 {
-    use ErrorAssertionsTrait;
-    use DocumentAssertionsTrait;
-
     /**
-     * @When /^I define the schema:/
+     * Initializes context.
      *
-     * @param PyStringNode $schema
-     * @return void
-     * @throws \Throwable
+     * Every scenario gets its own context instance.
+     * You can also pass arbitrary arguments to the
+     * context constructor through behat.yml.
      */
-    public function whenDefineSchemaText(PyStringNode $schema): void
+    public function __construct()
     {
-        $this->whenDefineSchema(\trim($schema->getRaw()));
-    }
-
-    /**
-     * @When /^I define the schema "([^"]+)"$/
-     *
-     * @param string $schema
-     * @return void
-     * @throws \Throwable
-     */
-    public function whenDefineSchema(string $schema): void
-    {
-        $this->document = $this->wrapErrors(static function () use ($schema) {
-            return (new Compiler(Compiler::MODE_EMPTY))->compile($schema);
-        });
-    }
-
-    /**
-     * @When /^I define the schema with stdlib:/
-     *
-     * @param PyStringNode $schema
-     * @return void
-     * @throws \Throwable
-     */
-    public function whenDefineSchemaWithStdlibText(PyStringNode $schema): void
-    {
-        $this->whenDefineSchemaWithStdlib(\trim($schema->getRaw()));
-    }
-
-    /**
-     * @When /^I define the schema "([^"]+)" with stdlib$/
-     *
-     * @param string $schema
-     * @return void
-     * @throws \Throwable
-     */
-    public function whenDefineSchemaWithStdlib(string $schema): void
-    {
-        $this->document = $this->wrapErrors(static function () use ($schema) {
-            return (new Compiler(Compiler::MODE_EMPTY))->compile($schema);
-        });
+        // Nothing
     }
 }

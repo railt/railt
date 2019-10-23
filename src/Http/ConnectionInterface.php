@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,8 +10,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Http;
 
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Contracts\Http\ResponseInterface;
 
 /**
  * Interface ConnectionInterface
@@ -47,7 +48,7 @@ interface ConnectionInterface
     /**
      * @param RequestInterface $request
      * @param \Closure|null $notifier
-     * @return \Generator|ResponseInterface[]
+     * @return \Generator|ResponseInterface[]|null[]
      */
     public function listen(RequestInterface $request, \Closure $notifier = null): \Generator;
 }

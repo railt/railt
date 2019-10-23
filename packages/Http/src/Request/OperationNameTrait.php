@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,8 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Request;
 
+use Railt\Contracts\Http\Request\OperationNameInterface;
+
 /**
- * Trait OperationNameTrait
+ * @mixin OperationNameInterface
  */
 trait OperationNameTrait
 {

@@ -25,14 +25,14 @@
         "composer-plugin-api": "^1.1",
         "justinrainbow/json-schema": "~5.2",
         "ocramius/package-versions": "~1.5",
-        "phplrt/ast-contracts": "~2.2",
         "phplrt/lexer": "~2.2",
         "phplrt/parser": "~2.2",
         "phplrt/position": "~2.2",
         "phplrt/source": "~2.2",
-        "phplrt/visitor": "~2.2",
         "psr/container": "~1.0",
-        "ramsey/collection": "~1.0"
+        "psr/http-message": "~1.0",
+        "ramsey/collection": "~1.0",
+        "webonyx/graphql-php": "~0.13"
     },
     "require-dev": {
         "behat/behat": "^3.5",
@@ -41,6 +41,7 @@
         "ocramius/package-versions": "~1.5",
         "phplrt/compiler": "~2.2",
         "phpunit/phpunit": "^8.3",
+        "squizlabs/php_codesniffer": "^3.4",
         "symfony/console": "~3.4|~4.0|~5.0",
         "symfony/dependency-injection": "~3.4|~4.0|~5.0",
         "symfony/http-foundation": "~3.4|~4.0|~5.0",
@@ -58,22 +59,29 @@
             "packages/Dumper/src/helpers.php"
         ],
         "psr-4": {
-            "Railt\\Ast\\": "packages/Ast/src",
             "Railt\\Config\\": "packages/Config/src",
             "Railt\\Container\\": "packages/Container/src",
+            "Railt\\Contracts\\": "packages/Contracts/",
             "Railt\\Discovery\\": "packages/Discovery/src",
             "Railt\\Dumper\\": "packages/Dumper/src",
             "Railt\\Foundation\\": "src",
+            "Railt\\GraphQL\\": "packages/GraphQL/src",
+            "Railt\\HttpFactory\\": "packages/HttpFactory/src",
             "Railt\\Http\\": "packages/Http/src/",
+            "Railt\\Observer\\": "packages/Observer/src",
             "Railt\\Parser\\": "packages/Parser/src",
-            "Railt\\Pipeline\\": "packages/Pipeline/src/",
-            "Railt\\TypeSystem\\": "packages/TypeSystem/src"
+            "Railt\\TypeSystem\\": [
+                "packages/SDL/src",
+                "packages/TypeSystem/src"
+            ]
         }
     },
     "autoload-dev": {
+        "files": [
+            "packages/Container/tests/unit/Mock/global_test_function.php",
+            "packages/Container/tests/unit/Mock/test_function.php"
+        ],
         "psr-4": {
-            "Railt\\Ast\\Tests\\Feature\\": "packages/Ast/tests/feature",
-            "Railt\\Ast\\Tests\\Unit\\": "packages/Ast/tests/unit",
             "Railt\\Config\\Tests\\Feature\\": "packages/Config/tests/feature",
             "Railt\\Config\\Tests\\Unit\\": "packages/Config/tests/unit",
             "Railt\\Container\\Tests\\Feature\\": "packages/Container/tests/feature",
@@ -82,28 +90,38 @@
             "Railt\\Discovery\\Tests\\Unit\\": "packages/Discovery/tests/unit",
             "Railt\\Dumper\\Tests\\Feature\\": "packages/Dumper/tests/feature",
             "Railt\\Dumper\\Tests\\Unit\\": "packages/Dumper/tests/unit",
+            "Railt\\GraphQL\\Tests\\Feature\\": "packages/GraphQL/tests/feature",
+            "Railt\\GraphQL\\Tests\\Unit\\": "packages/GraphQL/tests/unit",
+            "Railt\\HttpFactory\\Tests\\Feature\\": "packages/HttpFactory/tests/feature",
+            "Railt\\HttpFactory\\Tests\\Unit\\": "packages/HttpFactory/tests/unit",
             "Railt\\Http\\Tests\\Feature\\": "packages/Http/tests/feature",
             "Railt\\Http\\Tests\\Unit\\": "packages/Http/tests/unit",
+            "Railt\\Observer\\Tests\\Feature\\": "packages/Observer/tests/feature",
+            "Railt\\Observer\\Tests\\Unit\\": "packages/Observer/tests/unit",
             "Railt\\Parser\\Tests\\Feature\\": "packages/Parser/tests/feature",
             "Railt\\Parser\\Tests\\Unit\\": "packages/Parser/tests/unit",
-            "Railt\\Pipeline\\Tests\\Feature\\": "packages/Pipeline/tests/feature",
-            "Railt\\Pipeline\\Tests\\Unit\\": "packages/Pipeline/tests/unit",
-            "Railt\\TypeSystem\\Tests\\Feature\\": "packages/TypeSystem/tests/feature",
-            "Railt\\TypeSystem\\Tests\\Unit\\": "packages/TypeSystem/tests/unit"
+            "Railt\\TypeSystem\\Tests\\Feature\\": [
+                "packages/SDL/tests/feature",
+                "packages/TypeSystem/tests/feature"
+            ],
+            "Railt\\TypeSystem\\Tests\\Unit\\": [
+                "packages/SDL/tests/unit",
+                "packages/TypeSystem/tests/unit"
+            ]
         }
     },
     "replace": {
         "railt/config": "self.version",
         "railt/container": "self.version",
+        "railt/contracts": "self.version",
         "railt/discovery": "self.version",
         "railt/dumper": "self.version",
-        "railt/extension": "self.version",
+        "railt/graphql": "self.version",
         "railt/http": "self.version",
-        "railt/parser": "self.version",
+        "railt/http-factory": "self.version",
+        "railt/observer": "self.version",
         "railt/sdl": "self.version",
-        "railt/ast": "self.version",
-        "railt/exception": "self.version",
-        "railt/pipeline": "self.version"
+        "railt/parser": "self.version"
     },
     "provide": {
         "psr/container": "1.0",
@@ -127,14 +145,6 @@
             "1.4.x": "1.4.x-dev",
             "dev-master": "2.0.x-dev"
         },
-        "class": "Railt\\Discovery\\Manifest",
-        "railt": {
-            "commands": [
-                "Railt\\Foundation\\Console\\Command\\RepoSyncCommand",
-                "Railt\\Foundation\\Console\\Command\\RepoMergeCommand",
-                "Railt\\Foundation\\Console\\Command\\ExtensionsListCommand",
-                "Railt\\Parser\\Console\\ParserCompileCommand"
-            ]
-        }
+        "class": "Railt\\Discovery\\Manifest"
     }
 }

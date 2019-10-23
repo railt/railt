@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,10 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Request;
 
-use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Http\Request;
-use Railt\Http\Request\ProvidesQueryInterface;
 use Railt\Http\Tests\Unit\TestCase;
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Contracts\Http\Request\QueryInterface;
 
 /**
  * Class QueryTestCase
@@ -31,9 +32,9 @@ class QueryTestCase extends TestCase
 
     /**
      * @param string $query
-     * @return ProvidesQueryInterface
+     * @return QueryInterface
      */
-    private function request(string $query): ProvidesQueryInterface
+    private function request(string $query): QueryInterface
     {
         return new Request($query);
     }

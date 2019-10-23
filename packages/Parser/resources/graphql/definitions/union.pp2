@@ -15,21 +15,21 @@
  */
 
 #UnionTypeDefinition -> {
-    $union = new \Railt\Ast\TypeSystem\Definition\UnionTypeDefinitionNode(
+    $union = new \Railt\Parser\Ast\TypeSystem\Definition\UnionTypeDefinitionNode(
         $children[1]
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Description:
+            case $child instanceof \Railt\Parser\Ast\Description:
                 $union->description = $child->value;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $union->directives = $child;
                 break;
 
-            case $child instanceof \Railt\Ast\Generic\TypeDefinitionCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\TypeDefinitionCollection:
                 $union->types = $child;
                 break;
         }
@@ -56,7 +56,7 @@
   ;
 
 #UnionTypeDefinitionTargets -> {
-    return new \Railt\Ast\Generic\TypeDefinitionCollection($children);
+    return new \Railt\Parser\Ast\Generic\TypeDefinitionCollection($children);
 }
   : ::T_OR::? NamedType() (
       ::T_OR:: NamedType()

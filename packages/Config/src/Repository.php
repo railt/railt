@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,6 +10,8 @@ declare(strict_types=1);
 
 namespace Railt\Config;
 
+use Railt\Contracts\Config\RepositoryInterface;
+
 /**
  * Class Repository
  */
@@ -17,7 +20,7 @@ class Repository implements RepositoryInterface
     /**
      * @var string
      */
-    private const DEPTH_DELIMITER = '.';
+    protected const DEPTH_DELIMITER = '.';
 
     /**
      * @var array
@@ -92,5 +95,13 @@ class Repository implements RepositoryInterface
     public function all(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @return \Traversable
+     */
+    public function getIterator(): \Traversable
+    {
+        return new \ArrayIterator($this->all());
     }
 }

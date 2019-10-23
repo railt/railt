@@ -1,0 +1,44 @@
+{
+    "name": "railt/contracts",
+    "license": "MIT",
+    "type": "library",
+    "homepage": "http://railt.org",
+    "description": "The Railt Framework Contracts package",
+    "keywords": [
+        "contracts",
+        "interfaces"
+    ],
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/contracts"
+    },
+    "require": {
+        "php": ">=7.4",
+        "psr/container": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Contracts\\": ""
+        }
+    },
+    "require-dev": {
+    },
+    "extra": {
+        "branch-alias": {
+            "1.3.x": "1.3.x-dev",
+            "1.4.x": "1.4.x-dev",
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

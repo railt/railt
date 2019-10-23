@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,9 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Handler;
 
-use Railt\Http\RequestInterface;
-use Railt\Http\ResponseInterface;
-use Railt\Http\Pipeline\MiddlewareInterface;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Contracts\Http\ResponseInterface;
+use Railt\Contracts\Pipeline\Http\HandlerInterface;
+use Railt\Contracts\Pipeline\Http\HttpMiddlewareInterface;
 
 /**
  * Class Next
@@ -24,17 +26,17 @@ class Next implements HandlerInterface
     private HandlerInterface $handler;
 
     /**
-     * @var MiddlewareInterface
+     * @var HttpMiddlewareInterface
      */
-    private MiddlewareInterface $middleware;
+    private HttpMiddlewareInterface $middleware;
 
     /**
      * Next constructor.
      *
-     * @param MiddlewareInterface $middleware
+     * @param HttpMiddlewareInterface $middleware
      * @param HandlerInterface $handler
      */
-    public function __construct(MiddlewareInterface $middleware, HandlerInterface $handler)
+    public function __construct(HttpMiddlewareInterface $middleware, HandlerInterface $handler)
     {
         $this->middleware = $middleware;
         $this->handler = $handler;

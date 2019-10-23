@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -10,21 +11,21 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use PackageVersions\Versions;
-use Phplrt\Contracts\Source\ReadableInterface;
-use Psr\Container\ContainerInterface;
-use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 use Railt\Container\Container;
-use Railt\Container\Exception\ContainerInvocationException;
+use Psr\Container\ContainerInterface;
+use Railt\SDL\Document\Document;
+use Railt\Foundation\Http\GraphQLConnection;
+use Phplrt\Contracts\Source\ReadableInterface;
+use Railt\Foundation\Http\ConnectionInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Railt\Foundation\Extension\ExtensionsTrait;
+use Railt\Contracts\TypeSystem\CompilerInterface;
+use Railt\Foundation\Console\ConsoleExecutorTrait;
 use Railt\Foundation\Application\ConfigurationTrait;
 use Railt\Foundation\Application\DefaultBindingsTrait;
-use Railt\Foundation\Console\ConsoleExecutorTrait;
+use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Extension\Exception\ExtensionException;
-use Railt\Foundation\Extension\ExtensionsTrait;
-use Railt\Foundation\Http\ConnectionInterface;
-use Railt\Foundation\Http\GraphQLConnection;
-use Railt\Http\HttpKernelInterface;
-use Railt\TypeSystem\CompilerInterface;
-use Railt\TypeSystem\Document\DocumentInterface;
+use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
 
 /**
  * Class Application
@@ -35,6 +36,11 @@ class Application extends Container implements ApplicationInterface
     use ConfigurationTrait;
     use DefaultBindingsTrait;
     use ConsoleExecutorTrait;
+
+    /**
+     * @var HttpKernel
+     */
+    protected HttpKernel $kernel;
 
     /**
      * Application constructor.
@@ -52,20 +58,37 @@ class Application extends Container implements ApplicationInterface
         $this->bootDefaultBindingsTrait();
         $this->bootExtendableTrait($this, $this->config);
         $this->bootConsoleExecutorTrait($this, $this->config);
+
+        $this->kernel = new HttpKernel($this);
     }
 
     /**
      * @param ReadableInterface|resource|string $schema
      * @return ConnectionInterface
-     * @throws ContainerInvocationException
+     * @throws ContainerExceptionInterface
      */
     public function connect($schema): ConnectionInterface
     {
         $this->boot();
 
-        $kernel = $this->make(HttpKernelInterface::class);
+        return new GraphQLConnection($this, $this->kernel, $this->compile($schema));
+    }
 
-        return new GraphQLConnection($this, $kernel, $this->compile($schema));
+    /**
+     * @return ConnectionInterface
+     * @throws ContainerExceptionInterface
+     */
+    public function test(): ConnectionInterface
+    {
+        return $this->connect(<<<'GraphQL'
+            schema { 
+                query: Query 
+            }
+            
+            type Query {
+                test: String
+            }
+        GraphQL);
     }
 
     /**
@@ -78,17 +101,12 @@ class Application extends Container implements ApplicationInterface
 
     /**
      * @param string|resource|ReadableInterface $schema
-     * @return DocumentInterface
-     * @throws ContainerInvocationException
+     * @return Document
+     * @throws ContainerExceptionInterface
      */
-    protected function compile($schema): DocumentInterface
+    protected function compile($schema): Document
     {
-        if (! $this->has(CompilerInterface::class)) {
-            $message = 'Can not run application: GraphQL type system compiler not defined';
-            throw new \LogicException($message);
-        }
-
-        return $this->make(CompilerInterface::class)
+        return $this->get(CompilerInterface::class)
             ->compile($schema);
     }
 

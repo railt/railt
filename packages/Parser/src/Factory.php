@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -120,4 +121,3 @@ final class Factory implements ParserInterface, ExtendableInterface
         return $this->parser->parse($source);
     }
 }
-

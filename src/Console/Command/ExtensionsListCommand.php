@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -43,7 +44,7 @@ class ExtensionsListCommand extends Command
      */
     public function getName(): string
     {
-        return 'extensions:list';
+        return 'ext:list';
     }
 
     /**

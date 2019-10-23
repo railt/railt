@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -11,7 +12,6 @@ namespace Railt\Http\Tests\Feature\RequestFeatureContext;
 
 use Railt\Http\Request;
 use PHPUnit\Framework\Assert;
-use Railt\Http\RequestInterface;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 

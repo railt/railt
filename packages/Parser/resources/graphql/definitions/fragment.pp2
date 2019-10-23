@@ -16,15 +16,15 @@
  */
 
 #FragmentDefinition -> {
-    $fragment = new \Railt\Ast\Executable\Definition\FragmentDefinitionNode(
+    $fragment = new \Railt\Parser\Ast\Executable\Definition\FragmentDefinitionNode(
         $children[0],
         $children[1],
-        \Railt\Ast\Executable\Definition\SelectionSetNode::resolve($children)
+        \Railt\Parser\Ast\Executable\Definition\SelectionSetNode::resolve($children)
     );
 
     foreach ($children as $child) {
         switch (true) {
-            case $child instanceof \Railt\Ast\Generic\DirectiveCollection:
+            case $child instanceof \Railt\Parser\Ast\Generic\DirectiveCollection:
                 $fragment->directives = $child;
                 break;
         }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Railt package.
  *
@@ -9,15 +10,16 @@ declare(strict_types=1);
 
 namespace Railt\Http\Common;
 
+use Railt\Contracts\Common\RenderableInterface;
+
 /**
+ * Trait RenderableTrait
+ *
  * @mixin RenderableInterface
  */
 trait RenderableTrait
 {
-    /**
-     * @return array
-     */
-    abstract public function toArray(): array;
+    use JsonableTrait;
 
     /**
      * @return string
@@ -25,25 +27,25 @@ trait RenderableTrait
     public function __toString(): string
     {
         try {
-            return (string)\json_encode($this->toArray(), $this->toStringJsonOptions());
+            return $this->toString();
         } catch (\JsonException $e) {
             return '{"errors": "JSON Error: ' . \addcslashes($e->getMessage(), '"') . '"}';
         }
     }
 
     /**
-     * @return int
+     * @return string
      */
-    protected function toStringJsonOptions(): int
+    public function toString(): string
     {
-        return \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT;
+        return $this->toJson($this->toJsonDefaultOptions());
     }
 
     /**
-     * @return array
+     * @return int
      */
-    public function jsonSerialize(): array
+    protected function toJsonDefaultOptions(): int
     {
-        return $this->toArray();
+        return \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE;
     }
 }
