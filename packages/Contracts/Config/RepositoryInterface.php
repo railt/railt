@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Config;
 
-use Railt\Contracts\Observer\ObservableInterface;
-
 /**
  * Interface RepositoryInterface
  */

@@ -17,5 +17,4 @@ final class InputObjectType extends NamedType implements
     InputTypeInterface,
     NullableTypeInterface
 {
-
 }

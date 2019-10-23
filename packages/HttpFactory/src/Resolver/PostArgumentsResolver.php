@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory\Resolver;
 
-use Railt\Http\Request;
 use Railt\Contracts\HttpFactory\Provider\ProviderInterface;
+use Railt\Http\Request;
 
 /**
  * Class PostArgumentsResolver

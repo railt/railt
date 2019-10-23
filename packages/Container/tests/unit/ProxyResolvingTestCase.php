@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Container\Tests\Unit;
 
-use Railt\Container\Container;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Container\Exception\ContainerResolutionException;
+use Railt\Container\Container;
 use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
 use Symfony\Component\DependencyInjection\Exception\InvalidArgumentException;
 
 /**

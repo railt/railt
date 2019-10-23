@@ -25,5 +25,4 @@ namespace Railt\TypeSystem\Type;
  */
 interface NamedTypeInterface
 {
-
 }

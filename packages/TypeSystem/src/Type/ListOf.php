@@ -18,5 +18,4 @@ final class ListOf extends WrappingType implements
     InputTypeInterface,
     NullableTypeInterface
 {
-
 }

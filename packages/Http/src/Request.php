@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Request\QueryTrait;
-use Railt\Http\Common\RenderableTrait;
-use Railt\Http\Request\VariablesTrait;
 use Railt\Contracts\Http\RequestInterface;
+use Railt\Http\Common\RenderableTrait;
 use Railt\Http\Request\OperationNameTrait;
+use Railt\Http\Request\QueryTrait;
+use Railt\Http\Request\VariablesTrait;
 
 /**
  * Class Request

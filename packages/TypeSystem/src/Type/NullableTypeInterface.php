@@ -26,5 +26,4 @@ namespace Railt\TypeSystem\Type;
  */
 interface NullableTypeInterface
 {
-
 }

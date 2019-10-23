@@ -12,7 +12,6 @@ namespace Railt\Http\Pipeline;
 
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
-use Railt\Contracts\Container\ContainerInterface;
 use Railt\Contracts\Pipeline\Http\HandlerInterface;
 use Railt\Contracts\Pipeline\Http\RequestPipelineInterface;
 

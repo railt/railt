@@ -22,5 +22,4 @@ namespace Railt\TypeSystem\Type;
  */
 interface CompositeTypeInterface
 {
-
 }

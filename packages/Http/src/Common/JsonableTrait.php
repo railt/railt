@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Common;
 
-use Railt\Contracts\Common\JsonableInterface;
 use Railt\Contracts\Common\ArrayableInterface;
+use Railt\Contracts\Common\JsonableInterface;
 
 /**
  * Trait JsonableTrait

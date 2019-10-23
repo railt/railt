@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace Railt\GraphQL;
 
-use GraphQL\GraphQL;
-use Railt\Http\Response;
 use GraphQL\Error\Error;
-use GraphQL\Type\Schema;
-use Railt\Http\GraphQLError;
 use GraphQL\Executor\ExecutionResult;
+use GraphQL\GraphQL;
+use GraphQL\Type\Schema;
+use Railt\Contracts\Http\GraphQLErrorInterface;
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
-use Railt\Contracts\Http\GraphQLErrorInterface;
+use Railt\Http\GraphQLError;
+use Railt\Http\Response;
 
 /**
  * Class WebonyxExecutor

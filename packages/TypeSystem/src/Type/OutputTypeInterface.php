@@ -33,5 +33,4 @@ namespace Railt\TypeSystem\Type;
  */
 interface OutputTypeInterface
 {
-
 }

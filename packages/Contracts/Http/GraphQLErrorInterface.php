@@ -10,9 +10,8 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Http;
 
-use Railt\Contracts\Common\JsonableInterface;
 use Railt\Contracts\Common\ArrayableInterface;
-use Railt\Contracts\Http\Error\CategoryInterface;
+use Railt\Contracts\Common\JsonableInterface;
 use Railt\Contracts\Http\Response\ExtensionsProviderInterface;
 
 /**

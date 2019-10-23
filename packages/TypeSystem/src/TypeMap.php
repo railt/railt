@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-use Ramsey\Collection\Map\AbstractTypedMap;
 use Railt\TypeSystem\Type\NamedTypeInterface;
+use Ramsey\Collection\Map\AbstractTypedMap;
 
 /**
  * <code>

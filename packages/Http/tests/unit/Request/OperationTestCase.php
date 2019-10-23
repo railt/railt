@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Request;
 
-use Railt\Http\Request;
-use Railt\Http\Tests\Unit\TestCase;
-use Railt\Contracts\Http\RequestInterface;
 use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Contracts\Http\Request\OperationNameInterface;
+use Railt\Contracts\Http\RequestInterface;
+use Railt\Http\Request;
+use Railt\Http\Tests\Unit\TestCase;
 
 /**
  * Class OperationTestCase

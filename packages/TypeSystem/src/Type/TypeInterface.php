@@ -27,5 +27,4 @@ namespace Railt\TypeSystem\Type;
  */
 interface TypeInterface
 {
-
 }

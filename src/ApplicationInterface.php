@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace Railt\Foundation;
 
 use Phplrt\Contracts\Source\ReadableInterface;
-use Railt\Foundation\Http\ConnectionInterface;
 use Railt\Contracts\Container\ContainerInterface;
-use Railt\Foundation\Extension\ExtendableInterface;
 use Railt\Foundation\Console\ConsoleExecutableInterface;
+use Railt\Foundation\Extension\ExtendableInterface;
+use Railt\Foundation\Http\ConnectionInterface;
 
 /**
  * Interface ApplicationInterface

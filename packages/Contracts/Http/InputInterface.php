@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Http;
 
+use Railt\Contracts\Http\Input\ProvidesArgumentsInterface;
 use Railt\Contracts\Http\Input\ProvidesPathInterface;
 use Railt\Contracts\Http\Input\ProvidesTypeInfoInterface;
-use Railt\Contracts\Http\Input\ProvidesArgumentsInterface;
 
 /**
  * Interface InputInterface
