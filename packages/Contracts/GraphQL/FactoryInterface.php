@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\GraphQL;
 
-use Railt\Contracts\TypeSystem\DocumentInterface;
 use Railt\Contracts\Pipeline\Http\HandlerInterface;
+use Railt\Contracts\TypeSystem\DocumentInterface;
 
 /**
  * Interface FactoryInterface

@@ -14,5 +14,4 @@ namespace Railt\TypeSystem;
  */
 class Field extends Definition
 {
-
 }

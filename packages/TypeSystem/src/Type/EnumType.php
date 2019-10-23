@@ -19,5 +19,4 @@ final class EnumType extends NamedType implements
     LeafTypeInterface,
     OutputTypeInterface
 {
-
 }

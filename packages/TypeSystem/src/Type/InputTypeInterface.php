@@ -29,5 +29,4 @@ namespace Railt\TypeSystem\Type;
  */
 interface InputTypeInterface
 {
-
 }

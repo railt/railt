@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Railt\Discovery;
 
-use Railt\Contracts\Config\MutableRepositoryInterface;
 use Railt\Config\Repository;
+use Railt\Contracts\Config\MutableRepositoryInterface;
 use Railt\Foundation\Extension\Extension;
 use Railt\Foundation\Extension\Status;
 

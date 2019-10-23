@@ -15,5 +15,4 @@ namespace Railt\Contracts\Pipeline;
  */
 interface DestinationInterface
 {
-
 }

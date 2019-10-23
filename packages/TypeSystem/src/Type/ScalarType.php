@@ -19,5 +19,4 @@ final class ScalarType extends NamedType implements
     NullableTypeInterface,
     OutputTypeInterface
 {
-
 }

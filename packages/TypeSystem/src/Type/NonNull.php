@@ -17,5 +17,4 @@ final class NonNull extends WrappingType implements
     OutputTypeInterface,
     InputTypeInterface
 {
-
 }

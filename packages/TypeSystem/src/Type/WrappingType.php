@@ -16,5 +16,4 @@ use Railt\TypeSystem\Definition;
  */
 abstract class WrappingType extends Definition implements WrappingTypeInterface
 {
-
 }

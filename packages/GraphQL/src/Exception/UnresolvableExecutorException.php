@@ -14,5 +14,4 @@ namespace Railt\GraphQL\Exception;
  */
 class UnresolvableExecutorException extends \OutOfBoundsException
 {
-
 }

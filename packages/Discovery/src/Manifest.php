@@ -21,11 +21,11 @@ class Manifest extends ManifestFallback
     /**
      * @var array[]
      */
-    protected const CONFIGURATION = array (
-  'discovery' => 
-  array (
+    protected const CONFIGURATION = [
+  'discovery' =>
+  [
     'discovery' => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/packages/Discovery/resources/discovery.schema.json',
-    'railt' => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/resources/railt.schema.json',
-  ),
-);
+    'railt'     => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/resources/railt.schema.json',
+  ],
+];
 }

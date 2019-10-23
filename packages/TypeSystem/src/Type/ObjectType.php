@@ -18,5 +18,4 @@ final class ObjectType extends NamedType implements
     NullableTypeInterface,
     OutputTypeInterface
 {
-
 }

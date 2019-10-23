@@ -9,23 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-use Railt\TypeSystem\Type\ListOf;
-use Railt\TypeSystem\Type\NonNull;
-use Railt\TypeSystem\Type\EnumType;
-use Railt\TypeSystem\Type\UnionType;
-use Railt\TypeSystem\Type\ScalarType;
-use Railt\TypeSystem\Type\ObjectType;
-use Railt\TypeSystem\Type\TypeInterface;
-use Railt\TypeSystem\Type\InterfaceType;
-use Railt\TypeSystem\Type\InputObjectType;
-use Railt\TypeSystem\Type\LeafTypeInterface;
-use Railt\TypeSystem\Type\InputTypeInterface;
-use Railt\TypeSystem\Type\NamedTypeInterface;
-use Railt\TypeSystem\Type\OutputTypeInterface;
 use Railt\TypeSystem\Type\AbstractTypeInterface;
-use Railt\TypeSystem\Type\WrappingTypeInterface;
-use Railt\TypeSystem\Type\NullableTypeInterface;
 use Railt\TypeSystem\Type\CompositeTypeInterface;
+use Railt\TypeSystem\Type\EnumType;
+use Railt\TypeSystem\Type\InputObjectType;
+use Railt\TypeSystem\Type\InputTypeInterface;
+use Railt\TypeSystem\Type\InterfaceType;
+use Railt\TypeSystem\Type\LeafTypeInterface;
+use Railt\TypeSystem\Type\ListOf;
+use Railt\TypeSystem\Type\NamedTypeInterface;
+use Railt\TypeSystem\Type\NonNull;
+use Railt\TypeSystem\Type\NullableTypeInterface;
+use Railt\TypeSystem\Type\ObjectType;
+use Railt\TypeSystem\Type\OutputTypeInterface;
+use Railt\TypeSystem\Type\ScalarType;
+use Railt\TypeSystem\Type\TypeInterface;
+use Railt\TypeSystem\Type\UnionType;
+use Railt\TypeSystem\Type\WrappingTypeInterface;
 
 /**
  * Class Assert

@@ -19,5 +19,4 @@ final class UnionType extends NamedType implements
     NullableTypeInterface,
     OutputTypeInterface
 {
-
 }

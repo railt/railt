@@ -10,11 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\Config;
 
-use Railt\Observer\ObservableTrait;
-use Railt\Observer\NotifiableObserverTrait;
+use Railt\Contracts\Config\MutableRepositoryInterface;
 use Railt\Contracts\Config\RepositoryInterface;
 use Railt\Contracts\Observer\NotifiableInterface;
-use Railt\Contracts\Config\MutableRepositoryInterface;
+use Railt\Observer\NotifiableObserverTrait;
 
 /**
  * Class MutableRepository
@@ -31,7 +30,7 @@ class MutableRepository extends Repository implements
     public function set(string $key, $value = null): void
     {
         $before = $this->items;
-        $result =& $this->items;
+        $result = &$this->items;
 
         $chunks = $this->chunks($key);
 

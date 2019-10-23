@@ -13,9 +13,9 @@ namespace Railt\Contracts\Http;
 use Railt\Contracts\Common\ArrayableInterface;
 use Railt\Contracts\Common\JsonableInterface;
 use Railt\Contracts\Common\RenderableInterface;
+use Railt\Contracts\Http\Request\OperationNameInterface;
 use Railt\Contracts\Http\Request\QueryInterface;
 use Railt\Contracts\Http\Request\VariablesInterface;
-use Railt\Contracts\Http\Request\OperationNameInterface;
 
 /**
  * Interface RequestInterface

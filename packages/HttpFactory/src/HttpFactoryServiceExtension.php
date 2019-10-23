@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory;
 
-use Railt\Foundation\Extension\Status;
-use Railt\Foundation\Extension\Extension;
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\HttpFactory\FactoryInterface;
 use Railt\Contracts\HttpFactory\Provider\ProviderInterface;
+use Railt\Foundation\Extension\Extension;
+use Railt\Foundation\Extension\Status;
 
 /**
  * Class HttpFactoryServiceExtension

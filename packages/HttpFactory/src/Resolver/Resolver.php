@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\HttpFactory\Resolver;
 
-use Railt\Http\Request;
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\HttpFactory\Provider\ProviderInterface;
 use Railt\Contracts\HttpFactory\Resolver\ResolverInterface;
+use Railt\Http\Request;
 
 /**
  * Class Resolver

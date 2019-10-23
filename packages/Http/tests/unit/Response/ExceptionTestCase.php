@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\Http\Tests\Unit\Response;
 
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Contracts\Http\GraphQLErrorInterface;
 use Railt\Http\GraphQLError;
 use Railt\Http\Tests\Unit\TestCase;
-use Railt\Contracts\Http\GraphQLErrorInterface;
-use PHPUnit\Framework\ExpectationFailedException;
 
 /**
  * Class ExceptionTestCase

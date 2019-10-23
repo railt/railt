@@ -10,14 +10,14 @@ declare(strict_types=1);
 
 namespace Railt\Container\Tests\Unit;
 
-use Railt\Container\Container;
 use PHPUnit\Framework\Exception;
+use PHPUnit\Framework\ExpectationFailedException;
+use Railt\Container\Container;
+use Railt\Container\Exception\ContainerInvocationException;
+use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\SignatureResolver;
 use Railt\Container\Tests\Unit\Mock\MockClass;
-use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Container\Tests\Unit\Mock\NotCallableClass;
-use Railt\Container\Exception\ContainerResolutionException;
-use Railt\Container\Exception\ContainerInvocationException;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
