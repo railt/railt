@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 use Railt\SDL\Compiler;
 
@@ -8,5 +8,3 @@ dump(
     (new Compiler(Compiler::SPEC_INTROSPECTION))
         ->getDocument()
 );
-
-
