@@ -114,6 +114,14 @@ final class Compiler implements CompilerInterface
     }
 
     /**
+     * @return DocumentInterface
+     */
+    public function getDocument(): DocumentInterface
+    {
+        return $this->document;
+    }
+
+    /**
      * @param int $spec
      * @return void
      * @throws NotFoundException
