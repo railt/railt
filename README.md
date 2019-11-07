@@ -2,9 +2,9 @@
     <a href="https://railt.org"><img src="https://railt.org/images/logo-dark.svg" width="200" alt="Railt" /></a>
 </p>
 <p align="center">
-    <a href="https://github.com/railt/railt/actions?workflow=Unit+Testing"><img src="https://github.com/railt/railt/workflows/.github/workflows/unit.yml/badge.svg" alt="Unit Testing" /></a>
-    <a href="https://github.com/railt/railt/actions?workflow=Feature+Testing"><img src="https://github.com/railt/railt/workflows/.github/workflows/feature.yml/badge.svg" alt="Feature Testing" /></a>
-    <a href="https://github.com/railt/railt/actions?workflow=Static+Analysis"><img src="https://github.com/railt/railt/workflows/.github/workflows/static-analysis.yml/badge.svg" alt="Static Analysis" /></a>
+    <a href="https://github.com/railt/railt/actions?workflow=Unit+Testing"><img src="https://github.com/railt/railt/workflows/Unit%20Testing/badge.svg" alt="Unit Testing" /></a>
+    <a href="https://github.com/railt/railt/actions?workflow=Feature+Testing"><img src="https://github.com/railt/railt/workflows/Feature%20Testing/badge.svg" alt="Feature Testing" /></a>
+    <a href="https://github.com/railt/railt/actions?workflow=Static+Analysis"><img src="https://github.com/railt/railt/workflows/Static%20Analysis/badge.svg" alt="Static Analysis" /></a>
 </p>
 <p align="center">
     <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-7.4+-6f4ca5.svg" alt="PHP 7.4+"></a>
