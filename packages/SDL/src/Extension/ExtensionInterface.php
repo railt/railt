@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Extension;
 
-use Railt\SDL\Ast\Node;
-use Phplrt\Visitor\VisitorInterface;
 use Phplrt\Parser\Rule\RuleInterface;
+use Phplrt\Visitor\VisitorInterface;
+use Railt\SDL\Ast\Node;
 
 /**
  * Interface ExtensionInterface

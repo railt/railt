@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\TypeSystem\Type;
 
-use Railt\SDL\TypeSystem\Definition;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
+use Railt\SDL\TypeSystem\Definition;
 
 /**
  * {@inheritDoc}

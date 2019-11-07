@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\TypeSystem;
 
-use Railt\Dumper\Facade;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\Dumper\Facade;
 
 /**
  * {@inheritDoc}
@@ -34,7 +34,7 @@ abstract class Definition implements DefinitionInterface
                     Facade::value($name),
                     Facade::dump($value),
                     Facade::dump($this),
-                    $e->getMessage()
+                    $e->getMessage(),
                 ]);
 
                 throw new \InvalidArgumentException($message);

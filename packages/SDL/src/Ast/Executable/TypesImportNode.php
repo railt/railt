@@ -14,5 +14,4 @@ namespace Railt\SDL\Ast\Executable;
  */
 class TypesImportNode extends ImportNode
 {
-
 }

@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\TypeSystem;
 
-use Railt\SDL\TypeSystem\Common\NameTrait;
-use Railt\SDL\TypeSystem\Common\DescriptionTrait;
-use Railt\SDL\TypeSystem\Common\DeprecationTrait;
 use GraphQL\Contracts\TypeSystem\EnumValueInterface;
+use Railt\SDL\TypeSystem\Common\DeprecationTrait;
+use Railt\SDL\TypeSystem\Common\DescriptionTrait;
+use Railt\SDL\TypeSystem\Common\NameTrait;
 
 /**
  * {@inheritDoc}
