@@ -33,7 +33,7 @@
             "block": true,
             "value": "\nDescription of \"union Feed\"\n"
         },
-        "directives": []
+        "directives": null
     },
     {
         "kind": "UnionTypeDefinition",

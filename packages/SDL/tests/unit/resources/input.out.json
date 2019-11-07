@@ -23,7 +23,7 @@
                     "block": true,
                     "value": "\n    Description of \"key\" field\n    "
                 },
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             },
             {
@@ -44,7 +44,7 @@
                     "block": true,
                     "value": "\n    Description of \"answer\" field\n    "
                 },
-                "directives": [],
+                "directives": null,
                 "defaultValue": {
                     "kind": "IntValue",
                     "value": 42
@@ -64,7 +64,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": {
                     "kind": "StringValue",
                     "block": false,
@@ -85,7 +85,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": {
                     "kind": "StringValue",
                     "block": false,
@@ -102,7 +102,7 @@
             "block": true,
             "value": "\nDescription of \"input InputType\"\n"
         },
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InputObjectTypeDefinition",

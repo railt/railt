@@ -17,7 +17,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -33,7 +33,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": {
                             "kind": "StringValue",
                             "block": true,
@@ -48,6 +48,6 @@
             "value": "Some"
         },
         "description": null,
-        "directives": []
+        "directives": null
     }
 ]

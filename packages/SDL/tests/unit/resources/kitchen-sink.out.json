@@ -3,7 +3,7 @@
         "kind": "SchemaDefinition",
         "name": null,
         "description": null,
-        "directives": [],
+        "directives": null,
         "operationTypes": [
             {
                 "kind": "OperationTypeDefinition",
@@ -62,7 +62,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             },
             {
@@ -79,7 +79,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -102,7 +102,7 @@
                             "block": true,
                             "value": "\n        This is a description of the `argument` argument.\n        "
                         },
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -121,7 +121,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -137,7 +137,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     },
                     {
@@ -154,7 +154,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -173,7 +173,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -189,7 +189,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": {
                             "kind": "StringValue",
                             "block": false,
@@ -212,7 +212,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -231,7 +231,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": {
                             "kind": "ListValue",
                             "values": [
@@ -264,7 +264,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -280,7 +280,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": {
                             "kind": "ObjectValue",
                             "fields": [
@@ -315,7 +315,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -331,7 +331,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -346,7 +346,7 @@
             "block": true,
             "value": "\nThis is a description\nof the `Foo` type.\n"
         },
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ObjectTypeDefinition",
@@ -448,7 +448,7 @@
             "value": "UndefinedType"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ObjectTypeExtension",
@@ -468,7 +468,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -487,7 +487,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -498,7 +498,7 @@
             "value": "Foo"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ObjectTypeExtension",
@@ -538,7 +538,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             },
             {
@@ -555,7 +555,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -571,7 +571,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": {
                             "kind": "StringValue",
                             "block": false,
@@ -586,7 +586,7 @@
             "value": "Bar"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InterfaceTypeDefinition",
@@ -671,7 +671,7 @@
             "value": "UndefinedInterface"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InterfaceTypeExtension",
@@ -690,7 +690,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -709,7 +709,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -720,7 +720,7 @@
             "value": "Bar"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InterfaceTypeExtension",
@@ -771,7 +771,7 @@
             "value": "Feed"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "UnionTypeDefinition",
@@ -849,7 +849,7 @@
             "value": "UndefinedUnion"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "UnionTypeExtension",
@@ -874,7 +874,7 @@
             "value": "Feed"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "UnionTypeExtension",
@@ -902,7 +902,7 @@
             "value": "CustomScalar"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ScalarTypeDefinition",
@@ -954,7 +954,7 @@
                     "block": true,
                     "value": "\n    This is a description of the `DESKTOP` value\n    "
                 },
-                "directives": []
+                "directives": null
             },
             {
                 "kind": "EnumValueDefinition",
@@ -967,7 +967,7 @@
                     "block": true,
                     "value": "This is a description of the `MOBILE` value"
                 },
-                "directives": []
+                "directives": null
             },
             {
                 "kind": "EnumValueDefinition",
@@ -980,7 +980,7 @@
                     "block": false,
                     "value": "This is a description of the `WEB` value"
                 },
-                "directives": []
+                "directives": null
             }
         ],
         "name": {
@@ -988,7 +988,7 @@
             "value": "Site"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "EnumTypeDefinition",
@@ -1018,7 +1018,7 @@
                     "value": "OTHER_VALUE"
                 },
                 "description": null,
-                "directives": []
+                "directives": null
             }
         ],
         "name": {
@@ -1045,7 +1045,7 @@
             "value": "UndefinedEnum"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "EnumTypeExtension",
@@ -1057,7 +1057,7 @@
                     "value": "VR"
                 },
                 "description": null,
-                "directives": []
+                "directives": null
             }
         ],
         "name": {
@@ -1065,7 +1065,7 @@
             "value": "Site"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "EnumTypeExtension",
@@ -1106,7 +1106,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             },
             {
@@ -1123,7 +1123,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": {
                     "kind": "IntValue",
                     "value": 42
@@ -1135,7 +1135,7 @@
             "value": "InputType"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InputObjectTypeDefinition",
@@ -1191,7 +1191,7 @@
             "value": "UndefinedInput"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InputObjectTypeExtension",
@@ -1231,7 +1231,7 @@
             "value": "InputType"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InputObjectTypeExtension",
@@ -1350,7 +1350,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]
@@ -1395,7 +1395,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]
@@ -1436,7 +1436,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]

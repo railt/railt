@@ -29,7 +29,7 @@
             "value": "Feed"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "UnionTypeDefinition",

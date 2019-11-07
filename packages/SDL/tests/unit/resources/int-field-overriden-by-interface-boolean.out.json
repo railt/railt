@@ -25,7 +25,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             }
         ],
@@ -34,7 +34,7 @@
             "value": "TInt"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InterfaceTypeDefinition",
@@ -54,7 +54,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             }
         ],
@@ -63,6 +63,6 @@
             "value": "IBoolean"
         },
         "description": null,
-        "directives": []
+        "directives": null
     }
 ]
