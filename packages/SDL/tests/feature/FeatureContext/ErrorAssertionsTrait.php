@@ -36,7 +36,7 @@ trait ErrorAssertionsTrait
     {
         $class = \implode('', \explode(' ', \ucwords(\trim($class, '\\'))));
 
-        $fqn = '\\Railt\\TypeSystem\\Exception\\' . $class;
+        $fqn = '\\Railt\\SDL\\Exception\\' . $class;
 
         if (! \class_exists($fqn)) {
             throw new \InvalidArgumentException('"' . $class . '" is not a valid exception class name');

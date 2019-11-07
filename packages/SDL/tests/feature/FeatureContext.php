@@ -46,7 +46,7 @@ class FeatureContext implements Context
     public function whenDefineSchema(string $schema): void
     {
         $this->document = $this->wrapErrors(static function () use ($schema) {
-            return (new Compiler(Compiler::MODE_EMPTY))->compile($schema);
+            return (new Compiler(Compiler::SPEC_RAW))->compile($schema);
         });
     }
 

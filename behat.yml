@@ -3,7 +3,7 @@ imports:
     - packages/Container/behat.yml
     - packages/Discovery/behat.yml
     - packages/Dumper/behat.yml
-    - packages/Extension/behat.yml
     - packages/Http/behat.yml
-    - packages/Parser/behat.yml
-    - packages/TypeSystem/behat.yml
+    - packages/HttpFactory/behat.yml
+    - packages/Observer/behat.yml
+    - packages/SDL/behat.yml

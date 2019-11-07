@@ -14,19 +14,18 @@ use Railt\SDL\Ast\Node;
 use PHPUnit\Framework\Assert;
 use Phplrt\Visitor\Traverser;
 use PHPUnit\Framework\Exception;
-use Railt\SDL\Ast\DefinitionNode;
-use Railt\SDL\Document\Document;
+use Railt\Contracts\SDL\DocumentInterface;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\SDL\Ast\Definition\TypeDefinitionNode;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\UnionTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\ScalarTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\InputObjectTypeInterface;
 use Railt\SDL\Tests\Feature\FeatureContext\Visitor\SearchVisitor;
 use Railt\SDL\Tests\Feature\FeatureContext\Support\TypeCastTrait;
 use Railt\SDL\Tests\Feature\FeatureContext\Support\NumericalTrait;
-use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
-use Railt\SDL\Ast\Definition\UnionTypeDefinitionNode;
-use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
-use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
-use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
-use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
 
 /**
  * Trait DocumentAssertionsTrait
@@ -37,12 +36,12 @@ trait DocumentAssertionsTrait
     use TypeCastTrait;
 
     /**
-     * @var Document|null
+     * @var DocumentInterface|null
      */
-    private ?Document $document = null;
+    private ?DocumentInterface $document = null;
 
     /**
-     * @var mixed|DefinitionNode
+     * @var mixed|DefinitionInterface
      */
     private $last;
 
@@ -67,7 +66,9 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainTypes($types): void
     {
-        Assert::assertCount($this->number($types), $this->last = $this->document->types());
+        $this->thenNoErrors();
+
+        Assert::assertCount($this->number($types), $this->last = $this->document->getTypeMap());
     }
 
     /**
@@ -80,7 +81,8 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainDirectiveTypes($types): void
     {
-        $definitions = $this->document->directives();
+        $this->thenNoErrors();
+        $definitions = $this->document->getDirectives();
 
         Assert::assertCount($this->number($types), $this->last = $definitions);
     }
@@ -95,11 +97,12 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainEnumTypes($types): void
     {
-        $definitions = $this->document->types();
+        $this->thenNoErrors();
+        $definitions = $this->document->getTypeMap();
 
         Assert::assertCount(
             $this->number($types),
-            $this->last = $this->documentFilter($definitions, EnumTypeDefinitionNode::class)
+            $this->last = $this->documentFilter($definitions, EnumTypeInterface::class)
         );
     }
 
@@ -108,13 +111,13 @@ trait DocumentAssertionsTrait
      * @param string $instanceof
      * @return array
      */
-    private function documentFilter(array $items, string $instanceof): array
+    private function documentFilter(iterable $items, string $instanceof): array
     {
-        $filter = static function (TypeDefinitionNode $node) use ($instanceof) {
+        $filter = static function (DefinitionInterface $node) use ($instanceof) {
             return $node instanceof $instanceof;
         };
 
-        return \array_filter($items, $filter);
+        return \array_filter(\is_array($items) ? $items : \iterator_to_array($items), $filter);
     }
 
     /**
@@ -127,11 +130,13 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainInputObjectTypes($types): void
     {
-        $definitions = $this->document->types();
+        $this->thenNoErrors();
+
+        $definitions = $this->document->getTypeMap();
 
         Assert::assertCount(
             $this->number($types),
-            $this->last = $this->documentFilter($definitions, InputObjectTypeDefinitionNode::class)
+            $this->last = $this->documentFilter($definitions, InputObjectTypeInterface::class)
         );
     }
 
@@ -145,11 +150,12 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainInterfaceTypes($types): void
     {
-        $definitions = $this->document->types();
+        $this->thenNoErrors();
+        $definitions = $this->document->getTypeMap();
 
         Assert::assertCount(
             $this->number($types),
-            $this->last = $this->documentFilter($definitions, InterfaceTypeDefinitionNode::class)
+            $this->last = $this->documentFilter($definitions, InterfaceTypeInterface::class)
         );
     }
 
@@ -163,11 +169,12 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainObjectTypes($types): void
     {
-        $definitions = $this->document->types();
+        $this->thenNoErrors();
+        $definitions = $this->document->getTypeMap();
 
         Assert::assertCount(
             $this->number($types),
-            $this->last = $this->documentFilter($definitions, ObjectTypeDefinitionNode::class)
+            $this->last = $this->documentFilter($definitions, ObjectTypeInterface::class)
         );
     }
 
@@ -181,11 +188,12 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainScalarTypes($types): void
     {
-        $definitions = $this->document->types();
+        $this->thenNoErrors();
+        $definitions = $this->document->getTypeMap();
 
         Assert::assertCount(
             $this->number($types),
-            $this->last = $this->documentFilter($definitions, ScalarTypeDefinitionNode::class)
+            $this->last = $this->documentFilter($definitions, ScalarTypeInterface::class)
         );
     }
 
@@ -199,11 +207,12 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainUnionTypes($types): void
     {
-        $definitions = $this->document->types();
+        $this->thenNoErrors();
+        $definitions = $this->document->getTypeMap();
 
         Assert::assertCount(
             $this->number($types),
-            $this->last = $this->documentFilter($definitions, UnionTypeDefinitionNode::class)
+            $this->last = $this->documentFilter($definitions, UnionTypeInterface::class)
         );
     }
 
@@ -215,9 +224,10 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainSchemaTypes(): void
     {
-        $schemas = $this->document->schemas();
+        $this->thenNoErrors();
+        $schema = $this->document->getSchema();
 
-        Assert::assertNotNull($this->last = (\reset($schemas) ?: null));
+        Assert::assertNotNull($this->last = $schema);
     }
 
     /**
@@ -228,9 +238,10 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentNotContainSchemaTypes(): void
     {
-        $schemas = $this->document->schemas();
+        $this->thenNoErrors();
+        $schema = $this->document->getSchema();
 
-        Assert::assertNull($this->last = (\reset($schemas) ?: null));
+        Assert::assertNull($this->last = $schema);
     }
 
     /**
@@ -243,10 +254,7 @@ trait DocumentAssertionsTrait
      */
     public function thenDocumentContainDirectives($directives): void
     {
-        Assert::assertCount(
-            $this->number($directives),
-            $this->last = $this->document->executions()
-        );
+        throw new \LogicException(__METHOD__ . ' test not implemented yet');
     }
 
     /**
@@ -305,7 +313,9 @@ trait DocumentAssertionsTrait
     private function lastIs($index, \Closure $fn): void
     {
         if ($this->last === null) {
-            $this->last = $this->document->types();
+            $this->thenNoErrors();
+
+            $this->last = $this->document->getTypeMap();
         }
 
         (new Traverser())
