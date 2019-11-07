@@ -22,5 +22,5 @@ jobs:
     - name: Installation
       run: composer require vimeo/psalm --dev
     - name: Static Analysis
-      run: ./vendor/bin/psalm
+      run: composer psalm
 

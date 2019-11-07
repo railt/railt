@@ -22,5 +22,5 @@ jobs:
     - name: Installation
       run: composer require behat/behat --dev
     - name: Feature Testing
-      run: ./vendor/bin/behat
+      run: composer behat
 

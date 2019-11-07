@@ -111,7 +111,10 @@
         "psr/container-implementation": "1.0"
     },
     "scripts": {
-        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover"
+        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover",
+        "psalm": "psalm",
+        "phpunit": "phpunit",
+        "behat": "behat"
     },
     "config": {
         "sort-packages": true

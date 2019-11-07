@@ -19,8 +19,8 @@
 
         <ignoreFiles>
             <directory name="vendor"/>
-            <directory name="packages/Parser/src/Runtime"/>
-            <directory name="packages/Ast/src/Generic"/>
+            <directory name="packages/SDL/src/Parser"/>
+            <directory name="packages/SDL/src/Ast"/>
         </ignoreFiles>
     </projectFiles>
 
