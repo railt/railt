@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Parser\Generator;
 
-use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
-use Zend\Code\Generator\ValueGenerator;
+use Twig\TwigFunction;
 use Zend\Code\Generator\Exception\RuntimeException;
+use Zend\Code\Generator\ValueGenerator;
 
 /**
  * Class ZendGeneratorExtension

@@ -11,14 +11,14 @@ declare(strict_types=1);
 
 namespace Railt\SDL\TypeSystem;
 
-use Railt\SDL\TypeSystem\Common\NameTrait;
-use Railt\SDL\TypeSystem\Common\TypeTrait;
 use GraphQL\Contracts\TypeSystem\Constraint;
-use Railt\SDL\TypeSystem\Common\ArgumentsTrait;
-use Railt\SDL\TypeSystem\Common\DescriptionTrait;
-use Railt\SDL\TypeSystem\Common\DeprecationTrait;
 use GraphQL\Contracts\TypeSystem\FieldInterface;
 use GraphQL\Contracts\TypeSystem\Type\OutputTypeInterface;
+use Railt\SDL\TypeSystem\Common\ArgumentsTrait;
+use Railt\SDL\TypeSystem\Common\DeprecationTrait;
+use Railt\SDL\TypeSystem\Common\DescriptionTrait;
+use Railt\SDL\TypeSystem\Common\NameTrait;
+use Railt\SDL\TypeSystem\Common\TypeTrait;
 
 /**
  * @method OutputTypeInterface getType()

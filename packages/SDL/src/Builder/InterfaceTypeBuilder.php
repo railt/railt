@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\SDL\TypeSystem\Type\InterfaceType;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
+use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
+use Railt\SDL\TypeSystem\Type\InterfaceType;
 
 /**
- * @property-read InterfaceTypeDefinitionNode $ast
+ * @property InterfaceTypeDefinitionNode $ast
  */
 class InterfaceTypeBuilder extends TypeBuilder
 {

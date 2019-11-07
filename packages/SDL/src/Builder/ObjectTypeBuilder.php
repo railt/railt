@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\SDL\TypeSystem\Type\ObjectType;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
+use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
+use Railt\SDL\TypeSystem\Type\ObjectType;
 
 /**
- * @property-read ObjectTypeDefinitionNode $ast
+ * @property ObjectTypeDefinitionNode $ast
  */
 class ObjectTypeBuilder extends TypeBuilder
 {

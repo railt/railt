@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
-use Monolog\Logger;
-use Railt\SDL\Parser;
-use Railt\SDL\Compiler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Railt\SDL\Compiler;
 use Railt\SDL\Linker\LoggerLinker;
+use Railt\SDL\Parser;
 
 require __DIR__ . '/../vendor/autoload.php';
 

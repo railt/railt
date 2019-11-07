@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\SDL\TypeSystem\EnumValue;
-use Railt\SDL\Ast\Definition\EnumValueDefinitionNode;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\SDL\Ast\Definition\EnumValueDefinitionNode;
+use Railt\SDL\TypeSystem\EnumValue;
 
 /**
- * @property-read EnumValueDefinitionNode $ast
+ * @property EnumValueDefinitionNode $ast
  */
 class EnumValueBuilder extends TypeBuilder
 {
@@ -31,5 +31,4 @@ class EnumValueBuilder extends TypeBuilder
 
         return $value;
     }
-
 }

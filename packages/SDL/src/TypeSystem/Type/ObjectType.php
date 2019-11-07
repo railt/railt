@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\TypeSystem\Type;
 
+use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
 use Railt\SDL\TypeSystem\Common\FieldsTrait;
 use Railt\SDL\TypeSystem\Common\InterfacesTrait;
-use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
 
 /**
  * {@inheritDoc}

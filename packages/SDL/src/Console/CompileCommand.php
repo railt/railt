@@ -47,7 +47,7 @@ class CompileCommand extends Command
         $generator = new Generator();
         $generator->generateAndSave();
 
-        $out = \dirname(__DIR__)  . '/Parser/Factory.php';
+        $out = \dirname(__DIR__) . '/Parser/Factory.php';
 
         $output->writeln('<info>Successfully generated in ' . $out . '</info>');
     }
