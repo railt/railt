@@ -10,10 +10,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\Parser\Factory;
 use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Extension\Extension;
-use Railt\Contracts\TypeSystem\CompilerInterface;
+use Railt\Contracts\SDL\CompilerInterface;
 
 /**
  * Class TypeSystemServiceExtension
@@ -25,11 +24,9 @@ class TypeSystemServiceExtension extends Extension
      */
     public function register(): void
     {
-        $this->app->register(Factory::class, fn () => new Factory());
-
-        $registrar = fn (Factory $factory) => new Compiler(Compiler::MODE_EXTENDED, $factory);
-
-        $this->app->register(CompilerInterface::class, $registrar);
+        $this->app->register(CompilerInterface::class, fn () =>
+            new Compiler(Compiler::SPEC_RAILT)
+        );
     }
 
     /**

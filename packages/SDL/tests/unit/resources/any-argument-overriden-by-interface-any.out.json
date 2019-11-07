@@ -1,0 +1,104 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "IAny"
+                }
+            }
+        ],
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Any"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Identifier",
+                                "value": "Any"
+                            }
+                        },
+                        "description": null,
+                        "directives": [],
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "TAny"
+        },
+        "description": null,
+        "directives": []
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Any"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Identifier",
+                                "value": "Any"
+                            }
+                        },
+                        "description": null,
+                        "directives": [],
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "IAny"
+        },
+        "description": null,
+        "directives": []
+    }
+]

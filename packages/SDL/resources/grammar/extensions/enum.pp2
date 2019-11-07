@@ -1,0 +1,41 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enum Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Enum type extensions are used to represent an enum type which has been
+ * extended from some original enum type. For example, this might be used
+ * to represent additional local data, or by a GraphQL service which is
+ * itself an extension of another GraphQL service.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Enum-Extensions
+ */
+
+#EnumTypeExtension -> {
+    $enum = new \Railt\SDL\Ast\Extension\EnumTypeExtensionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $enum->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $enum->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\EnumValueDefinitionCollection:
+                $enum->values = $child;
+                break;
+        }
+    }
+
+    return $enum;
+}
+  : Description()
+    ::T_EXTEND:: EnumTypeDefinitionExceptDescription()
+  ;

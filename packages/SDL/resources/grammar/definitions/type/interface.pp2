@@ -1,0 +1,78 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Interfaces
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL interfaces represent a list of named fields and their arguments.
+ * GraphQL objects can then implement these interfaces which requires that
+ * the object type will define all fields defined by those interfaces.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Interfaces
+ */
+
+#InterfaceTypeDefinition -> {
+    $interface = new \Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $interface->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\FieldDefinitionCollection:
+                $interface->fields = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $interface->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
+                $interface->interfaces = $child;
+                break;
+        }
+    }
+
+    return $interface;
+}
+  : Description()
+    InterfaceTypeDefinitionExceptDescription()
+  ;
+
+#InterfaceTypeDefinitionExceptDescription
+  : InterfaceTypeDefinitionHead()
+    InterfaceTypeDefinitionBody()?
+  ;
+
+#InterfaceTypeDefinitionHead
+  : ::T_INTERFACE:: TypeName()
+    ImplementsInterfaces()?
+    Directives()?
+  ;
+
+#InterfaceTypeDefinitionBody
+  : ::T_BRACE_OPEN::
+      FieldDefinitions()?
+    ::T_BRACE_CLOSE::
+  ;
+
+//
+// Implements
+//
+
+#ImplementsInterfaces -> {
+    return new \Railt\SDL\Ast\Generic\InterfaceImplementsCollection($children);
+}
+  : ::T_IMPLEMENTS::
+    ImplementsInterfacesDelimiter()? NamedType()
+    ( ImplementsInterfacesDelimiter() NamedType() )*
+  ;
+
+#ImplementsInterfacesDelimiter
+  : ::T_COMMA::
+  | ::T_AND::
+  ;

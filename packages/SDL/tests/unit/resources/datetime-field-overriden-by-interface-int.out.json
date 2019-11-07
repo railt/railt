@@ -1,0 +1,68 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "IInt"
+                }
+            }
+        ],
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "DateTime"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "TDateTime"
+        },
+        "description": null,
+        "directives": []
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Int"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "IInt"
+        },
+        "description": null,
+        "directives": []
+    }
+]

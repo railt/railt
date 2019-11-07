@@ -1,0 +1,174 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  Railt GraphQL Grammar
+ * --------------------------------------------------------------------------
+ *
+ * This file provides PP language grammar for GraphQL and GraphQL SDL
+ *
+ * @see https://facebook.github.io/graphql/June2018/
+ * @see https://facebook.github.io/graphql/draft/
+ * @see https://github.com/facebook/graphql/pull/90
+ * @see https://www.graph.cool/docs/faq/graphql-sdl-schema-definition-language-kr84dktnp0
+ */
+
+%pragma root Document
+
+%include lexemes
+
+%include common/identifier
+%include common/name
+%include common/type
+%include common/values
+%include common/description
+
+%include definitions/schema
+%include definitions/directive
+%include definitions/field
+%include definitions/input-value
+%include definitions/enum-value
+
+%include definitions/type/enum
+%include definitions/type/input
+%include definitions/type/interface
+%include definitions/type/object
+%include definitions/type/scalar
+%include definitions/type/union
+
+%include executable/directive
+%include executable/argument
+
+%include extensions/enum
+%include extensions/input
+%include extensions/interface
+%include extensions/object
+%include extensions/scalar
+%include extensions/schema
+%include extensions/union
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Document
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL Document describes a complete file or request string operated
+ * on by a GraphQL service or client. A document contains multiple
+ * definitions, either executable or representative of a GraphQL
+ * type system.
+ *
+ * Documents are only executable by a GraphQL service if they contain
+ * an OperationDefinition and otherwise only contain ExecutableDefinition.
+ * However documents which do not contain OperationDefinition or do
+ * contain TypeDefinition or TypeExtension may still be parsed
+ * and validated to allow client tools to represent many GraphQL uses
+ * which may appear across many individual files.
+ *
+ * If a Document contains only one operation, that operation may be unnamed
+ * or represented in the shorthand form, which omits both the query keyword
+ * and operation name. Otherwise, if a GraphQL Document contains multiple
+ * operations, each operation must be named. When submitting a Document with
+ * multiple operations to a GraphQL service, the name of the desired
+ * operation to be executed must also be provided.
+ *
+ * GraphQL services which only seek to provide GraphQL query execution may
+ * choose to only include ExecutableDefinition and omit the
+ * TypeDefinition and TypeExtension rules from Definition.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Language.Document
+ */
+
+#Document
+  : Definition()*
+  ;
+
+#Definition
+  : TypeSystemDefinition()
+  | TypeSystemExtension()
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  Type System Definitions
+ * --------------------------------------------------------------------------
+ *
+ * The GraphQL Type system describes the capabilities of a GraphQL server
+ * and is used to determine if a query is valid. The type system also
+ * describes the input types of query variables to determine if values
+ * provided at runtime are valid.
+ *
+ * The fundamental unit of any GraphQL Schema is the type. There are six
+ * kinds of named type definitions in GraphQL, and two wrapping types.
+ *
+ * The most basic type is a Scalar. A scalar represents a primitive value,
+ * like a string or an integer. Oftentimes, the possible responses for a
+ * scalar field are enumerable. GraphQL offers an Enum type in those cases,
+ * where the type specifies the space of valid responses.
+ *
+ * Scalars and Enums form the leaves in response trees; the intermediate
+ * levels are Object types, which define a set of fields, where each field
+ * is another type in the system, allowing the definition of arbitrary
+ * type hierarchies.
+ *
+ * GraphQL supports two abstract types: interfaces and unions.
+ *
+ * An Interface defines a list of fields; Object types that implement
+ * that interface are guaranteed to implement those fields. Whenever the
+ * type system claims it will return an interface, it will return a valid
+ * implementing type.
+ *
+ * A Union defines a list of possible types; similar to interfaces,
+ * whenever the type system claims a union will be returned, one of the
+ * possible types will be returned.
+ *
+ * Finally, oftentimes it is useful to provide complex structs as inputs
+ * to GraphQL field arguments or variables; the Input Object type allows
+ * the schema to define exactly what data is expected.
+ *
+ * @see https://graphql.github.io/graphql-spec/draft/#TypeDefinition
+ *
+ */
+
+#TypeSystemDefinition
+  : SchemaDefinition()
+  | DirectiveDefinition()
+  | TypeDefinition()
+  ;
+
+#TypeDefinition
+  : ScalarTypeDefinition()
+  | ObjectTypeDefinition()
+  | InterfaceTypeDefinition()
+  | UnionTypeDefinition()
+  | EnumTypeDefinition()
+  | InputObjectTypeDefinition()
+  ;
+
+/**
+ * --------------------------------------------------------------------------
+ *  Type System Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Type system extensions are used to represent a GraphQL type system which
+ * has been extended from some original type system. For example, this might
+ * be used by a local service to represent data a GraphQL client only
+ * accesses locally, or by a GraphQL service which is itself an extension of
+ * another GraphQL service.
+ *
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Type-System-Extensions
+ *
+ */
+
+#TypeSystemExtension
+  : SchemaExtension()
+  | TypeExtension()
+  ;
+
+#TypeExtension
+  : ScalarTypeExtension()
+  | ObjectTypeExtension()
+  | InterfaceTypeExtension()
+  | UnionTypeExtension()
+  | EnumTypeExtension()
+  | InputObjectTypeExtension()
+  ;

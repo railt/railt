@@ -39,7 +39,7 @@ class StringResolver extends Resolver
      */
     public function value($string): string
     {
-        $string = (string)(\preg_replace('/\s+/iu', ' ', $string) ?? $string);
+        $string = (string)(\preg_replace('/\s+/u', ' ', $string) ?? $string);
         $string = \addcslashes($string, '"');
 
         return $this->shorten($string, '"%s"', '"%s…" +%d');

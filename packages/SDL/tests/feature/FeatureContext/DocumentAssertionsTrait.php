@@ -10,23 +10,23 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Tests\Feature\FeatureContext;
 
-use Railt\Parser\Ast\Node;
+use Railt\SDL\Ast\Node;
 use PHPUnit\Framework\Assert;
 use Phplrt\Visitor\Traverser;
 use PHPUnit\Framework\Exception;
-use Railt\Parser\Ast\DefinitionNode;
+use Railt\SDL\Ast\DefinitionNode;
 use Railt\SDL\Document\Document;
 use PHPUnit\Framework\ExpectationFailedException;
-use Railt\Parser\Ast\TypeSystem\TypeDefinitionNode;
+use Railt\SDL\Ast\Definition\TypeDefinitionNode;
 use Railt\SDL\Tests\Feature\FeatureContext\Visitor\SearchVisitor;
 use Railt\SDL\Tests\Feature\FeatureContext\Support\TypeCastTrait;
 use Railt\SDL\Tests\Feature\FeatureContext\Support\NumericalTrait;
-use Railt\Parser\Ast\TypeSystem\Definition\EnumTypeDefinitionNode;
-use Railt\Parser\Ast\TypeSystem\Definition\UnionTypeDefinitionNode;
-use Railt\Parser\Ast\TypeSystem\Definition\ObjectTypeDefinitionNode;
-use Railt\Parser\Ast\TypeSystem\Definition\ScalarTypeDefinitionNode;
-use Railt\Parser\Ast\TypeSystem\Definition\InterfaceTypeDefinitionNode;
-use Railt\Parser\Ast\TypeSystem\Definition\InputObjectTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\UnionTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
 
 /**
  * Trait DocumentAssertionsTrait

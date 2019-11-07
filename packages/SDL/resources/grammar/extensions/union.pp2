@@ -1,0 +1,41 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Union Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Union type extensions are used to represent a union type which has
+ * been extended from some original union type. For example, this might be
+ * used to represent additional local data, or by a GraphQL service which
+ * is itself an extension of another GraphQL service.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Union-Extensions
+ */
+
+#UnionTypeExtension -> {
+    $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $union->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $union->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\TypeDefinitionCollection:
+                $union->types = $child;
+                break;
+        }
+    }
+
+    return $union;
+}
+  : Description()
+    ::T_EXTEND:: UnionTypeDefinitionExceptDescription()
+  ;

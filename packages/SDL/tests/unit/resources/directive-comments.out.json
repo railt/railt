@@ -1,0 +1,137 @@
+[
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Identifier",
+            "value": "skip"
+        },
+        "repeatable": false,
+        "locations": [
+            {
+                "kind": "Identifier",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Identifier",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Identifier",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": null,
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Identifier",
+            "value": "include"
+        },
+        "repeatable": false,
+        "locations": [
+            {
+                "kind": "Identifier",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Identifier",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Identifier",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": null,
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "defaultValue": null
+            }
+        ]
+    },
+    {
+        "kind": "DirectiveDefinition",
+        "name": {
+            "kind": "Identifier",
+            "value": "include2"
+        },
+        "repeatable": false,
+        "locations": [
+            {
+                "kind": "Identifier",
+                "value": "FIELD"
+            },
+            {
+                "kind": "Identifier",
+                "value": "FRAGMENT_SPREAD"
+            },
+            {
+                "kind": "Identifier",
+                "value": "INLINE_FRAGMENT"
+            }
+        ],
+        "description": null,
+        "arguments": [
+            {
+                "kind": "InputValueDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "if"
+                },
+                "type": {
+                    "kind": "NonNullType",
+                    "type": {
+                        "kind": "NamedType",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "Boolean"
+                        }
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "defaultValue": null
+            }
+        ]
+    }
+]

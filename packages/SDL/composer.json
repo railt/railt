@@ -27,8 +27,10 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "railt/parser": "^2.0",
-        "railt/contracts": "^2.0"
+        "phplrt/parser": "~2.2.2",
+        "psr/simple-cache": "^1.0",
+        "railt/contracts": "^2.0",
+        "graphql/type-system-contracts": "~14.0|dev-master@dev"
     },
     "autoload": {
         "psr-4": {
@@ -38,7 +40,9 @@
     "require-dev": {
         "behat/behat": "^3.5",
         "vimeo/psalm": "^3.5",
-        "phpunit/phpunit": "^8.3"
+        "phpunit/phpunit": "^8.3",
+        "phplrt/phplrt": "~2.2.2",
+        "twig/twig": "~2.12"
     },
     "autoload-dev": {
         "psr-4": {

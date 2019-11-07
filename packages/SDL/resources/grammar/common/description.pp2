@@ -1,0 +1,10 @@
+
+//
+// Types description/documentation
+//
+
+#Description -> {
+    return new \Railt\SDL\Ast\Description($children ?: null);
+}
+  : StringValue()?
+  ;

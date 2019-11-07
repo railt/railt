@@ -1,0 +1,386 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "IntValue",
+                            "value": 123123
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "IntValue",
+                            "value": 0
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "IntValue",
+                            "value": 0
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "IntValue",
+                            "value": -23
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": 0.12
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": 23.23
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": -0.12
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": -23.23
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": 2.0e+23
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": 0
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": 2.0e-23
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": null,
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "test"
+                },
+                "arguments": [
+                    {
+                        "kind": "Argument",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "value": {
+                            "kind": "FloatValue",
+                            "value": 0
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

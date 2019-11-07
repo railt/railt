@@ -1,0 +1,48 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Input Fields
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL Input Object defines a set of input fields; the input fields
+ * are either scalars, enums, or other input objects. This allows
+ * arguments to accept arbitrarily complex structs.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#InputFieldsDefinition
+ */
+
+#InputValueDefinitions -> {
+    return new \Railt\SDL\Ast\Generic\InputValueDefinitionCollection($children);
+}
+  : InputValueDefinition()+
+  ;
+
+#InputValueDefinition -> {
+    $value = new \Railt\SDL\Ast\Definition\InputValueDefinitionNode(
+        $children[1],
+        $children[2]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $value->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $value->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Value\ValueNode:
+                $value->defaultValue = $child;
+                break;
+        }
+    }
+
+    return $value;
+}
+  : Description()
+    Identifier() ::T_COLON:: TypeHint()
+    (::T_EQUAL:: Value())?
+    Directives()? ::T_COMMA::?
+  ;

@@ -1,0 +1,59 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Objects
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL queries are hierarchical and composed, describing a tree of
+ * information. While Scalar types describe the leaf values of these
+ * hierarchical queries, Objects describe the intermediate levels.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Objects
+ */
+
+#ObjectTypeDefinition -> {
+    $object = new \Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode($children[1]);
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $object->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\FieldDefinitionCollection:
+                $object->fields = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $object->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
+                $object->interfaces = $child;
+                break;
+        }
+    }
+
+    return $object;
+}
+  : Description()
+    ObjectTypeDefinitionExceptDescription()
+  ;
+
+#ObjectTypeDefinitionExceptDescription
+  : ObjectTypeDefinitionHead()
+    ObjectTypeDefinitionBody()?
+  ;
+
+#ObjectTypeDefinitionHead
+  : ::T_TYPE:: TypeName()
+    ImplementsInterfaces()?
+    Directives()?
+  ;
+
+#ObjectTypeDefinitionBody
+  : ::T_BRACE_OPEN::
+      FieldDefinitions()?
+    ::T_BRACE_CLOSE::
+  ;

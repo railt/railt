@@ -24,13 +24,13 @@ class TypeDumper implements TypeDumperInterface
      */
     private const DEFAULT_DUMPER_RESOLVERS = [
         Resolver\ClosureResolver::class,
+        Resolver\StringResolver::class,
         Resolver\CallableResolver::class,
         Resolver\NullResolver::class,
         Resolver\IntResolver::class,
         Resolver\FloatResolver::class,
         Resolver\BoolResolver::class,
         Resolver\ResourceResolver::class,
-        Resolver\StringResolver::class,
         Resolver\GeneratorResolver::class,
         Resolver\ReflectionParameterResolver::class,
         Resolver\ReflectionTypeResolver::class,

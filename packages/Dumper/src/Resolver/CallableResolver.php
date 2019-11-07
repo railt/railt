@@ -13,7 +13,7 @@ namespace Railt\Dumper\Resolver;
 /**
  * Class CallableResolver
  */
-class CallableResolver extends ClosureResolver
+class CallableResolver extends ClosureResolver implements SelfDisplayed
 {
     /**
      * @param mixed $value
@@ -31,6 +31,16 @@ class CallableResolver extends ClosureResolver
     public function type($value): string
     {
         return 'callable';
+    }
+
+    /**
+     * @param string $type
+     * @param string $value
+     * @return string
+     */
+    public function render(string $type, string $value): string
+    {
+        return $type . ' ' . $value;
     }
 
     /**

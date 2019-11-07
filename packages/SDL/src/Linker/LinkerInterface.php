@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of Railt package.
  *
@@ -10,20 +9,63 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Linker;
 
-use Railt\Parser\Ast\NameNode;
-use Railt\Parser\Ast\Node;
-use Railt\SDL\Compiler;
-
 /**
  * Interface LinkerInterface
  */
 interface LinkerInterface
 {
     /**
-     * @param Compiler $compiler
-     * @param NameNode $name
-     * @param Node|null $from
+     * @var int
+     */
+    public const LINK_ENUM_TYPE = 2;
+
+    /**
+     * @var int
+     */
+    public const LINK_INPUT_OBJECT_TYPE = 4;
+
+    /**
+     * @var int
+     */
+    public const LINK_INTERFACE_TYPE = 8;
+
+    /**
+     * @var int
+     */
+    public const LINK_OBJECT_TYPE = 16;
+
+    /**
+     * @var int
+     */
+    public const LINK_SCALAR_TYPE = 32;
+
+    /**
+     * @var int
+     */
+    public const LINK_UNION_TYPE = 64;
+
+    /**
+     * @var int
+     */
+    public const LINK_TYPE = self::LINK_ENUM_TYPE | self::LINK_INPUT_OBJECT_TYPE |
+        self::LINK_INTERFACE_TYPE | self::LINK_OBJECT_TYPE | self::LINK_SCALAR_TYPE |
+        self::LINK_UNION_TYPE;
+
+    /**
+     * @var int
+     */
+    public const LINK_DIRECTIVE = 128;
+
+    /**
+     * @var int
+     */
+    public const LINK_SCHEMA = 256;
+
+    /**
+     * @param int $type
+     * @param string|null $name
      * @return void
      */
-    public function load(Compiler $compiler, NameNode $name, Node $from = null): void;
+    public function __invoke(int $type, ?string $name): void;
 }
+

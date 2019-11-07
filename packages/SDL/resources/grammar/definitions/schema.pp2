@@ -1,0 +1,91 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Schema
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL service's collective type system capabilities are referred
+ * to as that service's "schema". A schema is defined in terms of the
+ * types and directives it supports as well as the root operation types for
+ * each kind of operation: query, mutation, and subscription; this
+ * determines the place in the type system where those operations begin.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Schema
+ */
+
+#SchemaDefinition -> {
+    $operations = \array_filter($children, static function ($child): bool {
+        return $child instanceof \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection;
+    });
+
+    $schema = new \Railt\SDL\Ast\Definition\SchemaDefinitionNode(
+        \reset($operations) ?: new \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection([])
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $schema->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $schema->directives = $child;
+                break;
+        }
+    }
+
+    return $schema;
+}
+  : Description()
+    SchemaDefinitionExceptDescription()
+  ;
+
+#SchemaDefinitionExceptDescription
+  : SchemaDefinitionHead()
+    SchemaDefinitionBody()?
+  ;
+
+#SchemaDefinitionHead
+  : ::T_SCHEMA:: Directives()?
+  ;
+
+#SchemaDefinitionBody
+  : ::T_BRACE_OPEN::
+      OperationTypeDefinitions()?
+    ::T_BRACE_CLOSE::
+  ;
+
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Schema Fields
+ * --------------------------------------------------------------------------
+ *
+ * A schema defines the initial root operation type for each kind of
+ * operation it supports: query, mutation, and subscription; this determines
+ * the place in the type system where those operations begin.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Root-Operation-Types
+ */
+
+#OperationTypeDefinitions -> {
+    return new \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection($children);
+}
+  : (OperationTypeDefinition() ::T_COMMA::?)+
+
+#OperationTypeDefinition -> {
+    return new \Railt\SDL\Ast\Definition\OperationTypeDefinitionNode(
+        $children[0]->getValue(),
+        $children[1]
+    );
+}
+  : SchemaFieldName() ::T_COLON:: NamedType()
+  ;
+
+#SchemaFieldName
+  : <T_QUERY>
+  | <T_MUTATION>
+  | <T_SUBSCRIPTION>
+  ;

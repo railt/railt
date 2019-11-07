@@ -1,0 +1,68 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "IString"
+                }
+            }
+        ],
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Boolean"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "TBoolean"
+        },
+        "description": null,
+        "directives": []
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "IString"
+        },
+        "description": null,
+        "directives": []
+    }
+]

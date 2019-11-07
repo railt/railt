@@ -1,0 +1,69 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Directives
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL schema describes directives which are used to annotate
+ * various parts of a GraphQL document as an indicator that they should
+ * be evaluated differently by a validator, executor, or client
+ * tool such as a code generator.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Type-System.Directives
+ */
+
+#DirectiveDefinition -> {
+    $directive = new \Railt\SDL\Ast\Definition\DirectiveDefinitionNode(
+        $children[1],
+        \end($children)
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $directive->description = $child->value;
+                break;
+
+            case \is_bool($child):
+                $directive->repeatable = true;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
+                $directive->arguments = $child;
+                break;
+        }
+    }
+
+    return $directive;
+}
+  : Description()
+    DirectiveDefinitionHead()
+    DirectiveDefinitionBody()
+  ;
+
+#DirectiveDefinitionHead
+  : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: TypeName()
+    (::T_PARENTHESIS_OPEN:: InputValueDefinitions()? ::T_PARENTHESIS_CLOSE::)?
+    DirectiveIsRepeatable()?
+  ;
+
+#DirectiveIsRepeatable -> {
+    return ! \is_array($children);
+}
+  : <T_REPEATABLE>
+  ;
+
+#DirectiveDefinitionBody -> {
+    return new \Railt\SDL\Ast\Generic\DirectiveLocationCollection($children);
+}
+  : ::T_ON:: DirectiveLocations()
+  ;
+
+#DirectiveLocations
+  : ::T_OR::? DirectiveLocation() (::T_OR:: DirectiveLocation())*
+  ;
+
+#DirectiveLocation
+  : Identifier()
+  ;

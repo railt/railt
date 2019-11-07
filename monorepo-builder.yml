@@ -27,6 +27,7 @@ parameters:
             symfony/var-dumper: '~3.4|~4.0|~5.0'
             symplify/monorepo-builder: '^6.1'
             squizlabs/php_codesniffer: '^3.4'
+            monolog/monolog: '~2.0'
     directories_to_repositories:
         packages/Config: 'git@github.com:railt/config.git'
         packages/Container: 'git@github.com:railt/container.git'
@@ -37,6 +38,4 @@ parameters:
         packages/Http: 'git@github.com:railt/http.git'
         packages/HttpFactory: 'git@github.com:railt/http-factory.git'
         packages/Observer: 'git@github.com:railt/observer.git'
-        packages/Parser: 'git@github.com:railt/parser.git'
         packages/SDL: 'git@github.com:railt/sdl.git'
-        packages/TypeSystem: 'git@github.com:railt/type-system.git'

@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Railt\Dumper\Facade;
-use Railt\GraphQL\ExecutorExtension;
 use Railt\Discovery\DiscoveryServiceExtension;
 use Railt\Contracts\Config\RepositoryInterface;
 use Railt\SDL\TypeSystemServiceExtension;
@@ -39,7 +38,6 @@ trait ExtensionsTrait
         DiscoveryServiceExtension::class,
         TypeSystemServiceExtension::class,
         HttpFactoryServiceExtension::class,
-        ExecutorExtension::class,
     ];
 
     /**

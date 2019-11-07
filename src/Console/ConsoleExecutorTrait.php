@@ -35,7 +35,7 @@ trait ConsoleExecutorTrait
         \Railt\Foundation\Console\Command\ExtensionsListCommand::class,
 
         // Package commands
-        \Railt\Parser\Console\ParseCommand::class,
+        \Railt\SDL\Console\ParseCommand::class,
     ];
 
     /**
@@ -47,7 +47,7 @@ trait ConsoleExecutorTrait
         \Railt\Foundation\Console\Command\RepoSyncCommand::class,
 
         // Package commands
-        \Railt\Parser\Console\CompileCommand::class,
+        \Railt\SDL\Console\CompileCommand::class,
     ];
 
     /**

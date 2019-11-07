@@ -11,73 +11,69 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Phplrt\Source\File;
-use Railt\Parser\Factory;
-use Railt\SDL\Executor\Executor;
-use Railt\SDL\Document\Document;
-use Railt\SDL\Document\Decorator;
-use Railt\SDL\Linker\LinkerInterface;
+use Ramsey\Collection\Set;
+use Phplrt\Visitor\Traverser;
+use Railt\SDL\Builder\Factory;
+use Railt\SDL\Parser\Generator;
+use Railt\SDL\Executor\Registry;
+use Phplrt\Contracts\Ast\NodeInterface;
+use Railt\Contracts\SDL\CompilerInterface;
+use Railt\Contracts\SDL\DocumentInterface;
+use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
-use Railt\SDL\Document\MutableDocument;
 use Phplrt\Source\Exception\NotFoundException;
-use Railt\Parser\Exception\SyntaxErrorException;
+use Railt\SDL\Executor\Linker\NamedTypeLinker;
+use Phplrt\Contracts\Source\ReadableInterface;
+use Railt\SDL\Executor\Registrar\TypeDefinition;
+use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use Phplrt\Source\Exception\NotReadableException;
-use Railt\Contracts\TypeSystem\CompilerInterface;
-use Railt\Contracts\TypeSystem\DocumentInterface;
+use Railt\SDL\Executor\Registrar\SchemaDefinition;
+use GraphQL\Contracts\TypeSystem\DirectiveInterface;
+use Railt\SDL\Executor\Registrar\DirectiveDefinition;
+use Railt\SDL\Executor\Linker\EnumTypeExtensionLinker;
+use Railt\SDL\Executor\Linker\DirectiveExecutionLinker;
+use Railt\SDL\Executor\Linker\UnionTypeExtensionLinker;
+use Railt\SDL\Executor\Linker\ObjectTypeExtensionLinker;
+use Railt\SDL\Executor\Linker\ScalarTypeExtensionLinker;
+use Railt\SDL\Executor\Linker\SchemaTypeExtensionLinker;
+use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use Railt\SDL\Executor\Linker\InterfaceTypeExtensionLinker;
+use Railt\SDL\Executor\Linker\InputObjectTypeExtensionLinker;
 use Phplrt\Contracts\Parser\Exception\ParserRuntimeExceptionInterface;
 
 /**
  * Class Compiler
  */
-class Compiler implements CompilerInterface
+final class Compiler implements CompilerInterface
 {
     /**
      * @var int
      */
-    public const MODE_EMPTY = 0x00;
+    public const SPEC_RAW = 0x00;
 
     /**
      * @var int
      */
-    public const MODE_STANDARD = 0x02;
+    public const SPEC_JUNE_2018 = 0x02;
 
     /**
      * @var int
      */
-    public const MODE_INTROSPECTION = 0x04;
+    public const SPEC_RAILT = self::SPEC_JUNE_2018 | 0x04;
 
     /**
      * @var int
      */
-    public const MODE_EXTENDED = 0x08;
+    public const SPEC_INTROSPECTION = self::SPEC_JUNE_2018 | 0x08;
 
     /**
-     * @var int
+     * @var string[]
      */
-    private const FLAGS_EXTRAS = self::MODE_EXTENDED;
-
-    /**
-     * @var int
-     */
-    private const FLAGS_STDLIB = self::MODE_STANDARD | self::MODE_INTROSPECTION | self::MODE_EXTENDED;
-
-    /**
-     * @var int
-     */
-    private const FLAGS_INTROSPECTION = self::MODE_EXTENDED | self::MODE_INTROSPECTION;
-
-    /**
-     * @var int[]
-     */
-    private const LIBRARIES = [
-        __DIR__ . '/../resources/stdlib/extras.graphql'        => self::FLAGS_EXTRAS,
-        __DIR__ . '/../resources/stdlib/stdlib.graphql'        => self::FLAGS_STDLIB,
-        __DIR__ . '/../resources/stdlib/introspection.graphql' => self::FLAGS_INTROSPECTION,
+    private const SPEC_MAPPINGS = [
+        0x02 => __DIR__ . '/../resources/stdlib/stdlib.graphql',
+        0x04 => __DIR__ . '/../resources/stdlib/extra.graphql',
+        0x08 => __DIR__ . '/../resources/stdlib/introspection.graphql',
     ];
-
-    /**
-     * @var Document
-     */
-    private Document $document;
 
     /**
      * @var ParserInterface
@@ -85,41 +81,50 @@ class Compiler implements CompilerInterface
     private ParserInterface $parser;
 
     /**
-     * @var Executor
+     * @var Document
      */
-    private Executor $executor;
+    private Document $document;
+
+    /**
+     * @var Set|callable[]
+     */
+    private Set $loaders;
+
+    /**
+     * @var array|iterable[]
+     */
+    private array $cache = [];
 
     /**
      * Compiler constructor.
      *
-     * @param int $mode
+     * @param int $spec
      * @param ParserInterface|null $parser
      * @throws NotFoundException
      * @throws NotReadableException
      * @throws \Throwable
      */
-    public function __construct(int $mode = self::FLAGS_INTROSPECTION, ParserInterface $parser = null)
+    public function __construct(int $spec = self::SPEC_RAILT, ParserInterface $parser = null)
     {
-        $this->parser = $parser ?? Factory::sdl();
+        $this->document = new Document();
+        $this->parser = $parser ?? new Parser();
+        $this->loaders = new Set('callable');
 
-        $this->document = new MutableDocument();
-        $this->executor = new Executor($this);
-
-        $this->boot($mode);
+        $this->loadSpec($spec);
     }
 
     /**
-     * @param int $mode
+     * @param int $spec
      * @return void
      * @throws NotFoundException
      * @throws NotReadableException
      * @throws \Throwable
      */
-    private function boot(int $mode): void
+    private function loadSpec(int $spec): void
     {
-        foreach (self::LIBRARIES as $library => $opt) {
-            if (($opt & $mode) !== 0) {
-                $this->preload(File::fromPathname($library));
+        foreach (self::SPEC_MAPPINGS as $code => $file) {
+            if (($spec & $code) === $code) {
+                $this->preload(File::fromPathname($file));
             }
         }
     }
@@ -128,35 +133,171 @@ class Compiler implements CompilerInterface
      * {@inheritDoc}
      * @throws \Throwable
      */
-    public function preload($source, array $types = null): void
+    public function preload($source): self
     {
-        $this->executor->execute($this->document, $this->parser->parse($source));
+        $this->build($this->parse($source), $this->document);
+
+        return $this;
     }
 
     /**
+     * Converts RL/SDL AST to a finite set of GraphQL types.
+     *
+     * @param iterable $ast
+     * @param Document|null $dictionary
      * @return DocumentInterface
      */
-    public function getDocument(): DocumentInterface
+    public function build(iterable $ast, Document $dictionary = null): DocumentInterface
     {
-        return $this->document;
+        $registry = new Registry();
+        $dictionary ??= $this->document;
+
+        /**
+         * First tree walk:
+         *  - Registering all types in the registry.
+         *  - Verification that this type has not been previously
+         *      registered in the dictionary (list of builded types)
+         *      or registry (list of compiled types).
+         */
+        $ast = (new Traverser())
+            ->with(new TypeDefinition($dictionary, $registry))
+            ->with(new SchemaDefinition($dictionary, $registry))
+            ->with(new DirectiveDefinition($dictionary, $registry))
+            ->traverse($ast);
+
+        /**
+         * Second tree walk:
+         *  - Checks the types of the relationships.
+         *  - Checks the types in expressions.
+         *  - Loads missing types for correct compilation.
+         */
+        $ast = (new Traverser())
+            ->with(new DirectiveExecutionLinker($dictionary, $registry, $this->loaders))
+            ->with(new NamedTypeLinker($dictionary, $registry, $this->loaders))
+            ->with(new EnumTypeExtensionLinker($dictionary, $registry, $this->loaders))
+            ->with(new InputObjectTypeExtensionLinker($dictionary, $registry, $this->loaders))
+            ->with(new InterfaceTypeExtensionLinker($dictionary, $registry, $this->loaders))
+            ->with(new ObjectTypeExtensionLinker($dictionary, $registry, $this->loaders))
+            ->with(new ScalarTypeExtensionLinker($dictionary, $registry, $this->loaders))
+            ->with(new UnionTypeExtensionLinker($dictionary, $registry, $this->loaders))
+            ->with(new SchemaTypeExtensionLinker($dictionary, $registry, $this->loaders))
+            ->traverse($ast);
+
+        /**
+         * Last tree walk:
+         *  - Convert from AST to a set of finite DTO types.
+         */
+        return (new Factory($dictionary))
+            ->loadFrom($registry);
+    }
+
+    /**
+     * @param string|resource|ReadableInterface $source
+     * @return array|iterable|NodeInterface|NodeInterface[]
+     * @throws ParserRuntimeExceptionInterface
+     * @throws \Throwable
+     */
+    private function parse($source): iterable
+    {
+        $source = File::new($source);
+
+        return $this->cache[$this->hash($source)] ??= $this->parser->parse($source);
+    }
+
+    /**
+     * @param ReadableInterface $source
+     * @return string
+     */
+    private function hash(ReadableInterface $source): string
+    {
+        if ($source instanceof FileInterface) {
+            return \md5_file($source->getPathname());
+        }
+
+        return \md5($source->getContents());
+    }
+
+    /**
+     * @return void
+     * @throws NotFoundException
+     * @throws NotReadableException
+     * @throws \Throwable
+     */
+    public function rebuild(): void
+    {
+        (new Generator())->generateAndSave();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function withType(NamedTypeInterface $type, bool $overwrite = false): self
+    {
+        if ($overwrite || ! $this->document->typeMap->containsKey($type->getName())) {
+            $this->document->typeMap->put($type->getName(), $type);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function withDirective(DirectiveInterface $directive, bool $overwrite = false): self
+    {
+        if ($overwrite || ! $this->document->directives->containsKey($directive->getName())) {
+            $this->document->directives->put($directive->getName(), $directive);
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function withSchema(SchemaInterface $schema, bool $overwrite = false): self
+    {
+        if ($overwrite || ! $this->document->schema) {
+            $this->document->schema = $schema;
+        }
+
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      * @throws \Throwable
      */
-    public function compile($source, array $types = null): DocumentInterface
+    public function compile($source): DocumentInterface
     {
-        $this->executor->execute($document = new Decorator($this->document), $this->parser->parse($source));
+        $pointcut = clone $this->document;
 
-        return $document;
+        $result = $this->build($this->parse($source), $this->document);
+
+        $this->document = $pointcut;
+
+        return $result;
     }
 
     /**
-     * {@inheritDoc}
+     * @param callable $loader
+     * @return $this
      */
-    public function autoload(LinkerInterface $linker): void
+    public function autoload(callable $loader): self
     {
-        $this->executor->addLinker($linker);
+        $this->loaders->add($loader);
+
+        return $this;
+    }
+
+    /**
+     * @param callable $loader
+     * @return $this
+     */
+    public function cancelAutoload(callable $loader): self
+    {
+        $this->loaders->remove($loader);
+
+        return $this;
     }
 }

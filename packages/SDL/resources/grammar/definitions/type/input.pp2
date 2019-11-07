@@ -1,0 +1,55 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Inputs
+ * --------------------------------------------------------------------------
+ *
+ * Fields may accept arguments to configure their behavior. These inputs
+ * are often scalars or enums, but they sometimes need to represent more
+ * complex values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Objects
+ */
+
+#InputObjectTypeDefinition -> {
+    $input = new \Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $input->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $input->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
+                $input->fields = $child;
+                break;
+        }
+    }
+
+    return $input;
+}
+  : Description()
+    InputObjectTypeDefinitionExceptDescription()
+  ;
+
+#InputObjectTypeDefinitionExceptDescription
+  : InputObjectTypeDefinitionHead()
+    InputObjectTypeDefinitionBody()?
+  ;
+
+#InputObjectTypeDefinitionHead
+  : ::T_INPUT:: TypeName() Directives()?
+  ;
+
+#InputObjectTypeDefinitionBody
+  : ::T_BRACE_OPEN::
+      InputValueDefinitions()?
+    ::T_BRACE_CLOSE::
+  ;

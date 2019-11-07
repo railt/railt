@@ -15,7 +15,7 @@ use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
 use Railt\Contracts\GraphQL\FactoryInterface;
 use Railt\Contracts\Container\ContainerInterface;
-use Railt\Contracts\TypeSystem\DocumentInterface;
+use Railt\Contracts\SDL\DocumentInterface;
 use Railt\Contracts\Pipeline\Http\HandlerInterface;
 use Railt\Http\Pipeline\Handler\RequestDecoratorHandler;
 

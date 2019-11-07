@@ -1,0 +1,145 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Punctuators and Keywords
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL documents include punctuation in order to describe structure.
+ * GraphQL is a data description language and not a programming language,
+ * therefore GraphQL lacks the punctuation often used to describe
+ * mathematical expressions.
+ *
+ * @see http://facebook.github.io/graphql/#sec-Punctuators
+ */
+
+
+%token T_AND                    &
+%token T_OR                     \|
+%token T_PARENTHESIS_OPEN       \(
+%token T_PARENTHESIS_CLOSE      \)
+%token T_BRACKET_OPEN           \[
+%token T_BRACKET_CLOSE          \]
+%token T_BRACE_OPEN             {
+%token T_BRACE_CLOSE            }
+%token T_NON_NULL               !
+%token T_EQUAL                  =
+%token T_DIRECTIVE_AT           @
+%token T_COLON                  :
+%token T_COMMA                  ,
+
+/**
+ * Values
+ */
+//%token T_HEX_NUMBER             \-?0x([0-9a-fA-F]+)
+//%token T_BIN_NUMBER             \-?0b([0-1]+)
+
+%token T_FLOAT_EXP              \-?(?:0|[1-9][0-9]*)(?:[eE][\+\-]?[0-9]+)
+%token T_FLOAT                  \-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)(?:[eE][\+\-]?[0-9]+)?
+%token T_INT                    \-?(?:0|[1-9][0-9]*)
+%token T_TRUE                   (?<=\b)true\b
+%token T_FALSE                  (?<=\b)false\b
+%token T_NULL                   (?<=\b)null\b
+%token T_BLOCK_STRING           """((?:\\"|(?!""").)*)"""
+%token T_STRING                 "([^"\\]*(?:\\.[^"\\]*)*)"
+
+/**
+ * Common
+ */
+%token T_TYPE                   (?<=\b)type\b
+%token T_ENUM                   (?<=\b)enum\b
+%token T_UNION                  (?<=\b)union\b
+%token T_INTERFACE              (?<=\b)interface\b
+%token T_SCHEMA                 (?<=\b)schema\b
+%token T_SCALAR                 (?<=\b)scalar\b
+%token T_DIRECTIVE              (?<=\b)directive\b
+%token T_INPUT                  (?<=\b)input\b
+%token T_QUERY                  (?<=\b)query\b
+%token T_MUTATION               (?<=\b)mutation\b
+%token T_ON                     (?<=\b)on\b
+%token T_SUBSCRIPTION           (?<=\b)subscription\b
+%token T_EXTEND                 (?<=\b)extend\b
+%token T_EXTENDS                (?<=\b)extends\b
+%token T_IMPLEMENTS             (?<=\b)implements\b
+%token T_REPEATABLE             (?<=\b)repeatable\b
+
+/**
+ * Common
+ */
+%token T_VARIABLE               \$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)
+%token T_NAME                   [a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Ignored Tokens
+ * --------------------------------------------------------------------------
+ *
+ * Before and after every lexical token may be any amount of ignored
+ * tokens including WhiteSpace and Comment. No ignored regions of a source
+ * document are significant, however ignored source characters may appear
+ * within a lexical token in a significant way, for example a String may
+ * contain white space characters.
+ *
+ * No characters are ignored while parsing a given token, as an example no white
+ * space characters are permitted between the characters defining a FloatValue.
+ *
+ * - T_COMMENT      https://graphql.github.io/graphql-spec/June2018/#sec-Comments
+ * - T_BOM          https://graphql.github.io/graphql-spec/June2018/#sec-Unicode
+ * - T_HTAB         https://graphql.github.io/graphql-spec/June2018/#sec-White-Space
+ * - T_WHITESPACE   https://graphql.github.io/graphql-spec/June2018/#sec-White-Space
+ * - T_LF           https://graphql.github.io/graphql-spec/June2018/#sec-Line-Terminators
+ * - T_CR           https://graphql.github.io/graphql-spec/June2018/#sec-Line-Terminators
+ *
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Source-Text.Ignored-Tokens
+ *
+ */
+
+%skip T_COMMENT                #[^\n]*
+%skip T_BOM                    \x{FEFF}
+%skip T_HTAB                   \x09+
+%skip T_WHITESPACE             \x20+
+%skip T_LF                     \x0A+
+%skip T_CR                     \x0D+
+
+//
+// -------------------------------------------
+//  Other whitespaces (out of spec)
+// -------------------------------------------
+//  - line tabulation               | U+000B
+//  - form feed                     | U+000C
+//  - next line                     | U+0085
+//  - no-break space                | U+00A0
+//  - ogham space mark              | U+1680
+//  - en quad                       | U+2000
+//  - em quad                       | U+2001
+//  - en space                      | U+2002
+//  - em space                      | U+2003
+//  - three-per-em space            | U+2004
+//  - four-per-em space             | U+2005
+//  - six-per-em space              | U+2006
+//  - figure space                  | U+2007
+//  - punctuation space             | U+2008
+//  - thin space                    | U+2009
+//  - hair space                    | U+200A
+//  - line separator                | U+2028
+//  - paragraph separator           | U+2029
+//  - narrow no-break space         | U+202F
+//  - medium mathematical space     | U+205F
+//  - ideographic space             | U+3000
+// -------------------------------------------
+//
+
+%skip T_INVISIBLE_WHITESPACES  (?:\x{000B}|\x{000C}|\x{0085}|\x{00A0}|\x{1680}|[\x{2000}-\x{200A}]|\x{2028}|\x{2029}|\x{202F}|\x{205F}|\x{3000})+
+
+// -------------------------------------------
+//  Other non-whitespace chars (out of spec):
+// -------------------------------------------
+//  - mongolian vowel separator     | U+180E
+//  - zero width space              | U+200B
+//  - zero width non-joiner         | U+200C
+//  - zero width joiner             | U+200D
+//  - word joiner                   | U+2060
+// -------------------------------------------
+//
+
+%skip T_INVISIBLE              (?:\x{180E}|\x{200B}|\x{200C}|\x{200D}|\x{2060})+
