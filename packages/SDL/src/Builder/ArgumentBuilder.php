@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\TypeSystem\Argument;
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use Railt\SDL\Ast\Definition\InputValueDefinitionNode;
+use Railt\TypeSystem\Argument;
 
 /**
- * @property-read InputValueDefinitionNode $ast
+ * @property InputValueDefinitionNode $ast
  */
 class ArgumentBuilder extends TypeBuilder
 {

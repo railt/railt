@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\TypeSystem\Type\InputObjectType;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\InputTypeInterface;
 use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
+use Railt\TypeSystem\Type\InputObjectType;
 
 /**
- * @property-read InputObjectTypeDefinitionNode $ast
+ * @property InputObjectTypeDefinitionNode $ast
  */
 class InputObjectTypeBuilder extends TypeBuilder
 {

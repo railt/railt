@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Type;
 
+use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 use Railt\TypeSystem\Common\FieldsTrait;
 use Railt\TypeSystem\Common\InterfacesTrait;
-use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 
 /**
  * {@inheritDoc}
