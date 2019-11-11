@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\TypeSystem\Field;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\FieldInterface;
 use Railt\SDL\Ast\Definition\FieldDefinitionNode;
 use Railt\SDL\Builder\Common\ArgumentsBuilderTrait;
-use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\TypeSystem\Field;
 
 /**
- * @property-read FieldDefinitionNode $ast
+ * @property FieldDefinitionNode $ast
  */
 class FieldBuilder extends TypeBuilder
 {

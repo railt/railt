@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Linker;
 
-use Railt\Dumper\Facade;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
+use Railt\Dumper\Facade;
 
 /**
  * Class LoggerLinker

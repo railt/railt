@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\TypeSystem\Type\EnumType;
-use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\EnumValueInterface;
 use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
+use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
 use Railt\SDL\Ast\Generic\EnumValueDefinitionCollection;
+use Railt\TypeSystem\Type\EnumType;
 
 /**
- * @property-read EnumTypeDefinitionNode $ast
+ * @property EnumTypeDefinitionNode $ast
  */
 class EnumTypeBuilder extends TypeBuilder
 {

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder\Common;
 
-use Railt\SDL\Ast\DefinitionNode;
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\SDL\Ast\DefinitionNode;
 use Railt\SDL\Ast\Generic\InputValueDefinitionCollection;
 
 /**

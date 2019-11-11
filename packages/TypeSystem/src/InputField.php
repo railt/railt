@@ -11,13 +11,13 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-use Railt\TypeSystem\Common\NameTrait;
-use Railt\TypeSystem\Common\TypeTrait;
 use GraphQL\Contracts\TypeSystem\Constraint;
-use Railt\TypeSystem\Common\DescriptionTrait;
-use Railt\TypeSystem\Common\DefaultValueTrait;
 use GraphQL\Contracts\TypeSystem\InputFieldInterface;
 use GraphQL\Contracts\TypeSystem\Type\InputTypeInterface;
+use Railt\TypeSystem\Common\DefaultValueTrait;
+use Railt\TypeSystem\Common\DescriptionTrait;
+use Railt\TypeSystem\Common\NameTrait;
+use Railt\TypeSystem\Common\TypeTrait;
 
 /**
  * @method InputTypeInterface getType()

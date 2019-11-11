@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\TypeSystem\Type\ScalarType;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\Type\ScalarTypeInterface;
+use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
+use Railt\TypeSystem\Type\ScalarType;
 
 /**
- * @property-read ScalarTypeDefinitionNode $ast
+ * @property ScalarTypeDefinitionNode $ast
  */
 class ScalarTypeBuilder extends TypeBuilder
 {

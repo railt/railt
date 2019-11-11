@@ -68,4 +68,3 @@ interface LinkerInterface
      */
     public function __invoke(int $type, ?string $name): void;
 }
-
