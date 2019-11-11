@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace Railt\SDL\Executor\Linker;
 
 use Phplrt\Contracts\Ast\NodeInterface;
-use Phplrt\Source\Exception\NotAccessibleException;
 use Railt\SDL\Exception\TypeNotFoundException;
+use Phplrt\Source\Exception\NotAccessibleException;
 
 /**
  * Class TypeExtensionLinker

@@ -1,26 +1,36 @@
-name: Unit Testing
+name: Testing
 
 on: [pull_request, push]
 
 jobs:
   run:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     strategy:
-      max-parallel: 4
       matrix:
-        os: [ubuntu-18.04, windows-2019]
+        # 1) All allowed OS
+        os: [ubuntu, windows, macOS]
+        # 2) All allowed PHP versions greater than 7.4
         php: [7.4]
-    name: ${{ matrix.os }} / PHP ${{ matrix.php }}
+        # 3) Lowest and highest dependency versions
+        prefer: ['lowest', 'highest']
+    name: ${{ matrix.os }} / PHP ${{ matrix.php }} / ${{ matrix.prefer }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
-    - name: 'Preparation'
+      uses: actions/checkout@master
+
+    - name: PHP Installtion
       uses: shivammathur/setup-php@master
       with:
         php-version: ${{ matrix.php }}
         extension-csv: mbstring, dom, xsl, openssl, fileinfo
-    - name: Installation
-      run: composer require phpunit/phpunit --dev
-    - name: Unit Testing
-      run: ./vendor/bin/phpunit
 
+    - name: Composer Installation (Prefer Lowest)
+      if: matrix.prefer == 'lowest'
+      run: composer update --no-interaction --prefer-dist --no-suggest --prefer-lowest
+
+    - name: Composer Installation (Prefer Highest)
+      if: matrix.prefer == 'highest'
+      run: composer update --no-interaction --prefer-dist --no-suggest
+
+    - name: Unit Testing
+      run: composer run phpunit

@@ -1,9 +1,10 @@
-imports:
-    - packages/Config/behat.yml
-    - packages/Container/behat.yml
-    - packages/Discovery/behat.yml
-    - packages/Dumper/behat.yml
-    - packages/Http/behat.yml
-    - packages/HttpFactory/behat.yml
-    - packages/Observer/behat.yml
-    - packages/SDL/behat.yml
+default:
+    formatters:
+        pretty: true
+    suites:
+        default:
+            paths:
+                - '%paths.base%/tests/feature'
+            contexts:
+                - Railt\Tests\Feature\Http\FeatureContext
+                - Railt\Tests\Feature\SDL\FeatureContext

@@ -1,0 +1,48 @@
+[
+    {
+        "kind": "InterfaceTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "a"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "TestQuery"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "b"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "TestMutation"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "Example"
+        },
+        "description": null,
+        "directives": []
+    }
+]

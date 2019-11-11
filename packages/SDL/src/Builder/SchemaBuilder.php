@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\TypeSystem\Schema;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
-use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
-use Railt\SDL\TypeSystem\Schema;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
 
 /**
- * @property SchemaDefinitionNode $ast
+ * @property-read SchemaDefinitionNode $ast
  */
 class SchemaBuilder extends TypeBuilder
 {

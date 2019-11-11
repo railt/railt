@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Linker;
 
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 use Railt\Dumper\Facade;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerAwareInterface;
 
 /**
  * Class LoggerLinker
@@ -44,7 +44,7 @@ class LoggerLinker implements LinkerInterface, LoggerAwareInterface
     public function __invoke(int $type, ?string $name): void
     {
         $this->logger->info(\vsprintf(self::LOG_MESSAGE, [
-            Linker::toString($type),
+            Type::toString($type),
             Facade::value($type),
             Facade::value($name),
         ]));

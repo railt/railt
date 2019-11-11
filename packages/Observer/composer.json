@@ -29,15 +29,15 @@
         }
     },
     "require-dev": {
-        "behat/behat": "^3.5",
-        "vimeo/psalm": "^3.5",
         "phpunit/phpunit": "^8.3"
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Observer\\Tests\\Unit\\": "tests/unit",
-            "Railt\\Observer\\Tests\\Feature\\": "tests/feature"
+            "Railt\\Observer\\Tests\\Unit\\": "tests"
         }
+    },
+    "scripts": {
+        "phpunit": "@php vendor/phpunit/phpunit/phpunit"
     },
     "extra": {
         "branch-alias": {

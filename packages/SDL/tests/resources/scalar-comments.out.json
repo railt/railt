@@ -1,0 +1,29 @@
+[
+    {
+        "kind": "ScalarTypeDefinition",
+        "name": {
+            "kind": "Identifier",
+            "value": "Test"
+        },
+        "description": null,
+        "directives": []
+    },
+    {
+        "kind": "ScalarTypeDefinition",
+        "name": {
+            "kind": "Identifier",
+            "value": "Test2"
+        },
+        "description": null,
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "Directive"
+                },
+                "arguments": null
+            }
+        ]
+    }
+]

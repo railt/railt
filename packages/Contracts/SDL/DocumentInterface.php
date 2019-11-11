@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\SDL;
 
-use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
+use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 
 /**

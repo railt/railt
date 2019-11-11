@@ -38,17 +38,17 @@
         }
     },
     "require-dev": {
-        "behat/behat": "^3.5",
-        "vimeo/psalm": "^3.5",
         "phpunit/phpunit": "^8.3",
         "phplrt/phplrt": "~2.2.2",
         "twig/twig": "~2.12"
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\SDL\\Tests\\Unit\\": "tests/unit",
-            "Railt\\SDL\\Tests\\Feature\\": "tests/feature"
+            "Railt\\SDL\\Tests\\Unit\\": "tests"
         }
+    },
+    "scripts": {
+        "phpunit": "@php vendor/phpunit/phpunit/phpunit"
     },
     "extra": {
         "railt": {

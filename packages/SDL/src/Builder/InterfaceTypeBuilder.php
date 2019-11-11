@@ -9,27 +9,31 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
+use Railt\TypeSystem\Type\InterfaceType;
+use Railt\SDL\Builder\Common\FieldsBuilderTrait;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
-use Railt\SDL\TypeSystem\Type\InterfaceType;
+use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 
 /**
- * @property InterfaceTypeDefinitionNode $ast
+ * @property-read InterfaceTypeDefinitionNode $ast
  */
 class InterfaceTypeBuilder extends TypeBuilder
 {
+    use FieldsBuilderTrait;
+
     /**
      * @return DefinitionInterface|InterfaceTypeInterface
      */
     public function build(): InterfaceTypeInterface
     {
-        $interface = new InterfaceType();
-        $interface->name = $this->ast->name->value;
+        $interface = new InterfaceType([
+            'name' => $this->ast->name->value,
+        ]);
 
         $this->registerType($interface);
 
-        $interface->description = $this->description($this->ast->description);
+        $interface->description = $this->value($this->ast->description);
         $interface->fields = \iterator_to_array($this->buildFields($this->ast->fields));
         $interface->interfaces = \iterator_to_array($this->buildImplementedInterfaces($this->ast->interfaces));
 

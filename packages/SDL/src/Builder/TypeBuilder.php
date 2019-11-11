@@ -10,15 +10,16 @@ declare(strict_types=1);
 namespace Railt\SDL\Builder;
 
 use Railt\SDL\Document;
+use Railt\Dumper\Facade;
 use Railt\SDL\Executor\Registry;
 use Railt\SDL\Ast\Type\TypeNode;
 use Railt\SDL\Ast\DefinitionNode;
 use Railt\SDL\Ast\Type\ListTypeNode;
 use Railt\SDL\Ast\Type\NamedTypeNode;
 use Railt\SDL\Ast\Type\NonNullTypeNode;
-use Railt\SDL\TypeSystem\Type\ListType;
+use Railt\TypeSystem\Type\ListType;
 use Railt\SDL\Ast\Value\StringValueNode;
-use Railt\SDL\TypeSystem\Type\NonNullType;
+use Railt\TypeSystem\Type\NonNullType;
 use GraphQL\Contracts\TypeSystem\FieldInterface;
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
@@ -93,6 +94,23 @@ abstract class TypeBuilder
     }
 
     /**
+     * @param DefinitionInterface $definition
+     * @return DefinitionInterface
+     */
+    protected function registered(DefinitionInterface $definition): DefinitionInterface
+    {
+        if ($definition instanceof DirectiveInterface) {
+            return $this->registerDirective($definition);
+        }
+
+        if ($definition instanceof NamedTypeInterface) {
+            return $this->registerType($definition);
+        }
+
+        throw new \InvalidArgumentException('Invalid definition ' . Facade::dump($definition));
+    }
+
+    /**
      * @return DefinitionInterface
      */
     abstract public function build(): DefinitionInterface;
@@ -134,24 +152,6 @@ abstract class TypeBuilder
     }
 
     /**
-     * @param InputValueDefinitionCollection|null $arguments
-     * @return \Traversable|ArgumentInterface[]
-     */
-    protected function buildArguments(?InputValueDefinitionCollection $arguments): \Traversable
-    {
-        if ($arguments === null) {
-            return new \EmptyIterator();
-        }
-
-        foreach ($arguments as $argument) {
-            /** @var ArgumentInterface $definition */
-            $definition = $this->buildDefinition($argument);
-
-            yield $definition->getName() => $definition;
-        }
-    }
-
-    /**
      * @param DefinitionNode $node
      * @return DefinitionInterface
      */
@@ -164,27 +164,9 @@ abstract class TypeBuilder
      * @param StringValueNode|null $string
      * @return string|null
      */
-    protected function description(?StringValueNode $string): ?string
+    protected function value(?StringValueNode $string): ?string
     {
         return $string ? $string->value : null;
-    }
-
-    /**
-     * @param FieldDefinitionCollection|null $fields
-     * @return \Traversable|FieldInterface[]
-     */
-    protected function buildFields(?FieldDefinitionCollection $fields): \Traversable
-    {
-        if ($fields === null) {
-            return new \EmptyIterator();
-        }
-
-        foreach ($fields as $field) {
-            /** @var FieldInterface $definition */
-            $definition = $this->buildDefinition($field);
-
-            yield $definition->getName() => $definition;
-        }
     }
 
     /**

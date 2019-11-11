@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Linker;
 
-use Phplrt\Contracts\Ast\NodeInterface;
-use Phplrt\Source\Exception\NotAccessibleException;
 use Railt\SDL\Ast\DefinitionNode;
-use Railt\SDL\Ast\Extension\SchemaExtensionNode;
-use Railt\SDL\Ast\Type\NamedTypeNode;
-use Railt\SDL\Exception\TypeNotFoundException;
 use Railt\SDL\Linker\LinkerInterface;
+use Railt\SDL\Ast\Type\NamedTypeNode;
+use Phplrt\Contracts\Ast\NodeInterface;
+use Railt\SDL\Exception\TypeNotFoundException;
+use Railt\SDL\Ast\Extension\SchemaExtensionNode;
+use Phplrt\Source\Exception\NotAccessibleException;
 
 /**
  * Class SchemaTypeExtensionLinker

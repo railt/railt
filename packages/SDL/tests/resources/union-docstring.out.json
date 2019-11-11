@@ -1,0 +1,114 @@
+[
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "Story"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "Article"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "Advert"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "Feed"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"union Feed\"\n"
+        },
+        "directives": []
+    },
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "A"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "B"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "AnnotatedUnion"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"union AnnotatedUnion\"\n"
+        },
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "onUnion"
+                },
+                "arguments": null
+            }
+        ]
+    },
+    {
+        "kind": "UnionTypeDefinition",
+        "types": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "A"
+                }
+            },
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "B"
+                }
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "AnnotatedUnionTwo"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"union AnnotatedUnionTwo\"\n"
+        },
+        "directives": [
+            {
+                "kind": "Directive",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "onUnion"
+                },
+                "arguments": null
+            }
+        ]
+    }
+]

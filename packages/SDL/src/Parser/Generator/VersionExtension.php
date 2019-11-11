@@ -10,10 +10,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Parser\Generator;
 
-use PackageVersions\Versions;
-use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use PackageVersions\Versions;
+use Twig\Extension\AbstractExtension;
 
 /**
  * Class VersionExtension

@@ -1,0 +1,31 @@
+[
+    {
+        "kind": "EnumTypeDefinition",
+        "values": [
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "Red"
+                },
+                "description": null,
+                "directives": []
+            },
+            {
+                "kind": "EnumValueDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "Green"
+                },
+                "description": null,
+                "directives": []
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "Colour"
+        },
+        "description": null,
+        "directives": []
+    }
+]

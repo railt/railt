@@ -14,6 +14,10 @@ parameters:
         autoload:
             psr-4:
                 Railt\Foundation\: 'src'
+        autoload-dev:
+            psr-4:
+                Railt\Tests\Feature\: 'tests/feature'
+                Railt\Tests\Unit\: 'tests/unit'
         require:
             ocramius/package-versions: "~1.5"
             ramsey/collection: "~1.0"
@@ -34,7 +38,9 @@ parameters:
         packages/Contracts: 'git@github.com:railt/contracts.git'
         packages/Discovery: 'git@github.com:railt/discovery.git'
         packages/Dumper: 'git@github.com:railt/dumper.git'
+        packages/GraphQL: 'git@github.com:railt/graphql.git'
         packages/Http: 'git@github.com:railt/http.git'
         packages/HttpFactory: 'git@github.com:railt/http-factory.git'
         packages/Observer: 'git@github.com:railt/observer.git'
         packages/SDL: 'git@github.com:railt/sdl.git'
+        packages/TypeSystem: 'git@github.com:railt/type-system.git'

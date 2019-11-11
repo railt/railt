@@ -1,0 +1,102 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "TestQuery"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field2"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "TestMutation"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "TestQuery"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"type TestQuery\" type\n"
+        },
+        "directives": []
+    },
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field3"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "TestQuery"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            },
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field4"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "TestMutation"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": null
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "TestMutation"
+        },
+        "description": {
+            "kind": "StringValue",
+            "block": true,
+            "value": "\nDescription of \"type TestMutation\" type\n"
+        },
+        "directives": []
+    }
+]

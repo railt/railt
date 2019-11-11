@@ -2,9 +2,9 @@
 
 use Railt\SDL\Compiler;
 use Railt\SDL\Linker\Linker;
-use Railt\SDL\TypeSystem\Directive;
-use Railt\SDL\TypeSystem\Schema;
-use Railt\SDL\TypeSystem\Type\ObjectType;
+use Railt\TypeSystem\Directive;
+use Railt\TypeSystem\Schema;
+use Railt\TypeSystem\Type\ObjectType;
 
 require __DIR__ . '/../vendor/autoload.php';
 

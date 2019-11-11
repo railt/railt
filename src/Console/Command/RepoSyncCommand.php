@@ -36,9 +36,7 @@ class RepoSyncCommand extends Command
      */
     private const DIR_OUTPUT = [
         'CONTRIBUTING.md'     => '/.github',
-        'static-analysis.yml' => '/.github/workflows',
-        'unit.yml'            => '/.github/workflows',
-        'feature.yml'         => '/.github/workflows',
+        'unit.yml'            => '/.github/workflows'
     ];
 
     /**

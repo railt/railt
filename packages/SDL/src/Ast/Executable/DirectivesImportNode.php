@@ -14,4 +14,5 @@ namespace Railt\SDL\Ast\Executable;
  */
 class DirectivesImportNode extends ImportNode
 {
+
 }

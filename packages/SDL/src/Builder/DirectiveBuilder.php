@@ -9,8 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\SDL\TypeSystem\Directive;
+use Railt\TypeSystem\Directive;
 use Railt\SDL\Ast\Name\IdentifierNode;
+use Railt\SDL\Builder\Common\ArgumentsBuilderTrait;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
@@ -20,17 +21,20 @@ use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
  */
 class DirectiveBuilder extends TypeBuilder
 {
+    use ArgumentsBuilderTrait;
+
     /**
      * @return DirectiveInterface|DefinitionInterface
      */
     public function build(): DirectiveInterface
     {
-        $directive = new Directive();
-        $directive->name = $this->ast->name->value;
+        $directive = new Directive([
+            'name' => $this->ast->name->value
+        ]);
 
         $this->registerDirective($directive);
 
-        $directive->description = $this->description($this->ast->description);
+        $directive->description = $this->value($this->ast->description);
         $directive->locations = [...$this->buildLocations($this->ast->locations)];
         $directive->isRepeatable = $this->ast->repeatable;
         $directive->arguments = \iterator_to_array($this->buildArguments($this->ast->arguments));

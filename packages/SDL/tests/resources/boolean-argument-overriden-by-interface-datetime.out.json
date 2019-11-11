@@ -1,0 +1,104 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": [
+            {
+                "kind": "NamedType",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "IDateTime"
+                }
+            }
+        ],
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Boolean"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Identifier",
+                                "value": "DateTime"
+                            }
+                        },
+                        "description": null,
+                        "directives": [],
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "TBoolean"
+        },
+        "description": null,
+        "directives": []
+    },
+    {
+        "kind": "InterfaceTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Boolean"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "arg"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Identifier",
+                                "value": "Boolean"
+                            }
+                        },
+                        "description": null,
+                        "directives": [],
+                        "defaultValue": null
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "IDateTime"
+        },
+        "description": null,
+        "directives": []
+    }
+]

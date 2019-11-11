@@ -1,0 +1,53 @@
+[
+    {
+        "kind": "ObjectTypeDefinition",
+        "interfaces": null,
+        "fields": [
+            {
+                "kind": "FieldDefinition",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "field"
+                },
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "String"
+                    }
+                },
+                "description": null,
+                "directives": [],
+                "arguments": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": {
+                            "kind": "Identifier",
+                            "value": "value"
+                        },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": {
+                                "kind": "Identifier",
+                                "value": "String"
+                            }
+                        },
+                        "description": null,
+                        "directives": [],
+                        "defaultValue": {
+                            "kind": "StringValue",
+                            "block": true,
+                            "value": "\n        \"\" Double \"\" quote \"\"\n    "
+                        }
+                    }
+                ]
+            }
+        ],
+        "name": {
+            "kind": "Identifier",
+            "value": "Some"
+        },
+        "description": null,
+        "directives": []
+    }
+]

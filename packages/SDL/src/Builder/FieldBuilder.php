@@ -9,27 +9,31 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\TypeSystem\Field;
 use GraphQL\Contracts\TypeSystem\FieldInterface;
 use Railt\SDL\Ast\Definition\FieldDefinitionNode;
-use Railt\SDL\TypeSystem\Field;
+use Railt\SDL\Builder\Common\ArgumentsBuilderTrait;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 
 /**
- * @property FieldDefinitionNode $ast
+ * @property-read FieldDefinitionNode $ast
  */
 class FieldBuilder extends TypeBuilder
 {
+    use ArgumentsBuilderTrait;
+
     /**
      * @return FieldInterface|DefinitionInterface
      */
     public function build(): FieldInterface
     {
-        $field = new Field();
-        $field->name = $this->ast->name->value;
+        $field = new Field([
+            'name'        => $this->ast->name->value,
+            'description' => $this->value($this->ast->description),
+            'type'        => $this->buildType($this->ast->type),
+            'arguments'   => \iterator_to_array($this->buildArguments($this->ast->arguments)),
+        ]);
 
-        $field->type = $this->buildType($this->ast->type);
-        $field->description = $this->description($this->ast->description);
-        $field->arguments = \iterator_to_array($this->buildArguments($this->ast->arguments));
 
         return $field;
     }

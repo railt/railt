@@ -31,21 +31,21 @@
         }
     },
     "require-dev": {
-        "behat/behat": "^3.5",
-        "vimeo/psalm": "^3.5",
         "phpunit/phpunit": "^8.3",
         "illuminate/container": "~5.5|~6.0",
         "symfony/dependency-injection": "~3.4|~4.0|~5.0"
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Container\\Tests\\Unit\\": "tests/unit",
-            "Railt\\Container\\Tests\\Feature\\": "tests/feature"
+            "Railt\\Container\\Tests\\Unit\\": "tests"
         },
         "files": [
-            "tests/unit/Mock/global_test_function.php",
-            "tests/unit/Mock/test_function.php"
+            "tests/Mock/global_test_function.php",
+            "tests/Mock/test_function.php"
         ]
+    },
+    "scripts": {
+        "phpunit": "@php vendor/phpunit/phpunit/phpunit"
     },
     "provide": {
         "psr/container-implementation": "1.0",

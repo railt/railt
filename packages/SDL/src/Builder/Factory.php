@@ -24,6 +24,7 @@ use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\InputValueDefinitionNode;
 use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
 
 /**
  * Class Factory
@@ -34,19 +35,20 @@ class Factory
      * @var string|TypeBuilder
      */
     private const TYPE_MAPPINGS = [
-        SchemaDefinitionNode::class        => SchemaBuilder::class,
-        DirectiveDefinitionNode::class     => DirectiveBuilder::class,
+        SchemaDefinitionNode::class          => SchemaBuilder::class,
+        DirectiveDefinitionNode::class       => DirectiveBuilder::class,
 
         // TypeDefinitions
-        ObjectTypeDefinitionNode::class    => ObjectTypeBuilder::class,
-        InterfaceTypeDefinitionNode::class => InterfaceTypeBuilder::class,
-        ScalarTypeDefinitionNode::class    => ScalarTypeBuilder::class,
-        EnumTypeDefinitionNode::class      => EnumTypeBuilder::class,
+        ObjectTypeDefinitionNode::class      => ObjectTypeBuilder::class,
+        InterfaceTypeDefinitionNode::class   => InterfaceTypeBuilder::class,
+        ScalarTypeDefinitionNode::class      => ScalarTypeBuilder::class,
+        EnumTypeDefinitionNode::class        => EnumTypeBuilder::class,
+        InputObjectTypeDefinitionNode::class => InputObjectTypeBuilder::class,
 
         // Definitions
-        FieldDefinitionNode::class         => FieldBuilder::class,
-        InputValueDefinitionNode::class    => ArgumentBuilder::class,
-        EnumValueDefinitionNode::class     => EnumValueBuilder::class,
+        FieldDefinitionNode::class           => FieldBuilder::class,
+        InputValueDefinitionNode::class      => ArgumentBuilder::class,
+        EnumValueDefinitionNode::class       => EnumValueBuilder::class,
     ];
 
     /**

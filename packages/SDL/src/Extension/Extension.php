@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Extension;
 
-use Phplrt\Parser\Rule\Alternation;
-use Phplrt\Parser\Rule\Concatenation;
+use Railt\SDL\Ast\Node;
 use Phplrt\Parser\Rule\Lexeme;
 use Phplrt\Parser\Rule\Optional;
 use Phplrt\Parser\Rule\Repetition;
+use Phplrt\Parser\Rule\Alternation;
 use Phplrt\Visitor\VisitorInterface;
-use Railt\SDL\Ast\Node;
+use Phplrt\Parser\Rule\Concatenation;
 
 /**
  * Class Extension

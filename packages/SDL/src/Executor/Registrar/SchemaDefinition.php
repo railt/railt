@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Registrar;
 
-use Phplrt\Contracts\Ast\NodeInterface;
-use Phplrt\Source\Exception\NotAccessibleException;
 use Phplrt\Visitor\Traverser;
-use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
+use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Exception\TypeErrorException;
+use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
+use Phplrt\Source\Exception\NotAccessibleException;
 
 /**
  * Class SchemaDefinition

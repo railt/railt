@@ -9,13 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
+use Railt\TypeSystem\Argument;
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use Railt\SDL\Ast\Definition\InputValueDefinitionNode;
-use Railt\SDL\TypeSystem\Argument;
 
 /**
- * @property InputValueDefinitionNode $ast
+ * @property-read InputValueDefinitionNode $ast
  */
 class ArgumentBuilder extends TypeBuilder
 {
@@ -24,11 +24,11 @@ class ArgumentBuilder extends TypeBuilder
      */
     public function build(): ArgumentInterface
     {
-        $argument = new Argument();
-        $argument->name = $this->ast->name->value;
-
-        $argument->description = $this->description($this->ast->description);
-        $argument->type = $this->buildType($this->ast->type);
+        $argument = new Argument([
+            'name'        => $this->ast->name->value,
+            'description' => $this->value($this->ast->description),
+            'type'        => $this->buildType($this->ast->type),
+        ]);
 
         if ($this->ast->defaultValue) {
             $argument->defaultValue = $this->ast->defaultValue->toNative();

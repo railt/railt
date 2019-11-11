@@ -9,14 +9,14 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
+use Railt\TypeSystem\Type\EnumType;
+use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\EnumValueInterface;
 use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
-use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
 use Railt\SDL\Ast\Generic\EnumValueDefinitionCollection;
-use Railt\SDL\TypeSystem\Type\EnumType;
 
 /**
- * @property EnumTypeDefinitionNode $ast
+ * @property-read EnumTypeDefinitionNode $ast
  */
 class EnumTypeBuilder extends TypeBuilder
 {
@@ -25,12 +25,13 @@ class EnumTypeBuilder extends TypeBuilder
      */
     public function build(): EnumTypeInterface
     {
-        $enum = new EnumType();
-        $enum->name = $this->ast->name->value;
+        $enum = new EnumType([
+            'name' => $this->ast->name->value,
+        ]);
 
         $this->registerType($enum);
 
-        $enum->description = $this->description($this->ast->description);
+        $enum->description = $this->value($this->ast->description);
         $enum->values = \iterator_to_array($this->buildEnumValues($this->ast->values));
 
         return $enum;
