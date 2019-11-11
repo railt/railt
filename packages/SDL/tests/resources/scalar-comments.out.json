@@ -6,7 +6,7 @@
             "value": "Test"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ScalarTypeDefinition",

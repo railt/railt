@@ -17,7 +17,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -36,7 +36,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -47,7 +47,7 @@
             "value": "Foo"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ObjectTypeExtension",

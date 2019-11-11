@@ -47,7 +47,7 @@
                     "block": true,
                     "value": "\n    Attribute 'if' description\n    "
                 },
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]
@@ -100,7 +100,7 @@
                     "block": true,
                     "value": "\n    Attribute \"if\" description\n    "
                 },
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]
@@ -149,7 +149,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]

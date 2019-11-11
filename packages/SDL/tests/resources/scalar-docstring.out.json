@@ -10,7 +10,7 @@
             "block": true,
             "value": "\nDescription of \"scalar Test\" type\n"
         },
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ScalarTypeDefinition",

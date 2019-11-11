@@ -39,7 +39,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]
@@ -84,7 +84,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]
@@ -129,7 +129,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "defaultValue": null
             }
         ]

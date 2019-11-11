@@ -42,7 +42,8 @@
         "monolog/monolog": "~2.0",
         "phplrt/phplrt": "~2.2.2",
         "phpunit/phpunit": "^8.3",
-        "squizlabs/php_codesniffer": "^3.4",
+        "sensiolabs/security-checker": "^6.0",
+        "squizlabs/php_codesniffer": "^3.5",
         "symfony/dependency-injection": "~3.4|~4.0|~5.0",
         "symfony/http-foundation": "~3.4|~4.0|~5.0",
         "symfony/process": "~3.4|~4.0|~5.0",
@@ -107,13 +108,8 @@
         "psr/container-implementation": "1.0"
     },
     "scripts": {
-        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover",
-        "psalm": "@php vendor/vimeo/psalm/psalm",
         "phpunit": "@php vendor/phpunit/phpunit/phpunit",
-        "behat": "@php vendor/behat/behat/bin/behat",
-        "security": "@php vendor/sensiolabs/security-checker/security-checker security:check ./composer.lock",
-        "phpcs": "@php vendor/squizlabs/php_codesniffer/bin/phpcs --standard=PSR12 --colors --encoding=utf-8 --extensions=php src -p",
-        "phpcbf": "@php vendor/squizlabs/php_codesniffer/bin/phpcbf -s --colors --standard=PSR12 --encoding=utf-8 --extensions=php src"
+        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover"
     },
     "config": {
         "sort-packages": true

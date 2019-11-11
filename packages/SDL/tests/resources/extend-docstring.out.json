@@ -17,7 +17,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -36,7 +36,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -51,7 +51,7 @@
             "block": true,
             "value": "\nDescription of \"extend type Foo\"\n"
         },
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ObjectTypeExtension",

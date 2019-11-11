@@ -19,18 +19,19 @@ parameters:
                 Railt\Tests\Feature\: 'tests/feature'
                 Railt\Tests\Unit\: 'tests/unit'
         require:
-            ocramius/package-versions: "~1.5"
-            ramsey/collection: "~1.0"
+            ocramius/package-versions: '~1.5'
+            ramsey/collection: '~1.0'
         require-dev:
             # Testing
-            behat/behat: "^3.5"
-            phpunit/phpunit: "^8.3"
-            vimeo/psalm: "^3.5"
+            behat/behat: '^3.5'
+            phpunit/phpunit: '^8.3'
+            vimeo/psalm: '^3.5'
+            squizlabs/php_codesniffer: '^3.5'
+            sensiolabs/security-checker: '^6.0'
             # Development
             symfony/process: '~3.4|~4.0|~5.0'
             symfony/var-dumper: '~3.4|~4.0|~5.0'
             symplify/monorepo-builder: '^6.1'
-            squizlabs/php_codesniffer: '^3.4'
             monolog/monolog: '~2.0'
     directories_to_repositories:
         packages/Config: 'git@github.com:railt/config.git'

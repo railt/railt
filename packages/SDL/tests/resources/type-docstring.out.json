@@ -17,7 +17,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             },
             {
@@ -34,7 +34,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             }
         ],
@@ -47,7 +47,7 @@
             "block": true,
             "value": "\nDescription of \"type TestQuery\" type\n"
         },
-        "directives": []
+        "directives": null
     },
     {
         "kind": "ObjectTypeDefinition",
@@ -67,7 +67,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             },
             {
@@ -84,7 +84,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": null
             }
         ],
@@ -97,6 +97,6 @@
             "block": true,
             "value": "\nDescription of \"type TestMutation\" type\n"
         },
-        "directives": []
+        "directives": null
     }
 ]

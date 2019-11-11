@@ -25,7 +25,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -41,7 +41,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -52,7 +52,7 @@
             "value": "TInt"
         },
         "description": null,
-        "directives": []
+        "directives": null
     },
     {
         "kind": "InterfaceTypeDefinition",
@@ -72,7 +72,7 @@
                     }
                 },
                 "description": null,
-                "directives": [],
+                "directives": null,
                 "arguments": [
                     {
                         "kind": "InputValueDefinition",
@@ -88,7 +88,7 @@
                             }
                         },
                         "description": null,
-                        "directives": [],
+                        "directives": null,
                         "defaultValue": null
                     }
                 ]
@@ -99,6 +99,6 @@
             "value": "IDateTime"
         },
         "description": null,
-        "directives": []
+        "directives": null
     }
 ]
