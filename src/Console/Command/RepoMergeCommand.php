@@ -50,7 +50,7 @@ class RepoMergeCommand extends Command
         (new Process(['php', \realpath(self::PATH_MONOREPO), 'merge']))
             ->run(fn (string $_, string $buffer) => $output->write($buffer));
 
-        (new Process(['composer', 'update']))
+        (new Process(['composer', 'update', '--no-scripts']))
             ->run(fn (string $_, string $buffer) => $output->write($buffer));
     }
 }
