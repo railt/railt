@@ -12,7 +12,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Objects
  */
 
-#ObjectTypeDefinition -> {
+ObjectTypeDefinition -> {
     $object = new \Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode($children[1]);
 
     foreach ($children as $child) {
@@ -41,18 +41,18 @@
     ObjectTypeDefinitionExceptDescription()
   ;
 
-#ObjectTypeDefinitionExceptDescription
+ObjectTypeDefinitionExceptDescription
   : ObjectTypeDefinitionHead()
     ObjectTypeDefinitionBody()?
   ;
 
-#ObjectTypeDefinitionHead
+ObjectTypeDefinitionHead
   : ::T_TYPE:: TypeName()
     ImplementsInterfaces()?
     Directives()?
   ;
 
-#ObjectTypeDefinitionBody
+ObjectTypeDefinitionBody
   : ::T_BRACE_OPEN::
       FieldDefinitions()?
     ::T_BRACE_CLOSE::

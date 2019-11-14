@@ -14,7 +14,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Schema
  */
 
-#SchemaDefinition -> {
+SchemaDefinition -> {
     $operations = \array_filter($children, static function ($child): bool {
         return $child instanceof \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection;
     });
@@ -41,16 +41,16 @@
     SchemaDefinitionExceptDescription()
   ;
 
-#SchemaDefinitionExceptDescription
+SchemaDefinitionExceptDescription
   : SchemaDefinitionHead()
     SchemaDefinitionBody()?
   ;
 
-#SchemaDefinitionHead
+SchemaDefinitionHead
   : ::T_SCHEMA:: Directives()?
   ;
 
-#SchemaDefinitionBody
+SchemaDefinitionBody
   : ::T_BRACE_OPEN::
       OperationTypeDefinitions()?
     ::T_BRACE_CLOSE::
@@ -70,12 +70,12 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Root-Operation-Types
  */
 
-#OperationTypeDefinitions -> {
+OperationTypeDefinitions -> {
     return new \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection($children);
 }
   : (OperationTypeDefinition() ::T_COMMA::?)+
 
-#OperationTypeDefinition -> {
+OperationTypeDefinition -> {
     return new \Railt\SDL\Ast\Definition\OperationTypeDefinitionNode(
         $children[0]->getValue(),
         $children[1]
@@ -84,7 +84,7 @@
   : SchemaFieldName() ::T_COLON:: NamedType()
   ;
 
-#SchemaFieldName
+SchemaFieldName
   : <T_QUERY>
   | <T_MUTATION>
   | <T_SUBSCRIPTION>

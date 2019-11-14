@@ -13,7 +13,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Enum-Extensions
  */
 
-#EnumTypeExtension -> {
+EnumTypeExtension -> {
     $enum = new \Railt\SDL\Ast\Extension\EnumTypeExtensionNode(
         $children[1]
     );

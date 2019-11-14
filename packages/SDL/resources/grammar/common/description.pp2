@@ -3,7 +3,7 @@
 // Types description/documentation
 //
 
-#Description -> {
+Description -> {
     return new \Railt\SDL\Ast\Description($children ?: null);
 }
   : StringValue()?

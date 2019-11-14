@@ -26,7 +26,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Boolean-Value
  */
 
-#BooleanValue -> {
+BooleanValue -> {
     return \Railt\SDL\Ast\Value\BooleanValueNode::parse($children->getValue());
 }
   : <T_FALSE>
@@ -47,7 +47,7 @@
  * @see https://facebook.github.io/graphql/June2018/#EnumValue
  */
 
-#EnumValue -> {
+EnumValue -> {
     $first = $children[0];
 
     switch (true) {
@@ -78,7 +78,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-List-Value
  */
 
-#ListValue -> {
+ListValue -> {
     return new \Railt\SDL\Ast\Value\ListValueNode($children[0]);
 }
   : ::T_BRACKET_OPEN::
@@ -86,7 +86,7 @@
     ::T_BRACKET_CLOSE::
   ;
 
-#ListValues -> {
+ListValues -> {
     return new \Railt\SDL\Ast\Generic\ValueCollection($children);
 }
   : (Value() ::T_COMMA::?)*
@@ -107,7 +107,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Null-Value
  */
 
-#NullValue -> {
+NullValue -> {
     return new \Railt\SDL\Ast\Value\NullValueNode();
 }
   : ::T_NULL::
@@ -124,7 +124,7 @@
  * @see https://graphql.github.io/graphql-spec/June2018/#sec-Int-Value
  */
 
-#IntValue -> {
+IntValue -> {
     return \Railt\SDL\Ast\Value\IntValueNode::parse($children->getValue());
 }
   : <T_INT>
@@ -141,7 +141,7 @@
  * @see https://graphql.github.io/graphql-spec/June2018/#sec-Float-Value
  */
 
-#FloatValue -> {
+FloatValue -> {
     return \Railt\SDL\Ast\Value\FloatValueNode::parse($children->getValue());
 }
   : <T_FLOAT> | <T_FLOAT_EXP>
@@ -164,19 +164,19 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Input-Object-Values
  */
 
-#ObjectValue -> {
+ObjectValue -> {
     return new \Railt\SDL\Ast\Value\ObjectValueNode($children[0]);
 }
   : ::T_BRACE_OPEN:: ObjectFields() ::T_BRACE_CLOSE::
   ;
 
-#ObjectFields -> {
+ObjectFields -> {
     return new \Railt\SDL\Ast\Generic\ObjectFieldCollection($children);
 }
   : ObjectField()*
   ;
 
-#ObjectField  -> {
+ObjectField  -> {
     return new \Railt\SDL\Ast\Value\ObjectFieldNode($children[0], $children[1]);
 }
   : Identifier() ::T_COLON:: Value()
@@ -200,18 +200,18 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-String-Value
  */
 
-#StringValue
+StringValue
   : BlockStringValue()
   | InlineStringValue()
   ;
 
-#BlockStringValue -> {
+BlockStringValue -> {
     return \Railt\SDL\Ast\Value\StringValueNode::parse($children[0]->getValue(), true);
 }
   : <T_BLOCK_STRING>
   ;
 
-#InlineStringValue -> {
+InlineStringValue -> {
     return \Railt\SDL\Ast\Value\StringValueNode::parse($children[0]->getValue(), false);
 }
   : <T_STRING>
@@ -234,19 +234,19 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Language.Variables
  */
 
-#Variable -> {
+Variable -> {
     return new \Railt\SDL\Ast\Value\VariableNode($children[0]);
 }
   : VariableName()
   ;
 
-#VariableName -> {
+VariableName -> {
     return new \Railt\SDL\Ast\Name\IdentifierNode($children[0]->getValue());
 }
   : <T_VARIABLE>
   ;
 
-#ConstValue
+ConstValue
   : IntValue()
   | FloatValue()
   | StringValue()
@@ -255,7 +255,7 @@
   | EnumValue()
   ;
 
-#Value
+Value
   : Variable()
   | ConstValue()
   | ListValue()

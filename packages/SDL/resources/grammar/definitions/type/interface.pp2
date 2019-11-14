@@ -12,7 +12,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Interfaces
  */
 
-#InterfaceTypeDefinition -> {
+InterfaceTypeDefinition -> {
     $interface = new \Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode(
         $children[1]
     );
@@ -43,18 +43,18 @@
     InterfaceTypeDefinitionExceptDescription()
   ;
 
-#InterfaceTypeDefinitionExceptDescription
+InterfaceTypeDefinitionExceptDescription
   : InterfaceTypeDefinitionHead()
     InterfaceTypeDefinitionBody()?
   ;
 
-#InterfaceTypeDefinitionHead
+InterfaceTypeDefinitionHead
   : ::T_INTERFACE:: TypeName()
     ImplementsInterfaces()?
     Directives()?
   ;
 
-#InterfaceTypeDefinitionBody
+InterfaceTypeDefinitionBody
   : ::T_BRACE_OPEN::
       FieldDefinitions()?
     ::T_BRACE_CLOSE::
@@ -64,7 +64,7 @@
 // Implements
 //
 
-#ImplementsInterfaces -> {
+ImplementsInterfaces -> {
     return new \Railt\SDL\Ast\Generic\InterfaceImplementsCollection($children);
 }
   : ::T_IMPLEMENTS::
@@ -72,7 +72,7 @@
     ( ImplementsInterfacesDelimiter() NamedType() )*
   ;
 
-#ImplementsInterfacesDelimiter
+ImplementsInterfacesDelimiter
   : ::T_COMMA::
   | ::T_AND::
   ;

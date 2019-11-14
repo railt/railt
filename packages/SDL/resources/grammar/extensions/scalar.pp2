@@ -13,7 +13,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Scalar-Extensions
  */
 
-#ScalarTypeExtension -> {
+ScalarTypeExtension -> {
     $scalar = new \Railt\SDL\Ast\Extension\ScalarTypeExtensionNode(
         $children[1]
     );

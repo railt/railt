@@ -1,23 +1,23 @@
 
 /**
  * --------------------------------------------------------------------------
- *  GraphQL SDL Input Fields
+ *  GraphQL SDL Arguments
  * --------------------------------------------------------------------------
  *
- * A GraphQL Input Object defines a set of input fields; the input fields
- * are either scalars, enums, or other input objects. This allows
- * arguments to accept arbitrarily complex structs.
+ * Fields are conceptually functions which return values, and occasionally
+ * accept arguments which alter their behavior. These arguments often map
+ * directly to function arguments within a GraphQL server’s implementation.
  *
- * @see https://facebook.github.io/graphql/June2018/#InputFieldsDefinition
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Field-Arguments
  */
 
-#InputValueDefinitions -> {
+ArgumentDefinitions -> {
     return new \Railt\SDL\Ast\Generic\InputValueDefinitionCollection($children);
 }
-  : InputValueDefinition()+
+  : ArgumentDefinition()+
   ;
 
-#InputValueDefinition -> {
+ArgumentDefinition -> {
     $value = new \Railt\SDL\Ast\Definition\InputValueDefinitionNode(
         $children[1],
         $children[2]

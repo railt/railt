@@ -13,7 +13,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Input-Object-Extensions
  */
 
-#InputObjectTypeExtension -> {
+InputObjectTypeExtension -> {
     $input = new \Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode(
         $children[1]
     );

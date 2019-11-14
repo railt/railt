@@ -13,7 +13,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Type-System.Directives
  */
 
-#DirectiveDefinition -> {
+DirectiveDefinition -> {
     $directive = new \Railt\SDL\Ast\Definition\DirectiveDefinitionNode(
         $children[1],
         \end($children)
@@ -42,28 +42,65 @@
     DirectiveDefinitionBody()
   ;
 
-#DirectiveDefinitionHead
+DirectiveDefinitionHead
   : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: TypeName()
-    (::T_PARENTHESIS_OPEN:: InputValueDefinitions()? ::T_PARENTHESIS_CLOSE::)?
+    (::T_PARENTHESIS_OPEN:: DirectiveArguments()? ::T_PARENTHESIS_CLOSE::)?
     DirectiveIsRepeatable()?
   ;
 
-#DirectiveIsRepeatable -> {
+DirectiveArguments -> {
+    return new \Railt\SDL\Ast\Generic\InputValueDefinitionCollection($children);
+}
+  : DirectiveArgument()+
+  ;
+
+DirectiveArgument -> {
+    $value = new \Railt\SDL\Ast\Definition\InputValueDefinitionNode(
+        $children[1],
+        $children[2]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $value->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $value->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Value\ValueNode:
+                $value->defaultValue = $child;
+                break;
+        }
+    }
+
+    return $value;
+}
+  : Description()
+    Identifier() ::T_COLON:: TypeHint()
+    (::T_EQUAL:: Value())?
+    Directives()? ::T_COMMA::?
+  ;
+
+
+DirectiveIsRepeatable -> {
     return ! \is_array($children);
 }
   : <T_REPEATABLE>
   ;
 
-#DirectiveDefinitionBody -> {
+DirectiveDefinitionBody -> {
     return new \Railt\SDL\Ast\Generic\DirectiveLocationCollection($children);
 }
   : ::T_ON:: DirectiveLocations()
   ;
 
-#DirectiveLocations
+DirectiveLocations
   : ::T_OR::? DirectiveLocation() (::T_OR:: DirectiveLocation())*
   ;
 
-#DirectiveLocation
+DirectiveLocation
   : Identifier()
   ;

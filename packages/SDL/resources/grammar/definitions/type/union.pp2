@@ -14,7 +14,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Unions
  */
 
-#UnionTypeDefinition -> {
+UnionTypeDefinition -> {
     $union = new \Railt\SDL\Ast\Definition\UnionTypeDefinitionNode(
         $children[1]
     );
@@ -41,21 +41,21 @@
     UnionTypeDefinitionExceptDescription()
   ;
 
-#UnionTypeDefinitionExceptDescription
+UnionTypeDefinitionExceptDescription
   : UnionTypeDefinitionHead()
     UnionTypeDefinitionBody()?
   ;
 
-#UnionTypeDefinitionHead
+UnionTypeDefinitionHead
   : ::T_UNION:: TypeName()
     Directives()?
   ;
 
-#UnionTypeDefinitionBody
+UnionTypeDefinitionBody
   : ::T_EQUAL:: UnionTypeDefinitionTargets()?
   ;
 
-#UnionTypeDefinitionTargets -> {
+UnionTypeDefinitionTargets -> {
     return new \Railt\SDL\Ast\Generic\TypeDefinitionCollection($children);
 }
   : ::T_OR::? NamedType() (

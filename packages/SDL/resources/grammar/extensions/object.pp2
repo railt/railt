@@ -14,7 +14,7 @@
  */
 
 
-#ObjectTypeExtension -> {
+ObjectTypeExtension -> {
     $object = new \Railt\SDL\Ast\Extension\ObjectTypeExtensionNode(
         $children[1]
     );

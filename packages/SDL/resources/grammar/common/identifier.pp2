@@ -4,7 +4,7 @@
  * Namespaced names are represented using Name nodes.
  */
 
-#Identifier -> {
+Identifier -> {
     return new \Railt\SDL\Ast\Name\IdentifierNode($children->getValue());
 }
   // Values

@@ -12,7 +12,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Input-Objects
  */
 
-#InputObjectTypeDefinition -> {
+InputObjectTypeDefinition -> {
     $input = new \Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode(
         $children[1]
     );
@@ -39,17 +39,53 @@
     InputObjectTypeDefinitionExceptDescription()
   ;
 
-#InputObjectTypeDefinitionExceptDescription
+InputObjectTypeDefinitionExceptDescription
   : InputObjectTypeDefinitionHead()
     InputObjectTypeDefinitionBody()?
   ;
 
-#InputObjectTypeDefinitionHead
+InputObjectTypeDefinitionHead
   : ::T_INPUT:: TypeName() Directives()?
   ;
 
-#InputObjectTypeDefinitionBody
+InputObjectTypeDefinitionBody
   : ::T_BRACE_OPEN::
-      InputValueDefinitions()?
+      InputFieldDefinitions()?
     ::T_BRACE_CLOSE::
+  ;
+
+InputFieldDefinitions -> {
+    return new \Railt\SDL\Ast\Generic\InputValueDefinitionCollection($children);
+}
+  : InputFieldDefinition()+
+  ;
+
+InputFieldDefinition -> {
+    $value = new \Railt\SDL\Ast\Definition\InputValueDefinitionNode(
+        $children[1],
+        $children[2]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $value->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $value->directives = $child;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Value\ValueNode:
+                $value->defaultValue = $child;
+                break;
+        }
+    }
+
+    return $value;
+}
+  : Description()
+    Identifier() ::T_COLON:: TypeHint()
+    (::T_EQUAL:: Value())?
+    Directives()? ::T_COMMA::?
   ;

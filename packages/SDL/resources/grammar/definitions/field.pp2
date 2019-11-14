@@ -13,13 +13,13 @@
  * @see https://facebook.github.io/graphql/June2018/#FieldDefinition
  */
 
-#FieldDefinitions -> {
+FieldDefinitions -> {
     return new \Railt\SDL\Ast\Generic\FieldDefinitionCollection($children);
 }
   : FieldDefinition()+
   ;
 
-#FieldDefinition -> {
+FieldDefinition -> {
     $field = new \Railt\SDL\Ast\Definition\FieldDefinitionNode(
         $children[1],
         \Railt\SDL\Ast\Type\TypeNode::resolve($children)
@@ -44,6 +44,6 @@
     Directives()? ::T_COMMA::?
   ;
 
-#FieldArguments
-  : ::T_PARENTHESIS_OPEN:: InputValueDefinitions()? ::T_PARENTHESIS_CLOSE::
+FieldArguments
+  : ::T_PARENTHESIS_OPEN:: ArgumentDefinitions()? ::T_PARENTHESIS_CLOSE::
   ;

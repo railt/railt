@@ -1,14 +1,14 @@
 //
 // TypeHint
 //
-#TypeHint
+TypeHint
   : NonNullType()
   | ListType()
   | NamedType()
   ;
 
 
-#ListType -> {
+ListType -> {
     return new \Railt\SDL\Ast\Type\ListTypeNode($children[0]);
 }
   : ::T_BRACKET_OPEN::
@@ -17,14 +17,14 @@
   ;
 
 
-#NonNullType -> {
+NonNullType -> {
     return new \Railt\SDL\Ast\Type\NonNullTypeNode($children[0]);
 }
   : (ListType() | NamedType()) ::T_NON_NULL::
   ;
 
 
-#NamedType -> {
+NamedType -> {
     return new \Railt\SDL\Ast\Type\NamedTypeNode($children[0]);
 }
   : TypeName()

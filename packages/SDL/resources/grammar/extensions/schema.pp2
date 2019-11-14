@@ -13,7 +13,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Schema-Extension
  */
 
-#SchemaExtension -> {
+SchemaExtension -> {
     $schema = new \Railt\SDL\Ast\Extension\SchemaExtensionNode();
 
     foreach ($children as $child) {

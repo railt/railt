@@ -12,7 +12,7 @@
  * @see https://facebook.github.io/graphql/June2018/#Arguments
  */
 
-#Arguments -> {
+Arguments -> {
     return new \Railt\SDL\Ast\Generic\ArgumentCollection($children);
 }
  : ::T_PARENTHESIS_OPEN::
@@ -20,7 +20,7 @@
    ::T_PARENTHESIS_CLOSE::
  ;
 
-#Argument -> {
+Argument -> {
     return new \Railt\SDL\Ast\Executable\ArgumentNode(...$children);
 }
  : Identifier() ::T_COLON:: Value()

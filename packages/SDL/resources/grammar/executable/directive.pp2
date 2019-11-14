@@ -25,13 +25,13 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Language.Directives
  */
 
-#Directives -> {
+Directives -> {
     return new \Railt\SDL\Ast\Generic\DirectiveCollection($children);
 }
   : Directive()+
   ;
 
-#Directive -> {
+Directive -> {
     $directive = new \Railt\SDL\Ast\Executable\DirectiveNode($children[0]);
 
     if (isset($children[1])) {

@@ -5,7 +5,7 @@
 // regard to the context of the call.
 //
 
-#TypeName -> {
+TypeName -> {
 
 }
   : Identifier()

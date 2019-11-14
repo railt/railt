@@ -13,7 +13,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Union-Extensions
  */
 
-#UnionTypeExtension -> {
+UnionTypeExtension -> {
     $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode(
         $children[1]
     );

@@ -14,7 +14,7 @@
  */
 
 
-#InterfaceTypeExtension -> {
+InterfaceTypeExtension -> {
     $interface = new \Railt\SDL\Ast\Extension\InterfaceTypeExtensionNode(
         $children[1]
     );

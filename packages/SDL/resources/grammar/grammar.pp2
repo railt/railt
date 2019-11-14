@@ -25,8 +25,6 @@
 %include definitions/schema
 %include definitions/directive
 %include definitions/field
-%include definitions/input-value
-%include definitions/enum-value
 
 %include definitions/type/enum
 %include definitions/type/input
@@ -81,7 +79,7 @@
   : Definition()*
   ;
 
-#Definition
+Definition
   : TypeSystemDefinition()
   | TypeSystemExtension()
   ;
@@ -129,13 +127,13 @@
  *
  */
 
-#TypeSystemDefinition
+TypeSystemDefinition
   : SchemaDefinition()
   | DirectiveDefinition()
   | TypeDefinition()
   ;
 
-#TypeDefinition
+TypeDefinition
   : ScalarTypeDefinition()
   | ObjectTypeDefinition()
   | InterfaceTypeDefinition()
@@ -159,12 +157,12 @@
  *
  */
 
-#TypeSystemExtension
+TypeSystemExtension
   : SchemaExtension()
   | TypeExtension()
   ;
 
-#TypeExtension
+TypeExtension
   : ScalarTypeExtension()
   | ObjectTypeExtension()
   | InterfaceTypeExtension()

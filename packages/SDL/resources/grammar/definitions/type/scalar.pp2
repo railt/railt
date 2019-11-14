@@ -12,7 +12,7 @@
  * @see https://facebook.github.io/graphql/June2018/#sec-Scalars
  */
 
-#ScalarTypeDefinition -> {
+ScalarTypeDefinition -> {
     $scalar = new \Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode(
         $children[1]
     );
@@ -35,10 +35,10 @@
     ScalarTypeDefinitionExceptDescription()
   ;
 
-#ScalarTypeDefinitionExceptDescription
+ScalarTypeDefinitionExceptDescription
   : ScalarTypeDefinitionBody()
   ;
 
-#ScalarTypeDefinitionBody
+ScalarTypeDefinitionBody
   : ::T_SCALAR:: TypeName() Directives()?
   ;
