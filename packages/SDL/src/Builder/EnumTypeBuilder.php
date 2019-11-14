@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\Type\EnumType;
 use GraphQL\Contracts\TypeSystem\EnumValueInterface;
-use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
+use GraphQL\TypeSystem\Type\EnumType;
+use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
 use Railt\SDL\Ast\Generic\EnumValueDefinitionCollection;
 
 /**

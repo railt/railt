@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\Type\InputObjectType;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\InputTypeInterface;
+use GraphQL\TypeSystem\Type\InputObjectType;
 use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
 
 /**
