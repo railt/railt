@@ -22,8 +22,6 @@ use Phplrt\Parser\Rule\{Lexeme, Optional, Repetition, Alternation, Concatenation
  */
 final class Parser extends BaseParser
 {
-    use ParserLoggerTrait;
-
     /**
      * @var string
      */
@@ -31,13 +29,9 @@ final class Parser extends BaseParser
 
     /**
      * Parser constructor.
-     *
-     * @param LoggerInterface|null $logger
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct()
     {
-        $this->logger = $logger;
-
         parent::__construct(new Lexer(), $this->grammar(), [
             parent::CONFIG_AST_BUILDER  => new Builder(),
             parent::CONFIG_INITIAL_RULE => self::ROOT_PRODUCTION,
@@ -65,8 +59,6 @@ final class Parser extends BaseParser
      */
     protected function next(ReadableInterface $source, BufferInterface $buffer, $state)
     {
-        $this->depthIn($state, $buffer->current());
-
         $from = $buffer->current()->getOffset();
 
         $result = parent::next($source, $buffer, $state);
@@ -74,8 +66,6 @@ final class Parser extends BaseParser
         if ($result instanceof Node) {
             $result->loc = new Location($source, $from, $buffer->current()->getOffset());
         }
-
-        $this->depthOut($state, $result);
 
         return $result;
     }
@@ -86,7 +76,6 @@ final class Parser extends BaseParser
     public function parse($source): iterable
     {
         $source = File::new($source);
-        $this->prepare($source);
 
         try {
             return parent::parse($source);

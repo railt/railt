@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  *
  * @see https://github.com/railt/sdl/blob/2.0.x-dev/LICENSE.md
- * @see https://github.com/phplrt/parser/blob/2.2.2/LICENSE.md
- * @see https://github.com/phplrt/lexer/blob/2.2.2/LICENSE.md
+ * @see https://github.com/phplrt/parser/blob/2.2.3/LICENSE.md
+ * @see https://github.com/phplrt/lexer/blob/2.2.3/LICENSE.md
  */
 
 declare(strict_types=1);

@@ -32,7 +32,6 @@ parameters:
             symfony/process: '~3.4|~4.0|~5.0'
             symfony/var-dumper: '~3.4|~4.0|~5.0'
             symplify/monorepo-builder: '^6.1'
-            monolog/monolog: '~2.0'
     directories_to_repositories:
         packages/Config: 'git@github.com:railt/config.git'
         packages/Container: 'git@github.com:railt/container.git'

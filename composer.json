@@ -40,7 +40,6 @@
         "behat/behat": "^3.5",
         "illuminate/container": "~5.5|~6.0",
         "illuminate/http": "~5.5|~6.0",
-        "monolog/monolog": "~2.0",
         "phplrt/phplrt": "~2.2.2",
         "phpunit/phpunit": "^8.3",
         "sensiolabs/security-checker": "^6.0",
