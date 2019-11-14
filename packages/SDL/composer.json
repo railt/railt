@@ -27,7 +27,8 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "phplrt/parser": "~2.2.2",
+        "phplrt/parser": "^2.2",
+        "phplrt/lexer": "^2.2",
         "psr/simple-cache": "^1.0",
         "railt/contracts": "^2.0",
         "graphql/type-system": "^14.0|dev-master@dev"

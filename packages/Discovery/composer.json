@@ -39,7 +39,8 @@
         }
     },
     "scripts": {
-        "phpunit": "@php vendor/phpunit/phpunit/phpunit"
+        "phpunit": "@php vendor/phpunit/phpunit/phpunit",
+        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover"
     },
     "extra": {
         "discovery": {
@@ -55,9 +56,6 @@
             "1.4.x": "1.4.x-dev",
             "dev-master": "2.0.x-dev"
         }
-    },
-    "scripts": {
-        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover"
     },
     "config": {
         "sort-packages": true
