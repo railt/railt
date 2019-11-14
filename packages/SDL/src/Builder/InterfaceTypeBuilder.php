@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\Type\InterfaceType;
-use Railt\SDL\Builder\Common\FieldsBuilderTrait;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
+use GraphQL\TypeSystem\Type\InterfaceType;
+use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
+use Railt\SDL\Builder\Common\FieldsBuilderTrait;
 
 /**
  * @property InterfaceTypeDefinitionNode $ast

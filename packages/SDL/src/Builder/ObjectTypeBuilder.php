@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\Type\ObjectType;
-use Railt\SDL\Builder\Common\FieldsBuilderTrait;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
+use GraphQL\TypeSystem\Type\ObjectType;
+use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
+use Railt\SDL\Builder\Common\FieldsBuilderTrait;
 
 /**
  * @property ObjectTypeDefinitionNode $ast
