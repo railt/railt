@@ -100,8 +100,7 @@
         "railt/http": "self.version",
         "railt/http-factory": "self.version",
         "railt/observer": "self.version",
-        "railt/sdl": "self.version",
-        "railt/type-system": "self.version"
+        "railt/sdl": "self.version"
     },
     "provide": {
         "psr/container": "1.0",
