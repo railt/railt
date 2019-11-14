@@ -44,4 +44,3 @@ parameters:
         packages/HttpFactory: 'git@github.com:railt/http-factory.git'
         packages/Observer: 'git@github.com:railt/observer.git'
         packages/SDL: 'git@github.com:railt/sdl.git'
-        packages/TypeSystem: 'git@github.com:railt/type-system.git'

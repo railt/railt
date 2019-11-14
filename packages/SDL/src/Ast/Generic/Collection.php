@@ -44,6 +44,17 @@ abstract class Collection extends Node implements \ArrayAccess, \Countable
     }
 
     /**
+     * @param \Closure $each
+     * @return iterable
+     */
+    public function map(\Closure $each): iterable
+    {
+        foreach ($this as $key => $value) {
+            yield $each($value, $key);
+        }
+    }
+
+    /**
      * @param int $name
      * @param mixed $value
      * @return void

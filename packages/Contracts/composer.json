@@ -22,7 +22,7 @@
         "php": ">=7.4",
         "psr/container": "~1.0",
         "phplrt/parser-contracts": "~2.2",
-        "graphql/type-system-contracts": "~14.0|dev-master@dev"
+        "graphql/type-system-contracts": "^14.0"
     },
     "autoload": {
         "psr-4": {

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\TypeSystem\Directive;
+use GraphQL\TypeSystem\Directive;
 use Railt\SDL\Ast\Name\IdentifierNode;
 use Railt\SDL\Builder\Common\ArgumentsBuilderTrait;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
@@ -25,21 +25,22 @@ class DirectiveBuilder extends TypeBuilder
 
     /**
      * @return DirectiveInterface|DefinitionInterface
+     * @throws \RuntimeException
      */
     public function build(): DirectiveInterface
     {
         $directive = new Directive([
-            'name' => $this->ast->name->value
+            'name'        => $this->ast->name->value,
+            'description' => $this->value($this->ast->description),
+            'repeatable'  => $this->ast->repeatable,
         ]);
 
         $this->registerDirective($directive);
 
-        $directive->description = $this->value($this->ast->description);
-        $directive->locations = [...$this->buildLocations($this->ast->locations)];
-        $directive->isRepeatable = $this->ast->repeatable;
-        $directive->arguments = \iterator_to_array($this->buildArguments($this->ast->arguments));
-
-        return $directive;
+        return $directive
+            ->withLocations($this->buildLocations($this->ast->locations))
+            ->withArguments($this->buildArguments($this->ast->arguments))
+            ;
     }
 
     /**

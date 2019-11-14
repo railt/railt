@@ -1,0 +1,2730 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+interface Accommodable {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+interface Business {
+  businessKind: BusinessKind!
+  createdAt: String
+  id: ID!
+  isArchived: Boolean
+  subject: Subject
+  badge: Badge
+}
+
+interface Identity {
+  id: ID!
+}
+
+interface Imageable {
+  id: ID
+  mainSimulacrum: Simulacrum
+  simulacra: [Simulacrum!]!
+}
+
+interface L10n {
+  id: ID!
+  language: Language!
+}
+
+interface LivingRoomKind {
+  id: ID!
+}
+
+interface Localizable {
+  l10n: L10n
+  l10ns: [L10n!]!
+}
+
+interface Organization {
+  accounts: [Account!]!
+  badge: Badge!
+  contacts: [ContactGroup!]!
+  country: Country!
+  createdAt: Date
+  fullName: String
+  id: ID!
+  intTitle: String
+  ownershipType: OwnershipType!
+  requisites: [Requisite!]!
+  title: String
+  updatedAt: Date
+}
+
+interface ServiceInterface {
+  business: Business!
+  currency: Currency!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  tariffs: [ServiceTariffInterface!]!
+  unit: ServiceUnit!
+  version: ServiceVersionInterface!
+  versions: [ServiceVersionInterface!]!
+}
+
+interface ServiceTariffInterface {
+  id: ID!
+  placings: [Placing!]!
+  version: ServiceTariffVersionInterface!
+  versions: [ServiceTariffVersionInterface!]!
+}
+
+interface ServiceTariffVersionInterface {
+  ageUntil: Int
+  citizenship: Country
+  id: ID!
+  packs: [ServiceTariffVersionPackInterface!]!
+  socialStatus: SocialStatus
+  title: String
+}
+
+interface ServiceTariffVersionPackDiscountInterface {
+  id: ID!
+  quantity: Int!
+  rule: DiscountRule!
+  value: Int!
+}
+
+interface ServiceTariffVersionPackInterface {
+  discounts: [ServiceTariffVersionPackDiscountInterface!]!
+  id: ID!
+  price: Int!
+  quantity: Float!
+  size: Int!
+}
+
+interface ServiceVersionInterface {
+  id: ID!
+  quantity: Float!
+  service: ServiceInterface!
+  size: Int!
+}
+
+interface Subject {
+  accounts: [Account!]!
+  badge: Badge!
+  businessModels: [Business!]!
+  contacts: [ContactGroup!]!
+  createdAt: Date
+  id: ID!
+  updatedAt: Date
+}
+
+type Accessibility {
+  id: ID!
+  periods: [SchedulePeriod!]!
+}
+
+type AccommodableFeature implements Localizable {
+  category: AccommodableFeatureCategory!
+  key: ID!
+  l10n: AccommodableFeatureL10n
+  l10ns: [AccommodableFeatureL10n!]!
+}
+
+type AccommodableFeatureCategory implements Localizable {
+  features: [AccommodableFeature!]!
+  key: ID!
+  l10n: AccommodableFeatureCategoryL10n
+  l10ns: [AccommodableFeatureCategoryL10n!]!
+}
+
+type AccommodableFeatureCategoryL10n implements L10n {
+  description: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type AccommodableFeatureL10n implements L10n {
+  description: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type AccommodableL10n implements L10n {
+  description: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type Account {
+  bank: Bank!
+  createdAt: String!
+  currency: Currency!
+  id: ID!
+  isArchived: Boolean!
+  number: String!
+  title: String!
+}
+
+type ApartmentKind implements Accommodable & Identity {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type Auto implements Imageable {
+  body: AutoBody
+  brand: String!
+  dieselConsumption: Float!
+  equipment: String
+  equipments: [AutoEquipment!]!
+  gasConsumption: Float!
+  generation: String
+  hand: HandDrive
+  id: ID!
+  mainSimulacrum: Simulacrum
+  model: String!
+  modification: String
+  owner: Subject!
+  passengers: Int
+  petrolConsumption: Float!
+  series: String
+  simulacra: [Simulacrum!]!
+  transmission: AutoTransmission
+  type: AutoType
+  year: Int
+}
+
+type AutoDriver implements Business {
+  autos: [Auto!]!
+  businessKind: BusinessKind!
+  categories: [AutoCategory!]!
+  createdAt: String
+  id: ID!
+  isArchived: Boolean
+  location: Location!
+  subject: Subject!
+  badge: Badge
+}
+
+type AutoEquipment implements Localizable {
+  id: ID!
+  l10n: AutoEquipmentL10n!
+  l10ns: [AutoEquipmentL10n!]!
+}
+
+type AutoEquipmentL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type Badge {
+  subtitles: [String!]!
+  title: String
+}
+
+type Bank implements Business {
+  businessKind: BusinessKind!
+  createdAt: String
+  id: ID!
+  isArchived: Boolean
+  requisites: [Requisite!]!
+  subject: Subject
+  badge: Badge
+}
+
+type BankRequisiteType {
+  key: ID!
+  l10n: BankRequisiteTypeL10n
+  l10ns: [BankRequisiteTypeL10n!]!
+}
+
+type BankRequisiteTypeL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String
+}
+
+type BathroomKind implements Accommodable & Identity {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type BedKind implements Accommodable & Identity {
+  _type: String!
+  count: Int!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  size: BedSize!
+  standalone: Boolean!
+  type: BedType!
+}
+
+type BedSize implements Localizable {
+  key: ID!
+  l10n: BedSizeL10n
+  l10ns: [BedSizeL10n!]!
+}
+
+type BedSizeL10n implements L10n {
+  description: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type BedType implements Localizable {
+  category: String!
+  key: ID!
+  l10n: BedTypeL10n
+  l10ns: [BedTypeL10n!]!
+  places: Int!
+  sizes: [BedSize!]!
+}
+
+type BedTypeL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type BedroomKind implements Accommodable & Identity {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type BuildingKind implements Accommodable & Identity {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+  type: BuildingType!
+}
+
+type BuildingType implements Localizable {
+  key: ID!
+  l10n: BuildingTypeL10n
+  l10ns: [BuildingTypeL10n!]!
+}
+
+type BuildingTypeL10n implements L10n {
+  description: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type BusinessKind {
+  key: ID!
+  l10n: BusinessKindL10n!
+  l10ns: [BusinessKindL10n!]
+  model: String!
+  serviceKinds: [ServiceKind!]!
+}
+
+type BusinessKindL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type BusinessStandardModel implements Business {
+  businessKind: BusinessKind!
+  createdAt: String
+  id: ID!
+  isArchived: Boolean
+  subject: Subject
+  badge: Badge
+}
+
+type CanvasData {
+  height: Float!
+  left: Float!
+  naturalHeight: Float!
+  naturalWidth: Float!
+  top: Float!
+  width: Float!
+}
+
+type Category implements Localizable {
+  id: ID!
+  l10n: CategoryL10n
+  l10ns: [CategoryL10n!]!
+  parentId: String
+}
+
+type CategoryL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String
+}
+
+type City implements Imageable & Localizable {
+  country: Country!
+  id: ID!
+  imageableName: String!
+  l10n: CityL10n
+  l10ns: [CityL10n!]!
+  location: Location!
+  mainSimulacrum: Simulacrum
+  phoneCode: String
+  simulacra: [Simulacrum!]!
+}
+
+type CityL10n implements L10n {
+  description: Html
+  id: ID!
+  language: Language!
+  text: Html
+  title: String
+}
+
+type Contact {
+  type: String!
+  value: String!
+}
+
+type ContactGroup {
+  entries: [Contact!]!
+  type: String!
+}
+
+type ContactType {
+  key: ID!
+  l10n: ContactTypeL10n
+  l10ns: [ContactTypeL10n!]!
+  parentKey: String
+}
+
+type ContactTypeL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String
+}
+
+type Country implements Imageable & Localizable {
+  alpha2: String
+  alpha3: String
+  cities: [City!]!
+  id: ID!
+  imageableName: String!
+  l10n: CountryL10n
+  l10ns: [CountryL10n!]!
+  mainSimulacrum: Simulacrum
+  numericCode: String
+  phoneCode: String
+  simulacra: [Simulacrum!]!
+}
+
+type CountryL10n implements L10n {
+  description: Html
+  id: ID!
+  language: Language!
+  name: String
+  text: Html
+  title: String
+}
+
+type Crop {
+  format: Format!
+  horizontalColor: String!
+  horizontalMode: Int!
+  horizontalOrientation: Int
+  id: ID!
+  key: String!
+  name: String!
+  verticalColor: String!
+  verticalMode: Int!
+  verticalOrientation: Int
+}
+
+type CropBox {
+  height: Float!
+  left: Float!
+  top: Float!
+  width: Float!
+}
+
+type CropData {
+  canvas: CanvasData
+  cropBox: CropBox!
+}
+
+type Currency implements Localizable {
+  code: String!
+  digits: Int
+  id: ID!
+  l10n: CurrencyL10n
+  l10ns: [CurrencyL10n!]!
+  symbol: String!
+}
+
+type CurrencyL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String
+}
+
+type Entity implements Organization & Subject {
+  accounts: [Account!]!
+  badge: Badge!
+  businessModels: [Business!]!
+  contacts: [ContactGroup!]!
+  country: Country!
+  createdAt: Date
+  fullName: String
+  id: ID!
+  intTitle: String
+  ownershipType: OwnershipType!
+  requisites: [Requisite!]!
+  title: String
+  updatedAt: Date
+}
+
+type EtalonImageSimulacrum {
+  crop: CropData!
+  id: ID!
+  image: Image!
+  sumulacrum: Simulacrum!
+}
+
+type Format {
+  height: Int!
+  id: ID!
+  name: String!
+  width: Int!
+}
+
+type Frame {
+  aspectX: Int!
+  aspectY: Int!
+  context: String!
+  crops: [Crop!]!
+  id: ID!
+}
+
+type Guide implements Business & Imageable & Localizable {
+  autos: [Auto!]!
+  businessKind: BusinessKind!
+  certificates: [GuideCertificate!]!
+  createdAt: String
+  id: ID!
+  isArchived: Boolean
+  l10n: GuideL10n
+  l10ns: [GuideL10n!]!
+  languages: [Language!]!
+  location: Location!
+  mainSimulacrum: Simulacrum
+  simulacra: [Simulacrum!]!
+  specialities: [Speciality!]!
+  subject: Subject
+  badge: Badge!
+}
+
+type GuideCertificate implements Imageable & Localizable {
+  id: ID!
+  l10n: GuideCertificateL10n
+  l10ns: [GuideCertificateL10n!]!
+  mainSimulacrum: Simulacrum
+  simulacra: [Simulacrum!]!
+}
+
+type GuideCertificateL10n implements L10n {
+  about: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type GuideL10n implements L10n {
+  about: String
+  experience: String
+  extra: String
+  greetings: String
+  id: ID!
+  language: Language!
+  motivation: String
+}
+
+type Guideline {
+  formats: [Format!]!
+}
+
+type Hotel implements Business {
+  accommodable: [Accommodable!]!
+  allowPets: Boolean
+  breakfast: Boolean
+  businessKind: BusinessKind!
+  checkInEnd: Int
+  checkInStart: Int!
+  checkOutEnd: Int!
+  checkOutStart: Int
+  createdAt: String
+  currency: Currency!
+  freeCancelDeadLine: Int!
+  id: ID!
+  internet: HotelInternet
+  isArchived: Boolean
+  parkingPrice: Int
+  place: Place!
+  seasons: [HotelSeason!]!
+  services: [ServiceInterface!]!
+  specialDates: [HotelSpecialDate!]!
+  stars: Int
+  subject: Subject
+  type: HotelType
+}
+
+type HotelInternet {
+  coverage: String!
+  price: Int
+  type: String!
+}
+
+type HotelRoomKind implements Accommodable & Identity & LivingRoomKind {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type HotelSeason {
+  from: String!
+  id: ID!
+  tariffContainers: [TariffContainer!]!
+  to: String!
+}
+
+type HotelSpecialDate {
+  accommodation: ServiceAccommodation!
+  date: String!
+  id: ID!
+  tariff: ServiceTariff!
+}
+
+type HotelType implements Localizable {
+  hasStars: Boolean!
+  key: String!
+  l10n: HotelTypeL10n
+  l10ns: [HotelTypeL10n!]!
+}
+
+type HotelTypeL10n implements L10n {
+  description: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type Image {
+  id: ID!
+  imageSimulacra: [ThumbImageSimulacrum!]!
+  src: String
+}
+
+type ImageModule {
+  name: String
+  providers: [ImageableProvider!]!
+}
+
+type ImageableProvider {
+  frame: Frame
+  name: String!
+}
+
+type Individual implements Organization & Subject {
+  accounts: [Account!]!
+  badge: Badge!
+  businessModels: [Business!]!
+  contacts: [ContactGroup!]!
+  country: Country!
+  createdAt: Date
+  fullName: String
+  id: ID!
+  intTitle: String
+  ownershipType: OwnershipType!
+  person: Person
+  requisites: [Requisite!]!
+  title: String
+  updatedAt: Date
+}
+
+type KitchenKind implements Accommodable & Identity {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type Language {
+  alpha2: String!
+  alpha3: String
+  id: ID!
+  title: String!
+}
+
+type Limit {
+  h: Int
+  m: Int
+}
+
+type Limits {
+  from: Limit!
+  to: Limit!
+}
+
+type Location {
+  latitude: Float!
+  longitude: Float!
+  zoom: Int
+}
+
+type LoungeKind implements Accommodable & Identity {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type Message {
+  success: Boolean
+  text: String
+}
+
+type Mutation {
+  ApartmentKindCreate(apartment: ApartmentKindInput!): ApartmentKind!
+  ApartmentKindUpdate(apartment: ApartmentKindInput!): ApartmentKind!
+  AutoCreate(auto: AutoCreateInput!): Auto!
+  AutoDestroy(id: ID!): Message
+  AutoDriverCreate(driver: AutoDriverCreateInput!): AutoDriver!
+  AutoDriverUpdate(driver: AutoDriverUpdateInput!): AutoDriver!
+  AutoUpdate(auto: AutoUpdateInput!): Auto!
+  BankCreate(bank: BankCreateInput!): Bank!
+  BankUpdate(bank: BankUpdateInput!): Bank!
+  BathroomKindCreate(bathroom: BathroomKindInput!): BathroomKind!
+  BathroomKindUpdate(bathroom: BathroomKindInput!): BathroomKind!
+  BedKindCreate(bed: BedKindInput!): BedKind!
+  BedKindUpdate(bed: BedKindInput!): BedKind!
+  BedroomKindCreate(bedroom: BedroomKindInput!): BedroomKind!
+  BedroomKindUpdate(bedroom: BedroomKindInput!): BedroomKind!
+  BuildingKindCreate(building: BuildingKindInput!): BuildingKind!
+  BuildingKindUpdate(building: BuildingKindInput!): BuildingKind!
+  CityCreate(city: CityCreateInput): City!
+  CityDestroy(id: ID!): Message!
+  CityUpdate(city: CityUpdateInput!): City!
+  CountryCreate(country: CountryCreateInput): Country!
+  CountryDestroy(id: ID!): Message!
+  CountryUpdate(country: CountryUpdateInput!): Country!
+  CurrencyCreate(currency: CurrencyCreateInput): Currency!
+  CurrencyDestroy(id: ID!): Message!
+  CurrencyUpdate(currency: CurrencyUpdateInput!): Currency!
+  EntityCreate(organization: EntityCreateInput): Entity!
+  EntityUpdate(organization: EntityUpdateInput): Organization!
+  GuideCreate(guide: GuideCreateInput!): Guide!
+  GuideUpdate(guide: GuideUpdateInput!): Guide!
+  HotelCreate(hotel: HotelInput!): Hotel!
+  HotelRoomKindCreate(room: HotelRoomKindInput!): HotelRoomKind!
+  HotelRoomKindUpdate(room: HotelRoomKindInput!): HotelRoomKind!
+  HotelUpdate(hotel: HotelInput!): Hotel!
+  IndividualCreate(organization: IndividualCreateInput): Individual!
+  IndividualUpdate(organization: IndividualUpdateInput): Entity!
+  KitchenKindCreate(kitchen: KitchenKindInput!): KitchenKind!
+  KitchenKindUpdate(kitchen: KitchenKindInput!): KitchenKind!
+  LanguageCreate(language: LanguageCreateInput): Language!
+  LanguageDestroy(id: ID!): Message!
+  LanguageUpdate(language: LanguageUpdateInput!): Language!
+  LoungeKindCreate(lounge: LoungeKindInput!): LoungeKind!
+  LoungeKindUpdate(lounge: LoungeKindInput!): LoungeKind!
+  MyProjectUpdate(project: MyProjectUpdateInput!): MyProject!
+  PersonCreate(person: PersonCreateInput!): Person!
+  PersonUpdate(person: PersonUpdateInput!): Person
+  PlaceCreate(place: PlaceCreateInput!): Place!
+  PlaceDestroy(id: ID!): Message!
+  PlaceUpdate(place: PlaceUpdateInput!): Place!
+  ProjectCountryUpdate(projectCountry: ProjectCountryUpdateInput!): ProjectCountry!
+  ProjectCreate(project: ProjectCreateInput): Project!
+  ProjectUpdate(project: ProjectUpdateInput!): Project!
+  ServiceAccommodationModelCreate(service: ServiceAccommodationModelInput): ServiceAccommodation!
+  ServiceAccommodationModelUpdate(service: ServiceAccommodationModelInput): ServiceAccommodation!
+  ServiceAutoDrivingFixedModelCreate(service: ServiceAutoDrivingModelInput!): ServiceInterface!
+  ServiceAutoDrivingFixedModelUpdate(service: ServiceAutoDrivingModelInput!): ServiceInterface!
+  ServiceAutoDrivingFlexModelCreate(service: ServiceAutoDrivingModelInput!): ServiceInterface!
+  ServiceAutoDrivingFlexModelUpdate(service: ServiceAutoDrivingModelInput!): ServiceInterface!
+  ServiceEscortModelCreate(service: ServiceEscortModelInput): ServiceInterface!
+  ServiceEscortModelUpdate(service: ServiceEscortModelInput): ServiceInterface!
+  ServiceExcursionModelCreate(service: ServiceExcursionModelInput): ServiceInterface!
+  ServiceExcursionModelUpdate(service: ServiceExcursionModelInput): ServiceInterface!
+  ServiceGuideNDrivingModelCreate(service: ServicePassengerTransportModelInput!): ServiceInterface!
+  ServiceGuideNDrivingModelUpdate(service: ServicePassengerTransportModelInput!): ServiceInterface!
+  ServicePassengerTransportFixedModelCreate(service: ServicePassengerTransportModelInput!): ServiceInterface!
+  ServicePassengerTransportFixedModelUpdate(service: ServicePassengerTransportModelInput!): ServiceInterface!
+  ServicePassengerTransportFlexModelCreate(service: ServicePassengerTransportModelInput!): ServiceInterface!
+  ServicePassengerTransportFlexModelUpdate(service: ServicePassengerTransportModelInput!): ServiceInterface!
+  ServiceStandardModelCreate(service: ServiceStandardModelInput!): ServiceInterface!
+  ServiceStandardModelUpdate(service: ServiceStandardModelInput!): ServiceInterface!
+  ServiceTransferModelCreate(service: ServiceTransferModelInput!): ServiceInterface!
+  ServiceTransferModelUpdate(service: ServiceTransferModelInput!): ServiceInterface!
+  ServiceTransportRentFixedModelCreate(service: ServiceTransportRentModelInput!): ServiceInterface!
+  ServiceTransportRentFixedModelUpdate(service: ServiceTransportRentModelInput!): ServiceInterface!
+  ServiceTransportRentFlexModelCreate(service: ServiceTransportRentModelInput!): ServiceInterface!
+  ServiceTransportRentFlexModelUpdate(service: ServiceTransportRentModelInput!): ServiceInterface!
+  StudioKindCreate(studio: StudioKindInput!): StudioKind!
+  StudioKindUpdate(studio: StudioKindInput!): StudioKind!
+  SuiteKindCreate(suite: SuiteKindInput!): SuiteKind!
+  SuiteKindUpdate(suite: SuiteKindInput!): SuiteKind!
+  TransportCompanyCreate(company: TransportCompanyCreateInput!): TransportCompany!
+  TransportCompanyUpdate(company: TransportCompanyUpdateInput!): TransportCompany!
+  UpdateFrame(frame: FrameInput): Frame!
+  UpdateGuideline(guideline: GuidelineInput): Guideline!
+  UpdateMe(user: MeUpdateInput): Profile!
+  UserBan(user: UserSelectInput): Message!
+  UserCreate(user: UserCreateInput): User!
+  UserUpdate(user: UserUpdateInput!): User!
+}
+
+type MyProject {
+  countries: [ProjectCountry!]!
+  dataFallbackLanguage: Language
+  roles: [Role!]!
+  title: String!
+}
+
+type Offer {
+  id: ID!
+  place: Place!
+  service: ServiceInterface!
+}
+
+type OwnershipType implements Localizable {
+  key: ID!
+  l10n: OwnershipTypeL10n
+  l10ns: [OwnershipTypeL10n!]!
+  subjectType: SubjectType!
+}
+
+type OwnershipTypeL10n implements L10n {
+  abbreviation: String
+  id: ID!
+  language: Language!
+  title: String
+}
+
+type PageOfAutoDrivers {
+  list: [AutoDriver!]!
+  total: Int!
+}
+
+type PageOfAutos {
+  list: [Auto!]!
+  total: Int!
+}
+
+type PageOfBanks {
+  list: [Bank!]!
+  total: Int!
+}
+
+type PageOfCities {
+  list: [City!]!
+  total: Int
+}
+
+type PageOfCountries {
+  list: [Country!]!
+  total: Int
+}
+
+type PageOfCurrencies {
+  list: [Currency!]!
+  total: Int
+}
+
+type PageOfGuides {
+  list: [Guide!]!
+  total: Int!
+}
+
+type PageOfHotel {
+  list: [Hotel!]!
+  total: Int!
+}
+
+type PageOfImageable {
+  list: [Imageable!]!
+  total: Int
+}
+
+type PageOfLanguages {
+  list: [Language!]!
+  total: Int
+}
+
+type PageOfOrganizations {
+  list: [Organization!]!
+  total: Int
+}
+
+type PageOfPeople {
+  list: [Person!]!
+  total: Int
+}
+
+type PageOfPlaces {
+  list: [Place!]!
+  total: Int
+}
+
+type PageOfProjectCountries {
+  list: [ProjectCountry!]!
+  total: Int
+}
+
+type PageOfProjects {
+  list: [Project!]!
+  total: Int
+}
+
+type PageOfServices {
+  list: [ServiceInterface!]!
+  total: Int!
+}
+
+type PageOfTransportCompanies {
+  list: [TransportCompany!]!
+  total: Int!
+}
+
+type PageOfUsers {
+  list: [User!]!
+  total: Int
+}
+
+type Person implements Imageable & Subject {
+  accounts: [Account!]!
+  badge: Badge!
+  businessModels: [Business!]!
+  contacts: [ContactGroup!]!
+  createdAt: Date
+  dateOfBirth: Date
+  firstName: String!
+  id: ID!
+  language: Language
+  languages: [Language!]!
+  lastName: String
+  mainSimulacrum: Simulacrum
+  middleName: String
+  simulacra: [Simulacrum!]!
+  updatedAt: Date
+}
+
+type Place implements Imageable & Localizable {
+  accessibility: Accessibility!
+  active: Boolean!
+  address: String!
+  ancestors: [Place!]!
+  categories: [PlaceCategory!]!
+  children: [Place!]!
+  descendants: [Place!]!
+  id: ID!
+  imageableName: String!
+  l10n: PlaceL10n
+  l10ns: [PlaceL10n!]!
+  level: Int
+  location: Location!
+  mainSimulacrum: Simulacrum
+  offers: [Offer!]!
+  parent: Place
+  simulacra: [Simulacrum!]!
+  timeZone: String!
+}
+
+type PlaceCategory {
+  category: Category!
+  id: ID!
+  place: Place!
+}
+
+type PlaceL10n implements L10n {
+  description: Html
+  id: ID!
+  language: Language!
+  text: Html
+  title: String
+}
+
+type Placement {
+  id: ID!
+  placed: Accommodable!
+}
+
+type Placing {
+  accessibility: ServiceTariffAccessibility!
+  id: ID!
+  place: Place!
+  tarfiff: ServiceTariffInterface!
+}
+
+type Profile {
+  email: Email
+  id: ID!
+  mainSimulacrum: Simulacrum
+  name: String
+  settings: Settings
+  simulacra: [Simulacrum!]!
+}
+
+type Project {
+  availableRoles: [Role!]!
+  countries: [Country!]!
+  id: ID!
+  languages: [Language!]!
+  owner: User!
+  title: String!
+}
+
+type ProjectCountry implements Imageable & Localizable {
+  id: ID!
+  imageableName: String!
+  l10n: ProjectCountryL10n
+  l10ns: [ProjectCountryL10n!]!
+  mainSimulacrum: Simulacrum
+  prototype: Country!
+  simulacra: [Simulacrum!]!
+  sync: Boolean!
+}
+
+type ProjectCountryL10n implements L10n {
+  description: Html
+  id: ID!
+  language: Language!
+  text: Html
+}
+
+type Query {
+  AccommodableFeatureCategories: [AccommodableFeatureCategory!]!
+  AccommodableFeatures: [AccommodableFeature!]!
+  ActiveLanguages: [Language]
+  AutoDriverIndex(options: CrudIndexInput!): PageOfAutoDrivers!
+  AutoDriverShow(id: ID!): AutoDriver
+  AutoIndex(options: CrudIndexInput!): PageOfAutos!
+  AutoList(owner: SubjectSelectInput!): [Auto!]!
+  AutoOwnedBy(subject: SubjectSelectInput!): [Auto!]!
+  AutoShow(id: ID!): Auto
+  AvailableEquipments: [AutoEquipment!]!
+  BankAll: [Bank!]!
+  BankIndex(options: CrudIndexInput!): PageOfBanks!
+  BankRequisiteTypeForCountry(country: CountrySelectInput!): [BankRequisiteType!]!
+  BankShow(id: ID!): Bank
+  BedTypeAll: [BedType!]!
+  BuildingTypeAll: [BuildingType!]!
+  BusinessKinds: [BusinessKind!]!
+  CategoryList: [Category!]!
+  CityIndex(country: CountrySelectInput, options: CrudIndexInput!): PageOfCities!
+  CityShow(id: ID!): City
+  ContactTypeAll(country: CountrySelectInput, subjectType: SubjectType): [ContactType!]!
+  CountryIndex(options: CrudIndexInput!): PageOfCountries!
+  CountryList: [Country!]!
+  CountryShow(id: ID!): Country
+  CurrencyAll: [Currency!]!
+  CurrencyIndex(options: CrudIndexInput!): PageOfCurrencies!
+  CurrencyShow(id: ID!): Currency
+  GodSeesWithYourEyes(user: UserSelectInput): Token!
+  GuideIndex(options: CrudIndexInput!): PageOfGuides!
+  GuideShow(id: ID!): Guide!
+  GuideSpecialityAll: [Speciality!]!
+  Guideline: Guideline!
+  HotelIndex(options: CrudIndexInput!): PageOfHotel!
+  HotelShow(id: ID!): Hotel
+  HotelTypeAll: [HotelType!]!
+  ImageModules: [ImageModule!]!
+  Imageable(module: String, options: CrudIndexInput!, provider: String): PageOfImageable
+  LanguageIndex(options: CrudIndexInput!): PageOfLanguages!
+  LanguageShow(id: ID!): Language
+  Me: Profile!
+  MyProjectShow: MyProject!
+  OrganizationIndex(options: CrudIndexInput!): PageOfOrganizations!
+  OrganizationShow(id: ID!): Organization!
+  OwnershipTypeAll: [OwnershipType!]!
+  OwnershipTypeByCountry(country: CountrySelectInput): [OwnershipType!]!
+  PersonIndex(options: CrudIndexInput!): PageOfPeople!
+  PersonShow(id: ID): Person
+  PlaceIndex(options: CrudIndexInput!): PageOfPlaces!
+  PlaceSearch(except: PlaceSelectInput, search: String!): [Place!]!
+  PlaceShow(id: ID!): Place!
+  ProjectCountryIndex(options: CrudIndexInput!): PageOfProjectCountries!
+  ProjectCountryShow(id: ID!): ProjectCountry
+  ProjectIndex(options: CrudIndexInput!): PageOfProjects!
+  ProjectLanguages: [Language]
+  ProjectShow(id: ID!): Project
+  RequisiteTypeAll: [RequisiteType!]!
+  ServiceIndex(options: CrudIndexInput): PageOfServices!
+  ServiceSearch(search: String): [ServiceInterface!]!
+  ServiceShow(id: ID!): ServiceInterface
+  SocialStatusAll: [SocialStatus!]!
+  SubjectSearch(search: String, types: [SubjectType!] = []): [Subject!]!
+  SubjectShow(id: ID!): Subject
+  SubjectTypeRequisiteTypes(country: CountrySelectInput, subjectType: SubjectType): [RequisiteType!]!
+  TimeZones: [TimeZone!]!
+  TransportCompanyIndex(options: CrudIndexInput!): PageOfTransportCompanies!
+  TransportCompanyShow(id: ID!): TransportCompany
+  UnitList(canonical: Boolean = false, types: [String!] = []): [ServiceUnit!]!
+  UserIndex(options: CrudIndexInput!): PageOfUsers!
+  UserShow(id: ID!): User
+  ViewTypeAll: [RoomViewType!]!
+}
+
+type Requisite {
+  key: String!
+  value: String
+}
+
+type RequisiteType {
+  key: ID!
+  l10n: RequisiteTypeL10n
+  l10ns: [RequisiteTypeL10n!]!
+  type: String!
+}
+
+type RequisiteTypeL10n {
+  title: String!
+}
+
+type RoomViewType implements Localizable {
+  key: ID!
+  l10n: RoomViewTypeL10n
+  l10ns: [RoomViewTypeL10n!]!
+}
+
+type RoomViewTypeL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type SchedulePeriod {
+  from: Timestamp
+  id: ID!
+  schedules: [ScheduleRow!]!
+  to: Timestamp
+}
+
+type ScheduleRow {
+  days: [Day!]!
+  id: ID!
+  limits: Limits
+}
+
+type ServiceAccommodation implements ServiceInterface {
+  accommodable: Accommodable!
+  board: AccommodationBoardType!
+  business: Business!
+  currency: Currency!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  tariffs: [ServiceAccommodationTariff!]!
+  unit: ServiceUnit!
+  version: ServiceAccommodationVersion!
+  versions: [ServiceAccommodationVersion!]!
+}
+
+type ServiceAccommodationTariff implements ServiceTariffInterface {
+  id: ID!
+  placings: [Placing!]!
+  version: ServiceAccommodationTariffVersion!
+  versions: [ServiceAccommodationTariffVersion!]!
+}
+
+type ServiceAccommodationTariffVersion implements ServiceTariffVersionInterface {
+  ageUntil: Int
+  citizenship: Country
+  id: ID!
+  overtimePriceRule: OvertimePriceRule
+  overtimePriceValue: Int
+  packs: [ServiceTariffVersionPackInterface!]!
+  socialStatus: SocialStatus
+  title: String
+}
+
+type ServiceAccommodationVersion implements Localizable & ServiceVersionInterface {
+  id: ID!
+  l10n: ServiceVersionL10n
+  l10ns: [ServiceVersionL10n!]!
+  quantity: Float!
+  service: ServiceInterface!
+  size: Int!
+}
+
+type ServiceAutoDrivingModel implements ServiceInterface {
+  business: Business!
+  category: AutoCategory
+  currency: Currency!
+  hand: HandDrive
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  passengers: Int
+  quantity: Float!
+  size: Int!
+  tariffs: [ServiceTariff!]!
+  unit: ServiceUnit!
+  version: ServiceVersion!
+  versions: [ServiceVersion!]!
+}
+
+type ServiceEscortModel implements ServiceInterface {
+  business: Business!
+  currency: Currency!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  tariffs: [ServiceEscortTariff!]!
+  unit: ServiceUnit!
+  version: ServiceVersionInterface!
+  versions: [ServiceVersionInterface!]!
+}
+
+type ServiceEscortTariff implements ServiceTariffInterface {
+  id: ID!
+  placings: [Placing!]!
+  version: ServiceEscortTariffVersion!
+  versions: [ServiceEscortTariffVersion!]!
+}
+
+type ServiceEscortTariffVersion implements ServiceTariffVersionInterface {
+  ageUntil: Int
+  citizenship: Country
+  id: ID!
+  overtimePriceRule: OvertimePriceRule
+  overtimePriceValue: Int
+  packs: [ServiceTariffVersionPackInterface!]!
+  socialStatus: SocialStatus
+  title: String
+}
+
+type ServiceExcursionModel implements ServiceInterface {
+  business: Business!
+  currency: Currency!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  tariffs: [ServiceTariffInterface!]!
+  unit: ServiceUnit!
+  version: ServiceExcursionVersion!
+  versions: [ServiceExcursionVersion!]!
+}
+
+type ServiceExcursionVersion implements Imageable & Localizable & ServiceVersionInterface {
+  duration: Int!
+  id: ID!
+  l10n: ServiceVersionL10n
+  l10ns: [ServiceVersionL10n!]!
+  mainSimulacrum: Simulacrum
+  quantity: Float!
+  service: ServiceInterface!
+  simulacra: [Simulacrum!]!
+  size: Int!
+}
+
+type ServiceKind implements Localizable {
+  businessKinds: [BusinessKind]!
+  durable: Boolean!
+  key: ID!
+  l10n: ServiceKindL10n!
+  l10ns: [ServiceKindL10n!]!
+  models: [String!]!
+  units: [ServiceUnit!]!
+}
+
+type ServiceKindL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type ServicePassengerTransportModel implements ServiceInterface {
+  business: Business!
+  currency: Currency!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  tariffs: [ServiceTariff!]!
+  unit: ServiceUnit!
+  version: ServicePassengerTransportVersion!
+  versions: [ServicePassengerTransportVersion!]!
+}
+
+type ServicePassengerTransportVersion implements ServiceVersionInterface {
+  auto: Auto
+  dieselConsumption: Float!
+  fuelConsumption: Boolean!
+  gasConsumption: Float!
+  id: ID!
+  petrolConsumption: Float!
+  quantity: Float!
+  service: ServiceInterface!
+  size: Int!
+}
+
+type ServiceStandardModel implements ServiceInterface {
+  business: Business!
+  currency: Currency!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  quantity: Float
+  size: Int
+  tariffs: [ServiceTariff!]!
+  unit: ServiceUnit!
+  version: ServiceVersion!
+  versions: [ServiceVersion!]!
+}
+
+type ServiceTariff implements ServiceTariffInterface {
+  id: ID!
+  placings: [Placing!]!
+  version: ServiceTariffVersionInterface!
+  versions: [ServiceTariffVersionInterface!]!
+}
+
+type ServiceTariffAccessibility {
+  id: ID!
+  periods: [SchedulePeriod!]!
+  scheduled: Placing!
+}
+
+type ServiceTariffVersion implements ServiceTariffVersionInterface {
+  ageUntil: Int
+  citizenship: Country
+  id: ID!
+  packs: [ServiceTariffVersionPackInterface!]!
+  socialStatus: SocialStatus
+  title: String
+}
+
+type ServiceTariffVersionPack implements ServiceTariffVersionPackInterface {
+  discounts: [ServiceTariffVersionPackDiscountInterface!]!
+  id: ID!
+  price: Int!
+  quantity: Float!
+  size: Int!
+}
+
+type ServiceTariffVersionPackDiscount implements ServiceTariffVersionPackDiscountInterface {
+  id: ID!
+  quantity: Float!
+  rule: DiscountRule!
+  value: Int!
+}
+
+type ServiceTransferModel implements ServiceInterface {
+  business: Business!
+  currency: Currency!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  tariffs: [ServiceTariff!]!
+  unit: ServiceUnit!
+  version: ServiceTransferVersion!
+  versions: [ServiceTransferVersion!]!
+}
+
+type ServiceTransferVersion implements Imageable & Localizable & ServiceVersionInterface {
+  auto: Auto
+  distance: Int!
+  duration: Int!
+  from: Place!
+  id: ID!
+  l10n: ServiceVersionL10n!
+  l10ns: [ServiceVersionL10n!]!
+  mainSimulacrum: Simulacrum
+  quantity: Float!
+  service: ServiceInterface!
+  simulacra: [Simulacrum!]!
+  size: Int!
+  to: Place!
+}
+
+type ServiceTransportRentModel implements ServiceInterface {
+  auto: Auto
+  business: Business!
+  currency: Currency!
+  dieselConsumption: Float!
+  fuelConsumption: Boolean!
+  gasConsumption: Float!
+  id: ID!
+  kind: ServiceKind!
+  model: String!
+  petrolConsumption: Float!
+  quantity: Float!
+  size: Int!
+  tariffs: [ServiceTransportRentTariff!]!
+  unit: ServiceUnit!
+  version: ServiceVersion!
+  versions: [ServiceVersion!]!
+}
+
+type ServiceTransportRentTariff implements ServiceTariffInterface {
+  id: ID!
+  placings: [Placing!]!
+  version: ServiceTransportRentTariffVersion!
+  versions: [ServiceTransportRentTariffVersion!]!
+}
+
+type ServiceTransportRentTariffVersion implements ServiceTariffVersionInterface {
+  ageUntil: Int
+  citizenship: Country
+  id: ID!
+  packs: [ServiceTransportRentTariffVersionPack!]!
+  quotaUnit: ServiceUnit
+  socialStatus: SocialStatus
+  title: String
+}
+
+type ServiceTransportRentTariffVersionPack implements ServiceTariffVersionPackInterface {
+  discounts: [ServiceTariffVersionPackDiscount!]!
+  id: ID!
+  price: Int!
+  quantity: Float!
+  quota: Int!
+  quotaOverrunPrice: Int!
+  size: Int!
+}
+
+type ServiceUnit implements Localizable {
+  canonical: ServiceUnit
+  key: ID!
+  l10n: ServiceUnitL10n!
+  l10ns: [ServiceUnitL10n!]!
+  type: String!
+}
+
+type ServiceUnitL10n implements L10n {
+  abbreviation: String!
+  id: ID!
+  language: Language!
+  of: String!
+  title: String!
+}
+
+type ServiceVersion implements ServiceVersionInterface {
+  id: ID!
+  quantity: Float!
+  service: ServiceInterface!
+  size: Int!
+}
+
+type ServiceVersionL10n implements L10n {
+  description: String
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type Settings {
+  interfaceLanguage: Language
+}
+
+type Simulacrum {
+  etalon: EtalonImageSimulacrum!
+  id: ID!
+  main: Boolean!
+  source: SourceImageSimulacrum!
+  thumbs: [ThumbImageSimulacrum!]!
+}
+
+type SocialStatus implements Localizable {
+  id: ID!
+  l10n: SocialStatusL10n
+  l10ns: [SocialStatusL10n!]!
+}
+
+type SocialStatusL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type SourceImageSimulacrum {
+  id: ID!
+  image: Image!
+  sumulacrum: Simulacrum!
+  type: String!
+}
+
+type Speciality implements Localizable {
+  key: ID!
+  l10n: SpecialityL10n
+  l10ns: [SpecialityL10n!]!
+}
+
+type SpecialityL10n implements L10n {
+  id: ID!
+  language: Language!
+  title: String!
+}
+
+type StudioKind implements Accommodable & LivingRoomKind {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type SuiteKind implements Accommodable & Identity {
+  _type: String!
+  features: [AccommodableFeature!]!
+  id: ID!
+  l10ns: [AccommodableL10n!]!
+  mainSimulacrum: Simulacrum
+  placements: [Placement!]
+  simulacra: [Simulacrum!]!
+  standalone: Boolean!
+}
+
+type TariffContainer {
+  accommodation: ServiceAccommodation!
+  id: ID!
+  tariff: ServiceTariff
+}
+
+type ThumbImageSimulacrum {
+  crop: String!
+  id: ID!
+  image: Image!
+  sumulacrum: Simulacrum!
+}
+
+type TimeZone {
+  name: String!
+}
+
+type Token {
+  access_token: String!
+  token_type: String!
+}
+
+type TransportCompany implements Business {
+  autos: [Auto!]!
+  businessKind: BusinessKind!
+  createdAt: String
+  id: ID!
+  isArchived: Boolean
+  location: Location!
+  subject: Subject!
+  badge: Badge
+}
+
+type User implements Identity & Imageable {
+  email: Email
+  id: ID!
+  imageableName: String!
+  mainSimulacrum: Simulacrum
+  name: String
+  project: Project
+  roles: [Role!]!
+  simulacra: [Simulacrum!]!
+}
+
+enum AccommodationBoardType {
+  AI
+  BB
+  FB
+  HB
+  RO
+}
+
+enum AutoBody {
+  CABRIOLET
+  COUPE
+  CROSSOVER
+  FASTBACK
+  HARDTOP
+  HATCHBACK
+  LIFTBACK
+  LIMOUSINE
+  MINIVAN
+  PICKUP
+  ROADSTER
+  SEDAN
+  TARGA
+  WAGON
+}
+
+enum AutoCategory {
+  A
+  A1
+  B
+  B1
+  BE
+  C
+  C1
+  C1E
+  CE
+  D
+  D1
+  D1E
+  DE
+}
+
+enum AutoTransmission {
+  AUTO
+  MANUAL
+}
+
+enum AutoType {
+  BUS
+  CAR
+  LIGHT_COMMERCIAL
+  TRAILER
+  TRAILER_TRUCK
+  TRUCK
+}
+
+enum Day {
+  friday
+  monday
+  saturday
+  sunday
+  thursday
+  tuesday
+  wednesday
+}
+
+enum Direction {
+  asc
+  desc
+}
+
+enum DiscountRule {
+  REDUCE_ABSOLUTE
+  REDUCE_RELATIVE
+  SET_CONSTANT
+}
+
+enum HandDrive {
+  LEFT
+  RIGHT
+}
+
+enum OvertimePriceRule {
+  ADD_ABSOLUTE
+  ADD_RELATIVE
+  NONE
+  SET_CONSTANT
+}
+
+enum Role {
+  ADMIN
+  OBSERVER
+  OWNER
+  USER
+}
+
+enum SubjectType {
+  entity
+  individual
+  person
+}
+
+input AccessibilityInput {
+  id: ID
+  periods: [SchedulePeriodInput!]! = []
+}
+
+input AccommodableFeatureSelectInput {
+  key: ID!
+}
+
+input AccommodableInput {
+  id: ID!
+  placements: [PlacementInput!] = []
+}
+
+input AccommodableL10nInput {
+  description: String
+  language: LanguageSelectInput!
+  title: String
+}
+
+input AccommodableSelectInput {
+  id: ID!
+}
+
+input AccountInput {
+  bank: BankSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  isArchived: Boolean
+  number: String!
+  title: String!
+}
+
+input ApartmentKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input AutoCreateInput {
+  body: AutoBody
+  brand: String!
+  dieselConsumption: Float!
+  equipment: String
+  equipments: [AutoEquipmentSelectInput!]! = []
+  gasConsumption: Float!
+  generation: String
+  hand: HandDrive!
+  model: String!
+  modification: String
+  owner: SubjectSelectInput!
+  passengers: Int!
+  petrolConsumption: Float!
+  series: String
+  simulacra: [SimulacrumInput!]! = []
+  transmission: AutoTransmission
+  type: AutoType!
+  year: Int
+}
+
+input AutoDriverCreateInput {
+  categories: [AutoCategory]! = []
+  id: ID
+  location: LocationInput!
+  subject: SubjectSelectInput!
+}
+
+input AutoDriverUpdateInput {
+  categories: [AutoCategory]! = []
+  id: ID!
+  location: LocationInput!
+  subject: SubjectSelectInput!
+}
+
+input AutoEquipmentSelectInput {
+  id: ID!
+}
+
+input AutoSelectInput {
+  id: ID!
+}
+
+input AutoUpdateInput {
+  body: AutoBody
+  brand: String!
+  dieselConsumption: Float!
+  equipment: String
+  equipments: [AutoEquipmentSelectInput!]! = []
+  gasConsumption: Float!
+  generation: String
+  hand: HandDrive
+  id: ID!
+  model: String!
+  modification: String
+  owner: SubjectSelectInput!
+  passengers: Int!
+  petrolConsumption: Float!
+  series: String
+  simulacra: [SimulacrumInput!]! = []
+  transmission: AutoTransmission
+  type: AutoType!
+  year: Int
+}
+
+input BankCreateInput {
+  id: ID
+  requisites: [BankRequisiteInput!]! = []
+  subject: SubjectSelectInput!
+}
+
+input BankRequisiteInput {
+  key: String!
+  value: String
+}
+
+input BankSelectInput {
+  id: ID!
+}
+
+input BankUpdateInput {
+  id: ID!
+  requisites: [BankRequisiteInput!]! = []
+  subject: SubjectSelectInput!
+}
+
+input BathroomKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input BedKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  size: BedSizeSelectInput!
+  standalone: Boolean!
+  type: BedTypeSelectInput!
+}
+
+input BedSizeSelectInput {
+  key: ID!
+}
+
+input BedTypeSelectInput {
+  key: ID!
+}
+
+input BedroomKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input BuildingKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input BusinessSelectInput {
+  id: ID!
+}
+
+input CanvasDataInput {
+  height: Float!
+  left: Float!
+  naturalHeight: Float!
+  naturalWidth: Float!
+  top: Float!
+  width: Float!
+}
+
+input CategorySelectInput {
+  id: ID!
+}
+
+input CertificateInput {
+  id: ID
+  l10ns: [CertificateL10n!]! = []
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input CertificateL10n {
+  id: ID
+  language: LanguageSelectInput!
+  title: String!
+}
+
+input CityCreateInput {
+  country: CountrySelectInput!
+  id: ID
+  l10ns: [CityL10nInput!]! = []
+  location: LocationInput!
+  phoneCode: String
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input CityL10nInput {
+  description: Html
+  id: ID
+  language: LanguageSelectInput!
+  text: Html
+  title: String
+}
+
+input CityUpdateInput {
+  country: CountrySelectInput!
+  id: ID!
+  l10ns: [CityL10nInput!]! = []
+  location: LocationInput!
+  phoneCode: String
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input ContactGroupInput {
+  entries: [ContactInput!]! = []
+  type: String!
+}
+
+input ContactInput {
+  type: String!
+  value: String
+}
+
+input CountryCreateInput {
+  alpha2: String
+  alpha3: String
+  id: ID
+  l10ns: [CountryL10nInput!]! = []
+  numericCode: String
+  phoneCode: String
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input CountryL10nInput {
+  description: String
+  id: ID
+  language: LanguageSelectInput!
+  name: String
+  text: String
+  title: String
+}
+
+input CountrySelectInput {
+  id: ID!
+}
+
+input CountryUpdateInput {
+  alpha2: String
+  alpha3: String
+  id: ID!
+  l10ns: [CountryL10nInput!]! = []
+  numericCode: String
+  phoneCode: String
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input CropBoxInput {
+  height: Float!
+  left: Float!
+  top: Float!
+  width: Float!
+}
+
+input CropDataInput {
+  canvas: CanvasDataInput
+  cropBox: CropBoxInput!
+}
+
+input CropInput {
+  format: FormatSelectInput!
+  horizontalColor: String!
+  horizontalMode: Int!
+  horizontalOrientation: Int
+  id: ID
+  key: String!
+  name: String!
+  verticalColor: String!
+  verticalMode: Int!
+  verticalOrientation: Int
+}
+
+input CrudIndexInput {
+  order: OrderInput
+  pagination: PaginationInput
+  search: String
+}
+
+input CurrencyCreateInput {
+  code: String!
+  id: ID
+  l10ns: [CurrencyL10nInput!]! = []
+  symbol: String!
+}
+
+input CurrencyL10nInput {
+  id: ID
+  language: LanguageSelectInput!
+  title: String
+}
+
+input CurrencySelectInput {
+  id: ID!
+}
+
+input CurrencyUpdateInput {
+  code: String!
+  id: ID
+  l10ns: [CurrencyL10nInput!]! = []
+  symbol: String!
+}
+
+input EntityCreateInput {
+  accounts: [AccountInput!]! = []
+  contacts: [ContactGroupInput!]! = []
+  country: CountrySelectInput!
+  fullName: String
+  id: ID
+  intTitle: String
+  ownershipType: OwnershipTypeSelectInput!
+  requisites: [RequisiteInput!]! = []
+  title: String!
+}
+
+input EntityUpdateInput {
+  accounts: [AccountInput!]! = []
+  contacts: [ContactGroupInput!]! = []
+  country: CountrySelectInput!
+  fullName: String
+  id: ID!
+  intTitle: String
+  ownershipType: OwnershipTypeSelectInput!
+  requisites: [RequisiteInput!]! = []
+  title: String
+}
+
+input EtalonImageSimulacrumInput {
+  crop: CropDataInput!
+  id: ID
+  image: ImageInput!
+}
+
+input FormatInput {
+  height: Int!
+  id: ID!
+  name: String!
+  width: Int!
+}
+
+input FormatSelectInput {
+  id: ID!
+}
+
+input FrameInput {
+  aspectX: Int!
+  aspectY: Int!
+  context: String!
+  crops: [CropInput!]! = []
+  id: ID
+}
+
+input GuideCreateInput {
+  certificates: [CertificateInput!]! = []
+  id: ID
+  l10ns: [GuideL10nInput!]! = []
+  languages: [LanguageSelectInput!]! = []
+  location: LocationInput!
+  simulacra: [SimulacrumInput!]! = []
+  specialities: [SpecialitySelectInput!]! = []
+  subject: SubjectSelectInput!
+}
+
+input GuideL10nInput {
+  about: Text
+  experience: Text
+  extra: Text
+  greetings: Text
+  id: ID
+  language: LanguageSelectInput!
+  motivation: Text
+}
+
+input GuideUpdateInput {
+  certificates: [CertificateInput!]! = []
+  id: ID!
+  l10ns: [GuideL10nInput!]! = []
+  languages: [LanguageSelectInput!]! = []
+  location: LocationInput!
+  simulacra: [SimulacrumInput!]! = []
+  specialities: [SpecialitySelectInput!]! = []
+  subject: SubjectSelectInput!
+}
+
+input GuidelineInput {
+  formats: [FormatInput!]! = []
+}
+
+input HotelInput {
+  accommodable: [AccommodableInput!]! = []
+  allowPets: Boolean
+  breakfast: Boolean
+  checkInEnd: Int
+  checkInStart: Int!
+  checkOutEnd: Int!
+  checkOutStart: Int
+  currency: CurrencySelectInput!
+  freeCancelDeadLine: Int!
+  id: ID
+  internet: HotelInternetInput
+  parkingPrice: Int
+  place: PlaceUpdateInput!
+  seasons: [HotelSeasonInput!]! = []
+  services: [ServiceSelectInput!]! = []
+  specialDates: [HotelSpedialDateInpuit!]! = []
+  stars: Int
+  subject: SubjectSelectInput
+  type: HotelTypeSelectInput
+}
+
+input HotelInternetInput {
+  coverage: String!
+  price: Int
+  type: String!
+}
+
+input HotelRoomKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input HotelSeasonInput {
+  from: String!
+  id: ID!
+  tariffContainers: [TariffContainerInput!]! = []
+  to: String!
+}
+
+input HotelSpedialDateInpuit {
+  accommodation: ServiceSelectInput!
+  date: String!
+  id: ID!
+  tariff: ServiceTariffInput!
+}
+
+input HotelTypeSelectInput {
+  key: ID!
+}
+
+input ImageInput {
+  id: ID
+  src: String!
+}
+
+input IndividualCreateInput {
+  accounts: [AccountInput!]! = []
+  contacts: [ContactGroupInput!]! = []
+  country: CountrySelectInput!
+  fullName: String
+  id: ID
+  intTitle: String
+  ownershipType: OwnershipTypeSelectInput!
+  person: PersonSelectInput
+  requisites: [RequisiteInput!]! = []
+  title: String!
+}
+
+input IndividualUpdateInput {
+  accounts: [AccountInput!]! = []
+  contacts: [ContactGroupInput!]! = []
+  country: CountrySelectInput!
+  fullName: String
+  id: ID!
+  intTitle: String
+  ownershipType: OwnershipTypeSelectInput!
+  person: PersonSelectInput
+  requisites: [RequisiteInput!]! = []
+  title: String
+}
+
+input KitchenKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input LanguageCreateInput {
+  alpha2: String!
+  alpha3: String!
+  enabled: Boolean!
+  title: String!
+}
+
+input LanguageSelectInput {
+  id: ID!
+}
+
+input LanguageUpdateInput {
+  alpha2: String!
+  alpha3: String!
+  id: ID!
+  title: String!
+}
+
+input LimitInput {
+  h: Int
+  m: Int
+}
+
+input LimitsInput {
+  from: LimitInput!
+  to: LimitInput!
+}
+
+input LocationInput {
+  latitude: Float!
+  longitude: Float!
+  zoom: Int
+}
+
+input LoungeKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input MeUpdateInput {
+  email: Email!
+  id: ID!
+  name: String!
+  settings: SettingsInput
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input MyProjectUpdateInput {
+  countries: [ProjectCountryInput!]! = []
+  dataFallbackLanguage: LanguageSelectInput!
+  title: String!
+}
+
+input OfferInput {
+  id: ID!
+  service: ServiceSelectInput!
+}
+
+input OrderInput {
+  direction: Direction
+  orderBy: String
+}
+
+input OwnershipTypeSelectInput {
+  key: ID!
+}
+
+input PaginationInput {
+  page: Int
+  perPage: Int
+}
+
+input PersonCreateInput {
+  accounts: [AccountInput!]! = []
+  contacts: [ContactGroupInput!]! = []
+  dateOfBirth: Date
+  firstName: String!
+  id: ID
+  language: LanguageSelectInput
+  languages: [LanguageSelectInput!]! = []
+  lastName: String
+  middleName: String
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input PersonSelectInput {
+  id: ID!
+}
+
+input PersonUpdateInput {
+  accounts: [AccountInput!]! = []
+  dateOfBirth: Date
+  firstName: String
+  id: ID
+  language: LanguageSelectInput
+  languages: [LanguageSelectInput!]! = []
+  lastName: String
+  middleName: String
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input PlaceCategoryInput {
+  category: CategorySelectInput!
+  id: ID
+}
+
+input PlaceCreateInput {
+  accessibility: AccessibilityInput!
+  active: Boolean!
+  address: String!
+  categories: [PlaceCategoryInput!]! = []
+  l10ns: [PlaceL10nInput!]! = []
+  location: LocationInput!
+  offers: [OfferInput!]! = []
+  parent: PlaceSelectInput
+  simulacra: [SimulacrumInput!]! = []
+  timeZone: String!
+}
+
+input PlaceL10nInput {
+  description: Html
+  id: ID
+  language: LanguageSelectInput!
+  text: Html
+  title: String
+}
+
+input PlaceSelectInput {
+  id: ID
+}
+
+input PlaceUpdateInput {
+  accessibility: AccessibilityInput!
+  active: Boolean!
+  address: String!
+  categories: [PlaceCategoryInput!]! = []
+  id: ID!
+  l10ns: [PlaceL10nInput!]! = []
+  location: LocationInput!
+  parent: PlaceSelectInput
+  simulacra: [SimulacrumInput!]! = []
+  timeZone: String!
+}
+
+input PlacementInput {
+  id: ID!
+  placed: AccommodableInput!
+}
+
+input PlacingInput {
+  accessibility: AccessibilityInput!
+  id: ID
+  place: PlaceSelectInput!
+}
+
+input ProjectCountryInput {
+  id: ID
+  prototype: CountrySelectInput!
+}
+
+input ProjectCountryL10nInput {
+  description: Html
+  id: ID
+  language: LanguageSelectInput!
+  text: Html
+}
+
+input ProjectCountryUpdateInput {
+  id: ID!
+  l10ns: [ProjectCountryL10nInput!] = []
+  simulacra: [SimulacrumInput!] = []
+  sync: Boolean!
+}
+
+input ProjectCreateInput {
+  availableRoles: [Role!]! = []
+  id: ID
+  owner: UserCreateInput!
+  title: String!
+}
+
+input ProjectUpdateInput {
+  availableRoles: [Role!]! = []
+  id: ID!
+  languages: [LanguageSelectInput!]! = []
+  title: String!
+}
+
+input RequisiteInput {
+  key: String!
+  value: String
+}
+
+input SchedulePeriodInput {
+  from: Timestamp
+  id: ID
+  schedules: [ScheduleRowInput!]! = []
+  to: Timestamp
+}
+
+input ScheduleRowInput {
+  days: [Day!]! = []
+  id: ID
+  limits: LimitsInput
+}
+
+input ServiceAccommodationModelInput {
+  accommodable: AccommodableSelectInput!
+  board: AccommodationBoardType!
+  business: BusinessSelectInput
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceAccommodationTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServiceAccommodationVersionInput!
+}
+
+input ServiceAccommodationTariffInput {
+  id: ID
+  placings: [PlacingInput!]! = []
+  version: ServiceTariffVersionInput!
+}
+
+input ServiceAccommodationVersionInput {
+  id: ID!
+  l10ns: [ServiceVersionL10nInput!]! = []
+  quantity: Float!
+  size: Int
+}
+
+input ServiceAutoDrivingModelInput {
+  business: BusinessSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServiceAutoDrivingVersionInput!
+}
+
+input ServiceAutoDrivingVersionInput {
+  category: AutoCategory
+  hand: HandDrive
+  id: ID
+  passengers: Int
+  quantity: Float!
+  size: Int!
+}
+
+input ServiceEscortModelInput {
+  business: BusinessSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceEscortTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServiceVersionInput!
+}
+
+input ServiceEscortTariffInput {
+  id: ID
+  version: ServiceEscortTariffVersionInput!
+}
+
+input ServiceEscortTariffVersionInput {
+  ageUntil: Int
+  citizenship: CountrySelectInput
+  id: ID!
+  overtimePriceRule: OvertimePriceRule!
+  overtimePriceValue: Int
+  packs: [ServiceTariffVersionPackInput!]! = []
+  socialStatus: SocialStatusSelectInput
+  title: String!
+}
+
+input ServiceExcursionModelInput {
+  business: BusinessSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServiceExcursionVersionInpuit!
+}
+
+input ServiceExcursionVersionInpuit {
+  duration: Int!
+  id: ID!
+  l10ns: [ServiceVersionL10nInput!]! = []
+  quantity: Float!
+  simulacra: [SimulacrumInput!]! = []
+  size: Int
+}
+
+input ServiceKindSelectInput {
+  key: ID!
+}
+
+input ServicePassengerTransportModelInput {
+  business: BusinessSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServicePassengerTransportVersionInput!
+}
+
+input ServicePassengerTransportVersionInput {
+  auto: AutoSelectInput
+  dieselConsumption: Float!
+  fuelConsumption: Boolean!
+  gasConsumption: Float!
+  id: ID!
+  petrolConsumption: Float!
+  quantity: Float!
+  size: Int!
+}
+
+input ServiceSelectInput {
+  id: ID!
+}
+
+input ServiceStandardModelInput {
+  business: BusinessSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServiceVersionInput!
+}
+
+input ServiceTariffInput {
+  id: ID
+  version: ServiceTariffVersionInput!
+}
+
+input ServiceTariffVersionInput {
+  ageUntil: Int
+  citizenship: CountrySelectInput
+  id: ID!
+  packs: [ServiceTariffVersionPackInput!]! = []
+  socialStatus: SocialStatusSelectInput
+  title: String!
+}
+
+input ServiceTariffVersionPackDiscountInput {
+  id: ID
+  quantity: Int!
+  rule: DiscountRule!
+  value: Float!
+}
+
+input ServiceTariffVersionPackInput {
+  discounts: [ServiceTariffVersionPackDiscountInput!]! = []
+  id: ID
+  price: Float!
+  quantity: Float!
+  size: Int!
+}
+
+input ServiceTransferModelInput {
+  business: BusinessSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServiceTransferVersionInput!
+}
+
+input ServiceTransferVersionInput {
+  auto: AutoSelectInput
+  distance: Int!
+  duration: Int!
+  from: PlaceSelectInput!
+  id: ID!
+  quantity: Float!
+  simulacra: [SimulacrumInput!]! = []
+  size: Int
+  to: PlaceSelectInput!
+}
+
+input ServiceTransportRentModelInput {
+  business: BusinessSelectInput!
+  currency: CurrencySelectInput!
+  id: ID
+  kind: ServiceKindSelectInput!
+  model: String!
+  tariffs: [ServiceTransportRentTariffInput!]! = []
+  unit: ServiceUnitSelectInput!
+  version: ServiceTransportRentVersionInput!
+}
+
+input ServiceTransportRentTariffInput {
+  id: ID
+  version: ServiceTransportRentTariffVersionInput!
+}
+
+input ServiceTransportRentTariffVersionInput {
+  ageUntil: Int
+  citizenship: CountrySelectInput
+  id: ID!
+  packs: [ServiceTransportRentTariffVersionPackInput!]! = []
+  quotaUnit: ServiceUnitSelectInput
+  socialStatus: SocialStatusSelectInput
+  title: String!
+}
+
+input ServiceTransportRentTariffVersionPackInput {
+  discounts: [ServiceTariffVersionPackDiscountInput!]! = []
+  id: ID
+  price: Float!
+  quantity: Float!
+  quota: Int!
+  quotaOverrunPrice: Int!
+  size: Int!
+}
+
+input ServiceTransportRentVersionInput {
+  auto: AutoSelectInput
+  dieselConsumption: Float!
+  fuelConsumption: Boolean!
+  gasConsumption: Float!
+  id: ID!
+  petrolConsumption: Float!
+  quantity: Float!
+  size: Int
+}
+
+input ServiceUnitSelectInput {
+  key: ID!
+}
+
+input ServiceVersionInput {
+  id: ID
+  quantity: Float!
+  size: Int!
+}
+
+input ServiceVersionL10nInput {
+  description: String!
+  id: ID
+  language: LanguageSelectInput!
+  title: String!
+}
+
+input SettingsInput {
+  interfaceLanguage: LanguageSelectInput!
+}
+
+input SimulacrumInput {
+  etalon: EtalonImageSimulacrumInput!
+  id: ID
+  main: Boolean
+  source: SourceImageSimulacrumInput!
+}
+
+input SocialStatusSelectInput {
+  id: ID!
+}
+
+input SourceImageSimulacrumInput {
+  id: ID
+  image: ImageInput!
+}
+
+input SpecialitySelectInput {
+  key: ID!
+}
+
+input StudioKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input SubjectSelectInput {
+  id: ID!
+}
+
+input SuiteKindInput {
+  features: [AccommodableFeatureSelectInput!]! = []
+  id: ID!
+  l10ns: [AccommodableL10nInput!]! = []
+  simulacra: [SimulacrumInput!]! = []
+  standalone: Boolean!
+}
+
+input TariffContainerInput {
+  accommodation: ServiceSelectInput!
+  id: ID!
+  tariff: ServiceTariffInput
+}
+
+input TransportCompanyCreateInput {
+  id: ID
+  location: LocationInput!
+  subject: SubjectSelectInput!
+}
+
+input TransportCompanyUpdateInput {
+  id: ID!
+  location: LocationInput!
+  subject: SubjectSelectInput!
+}
+
+input UserCreateInput {
+  email: Email!
+  name: String!
+  password: Password!
+  roles: [Role!]! = []
+  simulacra: [SimulacrumInput!]! = []
+}
+
+input UserSelectInput {
+  id: ID!
+}
+
+input UserUpdateInput {
+  email: Email!
+  id: ID!
+  name: String!
+  roles: [Role!]! = []
+  simulacra: [SimulacrumInput!]! = []
+}
+
+
+scalar Email
+
+scalar Html
+
+scalar Date
+
+scalar Timestamp
+
+scalar Password
+
+scalar Text

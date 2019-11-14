@@ -16,18 +16,14 @@ use Railt\SDL\Ast\Type\TypeNode;
 use Railt\SDL\Ast\DefinitionNode;
 use Railt\SDL\Ast\Type\ListTypeNode;
 use Railt\SDL\Ast\Type\NamedTypeNode;
+use GraphQL\TypeSystem\Type\ListType;
 use Railt\SDL\Ast\Type\NonNullTypeNode;
-use Railt\TypeSystem\Type\ListType;
 use Railt\SDL\Ast\Value\StringValueNode;
-use Railt\TypeSystem\Type\NonNullType;
-use GraphQL\Contracts\TypeSystem\FieldInterface;
-use GraphQL\Contracts\TypeSystem\ArgumentInterface;
+use GraphQL\TypeSystem\Type\NonNullType;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
-use Railt\SDL\Ast\Generic\FieldDefinitionCollection;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use Railt\SDL\Ast\Generic\InterfaceImplementsCollection;
-use Railt\SDL\Ast\Generic\InputValueDefinitionCollection;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 
 /**
@@ -41,6 +37,11 @@ abstract class TypeBuilder
     protected DefinitionNode $ast;
 
     /**
+     * @var Document
+     */
+    protected Document $dictionary;
+
+    /**
      * @var Factory
      */
     private Factory $builder;
@@ -49,11 +50,6 @@ abstract class TypeBuilder
      * @var Registry
      */
     private Registry $registry;
-
-    /**
-     * @var Document
-     */
-    protected Document $dictionary;
 
     /**
      * Builder constructor.
@@ -72,26 +68,9 @@ abstract class TypeBuilder
     }
 
     /**
-     * @param NamedTypeInterface $type
-     * @return NamedTypeInterface
+     * @return DefinitionInterface
      */
-    protected function registerType(NamedTypeInterface $type): NamedTypeInterface
-    {
-        $this->dictionary->typeMap->put($type->getName(), $type);
-
-        return $type;
-    }
-
-    /**
-     * @param DirectiveInterface $directive
-     * @return DirectiveInterface
-     */
-    protected function registerDirective(DirectiveInterface $directive): DirectiveInterface
-    {
-        $this->dictionary->directives->put($directive->getName(), $directive);
-
-        return $directive;
-    }
+    abstract public function build(): DefinitionInterface;
 
     /**
      * @param DefinitionInterface $definition
@@ -111,9 +90,26 @@ abstract class TypeBuilder
     }
 
     /**
-     * @return DefinitionInterface
+     * @param DirectiveInterface $directive
+     * @return DirectiveInterface
      */
-    abstract public function build(): DefinitionInterface;
+    protected function registerDirective(DirectiveInterface $directive): DirectiveInterface
+    {
+        $this->dictionary->directives->put($directive->getName(), $directive);
+
+        return $directive;
+    }
+
+    /**
+     * @param NamedTypeInterface $type
+     * @return NamedTypeInterface
+     */
+    protected function registerType(NamedTypeInterface $type): NamedTypeInterface
+    {
+        $this->dictionary->typeMap->put($type->getName(), $type);
+
+        return $type;
+    }
 
     /**
      * @param TypeNode $type
@@ -123,16 +119,14 @@ abstract class TypeBuilder
     {
         switch (true) {
             case $type instanceof NonNullTypeNode:
-                $result = new NonNullType();
-                $result->ofType = $this->buildType($type->type);
-
-                return $result;
+                return new NonNullType([
+                    'ofType' => $this->buildType($type->type)
+                ]);
 
             case $type instanceof ListTypeNode:
-                $result = new ListType();
-                $result->ofType = $this->buildType($type->type);
-
-                return $result;
+                return new ListType([
+                    'ofType' => $this->buildType($type->type)
+                ]);
 
             case $type instanceof NamedTypeNode:
                 return $this->getType($type->name->value);

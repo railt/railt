@@ -23,7 +23,8 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "composer-plugin-api": "^1.1",
-        "graphql/type-system-contracts": "~14.0|dev-master@dev",
+        "graphql/type-system": "^14.0|dev-master@dev",
+        "graphql/type-system-contracts": "^14.0",
         "justinrainbow/json-schema": "~5.2",
         "ocramius/package-versions": "~1.5",
         "phplrt/parser": "~2.2.2",
@@ -68,8 +69,7 @@
             "Railt\\HttpFactory\\": "packages/HttpFactory/src",
             "Railt\\Http\\": "packages/Http/src/",
             "Railt\\Observer\\": "packages/Observer/src",
-            "Railt\\SDL\\": "packages/SDL/src",
-            "Railt\\TypeSystem\\": "packages/TypeSystem/src"
+            "Railt\\SDL\\": "packages/SDL/src"
         }
     },
     "autoload-dev": {
@@ -87,8 +87,7 @@
             "Railt\\Observer\\Tests\\Unit\\": "packages/Observer/tests",
             "Railt\\SDL\\Tests\\Unit\\": "packages/SDL/tests",
             "Railt\\Tests\\Feature\\": "tests/feature",
-            "Railt\\Tests\\Unit\\": "tests/unit",
-            "Railt\\TypeSystem\\Tests\\Unit\\": "packages/TypeSystem/tests"
+            "Railt\\Tests\\Unit\\": "tests/unit"
         }
     },
     "replace": {

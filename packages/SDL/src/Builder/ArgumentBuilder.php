@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
+use GraphQL\TypeSystem\Argument;
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use Railt\SDL\Ast\Definition\InputValueDefinitionNode;
-use Railt\TypeSystem\Argument;
 
 /**
  * @property InputValueDefinitionNode $ast
@@ -21,6 +21,7 @@ class ArgumentBuilder extends TypeBuilder
 {
     /**
      * @return ArgumentInterface|DefinitionInterface
+     * @throws \RuntimeException
      */
     public function build(): ArgumentInterface
     {
@@ -31,8 +32,7 @@ class ArgumentBuilder extends TypeBuilder
         ]);
 
         if ($this->ast->defaultValue) {
-            $argument->defaultValue = $this->ast->defaultValue->toNative();
-            $argument->hasDefaultValue = true;
+            return $argument->withDefaultValue($this->ast->defaultValue->toNative());
         }
 
         return $argument;

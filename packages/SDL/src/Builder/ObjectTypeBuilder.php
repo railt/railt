@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
-use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
+use GraphQL\TypeSystem\Type\ObjectType;
 use Railt\SDL\Builder\Common\FieldsBuilderTrait;
-use Railt\TypeSystem\Type\ObjectType;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
+use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
 
 /**
  * @property ObjectTypeDefinitionNode $ast
@@ -24,19 +24,20 @@ class ObjectTypeBuilder extends TypeBuilder
 
     /**
      * @return ObjectTypeInterface|DefinitionInterface
+     * @throws \RuntimeException
      */
     public function build(): ObjectTypeInterface
     {
         $object = new ObjectType([
-            'name' => $this->ast->name->value,
+            'name'        => $this->ast->name->value,
+            'description' => $this->value($this->ast->description),
         ]);
 
         $this->registerType($object);
 
-        $object->description = $this->value($this->ast->description);
-        $object->fields = \iterator_to_array($this->buildFields($this->ast->fields));
-        $object->interfaces = \iterator_to_array($this->buildImplementedInterfaces($this->ast->interfaces));
-
-        return $object;
+        return $object
+            ->withFields($this->buildFields($this->ast->fields))
+            ->withInterfaces($this->buildImplementedInterfaces($this->ast->interfaces))
+        ;
     }
 }

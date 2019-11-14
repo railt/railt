@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use GraphQL\TypeSystem\Schema;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
-use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
-use Railt\TypeSystem\Schema;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
 
 /**
  * @property SchemaDefinitionNode $ast
@@ -22,10 +22,14 @@ class SchemaBuilder extends TypeBuilder
 {
     /**
      * @return SchemaInterface|DefinitionInterface
+     * @throws \RuntimeException
      */
     public function build(): SchemaInterface
     {
-        $schema = new Schema();
+        $schema = new Schema([
+            'typeMap'    => $this->dictionary->typeMap,
+            'directives' => $this->dictionary->directives,
+        ]);
 
         /** @var OperationTypeDefinitionNode $operation */
         foreach ($this->ast->operationTypes as $operation) {
@@ -33,21 +37,18 @@ class SchemaBuilder extends TypeBuilder
 
             switch ($operation->operation) {
                 case 'query':
-                    $schema->query = $type;
+                    $schema = $schema->withQueryType($type);
                     break;
 
                 case 'mutation':
-                    $schema->mutation = $type;
+                    $schema = $schema->withMutationType($type);
                     break;
 
                 case 'subscription':
-                    $schema->subscription = $type;
+                    $schema = $schema->withSubscriptionType($type);
                     break;
             }
         }
-
-        $schema->typeMap = $this->dictionary->typeMap->toArray();
-        $schema->directives = $this->dictionary->directives->toArray();
 
         return $schema;
     }

@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
+use GraphQL\TypeSystem\Type\InputObjectType;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\InputTypeInterface;
 use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
-use Railt\TypeSystem\Type\InputObjectType;
 
 /**
  * @property InputObjectTypeDefinitionNode $ast
@@ -25,12 +25,11 @@ class InputObjectTypeBuilder extends TypeBuilder
     public function build(): InputTypeInterface
     {
         $input = new InputObjectType([
-            'name' => $this->ast->name->value,
+            'name'        => $this->ast->name->value,
+            'description' => $this->value($this->ast->description),
         ]);
 
         $this->registerType($input);
-
-        $input->description = $this->value($this->ast->description);
 
         // TODO Add input arguments builder
 
