@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Extension;
 
-use Phplrt\Contracts\Ast\NodeInterface;
 use GraphQL\TypeSystem\Type\ObjectType;
+use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Extension\ObjectTypeExtensionNode;
 
 /**

@@ -13,10 +13,8 @@ namespace Railt\SDL\Executor\Extension;
 
 use GraphQL\TypeSystem\Schema;
 use Phplrt\Contracts\Ast\NodeInterface;
-use GraphQL\TypeSystem\Type\ScalarType;
-use Railt\SDL\Ast\Extension\SchemaExtensionNode;
-use Railt\SDL\Ast\Extension\ScalarTypeExtensionNode;
 use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
+use Railt\SDL\Ast\Extension\SchemaExtensionNode;
 
 /**
  * Class SchemaExtensionExecutor
