@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\Argument;
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
-use Railt\SDL\Ast\Definition\ArgumentDefinitionNode;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use GraphQL\TypeSystem\Argument;
+use Railt\SDL\Ast\Definition\ArgumentDefinitionNode;
 
 /**
  * @property ArgumentDefinitionNode $ast
