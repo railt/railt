@@ -37,7 +37,7 @@ class DirectiveDefinition extends TypeRegistrar
         if ($directive instanceof DirectiveDefinitionNode) {
             $this->assertUniqueness($directive);
 
-            $this->registry->directives->put($directive->name->value, $directive);
+            $this->registry->directives[$directive->name->value] = $directive;
 
             //
             // Temporary optimization.

@@ -37,7 +37,7 @@ class TypeDefinition extends TypeRegistrar
         if ($type instanceof TypeDefinitionNode) {
             $this->assertUniqueness($type);
 
-            $this->registry->typeMap->put($type->name->value, $type);
+            $this->registry->typeMap[$type->name->value] = $type;
 
             //
             // Temporary optimization.

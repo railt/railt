@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor;
 
-use Ramsey\Collection\Set;
-use Ramsey\Collection\Map\TypedMap;
 use Railt\SDL\Ast\Executable\DirectiveNode;
 use Railt\SDL\Ast\Definition\TypeDefinitionNode;
 use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
@@ -22,32 +20,22 @@ use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
 class Registry
 {
     /**
-     * @var TypedMap|TypeDefinitionNode[]
+     * @var array|TypeDefinitionNode[]
      */
-    public TypedMap $typeMap;
+    public array $typeMap = [];
 
     /**
-     * @var TypedMap|DirectiveDefinitionNode[]
+     * @var array|DirectiveDefinitionNode[]
      */
-    public TypedMap $directives;
+    public array $directives = [];
 
     /**
-     * @var Set|DirectiveNode[]
+     * @var DirectiveNode[]
      */
-    public Set $executions;
+    public array $executions = [];
 
     /**
      * @var SchemaDefinitionNode|null
      */
     public ?SchemaDefinitionNode $schema = null;
-
-    /**
-     * Registry constructor.
-     */
-    public function __construct()
-    {
-        $this->typeMap = new TypedMap('string', TypeDefinitionNode::class);
-        $this->directives = new TypedMap('string', DirectiveDefinitionNode::class);
-        $this->executions = new Set(DirectiveNode::class);
-    }
 }

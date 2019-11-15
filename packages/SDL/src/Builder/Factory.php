@@ -101,8 +101,8 @@ class Factory
             return $this->dictionary->typeMap[$type];
         }
 
-        if ($registry->typeMap->containsKey($type)) {
-            return $this->build($registry->typeMap->get($type), $registry);
+        if (isset($registry->typeMap[$type])) {
+            return $this->build($registry->typeMap[$type], $registry);
         }
 
         throw new \LogicException('Can not build type ' . $type);
@@ -145,8 +145,8 @@ class Factory
             return $this->dictionary->directives[$type];
         }
 
-        if ($registry->directives->containsKey($type)) {
-            return $this->build($registry->directives->get($type), $registry);
+        if (isset($registry->directives[$type])) {
+            return $this->build($registry->directives[$type], $registry);
         }
 
         throw new \LogicException('Can not build directive ' . $type);
