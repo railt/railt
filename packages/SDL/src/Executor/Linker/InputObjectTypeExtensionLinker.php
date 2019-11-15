@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Linker;
 
-use Railt\SDL\Linker\LinkerInterface;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode;
+use Railt\SDL\Linker\LinkerInterface;
 
 /**
  * Class InputObjectTypeExtensionLinker

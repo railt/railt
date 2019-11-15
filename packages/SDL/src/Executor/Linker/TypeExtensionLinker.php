@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Linker;
 
-use Railt\SDL\Ast\DefinitionNode;
-use Railt\SDL\Ast\Type\NamedTypeNode;
 use Phplrt\Contracts\Ast\NodeInterface;
-use Railt\SDL\Exception\TypeNotFoundException;
 use Phplrt\Source\Exception\NotAccessibleException;
+use Railt\SDL\Exception\TypeNotFoundException;
 
 /**
  * Class TypeExtensionLinker
