@@ -9,17 +9,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\SDL\Ast\Type\NamedTypeNode;
-use GraphQL\TypeSystem\Type\UnionType;
-use GraphQL\TypeSystem\Type\ObjectType;
-use Railt\SDL\Ast\Generic\TypeDefinitionCollection;
-use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
-use Railt\SDL\Ast\Definition\UnionTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use Railt\SDL\Ast\Generic\InterfaceImplementsCollection;
-use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\UnionTypeInterface;
-use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
+use GraphQL\TypeSystem\Type\UnionType;
+use Railt\SDL\Ast\Definition\UnionTypeDefinitionNode;
+use Railt\SDL\Ast\Generic\TypeDefinitionCollection;
+use Railt\SDL\Ast\Type\NamedTypeNode;
 
 /**
  * @property UnionTypeDefinitionNode $ast
