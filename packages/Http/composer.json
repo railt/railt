@@ -31,8 +31,8 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "phplrt/source": "~2.2",
-        "phplrt/position": "~2.2",
+        "phplrt/source": "^2.2",
+        "phplrt/position": "^2.2",
         "railt/dumper": "^2.0",
         "railt/contracts": "^2.0",
         "railt/container": "^2.0"

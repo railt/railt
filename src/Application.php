@@ -13,12 +13,13 @@ namespace Railt\Foundation;
 use PackageVersions\Versions;
 use Railt\Container\Container;
 use Psr\Container\ContainerInterface;
+use Railt\Contracts\SDL\DocumentInterface;
+use Railt\Contracts\SDL\CompilerInterface;
 use Railt\Foundation\Http\GraphQLConnection;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Railt\Foundation\Http\ConnectionInterface;
 use Psr\Container\ContainerExceptionInterface;
 use Railt\Foundation\Extension\ExtensionsTrait;
-use Railt\Contracts\SDL\CompilerInterface;
 use Railt\Foundation\Console\ConsoleExecutorTrait;
 use Railt\Foundation\Application\ConfigurationTrait;
 use Railt\Foundation\Application\DefaultBindingsTrait;
@@ -62,18 +63,6 @@ class Application extends Container implements ApplicationInterface
     }
 
     /**
-     * @param ReadableInterface|resource|string $schema
-     * @return ConnectionInterface
-     * @throws ContainerExceptionInterface
-     */
-    public function connect($schema): ConnectionInterface
-    {
-        $this->boot();
-
-        return new GraphQLConnection($this, $this->kernel, $this->compile($schema));
-    }
-
-    /**
      * @return ConnectionInterface
      * @throws ContainerExceptionInterface
      */
@@ -87,7 +76,20 @@ class Application extends Container implements ApplicationInterface
             type Query {
                 test: String
             }
-        GraphQL);
+        GraphQL
+        );
+    }
+
+    /**
+     * @param ReadableInterface|resource|string $schema
+     * @return ConnectionInterface
+     * @throws ContainerExceptionInterface
+     */
+    public function connect($schema): ConnectionInterface
+    {
+        $this->boot();
+
+        return new GraphQLConnection($this, $this->kernel, $this->compile($schema));
     }
 
     /**
@@ -100,13 +102,14 @@ class Application extends Container implements ApplicationInterface
 
     /**
      * @param string|resource|ReadableInterface $schema
-     * @return Document
+     * @return DocumentInterface
      * @throws ContainerExceptionInterface
      */
-    protected function compile($schema): Document
+    protected function compile($schema): DocumentInterface
     {
         return $this->get(CompilerInterface::class)
-            ->compile($schema);
+            ->compile($schema)
+            ;
     }
 
     /**

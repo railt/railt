@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "448657c74c79dc4086e2693ee2322040",
+    "content-hash": "f5b1a2c59cf8b66c7208dd0c5f2b9764",
     "packages": [
         {
             "name": "graphql/type-system",
