@@ -2,6 +2,3 @@
 composer.phar
 .phpunit.result.cache
 vendor/
-
-/*.php
-/*.graphql
