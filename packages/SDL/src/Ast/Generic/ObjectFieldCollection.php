@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Value\ObjectFieldNode;
  *
  * @method \Traversable|ObjectFieldNode[] getIterator()
  */
-final class ObjectFieldCollection extends ReadOnlyCollection
+final class ObjectFieldCollection extends Collection
 {
     /**
      * ObjectFieldCollection constructor.

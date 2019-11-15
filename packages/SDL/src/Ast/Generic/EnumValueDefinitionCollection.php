@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Definition\EnumValueDefinitionNode;
  *
  * @method \Traversable|EnumValueDefinitionNode[] getIterator()
  */
-final class EnumValueDefinitionCollection extends ReadOnlyCollection
+final class EnumValueDefinitionCollection extends Collection
 {
     /**
      * EnumValueDefinitionCollection constructor.

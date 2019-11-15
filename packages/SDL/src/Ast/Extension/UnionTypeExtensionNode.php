@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Ast\Extension;
 
-use Railt\SDL\Ast\Generic\TypeDefinitionCollection;
+use Railt\SDL\Ast\Generic\UnionTypesCollection;
 
 /**
  * Class UnionTypeExtensionNode
@@ -28,7 +28,7 @@ use Railt\SDL\Ast\Generic\TypeDefinitionCollection;
 class UnionTypeExtensionNode extends TypeExtensionNode
 {
     /**
-     * @var TypeDefinitionCollection|null
+     * @var UnionTypesCollection|null
      */
-    public ?TypeDefinitionCollection $types = null;
+    public ?UnionTypesCollection $types = null;
 }

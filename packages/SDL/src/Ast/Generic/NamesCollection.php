@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Name\IdentifierNode;
  *
  * @method \Traversable|IdentifierNode[] getIterator()
  */
-abstract class NamesCollection extends ReadOnlyCollection
+abstract class NamesCollection extends Collection
 {
     /**
      * NamesCollection constructor.

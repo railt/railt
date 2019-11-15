@@ -37,22 +37,21 @@ class Factory
      * @var string|TypeBuilder
      */
     private const TYPE_MAPPINGS = [
-        SchemaDefinitionNode::class          => SchemaBuilder::class,
-        DirectiveDefinitionNode::class       => DirectiveBuilder::class,
-
-        // TypeDefinitions
-        ObjectTypeDefinitionNode::class      => ObjectTypeBuilder::class,
-        InterfaceTypeDefinitionNode::class   => InterfaceTypeBuilder::class,
-        ScalarTypeDefinitionNode::class      => ScalarTypeBuilder::class,
-        EnumTypeDefinitionNode::class        => EnumTypeBuilder::class,
-        InputObjectTypeDefinitionNode::class => InputObjectTypeBuilder::class,
-        UnionTypeDefinitionNode::class       => UnionTypeBuilder::class,
-
         // Definitions
+        ArgumentDefinitionNode::class        => ArgumentBuilder::class,
+        DirectiveDefinitionNode::class       => DirectiveBuilder::class,
+        EnumValueDefinitionNode::class       => EnumValueBuilder::class,
         FieldDefinitionNode::class           => FieldBuilder::class,
         InputFieldDefinitionNode::class      => InputFieldBuilder::class,
-        ArgumentDefinitionNode::class        => ArgumentBuilder::class,
-        EnumValueDefinitionNode::class       => EnumValueBuilder::class,
+        SchemaDefinitionNode::class          => SchemaBuilder::class,
+
+        // TypeDefinitions
+        EnumTypeDefinitionNode::class        => EnumTypeBuilder::class,
+        InputObjectTypeDefinitionNode::class => InputObjectTypeBuilder::class,
+        InterfaceTypeDefinitionNode::class   => InterfaceTypeBuilder::class,
+        ObjectTypeDefinitionNode::class      => ObjectTypeBuilder::class,
+        ScalarTypeDefinitionNode::class      => ScalarTypeBuilder::class,
+        UnionTypeDefinitionNode::class       => UnionTypeBuilder::class,
     ];
 
     /**
@@ -81,7 +80,7 @@ class Factory
         }
 
         foreach ($registry->directives as $name => $directiveNode) {
-            $this->getDirective($name, $registry);
+            $this->fetchDirective($name, $registry);
         }
 
         if ($registry->schema) {
@@ -98,17 +97,12 @@ class Factory
      */
     public function fetch(string $type, Registry $registry): TypeInterface
     {
-        if ($this->dictionary->typeMap->containsKey($type)) {
-            return $this->dictionary->typeMap->get($type);
+        if (isset($this->dictionary->typeMap[$type])) {
+            return $this->dictionary->typeMap[$type];
         }
 
         if ($registry->typeMap->containsKey($type)) {
-            /** @var TypeInterface $result */
-            $result = $this->build($registry->typeMap->get($type), $registry);
-
-            $this->dictionary->typeMap->put($type, $result);
-
-            return $result;
+            return $this->build($registry->typeMap->get($type), $registry);
         }
 
         throw new \LogicException('Can not build type ' . $type);
@@ -145,19 +139,14 @@ class Factory
      * @param Registry $registry
      * @return DirectiveInterface
      */
-    public function getDirective(string $type, Registry $registry): DirectiveInterface
+    public function fetchDirective(string $type, Registry $registry): DirectiveInterface
     {
-        if ($this->dictionary->directives->containsKey($type)) {
-            return $this->dictionary->directives->get($type);
+        if (isset($this->dictionary->directives[$type])) {
+            return $this->dictionary->directives[$type];
         }
 
         if ($registry->directives->containsKey($type)) {
-            /** @var DirectiveInterface $result */
-            $result = $this->build($registry->directives->get($type), $registry);
-
-            $this->dictionary->directives->put($type, $result);
-
-            return $result;
+            return $this->build($registry->directives->get($type), $registry);
         }
 
         throw new \LogicException('Can not build directive ' . $type);

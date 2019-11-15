@@ -10,26 +10,15 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Ast\Definition;
 
-use Railt\SDL\Ast\Generic\TypeDefinitionCollection;
+use Railt\SDL\Ast\Generic\UnionTypesCollection;
 
 /**
  * Class UnionTypeDefinitionNode
- *
- * <code>
- *  export interface UnionTypeDefinitionNode {
- *      readonly kind: 'UnionTypeDefinition';
- *      readonly loc?: Location;
- *      readonly description?: StringValueNode;
- *      readonly name: IdentifierNode;
- *      readonly directives?: ReadonlyArray<DirectiveNode>;
- *      readonly types?: ReadonlyArray<NamedTypeNode>;
- *  }
- * </code>
  */
 class UnionTypeDefinitionNode extends TypeDefinitionNode
 {
     /**
-     * @var TypeDefinitionCollection|null
+     * @var UnionTypesCollection|null
      */
-    public ?TypeDefinitionCollection $types = null;
+    public ?UnionTypesCollection $types = null;
 }

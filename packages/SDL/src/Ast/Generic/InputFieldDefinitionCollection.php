@@ -15,7 +15,7 @@ use Railt\SDL\Ast\Definition\InputFieldDefinitionNode;
 /**
  * @method \Traversable|InputFieldDefinitionNode[] getIterator()
  */
-final class InputFieldDefinitionCollection extends ReadOnlyCollection
+final class InputFieldDefinitionCollection extends Collection
 {
     /**
      * @param array|InputFieldDefinitionNode[] $items

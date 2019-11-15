@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Phplrt\Source\File;
-use Ramsey\Collection\Set;
 use Phplrt\Visitor\Traverser;
 use Railt\SDL\Builder\Factory;
 use Railt\SDL\Parser\Generator;
@@ -86,9 +85,9 @@ final class Compiler implements CompilerInterface
     private Document $document;
 
     /**
-     * @var Set|callable[]
+     * @var array|callable[]
      */
-    private Set $loaders;
+    private array $loaders = [];
 
     /**
      * @var array|iterable[]
@@ -108,7 +107,6 @@ final class Compiler implements CompilerInterface
     {
         $this->document = new Document();
         $this->parser = $parser ?? new Parser();
-        $this->loaders = new Set('callable');
 
         $this->loadSpec($spec);
     }
@@ -163,7 +161,8 @@ final class Compiler implements CompilerInterface
             ->with(new TypeDefinition($dictionary, $registry))
             ->with(new SchemaDefinition($dictionary, $registry))
             ->with(new DirectiveDefinition($dictionary, $registry))
-            ->traverse($ast);
+            ->traverse($ast)
+        ;
 
         /**
          * Second tree walk:
@@ -181,14 +180,14 @@ final class Compiler implements CompilerInterface
             ->with(new ScalarTypeExtensionLinker($dictionary, $registry, $this->loaders))
             ->with(new UnionTypeExtensionLinker($dictionary, $registry, $this->loaders))
             ->with(new SchemaTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->traverse($ast);
+            ->traverse($ast)
+        ;
 
         /**
          * Last tree walk:
          *  - Convert from AST to a set of finite DTO types.
          */
-        return (new Factory($dictionary))
-            ->loadFrom($registry);
+        return (new Factory($dictionary))->loadFrom($registry);
     }
 
     /**
@@ -233,8 +232,8 @@ final class Compiler implements CompilerInterface
      */
     public function withType(NamedTypeInterface $type, bool $overwrite = false): self
     {
-        if ($overwrite || ! $this->document->typeMap->containsKey($type->getName())) {
-            $this->document->typeMap->put($type->getName(), $type);
+        if ($overwrite || ! isset($this->document->typeMap[$type->getName()])) {
+            $this->document->typeMap[$type->getName()] = $type;
         }
 
         return $this;
@@ -245,8 +244,8 @@ final class Compiler implements CompilerInterface
      */
     public function withDirective(DirectiveInterface $directive, bool $overwrite = false): self
     {
-        if ($overwrite || ! $this->document->directives->containsKey($directive->getName())) {
-            $this->document->directives->put($directive->getName(), $directive);
+        if ($overwrite || ! isset($this->document->directives[$directive->getName()])) {
+            $this->document->directives[$directive->getName()] = $directive;
         }
 
         return $this;
@@ -285,7 +284,7 @@ final class Compiler implements CompilerInterface
      */
     public function autoload(callable $loader): self
     {
-        $this->loaders->add($loader);
+        $this->loaders[] = $loader;
 
         return $this;
     }
@@ -296,7 +295,9 @@ final class Compiler implements CompilerInterface
      */
     public function cancelAutoload(callable $loader): self
     {
-        $this->loaders->remove($loader);
+        $this->loaders = \array_filter($this->loaders, static function (callable $haystack) use ($loader): bool {
+            return $haystack !== $loader;
+        });
 
         return $this;
     }

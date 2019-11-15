@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Executable\VariableDefinitionNode;
  *
  * @method \Traversable|VariableDefinitionNode[] getIterator()
  */
-final class VariableDefinitionCollection extends ReadOnlyCollection
+final class VariableDefinitionCollection extends Collection
 {
     /**
      * VariableDefinitionCollection constructor.

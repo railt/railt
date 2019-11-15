@@ -11,7 +11,7 @@ namespace Railt\SDL\Builder;
 
 use Railt\SDL\Ast\Type\NamedTypeNode;
 use GraphQL\TypeSystem\Type\UnionType;
-use Railt\SDL\Ast\Generic\TypeDefinitionCollection;
+use Railt\SDL\Ast\Generic\UnionTypesCollection;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use Railt\SDL\Ast\Definition\UnionTypeDefinitionNode;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
@@ -43,10 +43,10 @@ class UnionTypeBuilder extends TypeBuilder
     }
 
     /**
-     * @param TypeDefinitionCollection|NamedTypeNode[]|null $types
+     * @param UnionTypesCollection|NamedTypeNode[]|null $types
      * @return \Traversable|TypeInterface[]
      */
-    protected function buildTypes(?TypeDefinitionCollection $types): \Traversable
+    protected function buildTypes(?UnionTypesCollection $types): \Traversable
     {
         foreach ($types as $type) {
             yield $this->fetch($type->name->value);

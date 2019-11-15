@@ -15,9 +15,7 @@
  */
 
 UnionTypeDefinition -> {
-    $union = new \Railt\SDL\Ast\Definition\UnionTypeDefinitionNode(
-        $children[1]
-    );
+    $union = new \Railt\SDL\Ast\Definition\UnionTypeDefinitionNode($children[1]);
 
     foreach ($children as $child) {
         switch (true) {
@@ -29,7 +27,7 @@ UnionTypeDefinition -> {
                 $union->directives = $child;
                 break;
 
-            case $child instanceof \Railt\SDL\Ast\Generic\TypeDefinitionCollection:
+            case $child instanceof \Railt\SDL\Ast\Generic\UnionTypesCollection:
                 $union->types = $child;
                 break;
         }
@@ -47,18 +45,15 @@ UnionTypeDefinitionExceptDescription
   ;
 
 UnionTypeDefinitionHead
-  : ::T_UNION:: TypeName()
-    Directives()?
+  : ::T_UNION:: TypeName() Directives()?
   ;
 
 UnionTypeDefinitionBody
-  : ::T_EQUAL:: UnionTypeDefinitionTargets()?
+  : ::T_EQUAL:: UnionMemberTypes()?
   ;
 
-UnionTypeDefinitionTargets -> {
-    return new \Railt\SDL\Ast\Generic\TypeDefinitionCollection($children);
+UnionMemberTypes -> {
+    return new \Railt\SDL\Ast\Generic\UnionTypesCollection($children);
 }
-  : ::T_OR::? NamedType() (
-      ::T_OR:: NamedType()
-    )*
+  : ::T_OR::? NamedType() (::T_OR:: NamedType())*
   ;

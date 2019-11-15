@@ -11,9 +11,8 @@ namespace Railt\SDL\Executor\Registrar;
 
 use Railt\SDL\Document;
 use Phplrt\Visitor\Visitor;
-use Railt\SDL\Ast\Name\IdentifierNode;
 use Railt\SDL\Executor\Registry;
-use Ramsey\Collection\Map\TypedMapInterface;
+use Railt\SDL\Ast\Name\IdentifierNode;
 
 /**
  * Class TypeRegistrar
@@ -44,13 +43,13 @@ abstract class TypeRegistrar extends Visitor
 
     /**
      * @param IdentifierNode $node
-     * @param TypedMapInterface ...$maps
+     * @param iterable ...$maps
      * @return bool
      */
-    protected function exists(IdentifierNode $node, TypedMapInterface ...$maps): bool
+    protected function exists(IdentifierNode $node, iterable ...$maps): bool
     {
         foreach ($maps as $map) {
-            if ($map->containsKey($node->value)) {
+            if (isset($map[$node->value])) {
                 return true;
             }
         }

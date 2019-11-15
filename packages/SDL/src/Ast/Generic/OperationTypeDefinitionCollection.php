@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
  *
  * @method \Traversable|OperationTypeDefinitionNode[] getIterator()
  */
-final class OperationTypeDefinitionCollection extends ReadOnlyCollection
+final class OperationTypeDefinitionCollection extends Collection
 {
     /**
      * OperationTypeDefinitionCollection constructor.

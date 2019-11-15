@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Definition\FieldDefinitionNode;
  *
  * @method \Traversable|FieldDefinitionNode[] getIterator()
  */
-final class FieldDefinitionCollection extends ReadOnlyCollection
+final class FieldDefinitionCollection extends Collection
 {
     /**
      * FieldDefinitionCollection constructor.

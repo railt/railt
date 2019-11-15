@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Executable\DirectiveNode;
  *
  * @method \Traversable|DirectiveNode[] getIterator()
  */
-class DirectiveCollection extends ReadOnlyCollection
+class DirectiveCollection extends Collection
 {
     /**
      * DirectiveCollection constructor.

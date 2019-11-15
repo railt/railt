@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Type\NamedTypeNode;
  *
  * @method \Traversable|NamedTypeNode[] getIterator()
  */
-abstract class NamedTypesCollection extends ReadOnlyCollection
+abstract class NamedTypesCollection extends Collection
 {
     /**
      * InterfaceTypeDefinitionCollection constructor.

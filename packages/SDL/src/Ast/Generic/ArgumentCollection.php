@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Executable\ArgumentNode;
  *
  * @method \Traversable|ArgumentNode[] getIterator()
  */
-final class ArgumentCollection extends ReadOnlyCollection
+final class ArgumentCollection extends Collection
 {
     /**
      * ArgumentCollection constructor.

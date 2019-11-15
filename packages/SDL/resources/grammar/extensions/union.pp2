@@ -14,9 +14,7 @@
  */
 
 UnionTypeExtension -> {
-    $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode(
-        $children[1]
-    );
+    $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode($children[1]);
 
     foreach ($children as $child) {
         switch (true) {

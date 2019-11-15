@@ -51,7 +51,7 @@ class NamedTypeLinker extends TypeLinker
      */
     protected function exists(DefinitionNode $type): bool
     {
-        return $this->registry->typeMap->containsKey($type->name->value) ||
-            $this->document->typeMap->containsKey($type->name->value);
+        return isset($this->registry->typeMap[$type->name->value]) ||
+            isset($this->document->typeMap[$type->name->value]);
     }
 }

@@ -17,7 +17,7 @@ use Railt\SDL\Ast\Value\ValueNode;
  *
  * @method \Traversable|ValueNode[] getIterator()
  */
-final class ValueCollection extends ReadOnlyCollection
+final class ValueCollection extends Collection
 {
     /**
      * ValueCollection constructor.
