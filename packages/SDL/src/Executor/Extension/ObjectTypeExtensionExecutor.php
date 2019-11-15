@@ -16,5 +16,4 @@ namespace Railt\SDL\Executor\Extension;
  */
 class ObjectTypeExtensionExecutor extends ExtensionExecutor
 {
-
 }
