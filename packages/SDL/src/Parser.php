@@ -833,49 +833,49 @@ final class Parser extends BaseParser
                 false,
             ),
             220 => new Concatenation(
-                [61, 219, 137],
+                [219, 137],
             ),
             221 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             222 => new Concatenation(
-                [61, 221, 147],
+                [221, 147],
             ),
             223 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             224 => new Concatenation(
-                [61, 223, 157],
+                [223, 157],
             ),
             225 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             226 => new Concatenation(
-                [61, 225, 176],
+                [225, 176],
             ),
             227 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             228 => new Concatenation(
-                [61, 227, 187],
+                [227, 187],
             ),
             229 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             230 => new Concatenation(
-                [61, 229, 62],
+                [229, 62],
             ),
             231 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             232 => new Concatenation(
-                [61, 231, 192],
+                [231, 192],
             ),
             'Document' => new Repetition(
                 233,

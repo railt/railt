@@ -14,7 +14,7 @@
  */
 
 UnionTypeExtension -> {
-    $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode($children[1]);
+    $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode(\reset($children));
 
     foreach ($children as $child) {
         switch (true) {
@@ -26,7 +26,7 @@ UnionTypeExtension -> {
                 $union->directives = $child;
                 break;
 
-            case $child instanceof \Railt\SDL\Ast\Generic\TypeDefinitionCollection:
+            case $child instanceof \Railt\SDL\Ast\Generic\UnionTypesCollection:
                 $union->types = $child;
                 break;
         }
@@ -34,6 +34,5 @@ UnionTypeExtension -> {
 
     return $union;
 }
-  : Description()
-    ::T_EXTEND:: UnionTypeDefinitionExceptDescription()
+  : ::T_EXTEND:: UnionTypeDefinitionExceptDescription()
   ;

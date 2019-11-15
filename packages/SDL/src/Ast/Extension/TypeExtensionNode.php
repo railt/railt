@@ -36,11 +36,6 @@ abstract class TypeExtensionNode extends TypeSystemExtensionNode
     public IdentifierNode $name;
 
     /**
-     * @var StringValueNode|null
-     */
-    public ?StringValueNode $description = null;
-
-    /**
      * @var DirectiveCollection|null
      */
     public ?DirectiveCollection $directives = null;

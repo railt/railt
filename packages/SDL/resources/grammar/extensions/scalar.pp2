@@ -14,9 +14,7 @@
  */
 
 ScalarTypeExtension -> {
-    $scalar = new \Railt\SDL\Ast\Extension\ScalarTypeExtensionNode(
-        $children[1]
-    );
+    $scalar = new \Railt\SDL\Ast\Extension\ScalarTypeExtensionNode(\reset($children));
 
     foreach ($children as $child) {
         switch (true) {
@@ -32,6 +30,5 @@ ScalarTypeExtension -> {
 
     return $scalar;
 }
-  : Description()
-    ::T_EXTEND:: ScalarTypeDefinitionExceptDescription()
+  : ::T_EXTEND:: ScalarTypeDefinitionExceptDescription()
   ;

@@ -36,9 +36,15 @@ use Railt\SDL\Executor\Linker\ObjectTypeExtensionLinker;
 use Railt\SDL\Executor\Linker\ScalarTypeExtensionLinker;
 use Railt\SDL\Executor\Linker\SchemaTypeExtensionLinker;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use Railt\SDL\Executor\Extension\SchemaExtensionExecutor;
 use Railt\SDL\Executor\Linker\InterfaceTypeExtensionLinker;
+use Railt\SDL\Executor\Extension\EnumTypeExtensionExecutor;
+use Railt\SDL\Executor\Extension\UnionTypeExtensionExecutor;
 use Railt\SDL\Executor\Linker\InputObjectTypeExtensionLinker;
 use Railt\SDL\Executor\Extension\ObjectTypeExtensionExecutor;
+use Railt\SDL\Executor\Extension\ScalarTypeExtensionExecutor;
+use Railt\SDL\Executor\Extension\InterfaceTypeExtensionExecutor;
+use Railt\SDL\Executor\Extension\InputObjectTypeExtensionExecutor;
 use Phplrt\Contracts\Parser\Exception\ParserRuntimeExceptionInterface;
 
 /**
@@ -149,7 +155,7 @@ final class Compiler implements CompilerInterface
     public function build(iterable $ast, Document $dictionary = null): DocumentInterface
     {
         $registry = new Registry();
-        $dictionary ??= $this->document;
+        $factory = new Factory($dictionary ??= $this->document);
 
         /**
          * First tree walk:
@@ -185,13 +191,23 @@ final class Compiler implements CompilerInterface
         ;
 
         /**
-         * Last tree walk:
+         * Third tree walk:
          *  - Convert from AST to a set of finite DTO types.
          */
-        $document = (new Factory($dictionary))->loadFrom($registry);
+        $document = $factory->loadFrom($registry);
 
+        /**
+         * Last tree walk:
+         *  - We get each type extension and implement it in the finished assembly.
+         */
         $ast = (new Traverser())
-            ->with(new ObjectTypeExtensionExecutor($document))
+            ->with(new EnumTypeExtensionExecutor($factory, $document, $registry))
+            ->with(new InputObjectTypeExtensionExecutor($factory, $document, $registry))
+            ->with(new InterfaceTypeExtensionExecutor($factory, $document, $registry))
+            ->with(new ObjectTypeExtensionExecutor($factory, $document, $registry))
+            ->with(new ScalarTypeExtensionExecutor($factory, $document, $registry))
+            ->with(new SchemaExtensionExecutor($factory, $document, $registry))
+            ->with(new UnionTypeExtensionExecutor($factory, $document, $registry))
             ->traverse($ast)
         ;
 

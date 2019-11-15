@@ -34,5 +34,5 @@ SchemaExtension -> {
 
     return $schema;
 }
-  : Description() ::T_EXTEND:: SchemaDefinitionExceptDescription()
+  : ::T_EXTEND:: SchemaDefinitionExceptDescription()
   ;

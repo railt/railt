@@ -26,6 +26,7 @@ use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\InputFieldDefinitionNode;
 use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
+use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
 
 /**
@@ -95,16 +96,20 @@ class Factory
     /**
      * @param string $type
      * @param Registry $registry
-     * @return TypeInterface
+     * @return NamedTypeInterface
      */
-    public function fetch(string $type, Registry $registry): TypeInterface
+    public function fetch(string $type, Registry $registry): NamedTypeInterface
     {
         if ($this->dictionary->hasType($type)) {
             return $this->dictionary->getType($type);
         }
 
         if (isset($registry->typeMap[$type])) {
-            return $this->build($registry->typeMap[$type], $registry);
+            $result = $this->build($registry->typeMap[$type], $registry);
+
+            $this->dictionary->addType($result);
+
+            return $result;
         }
 
         throw new \LogicException('Can not build type ' . $type);
@@ -148,7 +153,11 @@ class Factory
         }
 
         if (isset($registry->directives[$type])) {
-            return $this->build($registry->directives[$type], $registry);
+            $result = $this->build($registry->directives[$type], $registry);
+
+            $this->dictionary->addDirective($result);
+
+            return $result;
         }
 
         throw new \LogicException('Can not build directive ' . $type);

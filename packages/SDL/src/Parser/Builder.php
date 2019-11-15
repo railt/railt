@@ -884,9 +884,7 @@ final class Builder implements BuilderInterface
      */
     protected function reduce220($children)
     {
-        $enum = new \Railt\SDL\Ast\Extension\EnumTypeExtensionNode(
-            $children[1]
-        );
+        $enum = new \Railt\SDL\Ast\Extension\EnumTypeExtensionNode(\reset($children));
 
         foreach ($children as $child) {
             switch (true) {
@@ -914,9 +912,7 @@ final class Builder implements BuilderInterface
      */
     protected function reduce222($children)
     {
-        $input = new \Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode(
-            $children[1]
-        );
+        $input = new \Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode(\reset($children));
 
         foreach ($children as $child) {
             switch (true) {
@@ -944,9 +940,7 @@ final class Builder implements BuilderInterface
      */
     protected function reduce224($children)
     {
-        $interface = new \Railt\SDL\Ast\Extension\InterfaceTypeExtensionNode(
-            $children[1]
-        );
+        $interface = new \Railt\SDL\Ast\Extension\InterfaceTypeExtensionNode(\reset($children));
 
         foreach ($children as $child) {
             switch (true) {
@@ -961,6 +955,10 @@ final class Builder implements BuilderInterface
                 case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
                     $interface->directives = $child;
                     break;
+
+                case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
+                    $interface->interfaces = $child;
+                    break;
             }
         }
 
@@ -974,9 +972,7 @@ final class Builder implements BuilderInterface
      */
     protected function reduce226($children)
     {
-        $object = new \Railt\SDL\Ast\Extension\ObjectTypeExtensionNode(
-            $children[1]
-        );
+        $object = new \Railt\SDL\Ast\Extension\ObjectTypeExtensionNode(\reset($children));
 
         foreach ($children as $child) {
             switch (true) {
@@ -992,7 +988,7 @@ final class Builder implements BuilderInterface
                     $object->directives = $child;
                     break;
 
-                case $child instanceof \Railt\SDL\Ast\Generic\InterfaceTypeDefinitionCollection:
+                case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
                     $object->interfaces = $child;
                     break;
             }
@@ -1008,9 +1004,7 @@ final class Builder implements BuilderInterface
      */
     protected function reduce228($children)
     {
-        $scalar = new \Railt\SDL\Ast\Extension\ScalarTypeExtensionNode(
-            $children[1]
-        );
+        $scalar = new \Railt\SDL\Ast\Extension\ScalarTypeExtensionNode(\reset($children));
 
         foreach ($children as $child) {
             switch (true) {
@@ -1062,7 +1056,7 @@ final class Builder implements BuilderInterface
      */
     protected function reduce232($children)
     {
-        $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode($children[1]);
+        $union = new \Railt\SDL\Ast\Extension\UnionTypeExtensionNode(\reset($children));
 
         foreach ($children as $child) {
             switch (true) {
@@ -1074,7 +1068,7 @@ final class Builder implements BuilderInterface
                     $union->directives = $child;
                     break;
 
-                case $child instanceof \Railt\SDL\Ast\Generic\TypeDefinitionCollection:
+                case $child instanceof \Railt\SDL\Ast\Generic\UnionTypesCollection:
                     $union->types = $child;
                     break;
             }

@@ -15,9 +15,7 @@
 
 
 ObjectTypeExtension -> {
-    $object = new \Railt\SDL\Ast\Extension\ObjectTypeExtensionNode(
-        $children[1]
-    );
+    $object = new \Railt\SDL\Ast\Extension\ObjectTypeExtensionNode(\reset($children));
 
     foreach ($children as $child) {
         switch (true) {
@@ -33,7 +31,7 @@ ObjectTypeExtension -> {
                 $object->directives = $child;
                 break;
 
-            case $child instanceof \Railt\SDL\Ast\Generic\InterfaceTypeDefinitionCollection:
+            case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
                 $object->interfaces = $child;
                 break;
         }
@@ -41,6 +39,5 @@ ObjectTypeExtension -> {
 
     return $object;
 }
-  : Description()
-    ::T_EXTEND:: ObjectTypeDefinitionExceptDescription()
+  : ::T_EXTEND:: ObjectTypeDefinitionExceptDescription()
   ;

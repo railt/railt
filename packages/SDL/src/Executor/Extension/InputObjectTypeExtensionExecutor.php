@@ -12,29 +12,29 @@ declare(strict_types=1);
 namespace Railt\SDL\Executor\Extension;
 
 use Phplrt\Contracts\Ast\NodeInterface;
-use GraphQL\TypeSystem\Type\ObjectType;
-use Railt\SDL\Ast\Extension\ObjectTypeExtensionNode;
+use GraphQL\TypeSystem\Type\InputObjectType;
+use Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode;
 
 /**
- * Class ObjectTypeExtensionExecutor
+ * Class InputObjectTypeExtensionExecutor
  */
-class ObjectTypeExtensionExecutor extends ExtensionExecutor
+class InputObjectTypeExtensionExecutor extends ExtensionExecutor
 {
     /**
-     * @param NodeInterface|ObjectTypeExtensionNode $source
+     * @param NodeInterface|InputObjectTypeExtensionNode $source
      * @return mixed|void|null
      * @throws \RuntimeException
      */
     public function enter(NodeInterface $source)
     {
-        if (! $source instanceof ObjectTypeExtensionNode) {
+        if (! $source instanceof InputObjectTypeExtensionNode) {
             return;
         }
 
-        /** @var ObjectType $target */
+        /** @var InputObjectType $target */
         $target = $this->document->getType($source->name->value);
 
-        if (! $target instanceof ObjectType) {
+        if (! $target instanceof InputObjectType) {
             // TODO should throw an error
             return;
         }
@@ -43,13 +43,6 @@ class ObjectTypeExtensionExecutor extends ExtensionExecutor
             foreach ($source->fields as $field) {
                 // TODO assert field exists or merge
                 $target = $target->withField($this->build($field));
-            }
-        }
-
-        if ($source->interfaces) {
-            foreach ($source->interfaces as $interface) {
-                // TODO assert instance of interface
-                $target = $target->withInterface($this->fetch($interface->name->value));
             }
         }
 

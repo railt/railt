@@ -14,9 +14,7 @@
  */
 
 InputObjectTypeExtension -> {
-    $input = new \Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode(
-        $children[1]
-    );
+    $input = new \Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode(\reset($children));
 
     foreach ($children as $child) {
         switch (true) {
@@ -36,6 +34,5 @@ InputObjectTypeExtension -> {
 
     return $input;
 }
-  : Description()
-    ::T_EXTEND:: InputObjectTypeDefinitionExceptDescription()
+  : ::T_EXTEND:: InputObjectTypeDefinitionExceptDescription()
   ;

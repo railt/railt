@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Ast\Extension;
 
 use Railt\SDL\Ast\Generic\FieldDefinitionCollection;
+use Railt\SDL\Ast\Generic\InterfaceImplementsCollection;
 
 /**
  * Class InterfaceTypeExtensionNode
@@ -28,6 +29,11 @@ use Railt\SDL\Ast\Generic\FieldDefinitionCollection;
  */
 class InterfaceTypeExtensionNode extends TypeExtensionNode
 {
+    /**
+     * @var InterfaceImplementsCollection|null
+     */
+    public ?InterfaceImplementsCollection $interfaces = null;
+
     /**
      * @var FieldDefinitionCollection|null
      */

@@ -14,9 +14,7 @@
  */
 
 EnumTypeExtension -> {
-    $enum = new \Railt\SDL\Ast\Extension\EnumTypeExtensionNode(
-        $children[1]
-    );
+    $enum = new \Railt\SDL\Ast\Extension\EnumTypeExtensionNode(\reset($children));
 
     foreach ($children as $child) {
         switch (true) {
@@ -36,6 +34,5 @@ EnumTypeExtension -> {
 
     return $enum;
 }
-  : Description()
-    ::T_EXTEND:: EnumTypeDefinitionExceptDescription()
+  : ::T_EXTEND:: EnumTypeDefinitionExceptDescription()
   ;

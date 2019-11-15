@@ -15,9 +15,7 @@
 
 
 InterfaceTypeExtension -> {
-    $interface = new \Railt\SDL\Ast\Extension\InterfaceTypeExtensionNode(
-        $children[1]
-    );
+    $interface = new \Railt\SDL\Ast\Extension\InterfaceTypeExtensionNode(\reset($children));
 
     foreach ($children as $child) {
         switch (true) {
@@ -32,11 +30,14 @@ InterfaceTypeExtension -> {
             case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
                 $interface->directives = $child;
                 break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
+                $interface->interfaces = $child;
+                break;
         }
     }
 
     return $interface;
 }
-  : Description()
-    ::T_EXTEND:: InterfaceTypeDefinitionExceptDescription()
+  : ::T_EXTEND:: InterfaceTypeDefinitionExceptDescription()
   ;

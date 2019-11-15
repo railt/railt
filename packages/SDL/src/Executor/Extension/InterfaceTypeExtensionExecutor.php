@@ -12,29 +12,29 @@ declare(strict_types=1);
 namespace Railt\SDL\Executor\Extension;
 
 use Phplrt\Contracts\Ast\NodeInterface;
-use GraphQL\TypeSystem\Type\ObjectType;
-use Railt\SDL\Ast\Extension\ObjectTypeExtensionNode;
+use GraphQL\TypeSystem\Type\InterfaceType;
+use Railt\SDL\Ast\Extension\InterfaceTypeExtensionNode;
 
 /**
- * Class ObjectTypeExtensionExecutor
+ * Class InterfaceTypeExtensionExecutor
  */
-class ObjectTypeExtensionExecutor extends ExtensionExecutor
+class InterfaceTypeExtensionExecutor extends ExtensionExecutor
 {
     /**
-     * @param NodeInterface|ObjectTypeExtensionNode $source
+     * @param NodeInterface|InterfaceTypeExtensionNode $source
      * @return mixed|void|null
      * @throws \RuntimeException
      */
     public function enter(NodeInterface $source)
     {
-        if (! $source instanceof ObjectTypeExtensionNode) {
+        if (! $source instanceof InterfaceTypeExtensionNode) {
             return;
         }
 
-        /** @var ObjectType $target */
+        /** @var InterfaceType $target */
         $target = $this->document->getType($source->name->value);
 
-        if (! $target instanceof ObjectType) {
+        if (! $target instanceof InterfaceType) {
             // TODO should throw an error
             return;
         }
