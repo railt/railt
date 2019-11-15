@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\Field;
-use GraphQL\Contracts\TypeSystem\FieldInterface;
-use Railt\SDL\Ast\Definition\FieldDefinitionNode;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use GraphQL\Contracts\TypeSystem\FieldInterface;
+use GraphQL\TypeSystem\Field;
+use Railt\SDL\Ast\Definition\FieldDefinitionNode;
 
 /**
  * @property FieldDefinitionNode $ast

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\InputField;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\InputFieldInterface;
+use GraphQL\TypeSystem\InputField;
 use Railt\SDL\Ast\Definition\InputFieldDefinitionNode;
 
 /**
