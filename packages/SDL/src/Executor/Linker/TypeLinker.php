@@ -13,6 +13,7 @@ use Railt\SDL\Document;
 use Phplrt\Visitor\Visitor;
 use Railt\SDL\Executor\Registry;
 use Railt\SDL\Ast\DefinitionNode;
+use Railt\SDL\Ast\Type\NamedTypeNode;
 
 /**
  * Class TypeLinker
@@ -72,8 +73,12 @@ abstract class TypeLinker extends Visitor
     }
 
     /**
-     * @param DefinitionNode $definition
+     * @param DefinitionNode|NamedTypeNode $type
      * @return bool
      */
-    abstract protected function exists(DefinitionNode $definition): bool;
+    protected function exists(DefinitionNode $type): bool
+    {
+        return isset($this->registry->typeMap[$type->name->value])
+            || $this->document->hasType($type->name->value);
+    }
 }

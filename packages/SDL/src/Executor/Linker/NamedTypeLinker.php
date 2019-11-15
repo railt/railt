@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Linker;
 
-use Phplrt\Contracts\Ast\NodeInterface;
-use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\SDL\Ast\DefinitionNode;
 use Railt\SDL\Ast\Type\NamedTypeNode;
-use Railt\SDL\Exception\TypeNotFoundException;
 use Railt\SDL\Linker\LinkerInterface;
+use Phplrt\Contracts\Ast\NodeInterface;
+use Railt\SDL\Exception\TypeNotFoundException;
+use Phplrt\Source\Exception\NotAccessibleException;
 
 /**
  * Class NamedTypeLinker
@@ -43,15 +42,5 @@ class NamedTypeLinker extends TypeLinker
             $message = \sprintf(self::ERROR_TYPE_NOT_FOUND, $node->name->value);
             throw new TypeNotFoundException($message, $node);
         }
-    }
-
-    /**
-     * @param DefinitionNode|NamedTypeNode $type
-     * @return bool
-     */
-    protected function exists(DefinitionNode $type): bool
-    {
-        return isset($this->registry->typeMap[$type->name->value]) ||
-            isset($this->document->typeMap[$type->name->value]);
     }
 }

@@ -21,12 +21,36 @@ interface DocumentInterface
     /**
      * @return iterable|NamedTypeInterface[]
      */
-    public function getTypeMap(): iterable;
+    public function getTypes(): iterable;
+
+    /**
+     * @param string $name
+     * @return NamedTypeInterface|null
+     */
+    public function getType(string $name): ?NamedTypeInterface;
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasType(string $name): bool;
 
     /**
      * @return iterable|DirectiveInterface[]
      */
     public function getDirectives(): iterable;
+
+    /**
+     * @param string $name
+     * @return DirectiveInterface|null
+     */
+    public function getDirective(string $name): ?DirectiveInterface;
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasDirective(string $name): bool;
 
     /**
      * @return SchemaInterface|null

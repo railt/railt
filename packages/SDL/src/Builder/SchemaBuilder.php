@@ -27,8 +27,8 @@ class SchemaBuilder extends TypeBuilder
     public function build(): SchemaInterface
     {
         $schema = new Schema([
-            'typeMap'    => $this->dictionary->typeMap,
-            'directives' => $this->dictionary->directives,
+            'typeMap'    => $this->dictionary->getTypes(),
+            'directives' => $this->dictionary->getDirectives(),
         ]);
 
         /** @var OperationTypeDefinitionNode $operation */

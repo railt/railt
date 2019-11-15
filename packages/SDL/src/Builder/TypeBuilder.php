@@ -93,13 +93,13 @@ abstract class TypeBuilder
     protected function register(DefinitionInterface $definition): DefinitionInterface
     {
         if ($definition instanceof DirectiveInterface) {
-            $this->dictionary->directives[$definition->getName()] = $definition;
+            $this->dictionary->addDirective($definition);
 
             return $definition;
         }
 
         if ($definition instanceof NamedTypeInterface) {
-            $this->dictionary->typeMap[$definition->getName()] = $definition;
+            $this->dictionary->addType($definition);
 
             return $definition;
         }

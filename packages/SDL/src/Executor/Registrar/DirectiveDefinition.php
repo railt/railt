@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Registrar;
 
-use Phplrt\Contracts\Ast\NodeInterface;
-use Phplrt\Source\Exception\NotAccessibleException;
 use Phplrt\Visitor\Traverser;
-use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
+use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Exception\TypeErrorException;
+use Phplrt\Source\Exception\NotAccessibleException;
+use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
 
 /**
  * Class DirectiveDefinition
@@ -57,7 +57,10 @@ class DirectiveDefinition extends TypeRegistrar
      */
     private function assertUniqueness(DirectiveDefinitionNode $type): void
     {
-        if ($this->exists($type->name, $this->dictionary->directives, $this->registry->directives)) {
+        $exists = isset($this->registry->directives[$type->name->value])
+            || $this->dictionary->hasDirective($type->name->value);
+
+        if ($exists) {
             $message = \sprintf(self::ERROR_DIRECTIVE_REDEFINITION, $type->name->value);
 
             throw new TypeErrorException($message, $type);

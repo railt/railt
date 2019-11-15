@@ -57,7 +57,7 @@ class SchemaDefinition extends TypeRegistrar
      */
     private function assertUniqueness(SchemaDefinitionNode $type): void
     {
-        if ($this->registry->schema || $this->dictionary->schema) {
+        if ($this->registry->schema || $this->dictionary->getSchema()) {
             throw new TypeErrorException(self::ERROR_SCHEMA_DEFINITION_UNIQUENESS, $type);
         }
     }

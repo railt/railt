@@ -57,7 +57,10 @@ class TypeDefinition extends TypeRegistrar
      */
     private function assertUniqueness(TypeDefinitionNode $type): void
     {
-        if ($this->exists($type->name, $this->dictionary->typeMap, $this->registry->typeMap)) {
+        $exists = isset($this->registry->typeMap[$type->name->value])
+            || $this->dictionary->hasType($type->name->value);
+
+        if ($exists) {
             $message = \sprintf(self::ERROR_TYPE_REDEFINITION, $type->name->value);
 
             throw new TypeErrorException($message, $type);

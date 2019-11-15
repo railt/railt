@@ -38,6 +38,7 @@ use Railt\SDL\Executor\Linker\SchemaTypeExtensionLinker;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use Railt\SDL\Executor\Linker\InterfaceTypeExtensionLinker;
 use Railt\SDL\Executor\Linker\InputObjectTypeExtensionLinker;
+use Railt\SDL\Executor\Extension\ObjectTypeExtensionExecutor;
 use Phplrt\Contracts\Parser\Exception\ParserRuntimeExceptionInterface;
 
 /**
@@ -187,7 +188,14 @@ final class Compiler implements CompilerInterface
          * Last tree walk:
          *  - Convert from AST to a set of finite DTO types.
          */
-        return (new Factory($dictionary))->loadFrom($registry);
+        $document = (new Factory($dictionary))->loadFrom($registry);
+
+        $ast = (new Traverser())
+            ->with(new ObjectTypeExtensionExecutor($document))
+            ->traverse($ast)
+        ;
+
+        return $document;
     }
 
     /**
@@ -232,8 +240,8 @@ final class Compiler implements CompilerInterface
      */
     public function withType(NamedTypeInterface $type, bool $overwrite = false): self
     {
-        if ($overwrite || ! isset($this->document->typeMap[$type->getName()])) {
-            $this->document->typeMap[$type->getName()] = $type;
+        if ($overwrite || ! $this->document->hasType($type->getName())) {
+            $this->document->addType($type);
         }
 
         return $this;
@@ -244,8 +252,8 @@ final class Compiler implements CompilerInterface
      */
     public function withDirective(DirectiveInterface $directive, bool $overwrite = false): self
     {
-        if ($overwrite || ! isset($this->document->directives[$directive->getName()])) {
-            $this->document->directives[$directive->getName()] = $directive;
+        if ($overwrite || ! $this->document->hasDirective($directive->getName())) {
+            $this->document->addDirective($directive);
         }
 
         return $this;
@@ -256,8 +264,8 @@ final class Compiler implements CompilerInterface
      */
     public function withSchema(SchemaInterface $schema, bool $overwrite = false): self
     {
-        if ($overwrite || ! $this->document->schema) {
-            $this->document->schema = $schema;
+        if ($overwrite || ! $this->document->getSchema()) {
+            $this->document->setSchema($schema);
         }
 
         return $this;

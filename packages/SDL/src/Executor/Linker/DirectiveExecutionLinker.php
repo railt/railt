@@ -54,7 +54,7 @@ class DirectiveExecutionLinker extends TypeLinker
      */
     protected function exists(DefinitionNode $directive): bool
     {
-        return isset($this->registry->directives[$directive->name->value]) ||
-            isset($this->document->directives[$directive->name->value]);
+        return isset($this->registry->directives[$directive->name->value])
+            || $this->document->hasDirective($directive->name->value);
     }
 }

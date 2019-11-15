@@ -43,14 +43,4 @@ class EnumTypeExtensionLinker extends TypeExtensionLinker
     {
         return 'Enum type "%s" not found and could not be loaded';
     }
-
-    /**
-     * @param DefinitionNode|NamedTypeNode $type
-     * @return bool
-     */
-    protected function exists(DefinitionNode $type): bool
-    {
-        return isset($this->registry->typeMap[$type->name->value]) ||
-            isset($this->document->typeMap[$type->name->value]);
-    }
 }

@@ -84,7 +84,9 @@ class Factory
         }
 
         if ($registry->schema) {
-            $this->dictionary->schema = $this->build($registry->schema, $registry);
+            $schema = $this->build($registry->schema, $registry);
+
+            $this->dictionary->setSchema($schema);
         }
 
         return $this->dictionary;
@@ -97,8 +99,8 @@ class Factory
      */
     public function fetch(string $type, Registry $registry): TypeInterface
     {
-        if (isset($this->dictionary->typeMap[$type])) {
-            return $this->dictionary->typeMap[$type];
+        if ($this->dictionary->hasType($type)) {
+            return $this->dictionary->getType($type);
         }
 
         if (isset($registry->typeMap[$type])) {
@@ -141,8 +143,8 @@ class Factory
      */
     public function fetchDirective(string $type, Registry $registry): DirectiveInterface
     {
-        if (isset($this->dictionary->directives[$type])) {
-            return $this->dictionary->directives[$type];
+        if ($this->dictionary->hasDirective($type)) {
+            return $this->dictionary->getDirective($type);
         }
 
         if (isset($registry->directives[$type])) {

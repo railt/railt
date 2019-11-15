@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Linker;
 
-use Phplrt\Contracts\Ast\NodeInterface;
-use Railt\SDL\Ast\DefinitionNode;
-use Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode;
-use Railt\SDL\Ast\Type\NamedTypeNode;
 use Railt\SDL\Linker\LinkerInterface;
+use Phplrt\Contracts\Ast\NodeInterface;
+use Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode;
 
 /**
  * Class InputObjectTypeExtensionLinker
@@ -42,15 +40,5 @@ class InputObjectTypeExtensionLinker extends TypeExtensionLinker
     protected function getErrorMessage(): string
     {
         return 'Input object type "%s" not found and could not be loaded';
-    }
-
-    /**
-     * @param DefinitionNode|NamedTypeNode $type
-     * @return bool
-     */
-    protected function exists(DefinitionNode $type): bool
-    {
-        return isset($this->registry->typeMap[$type->name->value]) ||
-            isset($this->document->typeMap[$type->name->value]);
     }
 }

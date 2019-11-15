@@ -70,6 +70,6 @@ class SchemaTypeExtensionLinker extends TypeLinker
      */
     protected function exists(DefinitionNode $type): bool
     {
-        return $this->registry->schema || $this->document->schema;
+        return $this->registry->schema || $this->document->getSchema();
     }
 }

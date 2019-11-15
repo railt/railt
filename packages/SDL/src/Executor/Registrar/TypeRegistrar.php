@@ -40,20 +40,4 @@ abstract class TypeRegistrar extends Visitor
         $this->dictionary = $dictionary;
         $this->registry = $registry;
     }
-
-    /**
-     * @param IdentifierNode $node
-     * @param iterable ...$maps
-     * @return bool
-     */
-    protected function exists(IdentifierNode $node, iterable ...$maps): bool
-    {
-        foreach ($maps as $map) {
-            if (isset($map[$node->value])) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
