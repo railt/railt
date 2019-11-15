@@ -21,6 +21,7 @@ use Railt\SDL\Ast\Definition\ArgumentDefinitionNode;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
 use Railt\SDL\Ast\Definition\EnumValueDefinitionNode;
+use Railt\SDL\Ast\Definition\UnionTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\InputFieldDefinitionNode;
@@ -45,6 +46,7 @@ class Factory
         ScalarTypeDefinitionNode::class      => ScalarTypeBuilder::class,
         EnumTypeDefinitionNode::class        => EnumTypeBuilder::class,
         InputObjectTypeDefinitionNode::class => InputObjectTypeBuilder::class,
+        UnionTypeDefinitionNode::class       => UnionTypeBuilder::class,
 
         // Definitions
         FieldDefinitionNode::class           => FieldBuilder::class,
