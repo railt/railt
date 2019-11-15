@@ -33,7 +33,7 @@ class SchemaBuilder extends TypeBuilder
 
         /** @var OperationTypeDefinitionNode $operation */
         foreach ($this->ast->operationTypes as $operation) {
-            $type = $this->getType($operation->type->name->value);
+            $type = $this->fetch($operation->type->name->value);
 
             switch ($operation->operation) {
                 case 'query':

@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\Contracts\TypeSystem\EnumValueInterface;
-use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
 use GraphQL\TypeSystem\Type\EnumType;
 use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
-use Railt\SDL\Ast\Generic\EnumValueDefinitionCollection;
+use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
 
 /**
  * @property EnumTypeDefinitionNode $ast
@@ -31,26 +29,12 @@ class EnumTypeBuilder extends TypeBuilder
             'description' => $this->value($this->ast->description),
         ]);
 
-        $this->registerType($enum);
+        $this->register($enum);
 
-        return $enum->withValues($this->buildEnumValues($this->ast->values));
-    }
-
-    /**
-     * @param EnumValueDefinitionCollection|null $values
-     * @return \Traversable
-     */
-    protected function buildEnumValues(?EnumValueDefinitionCollection $values): \Traversable
-    {
-        if ($values === null) {
-            return new \EmptyIterator();
+        if ($this->ast->values) {
+            $enum = $enum->withValues($this->makeAll($this->ast->values));
         }
 
-        foreach ($values as $value) {
-            /** @var EnumValueInterface $definition */
-            $definition = $this->buildDefinition($value);
-
-            yield $definition->getName() => $definition;
-        }
+        return $enum;
     }
 }

@@ -9,19 +9,20 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
+use Railt\SDL\Ast\Type\NamedTypeNode;
 use GraphQL\TypeSystem\Type\InterfaceType;
+use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use Railt\SDL\Ast\Generic\InterfaceImplementsCollection;
 use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
-use Railt\SDL\Builder\Common\FieldsBuilderTrait;
+use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 
 /**
  * @property InterfaceTypeDefinitionNode $ast
  */
 class InterfaceTypeBuilder extends TypeBuilder
 {
-    use FieldsBuilderTrait;
-
     /**
      * @return DefinitionInterface|InterfaceTypeInterface
      * @throws \RuntimeException
@@ -33,10 +34,28 @@ class InterfaceTypeBuilder extends TypeBuilder
             'description' => $this->value($this->ast->description),
         ]);
 
-        $this->registerType($interface);
+        $this->register($interface);
 
-        return $interface
-            ->withFields($this->buildFields($this->ast->fields))
-            ->withInterfaces($this->buildImplementedInterfaces($this->ast->interfaces));
+        if ($this->ast->fields) {
+            $interface = $interface->withFields($this->makeAll($this->ast->fields));
+        }
+
+        if ($this->ast->interfaces) {
+            $interface = $interface->withInterfaces($this->buildImplementedInterfaces($this->ast->interfaces));
+        }
+
+        return $interface;
+    }
+
+    /**
+     * @param InterfaceImplementsCollection|NamedTypeNode[]|null $interfaces
+     * @return \Traversable|TypeInterface[]
+     */
+    protected function buildImplementedInterfaces(?InterfaceImplementsCollection $interfaces): \Traversable
+    {
+        foreach ($interfaces as $interface) {
+            /** @var NamedTypeInterface $type */
+            yield $this->fetch($interface->name->value);
+        }
     }
 }

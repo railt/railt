@@ -100,48 +100,48 @@ final class Builder implements BuilderInterface
                 return $this->reduce74($children);
             case 85:
                 return $this->reduce85($children);
-            case 86:
-                return $this->reduce86($children);
-            case 96:
-                return $this->reduce96($children);
-            case 91:
-                return $this->reduce91($children);
+            case 87:
+                return $this->reduce87($children);
             case 84:
                 return $this->reduce84($children);
-            case 113:
-                return $this->reduce113($children);
-            case 112:
-                return $this->reduce112($children);
-            case 125:
-                return $this->reduce125($children);
-            case 131:
-                return $this->reduce131($children);
-            case 135:
-                return $this->reduce135($children);
-            case 140:
-                return $this->reduce140($children);
-            case 146:
-                return $this->reduce146($children);
-            case 150:
-                return $this->reduce150($children);
-            case 159:
-                return $this->reduce159($children);
-            case 163:
-                return $this->reduce163($children);
-            case 178:
-                return $this->reduce178($children);
-            case 189:
-                return $this->reduce189($children);
-            case 194:
-                return $this->reduce194($children);
-            case 200:
-                return $this->reduce200($children);
+            case 105:
+                return $this->reduce105($children);
+            case 104:
+                return $this->reduce104($children);
+            case 92:
+                return $this->reduce92($children);
+            case 115:
+                return $this->reduce115($children);
+            case 124:
+                return $this->reduce124($children);
+            case 123:
+                return $this->reduce123($children);
+            case 133:
+                return $this->reduce133($children);
+            case 132:
+                return $this->reduce132($children);
+            case 138:
+                return $this->reduce138($children);
+            case 148:
+                return $this->reduce148($children);
+            case 158:
+                return $this->reduce158($children);
+            case 162:
+                return $this->reduce162($children);
+            case 177:
+                return $this->reduce177($children);
+            case 188:
+                return $this->reduce188($children);
+            case 193:
+                return $this->reduce193($children);
+            case 199:
+                return $this->reduce199($children);
             case 67:
                 return $this->reduce67($children);
+            case 207:
+                return $this->reduce207($children);
             case 208:
                 return $this->reduce208($children);
-            case 114:
-                return $this->reduce114($children);
             case 211:
                 return $this->reduce211($children);
             case 220:
@@ -447,7 +447,7 @@ final class Builder implements BuilderInterface
                     $directive->repeatable = true;
                     break;
 
-                case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
+                case $child instanceof \Railt\SDL\Ast\Generic\ArgumentDefinitionCollection:
                     $directive->arguments = $child;
                     break;
             }
@@ -461,9 +461,9 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce86($children)
+    protected function reduce87($children)
     {
-        return new \Railt\SDL\Ast\Generic\InputValueDefinitionCollection($children);
+        return ! \is_array($children);
     }
 
     /**
@@ -471,9 +471,66 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce96($children)
+    protected function reduce84($children)
     {
-        $value = new \Railt\SDL\Ast\Definition\InputValueDefinitionNode(
+        return new \Railt\SDL\Ast\Generic\DirectiveLocationCollection($children);
+    }
+
+    /**
+     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
+     * @return NodeInterface|mixed
+     * @throws \Throwable
+     */
+    protected function reduce105($children)
+    {
+        return new \Railt\SDL\Ast\Generic\FieldDefinitionCollection($children);
+    }
+
+    /**
+     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
+     * @return NodeInterface|mixed
+     * @throws \Throwable
+     */
+    protected function reduce104($children)
+    {
+        $field = new \Railt\SDL\Ast\Definition\FieldDefinitionNode(
+            $children[1],
+            \Railt\SDL\Ast\Type\TypeNode::resolve($children)
+        );
+
+        foreach ($children as $child) {
+            switch (true) {
+                case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                    $field->directives = $child;
+                    break;
+
+                case $child instanceof \Railt\SDL\Ast\Generic\ArgumentDefinitionCollection:
+                    $field->arguments = $child;
+                    break;
+            }
+        }
+
+        return $field;
+    }
+
+    /**
+     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
+     * @return NodeInterface|mixed
+     * @throws \Throwable
+     */
+    protected function reduce92($children)
+    {
+        return new \Railt\SDL\Ast\Generic\ArgumentDefinitionCollection($children);
+    }
+
+    /**
+     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
+     * @return NodeInterface|mixed
+     * @throws \Throwable
+     */
+    protected function reduce115($children)
+    {
+        $value = new \Railt\SDL\Ast\Definition\ArgumentDefinitionNode(
             $children[1],
             $children[2]
         );
@@ -502,9 +559,9 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce91($children)
+    protected function reduce124($children)
     {
-        return ! \is_array($children);
+        return new \Railt\SDL\Ast\Generic\InputFieldDefinitionCollection($children);
     }
 
     /**
@@ -512,46 +569,30 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce84($children)
+    protected function reduce123($children)
     {
-        return new \Railt\SDL\Ast\Generic\DirectiveLocationCollection($children);
-    }
-
-    /**
-     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
-     * @return NodeInterface|mixed
-     * @throws \Throwable
-     */
-    protected function reduce113($children)
-    {
-        return new \Railt\SDL\Ast\Generic\FieldDefinitionCollection($children);
-    }
-
-    /**
-     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
-     * @return NodeInterface|mixed
-     * @throws \Throwable
-     */
-    protected function reduce112($children)
-    {
-        $field = new \Railt\SDL\Ast\Definition\FieldDefinitionNode(
+        $value = new \Railt\SDL\Ast\Definition\InputFieldDefinitionNode(
             $children[1],
-            \Railt\SDL\Ast\Type\TypeNode::resolve($children)
+            $children[2]
         );
 
         foreach ($children as $child) {
             switch (true) {
-                case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                    $field->directives = $child;
+                case $child instanceof \Railt\SDL\Ast\Description:
+                    $value->description = $child->value;
                     break;
 
-                case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
-                    $field->arguments = $child;
+                case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                    $value->directives = $child;
+                    break;
+
+                case $child instanceof \Railt\SDL\Ast\Value\ValueNode:
+                    $value->defaultValue = $child;
                     break;
             }
         }
 
-        return $field;
+        return $value;
     }
 
     /**
@@ -559,7 +600,43 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce125($children)
+    protected function reduce133($children)
+    {
+        return new \Railt\SDL\Ast\Generic\EnumValueDefinitionCollection($children);
+    }
+
+    /**
+     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
+     * @return NodeInterface|mixed
+     * @throws \Throwable
+     */
+    protected function reduce132($children)
+    {
+        $value = new \Railt\SDL\Ast\Definition\EnumValueDefinitionNode(
+            $children[1]
+        );
+
+        foreach ($children as $child) {
+            switch (true) {
+                case $child instanceof \Railt\SDL\Ast\Description:
+                    $value->description = $child->value;
+                    break;
+
+                case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                    $value->directives = $child;
+                    break;
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
+     * @return NodeInterface|mixed
+     * @throws \Throwable
+     */
+    protected function reduce138($children)
     {
         $enum = new \Railt\SDL\Ast\Definition\EnumTypeDefinitionNode(
             $children[1]
@@ -589,43 +666,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce131($children)
-    {
-        return new \Railt\SDL\Ast\Generic\EnumValueDefinitionCollection($children);
-    }
-
-    /**
-     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
-     * @return NodeInterface|mixed
-     * @throws \Throwable
-     */
-    protected function reduce135($children)
-    {
-        $value = new \Railt\SDL\Ast\Definition\EnumValueDefinitionNode(
-            $children[1]
-        );
-
-        foreach ($children as $child) {
-            switch (true) {
-                case $child instanceof \Railt\SDL\Ast\Description:
-                    $value->description = $child->value;
-                    break;
-
-                case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                    $value->directives = $child;
-                    break;
-            }
-        }
-
-        return $value;
-    }
-
-    /**
-     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
-     * @return NodeInterface|mixed
-     * @throws \Throwable
-     */
-    protected function reduce140($children)
+    protected function reduce148($children)
     {
         $input = new \Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode(
             $children[1]
@@ -641,7 +682,7 @@ final class Builder implements BuilderInterface
                     $input->directives = $child;
                     break;
 
-                case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
+                case $child instanceof \Railt\SDL\Ast\Generic\InputFieldDefinitionCollection:
                     $input->fields = $child;
                     break;
             }
@@ -655,48 +696,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce146($children)
-    {
-        return new \Railt\SDL\Ast\Generic\InputValueDefinitionCollection($children);
-    }
-
-    /**
-     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
-     * @return NodeInterface|mixed
-     * @throws \Throwable
-     */
-    protected function reduce150($children)
-    {
-        $value = new \Railt\SDL\Ast\Definition\InputValueDefinitionNode(
-            $children[1],
-            $children[2]
-        );
-
-        foreach ($children as $child) {
-            switch (true) {
-                case $child instanceof \Railt\SDL\Ast\Description:
-                    $value->description = $child->value;
-                    break;
-
-                case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                    $value->directives = $child;
-                    break;
-
-                case $child instanceof \Railt\SDL\Ast\Value\ValueNode:
-                    $value->defaultValue = $child;
-                    break;
-            }
-        }
-
-        return $value;
-    }
-
-    /**
-     * @param NodeInterface|NodeInterface[]|TokenInterface|TokenInterface[] $children
-     * @return NodeInterface|mixed
-     * @throws \Throwable
-     */
-    protected function reduce159($children)
+    protected function reduce158($children)
     {
         $interface = new \Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode(
             $children[1]
@@ -730,7 +730,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce163($children)
+    protected function reduce162($children)
     {
         return new \Railt\SDL\Ast\Generic\InterfaceImplementsCollection($children);
     }
@@ -740,7 +740,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce178($children)
+    protected function reduce177($children)
     {
         $object = new \Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode($children[1]);
 
@@ -772,7 +772,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce189($children)
+    protected function reduce188($children)
     {
         $scalar = new \Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode(
             $children[1]
@@ -798,7 +798,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce194($children)
+    protected function reduce193($children)
     {
         $union = new \Railt\SDL\Ast\Definition\UnionTypeDefinitionNode(
             $children[1]
@@ -828,7 +828,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce200($children)
+    protected function reduce199($children)
     {
         return new \Railt\SDL\Ast\Generic\TypeDefinitionCollection($children);
     }
@@ -848,7 +848,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce208($children)
+    protected function reduce207($children)
     {
         $directive = new \Railt\SDL\Ast\Executable\DirectiveNode($children[0]);
 
@@ -864,7 +864,7 @@ final class Builder implements BuilderInterface
      * @return NodeInterface|mixed
      * @throws \Throwable
      */
-    protected function reduce114($children)
+    protected function reduce208($children)
     {
         return new \Railt\SDL\Ast\Generic\ArgumentCollection($children);
     }
@@ -930,7 +930,7 @@ final class Builder implements BuilderInterface
                     $input->directives = $child;
                     break;
 
-                case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
+                case $child instanceof \Railt\SDL\Ast\Generic\InputFieldDefinitionCollection:
                     $input->fields = $child;
                     break;
             }

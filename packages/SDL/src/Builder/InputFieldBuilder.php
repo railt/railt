@@ -9,23 +9,23 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use GraphQL\TypeSystem\Argument;
-use GraphQL\Contracts\TypeSystem\ArgumentInterface;
-use Railt\SDL\Ast\Definition\ArgumentDefinitionNode;
+use GraphQL\TypeSystem\InputField;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use GraphQL\Contracts\TypeSystem\InputFieldInterface;
+use Railt\SDL\Ast\Definition\InputFieldDefinitionNode;
 
 /**
- * @property ArgumentDefinitionNode $ast
+ * @property InputFieldDefinitionNode $ast
  */
-class ArgumentBuilder extends TypeBuilder
+class InputFieldBuilder extends TypeBuilder
 {
     /**
-     * @return ArgumentInterface|DefinitionInterface
+     * @return InputFieldInterface|DefinitionInterface
      * @throws \RuntimeException
      */
-    public function build(): ArgumentInterface
+    public function build(): InputFieldInterface
     {
-        $argument = new Argument([
+        $argument = new InputField([
             'name'        => $this->ast->name->value,
             'description' => $this->value($this->ast->description),
             'type'        => $this->hint($this->ast->type),

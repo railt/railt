@@ -31,7 +31,7 @@ FieldDefinition -> {
                 $field->directives = $child;
                 break;
 
-            case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
+            case $child instanceof \Railt\SDL\Ast\Generic\ArgumentDefinitionCollection:
                 $field->arguments = $child;
                 break;
         }

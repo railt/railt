@@ -21,6 +21,7 @@ class InputObjectTypeBuilder extends TypeBuilder
 {
     /**
      * @return DefinitionInterface|InputTypeInterface
+     * @throws \RuntimeException
      */
     public function build(): InputTypeInterface
     {
@@ -29,9 +30,11 @@ class InputObjectTypeBuilder extends TypeBuilder
             'description' => $this->value($this->ast->description),
         ]);
 
-        $this->registerType($input);
+        $this->register($input);
 
-        // TODO Add input arguments builder
+        if ($this->ast->fields) {
+            $input = $input->withFields($this->makeAll($this->ast->fields));
+        }
 
         return $input;
     }

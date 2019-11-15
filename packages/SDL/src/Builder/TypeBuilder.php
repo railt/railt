@@ -14,16 +14,15 @@ use Railt\Dumper\Facade;
 use Railt\SDL\Executor\Registry;
 use Railt\SDL\Ast\Type\TypeNode;
 use Railt\SDL\Ast\DefinitionNode;
+use Railt\SDL\Ast\Value\ValueNode;
 use Railt\SDL\Ast\Type\ListTypeNode;
 use Railt\SDL\Ast\Type\NamedTypeNode;
 use GraphQL\TypeSystem\Type\ListType;
 use Railt\SDL\Ast\Type\NonNullTypeNode;
-use Railt\SDL\Ast\Value\StringValueNode;
 use GraphQL\TypeSystem\Type\NonNullType;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use Railt\SDL\Ast\Generic\InterfaceImplementsCollection;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 
 /**
@@ -73,63 +72,69 @@ abstract class TypeBuilder
     abstract public function build(): DefinitionInterface;
 
     /**
+     * Registers a type in the system in order to be able to build correct
+     * recursive relationship in the future.
+     *
+     * <code>
+     *  input Example {     # Registration action
+     *      field: Example  # Usage (recursive relation)
+     *  }
+     *
+     *  $input = $this->register(
+     *          new InputObject(...)
+     *      )
+     *      ->withFields(...build fields...)
+     *  ;
+     * </code>
+     *
      * @param DefinitionInterface $definition
      * @return DefinitionInterface
      */
-    protected function registered(DefinitionInterface $definition): DefinitionInterface
+    protected function register(DefinitionInterface $definition): DefinitionInterface
     {
         if ($definition instanceof DirectiveInterface) {
-            return $this->registerDirective($definition);
+            $this->dictionary->directives->put($definition->getName(), $definition);
+
+            return $definition;
         }
 
         if ($definition instanceof NamedTypeInterface) {
-            return $this->registerType($definition);
+            $this->dictionary->typeMap->put($definition->getName(), $definition);
+
+            return $definition;
         }
 
         throw new \InvalidArgumentException('Invalid definition ' . Facade::dump($definition));
     }
 
     /**
-     * @param DirectiveInterface $directive
-     * @return DirectiveInterface
-     */
-    protected function registerDirective(DirectiveInterface $directive): DirectiveInterface
-    {
-        $this->dictionary->directives->put($directive->getName(), $directive);
-
-        return $directive;
-    }
-
-    /**
-     * @param NamedTypeInterface $type
-     * @return NamedTypeInterface
-     */
-    protected function registerType(NamedTypeInterface $type): NamedTypeInterface
-    {
-        $this->dictionary->typeMap->put($type->getName(), $type);
-
-        return $type;
-    }
-
-    /**
+     * Method for building a type hint.
+     *
+     * <code>
+     *  type Example {
+     *      field: [ExampleTypeHint]!
+     *      #      ^^^^^^^^^^^^^^^^^^
+     *  }
+     * </code>
+     *
      * @param TypeNode $type
      * @return TypeInterface
      */
-    protected function buildType(TypeNode $type): TypeInterface
+    protected function hint(TypeNode $type): TypeInterface
     {
         switch (true) {
             case $type instanceof NonNullTypeNode:
                 return new NonNullType([
-                    'ofType' => $this->buildType($type->type)
+                    'ofType' => $this->hint($type->type),
                 ]);
 
             case $type instanceof ListTypeNode:
                 return new ListType([
-                    'ofType' => $this->buildType($type->type)
+                    'ofType' => $this->hint($type->type),
                 ]);
 
             case $type instanceof NamedTypeNode:
-                return $this->getType($type->name->value);
+                return $this->fetch($type->name->value);
 
             default:
                 throw new \LogicException('Unrecognized wrapping type node ' . \get_class($type));
@@ -137,47 +142,66 @@ abstract class TypeBuilder
     }
 
     /**
-     * @param string $type
+     * Fetch type by definition's name.
+     *
+     * @param string $name
      * @return TypeInterface
      */
-    protected function getType(string $type): TypeInterface
+    protected function fetch(string $name): TypeInterface
     {
-        return $this->builder->getType($type, $this->registry);
+        return $this->builder->fetch($name, $this->registry);
     }
 
     /**
+     * Method for building a dependencies, presented in the form of a
+     * full-fledged AST.
+     *
+     * <code>
+     *  $this->makeAll([<field's AST>, <field's AST>]); // [FieldInterface, FieldInterface]
+     *  $this->makeAll([<argument's AST>]);             // [ArgumentInterface]
+     * </code>
+     *
+     * @param iterable|DefinitionNode[] $definitions
+     * @return iterable|DefinitionInterface[]
+     */
+    protected function makeAll(iterable $definitions): iterable
+    {
+        foreach ($definitions as $definition) {
+            yield $this->make($definition);
+        }
+    }
+
+    /**
+     * Method for building a dependency, presented in the form of a
+     * full-fledged AST.
+     *
+     * <code>
+     *  $this->make(<type's AST>);      // ObjectTypeInterface
+     *  $this->make(<field's AST>);     // FieldInterface
+     *  $this->make(<argument's AST>);  // ArgumentInterface
+     * </code>
+     *
      * @param DefinitionNode $node
      * @return DefinitionInterface
      */
-    protected function buildDefinition(DefinitionNode $node): DefinitionInterface
+    protected function make(DefinitionNode $node): DefinitionInterface
     {
         return $this->builder->build($node, $this->registry);
     }
 
     /**
-     * @param StringValueNode|null $string
-     * @return string|null
+     * Returns a php representation of a value.
+     *
+     * <code>
+     *  $this->value(<input's AST like {a: 42, b: 23}>);    // ['a' => 42, 'b' => 23]
+     *  $this->value(<string's AST like "string">);         // 'string'
+     * </code>
+     *
+     * @param ValueNode|null $value
+     * @return mixed
      */
-    protected function value(?StringValueNode $string): ?string
+    protected function value(?ValueNode $value)
     {
-        return $string ? $string->value : null;
-    }
-
-    /**
-     * @param InterfaceImplementsCollection|NamedTypeNode[]|null $interfaces
-     * @return \Traversable|TypeInterface[]
-     */
-    protected function buildImplementedInterfaces(?InterfaceImplementsCollection $interfaces): \Traversable
-    {
-        if ($interfaces === null) {
-            return new \EmptyIterator();
-        }
-
-        foreach ($interfaces as $interface) {
-            /** @var NamedTypeInterface $type */
-            $type = $this->getType($interface->name->value);
-
-            yield $type->getName() => $type;
-        }
+        return $value ? $value->toNative() : null;
     }
 }

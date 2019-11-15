@@ -29,7 +29,7 @@ class ScalarTypeBuilder extends TypeBuilder
             'description' => $this->value($this->ast->description),
         ]);
 
-        $this->registerType($scalar);
+        $this->register($scalar);
 
         return $scalar;
     }

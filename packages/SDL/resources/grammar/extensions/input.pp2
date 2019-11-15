@@ -28,7 +28,7 @@ InputObjectTypeExtension -> {
                 $input->directives = $child;
                 break;
 
-            case $child instanceof \Railt\SDL\Ast\Generic\InputValueDefinitionCollection:
+            case $child instanceof \Railt\SDL\Ast\Generic\InputFieldDefinitionCollection:
                 $input->fields = $child;
                 break;
         }

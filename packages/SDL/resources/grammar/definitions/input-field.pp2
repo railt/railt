@@ -1,7 +1,6 @@
-
 /**
  * --------------------------------------------------------------------------
- *  GraphQL SDL Arguments
+ *  GraphQL SDL Input Field
  * --------------------------------------------------------------------------
  *
  * Fields are conceptually functions which return values, and occasionally
@@ -11,14 +10,16 @@
  * @see https://graphql.github.io/graphql-spec/June2018/#sec-Field-Arguments
  */
 
-ArgumentDefinitions -> {
-    return new \Railt\SDL\Ast\Generic\ArgumentDefinitionCollection($children);
+
+InputFieldDefinitions -> {
+    return new \Railt\SDL\Ast\Generic\InputFieldDefinitionCollection($children);
 }
-  : ArgumentDefinition()+
+  : InputFieldDefinition()+
   ;
 
-ArgumentDefinition -> {
-    $value = new \Railt\SDL\Ast\Definition\ArgumentDefinitionNode(
+
+InputFieldDefinition -> {
+    $value = new \Railt\SDL\Ast\Definition\InputFieldDefinitionNode(
         $children[1],
         $children[2]
     );

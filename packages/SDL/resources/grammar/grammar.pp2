@@ -25,6 +25,9 @@
 %include definitions/schema
 %include definitions/directive
 %include definitions/field
+%include definitions/argument
+%include definitions/input-field
+%include definitions/enum-value
 
 %include definitions/type/enum
 %include definitions/type/input

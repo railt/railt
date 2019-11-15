@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Ast\Extension;
 
-use Railt\SDL\Ast\Generic\InputValueDefinitionCollection;
+use Railt\SDL\Ast\Generic\InputFieldDefinitionCollection;
 
 /**
  * Class InputObjectTypeExtensionNode
@@ -28,7 +28,7 @@ use Railt\SDL\Ast\Generic\InputValueDefinitionCollection;
 class InputObjectTypeExtensionNode extends TypeExtensionNode
 {
     /**
-     * @var InputValueDefinitionCollection|null
+     * @var InputFieldDefinitionCollection|null
      */
-    public ?InputValueDefinitionCollection $fields = null;
+    public ?InputFieldDefinitionCollection $fields = null;
 }

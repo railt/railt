@@ -13,25 +13,14 @@ namespace Railt\SDL\Ast\Definition;
 use Railt\SDL\Ast\Name\IdentifierNode;
 use Railt\SDL\Ast\Type\TypeNode;
 use Railt\SDL\Ast\DefinitionNode;
+use Railt\SDL\Ast\Value\ValueNode;
 use Railt\SDL\Ast\Value\StringValueNode;
 use Railt\SDL\Ast\Generic\DirectiveCollection;
-use Railt\SDL\Ast\Generic\ArgumentDefinitionCollection;
-use Railt\SDL\Ast\Generic\InputFieldDefinitionCollection;
 
 /**
- * <code>
- *  export interface FieldDefinitionNode {
- *      readonly kind: 'FieldDefinition';
- *      readonly loc?: Location;
- *      readonly description?: StringValueNode;
- *      readonly name: IdentifierNode;
- *      readonly arguments?: ReadonlyArray<InputValueDefinitionNode>;
- *      readonly type: TypeNode;
- *      readonly directives?: ReadonlyArray<DirectiveNode>;
- *  }
- * </code>
+ * Class ArgumentDefinitionNode
  */
-class FieldDefinitionNode extends DefinitionNode
+class ArgumentDefinitionNode extends DefinitionNode
 {
     /**
      * @var IdentifierNode
@@ -54,9 +43,9 @@ class FieldDefinitionNode extends DefinitionNode
     public ?DirectiveCollection $directives = null;
 
     /**
-     * @var ArgumentDefinitionCollection|null
+     * @var ValueNode|null
      */
-    public ?ArgumentDefinitionCollection $arguments = null;
+    public ?ValueNode $defaultValue = null;
 
     /**
      * TypeDefinitionNode constructor.

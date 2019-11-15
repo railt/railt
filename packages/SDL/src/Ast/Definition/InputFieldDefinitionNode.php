@@ -32,7 +32,7 @@ use Railt\SDL\Ast\Generic\DirectiveCollection;
  *  }
  * </code>
  */
-class InputValueDefinitionNode extends DefinitionNode
+class InputFieldDefinitionNode extends DefinitionNode
 {
     /**
      * @var IdentifierNode

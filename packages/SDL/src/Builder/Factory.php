@@ -17,12 +17,13 @@ use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
+use Railt\SDL\Ast\Definition\ArgumentDefinitionNode;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
 use Railt\SDL\Ast\Definition\EnumValueDefinitionNode;
 use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
-use Railt\SDL\Ast\Definition\InputValueDefinitionNode;
+use Railt\SDL\Ast\Definition\InputFieldDefinitionNode;
 use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
 
@@ -47,7 +48,8 @@ class Factory
 
         // Definitions
         FieldDefinitionNode::class           => FieldBuilder::class,
-        InputValueDefinitionNode::class      => ArgumentBuilder::class,
+        InputFieldDefinitionNode::class      => InputFieldBuilder::class,
+        ArgumentDefinitionNode::class        => ArgumentBuilder::class,
         EnumValueDefinitionNode::class       => EnumValueBuilder::class,
     ];
 
@@ -73,7 +75,7 @@ class Factory
     public function loadFrom(Registry $registry): Document
     {
         foreach ($registry->typeMap as $name => $typeNode) {
-            $this->getType($name, $registry);
+            $this->fetch($name, $registry);
         }
 
         foreach ($registry->directives as $name => $directiveNode) {
@@ -92,7 +94,7 @@ class Factory
      * @param Registry $registry
      * @return TypeInterface
      */
-    public function getType(string $type, Registry $registry): TypeInterface
+    public function fetch(string $type, Registry $registry): TypeInterface
     {
         if ($this->dictionary->typeMap->containsKey($type)) {
             return $this->dictionary->typeMap->get($type);

@@ -13,7 +13,8 @@ namespace Railt\SDL\Ast\Definition;
 use Railt\SDL\Ast\Name\IdentifierNode;
 use Railt\SDL\Ast\Value\StringValueNode;
 use Railt\SDL\Ast\Generic\DirectiveLocationCollection;
-use Railt\SDL\Ast\Generic\InputValueDefinitionCollection;
+use Railt\SDL\Ast\Generic\ArgumentDefinitionCollection;
+use Railt\SDL\Ast\Generic\InputFieldDefinitionCollection;
 
 /**
  * Class DirectiveDefinitionNode
@@ -53,9 +54,9 @@ class DirectiveDefinitionNode extends TypeSystemDefinitionNode
     public ?StringValueNode $description = null;
 
     /**
-     * @var InputValueDefinitionCollection|null
+     * @var ArgumentDefinitionCollection|null
      */
-    public ?InputValueDefinitionCollection $arguments = null;
+    public ?ArgumentDefinitionCollection $arguments = null;
 
     /**
      * TypeDefinitionNode constructor.

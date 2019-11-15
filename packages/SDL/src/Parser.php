@@ -301,7 +301,7 @@ final class Parser extends BaseParser
                 65,
             ),
             67 => new Repetition(
-                208,
+                207,
                 1,
                 INF,
             ),
@@ -361,442 +361,442 @@ final class Parser extends BaseParser
                 true,
             ),
             83 => new Concatenation(
-                [92, 93, 21, 94, 95],
+                [88, 89, 21, 90, 91],
             ),
             84 => new Concatenation(
-                [105, 104],
+                [97, 96],
             ),
             85 => new Concatenation(
                 [61, 83, 84],
             ),
-            86 => new Repetition(
-                96,
-                1,
-                INF,
+            86 => new Concatenation(
+                [93, 94, 95],
             ),
             87 => new Lexeme(
-                'T_PARENTHESIS_OPEN',
-                false,
-            ),
-            88 => new Optional(
-                86,
-            ),
-            89 => new Lexeme(
-                'T_PARENTHESIS_CLOSE',
-                false,
-            ),
-            90 => new Concatenation(
-                [87, 88, 89],
-            ),
-            91 => new Lexeme(
                 'T_REPEATABLE',
                 true,
             ),
-            92 => new Lexeme(
+            88 => new Lexeme(
                 'T_DIRECTIVE',
                 false,
             ),
-            93 => new Lexeme(
+            89 => new Lexeme(
                 'T_DIRECTIVE_AT',
                 false,
             ),
-            94 => new Optional(
-                90,
+            90 => new Optional(
+                86,
             ),
-            95 => new Optional(
-                91,
+            91 => new Optional(
+                87,
             ),
-            96 => new Concatenation(
-                [61, 20, 100, 25, 101, 102, 103],
-            ),
-            97 => new Lexeme(
-                'T_EQUAL',
-                false,
-            ),
-            98 => new Concatenation(
-                [97, 38],
-            ),
-            99 => new Lexeme(
-                'T_COMMA',
-                false,
-            ),
-            100 => new Lexeme(
-                'T_COLON',
-                false,
-            ),
-            101 => new Optional(
-                98,
-            ),
-            102 => new Optional(
-                67,
-            ),
-            103 => new Optional(
-                99,
-            ),
-            104 => new Concatenation(
-                [110, 107, 111],
-            ),
-            105 => new Lexeme(
-                'T_ON',
-                false,
-            ),
-            106 => new Lexeme(
-                'T_OR',
-                false,
-            ),
-            107 => new Concatenation(
-                [20],
-            ),
-            108 => new Lexeme(
-                'T_OR',
-                false,
-            ),
-            109 => new Concatenation(
-                [108, 107],
-            ),
-            110 => new Optional(
-                106,
-            ),
-            111 => new Repetition(
-                109,
-                0,
-                INF,
-            ),
-            112 => new Concatenation(
-                [61, 20, 120, 121, 25, 122, 123],
-            ),
-            113 => new Repetition(
-                112,
+            92 => new Repetition(
+                115,
                 1,
                 INF,
             ),
-            114 => new Concatenation(
-                [215, 216, 217],
-            ),
-            115 => new Lexeme(
+            93 => new Lexeme(
                 'T_PARENTHESIS_OPEN',
                 false,
             ),
-            116 => new Optional(
-                114,
+            94 => new Optional(
+                92,
             ),
-            117 => new Lexeme(
+            95 => new Lexeme(
                 'T_PARENTHESIS_CLOSE',
                 false,
             ),
-            118 => new Concatenation(
-                [115, 116, 117],
+            96 => new Concatenation(
+                [102, 99, 103],
             ),
-            119 => new Lexeme(
+            97 => new Lexeme(
+                'T_ON',
+                false,
+            ),
+            98 => new Lexeme(
+                'T_OR',
+                false,
+            ),
+            99 => new Concatenation(
+                [20],
+            ),
+            100 => new Lexeme(
+                'T_OR',
+                false,
+            ),
+            101 => new Concatenation(
+                [100, 99],
+            ),
+            102 => new Optional(
+                98,
+            ),
+            103 => new Repetition(
+                101,
+                0,
+                INF,
+            ),
+            104 => new Concatenation(
+                [61, 20, 108, 109, 25, 110, 111],
+            ),
+            105 => new Repetition(
+                104,
+                1,
+                INF,
+            ),
+            106 => new Concatenation(
+                [112, 113, 114],
+            ),
+            107 => new Lexeme(
                 'T_COMMA',
                 false,
             ),
-            120 => new Optional(
-                118,
+            108 => new Optional(
+                106,
             ),
-            121 => new Lexeme(
+            109 => new Lexeme(
                 'T_COLON',
                 false,
             ),
-            122 => new Optional(
+            110 => new Optional(
                 67,
             ),
-            123 => new Optional(
-                119,
+            111 => new Optional(
+                107,
             ),
-            124 => new Concatenation(
-                [126, 128],
+            112 => new Lexeme(
+                'T_PARENTHESIS_OPEN',
+                false,
             ),
-            125 => new Concatenation(
-                [61, 124],
+            113 => new Optional(
+                92,
+            ),
+            114 => new Lexeme(
+                'T_PARENTHESIS_CLOSE',
+                false,
+            ),
+            115 => new Concatenation(
+                [61, 20, 119, 25, 120, 121, 122],
+            ),
+            116 => new Lexeme(
+                'T_EQUAL',
+                false,
+            ),
+            117 => new Concatenation(
+                [116, 38],
+            ),
+            118 => new Lexeme(
+                'T_COMMA',
+                false,
+            ),
+            119 => new Lexeme(
+                'T_COLON',
+                false,
+            ),
+            120 => new Optional(
+                117,
+            ),
+            121 => new Optional(
+                67,
+            ),
+            122 => new Optional(
+                118,
+            ),
+            123 => new Concatenation(
+                [61, 20, 128, 25, 129, 130, 131],
+            ),
+            124 => new Repetition(
+                123,
+                1,
+                INF,
+            ),
+            125 => new Lexeme(
+                'T_EQUAL',
+                false,
             ),
             126 => new Concatenation(
-                [129, 21, 130],
+                [125, 38],
             ),
-            127 => new Concatenation(
-                [132, 133, 134],
-            ),
-            128 => new Optional(
-                127,
-            ),
-            129 => new Lexeme(
-                'T_ENUM',
+            127 => new Lexeme(
+                'T_COMMA',
                 false,
+            ),
+            128 => new Lexeme(
+                'T_COLON',
+                false,
+            ),
+            129 => new Optional(
+                126,
             ),
             130 => new Optional(
                 67,
             ),
-            131 => new Repetition(
-                135,
+            131 => new Optional(
+                127,
+            ),
+            132 => new Concatenation(
+                [61, 20, 135, 136],
+            ),
+            133 => new Repetition(
+                132,
                 1,
                 INF,
             ),
-            132 => new Lexeme(
-                'T_BRACE_OPEN',
-                false,
-            ),
-            133 => new Optional(
-                131,
-            ),
             134 => new Lexeme(
-                'T_BRACE_CLOSE',
-                false,
-            ),
-            135 => new Concatenation(
-                [61, 20, 137, 138],
-            ),
-            136 => new Lexeme(
                 'T_COMMA',
                 false,
             ),
-            137 => new Optional(
+            135 => new Optional(
                 67,
             ),
-            138 => new Optional(
-                136,
+            136 => new Optional(
+                134,
+            ),
+            137 => new Concatenation(
+                [139, 141],
+            ),
+            138 => new Concatenation(
+                [61, 137],
             ),
             139 => new Concatenation(
-                [141, 143],
+                [142, 21, 143],
             ),
             140 => new Concatenation(
-                [61, 139],
+                [144, 145, 146],
             ),
-            141 => new Concatenation(
-                [144, 21, 145],
+            141 => new Optional(
+                140,
             ),
-            142 => new Concatenation(
-                [147, 148, 149],
+            142 => new Lexeme(
+                'T_ENUM',
+                false,
             ),
             143 => new Optional(
-                142,
+                67,
             ),
             144 => new Lexeme(
-                'T_INPUT',
+                'T_BRACE_OPEN',
                 false,
             ),
             145 => new Optional(
-                67,
+                133,
             ),
-            146 => new Repetition(
-                150,
-                1,
-                INF,
-            ),
-            147 => new Lexeme(
-                'T_BRACE_OPEN',
-                false,
-            ),
-            148 => new Optional(
-                146,
-            ),
-            149 => new Lexeme(
+            146 => new Lexeme(
                 'T_BRACE_CLOSE',
                 false,
             ),
+            147 => new Concatenation(
+                [149, 151],
+            ),
+            148 => new Concatenation(
+                [61, 147],
+            ),
+            149 => new Concatenation(
+                [152, 21, 153],
+            ),
             150 => new Concatenation(
-                [61, 20, 154, 25, 155, 156, 157],
+                [154, 155, 156],
             ),
-            151 => new Lexeme(
-                'T_EQUAL',
+            151 => new Optional(
+                150,
+            ),
+            152 => new Lexeme(
+                'T_INPUT',
                 false,
             ),
-            152 => new Concatenation(
-                [151, 38],
-            ),
-            153 => new Lexeme(
-                'T_COMMA',
-                false,
+            153 => new Optional(
+                67,
             ),
             154 => new Lexeme(
-                'T_COLON',
+                'T_BRACE_OPEN',
                 false,
             ),
             155 => new Optional(
-                152,
+                124,
             ),
-            156 => new Optional(
-                67,
+            156 => new Lexeme(
+                'T_BRACE_CLOSE',
+                false,
             ),
-            157 => new Optional(
-                153,
+            157 => new Concatenation(
+                [159, 161],
             ),
             158 => new Concatenation(
-                [160, 162],
+                [61, 157],
             ),
             159 => new Concatenation(
-                [61, 158],
+                [163, 21, 164, 165],
             ),
             160 => new Concatenation(
-                [164, 21, 165, 166],
+                [166, 167, 168],
             ),
-            161 => new Concatenation(
-                [167, 168, 169],
+            161 => new Optional(
+                160,
             ),
-            162 => new Optional(
-                161,
+            162 => new Concatenation(
+                [171, 172, 24, 173],
             ),
-            163 => new Concatenation(
-                [172, 173, 24, 174],
-            ),
-            164 => new Lexeme(
+            163 => new Lexeme(
                 'T_INTERFACE',
                 false,
             ),
-            165 => new Optional(
-                163,
+            164 => new Optional(
+                162,
             ),
-            166 => new Optional(
+            165 => new Optional(
                 67,
             ),
-            167 => new Lexeme(
+            166 => new Lexeme(
                 'T_BRACE_OPEN',
                 false,
             ),
-            168 => new Optional(
-                113,
+            167 => new Optional(
+                105,
             ),
-            169 => new Lexeme(
+            168 => new Lexeme(
                 'T_BRACE_CLOSE',
                 false,
             ),
-            170 => new Alternation(
-                [175, 176],
+            169 => new Alternation(
+                [174, 175],
             ),
-            171 => new Concatenation(
-                [170, 24],
+            170 => new Concatenation(
+                [169, 24],
             ),
-            172 => new Lexeme(
+            171 => new Lexeme(
                 'T_IMPLEMENTS',
                 false,
             ),
-            173 => new Optional(
-                170,
+            172 => new Optional(
+                169,
             ),
-            174 => new Repetition(
-                171,
+            173 => new Repetition(
+                170,
                 0,
                 INF,
             ),
-            175 => new Lexeme(
+            174 => new Lexeme(
                 'T_COMMA',
                 false,
             ),
-            176 => new Lexeme(
+            175 => new Lexeme(
                 'T_AND',
                 false,
             ),
+            176 => new Concatenation(
+                [178, 180],
+            ),
             177 => new Concatenation(
-                [179, 181],
+                [61, 176],
             ),
             178 => new Concatenation(
-                [61, 177],
+                [181, 21, 182, 183],
             ),
             179 => new Concatenation(
-                [182, 21, 183, 184],
+                [184, 185, 186],
             ),
-            180 => new Concatenation(
-                [185, 186, 187],
+            180 => new Optional(
+                179,
             ),
-            181 => new Optional(
-                180,
-            ),
-            182 => new Lexeme(
+            181 => new Lexeme(
                 'T_TYPE',
                 false,
             ),
-            183 => new Optional(
-                163,
+            182 => new Optional(
+                162,
             ),
-            184 => new Optional(
+            183 => new Optional(
                 67,
             ),
-            185 => new Lexeme(
+            184 => new Lexeme(
                 'T_BRACE_OPEN',
                 false,
             ),
-            186 => new Optional(
-                113,
+            185 => new Optional(
+                105,
             ),
-            187 => new Lexeme(
+            186 => new Lexeme(
                 'T_BRACE_CLOSE',
                 false,
             ),
+            187 => new Concatenation(
+                [189],
+            ),
             188 => new Concatenation(
-                [190],
+                [61, 187],
             ),
             189 => new Concatenation(
-                [61, 188],
+                [190, 21, 191],
             ),
-            190 => new Concatenation(
-                [191, 21, 192],
-            ),
-            191 => new Lexeme(
+            190 => new Lexeme(
                 'T_SCALAR',
                 false,
             ),
-            192 => new Optional(
+            191 => new Optional(
                 67,
             ),
+            192 => new Concatenation(
+                [194, 196],
+            ),
             193 => new Concatenation(
-                [195, 197],
+                [61, 192],
             ),
             194 => new Concatenation(
-                [61, 193],
+                [197, 21, 198],
             ),
             195 => new Concatenation(
-                [198, 21, 199],
+                [200, 201],
             ),
-            196 => new Concatenation(
-                [201, 202],
+            196 => new Optional(
+                195,
             ),
-            197 => new Optional(
-                196,
-            ),
-            198 => new Lexeme(
+            197 => new Lexeme(
                 'T_UNION',
                 false,
             ),
-            199 => new Optional(
+            198 => new Optional(
                 67,
             ),
-            200 => new Concatenation(
-                [206, 24, 207],
+            199 => new Concatenation(
+                [205, 24, 206],
             ),
-            201 => new Lexeme(
+            200 => new Lexeme(
                 'T_EQUAL',
                 false,
             ),
-            202 => new Optional(
-                200,
+            201 => new Optional(
+                199,
+            ),
+            202 => new Lexeme(
+                'T_OR',
+                false,
             ),
             203 => new Lexeme(
                 'T_OR',
                 false,
             ),
-            204 => new Lexeme(
-                'T_OR',
-                false,
+            204 => new Concatenation(
+                [203, 24],
             ),
-            205 => new Concatenation(
-                [204, 24],
+            205 => new Optional(
+                202,
             ),
-            206 => new Optional(
-                203,
-            ),
-            207 => new Repetition(
-                205,
+            206 => new Repetition(
+                204,
                 0,
                 INF,
             ),
-            208 => new Concatenation(
+            207 => new Concatenation(
                 [209, 21, 210],
+            ),
+            208 => new Concatenation(
+                [215, 216, 217],
             ),
             209 => new Lexeme(
                 'T_DIRECTIVE_AT',
                 false,
             ),
             210 => new Optional(
-                114,
+                208,
             ),
             211 => new Concatenation(
                 [20, 218, 38],
@@ -833,35 +833,35 @@ final class Parser extends BaseParser
                 false,
             ),
             220 => new Concatenation(
-                [61, 219, 124],
+                [61, 219, 137],
             ),
             221 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             222 => new Concatenation(
-                [61, 221, 139],
+                [61, 221, 147],
             ),
             223 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             224 => new Concatenation(
-                [61, 223, 158],
+                [61, 223, 157],
             ),
             225 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             226 => new Concatenation(
-                [61, 225, 177],
+                [61, 225, 176],
             ),
             227 => new Lexeme(
                 'T_EXTEND',
                 false,
             ),
             228 => new Concatenation(
-                [61, 227, 188],
+                [61, 227, 187],
             ),
             229 => new Lexeme(
                 'T_EXTEND',
@@ -875,7 +875,7 @@ final class Parser extends BaseParser
                 false,
             ),
             232 => new Concatenation(
-                [61, 231, 193],
+                [61, 231, 192],
             ),
             'Document' => new Repetition(
                 233,
@@ -889,7 +889,7 @@ final class Parser extends BaseParser
                 [63, 85, 236],
             ),
             236 => new Alternation(
-                [189, 178, 159, 194, 125, 140],
+                [188, 177, 158, 193, 138, 148],
             ),
             235 => new Alternation(
                 [230, 237],

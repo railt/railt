@@ -1,0 +1,42 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enum Values
+ * --------------------------------------------------------------------------
+ *
+ * Enums are not references for a numeric value, but are unique values
+ * in their own right. They may serialize as a string: the name of the
+ * represented value.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#EnumValuesDefinition
+ */
+
+EnumValueDefinitions -> {
+    return new \Railt\SDL\Ast\Generic\EnumValueDefinitionCollection($children);
+}
+    : EnumValueDefinition()+
+    ;
+
+EnumValueDefinition -> {
+    $value = new \Railt\SDL\Ast\Definition\EnumValueDefinitionNode(
+        $children[1]
+    );
+
+    foreach ($children as $child) {
+        switch (true) {
+            case $child instanceof \Railt\SDL\Ast\Description:
+                $value->description = $child->value;
+                break;
+
+            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
+                $value->directives = $child;
+                break;
+        }
+    }
+
+    return $value;
+}
+  : Description()
+    Identifier()
+    Directives()? ::T_COMMA::?
+  ;
