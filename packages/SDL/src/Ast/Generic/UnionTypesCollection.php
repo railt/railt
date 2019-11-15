@@ -19,5 +19,4 @@ use Railt\SDL\Ast\Type\NamedTypeNode;
  */
 final class UnionTypesCollection extends NamedTypesCollection
 {
-
 }
