@@ -184,6 +184,7 @@ final class Compiler implements CompilerInterface
          *  - Checks the types of the relationships.
          *  - Checks the types in expressions.
          *  - Loads missing types for correct compilation.
+         *
          */
         $ast = (new Traverser())
             ->with(new DirectiveExecutionLinker($dictionary, $registry, $this->loaders))
@@ -204,6 +205,7 @@ final class Compiler implements CompilerInterface
          * ---------------------------------------------------------------------
          *
          * Convert from AST to a set of finite DTO types.
+         *
          */
         $document = $factory->loadFrom($registry);
 
@@ -215,6 +217,7 @@ final class Compiler implements CompilerInterface
          *  Third tree walk:
          *  - Type Extension executions: We get each type extension and
          *      implement it in the finished assembly.
+         *
          */
         $ast = (new Traverser())
             ->with(new EnumTypeExtensionExecutor($factory, $document, $registry))
@@ -235,6 +238,7 @@ final class Compiler implements CompilerInterface
          *  Last tree walk:
          *  - Directive executions: We get each directive execution and collect
          *      in the executions list.
+         *
          */
         $ast = (new Traverser())
             ->with(new DirectiveExecutor($document))
