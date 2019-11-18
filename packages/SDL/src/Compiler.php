@@ -158,7 +158,11 @@ final class Compiler implements CompilerInterface
         $factory = new Factory($dictionary ??= $this->document);
 
         /**
-         * First tree walk:
+         * ---------------------------------------------------------------------
+         *  Registration
+         * ---------------------------------------------------------------------
+         *
+         *  First tree walk:
          *  - Registering all types in the registry.
          *  - Verification that this type has not been previously
          *      registered in the dictionary (list of builded types)
@@ -172,7 +176,11 @@ final class Compiler implements CompilerInterface
         ;
 
         /**
-         * Second tree walk:
+         * ---------------------------------------------------------------------
+         *  Relations Resolving
+         * ---------------------------------------------------------------------
+         *
+         *  Second tree walk:
          *  - Checks the types of the relationships.
          *  - Checks the types in expressions.
          *  - Loads missing types for correct compilation.
@@ -191,13 +199,20 @@ final class Compiler implements CompilerInterface
         ;
 
         /**
-         * Building.
-         *  - Convert from AST to a set of finite DTO types.
+         * ---------------------------------------------------------------------
+         *  Building Final Structures
+         * ---------------------------------------------------------------------
+         *
+         * Convert from AST to a set of finite DTO types.
          */
         $document = $factory->loadFrom($registry);
 
         /**
-         * Third tree walk:
+         * ---------------------------------------------------------------------
+         *  Type Extensions
+         * ---------------------------------------------------------------------
+         *
+         *  Third tree walk:
          *  - Type Extension executions: We get each type extension and
          *      implement it in the finished assembly.
          */
@@ -213,7 +228,11 @@ final class Compiler implements CompilerInterface
         ;
 
         /**
-         * Last tree walk:
+         * ---------------------------------------------------------------------
+         *  Directive Executions
+         * ---------------------------------------------------------------------
+         *
+         *  Last tree walk:
          *  - Directive executions: We get each directive execution and collect
          *      in the executions list.
          */
