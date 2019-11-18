@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Phplrt\Contracts\Source\ReadableInterface;
-use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
+use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use Phplrt\Contracts\Source\ReadableInterface;
 
 /**
  * Interface CompilerInterface
