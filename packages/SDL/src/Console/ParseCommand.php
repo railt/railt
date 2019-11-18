@@ -6,6 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace Railt\SDL\Console;
@@ -47,8 +48,11 @@ class ParseCommand extends Command
      */
     public function configure(): void
     {
-        $this->addArgument('source', InputArgument::OPTIONAL,
-            'GraphQL source file pathname');
+        $this->addArgument(
+            'source',
+            InputArgument::OPTIONAL,
+            'GraphQL source file pathname'
+        );
     }
 
     /**

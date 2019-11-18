@@ -180,7 +180,6 @@ final class Builder implements BuilderInterface
      */
     protected function reduce21($children)
     {
-    
     }
 
     /**
@@ -1076,6 +1075,4 @@ final class Builder implements BuilderInterface
 
         return $union;
     }
-
 }
-

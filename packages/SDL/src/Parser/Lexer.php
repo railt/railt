@@ -383,4 +383,3 @@ final class Lexer implements LexerInterface
         }
     }
 }
-

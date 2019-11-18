@@ -6,6 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace Railt\SDL;
@@ -23,7 +24,9 @@ class TypeSystemServiceExtension extends Extension
      */
     public function register(): void
     {
-        $this->app->register(CompilerInterface::class, fn () =>
+        $this->app->register(
+            CompilerInterface::class,
+            fn () =>
             new Compiler(Compiler::SPEC_RAILT)
         );
     }

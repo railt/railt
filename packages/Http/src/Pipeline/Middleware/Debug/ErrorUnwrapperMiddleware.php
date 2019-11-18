@@ -6,6 +6,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Middleware\Debug;
@@ -49,12 +50,14 @@ class ErrorUnwrapperMiddleware extends DebuggingMiddleware
     {
         $lines = \explode("\n", $error->getTraceAsString());
 
-        $lines = \array_map(fn (string $line) =>
+        $lines = \array_map(
+            fn (string $line) =>
             \preg_replace('/^#\d+\h+/ium', '', $line),
             $lines
         );
 
-        $lines = \array_map(fn (string $line) =>
+        $lines = \array_map(
+            fn (string $line) =>
             \preg_replace('/(.+?)\((\d+)\):\h.+/ium', '$1:$2', $line),
             $lines
         );

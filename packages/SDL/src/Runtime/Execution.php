@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Runtime;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+
 use function GraphQL\TypeSystem\iterable_to_array;
 
 /**
