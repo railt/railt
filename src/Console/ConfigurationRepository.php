@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Console;
 
-use Railt\Contracts\Container\ContainerInterface;
-use Railt\Contracts\Observer\ObservableInterface;
-use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Observer\ObservableInterface;
+use Railt\Container\ContainerInterface;
+use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 
 /**
  * Class ConfigurationRepository

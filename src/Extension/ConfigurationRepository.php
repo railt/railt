@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Railt\Contracts\Container\ContainerInterface;
-use Railt\Contracts\Observer\ObservableInterface;
+use Railt\Observer\ObservableInterface;
+use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Extension\Exception\ExtensionException;
-use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 
 /**
  * Class ConfigurationRepository

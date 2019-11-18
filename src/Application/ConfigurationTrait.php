@@ -12,7 +12,7 @@ namespace Railt\Foundation\Application;
 
 use Railt\Dumper\Facade;
 use Railt\Config\MutableRepository as ConfigRepository;
-use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 
 /**
  * Trait ConfigurationTrait

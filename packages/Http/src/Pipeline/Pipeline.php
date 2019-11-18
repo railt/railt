@@ -11,8 +11,8 @@ declare(strict_types=1);
 namespace Railt\Http\Pipeline;
 
 use Railt\Http\Pipeline\Handler\Next;
+use Railt\Container\ContainerInterface;
 use Railt\Contracts\Pipeline\PipelineInterface;
-use Railt\Contracts\Container\ContainerInterface;
 use Railt\Contracts\Pipeline\MiddlewareInterface;
 use Railt\Contracts\Pipeline\Http\HandlerInterface;
 use Railt\Contracts\Pipeline\Http\HttpMiddlewareInterface;

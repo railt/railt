@@ -8,16 +8,15 @@
  */
 declare(strict_types=1);
 
-namespace Railt\SDL\Extension;
+namespace Railt\Observer;
 
 /**
- * Interface ExtendableInterface
+ * Interface NotifiableInterface
  */
-interface ExtendableInterface
+interface NotifiableInterface
 {
     /**
-     * @param ExtensionInterface $extension
-     * @return void
+     * Notifies all observers of an update from this subject.
      */
-    public function extend(ExtensionInterface $extension): void;
+    public function notify(): void;
 }

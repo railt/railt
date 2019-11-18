@@ -10,13 +10,12 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Ast\Definition;
 
-use Railt\SDL\Ast\Name\IdentifierNode;
 use Railt\SDL\Ast\Type\TypeNode;
 use Railt\SDL\Ast\DefinitionNode;
+use Railt\SDL\Ast\Name\IdentifierNode;
 use Railt\SDL\Ast\Value\StringValueNode;
 use Railt\SDL\Ast\Generic\DirectiveCollection;
 use Railt\SDL\Ast\Generic\ArgumentDefinitionCollection;
-use Railt\SDL\Ast\Generic\InputFieldDefinitionCollection;
 
 /**
  * <code>

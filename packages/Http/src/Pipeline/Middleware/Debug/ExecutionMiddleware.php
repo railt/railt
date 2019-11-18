@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Railt\Http\Pipeline\Middleware\Debug;
 
+use Railt\Config\RepositoryInterface;
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
-use Railt\Contracts\Config\RepositoryInterface;
 use Railt\Contracts\Pipeline\Http\HandlerInterface;
 
 /**

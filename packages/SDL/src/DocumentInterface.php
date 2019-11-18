@@ -7,10 +7,11 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Contracts\SDL;
+namespace Railt\SDL;
 
-use GraphQL\Contracts\TypeSystem\DirectiveInterface;
+use Railt\SDL\Runtime\ExecutionInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
+use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 
 /**
@@ -56,4 +57,9 @@ interface DocumentInterface
      * @return SchemaInterface|null
      */
     public function getSchema(): ?SchemaInterface;
+
+    /**
+     * @return iterable|ExecutionInterface[]
+     */
+    public function getExecutions(): iterable;
 }

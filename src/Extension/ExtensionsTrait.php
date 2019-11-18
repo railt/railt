@@ -11,10 +11,10 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Railt\Dumper\Facade;
+use Railt\Config\RepositoryInterface;
+use Railt\Container\ContainerInterface;
 use Railt\SDL\TypeSystemServiceExtension;
 use Railt\Discovery\DiscoveryServiceExtension;
-use Railt\Contracts\Config\RepositoryInterface;
-use Railt\Contracts\Container\ContainerInterface;
 use Railt\HttpFactory\HttpFactoryServiceExtension;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Extension\Exception\ExtensionException;

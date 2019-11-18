@@ -8,7 +8,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Contracts\Config;
+namespace Railt\Config;
 
 /**
  * Interface RepositoryInterface

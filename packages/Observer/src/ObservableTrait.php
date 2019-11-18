@@ -10,8 +10,6 @@ declare(strict_types=1);
 
 namespace Railt\Observer;
 
-use Railt\Contracts\Observer\ObservableInterface;
-
 /**
  * @mixin ObservableInterface
  */

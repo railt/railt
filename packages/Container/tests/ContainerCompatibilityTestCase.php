@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace Railt\Container\Tests\Unit;
 
+use Railt\Container\Container;
 use PHPUnit\Framework\Exception;
+use Railt\Container\Registrable;
+use Railt\Container\Autowireable;
+use Railt\Container\ContainerInterface;
 use PHPUnit\Framework\ExpectationFailedException;
 use Psr\Container\ContainerInterface as PSRContainer;
-use Railt\Container\Container;
-use Railt\Contracts\Container\Autowireable;
-use Railt\Contracts\Container\ContainerInterface;
-use Railt\Contracts\Container\Registrable;
 
 /**
  * Class ContainerCompatibilityTestCase

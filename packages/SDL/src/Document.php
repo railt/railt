@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\Contracts\SDL\DocumentInterface;
+use Railt\SDL\Runtime\ExecutionInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
@@ -28,6 +28,11 @@ final class Document implements DocumentInterface
      * @var array|DirectiveInterface[]
      */
     private array $directives = [];
+
+    /**
+     * @var array|ExecutionInterface[]
+     */
+    private array $executions = [];
 
     /**
      * @var SchemaInterface|null
@@ -82,6 +87,23 @@ final class Document implements DocumentInterface
     public function addDirective(DirectiveInterface $directive): void
     {
         $this->directives[$directive->getName()] = $directive;
+    }
+
+    /**
+     * @return iterable|ExecutionInterface[]
+     */
+    public function getExecutions(): iterable
+    {
+        return $this->executions;
+    }
+
+    /**
+     * @param ExecutionInterface $execution
+     * @return void
+     */
+    public function addExecution(ExecutionInterface $execution): void
+    {
+        $this->executions[] = $execution;
     }
 
     /**

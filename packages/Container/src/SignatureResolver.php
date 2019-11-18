@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Railt\Container;
 
-use Railt\Contracts\Container\ContainerInterface;
 use Railt\Container\SignatureResolver\ClosureFetcher;
 use Railt\Container\SignatureResolver\FetcherInterface;
 use Railt\Container\Exception\ContainerInvocationException;

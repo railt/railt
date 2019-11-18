@@ -12,7 +12,6 @@ namespace Railt\SDL;
 
 use Railt\Foundation\Extension\Status;
 use Railt\Foundation\Extension\Extension;
-use Railt\Contracts\SDL\CompilerInterface;
 
 /**
  * Class TypeSystemServiceExtension

@@ -10,9 +10,7 @@ declare(strict_types=1);
 
 namespace Railt\Config;
 
-use Railt\Contracts\Config\MutableRepositoryInterface;
-use Railt\Contracts\Config\RepositoryInterface;
-use Railt\Contracts\Observer\NotifiableInterface;
+use Railt\Observer\NotifiableInterface;
 use Railt\Observer\NotifiableObserverTrait;
 
 /**

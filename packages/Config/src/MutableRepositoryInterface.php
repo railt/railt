@@ -8,9 +8,9 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Contracts\Config;
+namespace Railt\Config;
 
-use Railt\Contracts\Observer\ObservableInterface;
+use Railt\Observer\ObservableInterface;
 
 /**
  * Interface MutableRepositoryInterface

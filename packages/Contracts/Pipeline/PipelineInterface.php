@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Pipeline;
 
-use Railt\Contracts\Container\ContainerInterface;
+use Railt\Container\ContainerInterface;
 
 /**
  * Interface PipelineInterface

@@ -12,9 +12,9 @@ namespace Railt\Container\Tests\Unit;
 
 use Railt\Container\Container;
 use PHPUnit\Framework\Exception;
+use Railt\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Container\ContainerExceptionInterface;
-use Railt\Contracts\Container\ContainerInterface;
 use PHPUnit\Framework\ExpectationFailedException;
 use Railt\Container\Exception\ParameterResolutionException;
 use Railt\Container\Exception\ContainerInvocationException;

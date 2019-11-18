@@ -8,7 +8,7 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Contracts\Container;
+namespace Railt\Container;
 
 /**
  * Interface Registrable

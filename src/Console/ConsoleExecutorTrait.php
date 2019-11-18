@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Console;
 
+use Railt\Container\ContainerInterface;
 use Symfony\Component\Console\Command\Command;
-use Railt\Contracts\Container\ContainerInterface;
 use Symfony\Component\Console\Application as CliApplication;
+use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 use Railt\Foundation\Console\ConfigurationRepository as ConsoleRepository;
-use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
 use Railt\Foundation\Console\RepositoryInterface as ConsoleRepositoryInterface;
 
 /**

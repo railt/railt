@@ -14,8 +14,8 @@ use Railt\Config;
 use Railt\Foundation\Console;
 use Railt\Foundation\Extension;
 use Railt\Foundation\Application;
+use Railt\Container\ContainerInterface;
 use Railt\Foundation\ApplicationInterface;
-use Railt\Contracts\Container\ContainerInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**

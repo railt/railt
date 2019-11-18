@@ -16,8 +16,6 @@ use Railt\SDL\Builder\Factory;
 use Railt\SDL\Parser\Generator;
 use Railt\SDL\Executor\Registry;
 use Phplrt\Contracts\Ast\NodeInterface;
-use Railt\Contracts\SDL\CompilerInterface;
-use Railt\Contracts\SDL\DocumentInterface;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Source\Exception\NotFoundException;
@@ -27,6 +25,7 @@ use Railt\SDL\Executor\Registrar\TypeDefinition;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use Phplrt\Source\Exception\NotReadableException;
 use Railt\SDL\Executor\Registrar\SchemaDefinition;
+use Railt\SDL\Executor\Execution\DirectiveExecutor;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use Railt\SDL\Executor\Registrar\DirectiveDefinition;
 use Railt\SDL\Executor\Linker\EnumTypeExtensionLinker;
@@ -191,14 +190,15 @@ final class Compiler implements CompilerInterface
         ;
 
         /**
-         * Third tree walk:
+         * Building.
          *  - Convert from AST to a set of finite DTO types.
          */
         $document = $factory->loadFrom($registry);
 
         /**
-         * Last tree walk:
-         *  - We get each type extension and implement it in the finished assembly.
+         * Third tree walk:
+         *  - Type Extension executions: We get each type extension and
+         *      implement it in the finished assembly.
          */
         $ast = (new Traverser())
             ->with(new EnumTypeExtensionExecutor($factory, $document, $registry))
@@ -208,6 +208,16 @@ final class Compiler implements CompilerInterface
             ->with(new ScalarTypeExtensionExecutor($factory, $document, $registry))
             ->with(new SchemaExtensionExecutor($factory, $document, $registry))
             ->with(new UnionTypeExtensionExecutor($factory, $document, $registry))
+            ->traverse($ast)
+        ;
+
+        /**
+         * Last tree walk:
+         *  - Directive executions: We get each directive execution and collect
+         *      in the executions list.
+         */
+        $ast = (new Traverser())
+            ->with(new DirectiveExecutor($document))
             ->traverse($ast)
         ;
 

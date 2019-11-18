@@ -11,11 +11,11 @@ declare(strict_types=1);
 namespace Railt\Foundation\Http;
 
 use Railt\Foundation\HttpKernel;
+use Railt\SDL\DocumentInterface;
+use Railt\Container\ContainerInterface;
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
 use Railt\Contracts\GraphQL\FactoryInterface;
-use Railt\Contracts\Container\ContainerInterface;
-use Railt\Contracts\SDL\DocumentInterface;
 use Railt\Contracts\Pipeline\Http\HandlerInterface;
 use Railt\Http\Pipeline\Handler\RequestDecoratorHandler;
 

@@ -10,13 +10,13 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Railt\Container\ContainerInterface;
 use Railt\Http\Pipeline\RequestPipeline;
 use Railt\Contracts\Http\InputInterface;
 use Railt\Contracts\Http\OutputInterface;
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
 use Railt\Contracts\Pipeline\PipelineInterface;
-use Railt\Contracts\Container\ContainerInterface;
 use Railt\Contracts\Pipeline\Http\HandlerInterface;
 use Railt\Contracts\Pipeline\Http\HttpMiddlewareInterface;
 use Railt\Http\Pipeline\Middleware\Debug\ExecutionMiddleware;

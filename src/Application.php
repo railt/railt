@@ -12,9 +12,9 @@ namespace Railt\Foundation;
 
 use PackageVersions\Versions;
 use Railt\Container\Container;
+use Railt\SDL\CompilerInterface;
+use Railt\SDL\DocumentInterface;
 use Psr\Container\ContainerInterface;
-use Railt\Contracts\SDL\DocumentInterface;
-use Railt\Contracts\SDL\CompilerInterface;
 use Railt\Foundation\Http\GraphQLConnection;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Railt\Foundation\Http\ConnectionInterface;
@@ -25,7 +25,7 @@ use Railt\Foundation\Application\ConfigurationTrait;
 use Railt\Foundation\Application\DefaultBindingsTrait;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Foundation\Extension\Exception\ExtensionException;
-use Railt\Contracts\Config\RepositoryInterface as ConfigRepositoryInterface;
+use Railt\Config\RepositoryInterface as ConfigRepositoryInterface;
 
 /**
  * Class Application

@@ -8,15 +8,13 @@
  */
 declare(strict_types=1);
 
-namespace Railt\Contracts\Observer;
+namespace Railt\Container;
+
+use Psr\Container\ContainerInterface as PsrContainer;
 
 /**
- * Interface NotifiableInterface
+ * Interface ContainerInterface
  */
-interface NotifiableInterface
+interface ContainerInterface extends PsrContainer, Registrable, Autowireable
 {
-    /**
-     * Notifies all observers of an update from this subject.
-     */
-    public function notify(): void;
 }

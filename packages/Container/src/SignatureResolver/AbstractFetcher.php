@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Railt\Container\SignatureResolver;
 
 use Railt\Container\SignatureResolver;
-use Railt\Contracts\Container\ContainerInterface;
+use Railt\Container\ContainerInterface;
 use Railt\Container\Exception\ContainerInvocationException;
 
 /**
