@@ -27,7 +27,7 @@
         },
         "arguments": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "ArgumentDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "if"
@@ -80,7 +80,7 @@
         },
         "arguments": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "ArgumentDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "if"
@@ -133,7 +133,7 @@
         },
         "arguments": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "ArgumentDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "if"

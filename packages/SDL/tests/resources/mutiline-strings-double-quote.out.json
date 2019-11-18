@@ -20,7 +20,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "value"

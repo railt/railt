@@ -152,7 +152,7 @@ final class Compiler implements CompilerInterface
      * @param Document|null $dictionary
      * @return DocumentInterface
      */
-    public function build(iterable $ast, Document $dictionary = null): DocumentInterface
+    private function build(iterable $ast, Document $dictionary = null): DocumentInterface
     {
         $registry = new Registry();
         $factory = new Factory($dictionary ??= $this->document);
@@ -327,9 +327,7 @@ final class Compiler implements CompilerInterface
      */
     public function compile($source): DocumentInterface
     {
-        $pointcut = clone $this->document;
-
-        $result = $this->build($this->parse($source), $this->document);
+        $result = $this->build($this->parse($source), $pointcut = clone $this->document);
 
         $this->document = $pointcut;
 

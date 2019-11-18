@@ -3,7 +3,7 @@
         "kind": "InputObjectTypeDefinition",
         "fields": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "key"
@@ -27,7 +27,7 @@
                 "defaultValue": null
             },
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "answer"
@@ -51,7 +51,7 @@
                 }
             },
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "field"
@@ -72,7 +72,7 @@
                 }
             },
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "field2"
@@ -108,7 +108,7 @@
         "kind": "InputObjectTypeDefinition",
         "fields": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "annotatedField"

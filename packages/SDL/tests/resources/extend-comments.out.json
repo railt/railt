@@ -20,7 +20,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -46,7 +46,6 @@
             "kind": "Identifier",
             "value": "Foo"
         },
-        "description": null,
         "directives": null
     },
     {
@@ -57,7 +56,6 @@
             "kind": "Identifier",
             "value": "Foo2"
         },
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",

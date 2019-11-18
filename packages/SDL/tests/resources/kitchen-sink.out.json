@@ -82,7 +82,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -124,7 +124,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -141,7 +141,7 @@
                         "defaultValue": null
                     },
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "other"
@@ -176,7 +176,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -215,7 +215,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -267,7 +267,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -318,7 +318,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -378,7 +378,7 @@
                 ],
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "arg"
@@ -471,7 +471,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -497,7 +497,6 @@
             "kind": "Identifier",
             "value": "Foo"
         },
-        "description": null,
         "directives": null
     },
     {
@@ -508,7 +507,6 @@
             "kind": "Identifier",
             "value": "Foo"
         },
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",
@@ -558,7 +556,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -618,7 +616,7 @@
                 ],
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "arg"
@@ -675,6 +673,7 @@
     },
     {
         "kind": "InterfaceTypeExtension",
+        "interfaces": null,
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -693,7 +692,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "argument"
@@ -719,17 +718,16 @@
             "kind": "Identifier",
             "value": "Bar"
         },
-        "description": null,
         "directives": null
     },
     {
         "kind": "InterfaceTypeExtension",
+        "interfaces": null,
         "fields": null,
         "name": {
             "kind": "Identifier",
             "value": "Bar"
         },
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",
@@ -873,7 +871,6 @@
             "kind": "Identifier",
             "value": "Feed"
         },
-        "description": null,
         "directives": null
     },
     {
@@ -883,7 +880,6 @@
             "kind": "Identifier",
             "value": "Feed"
         },
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",
@@ -928,7 +924,6 @@
             "kind": "Identifier",
             "value": "CustomScalar"
         },
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",
@@ -1064,7 +1059,6 @@
             "kind": "Identifier",
             "value": "Site"
         },
-        "description": null,
         "directives": null
     },
     {
@@ -1074,7 +1068,6 @@
             "kind": "Identifier",
             "value": "Site"
         },
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",
@@ -1090,7 +1083,7 @@
         "kind": "InputObjectTypeDefinition",
         "fields": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "key"
@@ -1110,7 +1103,7 @@
                 "defaultValue": null
             },
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "answer"
@@ -1141,7 +1134,7 @@
         "kind": "InputObjectTypeDefinition",
         "fields": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "annotatedField"
@@ -1197,7 +1190,7 @@
         "kind": "InputObjectTypeExtension",
         "fields": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "InputFieldDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "other"
@@ -1230,7 +1223,6 @@
             "kind": "Identifier",
             "value": "InputType"
         },
-        "description": null,
         "directives": null
     },
     {
@@ -1240,7 +1232,6 @@
             "kind": "Identifier",
             "value": "InputType"
         },
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",
@@ -1280,7 +1271,7 @@
         },
         "arguments": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "ArgumentDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "if"
@@ -1334,7 +1325,7 @@
         "description": null,
         "arguments": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "ArgumentDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "if"
@@ -1379,7 +1370,7 @@
         "description": null,
         "arguments": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "ArgumentDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "if"
@@ -1420,7 +1411,7 @@
         "description": null,
         "arguments": [
             {
-                "kind": "InputValueDefinition",
+                "kind": "ArgumentDefinition",
                 "name": {
                     "kind": "Identifier",
                     "value": "name"
@@ -1443,7 +1434,6 @@
     },
     {
         "kind": "SchemaExtension",
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",
@@ -1458,7 +1448,6 @@
     },
     {
         "kind": "SchemaExtension",
-        "description": null,
         "directives": [
             {
                 "kind": "Directive",

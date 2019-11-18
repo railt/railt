@@ -28,7 +28,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "arg"
@@ -75,7 +75,7 @@
                 "directives": null,
                 "arguments": [
                     {
-                        "kind": "InputValueDefinition",
+                        "kind": "ArgumentDefinition",
                         "name": {
                             "kind": "Identifier",
                             "value": "arg"
