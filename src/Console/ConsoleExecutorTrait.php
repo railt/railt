@@ -44,8 +44,7 @@ trait ConsoleExecutorTrait
      */
     protected array $developmentCommands = [
         // Application commands
-        \Railt\Foundation\Console\Command\RepoMergeCommand::class,
-        \Railt\Foundation\Console\Command\RepoSyncCommand::class,
+        \Railt\Foundation\Console\Command\SyncCommand::class,
 
         // Package commands
         \Railt\SDL\Console\CompileCommand::class,

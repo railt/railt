@@ -1,8 +1,4 @@
 {
-    "support": {
-        "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/railt"
-    },
     "name": "railt/railt",
     "type": "library",
     "description": "The Railt Framework",
@@ -15,6 +11,10 @@
             "email": "nesk@xakep.ru"
         }
     ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/railt"
+    },
     "bin": [
         "bin/railt"
     ],
@@ -27,6 +27,7 @@
         "graphql/type-system-contracts": "^14.0",
         "justinrainbow/json-schema": "~5.2",
         "ocramius/package-versions": "~1.5",
+        "symfony/console": "~3.4|~4.0|~5.0",
         "phplrt/lexer": "^2.2",
         "phplrt/parser": "^2.2",
         "phplrt/parser-contracts": "~2.2",
@@ -61,6 +62,7 @@
             "packages/Dumper/src/helpers.php"
         ],
         "psr-4": {
+            "Railt\\Common\\": "packages/Common/src",
             "Railt\\Config\\": "packages/Config/src",
             "Railt\\Container\\": "packages/Container/src",
             "Railt\\Contracts\\": "packages/Contracts/",
@@ -79,14 +81,15 @@
             "packages/Container/tests/Mock/test_function.php"
         ],
         "psr-4": {
-            "Railt\\Config\\Tests\\Unit\\": "packages/Config/tests",
-            "Railt\\Container\\Tests\\Unit\\": "packages/Container/tests",
-            "Railt\\Discovery\\Tests\\Unit\\": "packages/Discovery/tests",
-            "Railt\\Dumper\\Tests\\Unit\\": "packages/Dumper/tests",
-            "Railt\\HttpFactory\\Tests\\Unit\\": "packages/HttpFactory/tests",
-            "Railt\\Http\\Tests\\Unit\\": "packages/Http/tests",
-            "Railt\\Observer\\Tests\\Unit\\": "packages/Observer/tests",
-            "Railt\\SDL\\Tests\\Unit\\": "packages/SDL/tests",
+            "Railt\\Common\\Tests\\": "packages/Common/tests",
+            "Railt\\Config\\Tests\\": "packages/Config/tests",
+            "Railt\\Container\\Tests\\": "packages/Container/tests",
+            "Railt\\Discovery\\Tests\\": "packages/Discovery/tests",
+            "Railt\\Dumper\\Tests\\": "packages/Dumper/tests",
+            "Railt\\HttpFactory\\Tests\\": "packages/HttpFactory/tests",
+            "Railt\\Http\\Tests\\": "packages/Http/tests",
+            "Railt\\Observer\\Tests\\": "packages/Observer/tests",
+            "Railt\\SDL\\Tests\\": "packages/SDL/tests",
             "Railt\\Tests\\Feature\\": "tests/feature",
             "Railt\\Tests\\Unit\\": "tests/unit"
         }
@@ -100,7 +103,8 @@
         "railt/http": "self.version",
         "railt/http-factory": "self.version",
         "railt/observer": "self.version",
-        "railt/sdl": "self.version"
+        "railt/sdl": "self.version",
+        "railt/common": "self.version"
     },
     "provide": {
         "psr/container": "1.0",
@@ -108,7 +112,13 @@
     },
     "scripts": {
         "phpunit": "@php vendor/phpunit/phpunit/phpunit",
-        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover"
+        "post-autoload-dump": "Railt\\Discovery\\Manifest::discover",
+        "merge": "@php vendor/bin/monorepo-builder merge",
+        "split": "@php vendor/bin/monorepo-builder split",
+        "security": "@php vendor/bin/security-checker security:check ./composer.lock",
+        "phpcs": "@php vendor/bin/phpcs --standard=PSR12 --colors --encoding=utf-8 --extensions=php src packages tests -p",
+        "phpcbf": "@php vendor/bin/phpcbf -s --colors --standard=PSR12 --encoding=utf-8 --extensions=php src packages tests",
+        "psalm": "@php vendor/bin/psalm"
     },
     "config": {
         "sort-packages": true

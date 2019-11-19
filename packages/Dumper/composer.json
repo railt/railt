@@ -35,7 +35,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Dumper\\Tests\\Unit\\": "tests"
+            "Railt\\Dumper\\Tests\\": "tests"
         }
     },
     "scripts": {

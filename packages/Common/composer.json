@@ -1,13 +1,14 @@
 {
-    "name": "railt/config",
+    "name": "railt/common",
     "license": "MIT",
     "type": "library",
     "homepage": "http://railt.org",
-    "description": "The Railt Framework configuration package",
+    "description": "Subtree split of the Railt Common component",
     "keywords": [
-        "config",
-        "repository",
-        "loaders"
+        "support",
+        "helpers",
+        "common",
+        "php"
     ],
     "authors": [
         {
@@ -17,7 +18,7 @@
     ],
     "support": {
         "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/config"
+        "source": "https://github.com/railt/common"
     },
     "require": {
         "php": ">=7.4",
@@ -25,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Railt\\Config\\": "src"
+            "Railt\\Common\\": "src"
         }
     },
     "require-dev": {
@@ -33,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Config\\Tests\\": "tests"
+            "Railt\\Common\\Tests\\": "tests"
         }
     },
     "scripts": {

@@ -51,7 +51,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Http\\Tests\\Unit\\": "tests"
+            "Railt\\Http\\Tests\\": "tests"
         }
     },
     "suggest": {

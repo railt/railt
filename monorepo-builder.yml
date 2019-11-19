@@ -7,7 +7,6 @@ parameters:
         - 'autoload'
         - 'autoload-dev'
         - 'repositories'
-        - 'scripts'
     package_directories:
         - 'packages'
     data_to_append:
@@ -21,6 +20,7 @@ parameters:
         require:
             ocramius/package-versions: '~1.5'
             ramsey/collection: '~1.0'
+            symfony/console: '~3.4|~4.0|~5.0'
         require-dev:
             # Testing
             behat/behat: '^3.5'

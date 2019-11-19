@@ -33,7 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Observer\\Tests\\Unit\\": "tests"
+            "Railt\\Observer\\Tests\\": "tests"
         }
     },
     "scripts": {

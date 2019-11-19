@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @internal For development only
  */
-class RepoSyncCommand extends Command
+class SyncCommand extends Command
 {
     /**
      * @var string
@@ -72,7 +72,7 @@ class RepoSyncCommand extends Command
      */
     public function getName(): string
     {
-        return 'repo:sync';
+        return 'sync';
     }
 
     /**

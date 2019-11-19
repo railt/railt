@@ -33,6 +33,7 @@
         "phplrt/visitor": "^2.2",
         "psr/simple-cache": "^1.0",
         "railt/contracts": "^2.0",
+        "railt/common": "^2.0",
         "graphql/type-system": "^14.0|dev-master@dev"
     },
     "autoload": {
@@ -47,7 +48,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\SDL\\Tests\\Unit\\": "tests"
+            "Railt\\SDL\\Tests\\": "tests"
         }
     },
     "scripts": {

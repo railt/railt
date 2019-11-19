@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\Container\Tests\Unit\Mock;
+namespace Railt\Container\Tests\Mock;
 
 class MockClass
 {

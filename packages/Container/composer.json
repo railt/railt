@@ -37,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Container\\Tests\\Unit\\": "tests"
+            "Railt\\Container\\Tests\\": "tests"
         },
         "files": [
             "tests/Mock/global_test_function.php",

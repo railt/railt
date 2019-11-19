@@ -11,9 +11,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Runtime;
 
+use Railt\Common\Iter;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-
-use function GraphQL\TypeSystem\iterable_to_array;
 
 /**
  * Class Execution
@@ -39,7 +38,7 @@ abstract class Execution implements ExecutionInterface
     public function __construct(DefinitionInterface $context, iterable $arguments = [])
     {
         $this->context = $context;
-        $this->arguments = iterable_to_array($arguments, true);
+        $this->arguments = Iter::toArray($arguments, true);
     }
 
     /**

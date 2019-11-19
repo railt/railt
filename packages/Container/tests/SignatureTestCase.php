@@ -17,8 +17,8 @@ use Railt\Container\Container;
 use Railt\Container\Exception\ContainerInvocationException;
 use Railt\Container\Exception\ContainerResolutionException;
 use Railt\Container\SignatureResolver;
-use Railt\Container\Tests\Unit\Mock\MockClass;
-use Railt\Container\Tests\Unit\Mock\NotCallableClass;
+use Railt\Container\Tests\Mock\MockClass;
+use Railt\Container\Tests\Mock\NotCallableClass;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
@@ -35,7 +35,7 @@ class SignatureTestCase extends TestCase
             'Array Instance'      => [[new MockClass(), 'instanceMethod'], MockClass::class],
             'Array Static'        => [[MockClass::class, 'staticMethod'], MockClass::class],
             'Function'            => ['__test', null],
-            'Namespaced Function' => ['Railt\\Container\\Tests\\Unit\\__test', null],
+            'Namespaced Function' => ['Railt\\Container\\Tests\\__test', null],
             'String Static'       => [MockClass::class . '::staticMethod', MockClass::class],
             'String Instance'     => [MockClass::class . '@instanceMethod', MockClass::class],
             'Closure'             => [
@@ -65,8 +65,8 @@ class SignatureTestCase extends TestCase
             ],
             // Undefined function with namespace should be parsed as class
             'Namespaced Bad Function'    => [
-                'Railt\\Container\\Tests\\Unit\\__bad_function',
-                'Railt\\Container\\Tests\\Unit\\__bad_function',
+                'Railt\\Container\\Tests\\__bad_function',
+                'Railt\\Container\\Tests\\__bad_function',
             ],
             'String Static Bad Method'   => [MockClass::class . '::badMethod', MockClass::class],
             'String Static Bad Class'    => ['BadMockClass::badMethod', 'BadMockClass'],

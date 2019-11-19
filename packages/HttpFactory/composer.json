@@ -37,7 +37,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\HttpFactory\\Tests\\Unit\\": "tests"
+            "Railt\\HttpFactory\\Tests\\": "tests"
         }
     },
     "scripts": {

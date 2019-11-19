@@ -78,6 +78,10 @@ class Generator
      */
     private function bootTwig(): Environment
     {
+        if (! \class_exists(Environment::class)) {
+            throw new \LogicException('Can not boot compiler generator, please install twig/twig ~2.0');
+        }
+
         $environment = new Environment(new FilesystemLoader(self::TEMPLATES_DIRECTORY));
 
         $environment->addExtension(new VersionExtension());
