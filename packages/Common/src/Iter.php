@@ -72,7 +72,7 @@ final class Iter
     public static function map(iterable $items, callable $each): iterable
     {
         foreach ($items as $key => $value) {
-            yield $each($value, $key);
+            yield $key => $each($value, $key);
         }
     }
 

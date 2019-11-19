@@ -9,16 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Railt\Http\Common;
+namespace Railt\Common;
 
-use Railt\Contracts\Common\ArrayableInterface;
 use Railt\Contracts\Common\JsonableInterface;
 
 /**
- * Trait JsonableTrait
- *
  * @mixin JsonableInterface
- * @mixin ArrayableInterface
  */
 trait JsonableTrait
 {
@@ -27,10 +23,15 @@ trait JsonableTrait
     /**
      * @param int $options
      * @return string
+     * @throws \RuntimeException
      */
     public function toJson(int $options = 0): string
     {
-        return (string)\json_encode($this, $options | \JSON_THROW_ON_ERROR);
+        if (! \function_exists('json_encode')) {
+            throw new \RuntimeException('Can not execute method, PHP JSON extension (ext-json) required');
+        }
+
+        return \json_encode($this, $options | \JSON_THROW_ON_ERROR);
     }
 
     /**

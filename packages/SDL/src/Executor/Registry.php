@@ -32,11 +32,6 @@ class Registry
     public array $directives = [];
 
     /**
-     * @var DirectiveNode[]
-     */
-    public array $executions = [];
-
-    /**
      * @var SchemaDefinitionNode|null
      */
     public ?SchemaDefinitionNode $schema = null;

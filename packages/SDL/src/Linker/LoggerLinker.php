@@ -11,10 +11,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Linker;
 
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
 use Railt\Dumper\Facade;
+use Railt\SDL\Ast\Location;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerAwareInterface;
+use Phplrt\Contracts\Source\FileInterface;
+use Phplrt\Source\Exception\NotAccessibleException;
 
 /**
  * Class LoggerLinker
@@ -26,7 +29,7 @@ class LoggerLinker implements LinkerInterface, LoggerAwareInterface
     /**
      * @var string
      */
-    private const LOG_MESSAGE = 'Trying to load <%s#%d> named %s';
+    private const LOG_MESSAGE = 'Trying to load <%s> named %s from %s:%d';
 
     /**
      * LoggerLinker constructor.
@@ -39,16 +42,20 @@ class LoggerLinker implements LinkerInterface, LoggerAwareInterface
     }
 
     /**
-     * @param int $type
      * @param string|null $name
+     * @param int $type
+     * @param Location $from
      * @return void
+     * @throws NotAccessibleException
+     * @throws \RuntimeException
      */
-    public function __invoke(int $type, ?string $name): void
+    public function __invoke(?string $name, int $type, Location $from): void
     {
         $this->logger->info(\vsprintf(self::LOG_MESSAGE, [
             Type::toString($type),
-            Facade::value($type),
             Facade::value($name),
+            $from->source instanceof FileInterface ? $from->source->getPathname() : 'source',
+            $from->getStartLine(),
         ]));
     }
 }

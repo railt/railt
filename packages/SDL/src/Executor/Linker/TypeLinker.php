@@ -16,6 +16,7 @@ use Phplrt\Visitor\Visitor;
 use Railt\SDL\Executor\Registry;
 use Railt\SDL\Ast\DefinitionNode;
 use Railt\SDL\Ast\Type\NamedTypeNode;
+use Phplrt\Contracts\Source\ReadableInterface;
 
 /**
  * Class TypeLinker
@@ -61,7 +62,7 @@ abstract class TypeLinker extends Visitor
     {
         if (! $this->exists($node)) {
             foreach ($this->loaders as $loader) {
-                $loader($type, $name);
+                $loader($name, $type, $node->loc);
 
                 if ($this->exists($node)) {
                     return true;

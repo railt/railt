@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Request;
 
+use Railt\Common\Iter;
 use Railt\Contracts\Http\Request\VariablesInterface;
 
 /**
@@ -72,10 +73,6 @@ trait VariablesTrait
      */
     private function setVariables(iterable $variables): void
     {
-        if ($variables instanceof \Traversable) {
-            $variables = \iterator_to_array($variables);
-        }
-
-        $this->variables = $variables;
+        $this->variables = Iter::toArray($variables, true);
     }
 }

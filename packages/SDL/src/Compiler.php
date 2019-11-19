@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Phplrt\Source\File;
+use Railt\SDL\Ast\Node;
 use Phplrt\Visitor\Traverser;
 use Railt\SDL\Builder\Factory;
 use Railt\SDL\Parser\Generator;
@@ -135,27 +136,16 @@ final class Compiler implements CompilerInterface
     }
 
     /**
-     * {@inheritDoc}
-     * @throws \Throwable
-     */
-    public function preload($source): self
-    {
-        $this->build($this->parse($source), $this->document);
-
-        return $this;
-    }
-
-    /**
      * Converts RL/SDL AST to a finite set of GraphQL types.
      *
-     * @param iterable $ast
-     * @param Document|null $dictionary
+     * @param iterable|Node[] $ast
+     * @param Document $dictionary
      * @return DocumentInterface
      */
-    private function build(iterable $ast, Document $dictionary = null): DocumentInterface
+    private function build(iterable $ast, Document $dictionary): DocumentInterface
     {
         $registry = new Registry();
-        $factory = new Factory($dictionary ??= $this->document);
+        $factory = new Factory($dictionary);
 
         /**
          * ---------------------------------------------------------------------
@@ -288,7 +278,7 @@ final class Compiler implements CompilerInterface
     /**
      * {@inheritDoc}
      */
-    public function withType(NamedTypeInterface $type, bool $overwrite = false): self
+    public function addType(NamedTypeInterface $type, bool $overwrite = false): self
     {
         if ($overwrite || ! $this->document->hasType($type->getName())) {
             $this->document->addType($type);
@@ -300,7 +290,7 @@ final class Compiler implements CompilerInterface
     /**
      * {@inheritDoc}
      */
-    public function withDirective(DirectiveInterface $directive, bool $overwrite = false): self
+    public function addDirective(DirectiveInterface $directive, bool $overwrite = false): self
     {
         if ($overwrite || ! $this->document->hasDirective($directive->getName())) {
             $this->document->addDirective($directive);
@@ -312,7 +302,7 @@ final class Compiler implements CompilerInterface
     /**
      * {@inheritDoc}
      */
-    public function withSchema(SchemaInterface $schema, bool $overwrite = false): self
+    public function addSchema(SchemaInterface $schema, bool $overwrite = false): self
     {
         if ($overwrite || ! $this->document->getSchema()) {
             $this->document->setSchema($schema);
@@ -325,13 +315,20 @@ final class Compiler implements CompilerInterface
      * {@inheritDoc}
      * @throws \Throwable
      */
+    public function preload($source): self
+    {
+        $this->build($this->parse($source), $this->document);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws \Throwable
+     */
     public function compile($source): DocumentInterface
     {
-        $result = $this->build($this->parse($source), $pointcut = clone $this->document);
-
-        $this->document = $pointcut;
-
-        return $result;
+        return $this->build($this->parse($source), clone $this->document);
     }
 
     /**

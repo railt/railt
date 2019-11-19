@@ -62,7 +62,7 @@ interface CompilerInterface
      * @param bool $overwrite
      * @return CompilerInterface|$this
      */
-    public function withType(NamedTypeInterface $type, bool $overwrite = false): self;
+    public function addType(NamedTypeInterface $type, bool $overwrite = false): self;
 
     /**
      * Adds a compiled GraphQL directive to the dictionary.
@@ -71,7 +71,7 @@ interface CompilerInterface
      * @param bool $overwrite
      * @return CompilerInterface|$this
      */
-    public function withDirective(DirectiveInterface $type, bool $overwrite = false): self;
+    public function addDirective(DirectiveInterface $type, bool $overwrite = false): self;
 
     /**
      * Adds a compiled GraphQL schema to the dictionary.
@@ -80,5 +80,5 @@ interface CompilerInterface
      * @param bool $overwrite
      * @return CompilerInterface|$this
      */
-    public function withSchema(SchemaInterface $type, bool $overwrite = false): self;
+    public function addSchema(SchemaInterface $type, bool $overwrite = false): self;
 }

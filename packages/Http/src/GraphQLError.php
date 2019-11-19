@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Http\Common\JsonableTrait;
+use Railt\Common\JsonableTrait;
+use Railt\Common\RenderableTrait;
 use Railt\Http\Error\LocationsTrait;
-use Railt\Http\Common\RenderableTrait;
 use Railt\Http\Response\ExtensionsTrait;
 use Railt\Contracts\Http\GraphQLErrorInterface;
 use Railt\Contracts\Http\Error\SourceLocationInterface;

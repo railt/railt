@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Error;
 
-use Railt\Http\Common\RenderableTrait;
+use Railt\Common\RenderableTrait;
 use Railt\Contracts\Http\Error\SourceLocationInterface;
 
 /**

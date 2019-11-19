@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Linker;
 
+use Railt\SDL\Ast\Location;
+
 /**
  * Interface LinkerInterface
  */
@@ -64,9 +66,10 @@ interface LinkerInterface
     public const LINK_SCHEMA = 256;
 
     /**
-     * @param int $type
      * @param string|null $name
+     * @param int $type
+     * @param Location $from
      * @return void
      */
-    public function __invoke(int $type, ?string $name): void;
+    public function __invoke(?string $name, int $type, Location $from): void;
 }

@@ -17,24 +17,45 @@ namespace Railt\SDL\Linker;
 final class Type
 {
     /**
+     * @var string[]
+     */
+    private const LINKER_MAPPINGS = [
+        LinkerInterface::LINK_ENUM_TYPE         => 'Enum',
+        LinkerInterface::LINK_INPUT_OBJECT_TYPE => 'InputObject',
+        LinkerInterface::LINK_INTERFACE_TYPE    => 'Interface',
+        LinkerInterface::LINK_OBJECT_TYPE       => 'Object',
+        LinkerInterface::LINK_SCALAR_TYPE       => 'Scalar',
+        LinkerInterface::LINK_UNION_TYPE        => 'Union',
+        LinkerInterface::LINK_DIRECTIVE         => 'Directive',
+        LinkerInterface::LINK_SCHEMA            => 'Schema',
+    ];
+
+    /**
      * @param int $type
      * @return string
      */
     public static function toString(int $type): string
     {
-        switch (true) {
-            case self::wantsType($type):
-                return 'type';
+        $result = static::toArray($type);
 
-            case self::wantsDirective($type):
-                return 'directive';
+        return \count($result) ? \implode('|', $result) : 'unknown';
+    }
 
-            case self::wantsSchema($type):
-                return 'schema';
+    /**
+     * @param int $type
+     * @return array|string[]
+     */
+    public static function toArray(int $type): array
+    {
+        $result = [];
 
-            default:
-                return 'unknown';
+        foreach (self::LINKER_MAPPINGS as $code => $description) {
+            if (($code & $type) === $code) {
+                $result[] = $description;
+            }
         }
+
+        return $result;
     }
 
     /**

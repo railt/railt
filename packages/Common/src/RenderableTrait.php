@@ -9,13 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Railt\Http\Common;
+namespace Railt\Common;
 
 use Railt\Contracts\Common\RenderableInterface;
 
 /**
- * Trait RenderableTrait
- *
  * @mixin RenderableInterface
  */
 trait RenderableTrait
@@ -24,18 +22,21 @@ trait RenderableTrait
 
     /**
      * @return string
+     * @throws \Throwable
      */
     public function __toString(): string
     {
         try {
             return $this->toString();
-        } catch (\JsonException $e) {
-            return '{"errors": "JSON Error: ' . \addcslashes($e->getMessage(), '"') . '"}';
+        } catch (\Throwable $e) {
+            \file_put_contents('php://stderr', (string)$e);
+            throw $e;
         }
     }
 
     /**
      * @return string
+     * @throws \RuntimeException
      */
     public function toString(): string
     {
@@ -47,6 +48,10 @@ trait RenderableTrait
      */
     protected function toJsonDefaultOptions(): int
     {
-        return \JSON_PRETTY_PRINT | \JSON_UNESCAPED_UNICODE;
+        $options = 0;
+        $options |= \defined('\\JSON_PRETTY_PRINT') ? \JSON_PRETTY_PRINT : 128;
+        $options |= \defined('\\JSON_UNESCAPED_UNICODE') ? \JSON_UNESCAPED_UNICODE : 256;
+
+        return $options;
     }
 }

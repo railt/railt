@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Contracts\Http\ResponseInterface;
-use Railt\Http\Common\RenderableTrait;
+use Railt\Common\RenderableTrait;
 use Railt\Http\Response\DataTrait;
 use Railt\Http\Response\ErrorsTrait;
 use Railt\Http\Response\ExceptionsTrait;
 use Railt\Http\Response\ExtensionsTrait;
+use Railt\Contracts\Http\ResponseInterface;
 
 /**
  * Class Response
