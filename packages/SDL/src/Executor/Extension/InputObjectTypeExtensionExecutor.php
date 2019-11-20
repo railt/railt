@@ -40,12 +40,14 @@ class InputObjectTypeExtensionExecutor extends ExtensionExecutor
         }
 
         if ($source->fields) {
+            $fields = $target->getFields();
+
             foreach ($source->fields as $field) {
                 // TODO assert field exists or merge
-                $target = $target->withField($this->build($field));
+                $fields[] = $this->build($field);
             }
-        }
 
-        $this->document->addType($target);
+            $target->setFields($fields);
+        }
     }
 }

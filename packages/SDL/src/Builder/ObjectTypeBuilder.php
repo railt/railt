@@ -39,13 +39,12 @@ class ObjectTypeBuilder extends TypeBuilder
         $this->register($object);
 
         if ($this->ast->fields) {
-            $object = $object->withFields($this->makeAll($this->ast->fields));
+            $object->setFields($this->makeAll($this->ast->fields));
         }
 
         if ($this->ast->interfaces) {
-            $object = $object->withInterfaces($this->buildImplementedInterfaces($this->ast->interfaces));
+            $object->setInterfaces($this->buildImplementedInterfaces($this->ast->interfaces));
         }
-
 
         return $object;
     }

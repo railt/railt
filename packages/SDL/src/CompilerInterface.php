@@ -11,9 +11,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use GraphQL\Contracts\TypeSystem\DirectiveInterface;
-use GraphQL\Contracts\TypeSystem\SchemaInterface;
-use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 
 /**
@@ -22,6 +19,14 @@ use Phplrt\Contracts\Source\ReadableInterface;
 interface CompilerInterface
 {
     /**
+     * Loads GraphQL source into the compiler.
+     *
+     * @param ReadableInterface|string|resource|mixed $source
+     * @return CompilerInterface|$this
+     */
+    public function preload($source): self;
+
+    /**
      * Compiles the sources and all previously loaded types
      * into the final document.
      *
@@ -29,14 +34,6 @@ interface CompilerInterface
      * @return DocumentInterface
      */
     public function compile($source): DocumentInterface;
-
-    /**
-     * Loads GraphQL source into the compiler.
-     *
-     * @param ReadableInterface|string|resource|mixed $source
-     * @return CompilerInterface|$this
-     */
-    public function preload($source): self;
 
     /**
      * Adds an interceptor of events of the types linker and
@@ -56,29 +53,9 @@ interface CompilerInterface
     public function cancelAutoload(callable $loader): self;
 
     /**
-     * Adds a compiled GraphQL type to the dictionary.
+     * Returns list of registered loaders
      *
-     * @param NamedTypeInterface $type
-     * @param bool $overwrite
-     * @return CompilerInterface|$this
+     * @return iterable|callable[]
      */
-    public function addType(NamedTypeInterface $type, bool $overwrite = false): self;
-
-    /**
-     * Adds a compiled GraphQL directive to the dictionary.
-     *
-     * @param DirectiveInterface $type
-     * @param bool $overwrite
-     * @return CompilerInterface|$this
-     */
-    public function addDirective(DirectiveInterface $type, bool $overwrite = false): self;
-
-    /**
-     * Adds a compiled GraphQL schema to the dictionary.
-     *
-     * @param SchemaInterface $type
-     * @param bool $overwrite
-     * @return CompilerInterface|$this
-     */
-    public function addSchema(SchemaInterface $type, bool $overwrite = false): self;
+    public function getAutoloaders(): iterable;
 }

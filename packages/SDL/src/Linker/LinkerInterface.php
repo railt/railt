@@ -71,5 +71,5 @@ interface LinkerInterface
      * @param Location $from
      * @return void
      */
-    public function __invoke(?string $name, int $type, Location $from): void;
+    //public function __invoke(?string $name, int $type, Location $from): void;
 }

@@ -27,7 +27,6 @@ class InterfaceTypeBuilder extends TypeBuilder
 {
     /**
      * @return DefinitionInterface|InterfaceTypeInterface
-     * @throws \RuntimeException
      */
     public function build(): InterfaceTypeInterface
     {
@@ -39,11 +38,11 @@ class InterfaceTypeBuilder extends TypeBuilder
         $this->register($interface);
 
         if ($this->ast->fields) {
-            $interface = $interface->withFields($this->makeAll($this->ast->fields));
+            $interface->setFields($this->makeAll($this->ast->fields));
         }
 
         if ($this->ast->interfaces) {
-            $interface = $interface->withInterfaces($this->buildImplementedInterfaces($this->ast->interfaces));
+            $interface->setInterfaces($this->buildImplementedInterfaces($this->ast->interfaces));
         }
 
         return $interface;

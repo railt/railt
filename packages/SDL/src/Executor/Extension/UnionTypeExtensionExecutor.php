@@ -23,7 +23,6 @@ class UnionTypeExtensionExecutor extends ExtensionExecutor
     /**
      * @param NodeInterface|UnionTypeExtensionNode $source
      * @return mixed|void|null
-     * @throws \RuntimeException
      */
     public function enter(NodeInterface $source)
     {
@@ -40,12 +39,14 @@ class UnionTypeExtensionExecutor extends ExtensionExecutor
         }
 
         if ($source->types) {
+            $types = $target->getTypes();
+
             foreach ($source->types as $type) {
                 // TODO Assert type
-                $target = $target->withType($this->fetch($type->name->value));
+                $types[] = $this->fetch($type->name->value);
             }
-        }
 
-        $this->document->addType($target);
+            $target->setTypes($types);
+        }
     }
 }

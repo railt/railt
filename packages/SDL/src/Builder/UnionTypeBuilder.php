@@ -26,7 +26,6 @@ class UnionTypeBuilder extends TypeBuilder
 {
     /**
      * @return UnionTypeInterface|DefinitionInterface
-     * @throws \RuntimeException
      */
     public function build(): UnionTypeInterface
     {
@@ -38,7 +37,7 @@ class UnionTypeBuilder extends TypeBuilder
         $this->register($union);
 
         if ($this->ast->types) {
-            $union = $union->withTypes($this->buildTypes($this->ast->types));
+            $union->setTypes($this->buildTypes($this->ast->types));
         }
 
         return $union;

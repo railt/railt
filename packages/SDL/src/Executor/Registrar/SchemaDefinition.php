@@ -39,6 +39,8 @@ class SchemaDefinition extends TypeRegistrar
         if ($node instanceof SchemaDefinitionNode) {
             $this->assertUniqueness($node);
 
+            \assert($this->context->note('[Registry] Add schema'));
+
             $this->registry->schema = $node;
 
             //
@@ -59,7 +61,7 @@ class SchemaDefinition extends TypeRegistrar
      */
     private function assertUniqueness(SchemaDefinitionNode $type): void
     {
-        if ($this->registry->schema || $this->dictionary->getSchema()) {
+        if ($this->registry->schema || $this->document->getSchema()) {
             throw new TypeErrorException(self::ERROR_SCHEMA_DEFINITION_UNIQUENESS, $type);
         }
     }

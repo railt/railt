@@ -24,7 +24,6 @@ class EnumTypeExtensionExecutor extends ExtensionExecutor
     /**
      * @param NodeInterface|EnumTypeExtensionNode $source
      * @return mixed|void|null
-     * @throws \RuntimeException
      */
     public function enter(NodeInterface $source)
     {
@@ -40,11 +39,13 @@ class EnumTypeExtensionExecutor extends ExtensionExecutor
             return;
         }
 
-        foreach ($source->values as $value) {
-            // TODO assert value exists
-            $target = $target->withValue($this->build($value));
+        $values = $target->getValues();
+
+        foreach ($source->values ?? [] as $value) {
+            // TODO assert overriding
+            $values[] = $this->build($value);
         }
 
-        $this->document->addType($target);
+        $target->setValues($values);
     }
 }

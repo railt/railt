@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use GraphQL\Contracts\TypeSystem\DirectiveInterface;
+use Railt\SDL\Runtime\Type\ExecutionInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
+use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
-use Railt\SDL\Runtime\ExecutionInterface;
 
 /**
  * Interface DocumentInterface
@@ -39,6 +39,15 @@ interface DocumentInterface
     public function hasType(string $name): bool;
 
     /**
+     * Adds a compiled GraphQL type to the dictionary.
+     *
+     * @param NamedTypeInterface $type
+     * @param bool $overwrite
+     * @return DocumentInterface|$this
+     */
+    public function addType(NamedTypeInterface $type, bool $overwrite = false): self;
+
+    /**
      * @return iterable|DirectiveInterface[]
      */
     public function getDirectives(): iterable;
@@ -56,12 +65,36 @@ interface DocumentInterface
     public function hasDirective(string $name): bool;
 
     /**
+     * Adds a compiled GraphQL directive to the dictionary.
+     *
+     * @param DirectiveInterface $type
+     * @param bool $overwrite
+     * @return DocumentInterface|$this
+     */
+    public function addDirective(DirectiveInterface $type, bool $overwrite = false): self;
+
+    /**
      * @return SchemaInterface|null
      */
     public function getSchema(): ?SchemaInterface;
 
     /**
+     * Adds a compiled GraphQL schema to the dictionary.
+     *
+     * @param SchemaInterface $type
+     * @param bool $overwrite
+     * @return DocumentInterface|$this
+     */
+    public function setSchema(SchemaInterface $type, bool $overwrite = false): self;
+
+    /**
      * @return iterable|ExecutionInterface[]
      */
     public function getExecutions(): iterable;
+
+    /**
+     * @param ExecutionInterface $execution
+     * @return DocumentInterface|$this
+     */
+    public function addExecution(ExecutionInterface $execution): self;
 }

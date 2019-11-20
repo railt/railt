@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Runtime;
+namespace Railt\SDL\Runtime\Type;
 
 use Railt\Common\Iter;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;

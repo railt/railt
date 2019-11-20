@@ -14,9 +14,9 @@ namespace Railt\SDL\Executor\Extension;
 use Railt\SDL\Document;
 use Phplrt\Visitor\Visitor;
 use Railt\SDL\Builder\Factory;
+use Railt\SDL\Executor\Context;
 use Railt\SDL\Executor\Registry;
 use Railt\SDL\Ast\DefinitionNode;
-use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 
@@ -43,15 +43,14 @@ abstract class ExtensionExecutor extends Visitor
     /**
      * ExtensionExecutor constructor.
      *
+     * @param Context $context
      * @param Factory $factory
-     * @param Document $document
-     * @param Registry $registry
      */
-    public function __construct(Factory $factory, Document $document, Registry $registry)
+    public function __construct(Context $context, Factory $factory)
     {
         $this->factory = $factory;
-        $this->registry = $registry;
-        $this->document = $document;
+        $this->registry = $context->getRegistry();
+        $this->document = $context->getDocument();
     }
 
     /**

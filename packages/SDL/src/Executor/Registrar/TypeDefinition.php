@@ -39,6 +39,8 @@ class TypeDefinition extends TypeRegistrar
         if ($type instanceof TypeDefinitionNode) {
             $this->assertUniqueness($type);
 
+            \assert($this->context->note('[Registry] Add type <%s>', $type->name->value));
+
             $this->registry->typeMap[$type->name->value] = $type;
 
             //
@@ -60,7 +62,7 @@ class TypeDefinition extends TypeRegistrar
     private function assertUniqueness(TypeDefinitionNode $type): void
     {
         $exists = isset($this->registry->typeMap[$type->name->value])
-            || $this->dictionary->hasType($type->name->value);
+            || $this->document->hasType($type->name->value);
 
         if ($exists) {
             $message = \sprintf(self::ERROR_TYPE_REDEFINITION, $type->name->value);

@@ -34,7 +34,7 @@ class FieldBuilder extends TypeBuilder
         ]);
 
         if ($this->ast->arguments) {
-            $field = $field->withArguments($this->makeAll($this->ast->arguments));
+            return $field->withArguments($this->makeAll($this->ast->arguments));
         }
 
         return $field;

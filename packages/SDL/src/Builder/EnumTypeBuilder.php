@@ -22,7 +22,6 @@ class EnumTypeBuilder extends TypeBuilder
 {
     /**
      * @return EnumTypeInterface
-     * @throws \RuntimeException
      */
     public function build(): EnumTypeInterface
     {
@@ -34,7 +33,7 @@ class EnumTypeBuilder extends TypeBuilder
         $this->register($enum);
 
         if ($this->ast->values) {
-            $enum = $enum->withValues($this->makeAll($this->ast->values));
+            $enum->setValues($this->makeAll($this->ast->values));
         }
 
         return $enum;

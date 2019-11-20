@@ -23,7 +23,6 @@ class ObjectTypeExtensionExecutor extends ExtensionExecutor
     /**
      * @param NodeInterface|ObjectTypeExtensionNode $source
      * @return mixed|void|null
-     * @throws \RuntimeException
      */
     public function enter(NodeInterface $source)
     {
@@ -40,19 +39,25 @@ class ObjectTypeExtensionExecutor extends ExtensionExecutor
         }
 
         if ($source->fields) {
+            $fields = $target->getFields();
+
             foreach ($source->fields as $field) {
                 // TODO assert field exists or merge
-                $target = $target->withField($this->build($field));
+                $fields[] = $this->build($field);
             }
+
+            $target->setFields($fields);
         }
 
         if ($source->interfaces) {
+            $interfaces = $target->getInterfaces();
+
             foreach ($source->interfaces as $interface) {
                 // TODO assert instance of interface
-                $target = $target->withInterface($this->fetch($interface->name->value));
+                $interfaces[] = $this->fetch($interface->name->value);
             }
-        }
 
-        $this->document->addType($target);
+            $target->setInterfaces($interfaces);
+        }
     }
 }

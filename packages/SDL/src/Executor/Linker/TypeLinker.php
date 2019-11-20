@@ -13,10 +13,10 @@ namespace Railt\SDL\Executor\Linker;
 
 use Railt\SDL\Document;
 use Phplrt\Visitor\Visitor;
+use Railt\SDL\Executor\Context;
 use Railt\SDL\Executor\Registry;
 use Railt\SDL\Ast\DefinitionNode;
 use Railt\SDL\Ast\Type\NamedTypeNode;
-use Phplrt\Contracts\Source\ReadableInterface;
 
 /**
  * Class TypeLinker
@@ -39,17 +39,22 @@ abstract class TypeLinker extends Visitor
     protected iterable $loaders;
 
     /**
+     * @var Context
+     */
+    private Context $context;
+
+    /**
      * TypeLinker constructor.
      *
-     * @param Document $document
-     * @param Registry $registry
+     * @param Context $context
      * @param iterable|callable[] $loaders
      */
-    public function __construct(Document $document, Registry $registry, iterable $loaders)
+    public function __construct(Context $context, iterable $loaders)
     {
-        $this->document = $document;
-        $this->registry = $registry;
+        $this->document = $context->getDocument();
+        $this->registry = $context->getRegistry();
         $this->loaders = $loaders;
+        $this->context = $context;
     }
 
     /**
@@ -61,13 +66,17 @@ abstract class TypeLinker extends Visitor
     protected function loaded(DefinitionNode $node, int $type, ?string $name): bool
     {
         if (! $this->exists($node)) {
+            \assert($this->context->note('[Linker] Lookup type <%s>', $name));
+
             foreach ($this->loaders as $loader) {
-                $loader($name, $type, $node->loc);
+                $loader($this->context, $name, $type, $node->loc);
 
                 if ($this->exists($node)) {
                     return true;
                 }
             }
+
+            \assert($this->context->note('[Linker] Failed lookup type <%s>', $name));
 
             return false;
         }

@@ -38,7 +38,7 @@ class DirectiveBuilder extends TypeBuilder
         $this->register($directive);
 
         if ($this->ast->arguments) {
-            $directive = $directive->withArguments($this->makeAll($this->ast->arguments));
+            $directive->setArguments($this->makeAll($this->ast->arguments));
         }
 
         return $directive;

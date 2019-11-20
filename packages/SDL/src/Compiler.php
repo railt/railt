@@ -12,47 +12,22 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Phplrt\Source\File;
-use Railt\SDL\Ast\Node;
-use Phplrt\Visitor\Traverser;
-use Railt\SDL\Builder\Factory;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareTrait;
+use Railt\SDL\Executor\Context;
 use Railt\SDL\Parser\Generator;
-use Railt\SDL\Executor\Registry;
-use Phplrt\Contracts\Ast\NodeInterface;
-use Phplrt\Contracts\Source\FileInterface;
+use Psr\SimpleCache\CacheInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Source\Exception\NotFoundException;
-use Railt\SDL\Executor\Linker\NamedTypeLinker;
-use Phplrt\Contracts\Source\ReadableInterface;
-use Railt\SDL\Executor\Registrar\TypeDefinition;
-use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use Phplrt\Source\Exception\NotReadableException;
-use Railt\SDL\Executor\Registrar\SchemaDefinition;
-use Railt\SDL\Executor\Execution\DirectiveExecutor;
-use GraphQL\Contracts\TypeSystem\DirectiveInterface;
-use Railt\SDL\Executor\Registrar\DirectiveDefinition;
-use Railt\SDL\Executor\Linker\EnumTypeExtensionLinker;
-use Railt\SDL\Executor\Linker\DirectiveExecutionLinker;
-use Railt\SDL\Executor\Linker\UnionTypeExtensionLinker;
-use Railt\SDL\Executor\Linker\ObjectTypeExtensionLinker;
-use Railt\SDL\Executor\Linker\ScalarTypeExtensionLinker;
-use Railt\SDL\Executor\Linker\SchemaTypeExtensionLinker;
-use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
-use Railt\SDL\Executor\Extension\SchemaExtensionExecutor;
-use Railt\SDL\Executor\Linker\InterfaceTypeExtensionLinker;
-use Railt\SDL\Executor\Extension\EnumTypeExtensionExecutor;
-use Railt\SDL\Executor\Extension\UnionTypeExtensionExecutor;
-use Railt\SDL\Executor\Linker\InputObjectTypeExtensionLinker;
-use Railt\SDL\Executor\Extension\ObjectTypeExtensionExecutor;
-use Railt\SDL\Executor\Extension\ScalarTypeExtensionExecutor;
-use Railt\SDL\Executor\Extension\InterfaceTypeExtensionExecutor;
-use Railt\SDL\Executor\Extension\InputObjectTypeExtensionExecutor;
-use Phplrt\Contracts\Parser\Exception\ParserRuntimeExceptionInterface;
 
 /**
  * Class Compiler
  */
 final class Compiler implements CompilerInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @var int
      */
@@ -98,23 +73,23 @@ final class Compiler implements CompilerInterface
     private array $loaders = [];
 
     /**
-     * @var array|iterable[]
-     */
-    private array $cache = [];
-
-    /**
      * Compiler constructor.
      *
      * @param int $spec
-     * @param ParserInterface|null $parser
+     * @param CacheInterface|null $cache
+     * @param LoggerInterface|null $logger
      * @throws NotFoundException
      * @throws NotReadableException
      * @throws \Throwable
      */
-    public function __construct(int $spec = self::SPEC_RAILT, ParserInterface $parser = null)
-    {
+    public function __construct(
+        int $spec = self::SPEC_RAILT,
+        CacheInterface $cache = null,
+        LoggerInterface $logger = null
+    ) {
+        $this->logger = $logger;
         $this->document = new Document();
-        $this->parser = $parser ?? new Parser();
+        $this->parser = new Parser($cache);
 
         $this->loadSpec($spec);
     }
@@ -136,132 +111,26 @@ final class Compiler implements CompilerInterface
     }
 
     /**
-     * Converts RL/SDL AST to a finite set of GraphQL types.
-     *
-     * @param iterable|Node[] $ast
-     * @param Document $dictionary
-     * @return DocumentInterface
-     */
-    private function build(iterable $ast, Document $dictionary): DocumentInterface
-    {
-        $registry = new Registry();
-        $factory = new Factory($dictionary);
-
-        /**
-         * ---------------------------------------------------------------------
-         *  Registration
-         * ---------------------------------------------------------------------
-         *
-         *  First tree walk:
-         *  - Registering all types in the registry.
-         *  - Verification that this type has not been previously
-         *      registered in the dictionary (list of builded types)
-         *      or registry (list of compiled types).
-         */
-        $ast = (new Traverser())
-            ->with(new TypeDefinition($dictionary, $registry))
-            ->with(new SchemaDefinition($dictionary, $registry))
-            ->with(new DirectiveDefinition($dictionary, $registry))
-            ->traverse($ast)
-        ;
-
-        /**
-         * ---------------------------------------------------------------------
-         *  Relations Resolving
-         * ---------------------------------------------------------------------
-         *
-         *  Second tree walk:
-         *  - Checks the types of the relationships.
-         *  - Checks the types in expressions.
-         *  - Loads missing types for correct compilation.
-         *
-         */
-        $ast = (new Traverser())
-            ->with(new DirectiveExecutionLinker($dictionary, $registry, $this->loaders))
-            ->with(new NamedTypeLinker($dictionary, $registry, $this->loaders))
-            ->with(new EnumTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->with(new InputObjectTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->with(new InterfaceTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->with(new ObjectTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->with(new ScalarTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->with(new UnionTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->with(new SchemaTypeExtensionLinker($dictionary, $registry, $this->loaders))
-            ->traverse($ast)
-        ;
-
-        /**
-         * ---------------------------------------------------------------------
-         *  Building Final Structures
-         * ---------------------------------------------------------------------
-         *
-         * Convert from AST to a set of finite DTO types.
-         *
-         */
-        $document = $factory->loadFrom($registry);
-
-        /**
-         * ---------------------------------------------------------------------
-         *  Type Extensions
-         * ---------------------------------------------------------------------
-         *
-         *  Third tree walk:
-         *  - Type Extension executions: We get each type extension and
-         *      implement it in the finished assembly.
-         *
-         */
-        $ast = (new Traverser())
-            ->with(new EnumTypeExtensionExecutor($factory, $document, $registry))
-            ->with(new InputObjectTypeExtensionExecutor($factory, $document, $registry))
-            ->with(new InterfaceTypeExtensionExecutor($factory, $document, $registry))
-            ->with(new ObjectTypeExtensionExecutor($factory, $document, $registry))
-            ->with(new ScalarTypeExtensionExecutor($factory, $document, $registry))
-            ->with(new SchemaExtensionExecutor($factory, $document, $registry))
-            ->with(new UnionTypeExtensionExecutor($factory, $document, $registry))
-            ->traverse($ast)
-        ;
-
-        /**
-         * ---------------------------------------------------------------------
-         *  Directive Executions
-         * ---------------------------------------------------------------------
-         *
-         *  Last tree walk:
-         *  - Directive executions: We get each directive execution and collect
-         *      in the executions list.
-         *
-         */
-        $ast = (new Traverser())
-            ->with(new DirectiveExecutor($document))
-            ->traverse($ast)
-        ;
-
-        return $document;
-    }
-
-    /**
-     * @param string|resource|ReadableInterface $source
-     * @return array|iterable|NodeInterface|NodeInterface[]
-     * @throws ParserRuntimeExceptionInterface
+     * {@inheritDoc}
      * @throws \Throwable
      */
-    private function parse($source): iterable
+    public function preload($source): self
     {
-        $source = File::new($source);
+        $context = new Context($this, $this->parser, $this->document, $this->logger);
+        $context->compile($source);
 
-        return $this->cache[$this->hash($source)] ??= $this->parser->parse($source);
+        return $this;
     }
 
     /**
-     * @param ReadableInterface $source
-     * @return string
+     * {@inheritDoc}
+     * @throws \Throwable
      */
-    private function hash(ReadableInterface $source): string
+    public function compile($source): DocumentInterface
     {
-        if ($source instanceof FileInterface) {
-            return \md5_file($source->getPathname());
-        }
+        $context = new Context($this, $this->parser, clone $this->document, $this->logger);
 
-        return \md5($source->getContents());
+        return $context->compile($source);
     }
 
     /**
@@ -278,57 +147,9 @@ final class Compiler implements CompilerInterface
     /**
      * {@inheritDoc}
      */
-    public function addType(NamedTypeInterface $type, bool $overwrite = false): self
+    public function getAutoloaders(): iterable
     {
-        if ($overwrite || ! $this->document->hasType($type->getName())) {
-            $this->document->addType($type);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addDirective(DirectiveInterface $directive, bool $overwrite = false): self
-    {
-        if ($overwrite || ! $this->document->hasDirective($directive->getName())) {
-            $this->document->addDirective($directive);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addSchema(SchemaInterface $schema, bool $overwrite = false): self
-    {
-        if ($overwrite || ! $this->document->getSchema()) {
-            $this->document->setSchema($schema);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws \Throwable
-     */
-    public function preload($source): self
-    {
-        $this->build($this->parse($source), $this->document);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @throws \Throwable
-     */
-    public function compile($source): DocumentInterface
-    {
-        return $this->build($this->parse($source), clone $this->document);
+        return $this->loaders;
     }
 
     /**

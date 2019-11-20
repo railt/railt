@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Runtime;
+namespace Railt\SDL\Runtime\Type;
 
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 

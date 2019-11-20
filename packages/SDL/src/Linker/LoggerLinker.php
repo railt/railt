@@ -15,6 +15,7 @@ use Railt\Dumper\Facade;
 use Railt\SDL\Ast\Location;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LoggerAwareTrait;
+use Railt\SDL\Executor\Context;
 use Psr\Log\LoggerAwareInterface;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Source\Exception\NotAccessibleException;
@@ -42,6 +43,7 @@ class LoggerLinker implements LinkerInterface, LoggerAwareInterface
     }
 
     /**
+     * @param Context $ctx
      * @param string|null $name
      * @param int $type
      * @param Location $from
@@ -49,7 +51,7 @@ class LoggerLinker implements LinkerInterface, LoggerAwareInterface
      * @throws NotAccessibleException
      * @throws \RuntimeException
      */
-    public function __invoke(?string $name, int $type, Location $from): void
+    public function __invoke(Context $ctx, ?string $name, int $type, Location $from): void
     {
         $this->logger->info(\vsprintf(self::LOG_MESSAGE, [
             Type::toString($type),

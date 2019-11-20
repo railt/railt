@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Console;
 
-use Railt\SDL\Parser;
 use Phplrt\Source\File;
 use Railt\SDL\Ast\Node;
+use Railt\SDL\Parser\Parser;
 use Railt\SDL\Exception\SyntaxErrorException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\Question;

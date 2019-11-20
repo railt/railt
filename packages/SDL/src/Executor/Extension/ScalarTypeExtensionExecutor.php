@@ -37,7 +37,5 @@ class ScalarTypeExtensionExecutor extends ExtensionExecutor
             // TODO should throw an error
             return;
         }
-
-        $this->document->addType($target);
     }
 }

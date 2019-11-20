@@ -39,6 +39,8 @@ class DirectiveDefinition extends TypeRegistrar
         if ($directive instanceof DirectiveDefinitionNode) {
             $this->assertUniqueness($directive);
 
+            \assert($this->context->note('[Registry] Add directive <%s>', $directive->name->value));
+
             $this->registry->directives[$directive->name->value] = $directive;
 
             //
@@ -60,7 +62,7 @@ class DirectiveDefinition extends TypeRegistrar
     private function assertUniqueness(DirectiveDefinitionNode $type): void
     {
         $exists = isset($this->registry->directives[$type->name->value])
-            || $this->dictionary->hasDirective($type->name->value);
+            || $this->document->hasDirective($type->name->value);
 
         if ($exists) {
             $message = \sprintf(self::ERROR_DIRECTIVE_REDEFINITION, $type->name->value);

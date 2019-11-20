@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\SDL\Runtime\ExecutionInterface;
+use Railt\SDL\Runtime\Type\ExecutionInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
@@ -58,15 +58,6 @@ final class Document implements DocumentInterface
     }
 
     /**
-     * @param NamedTypeInterface $type
-     * @return void
-     */
-    public function addType(NamedTypeInterface $type): void
-    {
-        $this->typeMap[$type->getName()] = $type;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function getDirective(string $name): ?DirectiveInterface
@@ -83,29 +74,11 @@ final class Document implements DocumentInterface
     }
 
     /**
-     * @param DirectiveInterface $directive
-     * @return void
-     */
-    public function addDirective(DirectiveInterface $directive): void
-    {
-        $this->directives[$directive->getName()] = $directive;
-    }
-
-    /**
      * @return iterable|ExecutionInterface[]
      */
     public function getExecutions(): iterable
     {
         return $this->executions;
-    }
-
-    /**
-     * @param ExecutionInterface $execution
-     * @return void
-     */
-    public function addExecution(ExecutionInterface $execution): void
-    {
-        $this->executions[] = $execution;
     }
 
     /**
@@ -133,11 +106,48 @@ final class Document implements DocumentInterface
     }
 
     /**
-     * @param SchemaInterface|null $schema
-     * @return void
+     * {@inheritDoc}
      */
-    public function setSchema(?SchemaInterface $schema): void
+    public function addType(NamedTypeInterface $type, bool $overwrite = false): self
     {
-        $this->schema = $schema;
+        if ($overwrite || ! $this->hasType($type->getName())) {
+            $this->typeMap[$type->getName()] = $type;
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addDirective(DirectiveInterface $directive, bool $overwrite = false): self
+    {
+        if ($overwrite || ! $this->hasDirective($directive->getName())) {
+            $this->directives[$directive->getName()] = $directive;
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setSchema(SchemaInterface $schema, bool $overwrite = false): self
+    {
+        if ($overwrite || ! $this->getSchema()) {
+            $this->schema = $schema;
+        }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addExecution(ExecutionInterface $execution): self
+    {
+        $this->executions[] = $execution;
+
+        return $this;
     }
 }

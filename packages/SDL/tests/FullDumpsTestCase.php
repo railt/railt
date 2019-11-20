@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Tests\Unit;
 
-use Railt\SDL\Parser;
 use Phplrt\Source\File;
+use Railt\SDL\Parser\Parser;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Source\Exception\NotFoundException;
 use PHPUnit\Framework\ExpectationFailedException;

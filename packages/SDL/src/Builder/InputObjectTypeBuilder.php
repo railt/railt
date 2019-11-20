@@ -23,7 +23,6 @@ class InputObjectTypeBuilder extends TypeBuilder
 {
     /**
      * @return DefinitionInterface|InputTypeInterface
-     * @throws \RuntimeException
      */
     public function build(): InputTypeInterface
     {
@@ -35,7 +34,7 @@ class InputObjectTypeBuilder extends TypeBuilder
         $this->register($input);
 
         if ($this->ast->fields) {
-            $input = $input->withFields($this->makeAll($this->ast->fields));
+            $input->setFields($this->makeAll($this->ast->fields));
         }
 
         return $input;

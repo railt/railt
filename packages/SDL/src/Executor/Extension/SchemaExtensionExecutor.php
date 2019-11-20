@@ -47,20 +47,18 @@ class SchemaExtensionExecutor extends ExtensionExecutor
 
                 switch ($operation->operation) {
                     case 'query':
-                        $target = $target->withQueryType($type);
+                        $target->setQuery($type);
                         break;
 
                     case 'mutation':
-                        $target = $target->withMutationType($type);
+                        $target->setMutation($type);
                         break;
 
                     case 'subscription':
-                        $target = $target->withSubscriptionType($type);
+                        $target->setSubscription($type);
                         break;
                 }
             }
         }
-
-        $this->document->setSchema($target);
     }
 }

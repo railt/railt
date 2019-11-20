@@ -45,7 +45,7 @@ class Generator
      * @var string[]
      */
     private const GENERATOR_MAPPINGS = [
-        __DIR__ . '/../Parser.php' => 'generateParser',
+        __DIR__ . '/Parser.php' => 'generateParser',
         __DIR__ . '/Builder.php'   => 'generateBuilder',
         __DIR__ . '/Lexer.php'     => 'generateLexer',
     ];

@@ -24,7 +24,6 @@ class SchemaBuilder extends TypeBuilder
 {
     /**
      * @return SchemaInterface|DefinitionInterface
-     * @throws \RuntimeException
      */
     public function build(): SchemaInterface
     {
@@ -39,15 +38,15 @@ class SchemaBuilder extends TypeBuilder
 
             switch ($operation->operation) {
                 case 'query':
-                    $schema = $schema->withQueryType($type);
+                    $schema->setQuery($type);
                     break;
 
                 case 'mutation':
-                    $schema = $schema->withMutationType($type);
+                    $schema->setMutation($type);
                     break;
 
                 case 'subscription':
-                    $schema = $schema->withSubscriptionType($type);
+                    $schema->setSubscription($type);
                     break;
             }
         }

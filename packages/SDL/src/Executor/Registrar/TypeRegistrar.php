@@ -13,8 +13,8 @@ namespace Railt\SDL\Executor\Registrar;
 
 use Railt\SDL\Document;
 use Phplrt\Visitor\Visitor;
+use Railt\SDL\Executor\Context;
 use Railt\SDL\Executor\Registry;
-use Railt\SDL\Ast\Name\IdentifierNode;
 
 /**
  * Class TypeRegistrar
@@ -29,17 +29,23 @@ abstract class TypeRegistrar extends Visitor
     /**
      * @var Document
      */
-    protected Document $dictionary;
+    protected Document $document;
 
     /**
-     * Registrar constructor.
-     *
-     * @param Document $dictionary
-     * @param Registry $registry
+     * @var Context
      */
-    public function __construct(Document $dictionary, Registry $registry)
+    protected Context $context;
+
+    /**
+     * TypeRegistrar constructor.
+     *
+     * @param Context $context
+     */
+    public function __construct(Context $context)
     {
-        $this->dictionary = $dictionary;
-        $this->registry = $registry;
+        $this->context = $context;
+
+        $this->document = $context->getDocument();
+        $this->registry = $context->getRegistry();
     }
 }
