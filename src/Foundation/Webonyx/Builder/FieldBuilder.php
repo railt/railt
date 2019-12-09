@@ -55,28 +55,11 @@ class FieldBuilder extends Builder
             $event = $this->fireResolving($parent, $args, $ctx, $info);
 
             if ($event->hasResult() && ! $event->isPropagationStopped()) {
-                return $this->assertResult($event->getResult());
+                return $event->getResult();
             }
 
             return $this->default();
         };
-    }
-
-    /**
-     * @param mixed $result
-     * @return mixed
-     * @throws BadResponseException
-     */
-    private function assertResult($result)
-    {
-        if (\is_array($result) || \is_scalar($result)) {
-            return $result;
-        }
-
-        $error = 'Result of %s field should be scalar or array type, but %s given';
-        $error = \sprintf($error, $this->reflection, $this->getTypeString($result));
-
-        throw new BadResponseException($error);
     }
 
     /**
