@@ -105,5 +105,4 @@ Join our [Discord community](https://discord.gg/ND7SpD4) if you run into issues 
 
 <p align="center">
     <a href="https://www.jetbrains.com/" target="_blank"><img src="https://habrastorage.org/webt/oc/-2/ek/oc-2eklcyr_ncszrzytmlu8_vky.png" alt="JetBrains" /></a>
-    <a href="https://rambler-co.ru/" target="_blank"><img src="https://habrastorage.org/webt/wp/wu/wp/wpwuwpqpkskjfs0yjdjry5jvoog.png" alt="Rambler&Co" /></a>
 </p>
