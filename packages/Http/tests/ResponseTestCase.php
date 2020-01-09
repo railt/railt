@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\Http\Tests\Unit;
+namespace Railt\Http\Tests;
 
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;

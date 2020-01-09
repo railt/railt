@@ -15,7 +15,7 @@ use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
-use GraphQL\TypeSystem\Type\InterfaceType;
+use Railt\TypeSystem\Type\InterfaceType;
 use Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode;
 use Railt\SDL\Ast\Generic\InterfaceImplementsCollection;
 use Railt\SDL\Ast\Type\NamedTypeNode;

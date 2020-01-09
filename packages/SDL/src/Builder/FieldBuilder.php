@@ -13,7 +13,7 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\FieldInterface;
-use GraphQL\TypeSystem\Field;
+use Railt\TypeSystem\Field;
 use Railt\SDL\Ast\Definition\FieldDefinitionNode;
 
 /**

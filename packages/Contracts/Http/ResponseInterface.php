@@ -13,7 +13,7 @@ namespace Railt\Contracts\Http;
 
 use Railt\Contracts\Common\ArrayableInterface;
 use Railt\Contracts\Common\JsonableInterface;
-use Railt\Contracts\Common\RenderableInterface;
+use Railt\Contracts\Common\StringableInterface;
 use Railt\Contracts\Http\Response\DataInterface;
 use Railt\Contracts\Http\Response\ErrorsProviderInterface;
 use Railt\Contracts\Http\Response\ExceptionsProviderInterface;
@@ -29,6 +29,6 @@ interface ResponseInterface extends
     DataInterface,
     ArrayableInterface,
     JsonableInterface,
-    RenderableInterface
+    StringableInterface
 {
 }

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Tests\Unit;
+namespace Railt\SDL\Tests;
 
 use Phplrt\Source\Exception\NotFoundException;
 use Phplrt\Source\Exception\NotReadableException;

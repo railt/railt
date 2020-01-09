@@ -13,7 +13,7 @@ namespace Railt\Contracts\Http\Error;
 
 use Railt\Contracts\Common\ArrayableInterface;
 use Railt\Contracts\Common\JsonableInterface;
-use Railt\Contracts\Common\RenderableInterface;
+use Railt\Contracts\Common\StringableInterface;
 
 /**
  * Interface LocationInterface
@@ -21,7 +21,7 @@ use Railt\Contracts\Common\RenderableInterface;
 interface SourceLocationInterface extends
     ArrayableInterface,
     JsonableInterface,
-    RenderableInterface
+    StringableInterface
 {
     /**
      * @var string

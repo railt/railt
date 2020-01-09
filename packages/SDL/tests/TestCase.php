@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Tests\Unit;
+namespace Railt\SDL\Tests;
 
 use Railt\SDL\Compiler;
 use Railt\SDL\DocumentInterface;

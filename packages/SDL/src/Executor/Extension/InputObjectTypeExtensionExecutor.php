@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Extension;
 
-use GraphQL\TypeSystem\Type\InputObjectType;
+use Railt\TypeSystem\Type\InputObjectType;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Extension\InputObjectTypeExtensionNode;
 

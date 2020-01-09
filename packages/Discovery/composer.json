@@ -22,7 +22,7 @@
     "require": {
         "php": ">=7.4",
         "ext-json": "*",
-        "justinrainbow/json-schema": "~5.2",
+        "justinrainbow/json-schema": "^5.2",
         "composer-plugin-api": "^1.1"
     },
     "autoload": {

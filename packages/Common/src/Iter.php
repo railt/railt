@@ -40,7 +40,7 @@ final class Iter
      * @param bool $saveKeys
      * @return \Traversable
      */
-    public function toTraversable(iterable $items, bool $saveKeys = true): \Traversable
+    public static function toTraversable(iterable $items, bool $saveKeys = true): \Traversable
     {
         foreach ($items as $key => $value) {
             if ($saveKeys) {
@@ -67,21 +67,43 @@ final class Iter
     /**
      * @param iterable $items
      * @param callable $each
-     * @return iterable
+     * @return \Traversable
      */
-    public static function map(iterable $items, callable $each): iterable
+    public static function map(iterable $items, callable $each): \Traversable
     {
         foreach ($items as $key => $value) {
             yield $key => $each($value, $key);
         }
     }
 
+
+    /**
+     * @template T
+     * @psalm-param iterable<mixed, T> $items
+     * @psalm-param \Closure(T): array<string, T> $unpack
+     * @psalm-return array<string, T>
+     *
+     * @param iterable $items
+     * @param callable $each
+     * @return array
+     */
+    public static function mapToArray(iterable $items, callable $each): array
+    {
+        $result = [];
+
+        foreach ($items as $item) {
+            $result += $each($item);
+        }
+
+        return $result;
+    }
+
     /**
      * @param iterable $items
      * @param callable $each
-     * @return iterable
+     * @return \Traversable
      */
-    public static function mapWithKeys(iterable $items, callable $each): iterable
+    public static function mapWithKeys(iterable $items, callable $each): \Traversable
     {
         foreach ($items as $key => $value) {
             yield from $each($value, $key);
@@ -91,15 +113,33 @@ final class Iter
     /**
      * @param iterable $items
      * @param callable $each
-     * @return iterable
+     * @return \Traversable
      */
-    public static function filter(iterable $items, callable $each): iterable
+    public static function filter(iterable $items, callable $each): \Traversable
     {
         foreach ($items as $key => $value) {
             if ($result = $each($value, $key)) {
                 yield $key => $value;
             }
         }
+    }
+
+    /**
+     * @param iterable $items
+     * @param callable $each
+     * @return array
+     */
+    public static function filterToArray(iterable $items, callable $each): array
+    {
+        $result = [];
+
+        foreach ($items as $key => $value) {
+            if ($result = $each($value, $key)) {
+                $result[$key] = $value;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -122,5 +162,33 @@ final class Iter
         foreach ($items as $key => $value) {
             yield $value;
         }
+    }
+
+    /**
+     * @param iterable $items
+     * @param mixed|null $default
+     * @return mixed
+     */
+    public static function first(iterable $items, $default = null)
+    {
+        foreach ($items as $value) {
+            return $value;
+        }
+
+        return $default;
+    }
+
+    /**
+     * @param iterable $items
+     * @param mixed|null $default
+     * @return mixed
+     */
+    public static function firstKey(iterable $items, $default = null)
+    {
+        foreach ($items as $key => $value) {
+            return $key;
+        }
+
+        return $default;
     }
 }

@@ -18,8 +18,8 @@ parameters:
                 Railt\Tests\Feature\: 'tests/feature'
                 Railt\Tests\Unit\: 'tests/unit'
         require:
-            ocramius/package-versions: '~1.5'
-            ramsey/collection: '~1.0'
+            ocramius/package-versions: '^1.5'
+            ramsey/collection: '^1.0'
             symfony/console: '~3.4|~4.0|~5.0'
         require-dev:
             # Testing
@@ -33,6 +33,8 @@ parameters:
             symfony/var-dumper: '~3.4|~4.0|~5.0'
             symplify/monorepo-builder: '^6.1'
     directories_to_repositories:
+        packages/CodeGenerator: 'git@github.com:railt/code-generator.git'
+        packages/Common: 'git@github.com:railt/common.git'
         packages/Config: 'git@github.com:railt/config.git'
         packages/Container: 'git@github.com:railt/container.git'
         packages/Contracts: 'git@github.com:railt/contracts.git'
@@ -40,5 +42,7 @@ parameters:
         packages/Dumper: 'git@github.com:railt/dumper.git'
         packages/Http: 'git@github.com:railt/http.git'
         packages/HttpFactory: 'git@github.com:railt/http-factory.git'
+        packages/Introspection: 'git@github.com:railt/introspection.git'
         packages/Observer: 'git@github.com:railt/observer.git'
         packages/SDL: 'git@github.com:railt/sdl.git'
+        packages/TypeSystem: 'git@github.com:railt/type-system.git'

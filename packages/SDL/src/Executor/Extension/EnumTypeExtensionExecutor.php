@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Executor\Extension;
 
 use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
-use GraphQL\TypeSystem\Type\EnumType;
+use Railt\TypeSystem\Type\EnumType;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Extension\EnumTypeExtensionNode;
 

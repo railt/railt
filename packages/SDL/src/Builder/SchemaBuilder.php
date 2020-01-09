@@ -13,7 +13,7 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
-use GraphQL\TypeSystem\Schema;
+use Railt\TypeSystem\Schema;
 use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
 

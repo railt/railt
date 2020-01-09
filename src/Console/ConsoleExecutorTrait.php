@@ -48,6 +48,7 @@ trait ConsoleExecutorTrait
 
         // Package commands
         \Railt\SDL\Console\CompileCommand::class,
+        \Railt\Introspection\Console\CompileCommand::class,
     ];
 
     /**

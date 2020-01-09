@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\Container\Tests\Unit;
+namespace Railt\Container\Tests;
 
 function __test($argument)
 {

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Common\RenderableTrait;
+use Railt\Common\StringableTrait;
 use Railt\Http\Request\QueryTrait;
 use Railt\Http\Request\VariablesTrait;
 use Railt\Contracts\Http\RequestInterface;
@@ -25,7 +25,7 @@ final class Request implements RequestInterface
     use QueryTrait;
     use VariablesTrait;
     use OperationNameTrait;
-    use RenderableTrait;
+    use StringableTrait;
 
     /**
      * @var string

@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Railt\Common;
 
-use Railt\Contracts\Common\RenderableInterface;
+use Railt\Contracts\Common\StringableInterface;
 
 /**
- * @mixin RenderableInterface
+ * @mixin StringableInterface
  */
-trait RenderableTrait
+trait StringableTrait
 {
     use JsonableTrait;
 

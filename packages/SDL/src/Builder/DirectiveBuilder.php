@@ -13,7 +13,7 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
-use GraphQL\TypeSystem\Directive;
+use Railt\TypeSystem\Directive;
 use Railt\SDL\Ast\Definition\DirectiveDefinitionNode;
 use Railt\SDL\Ast\Name\IdentifierNode;
 

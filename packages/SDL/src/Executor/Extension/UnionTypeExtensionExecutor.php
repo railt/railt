@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Extension;
 
-use GraphQL\TypeSystem\Type\UnionType;
+use Railt\TypeSystem\Type\UnionType;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Extension\UnionTypeExtensionNode;
 

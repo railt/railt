@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace Railt\Contracts\Common;
 
 /**
- * Interface RenderableInterface
+ * Interface StringableInterface
  */
-interface RenderableInterface
+interface StringableInterface
 {
     /**
      * Get the evaluated contents of the object.
@@ -22,10 +22,4 @@ interface RenderableInterface
      * @return string
      */
     public function toString(): string;
-
-    /**
-     * @return string
-     * @see RenderableInterface::toString()
-     */
-    public function __toString(): string;
 }

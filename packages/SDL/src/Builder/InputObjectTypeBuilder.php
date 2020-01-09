@@ -13,7 +13,7 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\InputTypeInterface;
-use GraphQL\TypeSystem\Type\InputObjectType;
+use Railt\TypeSystem\Type\InputObjectType;
 use Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode;
 
 /**

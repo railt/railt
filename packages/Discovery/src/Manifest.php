@@ -24,8 +24,8 @@ class Manifest extends ManifestFallback
     protected const CONFIGURATION = array (
   'discovery' => 
   array (
-    'discovery' => __DIR__ . '/../resources/discovery.schema.json',
-    'railt' => __DIR__ . '/../../../resources/railt.schema.json',
+    'discovery' => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/packages/Discovery/resources/discovery.schema.json',
+    'railt' => 'C:\\Users\\Serafim\\Projects\\Railt\\Railt/resources/railt.schema.json',
   ),
 );
 }

@@ -26,7 +26,7 @@ class CompileCommand extends Command
      */
     public function getName(): string
     {
-        return 'sdl:compile';
+        return 'sdl:parser:compile';
     }
 
     /**

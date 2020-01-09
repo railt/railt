@@ -1,0 +1,247 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Values Punctuators and Keywords
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL documents include punctuation in order to describe structure.
+ * GraphQL is a data description language and not a programming language,
+ * therefore GraphQL lacks the punctuation often used to describe
+ * mathematical expressions.
+ *
+ * @see http://facebook.github.io/graphql/#sec-Punctuators
+ */
+
+%token T_BRACKET_OPEN           \[
+%token T_BRACKET_CLOSE          \]
+%token T_BRACE_OPEN             {
+%token T_BRACE_CLOSE            }
+%token T_COLON                  :
+%token T_COMMA                  ,
+
+%token T_FLOAT_EXP              \-?(?:0|[1-9][0-9]*)(?:[eE][\+\-]?[0-9]+)
+%token T_FLOAT                  \-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)(?:[eE][\+\-]?[0-9]+)?
+%token T_INT                    \-?(?:0|[1-9][0-9]*)
+%token T_TRUE                   (?<=\b)true\b
+%token T_FALSE                  (?<=\b)false\b
+%token T_NULL                   (?<=\b)null\b
+%token T_BLOCK_STRING           """((?:\\"|(?!""").)*)"""
+%token T_STRING                 "([^"\\]*(?:\\.[^"\\]*)*)"
+
+%token T_NAME                   [a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*
+%skip  T_WHITESPACE             \s+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Values (Input Values)
+ * --------------------------------------------------------------------------
+ *
+ * Field and directive arguments accept input values of various literal
+ * primitives; input values can be scalars, enumeration values, lists, or
+ * input objects.
+ *
+ * If not defined as constant (for example, in DefaultValue), input
+ * values can be specified as a variable. List and inputs objects may
+ * also contain variables (unless defined to be constant).
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Values
+ */
+
+%pragma root Document
+
+Document -> { return [$children]; } ::= Value();
+
+Value
+  : IntValue()
+  | FloatValue()
+  | StringValue()
+  | BooleanValue()
+  | NullValue()
+  | EnumValue()
+  | ListValue()
+  | ObjectValue()
+  ;
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Boolean Values
+ * --------------------------------------------------------------------------
+ *
+ * The two keywords true and false represent the two boolean values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Boolean-Value
+ */
+
+BooleanValue -> {
+    return Value\BooleanValue::parse($children->getName() === 'T_TRUE');
+}
+  : <T_FALSE>
+  | <T_TRUE>
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Boolean Values
+ * --------------------------------------------------------------------------
+ *
+ * Enum values are represented as unquoted names (ex. MOBILE_WEB). It is
+ * recommended that Enum values be “all caps”. Enum values are only used
+ * in contexts where the precise enumeration type is known. Therefore it’s
+ * not necessary to supply an enumeration type name in the literal.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#EnumValue
+ */
+
+EnumValue -> {
+    return Value\EnumValue::parse($children->getValue());
+}
+  : <T_NAME>
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL List Values
+ * --------------------------------------------------------------------------
+ *
+ * Lists are ordered sequences of values wrapped in square‐brackets [ ].
+ * The values of a List literal may be any value literal or variable
+ * (ex. [1, 2, 3]).
+ *
+ * Commas are optional throughout GraphQL so trailing commas are allowed
+ * and repeated commas do not represent missing values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-List-Value
+ */
+
+ListValue -> {
+    return Value\ListValue::parse($children);
+}
+  : ::T_BRACKET_OPEN::
+      (Value() ::T_COMMA::?)*
+    ::T_BRACKET_CLOSE::
+  ;
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Null Values
+ * --------------------------------------------------------------------------
+ *
+ * Null values are represented as the keyword null.
+ *
+ * GraphQL has two semantically different ways to represent the lack
+ * of a value:
+ *     - Explicitly providing the literal value: null.
+ *     - Implicitly not providing a value at all.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Null-Value
+ */
+
+NullValue -> {
+    return Value\NullValue::parse();
+}
+  : ::T_NULL::
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Int Value
+ * --------------------------------------------------------------------------
+ *
+ * An Int number is specified without a decimal point or exponent (ex. 1).
+ *
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Int-Value
+ */
+
+IntValue -> {
+    return Value\IntValue::parse($children->getValue());
+}
+  : <T_INT>
+  ;
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Float Value
+ * --------------------------------------------------------------------------
+ *
+ * A Float number includes either a decimal point (ex. 1.0) or an exponent
+ * (ex. 1e50) or both (ex. 6.0221413e23).
+ *
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Float-Value
+ */
+
+FloatValue -> {
+    return Value\FloatValue::parse($children->getValue());
+}
+  : <T_FLOAT>
+  | <T_FLOAT_EXP>
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Object Values (Input Object Values)
+ * --------------------------------------------------------------------------
+ *
+ * Input object literal values are unordered lists of keyed input values
+ * wrapped in curly‐braces { }. The values of an object literal may be any
+ * input value literal or variable (ex.  { name: "Hello world", score: 1.0 }).
+ * We refer to literal representation of input objects as “object literals.”
+ *
+ * NOTE: Input object fields are unordered
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Object-Values
+ */
+
+ObjectValue -> {
+    $result = [];
+
+    for ($i = 0, $count = \count((array)$children); $i < $count; $i += 2) {
+        $result[$children[$i]->getValue()] = $children[$i + 1];
+    }
+
+    return Value\InputObjectValue::parse($result);
+}
+  : ::T_BRACE_OPEN:: ObjectField()* ::T_BRACE_CLOSE::
+  ;
+
+ObjectField
+  : <T_NAME> ::T_COLON:: Value()
+    ::T_COMMA::?
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Strings and Block Strings
+ * --------------------------------------------------------------------------
+ *
+ * Strings are sequences of characters wrapped in double‐quotes (").
+ * (ex. "Hello World"). White space and other otherwise‐ignored characters
+ * are significant within a string value.
+ *
+ * Block strings are sequences of characters wrapped in triple‐quotes
+ * ("""). White space, line terminators, quote, and backslash characters
+ * may all be used unescaped to enable verbatim text.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-String-Value
+ */
+
+StringValue
+  : BlockStringValue()
+  | InlineStringValue()
+  ;
+
+BlockStringValue -> {
+    return Value\StringValue::parse(\substr($children->getValue(), 3, -3));
+}
+  : <T_BLOCK_STRING>
+  ;
+
+InlineStringValue -> {
+    return Value\StringValue::parse(\substr($children->getValue(), 1, -1));
+}
+  : <T_STRING>
+  ;

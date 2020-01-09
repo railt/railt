@@ -13,7 +13,7 @@ namespace Railt\Contracts\Http;
 
 use Railt\Contracts\Common\ArrayableInterface;
 use Railt\Contracts\Common\JsonableInterface;
-use Railt\Contracts\Common\RenderableInterface;
+use Railt\Contracts\Common\StringableInterface;
 use Railt\Contracts\Http\Request\OperationNameInterface;
 use Railt\Contracts\Http\Request\QueryInterface;
 use Railt\Contracts\Http\Request\VariablesInterface;
@@ -27,6 +27,6 @@ interface RequestInterface extends
     OperationNameInterface,
     ArrayableInterface,
     JsonableInterface,
-    RenderableInterface
+    StringableInterface
 {
 }

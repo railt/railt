@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Common\RenderableTrait;
+use Railt\Common\StringableTrait;
 use Railt\Http\Response\DataTrait;
 use Railt\Http\Response\ErrorsTrait;
 use Railt\Http\Response\ExceptionsTrait;
@@ -27,7 +27,7 @@ final class Response implements ResponseInterface
     use ErrorsTrait;
     use ExceptionsTrait;
     use ExtensionsTrait;
-    use RenderableTrait;
+    use StringableTrait;
 
     /**
      * @var string

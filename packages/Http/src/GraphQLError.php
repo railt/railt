@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Common\JsonableTrait;
-use Railt\Common\RenderableTrait;
+use Railt\Common\StringableTrait;
 use Railt\Http\Error\LocationsTrait;
 use Railt\Http\Response\ExtensionsTrait;
 use Railt\Contracts\Http\GraphQLErrorInterface;
@@ -26,7 +26,7 @@ class GraphQLError extends \Exception implements GraphQLErrorInterface
     use JsonableTrait;
     use LocationsTrait;
     use ExtensionsTrait;
-    use RenderableTrait {
+    use StringableTrait {
         __toString as private render;
     }
 

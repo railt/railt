@@ -72,9 +72,9 @@ trait ConfigurationTrait
 
     /**
      * @param mixed $config
-     * @return \Throwable
+     * @return string
      */
-    private function configurationErrorMessage($config): \Throwable
+    private function configurationErrorMessage($config): string
     {
         $error = 'Configuration format should be an array or instanceof %s, but %s given';
 

@@ -27,15 +27,16 @@
         "php": ">=7.4",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "phplrt/parser": "^2.2",
-        "phplrt/lexer": "^2.2",
-        "phplrt/position": "^2.2",
-        "phplrt/visitor": "^2.2",
+        "phplrt/parser": "^2.3",
+        "phplrt/lexer": "^2.3",
+        "phplrt/position": "^2.3",
+        "phplrt/visitor": "^2.3",
+        "phplrt/grammar": "^2.3",
         "psr/simple-cache": "^1.0",
         "cache/array-adapter": "^1.0",
         "railt/contracts": "^2.0",
         "railt/common": "^2.0",
-        "graphql/type-system": "^14.0|dev-master@dev"
+        "railt/type-system": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -43,8 +44,9 @@
         }
     },
     "require-dev": {
+        "symfony/console": "~3.4|~4.0|~5.0",
         "phpunit/phpunit": "^8.3",
-        "phplrt/compiler": "^2.2",
+        "phplrt/compiler": "^2.3",
         "twig/twig": "~2.12"
     },
     "autoload-dev": {

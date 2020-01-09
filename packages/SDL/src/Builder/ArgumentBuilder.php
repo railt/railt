@@ -13,7 +13,7 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use GraphQL\TypeSystem\Argument;
+use Railt\TypeSystem\Argument;
 use Railt\SDL\Ast\Definition\ArgumentDefinitionNode;
 
 /**

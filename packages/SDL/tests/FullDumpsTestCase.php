@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Tests\Unit;
+namespace Railt\SDL\Tests;
 
 use Phplrt\Source\File;
 use Railt\SDL\Parser\Parser;

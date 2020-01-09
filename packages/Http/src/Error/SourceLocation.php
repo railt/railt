@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Error;
 
-use Railt\Common\RenderableTrait;
+use Railt\Common\StringableTrait;
 use Railt\Contracts\Http\Error\SourceLocationInterface;
 
 /**
@@ -19,7 +19,7 @@ use Railt\Contracts\Http\Error\SourceLocationInterface;
  */
 final class SourceLocation implements SourceLocationInterface
 {
-    use RenderableTrait;
+    use StringableTrait;
 
     /**
      * @var int
