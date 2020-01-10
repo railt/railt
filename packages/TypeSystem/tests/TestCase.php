@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace GraphQL\Type\Tests;
+namespace Railt\TypeSystem\Tests;
 
 use PHPUnit\Framework\TestCase as AbstractTestCase;
 

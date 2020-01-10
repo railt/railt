@@ -13,19 +13,72 @@ namespace Railt\TypeSystem\Type;
 
 use GraphQL\Contracts\TypeSystem\EnumValueInterface;
 use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
-use Railt\Common\Iter;
+use Railt\TypeSystem\Exception\TypeUniquenessException;
 use Serafim\Immutable\Immutable;
 
 /**
  * {@inheritDoc}
  */
-class EnumType extends NamedType implements EnumTypeInterface
+final class EnumType extends NamedType implements EnumTypeInterface
 {
+    /**
+     * @var string
+     */
+    private const ERROR_VALUE_UNIQUENESS = 'Enum "%s" must contain only one value named "%s"';
+
     /**
      * @psalm-var array<string, EnumValueInterface>
      * @var array|EnumValueInterface[]
      */
     protected array $values = [];
+
+    /**
+     * EnumType constructor.
+     *
+     * @param string $name
+     * @param iterable $properties
+     * @throws \Throwable
+     */
+    public function __construct(string $name, iterable $properties = [])
+    {
+        parent::__construct($name, $properties);
+
+        $this->fill($properties, [
+            'values' => fn(iterable $values) => $this->addValues($values),
+        ]);
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param iterable|EnumValueInterface[] $values
+     * @return void
+     */
+    public function addValues(iterable $values): void
+    {
+        foreach ($values as $value) {
+            $this->addValue($value);
+        }
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param EnumValueInterface $value
+     * @return void
+     */
+    public function addValue(EnumValueInterface $value): void
+    {
+        if (isset($this->values[$value->getName()])) {
+            $message = \sprintf(self::ERROR_VALUE_UNIQUENESS, $this->getName(), $value->getName());
+
+            throw new TypeUniquenessException($message);
+        }
+
+        $this->values[$value->getName()] = $value;
+    }
 
     /**
      * {@inheritDoc}
@@ -52,20 +105,6 @@ class EnumType extends NamedType implements EnumTypeInterface
     }
 
     /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param iterable|EnumValueInterface[] $values
-     * @return void
-     */
-    public function setValues(iterable $values): void
-    {
-        $this->values = Iter::mapToArray($values, static function (EnumValueInterface $value): array {
-            return [$value->getName() => $value];
-        });
-    }
-
-    /**
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
@@ -74,7 +113,7 @@ class EnumType extends NamedType implements EnumTypeInterface
      */
     public function withValues(iterable $values): self
     {
-        return Immutable::execute(fn() => $this->setValues($values));
+        return Immutable::execute(fn() => $this->addValues($values));
     }
 
     /**
@@ -87,18 +126,6 @@ class EnumType extends NamedType implements EnumTypeInterface
     public function withValue(EnumValueInterface $value): self
     {
         return Immutable::execute(fn() => $this->addValue($value));
-    }
-
-    /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param EnumValueInterface $value
-     * @return void
-     */
-    public function addValue(EnumValueInterface $value): void
-    {
-        $this->values[$value->getName()] = $value;
     }
 
     /**

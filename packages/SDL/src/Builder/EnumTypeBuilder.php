@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
-use Railt\TypeSystem\Type\EnumType;
 use Railt\SDL\Ast\Definition\EnumTypeDefinitionNode;
+use Railt\TypeSystem\Type\EnumType;
 
 /**
  * @property EnumTypeDefinitionNode $ast

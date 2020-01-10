@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Railt\TypeSystem;
 
 use GraphQL\Contracts\TypeSystem\DirectiveInterface;
-use Railt\Common\Iter;
 use Railt\TypeSystem\Common\ArgumentsTrait;
 use Railt\TypeSystem\Common\DescriptionTrait;
 use Railt\TypeSystem\Common\NameTrait;
@@ -21,7 +20,7 @@ use Serafim\Immutable\Immutable;
 /**
  * {@inheritDoc}
  */
-class Directive extends Definition implements DirectiveInterface
+final class Directive extends Definition implements DirectiveInterface
 {
     use NameTrait;
     use ArgumentsTrait;
@@ -39,6 +38,50 @@ class Directive extends Definition implements DirectiveInterface
     protected bool $repeatable = false;
 
     /**
+     * Directive constructor.
+     *
+     * @param string $name
+     * @param iterable $properties
+     * @throws \Throwable
+     */
+    public function __construct(string $name, iterable $properties = [])
+    {
+        $this->setName($name);
+
+        $this->fill($properties, [
+            'arguments'   => fn(iterable $arguments) => $this->addArguments($arguments),
+            'description' => fn(?string $description) => $this->setDescription($description),
+            'locations'   => fn(iterable $locations) => $this->addLocations($locations),
+            'repeatable'  => fn(bool $repeatable) => $this->setRepeatable($repeatable),
+        ]);
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param iterable|string[] $locations
+     * @return void
+     */
+    public function addLocations(iterable $locations): void
+    {
+        foreach ($locations as $location) {
+            $this->addLocation($location);
+        }
+    }
+
+    /**
+     * @param string $location
+     * @return object|self|$this
+     */
+    public function addLocation(string $location): self
+    {
+        $this->locations[] = $location;
+
+        return $this;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function isRepeatable(): bool
@@ -53,7 +96,7 @@ class Directive extends Definition implements DirectiveInterface
      * @param bool $repeatable
      * @return void
      */
-    public function setRepeatable(bool $repeatable): void
+    public function setRepeatable(bool $repeatable = true): void
     {
         $this->repeatable = $repeatable;
     }
@@ -79,19 +122,6 @@ class Directive extends Definition implements DirectiveInterface
     }
 
     /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param iterable|string[] $locations
-     * @return void
-     */
-    public function setLocations(iterable $locations): void
-    {
-        /** @psalm-suppress MixedPropertyTypeCoercion */
-        $this->locations = Iter::toArray($locations, false);
-    }
-
-    /**
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
@@ -100,23 +130,16 @@ class Directive extends Definition implements DirectiveInterface
      */
     public function withLocations(iterable $locations): self
     {
-        return Immutable::execute(fn() => $this->setLocations($locations));
+        return Immutable::execute(fn() => $this->addLocations($locations));
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
      * @param string $location
      * @return object|self|$this
      */
     public function withLocation(string $location): self
     {
-        return Immutable::execute(function () use ($location): void {
-            if (! $this->hasLocation($location)) {
-                $this->locations[] = $location;
-            }
-        });
+        return Immutable::execute(fn() => $this->addLocation($location));
     }
 
     /**
@@ -128,20 +151,27 @@ class Directive extends Definition implements DirectiveInterface
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
      *
      * @param string $location
      * @return object|self|$this
      */
     public function withoutLocation(string $location): self
     {
-        return Immutable::execute(function () use ($location): void {
-            $index = \array_search($location, $this->locations, true);
+        return Immutable::execute(fn() => $this->removeLocation($location));
+    }
 
-            if ($index !== false) {
-                unset($this->locations[$index]);
-            }
-        });
+    /**
+     * @param string $location
+     * @return object|self|$this
+     */
+    public function removeLocation(string $location): self
+    {
+        $index = \array_search($location, $this->locations, true);
+
+        if ($index !== false) {
+            unset($this->locations[$index]);
+        }
+
+        return $this;
     }
 }

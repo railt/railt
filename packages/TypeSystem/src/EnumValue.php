@@ -11,16 +11,16 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-use Railt\TypeSystem\Common\NameTrait;
-use Railt\TypeSystem\Common\DescriptionTrait;
-use Railt\TypeSystem\Common\DeprecationTrait;
 use GraphQL\Contracts\TypeSystem\EnumValueInterface;
+use Railt\TypeSystem\Common\DeprecationTrait;
+use Railt\TypeSystem\Common\DescriptionTrait;
+use Railt\TypeSystem\Common\NameTrait;
 use Serafim\Immutable\Immutable;
 
 /**
  * {@inheritDoc}
  */
-class EnumValue extends Definition implements EnumValueInterface
+final class EnumValue extends Definition implements EnumValueInterface
 {
     use NameTrait;
     use DescriptionTrait;
@@ -32,23 +32,30 @@ class EnumValue extends Definition implements EnumValueInterface
     protected $value;
 
     /**
+     * EnumValue constructor.
+     *
+     * @param string $name
+     * @param iterable $properties
+     * @throws \Throwable
+     */
+    public function __construct(string $name, iterable $properties = [])
+    {
+        $this->setName($name);
+        $this->setValue($name);
+
+        $this->fill($properties, [
+            'value'             => fn($value) => $this->setValue($value),
+            'description'       => fn(?string $description) => $this->setDescription($description),
+            'deprecationReason' => fn(?string $message) => $this->setDeprecationReason($message),
+        ]);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
-     * @param mixed $value
-     * @return object|self|$this
-     */
-    public function withValue($value): self
-    {
-        return Immutable::execute(fn() => $this->setValue($value));
     }
 
     /**
@@ -61,5 +68,17 @@ class EnumValue extends Definition implements EnumValueInterface
     public function setValue($value): void
     {
         $this->value = $value;
+    }
+
+    /**
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-return self
+     *
+     * @param mixed $value
+     * @return object|self|$this
+     */
+    public function withValue($value): self
+    {
+        return Immutable::execute(fn() => $this->setValue($value));
     }
 }

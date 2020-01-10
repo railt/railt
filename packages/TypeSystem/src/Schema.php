@@ -18,94 +18,112 @@ use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\UnionTypeInterface;
-use Railt\Common\Iter;
+use Railt\TypeSystem\Collection\Directives;
+use Railt\TypeSystem\Collection\TypeMap;
+use Railt\TypeSystem\Reference\Reference;
+use Railt\TypeSystem\Reference\TypeReferenceInterface;
 use Serafim\Immutable\Immutable;
 
 /**
  * {@inheritDoc}
  */
-class Schema extends Definition implements SchemaInterface
+final class Schema extends Definition implements SchemaInterface
 {
     /**
-     * @var ObjectTypeInterface|null
+     * @var TypeReferenceInterface|null
      */
-    protected ?ObjectTypeInterface $query = null;
+    protected ?TypeReferenceInterface $query = null;
 
     /**
-     * @var ObjectTypeInterface|null
+     * @var TypeReferenceInterface|null
      */
-    protected ?ObjectTypeInterface $mutation = null;
+    protected ?TypeReferenceInterface $mutation = null;
 
     /**
-     * @var ObjectTypeInterface|null
+     * @var TypeReferenceInterface|null
      */
-    protected ?ObjectTypeInterface $subscription = null;
+    protected ?TypeReferenceInterface $subscription = null;
 
     /**
-     * @psalm-var array<string, NamedTypeInterface>
-     * @var array|NamedTypeInterface[]
+     * @psalm-var TypeMap<string, NamedTypeInterface>
+     * @var TypeMap|NamedTypeInterface[]
      */
-    protected array $typeMap = [];
+    protected TypeMap $typeMap;
 
     /**
-     * @psalm-var array<string, DirectiveInterface>
-     * @var array|DirectiveInterface[]
+     * @psalm-var Directives<string, DirectiveInterface>
+     * @var Directives|DirectiveInterface[]
      */
-    protected array $directives = [];
+    protected Directives $directives;
 
     /**
-     * {@inheritDoc}
-     */
-    public function getQueryType(): ?ObjectTypeInterface
-    {
-        return $this->query;
-    }
-
-    /**
-     * @internal This is an alias of Schema::withQueryType() method.
-     * @psalm-return self
+     * Schema constructor.
      *
-     * @param ObjectTypeInterface|null $object
-     * @return object|self|$this
+     * @param iterable $properties
+     * @throws \Throwable
      */
-    public function withQuery(?ObjectTypeInterface $object): self
+    public function __construct(iterable $properties = [])
     {
-        return $this->withQueryType($object);
-    }
+        $this->typeMap = new TypeMap();
+        $this->directives = new Directives();
 
-    /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
-     * @param ObjectTypeInterface|null $object
-     * @return object|self|$this
-     */
-    public function withQueryType(?ObjectTypeInterface $object): self
-    {
-        return Immutable::execute(fn() => $this->setQuery($object));
+        $this->fill($properties, [
+            'query'        => fn(TypeReferenceInterface $ref) => $this->setQueryType($ref),
+            'mutation'     => fn(TypeReferenceInterface $ref) => $this->setMutationType($ref),
+            'subscription' => fn(TypeReferenceInterface $ref) => $this->setSubscriptionType($ref),
+            'typeMap'      => fn(iterable $types) => $this->addTypes($types),
+            'directives'   => fn(iterable $directives) => $this->addDirectives($directives),
+        ]);
     }
 
     /**
      * @internal Please note that this method changes the internals of the current
      *           object, and its improper use can violate the integrity of the data.
      *
-     * @param ObjectTypeInterface|null $object
+     * @param TypeReferenceInterface|null $object
      * @return void
      */
-    public function setQuery(?ObjectTypeInterface $object): void
+    public function setQueryType(?TypeReferenceInterface $object): void
     {
-        if (($this->query = $object) && ! $this->hasType($this->query->getName())) {
-            $this->addType($this->query);
-        }
+        $this->query = $object;
     }
 
     /**
-     * @param string $name
-     * @return bool
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param TypeReferenceInterface|null $object
+     * @return void
      */
-    public function hasType(string $name): bool
+    public function setMutationType(?TypeReferenceInterface $object): void
     {
-        return isset($this->typeMap[$name]);
+        $this->mutation = $object;
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param TypeReferenceInterface|null $object
+     * @return void
+     */
+    public function setSubscriptionType(?TypeReferenceInterface $object): void
+    {
+        $this->subscription = $object;
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param NamedTypeInterface[] $types
+     * @return void
+     */
+    public function addTypes(iterable $types): void
+    {
+        foreach ($types as $type) {
+            $this->addType($type);
+        }
     }
 
     /**
@@ -123,47 +141,41 @@ class Schema extends Definition implements SchemaInterface
     /**
      * {@inheritDoc}
      */
-    public function getMutationType(): ?ObjectTypeInterface
+    public function getQueryType(): ?ObjectTypeInterface
     {
-        return $this->mutation;
-    }
-
-    /**
-     * @internal This is an alias of Schema::withMutationType() method.
-     * @psalm-return self
-     *
-     * @param ObjectTypeInterface|null $object
-     * @return object|self|$this
-     */
-    public function withMutation(?ObjectTypeInterface $object): self
-    {
-        return $this->withMutationType($object);
+        return Reference::resolveNullable($this, $this->query, ObjectTypeInterface::class);
     }
 
     /**
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
-     * @param ObjectTypeInterface|null $object
+     * @param TypeReferenceInterface|null $object
      * @return object|self|$this
      */
-    public function withMutationType(?ObjectTypeInterface $object): self
+    public function withQueryType(?TypeReferenceInterface $object): self
     {
-        return Immutable::execute(fn() => $this->setMutation($object));
+        return Immutable::execute(fn() => $this->setQueryType($object));
     }
 
     /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param ObjectTypeInterface|null $object
-     * @return void
+     * {@inheritDoc}
      */
-    public function setMutation(?ObjectTypeInterface $object): void
+    public function getMutationType(): ?ObjectTypeInterface
     {
-        if (($this->mutation = $object) && ! $this->hasType($this->mutation->getName())) {
-            $this->addType($this->mutation);
-        }
+        return Reference::resolveNullable($this, $this->mutation, ObjectTypeInterface::class);
+    }
+
+    /**
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-return self
+     *
+     * @param TypeReferenceInterface|null $object
+     * @return object|self|$this
+     */
+    public function withMutationType(?TypeReferenceInterface $object): self
+    {
+        return Immutable::execute(fn() => $this->setMutationType($object));
     }
 
     /**
@@ -171,45 +183,25 @@ class Schema extends Definition implements SchemaInterface
      */
     public function getSubscriptionType(): ?ObjectTypeInterface
     {
-        return $this->subscription;
+        return Reference::resolveNullable($this, $this->subscription, ObjectTypeInterface::class);
     }
 
     /**
-     * @internal This is an alias of Schema::withSubscriptionType() method.
-     * @psalm-return self
-     *
-     * @param ObjectTypeInterface|null $object
+     * @param TypeReferenceInterface|null $object
      * @return object|self|$this
      */
-    public function withSubscription(?ObjectTypeInterface $object): self
+    public function withSubscriptionType(?TypeReferenceInterface $object): self
     {
-        return $this->withSubscriptionType($object);
+        return Immutable::execute(fn() => $this->setSubscriptionType($object));
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
-     * @param ObjectTypeInterface|null $object
-     * @return object|self|$this
+     * @param string $name
+     * @return bool
      */
-    public function withSubscriptionType(?ObjectTypeInterface $object): self
+    public function hasType(string $name): bool
     {
-        return Immutable::execute(fn() => $this->setSubscription($object));
-    }
-
-    /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param ObjectTypeInterface|null $object
-     * @return void
-     */
-    public function setSubscription(?ObjectTypeInterface $object): void
-    {
-        if (($this->subscription = $object) && ! $this->hasType($this->subscription->getName())) {
-            $this->addType($this->subscription);
-        }
+        return isset($this->typeMap[$name]);
     }
 
     /**
@@ -221,9 +213,6 @@ class Schema extends Definition implements SchemaInterface
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
      * @param NamedTypeInterface $type
      * @return object|self|$this
      */
@@ -233,9 +222,15 @@ class Schema extends Definition implements SchemaInterface
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
+     * @param NamedTypeInterface[] $types
+     * @return object|self|$this
+     */
+    public function withTypes(iterable $types): self
+    {
+        return Immutable::execute(fn() => $this->addTypes($types));
+    }
+
+    /**
      * @param string $name
      * @return object|self|$this
      */
@@ -277,20 +272,6 @@ class Schema extends Definition implements SchemaInterface
     }
 
     /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param iterable|NamedTypeInterface[] $typeMap
-     * @return void
-     */
-    public function setTypeMap(iterable $typeMap): void
-    {
-        $this->typeMap = Iter::mapToArray($typeMap, static function (NamedTypeInterface $type): array {
-            return [$type->getName() => $type];
-        });
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function isPossibleType(AbstractTypeInterface $abstract, ObjectTypeInterface $possible): bool
@@ -308,37 +289,11 @@ class Schema extends Definition implements SchemaInterface
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
-     * @param iterable|NamedTypeInterface[] $typeMap
-     * @return object|self|$this
-     */
-    public function withTypeMap(iterable $typeMap): self
-    {
-        return Immutable::execute(fn() => $this->setTypeMap($typeMap));
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function getDirectives(): iterable
     {
         return $this->directives;
-    }
-
-    /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param iterable|DirectiveInterface[] $directives
-     * @return void
-     */
-    public function setDirectives(iterable $directives): void
-    {
-        $this->directives = Iter::mapToArray($directives, static function (DirectiveInterface $directive): array {
-            return [$directive->getName() => $directive];
-        });
     }
 
     /**
@@ -350,21 +305,6 @@ class Schema extends Definition implements SchemaInterface
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
-     * @param iterable|DirectiveInterface[] $directives
-     * @return object|self|$this
-     */
-    public function withDirectives(iterable $directives): self
-    {
-        return Immutable::execute(fn() => $this->setDirectives($directives));
-    }
-
-    /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
      * @param DirectiveInterface $directive
      * @return object|self|$this
      */
@@ -374,9 +314,6 @@ class Schema extends Definition implements SchemaInterface
     }
 
     /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
      * @param DirectiveInterface $directive
      * @return void
      */
@@ -386,9 +323,26 @@ class Schema extends Definition implements SchemaInterface
     }
 
     /**
-     * @psalm-suppress LessSpecificReturnStatement
-     * @psalm-return self
-     *
+     * @param DirectiveInterface[] $directives
+     * @return object|self|$this
+     */
+    public function withDirectives(iterable $directives): self
+    {
+        return Immutable::execute(fn() => $this->addDirectives($directives));
+    }
+
+    /**
+     * @param DirectiveInterface[] $directives
+     * @return void
+     */
+    public function addDirectives(iterable $directives): void
+    {
+        foreach ($directives as $directive) {
+            $this->addDirective($directive);
+        }
+    }
+
+    /**
      * @param string $name
      * @return object|self|$this
      */
@@ -419,7 +373,7 @@ class Schema extends Definition implements SchemaInterface
         foreach (['query', 'mutation', 'subscription'] as $property) {
             if (\property_exists($this, $property) && $this->$property !== null) {
                 /** @var ObjectTypeInterface $context */
-                $context = $this->$property;
+                $context = Reference::resolve($this, $this->$property, ObjectTypeInterface::class);
 
                 /**
                  * @psalm-suppress MixedMethodCall

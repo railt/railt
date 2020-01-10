@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Type;
 
-use Railt\TypeSystem\Common\NameTrait;
-use Railt\TypeSystem\Common\DescriptionTrait;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use Railt\TypeSystem\Common\DescriptionTrait;
+use Railt\TypeSystem\Common\NameTrait;
 
 /**
  * {@inheritDoc}
@@ -22,4 +22,20 @@ abstract class NamedType extends Type implements NamedTypeInterface
 {
     use NameTrait;
     use DescriptionTrait;
+
+    /**
+     * NamedType constructor.
+     *
+     * @param string $name
+     * @param iterable $properties
+     * @throws \Throwable
+     */
+    public function __construct(string $name, iterable $properties = [])
+    {
+        $this->setName($name);
+
+        $this->fill($properties, [
+            'description' => fn(?string $description) => $this->setDescription($description),
+        ]);
+    }
 }

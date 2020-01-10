@@ -26,13 +26,16 @@ use Railt\TypeSystem\Directive;
 use Railt\TypeSystem\EnumValue;
 use Railt\TypeSystem\Field;
 use Railt\TypeSystem\InputField;
+use Railt\TypeSystem\Reference\TypeReference;
+use Railt\TypeSystem\Reference\TypeReferenceInterface;
+use Railt\TypeSystem\Schema;
 use Railt\TypeSystem\Type\ListType;
 use Railt\TypeSystem\Type\NonNullType;
 
 /**
  * Class Registry
  */
-class Registry implements RegistryInterface
+class Registry
 {
     /**
      * @var string
@@ -67,13 +70,20 @@ class Registry implements RegistryInterface
     private Parser $parser;
 
     /**
+     * @var Schema
+     */
+    private Schema $schema;
+
+    /**
      * Registry constructor.
      *
+     * @param Schema $schema
      * @param array $types
      * @throws IntrospectionException
      */
-    public function __construct(array $types)
+    public function __construct(Schema $schema, array $types)
     {
+        $this->schema = $schema;
         $this->parser = new Parser();
 
         $this->preloadTypes($types);
@@ -113,11 +123,9 @@ class Registry implements RegistryInterface
     {
         $arguments = \array_map(fn(array $data) => $this->argument($data), $field['args'] ?? []);
 
-        return new Field([
-            'name'              => $field['name'],
+        return new Field($field['name'], $this->type($field['type']), [
             'description'       => $field['description'] ?? null,
             'arguments'         => $arguments,
-            'type'              => $this->type($field['type']),
             'deprecationReason' => $field['deprecationReason'] ?? null,
         ]);
     }
@@ -129,35 +137,57 @@ class Registry implements RegistryInterface
      */
     public function argument(array $argument): ArgumentInterface
     {
-        $result = new Argument([
-            'name'        => $argument['name'],
-            'description' => $argument['description'] ?? null,
-            'type'        => $this->type($argument['type']),
+        return new Argument($argument['name'], $this->type($argument['type']), [
+            'description'  => $argument['description'] ?? null,
+            'defaultValue' => $this->parseDefaultValue($argument['defaultValue']),
         ]);
-
-        if (isset($argument['defaultValue'])) {
-            $result->setDefaultValue($this->parseDefaultValue($argument['defaultValue']));
-        }
-
-        return $result;
     }
 
     /**
      * @param array $type
-     * @return TypeInterface
+     * @return TypeInterface|TypeReferenceInterface
      * @throws \Throwable
      */
-    public function type(array $type): TypeInterface
+    public function type(array $type)
     {
         switch ($type['kind']) {
             case 'NON_NULL':
-                return new NonNullType(['ofType' => $this->type($type['ofType'])]);
+                return new NonNullType($this->type($type['ofType']));
 
             case 'LIST':
-                return new ListType(['ofType' => $this->type($type['ofType'])]);
+                return new ListType($this->type($type['ofType']));
 
             default:
-                return $this->get($type['name']);
+                return $this->reference($type['name']);
+        }
+    }
+
+    /**
+     * @param string $name
+     * @return TypeReferenceInterface
+     */
+    public function reference(string $name): TypeReferenceInterface
+    {
+        return new TypeReference($this->schema, $name);
+    }
+
+    /**
+     * @param mixed $value
+     * @return bool|int|mixed|string|array|null
+     * @throws \Throwable
+     */
+    protected function parseDefaultValue($value)
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        try {
+            $result = $this->parser->parse($value);
+
+            return $result[0][0];
+        } catch (ParserRuntimeExceptionInterface $e) {
+            throw new IntrospectionException('Can not parse default value ' . $value);
         }
     }
 
@@ -178,22 +208,6 @@ class Registry implements RegistryInterface
     }
 
     /**
-     * @param mixed $value
-     * @return bool|int|mixed|string|array|null
-     * @throws \Throwable
-     */
-    protected function parseDefaultValue($value)
-    {
-        try {
-            $result = $this->parser->parse($value);
-
-            return $result[0][0];
-        } catch (ParserRuntimeExceptionInterface $e) {
-            throw new IntrospectionException('Can not parse default value ' . $value);
-        }
-    }
-
-    /**
      * @param array $directive
      * @return DirectiveInterface
      * @throws \Throwable
@@ -204,8 +218,7 @@ class Registry implements RegistryInterface
             $field['args'] ?? []
         );
 
-        return new Directive([
-            'name'        => $directive['name'],
+        return new Directive($directive['name'], [
             'description' => $directive['description'] ?? null,
             'locations'   => $directive['locations'] ?? [],
             'arguments'   => $arguments,
@@ -219,17 +232,10 @@ class Registry implements RegistryInterface
      */
     public function inputField(array $field): InputFieldInterface
     {
-        $result = new InputField([
-            'name'         => $field['name'],
+        return new InputField($field['name'], $this->type($field['type']), [
             'description'  => $field['description'] ?? null,
-            'type'         => $this->type($field['type']),
+            'defaultValue' => $this->parseDefaultValue($field['defaultValue']),
         ]);
-
-        if (isset($field['defaultValue'])) {
-            $result->setDefaultValue($this->parseDefaultValue($field['defaultValue']));
-        }
-
-        return $result;
     }
 
     /**
@@ -239,16 +245,14 @@ class Registry implements RegistryInterface
      */
     public function enumValue(array $value): EnumValueInterface
     {
-        return new EnumValue([
-            'name'              => $value['name'],
-            'value'             => $value['name'],
+        return new EnumValue($value['name'], [
             'description'       => $value['description'] ?? null,
             'deprecationReason' => $value['deprecationReason'] ?? null,
         ]);
     }
 
     /**
-     * @return \Traversable
+     * @return \Traversable|NamedTypeInterface[]
      */
     public function build(): \Traversable
     {

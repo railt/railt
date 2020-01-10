@@ -16,7 +16,7 @@ use GraphQL\Contracts\TypeSystem\Type\ListTypeInterface;
 /**
  * {@inheritDoc}
  */
-class ListType extends WrappingType implements ListTypeInterface
+final class ListType extends WrappingType implements ListTypeInterface
 {
     /**
      * {@inheritDoc}

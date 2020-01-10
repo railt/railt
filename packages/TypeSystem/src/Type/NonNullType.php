@@ -16,7 +16,7 @@ use GraphQL\Contracts\TypeSystem\Type\NonNullTypeInterface;
 /**
  * {@inheritDoc}
  */
-class NonNullType extends WrappingType implements NonNullTypeInterface
+final class NonNullType extends WrappingType implements NonNullTypeInterface
 {
     /**
      * {@inheritDoc}

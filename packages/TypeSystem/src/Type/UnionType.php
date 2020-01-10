@@ -11,21 +11,75 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Type;
 
-use GraphQL\Contracts\TypeSystem\Type\UnionTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
-use Railt\Common\Iter;
+use GraphQL\Contracts\TypeSystem\Type\UnionTypeInterface;
+use Railt\TypeSystem\Exception\TypeUniquenessException;
+use Railt\TypeSystem\Reference\TypeReferenceInterface;
 use Serafim\Immutable\Immutable;
 
 /**
  * {@inheritDoc}
  */
-class UnionType extends NamedType implements UnionTypeInterface
+final class UnionType extends NamedType implements UnionTypeInterface
 {
     /**
-     * @psalm-var array<string, ObjectTypeInterface>
-     * @var array|ObjectTypeInterface[]
+     * @var string
+     */
+    private const ERROR_TYPE_UNIQUENESS = 'Union "%s" must contain only one type named "%s"';
+
+    /**
+     * @psalm-var array<string, TypeReferenceInterface>
+     * @var array|TypeReferenceInterface[]
      */
     protected array $types = [];
+
+    /**
+     * UnionType constructor.
+     *
+     * @param string $name
+     * @param iterable $properties
+     * @throws \Throwable
+     */
+    public function __construct(string $name, iterable $properties = [])
+    {
+        parent::__construct($name, $properties);
+
+        $this->fill($properties, [
+            'types' => fn(iterable $types) => $this->addTypes($types),
+        ]);
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param TypeReferenceInterface[] $types
+     * @return void
+     */
+    public function addTypes(iterable $types): void
+    {
+        foreach ($types as $ref) {
+            $this->addType($ref);
+        }
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param TypeReferenceInterface $type
+     * @return void
+     */
+    public function addType(TypeReferenceInterface $type): void
+    {
+        if (isset($this->types[$type->getName()])) {
+            $message = \sprintf(self::ERROR_TYPE_UNIQUENESS, $this->getName(), $type->getName());
+
+            throw new TypeUniquenessException($message);
+        }
+
+        $this->types[$type->getName()] = $type;
+    }
 
     /**
      * {@inheritDoc}
@@ -40,7 +94,7 @@ class UnionType extends NamedType implements UnionTypeInterface
      */
     public function getType(string $name): ?ObjectTypeInterface
     {
-        return $this->types[$name] ?? null;
+        return Reference::resolveNullable($this, $this->types[$name] ?? null, ObjectTypeInterface::class);
     }
 
     /**
@@ -48,57 +102,36 @@ class UnionType extends NamedType implements UnionTypeInterface
      */
     public function getTypes(): iterable
     {
-        return $this->types;
-    }
+        foreach ($this->types as $ref) {
+            /** @var ObjectTypeInterface $object */
+            $object = Reference::resolve($this, $ref, ObjectTypeInterface::class);
 
-    /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param iterable|ObjectTypeInterface[] $types
-     * @return void
-     */
-    public function setTypes(iterable $types): void
-    {
-        $this->types = Iter::mapToArray($types, static function (ObjectTypeInterface $type): array {
-            return [$type->getName() => $type];
-        });
+            yield $object->getName() => $object;
+        }
     }
 
     /**
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
-     * @param iterable|ObjectTypeInterface[] $types
+     * @param TypeReferenceInterface[] $types
      * @return object|self|$this
      */
     public function withTypes(iterable $types): self
     {
-        return Immutable::execute(fn() => $this->setTypes($types));
+        return Immutable::execute(fn() => $this->addTypes($types));
     }
 
     /**
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
-     * @param ObjectTypeInterface $type
+     * @param TypeReferenceInterface $type
      * @return object|self|$this
      */
-    public function withType(ObjectTypeInterface $type): self
+    public function withType(TypeReferenceInterface $type): self
     {
         return Immutable::execute(fn() => $this->addType($type));
-    }
-
-    /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param ObjectTypeInterface $type
-     * @return void
-     */
-    public function addType(ObjectTypeInterface $type): void
-    {
-        $this->types[$type->getName()] = $type;
     }
 
     /**

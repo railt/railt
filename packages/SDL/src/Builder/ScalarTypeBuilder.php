@@ -13,8 +13,8 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\ScalarTypeInterface;
-use Railt\TypeSystem\Type\ScalarType;
 use Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode;
+use Railt\TypeSystem\Type\ScalarType;
 
 /**
  * @property ScalarTypeDefinitionNode $ast

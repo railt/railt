@@ -55,13 +55,25 @@ final class Location
     protected static ?array $memoized = null;
 
     /**
-     * @return array|string[]
-     * @throws \ReflectionException
+     * @param string $location
+     * @return bool
      */
-    public static function values(): array
+    public static function has(string $location): bool
+    {
+        return \in_array($location, self::all(), true);
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public static function all(): array
     {
         if (self::$memoized === null) {
-            self::$memoized = static::readValues();
+            try {
+                self::$memoized = static::readValues();
+            } catch (\ReflectionException $e) {
+                return [];
+            }
         }
 
         return self::$memoized;

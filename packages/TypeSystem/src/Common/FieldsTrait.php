@@ -11,9 +11,10 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Common;
 
-use GraphQL\Contracts\TypeSystem\FieldInterface;
 use GraphQL\Contracts\TypeSystem\Common\FieldsAwareInterface;
+use GraphQL\Contracts\TypeSystem\FieldInterface;
 use Railt\Common\Iter;
+use Railt\TypeSystem\Exception\TypeUniquenessException;
 use Serafim\Immutable\Immutable;
 
 /**
@@ -59,11 +60,11 @@ trait FieldsTrait
      * @param iterable|FieldInterface[] $fields
      * @return void
      */
-    public function setFields(iterable $fields): void
+    public function addFields(iterable $fields): void
     {
-        $this->fields = Iter::mapToArray($fields, static function (FieldInterface $field): array {
-            return [$field->getName() => $field];
-        });
+        foreach ($fields as $field) {
+            $this->addField($field);
+        }
     }
 
     /**
@@ -75,7 +76,7 @@ trait FieldsTrait
      */
     public function withFields(iterable $fields): self
     {
-        return Immutable::execute(fn() => $this->setFields($fields));
+        return Immutable::execute(fn() => $this->addFields($fields));
     }
 
     /**
@@ -87,6 +88,12 @@ trait FieldsTrait
      */
     public function addField(FieldInterface $field): void
     {
+        if (isset($this->fields[$field->getName()])) {
+            $message = \sprintf('Field %s has already been defined', $field->getName());
+
+            throw new TypeUniquenessException($message);
+        }
+
         $this->fields[$field->getName()] = $field;
     }
 

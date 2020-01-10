@@ -11,26 +11,24 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-use GraphQL\Contracts\TypeSystem\FieldInterface;
-use GraphQL\Contracts\TypeSystem\Type\OutputTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\InputTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\WrappingTypeInterface;
-use Railt\TypeSystem\Common\ArgumentsTrait;
-use Railt\TypeSystem\Common\DeprecationTrait;
+use Railt\TypeSystem\Common\DefaultValueTrait;
 use Railt\TypeSystem\Common\DescriptionTrait;
 use Railt\TypeSystem\Common\NameTrait;
 use Railt\TypeSystem\Reference\Reference;
 use Railt\TypeSystem\Reference\TypeReferenceInterface;
+use Railt\TypeSystem\Value\ValueInterface;
 use Serafim\Immutable\Immutable;
 
 /**
  * {@inheritDoc}
  */
-final class Field extends Definition implements FieldInterface
+abstract class AbstractInputField extends Definition
 {
     use NameTrait;
-    use ArgumentsTrait;
     use DescriptionTrait;
-    use DeprecationTrait;
+    use DefaultValueTrait;
 
     /**
      * @var TypeReferenceInterface|WrappingTypeInterface
@@ -50,18 +48,17 @@ final class Field extends Definition implements FieldInterface
         $this->setType($type);
 
         $this->fill($properties, [
-            'description'       => fn(?string $description) => $this->setDescription($description),
-            'arguments'         => fn(iterable $arguments) => $this->addArguments($arguments),
-            'deprecationReason' => fn(?string $message) => $this->setDeprecationReason($message),
+            'description'  => fn(?string $description) => $this->setDescription($description),
+            'defaultValue' => fn(?ValueInterface $value) => $this->setDefaultValue($value),
         ]);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getType(): OutputTypeInterface
+    public function getType(): InputTypeInterface
     {
-        return Reference::resolve($this, $this->type, OutputTypeInterface::class);
+        return Reference::resolve($this, $this->type, InputTypeInterface::class);
     }
 
     /**

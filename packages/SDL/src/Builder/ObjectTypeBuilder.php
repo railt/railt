@@ -15,10 +15,10 @@ use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
-use Railt\TypeSystem\Type\ObjectType;
 use Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode;
 use Railt\SDL\Ast\Generic\InterfaceImplementsCollection;
 use Railt\SDL\Ast\Type\NamedTypeNode;
+use Railt\TypeSystem\Type\ObjectType;
 
 /**
  * @property ObjectTypeDefinitionNode $ast

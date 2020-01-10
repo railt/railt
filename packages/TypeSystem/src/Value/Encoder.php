@@ -11,12 +11,12 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Value;
 
-use Phplrt\Lexer\Lexer;
-use Phplrt\Lexer\Token\Composite;
-use Phplrt\Contracts\Lexer\LexerInterface;
-use Phplrt\Contracts\Lexer\TokenInterface;
 use Phplrt\Contracts\Lexer\Exception\LexerExceptionInterface;
 use Phplrt\Contracts\Lexer\Exception\LexerRuntimeExceptionInterface;
+use Phplrt\Contracts\Lexer\LexerInterface;
+use Phplrt\Contracts\Lexer\TokenInterface;
+use Phplrt\Lexer\Lexer;
+use Phplrt\Lexer\Token\Composite;
 use Railt\Common\Iter;
 
 /**

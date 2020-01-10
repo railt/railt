@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Extension;
 
-use Railt\TypeSystem\Schema;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
 use Railt\SDL\Ast\Extension\SchemaExtensionNode;
+use Railt\TypeSystem\Schema;
 
 /**
  * Class SchemaExtensionExecutor
@@ -47,15 +47,15 @@ class SchemaExtensionExecutor extends ExtensionExecutor
 
                 switch ($operation->operation) {
                     case 'query':
-                        $target->setQuery($type);
+                        $target->setQueryType($type);
                         break;
 
                     case 'mutation':
-                        $target->setMutation($type);
+                        $target->setMutationType($type);
                         break;
 
                     case 'subscription':
-                        $target->setSubscription($type);
+                        $target->setSubscriptionType($type);
                         break;
                 }
             }

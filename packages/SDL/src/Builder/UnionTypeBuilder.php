@@ -14,10 +14,10 @@ namespace Railt\SDL\Builder;
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\UnionTypeInterface;
-use Railt\TypeSystem\Type\UnionType;
 use Railt\SDL\Ast\Definition\UnionTypeDefinitionNode;
 use Railt\SDL\Ast\Generic\UnionTypesCollection;
 use Railt\SDL\Ast\Type\NamedTypeNode;
+use Railt\TypeSystem\Type\UnionType;
 
 /**
  * @property UnionTypeDefinitionNode $ast

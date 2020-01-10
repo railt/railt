@@ -13,8 +13,8 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\FieldInterface;
-use Railt\TypeSystem\Field;
 use Railt\SDL\Ast\Definition\FieldDefinitionNode;
+use Railt\TypeSystem\Field;
 
 /**
  * @property FieldDefinitionNode $ast

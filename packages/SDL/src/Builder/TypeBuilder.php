@@ -11,21 +11,21 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Builder;
 
-use Railt\SDL\Document;
+use GraphQL\Contracts\TypeSystem\DefinitionInterface;
+use GraphQL\Contracts\TypeSystem\DirectiveInterface;
+use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use Railt\Dumper\Facade;
-use Railt\SDL\Executor\Registry;
-use Railt\SDL\Ast\Type\TypeNode;
 use Railt\SDL\Ast\DefinitionNode;
-use Railt\SDL\Ast\Value\ValueNode;
 use Railt\SDL\Ast\Type\ListTypeNode;
 use Railt\SDL\Ast\Type\NamedTypeNode;
-use Railt\TypeSystem\Type\ListType;
 use Railt\SDL\Ast\Type\NonNullTypeNode;
+use Railt\SDL\Ast\Type\TypeNode;
+use Railt\SDL\Ast\Value\ValueNode;
+use Railt\SDL\Document;
+use Railt\SDL\Executor\Registry;
+use Railt\TypeSystem\Type\ListType;
 use Railt\TypeSystem\Type\NonNullType;
-use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
-use GraphQL\Contracts\TypeSystem\DirectiveInterface;
-use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 
 /**
  * Class Builder

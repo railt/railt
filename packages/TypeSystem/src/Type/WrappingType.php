@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Type;
 
-use GraphQL\Contracts\TypeSystem\Constraint;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\WrappingTypeInterface;
+use Railt\TypeSystem\Reference\TypeReferenceInterface;
 use Serafim\Immutable\Immutable;
 
 /**
@@ -22,32 +22,40 @@ use Serafim\Immutable\Immutable;
 abstract class WrappingType extends Type implements WrappingTypeInterface
 {
     /**
-     * @var TypeInterface
+     * @var TypeReferenceInterface|WrappingTypeInterface
      */
-    protected TypeInterface $ofType;
+    protected $ofType;
+
+    /**
+     * WrappingType constructor.
+     *
+     * @param TypeReferenceInterface|WrappingTypeInterface $ofType
+     * @throws \Throwable
+     */
+    public function __construct($ofType)
+    {
+        $this->setOfType($ofType);
+    }
 
     /**
      * {@inheritDoc}
      */
     public function getOfType(): TypeInterface
     {
-        \assert(Constraint::isType($this->ofType), \vsprintf('%s wrapping type must be initialized by the %s', [
-            \get_class($this),
-            TypeInterface::class,
-        ]));
-
-        return $this->ofType;
+        return Reference::resolve($this, $this->ofType, TypeInterface::class);
     }
 
     /**
      * @internal Please note that this method changes the internals of the current
      *           object, and its improper use can violate the integrity of the data.
      *
-     * @param TypeInterface $type
+     * @param TypeReferenceInterface|WrappingTypeInterface $type
      * @return void
      */
-    public function setOfType(TypeInterface $type): void
+    public function setOfType($type): void
     {
+        \assert($type instanceof WrappingTypeInterface || $type instanceof TypeReferenceInterface);
+
         $this->ofType = $type;
     }
 
@@ -55,11 +63,11 @@ abstract class WrappingType extends Type implements WrappingTypeInterface
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
-     * @param TypeInterface $type
+     * @param TypeReferenceInterface|WrappingTypeInterface $type
      * @return object|self|$this
      */
-    public function withOfType(TypeInterface $type): self
+    public function withOfType($type): self
     {
-        return Immutable::execute(fn() => $this->ofType = $type);
+        return Immutable::execute(fn() => $this->setOfType($type));
     }
 }

@@ -13,9 +13,9 @@ namespace Railt\SDL\Builder;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
-use Railt\TypeSystem\Schema;
 use Railt\SDL\Ast\Definition\OperationTypeDefinitionNode;
 use Railt\SDL\Ast\Definition\SchemaDefinitionNode;
+use Railt\TypeSystem\Schema;
 
 /**
  * @property SchemaDefinitionNode $ast
@@ -38,15 +38,15 @@ class SchemaBuilder extends TypeBuilder
 
             switch ($operation->operation) {
                 case 'query':
-                    $schema->setQuery($type);
+                    $schema->setQueryType($type);
                     break;
 
                 case 'mutation':
-                    $schema->setMutation($type);
+                    $schema->setMutationType($type);
                     break;
 
                 case 'subscription':
-                    $schema->setSubscription($type);
+                    $schema->setSubscriptionType($type);
                     break;
             }
         }

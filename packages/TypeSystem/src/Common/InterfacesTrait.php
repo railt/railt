@@ -11,9 +11,10 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Common;
 
-use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 use GraphQL\Contracts\TypeSystem\Common\InterfacesAwareInterface;
-use Railt\Common\Iter;
+use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
+use Railt\TypeSystem\Exception\TypeUniquenessException;
+use Railt\TypeSystem\Reference\TypeReferenceInterface;
 use Serafim\Immutable\Immutable;
 
 /**
@@ -22,8 +23,8 @@ use Serafim\Immutable\Immutable;
 trait InterfacesTrait
 {
     /**
-     * @psalm-var array<string, InterfaceTypeInterface>
-     * @var array|InterfaceTypeInterface[]
+     * @psalm-var array<string, TypeReferenceInterface>
+     * @var array|TypeReferenceInterface[]
      */
     protected array $interfaces = [];
 
@@ -40,7 +41,9 @@ trait InterfacesTrait
      */
     public function getInterface(string $name): ?InterfaceTypeInterface
     {
-        return $this->interfaces[$name] ?? null;
+        $type = $this->interfaces[$name] ?? null;
+
+        return Reference::resolveNullable($this, $type, InterfaceTypeInterface::class);
     }
 
     /**
@@ -49,44 +52,53 @@ trait InterfacesTrait
      */
     public function getInterfaces(): iterable
     {
-        return $this->interfaces;
-    }
+        foreach ($this->interfaces as $ref) {
+            /** @var InterfaceTypeInterface $interface */
+            $interface = Reference::resolve($this, $ref, InterfaceTypeInterface::class);
 
-    /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param iterable|InterfaceTypeInterface[] $interfaces
-     * @return void
-     */
-    public function setInterfaces(iterable $interfaces): void
-    {
-        $this->interfaces = Iter::mapToArray($interfaces, static function (InterfaceTypeInterface $type): array {
-            return [$type->getName() => $type];
-        });
+            yield $interface->getName() => $interface;
+        }
     }
 
     /**
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
-     * @param iterable|InterfaceTypeInterface[] $interfaces
+     * @param TypeReferenceInterface[] $interfaces
      * @return object|self|$this
      */
     public function withInterfaces(iterable $interfaces): self
     {
-        return Immutable::execute(fn() => $this->setInterfaces($interfaces));
+        return Immutable::execute(fn() => $this->addInterfaces($interfaces));
     }
 
     /**
      * @internal Please note that this method changes the internals of the current
      *           object, and its improper use can violate the integrity of the data.
      *
-     * @param InterfaceTypeInterface $interface
+     * @param TypeReferenceInterface[] $interfaces
      * @return void
      */
-    public function addInterface(InterfaceTypeInterface $interface): void
+    public function addInterfaces(iterable $interfaces): void
     {
+        foreach ($interfaces as $ref) {
+            $this->addInterface($ref);
+        }
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param TypeReferenceInterface $interface
+     * @return void
+     */
+    public function addInterface(TypeReferenceInterface $interface): void
+    {
+        if (isset($this->interfaces[$interface->getName()])) {
+            throw new TypeUniquenessException(\sprintf('Interface %s already has been defined', $interface->getName()));
+        }
+
         $this->interfaces[$interface->getName()] = $interface;
     }
 
@@ -94,24 +106,12 @@ trait InterfacesTrait
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-return self
      *
-     * @param InterfaceTypeInterface $interface
+     * @param TypeReferenceInterface $interface
      * @return object|self|$this
      */
-    public function withInterface(InterfaceTypeInterface $interface): self
+    public function withInterface(TypeReferenceInterface $interface): self
     {
         return Immutable::execute(fn() => $this->addInterface($interface));
-    }
-
-    /**
-     * @internal Please note that this method changes the internals of the current
-     *           object, and its improper use can violate the integrity of the data.
-     *
-     * @param string $name
-     * @return void
-     */
-    public function removeInterface(string $name): void
-    {
-        unset($this->interfaces[$name]);
     }
 
     /**
@@ -124,5 +124,17 @@ trait InterfacesTrait
     public function withoutInterface(string $name): self
     {
         return Immutable::execute(fn() => $this->removeInterface($name));
+    }
+
+    /**
+     * @internal Please note that this method changes the internals of the current
+     *           object, and its improper use can violate the integrity of the data.
+     *
+     * @param string $name
+     * @return void
+     */
+    public function removeInterface(string $name): void
+    {
+        unset($this->interfaces[$name]);
     }
 }

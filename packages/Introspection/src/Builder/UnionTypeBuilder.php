@@ -11,22 +11,14 @@ declare(strict_types=1);
 
 namespace Railt\Introspection\Builder;
 
-use Railt\TypeSystem\Type\UnionType;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
-use Railt\Introspection\Exception\IntrospectionException;
-use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
-use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
+use Railt\TypeSystem\Type\UnionType;
 
 /**
  * Class UnionTypeBuilder
  */
 class UnionTypeBuilder extends Builder
 {
-    /**
-     * @var string
-     */
-    private const ERROR_BAD_TYPE = 'Union can not content non-object GraphQL type %s';
-
     /**
      * @return string
      */
@@ -50,15 +42,7 @@ class UnionTypeBuilder extends Builder
     protected function complete(NamedTypeInterface $type, array $data): void
     {
         foreach ($data['possibleTypes'] ?? [] as ['name' => $name]) {
-            $target = $this->get($name);
-
-            if (! $target instanceof ObjectTypeInterface) {
-                throw new IntrospectionException(
-                    \sprintf(self::ERROR_BAD_TYPE, $name)
-                );
-            }
-
-            $type->addType($target);
+            $type->addType($this->reference($name));
         }
     }
 }

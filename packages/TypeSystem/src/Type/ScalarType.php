@@ -16,7 +16,7 @@ use GraphQL\Contracts\TypeSystem\Type\ScalarTypeInterface;
 /**
  * {@inheritDoc}
  */
-class ScalarType extends NamedType implements ScalarTypeInterface
+final class ScalarType extends NamedType implements ScalarTypeInterface
 {
 
 }

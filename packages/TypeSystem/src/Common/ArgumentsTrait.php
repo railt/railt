@@ -14,6 +14,7 @@ namespace Railt\TypeSystem\Common;
 use GraphQL\Contracts\TypeSystem\ArgumentInterface;
 use GraphQL\Contracts\TypeSystem\Common\ArgumentsAwareInterface;
 use Railt\Common\Iter;
+use Railt\TypeSystem\Exception\TypeUniquenessException;
 use Serafim\Immutable\Immutable;
 
 /**
@@ -59,11 +60,11 @@ trait ArgumentsTrait
      * @param iterable|ArgumentInterface[] $arguments
      * @return void
      */
-    public function setArguments(iterable $arguments): void
+    public function addArguments(iterable $arguments): void
     {
-        $this->arguments = Iter::mapToArray($arguments, static function (ArgumentInterface $argument): array {
-            return [$argument->getName() => $argument];
-        });
+        foreach ($arguments as $argument) {
+            $this->addArgument($argument);
+        }
     }
 
     /**
@@ -75,7 +76,7 @@ trait ArgumentsTrait
      */
     public function withArguments(iterable $arguments): self
     {
-        return Immutable::execute(fn() =>  $this->setArguments($arguments));
+        return Immutable::execute(fn() =>  $this->addArguments($arguments));
     }
 
     /**
@@ -99,6 +100,12 @@ trait ArgumentsTrait
      */
     public function addArgument(ArgumentInterface $argument): void
     {
+        if (isset($this->arguments[$argument->getName()])) {
+            $message = \sprintf('Argument %s has already been defined', $argument->getName());
+
+            throw new TypeUniquenessException($message);
+        }
+
         $this->arguments[$argument->getName()] = $argument;
     }
 

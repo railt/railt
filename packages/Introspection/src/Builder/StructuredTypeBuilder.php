@@ -11,22 +11,15 @@ declare(strict_types=1);
 
 namespace Railt\Introspection\Builder;
 
-use Railt\TypeSystem\Type\ObjectType;
-use Railt\TypeSystem\Type\InterfaceType;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
-use Railt\Introspection\Exception\IntrospectionException;
-use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
+use Railt\TypeSystem\Type\InterfaceType;
+use Railt\TypeSystem\Type\ObjectType;
 
 /**
  * Class StructuredTypeBuilder
  */
 abstract class StructuredTypeBuilder extends Builder
 {
-    /**
-     * @var string
-     */
-    private const ERROR_BAD_IMPLEMENTATION = 'Can not implement non-interface GraphQL type %s';
-
     /**
      * @param ObjectType|InterfaceType $type
      * {@inheritDoc}
@@ -38,15 +31,7 @@ abstract class StructuredTypeBuilder extends Builder
         }
 
         foreach ($data['interfaces'] ?? [] as ['name' => $name]) {
-            $interface = $this->get($name);
-
-            if (! $interface instanceof InterfaceTypeInterface) {
-                throw new IntrospectionException(
-                    \sprintf(self::ERROR_BAD_IMPLEMENTATION, $name)
-                );
-            }
-
-            $type->addInterface($interface);
+            $type->addInterface($this->reference($name));
         }
     }
 }

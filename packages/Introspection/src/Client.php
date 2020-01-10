@@ -11,15 +11,14 @@ declare(strict_types=1);
 
 namespace Railt\Introspection;
 
-use GraphQL\Contracts\TypeSystem\DirectiveInterface;
 use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
-use Railt\TypeSystem\Schema;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use Railt\Introspection\Builder\Registry;
 use Railt\Introspection\Exception\IntrospectionException;
 use Railt\Introspection\Origin\OriginInterface;
+use Railt\TypeSystem\Schema;
 
 /**
  * Class Client
@@ -53,8 +52,8 @@ final class Client
      *
      * @param CacheInterface|null $cache A PSR-16 cache implementation.
      * @param null|int|\DateInterval $ttl Optional. The TTL value of this item. If no value is sent and
-     *                                      the driver supports TTL then the library may set a default value
-     *                                      for it or let the driver take care of that.
+     *                                    the driver supports TTL then the library may set a default value
+     *                                    for it or let the driver take care of that.
      */
     public function __construct(CacheInterface $cache = null, $ttl = null)
     {
@@ -71,11 +70,14 @@ final class Client
     public function read(OriginInterface $origin): SchemaInterface
     {
         return $this->cached($origin, function (OriginInterface $origin): SchemaInterface {
-            $schema = $this->query($origin)[self::DATA_FIELD_NAME]['__schema'] ?? [];
+            $data = $this->query($origin)[self::DATA_FIELD_NAME]['__schema'] ?? [];
 
-            $registry = new Registry($schema['types'] ?? []);
+            $schema = new Schema();
 
-            return $this->buildSchema($schema, $registry);
+
+            $registry = new Registry($schema, $data['types'] ?? []);
+
+            return $this->buildSchema($schema, $data, $registry);
         });
     }
 
@@ -112,39 +114,39 @@ final class Client
     }
 
     /**
-     * @param array $schema
+     * @param Schema $schema
+     * @param array $data
      * @param Registry $registry
      * @return SchemaInterface
      * @throws IntrospectionException
      * @throws \Throwable
      */
-    private function buildSchema(array $schema, Registry $registry): SchemaInterface
+    private function buildSchema(Schema $schema, array $data, Registry $registry): SchemaInterface
     {
-        $directives = static function (array $directive) use ($registry): DirectiveInterface {
-            return $registry->directive($directive);
-        };
+        foreach ($registry->build() as $type) {
+            $schema->addType($type);
+        }
 
-        $result = new Schema([
-            'typeMap'    => $registry->build(),
-            'directives' => \array_map($directives, $schema['directives'] ?? []),
-        ]);
+        foreach ($data['directives'] ?? [] as $directive) {
+            $schema->addDirective($registry->directive($directive));
+        }
 
-        $this->resolveSchemaField('queryType', $schema, $registry,
-            static function (ObjectTypeInterface $type) use ($result) {
-                $result->setQuery($type);
+        $this->resolveSchemaField('queryType', $data, $registry,
+            static function (ObjectTypeInterface $type) use ($schema, $registry) {
+                $schema->setQueryType($registry->reference($type->getName()));
             });
 
-        $this->resolveSchemaField('mutationType', $schema, $registry,
-            static function (ObjectTypeInterface $type) use ($result) {
-                $result->setMutation($type);
+        $this->resolveSchemaField('mutationType', $data, $registry,
+            static function (ObjectTypeInterface $type) use ($schema, $registry) {
+                $schema->setMutationType($registry->reference($type->getName()));
             });
 
-        $this->resolveSchemaField('subscriptionType', $schema, $registry,
-            static function (ObjectTypeInterface $type) use ($result) {
-                $result->setSubscription($type);
+        $this->resolveSchemaField('subscriptionType', $data, $registry,
+            static function (ObjectTypeInterface $type) use ($schema, $registry) {
+                $schema->setSubscriptionType($registry->reference($type->getName()));
             });
 
-        return $result;
+        return $schema;
     }
 
     /**

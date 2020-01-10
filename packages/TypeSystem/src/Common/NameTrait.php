@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Common;
 
 use GraphQL\Contracts\TypeSystem\Common\NameAwareInterface;
+use Railt\TypeSystem\Exception\TypeSystemException;
 use Serafim\Immutable\Immutable;
 
 /**
@@ -65,8 +66,14 @@ trait NameTrait
      * @param string $name
      * @return void
      */
-    public function setName(string $name): void
+    private function setName(string $name): void
     {
+        if (\preg_match('/^[a-z_][a-z0-9_]$/ium', $name) === false) {
+            $message = 'Type name must starts at Latin letter or "_" symbol and may contain digits, but "%s" given';
+
+            throw new TypeSystemException(\sprintf($message, $name));
+        }
+
         $this->name = $name;
     }
 }

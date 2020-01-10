@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace Railt\SDL\Executor\Extension;
 
 use GraphQL\Contracts\TypeSystem\Type\EnumTypeInterface;
-use Railt\TypeSystem\Type\EnumType;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Extension\EnumTypeExtensionNode;
+use Railt\TypeSystem\Type\EnumType;
 
 /**
  * Class EnumTypeExtensionExecutor
@@ -46,6 +46,6 @@ class EnumTypeExtensionExecutor extends ExtensionExecutor
             $values[] = $this->build($value);
         }
 
-        $target->setValues($values);
+        $target->addValues($values);
     }
 }

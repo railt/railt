@@ -76,7 +76,6 @@ final class Iter
         }
     }
 
-
     /**
      * @template T
      * @psalm-param iterable<mixed, T> $items

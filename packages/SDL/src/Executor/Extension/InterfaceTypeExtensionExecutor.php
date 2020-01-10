@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Executor\Extension;
 
-use Railt\TypeSystem\Type\InterfaceType;
 use Phplrt\Contracts\Ast\NodeInterface;
 use Railt\SDL\Ast\Extension\InterfaceTypeExtensionNode;
+use Railt\TypeSystem\Type\InterfaceType;
 
 /**
  * Class InterfaceTypeExtensionExecutor

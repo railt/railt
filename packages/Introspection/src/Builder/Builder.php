@@ -14,6 +14,7 @@ namespace Railt\Introspection\Builder;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use Railt\Introspection\Exception\IntrospectionException;
+use Railt\TypeSystem\Reference\TypeReferenceInterface;
 
 /**
  * Class NamedTypeBuilder
@@ -21,9 +22,9 @@ use Railt\Introspection\Exception\IntrospectionException;
 abstract class Builder implements BuilderInterface
 {
     /**
-     * @var RegistryInterface|Registry
+     * @var Registry
      */
-    protected RegistryInterface $registry;
+    protected Registry $registry;
 
     /**
      * @var bool
@@ -43,11 +44,11 @@ abstract class Builder implements BuilderInterface
     /**
      * NamedTypeBuilder constructor.
      *
-     * @param RegistryInterface $registry
+     * @param Registry $registry
      * @param array $data
      * @throws \Throwable
      */
-    public function __construct(RegistryInterface $registry, array $data)
+    public function __construct(Registry $registry, array $data)
     {
         $this->registry = $registry;
         $this->type = $this->create($data);
@@ -63,8 +64,7 @@ abstract class Builder implements BuilderInterface
     {
         $class = $this->getClass();
 
-        return new $class([
-            'name'        => $data['name'],
+        return new $class($data['name'], [
             'description' => $data['description'] ?? null,
         ]);
     }
@@ -73,6 +73,15 @@ abstract class Builder implements BuilderInterface
      * @return string
      */
     abstract protected function getClass(): string;
+
+    /**
+     * @param string $name
+     * @return TypeReferenceInterface
+     */
+    public function reference(string $name): TypeReferenceInterface
+    {
+        return $this->registry->reference($name);
+    }
 
     /**
      * @param string $kind
