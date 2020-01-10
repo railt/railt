@@ -13,6 +13,7 @@ namespace Railt\TypeSystem\Type;
 
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\WrappingTypeInterface;
+use Railt\TypeSystem\Reference\Reference;
 use Railt\TypeSystem\Reference\TypeReferenceInterface;
 use Serafim\Immutable\Immutable;
 

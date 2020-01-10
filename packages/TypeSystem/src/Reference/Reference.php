@@ -13,6 +13,7 @@ namespace Railt\TypeSystem\Reference;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
 use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use Railt\TypeSystem\Exception\IncompatibleTypeException;
 
 /**
@@ -27,15 +28,12 @@ class Reference
 
     /**
      * @param DefinitionInterface $ctx
-     * @param TypeReferenceInterface|null $ref
+     * @param TypeReferenceInterface|TypeInterface|null $ref
      * @param string $type
-     * @return NamedTypeInterface|null
+     * @return TypeInterface|null
      */
-    public static function resolveNullable(
-        DefinitionInterface $ctx,
-        ?TypeReferenceInterface $ref,
-        string $type
-    ): ?NamedTypeInterface {
+    public static function resolveNullable(DefinitionInterface $ctx, $ref, string $type): ?TypeInterface
+    {
         if ($ref === null) {
             return null;
         }
@@ -45,15 +43,16 @@ class Reference
 
     /**
      * @param DefinitionInterface $ctx
-     * @param TypeReferenceInterface $ref
+     * @param TypeReferenceInterface|TypeInterface $ref
      * @param string $type
-     * @return NamedTypeInterface
+     * @return TypeInterface
      */
-    public static function resolve(
-        DefinitionInterface $ctx,
-        TypeReferenceInterface $ref,
-        string $type
-    ): NamedTypeInterface {
+    public static function resolve(DefinitionInterface $ctx, $ref, string $type): TypeInterface
+    {
+        if ($ref instanceof TypeInterface) {
+            return $ref;
+        }
+
         $result = $ref->getType($ctx);
 
         if ($result instanceof $type) {

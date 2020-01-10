@@ -14,6 +14,7 @@ namespace Railt\CodeGenerator\Type;
 use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
 use Railt\CodeGenerator\FieldGenerator;
+use Railt\Common\Iter;
 
 /**
  * @property-read ObjectTypeInterface $type
@@ -37,7 +38,7 @@ class ObjectTypeGenerator extends TypeGenerator
         $result = 'type ' . $this->type->getName();
 
         $interfaces = \array_map(fn(InterfaceTypeInterface $interface): string => $interface->getName(),
-            $this->type->getInterfaces());
+            Iter::toArray($this->type->getInterfaces()));
 
         if ($interfaces !== []) {
             $result .= ' implements ' . \implode(' & ', $interfaces);
@@ -68,9 +69,8 @@ class ObjectTypeGenerator extends TypeGenerator
 
         return
             $this->line($this->isNewLineBraces() ? "\n{" : '{', $this->depth()) . "\n" .
-                $this->fields($result, 0) . "\n" .
-            $this->line('}', $this->depth())
-        ;
+            $this->fields($result, 0) . "\n" .
+            $this->line('}', $this->depth());
     }
 
     /**
