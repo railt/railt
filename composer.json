@@ -51,6 +51,7 @@
         "phpunit/phpunit": "^8.3",
         "sensiolabs/security-checker": "^6.0",
         "squizlabs/php_codesniffer": "^3.5",
+        "symfony/console": "~3.4|~4.0|~5.0",
         "symfony/dependency-injection": "~3.4|~4.0|~5.0",
         "symfony/http-foundation": "~3.4|~4.0|~5.0",
         "symfony/process": "~3.4|~4.0|~5.0",

@@ -48,7 +48,9 @@
         }
     },
     "scripts": {
-        "phpunit": "@php vendor/phpunit/phpunit/phpunit"
+        "phpunit": "phpunit",
+        "split": "monorepo-builder split",
+        "merge": "monorepo-builder merge"
     },
     "extra": {
         "branch-alias": {
