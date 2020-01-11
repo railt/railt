@@ -149,12 +149,17 @@ class SyncCommand extends Command
      */
     private function render(ReadableInterface $file, string $dirname): string
     {
+        $name = \basename($dirname);
+
+        $repo = \preg_replace('/([A-Z]+)/um', '-$1', $name);
+        $repo = \strtolower(\trim($repo, '-'));
+
         return \str_replace([
             '${package}',
             '${name}',
         ], [
-            \strtolower(\basename($dirname)),
-            \basename($dirname),
+            $repo,
+            $name,
         ], $file->getContents());
     }
 }

@@ -66,7 +66,8 @@ trait ConfigurationTrait
                 break;
 
             default:
-                throw new \InvalidArgumentException($this->configurationErrorMessage($config));
+                $message = $this->configurationErrorMessage($config);
+                throw new \InvalidArgumentException($message);
         }
     }
 
