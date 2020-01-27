@@ -1,7 +1,7 @@
 [
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -16,9 +16,11 @@
                         "value": "TestQuery"
                     }
                 },
-                "description": null,
-                "directives": null,
-                "arguments": null
+                "description": {
+                    "value": "\n    Description of \"field\" field\n    "
+                },
+                "directives": [],
+                "arguments": []
             },
             {
                 "kind": "FieldDefinition",
@@ -33,9 +35,11 @@
                         "value": "TestMutation"
                     }
                 },
-                "description": null,
-                "directives": null,
-                "arguments": null
+                "description": {
+                    "value": "\n    Description of \"field2\" field\n    "
+                },
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -43,15 +47,13 @@
             "value": "TestQuery"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"type TestQuery\" type\n"
         },
-        "directives": null
+        "directives": []
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -66,9 +68,11 @@
                         "value": "TestQuery"
                     }
                 },
-                "description": null,
-                "directives": null,
-                "arguments": null
+                "description": {
+                    "value": "\n    Description of \"field3\" field\n    "
+                },
+                "directives": [],
+                "arguments": []
             },
             {
                 "kind": "FieldDefinition",
@@ -83,9 +87,11 @@
                         "value": "TestMutation"
                     }
                 },
-                "description": null,
-                "directives": null,
-                "arguments": null
+                "description": {
+                    "value": "\n    Description of \"field4\" field\n    "
+                },
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -93,10 +99,8 @@
             "value": "TestMutation"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"type TestMutation\" type\n"
         },
-        "directives": null
+        "directives": []
     }
 ]

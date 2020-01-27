@@ -6,11 +6,9 @@
             "value": "Test"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"scalar Test\" type\n"
         },
-        "directives": null
+        "directives": []
     },
     {
         "kind": "ScalarTypeDefinition",
@@ -19,18 +17,19 @@
             "value": "Test2"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"scalar Test2\" type\n"
         },
         "directives": [
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "Directive"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Directive"
+                    }
                 },
-                "arguments": null
+                "arguments": []
             }
         ]
     }

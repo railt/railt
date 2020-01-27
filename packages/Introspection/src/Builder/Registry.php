@@ -185,6 +185,10 @@ class Registry
         try {
             $result = $this->parser->parse($value);
 
+            if (! isset($result[0][0])) {
+                throw new \OverflowException('Parsing error');
+            }
+
             return $result[0][0];
         } catch (ParserRuntimeExceptionInterface $e) {
             throw new IntrospectionException('Can not parse default value ' . $value);

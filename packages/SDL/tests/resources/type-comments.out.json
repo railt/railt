@@ -1,7 +1,7 @@
 [
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -17,8 +17,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             },
             {
                 "kind": "FieldDefinition",
@@ -34,8 +34,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -43,11 +43,11 @@
             "value": "TestQuery"
         },
         "description": null,
-        "directives": null
+        "directives": []
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -63,8 +63,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             },
             {
                 "kind": "FieldDefinition",
@@ -80,8 +80,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -89,6 +89,6 @@
             "value": "TestMutation"
         },
         "description": null,
-        "directives": null
+        "directives": []
     }
 ]

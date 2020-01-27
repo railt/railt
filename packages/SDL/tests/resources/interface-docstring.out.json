@@ -1,7 +1,7 @@
 [
     {
         "kind": "InterfaceTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -16,9 +16,11 @@
                         "value": "TestQuery"
                     }
                 },
-                "description": null,
-                "directives": null,
-                "arguments": null
+                "description": {
+                    "value": "\n    Description of \"a\" field\n    "
+                },
+                "directives": [],
+                "arguments": []
             },
             {
                 "kind": "FieldDefinition",
@@ -33,9 +35,11 @@
                         "value": "TestMutation"
                     }
                 },
-                "description": null,
-                "directives": null,
-                "arguments": null
+                "description": {
+                    "value": "Description of \"b\" field"
+                },
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -43,10 +47,8 @@
             "value": "Example"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"interface Example\" type\n"
         },
-        "directives": null
+        "directives": []
     }
 ]

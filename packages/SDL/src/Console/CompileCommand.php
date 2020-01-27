@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Console;
 
-use Railt\SDL\Parser\Generator;
+use Railt\SDL\Frontend\Generator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -26,7 +26,7 @@ class CompileCommand extends Command
      */
     public function getName(): string
     {
-        return 'sdl:parser:compile';
+        return 'sdl:compile';
     }
 
     /**
@@ -41,7 +41,7 @@ class CompileCommand extends Command
      * {@inheritDoc}
      * @throws \Throwable
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<comment>Generating</comment>');
 
@@ -51,5 +51,7 @@ class CompileCommand extends Command
         $out = \dirname(__DIR__) . '/Parser/Factory.php';
 
         $output->writeln('<info>Successfully generated in ' . $out . '</info>');
+
+        return 0;
     }
 }

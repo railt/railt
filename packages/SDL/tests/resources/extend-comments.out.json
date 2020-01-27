@@ -1,7 +1,7 @@
 [
     {
         "kind": "ObjectTypeExtension",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -17,7 +17,7 @@
                     }
                 },
                 "description": null,
-                "directives": null,
+                "directives": [],
                 "arguments": [
                     {
                         "kind": "ArgumentDefinition",
@@ -36,7 +36,7 @@
                             }
                         },
                         "description": null,
-                        "directives": null,
+                        "directives": [],
                         "defaultValue": null
                     }
                 ]
@@ -46,12 +46,12 @@
             "kind": "Identifier",
             "value": "Foo"
         },
-        "directives": null
+        "directives": []
     },
     {
         "kind": "ObjectTypeExtension",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Foo2"
@@ -60,10 +60,13 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "onType"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "onType"
+                    }
                 },
-                "arguments": null
+                "arguments": []
             }
         ]
     }

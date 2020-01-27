@@ -1,0 +1,129 @@
+
+/**
+ * Types description/documentation
+ */
+
+Description -> {
+    return Ast\Description::create($children ?: null);
+}
+  : StringValue()?
+  ;
+
+
+/**
+ * Represents a non-namespaced name.
+ * Namespaced names are represented using Name nodes.
+ */
+
+Identifier -> {
+    return Ast\Identifier::create($children);
+}
+  // Values
+  : <T_TRUE>
+  | <T_FALSE>
+  | <T_NULL>
+
+  // Keywords
+  | <T_TYPE>
+  | <T_ENUM>
+  | <T_UNION>
+  | <T_INTERFACE>
+  | <T_SCHEMA>
+  | <T_SCALAR>
+  | <T_DIRECTIVE>
+  | <T_INPUT>
+  | <T_EXTEND>
+  | <T_EXTENDS>
+  | <T_IMPLEMENTS>
+  | <T_ON>
+  | <T_REPEATABLE>
+  | <T_QUERY>
+  | <T_MUTATION>
+  | <T_SUBSCRIPTION>
+
+  // Other
+  | <T_NAME>
+  ;
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Values (Input Values)
+ * --------------------------------------------------------------------------
+ *
+ * Field and directive arguments accept input values of various literal
+ * primitives; input values can be scalars, enumeration values, lists, or
+ * input objects.
+ *
+ * If not defined as constant (for example, in DefaultValue), input
+ * values can be specified as a variable. List and inputs objects may
+ * also contain variables (unless defined to be constant).
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Values
+ */
+
+%include value/boolean
+%include value/enum
+%include value/float
+%include value/int
+%include value/list
+%include value/null
+%include value/object
+%include value/string
+%include value/variable
+
+
+ConstValue
+  : IntValue()
+  | FloatValue()
+  | StringValue()
+  | BooleanValue()
+  | NullValue()
+  | EnumValue()
+  ;
+
+
+Value
+  : Variable()
+  | ConstValue()
+  | ListValue()
+  | ObjectValue()
+  ;
+
+
+/**
+ * TypeHint
+ */
+
+TypeHint
+  : NonNullType()
+  | ListType()
+  | NamedType()
+  ;
+
+
+ListType -> {
+    return Ast\Type\ListTypeNode::create($children);
+}
+  : ::T_BRACKET_OPEN:: TypeHint() ::T_BRACKET_CLOSE::
+  ;
+
+
+NonNullType -> {
+    return Ast\Type\NonNullTypeNode::create($children);
+}
+  : (ListType() | NamedType()) ::T_NON_NULL::
+  ;
+
+
+NamedType -> {
+    return Ast\Type\NamedTypeNode::create($children);
+}
+  : Identifier()
+  ;
+
+NamedDirective -> {
+    return Ast\Type\NamedDirectiveNode::create($children);
+}
+  : ::T_DIRECTIVE_AT:: Identifier()
+  ;
+

@@ -14,7 +14,7 @@ namespace Railt\SDL\Exception;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Position\Position;
 use Phplrt\Source\Exception\NotAccessibleException;
-use Railt\SDL\Ast\Node;
+use Railt\SDL\Frontend\Ast\Node;
 
 /**
  * Class GraphQLException

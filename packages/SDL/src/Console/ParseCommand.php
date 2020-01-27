@@ -12,15 +12,16 @@ declare(strict_types=1);
 namespace Railt\SDL\Console;
 
 use Phplrt\Source\File;
-use Railt\SDL\Ast\Node;
-use Railt\SDL\Parser\Parser;
 use Railt\SDL\Exception\SyntaxErrorException;
+use Railt\SDL\Frontend\Ast\Node;
+use Railt\SDL\Frontend\Parser;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Exception\RuntimeException;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Class ParseCommand
@@ -45,6 +46,7 @@ class ParseCommand extends Command
 
     /**
      * @return void
+     * @throws InvalidArgumentException
      */
     public function configure(): void
     {
@@ -59,7 +61,7 @@ class ParseCommand extends Command
      * {@inheritDoc}
      * @throws \Throwable
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($source = $input->getArgument('source')) {
             $source = File::fromPathname($source);
@@ -82,10 +84,12 @@ class ParseCommand extends Command
 
             $output->writeln(\str_repeat('-', 80));
 
-            return;
+            return 0;
         }
 
         $this->interactive($input, $output);
+
+        return 0;
     }
 
     /**
@@ -116,7 +120,7 @@ class ParseCommand extends Command
                 $message = \vsprintf('<error> %s on line %d at column %d </error>', [
                     $e->getMessage(),
                     $e->getPosition()->getLine(),
-                    $e->getPosition()->getColumn()
+                    $e->getPosition()->getColumn(),
                 ]);
 
                 $output->writeln($this->line('⨯', $message, 'red'));

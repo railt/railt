@@ -6,7 +6,7 @@
             "value": "Test"
         },
         "description": null,
-        "directives": null
+        "directives": []
     },
     {
         "kind": "ScalarTypeDefinition",
@@ -19,10 +19,13 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "Directive"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Directive"
+                    }
                 },
-                "arguments": null
+                "arguments": []
             }
         ]
     }

@@ -1,0 +1,20 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Input Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Input object type extensions are used to represent an input object type
+ * which has been extended from some original input object type. For
+ * example, this might be used by a GraphQL service which is itself an
+ * extension of another GraphQL service.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Object-Extensions
+ *
+ */
+
+InputObjectTypeExtension -> {
+    return Ast\Extension\Type\InputObjectTypeExtensionNode::create($children);
+}
+  : ::T_EXTEND:: InputObjectTypeDefinitionExceptDescription()
+  ;

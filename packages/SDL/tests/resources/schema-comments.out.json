@@ -1,9 +1,8 @@
 [
     {
         "kind": "SchemaDefinition",
-        "name": null,
         "description": null,
-        "directives": null,
+        "directives": [],
         "operationTypes": [
             {
                 "kind": "OperationTypeDefinition",

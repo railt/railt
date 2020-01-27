@@ -11,39 +11,21 @@
  * ordered by the order in which they appear in the query.
  *
  * @see https://facebook.github.io/graphql/June2018/#FieldDefinition
+ *
  */
 
-FieldDefinitions -> {
-    return new \Railt\SDL\Ast\Generic\FieldDefinitionCollection($children);
-}
+FieldDefinitions
   : FieldDefinition()+
   ;
 
 FieldDefinition -> {
-    $field = new \Railt\SDL\Ast\Definition\FieldDefinitionNode(
-        $children[1],
-        \Railt\SDL\Ast\Type\TypeNode::resolve($children)
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $field->directives = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\ArgumentDefinitionCollection:
-                $field->arguments = $child;
-                break;
-        }
-    }
-
-    return $field;
+    return Ast\Definition\FieldDefinitionNode::create($children);
 }
   : Description()
     Identifier() FieldArguments()? ::T_COLON:: TypeHint()
-    Directives()? ::T_COMMA::?
+    Directive()* ::T_COMMA::?
   ;
 
 FieldArguments
-  : ::T_PARENTHESIS_OPEN:: ArgumentDefinitions()? ::T_PARENTHESIS_CLOSE::
+  : ::T_PARENTHESIS_OPEN:: ArgumentDefinition()* ::T_PARENTHESIS_CLOSE::
   ;

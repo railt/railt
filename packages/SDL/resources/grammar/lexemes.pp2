@@ -13,7 +13,6 @@
  * @see http://facebook.github.io/graphql/#sec-Punctuators
  */
 
-
 %token T_AND                    &
 %token T_OR                     \|
 %token T_PARENTHESIS_OPEN       \(
@@ -31,8 +30,6 @@
 /**
  * Values
  */
-//%token T_HEX_NUMBER             \-?0x([0-9a-fA-F]+)
-//%token T_BIN_NUMBER             \-?0b([0-1]+)
 
 %token T_FLOAT_EXP              \-?(?:0|[1-9][0-9]*)(?:[eE][\+\-]?[0-9]+)
 %token T_FLOAT                  \-?(?:0|[1-9][0-9]*)(?:\.[0-9]+)(?:[eE][\+\-]?[0-9]+)?
@@ -46,6 +43,7 @@
 /**
  * Common
  */
+
 %token T_TYPE                   (?<=\b)type\b
 %token T_ENUM                   (?<=\b)enum\b
 %token T_UNION                  (?<=\b)union\b
@@ -66,6 +64,7 @@
 /**
  * Common
  */
+
 %token T_VARIABLE               \$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)
 %token T_NAME                   [a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*
 

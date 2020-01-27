@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Tests;
 
-use Railt\SDL\Compiler;
-use Railt\SDL\DocumentInterface;
+use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use PHPUnit\Framework\TestCase as BaseTestCase;
-use Phplrt\Source\Exception\NotFoundException;
-use Phplrt\Source\Exception\NotReadableException;
+use Psr\SimpleCache\InvalidArgumentException;
+use Railt\SDL\Compiler;
+use Railt\SDL\Spec\SpecificationInterface;
 
 /**
  * Class TestCase
@@ -24,13 +24,12 @@ abstract class TestCase extends BaseTestCase
 {
     /**
      * @param string $source
-     * @param int $spec
-     * @return DocumentInterface
-     * @throws NotFoundException
-     * @throws NotReadableException
+     * @param SpecificationInterface|null $spec
+     * @return SchemaInterface
+     * @throws InvalidArgumentException
      * @throws \Throwable
      */
-    protected function compile(string $source, int $spec = Compiler::SPEC_RAILT): DocumentInterface
+    protected function compile(string $source, SpecificationInterface $spec = null): SchemaInterface
     {
         $compiler = new Compiler($spec);
 

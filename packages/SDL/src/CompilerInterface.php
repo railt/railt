@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 
 /**
@@ -22,40 +23,18 @@ interface CompilerInterface
      * Loads GraphQL source into the compiler.
      *
      * @param ReadableInterface|string|resource|mixed $source
+     * @param array $variables
      * @return CompilerInterface|$this
      */
-    public function preload($source): self;
+    public function preload($source, array $variables = []): self;
 
     /**
      * Compiles the sources and all previously loaded types
      * into the final document.
      *
      * @param ReadableInterface|string|resource|mixed $source
-     * @return DocumentInterface
+     * @param array $variables
+     * @return SchemaInterface
      */
-    public function compile($source): DocumentInterface;
-
-    /**
-     * Adds an interceptor of events of the types linker and
-     * allows loading the missing type.
-     *
-     * @param callable $loader
-     * @return CompilerInterface|$this
-     */
-    public function autoload(callable $loader): self;
-
-    /**
-     * Removes a previously registered linker interceptor.
-     *
-     * @param callable $loader
-     * @return CompilerInterface|$this
-     */
-    public function cancelAutoload(callable $loader): self;
-
-    /**
-     * Returns list of registered loaders
-     *
-     * @return iterable|callable[]
-     */
-    public function getAutoloaders(): iterable;
+    public function compile($source, array $variables = []): SchemaInterface;
 }

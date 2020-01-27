@@ -9,7 +9,7 @@
                     "value": "Red"
                 },
                 "description": null,
-                "directives": null
+                "directives": []
             },
             {
                 "kind": "EnumValueDefinition",
@@ -18,7 +18,7 @@
                     "value": "Green"
                 },
                 "description": null,
-                "directives": null
+                "directives": []
             }
         ],
         "name": {
@@ -26,6 +26,6 @@
             "value": "Colour"
         },
         "description": null,
-        "directives": null
+        "directives": []
     }
 ]

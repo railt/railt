@@ -117,7 +117,7 @@ class Parser implements ParserInterface, BuilderInterface
             ),
             6 => new \Phplrt\Grammar\Lexeme(
                 'T_NULL',
-                false,
+                true,
             ),
             7 => new \Phplrt\Grammar\Lexeme(
                 'T_NAME',
@@ -252,7 +252,7 @@ class Parser implements ParserInterface, BuilderInterface
             case 8:
                 return Value\ListValue::parse($children);
             case 6:
-                return Value\NullValue::parse();
+                return Value\NullValue::parse(null);
             case 2:
                 return Value\IntValue::parse($children->getValue());
             case 3:

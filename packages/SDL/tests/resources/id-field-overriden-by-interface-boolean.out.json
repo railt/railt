@@ -3,11 +3,15 @@
         "kind": "ObjectTypeDefinition",
         "interfaces": [
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "IBoolean"
-                }
+                "kind": "ImplementedInterface",
+                "interface": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "IBoolean"
+                    }
+                },
+                "loc": null
             }
         ],
         "fields": [
@@ -25,8 +29,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -34,11 +38,11 @@
             "value": "TID"
         },
         "description": null,
-        "directives": null
+        "directives": []
     },
     {
         "kind": "InterfaceTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -54,8 +58,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -63,6 +67,6 @@
             "value": "IBoolean"
         },
         "description": null,
-        "directives": null
+        "directives": []
     }
 ]

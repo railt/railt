@@ -11,126 +11,155 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Phplrt\Source\File;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LoggerAwareTrait;
-use Railt\SDL\Executor\Context;
-use Railt\SDL\Parser\Generator;
-use Psr\SimpleCache\CacheInterface;
+use GraphQL\Contracts\TypeSystem\SchemaInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Source\Exception\NotFoundException;
 use Phplrt\Source\Exception\NotReadableException;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\InvalidArgumentException;
+use Railt\SDL\Backend\Context;
+use Railt\SDL\Backend\Linker\LinkerFacadeTrait;
+use Railt\SDL\Backend\Linker\LinkerInterface;
+use Railt\SDL\Backend\Linker\Registry;
+use Railt\SDL\Frontend\Generator;
+use Railt\SDL\Spec\Railt;
+use Railt\SDL\Spec\SpecificationInterface;
+use Railt\TypeSystem\Schema;
 
 /**
  * Class Compiler
  */
 final class Compiler implements CompilerInterface
 {
+    use LinkerFacadeTrait;
     use LoggerAwareTrait;
 
     /**
-     * @var int
+     * @var bool
      */
-    public const SPEC_RAW = 0x00;
-
-    /**
-     * @var int
-     */
-    public const SPEC_JUNE_2018 = 0x02;
-
-    /**
-     * @var int
-     */
-    public const SPEC_RAILT = self::SPEC_JUNE_2018 | 0x04;
-
-    /**
-     * @var int
-     */
-    public const SPEC_INTROSPECTION = self::SPEC_JUNE_2018 | 0x08;
-
-    /**
-     * @var string[]
-     */
-    private const SPEC_MAPPINGS = [
-        0x02 => __DIR__ . '/../resources/stdlib/stdlib.graphql',
-        0x04 => __DIR__ . '/../resources/stdlib/extra.graphql',
-        0x08 => __DIR__ . '/../resources/stdlib/introspection.graphql',
-    ];
+    private bool $booted = false;
 
     /**
      * @var ParserInterface
      */
-    private ParserInterface $parser;
+    private ParserInterface $frontend;
 
     /**
-     * @var Document
+     * @var Context
      */
-    private Document $document;
+    private Context $context;
 
     /**
-     * @var array|callable[]
+     * @var SpecificationInterface
      */
-    private array $loaders = [];
+    private SpecificationInterface $spec;
+
+    /**
+     * @var LinkerInterface
+     */
+    private LinkerInterface $linker;
 
     /**
      * Compiler constructor.
      *
-     * @param int $spec
+     * @param SpecificationInterface $spec
      * @param CacheInterface|null $cache
      * @param LoggerInterface|null $logger
-     * @throws NotFoundException
-     * @throws NotReadableException
      * @throws \Throwable
      */
     public function __construct(
-        int $spec = self::SPEC_RAILT,
+        SpecificationInterface $spec = null,
         CacheInterface $cache = null,
         LoggerInterface $logger = null
     ) {
+        $this->context = new Context();
+        $this->spec = $spec ?? new Railt();
         $this->logger = $logger;
-        $this->document = new Document();
-        $this->parser = new Parser($cache);
-
-        $this->loadSpec($spec);
+        $this->frontend = new Frontend($cache);
+        $this->linker = new Registry();
     }
 
     /**
-     * @param int $spec
-     * @return void
-     * @throws NotFoundException
-     * @throws NotReadableException
-     * @throws \Throwable
+     * @return LinkerInterface
      */
-    private function loadSpec(int $spec): void
+    public function getLinker(): LinkerInterface
     {
-        foreach (self::SPEC_MAPPINGS as $code => $file) {
-            if (($spec & $code) === $code) {
-                $this->preload(File::fromPathname($file));
-            }
-        }
+        return $this->linker;
+    }
+
+    /**
+     * @return Context
+     */
+    public function getContext(): Context
+    {
+        return $this->context;
     }
 
     /**
      * {@inheritDoc}
      * @throws \Throwable
+     * @throws InvalidArgumentException
      */
-    public function preload($source): self
+    public function preload($source, array $variables = []): self
     {
-        $context = new Context($this, $this->parser, $this->document, $this->logger);
-        $context->compile($source);
+        $this->bootIfNotBooted();
+
+        $this->backend($this->frontend($source), $this->context, $variables);
 
         return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * @return void
+     * @throws NotFoundException
+     * @throws NotReadableException
+     */
+    private function bootIfNotBooted(): void
+    {
+        if ($this->booted === false) {
+            $this->booted = true;
+
+            $this->spec->load($this);
+        }
+    }
+
+    /**
+     * @param iterable $ast
+     * @param Context $ctx
+     * @param array $variables
+     * @return SchemaInterface
      * @throws \Throwable
      */
-    public function compile($source): DocumentInterface
+    private function backend(iterable $ast, Context $ctx, array $variables = []): SchemaInterface
     {
-        $context = new Context($this, $this->parser, clone $this->document, $this->logger);
+        $executor = new Backend($this->spec, $ctx, $this->linker);
 
-        return $context->compile($source);
+        return $executor->run($ast, $variables);
+    }
+
+    /**
+     * @param mixed $source
+     * @return iterable
+     * @throws InvalidArgumentException
+     * @throws \Throwable
+     */
+    private function frontend($source): iterable
+    {
+        return $this->frontend->parse($source);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @throws \Throwable
+     * @throws InvalidArgumentException
+     */
+    public function compile($source, array $variables = []): SchemaInterface
+    {
+        $this->bootIfNotBooted();
+
+        return $this->backend($this->frontend($source), clone $this->context, $variables);
     }
 
     /**
@@ -142,37 +171,5 @@ final class Compiler implements CompilerInterface
     public function rebuild(): void
     {
         (new Generator())->generateAndSave();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAutoloaders(): iterable
-    {
-        return $this->loaders;
-    }
-
-    /**
-     * @param callable $loader
-     * @return $this
-     */
-    public function autoload(callable $loader): self
-    {
-        $this->loaders[] = $loader;
-
-        return $this;
-    }
-
-    /**
-     * @param callable $loader
-     * @return $this
-     */
-    public function cancelAutoload(callable $loader): self
-    {
-        $this->loaders = \array_filter($this->loaders, static function (callable $haystack) use ($loader): bool {
-            return $haystack !== $loader;
-        });
-
-        return $this;
     }
 }

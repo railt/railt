@@ -10,32 +10,11 @@
  * hierarchical queries, Objects describe the intermediate levels.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Objects
+ *
  */
 
 ObjectTypeDefinition -> {
-    $object = new \Railt\SDL\Ast\Definition\ObjectTypeDefinitionNode($children[1]);
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $object->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\FieldDefinitionCollection:
-                $object->fields = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $object->directives = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
-                $object->interfaces = $child;
-                break;
-        }
-    }
-
-    return $object;
+    return Ast\Definition\Type\ObjectTypeDefinitionNode::create($children);
 }
   : Description()
     ObjectTypeDefinitionExceptDescription()
@@ -47,9 +26,9 @@ ObjectTypeDefinitionExceptDescription
   ;
 
 ObjectTypeDefinitionHead
-  : ::T_TYPE:: TypeName()
+  : ::T_TYPE:: Identifier()
     ImplementsInterfaces()?
-    Directives()?
+    Directive()*
   ;
 
 ObjectTypeDefinitionBody

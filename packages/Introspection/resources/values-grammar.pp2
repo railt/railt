@@ -139,9 +139,9 @@ ListValue -> {
  */
 
 NullValue -> {
-    return Value\NullValue::parse();
+    return Value\NullValue::parse(null);
 }
-  : ::T_NULL::
+  : <T_NULL>
   ;
 
 

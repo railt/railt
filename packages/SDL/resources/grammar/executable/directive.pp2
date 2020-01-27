@@ -23,22 +23,11 @@
  * capabilities, they may be exposed via directives.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Language.Directives
+ *
  */
 
-Directives -> {
-    return new \Railt\SDL\Ast\Generic\DirectiveCollection($children);
-}
-  : Directive()+
-  ;
-
 Directive -> {
-    $directive = new \Railt\SDL\Ast\Executable\DirectiveNode($children[0]);
-
-    if (isset($children[1])) {
-        $directive->arguments = $children[1];
-    }
-
-    return $directive;
+    return Ast\Executable\DirectiveNode::create($children);
 }
-  : ::T_DIRECTIVE_AT:: TypeName() Arguments()?
+  : NamedDirective() Arguments()?
   ;

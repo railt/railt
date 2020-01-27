@@ -19,11 +19,9 @@
                     }
                 },
                 "description": {
-                    "kind": "StringValue",
-                    "block": true,
                     "value": "\n    Description of \"key\" field\n    "
                 },
-                "directives": null,
+                "directives": [],
                 "defaultValue": null
             },
             {
@@ -40,15 +38,10 @@
                     }
                 },
                 "description": {
-                    "kind": "StringValue",
-                    "block": true,
                     "value": "\n    Description of \"answer\" field\n    "
                 },
-                "directives": null,
-                "defaultValue": {
-                    "kind": "IntValue",
-                    "value": 42
-                }
+                "directives": [],
+                "defaultValue": {}
             },
             {
                 "kind": "InputFieldDefinition",
@@ -64,10 +57,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
+                "directives": [],
                 "defaultValue": {
-                    "kind": "StringValue",
-                    "block": false,
                     "value": "Default"
                 }
             },
@@ -85,10 +76,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
+                "directives": [],
                 "defaultValue": {
-                    "kind": "StringValue",
-                    "block": false,
                     "value": ""
                 }
             }
@@ -98,11 +87,9 @@
             "value": "InputType"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"input InputType\"\n"
         },
-        "directives": null
+        "directives": []
     },
     {
         "kind": "InputObjectTypeDefinition",
@@ -121,18 +108,19 @@
                     }
                 },
                 "description": {
-                    "kind": "StringValue",
-                    "block": true,
                     "value": "\n    Description of \"annotatedField\" field\n    "
                 },
                 "directives": [
                     {
                         "kind": "Directive",
                         "name": {
-                            "kind": "Identifier",
-                            "value": "onField"
+                            "kind": "NamedDirective",
+                            "name": {
+                                "kind": "Identifier",
+                                "value": "onField"
+                            }
                         },
-                        "arguments": null
+                        "arguments": []
                     }
                 ],
                 "defaultValue": null
@@ -143,18 +131,19 @@
             "value": "AnnotatedInput"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"input AnnotatedInput\" type\n"
         },
         "directives": [
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "onInputObjectType"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "onInputObjectType"
+                    }
                 },
-                "arguments": null
+                "arguments": []
             }
         ]
     }

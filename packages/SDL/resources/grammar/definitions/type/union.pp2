@@ -12,28 +12,11 @@
  * contain them.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Unions
+ *
  */
 
 UnionTypeDefinition -> {
-    $union = new \Railt\SDL\Ast\Definition\UnionTypeDefinitionNode($children[1]);
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $union->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $union->directives = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\UnionTypesCollection:
-                $union->types = $child;
-                break;
-        }
-    }
-
-    return $union;
+    return Ast\Definition\Type\UnionTypeDefinitionNode::create($children);
 }
   : Description()
     UnionTypeDefinitionExceptDescription()
@@ -45,7 +28,7 @@ UnionTypeDefinitionExceptDescription
   ;
 
 UnionTypeDefinitionHead
-  : ::T_UNION:: TypeName() Directives()?
+  : ::T_UNION:: Identifier() Directive()*
   ;
 
 UnionTypeDefinitionBody
@@ -53,7 +36,7 @@ UnionTypeDefinitionBody
   ;
 
 UnionMemberTypes -> {
-    return new \Railt\SDL\Ast\Generic\UnionTypesCollection($children);
+    return Ast\Definition\Type\UnionMemberNode::create($children);
 }
   : ::T_OR::? NamedType() (::T_OR:: NamedType())*
   ;

@@ -3,25 +3,37 @@
         "kind": "UnionTypeDefinition",
         "types": [
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "Story"
-                }
+                "kind": "UnionMember",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Story"
+                    }
+                },
+                "loc": null
             },
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "Article"
-                }
+                "kind": "UnionMember",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Article"
+                    }
+                },
+                "loc": null
             },
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "Advert"
-                }
+                "kind": "UnionMember",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "Advert"
+                    }
+                },
+                "loc": null
             }
         ],
         "name": {
@@ -29,28 +41,34 @@
             "value": "Feed"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"union Feed\"\n"
         },
-        "directives": null
+        "directives": []
     },
     {
         "kind": "UnionTypeDefinition",
         "types": [
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "A"
-                }
+                "kind": "UnionMember",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "A"
+                    }
+                },
+                "loc": null
             },
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "B"
-                }
+                "kind": "UnionMember",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "B"
+                    }
+                },
+                "loc": null
             }
         ],
         "name": {
@@ -58,18 +76,19 @@
             "value": "AnnotatedUnion"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"union AnnotatedUnion\"\n"
         },
         "directives": [
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "onUnion"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "onUnion"
+                    }
                 },
-                "arguments": null
+                "arguments": []
             }
         ]
     },
@@ -77,18 +96,26 @@
         "kind": "UnionTypeDefinition",
         "types": [
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "A"
-                }
+                "kind": "UnionMember",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "A"
+                    }
+                },
+                "loc": null
             },
             {
-                "kind": "NamedType",
-                "name": {
-                    "kind": "Identifier",
-                    "value": "B"
-                }
+                "kind": "UnionMember",
+                "type": {
+                    "kind": "NamedType",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "B"
+                    }
+                },
+                "loc": null
             }
         ],
         "name": {
@@ -96,18 +123,19 @@
             "value": "AnnotatedUnionTwo"
         },
         "description": {
-            "kind": "StringValue",
-            "block": true,
             "value": "\nDescription of \"union AnnotatedUnionTwo\"\n"
         },
         "directives": [
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "onUnion"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "onUnion"
+                    }
                 },
-                "arguments": null
+                "arguments": []
             }
         ]
     }

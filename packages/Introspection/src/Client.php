@@ -74,7 +74,6 @@ final class Client
 
             $schema = new Schema();
 
-
             $registry = new Registry($schema, $data['types'] ?? []);
 
             return $this->buildSchema($schema, $data, $registry);

@@ -1,0 +1,24 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Variables
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL query can be parameterized with variables, maximizing query
+ * reuse, and avoiding costly string building in clients at runtime.
+ *
+ * If not defined as constant (for example, in DefaultValue), a Variable
+ * can be supplied for an input value.
+ *
+ * Variables must be defined at the top of an operation and are in scope
+ * throughout the execution of that operation.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Language.Variables
+ *
+ */
+
+Variable -> {
+    return Ast\Value\VariableValueNode::parse($children[0]->getValue());
+}
+  : <T_VARIABLE>
+  ;

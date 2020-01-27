@@ -1,7 +1,7 @@
 [
     {
         "kind": "InterfaceTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -17,8 +17,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             },
             {
                 "kind": "FieldDefinition",
@@ -34,8 +34,8 @@
                     }
                 },
                 "description": null,
-                "directives": null,
-                "arguments": null
+                "directives": [],
+                "arguments": []
             }
         ],
         "name": {
@@ -43,6 +43,6 @@
             "value": "Example"
         },
         "description": null,
-        "directives": null
+        "directives": []
     }
 ]

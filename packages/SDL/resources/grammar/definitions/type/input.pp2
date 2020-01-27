@@ -10,30 +10,11 @@
  * complex values.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Input-Objects
+ *
  */
 
 InputObjectTypeDefinition -> {
-    $input = new \Railt\SDL\Ast\Definition\InputObjectTypeDefinitionNode(
-        $children[1]
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $input->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $input->directives = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\InputFieldDefinitionCollection:
-                $input->fields = $child;
-                break;
-        }
-    }
-
-    return $input;
+    return Ast\Definition\Type\InputObjectTypeDefinitionNode::create($children);
 }
   : Description()
     InputObjectTypeDefinitionExceptDescription()
@@ -45,12 +26,10 @@ InputObjectTypeDefinitionExceptDescription
   ;
 
 InputObjectTypeDefinitionHead
-  : ::T_INPUT:: TypeName() Directives()?
+  : ::T_INPUT:: Identifier() Directive()*
   ;
 
 InputObjectTypeDefinitionBody
-  : ::T_BRACE_OPEN::
-      InputFieldDefinitions()?
-    ::T_BRACE_CLOSE::
+  : ::T_BRACE_OPEN:: InputFieldDefinition()* ::T_BRACE_CLOSE::
   ;
 

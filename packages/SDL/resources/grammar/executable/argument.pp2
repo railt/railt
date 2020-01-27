@@ -12,16 +12,14 @@
  * @see https://facebook.github.io/graphql/June2018/#Arguments
  */
 
-Arguments -> {
-    return new \Railt\SDL\Ast\Generic\ArgumentCollection($children);
-}
+Arguments
  : ::T_PARENTHESIS_OPEN::
       (Argument() ::T_COMMA::?)*
    ::T_PARENTHESIS_CLOSE::
  ;
 
 Argument -> {
-    return new \Railt\SDL\Ast\Executable\ArgumentNode(...$children);
+    return Ast\Executable\ArgumentNode::create($children);
 }
  : Identifier() ::T_COLON:: Value()
  ;

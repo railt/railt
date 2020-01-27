@@ -1,7 +1,7 @@
 [
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
+        "interfaces": [],
         "fields": [
             {
                 "kind": "FieldDefinition",
@@ -17,7 +17,7 @@
                     }
                 },
                 "description": null,
-                "directives": null,
+                "directives": [],
                 "arguments": [
                     {
                         "kind": "ArgumentDefinition",
@@ -33,11 +33,9 @@
                             }
                         },
                         "description": null,
-                        "directives": null,
+                        "directives": [],
                         "defaultValue": {
-                            "kind": "StringValue",
-                            "block": true,
-                            "value": "\n        \\\" Single \" quote \"\n    "
+                            "value": "\n        \" Single \" quote \"\n    "
                         }
                     }
                 ]
@@ -48,6 +46,6 @@
             "value": "Some"
         },
         "description": null,
-        "directives": null
+        "directives": []
     }
 ]

@@ -12,30 +12,11 @@
  * determines the place in the type system where those operations begin.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Schema
+ *
  */
 
 SchemaDefinition -> {
-    $operations = \array_filter($children, static function ($child): bool {
-        return $child instanceof \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection;
-    });
-
-    $schema = new \Railt\SDL\Ast\Definition\SchemaDefinitionNode(
-        \reset($operations) ?: new \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection([])
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $schema->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $schema->directives = $child;
-                break;
-        }
-    }
-
-    return $schema;
+    return Ast\Definition\SchemaDefinitionNode::create($children);
 }
   : Description()
     SchemaDefinitionExceptDescription()
@@ -47,15 +28,14 @@ SchemaDefinitionExceptDescription
   ;
 
 SchemaDefinitionHead
-  : ::T_SCHEMA:: Directives()?
+  : ::T_SCHEMA:: Directive()*
   ;
 
 SchemaDefinitionBody
   : ::T_BRACE_OPEN::
-      OperationTypeDefinitions()?
+      (OperationTypeDefinition() ::T_COMMA::?)*
     ::T_BRACE_CLOSE::
   ;
-
 
 
 /**
@@ -70,16 +50,8 @@ SchemaDefinitionBody
  * @see https://facebook.github.io/graphql/June2018/#sec-Root-Operation-Types
  */
 
-OperationTypeDefinitions -> {
-    return new \Railt\SDL\Ast\Generic\OperationTypeDefinitionCollection($children);
-}
-  : (OperationTypeDefinition() ::T_COMMA::?)+
-
 OperationTypeDefinition -> {
-    return new \Railt\SDL\Ast\Definition\OperationTypeDefinitionNode(
-        $children[0]->getValue(),
-        $children[1]
-    );
+    return Ast\Definition\OperationTypeDefinitionNode::create($children);
 }
   : SchemaFieldName() ::T_COLON:: NamedType()
   ;

@@ -10,30 +10,11 @@
  * possible values.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Enums
+ *
  */
 
 EnumTypeDefinition -> {
-    $enum = new \Railt\SDL\Ast\Definition\EnumTypeDefinitionNode(
-        $children[1]
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $enum->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $enum->directives = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\EnumValueDefinitionCollection:
-                $enum->values = $child;
-                break;
-        }
-    }
-
-    return $enum;
+    return Ast\Definition\Type\EnumTypeDefinitionNode::create($children);
 }
   : Description()
     EnumTypeDefinitionExceptDescription()
@@ -45,11 +26,12 @@ EnumTypeDefinitionExceptDescription
   ;
 
 EnumTypeDefinitionHead
-  : ::T_ENUM:: TypeName() Directives()?
+  : ::T_ENUM:: Identifier() Directive()*
   ;
 
 EnumTypeDefinitionBody
   : ::T_BRACE_OPEN::
-      EnumValueDefinitions()?
+      EnumValueDefinition()*
     ::T_BRACE_CLOSE::
   ;
+

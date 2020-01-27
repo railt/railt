@@ -5,19 +5,31 @@
             "kind": "Identifier",
             "value": "skip"
         },
-        "repeatable": false,
+        "repeatable": null,
         "locations": [
             {
-                "kind": "Identifier",
-                "value": "FIELD"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "FIELD"
+                },
+                "loc": null
             },
             {
-                "kind": "Identifier",
-                "value": "FRAGMENT_SPREAD"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "FRAGMENT_SPREAD"
+                },
+                "loc": null
             },
             {
-                "kind": "Identifier",
-                "value": "INLINE_FRAGMENT"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "INLINE_FRAGMENT"
+                },
+                "loc": null
             }
         ],
         "description": null,
@@ -39,7 +51,7 @@
                     }
                 },
                 "description": null,
-                "directives": null,
+                "directives": [],
                 "defaultValue": null
             }
         ]
@@ -50,19 +62,31 @@
             "kind": "Identifier",
             "value": "include"
         },
-        "repeatable": false,
+        "repeatable": null,
         "locations": [
             {
-                "kind": "Identifier",
-                "value": "FIELD"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "FIELD"
+                },
+                "loc": null
             },
             {
-                "kind": "Identifier",
-                "value": "FRAGMENT_SPREAD"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "FRAGMENT_SPREAD"
+                },
+                "loc": null
             },
             {
-                "kind": "Identifier",
-                "value": "INLINE_FRAGMENT"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "INLINE_FRAGMENT"
+                },
+                "loc": null
             }
         ],
         "description": null,
@@ -84,7 +108,7 @@
                     }
                 },
                 "description": null,
-                "directives": null,
+                "directives": [],
                 "defaultValue": null
             }
         ]
@@ -95,19 +119,31 @@
             "kind": "Identifier",
             "value": "include2"
         },
-        "repeatable": false,
+        "repeatable": null,
         "locations": [
             {
-                "kind": "Identifier",
-                "value": "FIELD"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "FIELD"
+                },
+                "loc": null
             },
             {
-                "kind": "Identifier",
-                "value": "FRAGMENT_SPREAD"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "FRAGMENT_SPREAD"
+                },
+                "loc": null
             },
             {
-                "kind": "Identifier",
-                "value": "INLINE_FRAGMENT"
+                "kind": "DirectiveDefinitionLocation",
+                "name": {
+                    "kind": "Identifier",
+                    "value": "INLINE_FRAGMENT"
+                },
+                "loc": null
             }
         ],
         "description": null,
@@ -129,7 +165,7 @@
                     }
                 },
                 "description": null,
-                "directives": null,
+                "directives": [],
                 "defaultValue": null
             }
         ]

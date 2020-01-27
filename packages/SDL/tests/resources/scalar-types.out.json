@@ -1,8 +1,8 @@
 [
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -12,8 +12,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -22,10 +25,7 @@
                             "kind": "Identifier",
                             "value": "value"
                         },
-                        "value": {
-                            "kind": "IntValue",
-                            "value": 123123
-                        }
+                        "value": {}
                     }
                 ]
             }
@@ -33,8 +33,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -44,8 +44,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -54,10 +57,7 @@
                             "kind": "Identifier",
                             "value": "value"
                         },
-                        "value": {
-                            "kind": "IntValue",
-                            "value": 0
-                        }
+                        "value": {}
                     }
                 ]
             }
@@ -65,8 +65,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -76,8 +76,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -86,10 +89,7 @@
                             "kind": "Identifier",
                             "value": "value"
                         },
-                        "value": {
-                            "kind": "IntValue",
-                            "value": 0
-                        }
+                        "value": {}
                     }
                 ]
             }
@@ -97,8 +97,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -108,8 +108,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -118,10 +121,7 @@
                             "kind": "Identifier",
                             "value": "value"
                         },
-                        "value": {
-                            "kind": "IntValue",
-                            "value": -23
-                        }
+                        "value": {}
                     }
                 ]
             }
@@ -129,8 +129,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -140,8 +140,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -151,7 +154,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": 0.12
                         }
                     }
@@ -161,8 +163,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -172,8 +174,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -183,7 +188,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": 23.23
                         }
                     }
@@ -193,8 +197,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -204,8 +208,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -215,7 +222,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": -0.12
                         }
                     }
@@ -225,8 +231,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -236,8 +242,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -247,7 +256,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": -23.23
                         }
                     }
@@ -257,8 +265,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -268,8 +276,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -279,7 +290,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": 2.0e+23
                         }
                     }
@@ -289,8 +299,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -300,8 +310,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -311,7 +324,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": 0
                         }
                     }
@@ -321,8 +333,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -332,8 +344,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -343,7 +358,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": 2.0e-23
                         }
                     }
@@ -353,8 +367,8 @@
     },
     {
         "kind": "ObjectTypeDefinition",
-        "interfaces": null,
-        "fields": null,
+        "interfaces": [],
+        "fields": [],
         "name": {
             "kind": "Identifier",
             "value": "Example"
@@ -364,8 +378,11 @@
             {
                 "kind": "Directive",
                 "name": {
-                    "kind": "Identifier",
-                    "value": "test"
+                    "kind": "NamedDirective",
+                    "name": {
+                        "kind": "Identifier",
+                        "value": "test"
+                    }
                 },
                 "arguments": [
                     {
@@ -375,7 +392,6 @@
                             "value": "value"
                         },
                         "value": {
-                            "kind": "FloatValue",
                             "value": 0
                         }
                     }

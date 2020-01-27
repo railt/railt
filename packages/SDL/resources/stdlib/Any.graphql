@@ -1,0 +1,7 @@
+
+"""
+The `Any` type represents any value that is supported by underlying
+serialization protocol (including lists). It is intended to be used as an
+opt-out type in cases when the exact type is not known in advance.
+"""
+scalar Any

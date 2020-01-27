@@ -1,0 +1,13 @@
+
+type Application
+type AuthenticationManager
+type TemplateManager
+
+type Query {
+    auth: AuthenticationManager!
+    app: Application! @auth(enabled: $auth)
+    templates: TemplateManager! @auth(enabled: $auth)
+}
+
+directive @auth(enabled: Boolean) on FIELD_DEFINITION
+directive @can(roles: [String!]) on FIELD_DEFINITION

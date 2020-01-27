@@ -1,3 +1,4 @@
+
 /**
  * --------------------------------------------------------------------------
  *  GraphQL SDL Input Field
@@ -8,42 +9,22 @@
  * directly to function arguments within a GraphQL server’s implementation.
  *
  * @see https://graphql.github.io/graphql-spec/June2018/#sec-Field-Arguments
+ *
  */
 
-
-InputFieldDefinitions -> {
-    return new \Railt\SDL\Ast\Generic\InputFieldDefinitionCollection($children);
-}
-  : InputFieldDefinition()+
-  ;
-
-
 InputFieldDefinition -> {
-    $value = new \Railt\SDL\Ast\Definition\InputFieldDefinitionNode(
-        $children[1],
-        $children[2]
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $value->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $value->directives = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Value\ValueNode:
-                $value->defaultValue = $child;
-                break;
-        }
-    }
-
-    return $value;
+    return Ast\Definition\InputFieldDefinitionNode::create($children);
 }
   : Description()
-    Identifier() ::T_COLON:: TypeHint()
-    (::T_EQUAL:: Value())?
-    Directives()? ::T_COMMA::?
+    InputFieldDefinitionBody()
+    InputFieldDefinitionDefaultValue()?
+    Directive()* ::T_COMMA::?
+  ;
+
+InputFieldDefinitionBody
+  : Identifier() ::T_COLON:: TypeHint()
+  ;
+
+InputFieldDefinitionDefaultValue
+  : ::T_EQUAL:: Value()
   ;

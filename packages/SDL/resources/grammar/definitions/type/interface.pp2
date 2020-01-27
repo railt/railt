@@ -10,36 +10,13 @@
  * the object type will define all fields defined by those interfaces.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Interfaces
+ *
  */
 
 InterfaceTypeDefinition -> {
-    $interface = new \Railt\SDL\Ast\Definition\InterfaceTypeDefinitionNode(
-        $children[1]
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $interface->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\FieldDefinitionCollection:
-                $interface->fields = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $interface->directives = $child;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\InterfaceImplementsCollection:
-                $interface->interfaces = $child;
-                break;
-        }
-    }
-
-    return $interface;
+    return Ast\Definition\Type\InterfaceTypeDefinitionNode::create($children);
 }
-  : Description()
+  : Description()?
     InterfaceTypeDefinitionExceptDescription()
   ;
 
@@ -49,9 +26,9 @@ InterfaceTypeDefinitionExceptDescription
   ;
 
 InterfaceTypeDefinitionHead
-  : ::T_INTERFACE:: TypeName()
+  : ::T_INTERFACE:: Identifier()
     ImplementsInterfaces()?
-    Directives()?
+    Directive()*
   ;
 
 InterfaceTypeDefinitionBody
@@ -65,7 +42,7 @@ InterfaceTypeDefinitionBody
 //
 
 ImplementsInterfaces -> {
-    return new \Railt\SDL\Ast\Generic\InterfaceImplementsCollection($children);
+    return Ast\Definition\Type\ImplementedInterfaceNode::create($children);
 }
   : ::T_IMPLEMENTS::
     ImplementsInterfacesDelimiter()? NamedType()

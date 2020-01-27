@@ -3,11 +3,11 @@
 
 ### Type Definition
 
-- [x] There can be only one type named "%s"
+- [ ] There can be only one type named "%s"
 
 ### Type Usage
 
-- [x] Type "%s" not found and could not be loaded
+- [ ] Type "%s" not found and could not be loaded
 
 ### Directive Definition
 
@@ -16,7 +16,7 @@
 ### Directive Usage
 
 - [ ] Trying to define directive %s on %s, but only %s locations allowed
-- [x] Directive "@%s" not found and could not be loaded
+- [ ] Directive "@%s" not found and could not be loaded
 - [ ] Argument "%s" not defined in %s
 
 ### Argument Definition

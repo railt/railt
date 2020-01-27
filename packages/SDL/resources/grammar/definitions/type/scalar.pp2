@@ -10,26 +10,11 @@
  * on these trees are GraphQL scalars.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Scalars
+ *
  */
 
 ScalarTypeDefinition -> {
-    $scalar = new \Railt\SDL\Ast\Definition\ScalarTypeDefinitionNode(
-        $children[1]
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $scalar->description = $child->value;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\DirectiveCollection:
-                $scalar->directives = $child;
-                break;
-        }
-    }
-
-    return $scalar;
+    return Ast\Definition\Type\ScalarTypeDefinitionNode::create($children);
 }
   : Description()
     ScalarTypeDefinitionExceptDescription()
@@ -40,5 +25,5 @@ ScalarTypeDefinitionExceptDescription
   ;
 
 ScalarTypeDefinitionBody
-  : ::T_SCALAR:: TypeName() Directives()?
+  : ::T_SCALAR:: Identifier() Directive()*
   ;

@@ -11,31 +11,11 @@
  * tool such as a code generator.
  *
  * @see https://facebook.github.io/graphql/June2018/#sec-Type-System.Directives
+ *
  */
 
 DirectiveDefinition -> {
-    $directive = new \Railt\SDL\Ast\Definition\DirectiveDefinitionNode(
-        $children[1],
-        \end($children)
-    );
-
-    foreach ($children as $child) {
-        switch (true) {
-            case $child instanceof \Railt\SDL\Ast\Description:
-                $directive->description = $child->value;
-                break;
-
-            case \is_bool($child):
-                $directive->repeatable = true;
-                break;
-
-            case $child instanceof \Railt\SDL\Ast\Generic\ArgumentDefinitionCollection:
-                $directive->arguments = $child;
-                break;
-        }
-    }
-
-    return $directive;
+    return Ast\Definition\DirectiveDefinitionNode::create($children);
 }
   : Description()
     DirectiveDefinitionHead()
@@ -43,31 +23,27 @@ DirectiveDefinition -> {
   ;
 
 DirectiveDefinitionHead
-  : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: TypeName()
+  : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: Identifier()
     DirectiveArguments()?
     DirectiveIsRepeatable()?
   ;
 
 DirectiveArguments
-  : ::T_PARENTHESIS_OPEN:: ArgumentDefinitions()? ::T_PARENTHESIS_CLOSE::
+  : ::T_PARENTHESIS_OPEN:: ArgumentDefinition()* ::T_PARENTHESIS_CLOSE::
   ;
 
 DirectiveIsRepeatable -> {
-    return ! \is_array($children);
+    return Ast\Definition\DirectiveDefinitionIsRepeatableNode::create();
 }
   : <T_REPEATABLE>
   ;
 
-DirectiveDefinitionBody -> {
-    return new \Railt\SDL\Ast\Generic\DirectiveLocationCollection($children);
+DirectiveDefinitionBody
+  : ::T_ON:: DirectiveDefinitionLocations()
+  ;
+
+DirectiveDefinitionLocations -> {
+    return Ast\Definition\DirectiveDefinitionLocationNode::create($children);
 }
-  : ::T_ON:: DirectiveLocations()
-  ;
-
-DirectiveLocations
-  : ::T_OR::? DirectiveLocation() (::T_OR:: DirectiveLocation())*
-  ;
-
-DirectiveLocation
-  : Identifier()
+  : ::T_OR::? Identifier() (::T_OR:: Identifier())*
   ;

@@ -1,0 +1,21 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Object Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Object type extensions are used to represent a type which has been
+ * extended from some original type. For example, this might be used to
+ * represent local data, or by a GraphQL service which is itself an
+ * extension of another GraphQL service.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Object-Extensions
+ *
+ */
+
+ObjectTypeExtension -> {
+    return Ast\Extension\Type\ObjectTypeExtensionNode::create($children);
+}
+  : ::T_EXTEND:: ObjectTypeDefinitionExceptDescription()
+  ;
