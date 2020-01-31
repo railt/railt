@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Reference;
 
 use GraphQL\Contracts\TypeSystem\DefinitionInterface;
-use GraphQL\Contracts\TypeSystem\Type\NamedTypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use Railt\TypeSystem\Exception\IncompatibleTypeException;
 

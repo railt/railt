@@ -12,8 +12,10 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Type;
 
 use GraphQL\Contracts\TypeSystem\Type\ObjectTypeInterface;
+use GraphQL\Contracts\TypeSystem\Type\TypeInterface;
 use GraphQL\Contracts\TypeSystem\Type\UnionTypeInterface;
 use Railt\TypeSystem\Exception\TypeUniquenessException;
+use Railt\TypeSystem\Reference\Reference;
 use Railt\TypeSystem\Reference\TypeReferenceInterface;
 use Serafim\Immutable\Immutable;
 
@@ -91,6 +93,7 @@ final class UnionType extends NamedType implements UnionTypeInterface
 
     /**
      * {@inheritDoc}
+     * @return ObjectTypeInterface|TypeInterface|null
      */
     public function getType(string $name): ?ObjectTypeInterface
     {
