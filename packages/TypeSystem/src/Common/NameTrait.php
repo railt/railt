@@ -68,7 +68,7 @@ trait NameTrait
      */
     protected function setName(string $name): void
     {
-        if (\preg_match('/^[a-z_][a-z0-9_]$/ium', $name) === false) {
+        if (! \preg_match('/^[a-z_][a-z0-9_]+$/ium', $name)) {
             $message = 'Type name must starts at Latin letter or "_" symbol and may contain digits, but "%s" given';
 
             throw new TypeSystemException(\sprintf($message, $name));
