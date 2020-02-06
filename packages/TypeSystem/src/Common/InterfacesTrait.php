@@ -14,6 +14,7 @@ namespace Railt\TypeSystem\Common;
 use GraphQL\Contracts\TypeSystem\Common\InterfacesAwareInterface;
 use GraphQL\Contracts\TypeSystem\Type\InterfaceTypeInterface;
 use Railt\TypeSystem\Exception\TypeUniquenessException;
+use Railt\TypeSystem\Reference\Reference;
 use Railt\TypeSystem\Reference\TypeReferenceInterface;
 use Serafim\Immutable\Immutable;
 
