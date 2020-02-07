@@ -89,6 +89,14 @@ final class Schema extends Definition implements SchemaInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasQueryType(): bool
+    {
+        return $this->query !== null;
+    }
+
+    /**
      * @internal Please note that this method changes the internals of the current
      *           object, and its improper use can violate the integrity of the data.
      *
@@ -101,6 +109,14 @@ final class Schema extends Definition implements SchemaInterface
     }
 
     /**
+     * @return bool
+     */
+    public function hasMutationType(): bool
+    {
+        return $this->mutation !== null;
+    }
+
+    /**
      * @internal Please note that this method changes the internals of the current
      *           object, and its improper use can violate the integrity of the data.
      *
@@ -110,6 +126,14 @@ final class Schema extends Definition implements SchemaInterface
     public function setSubscriptionType(?TypeReferenceInterface $object): void
     {
         $this->subscription = $object;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSubscriptionType(): bool
+    {
+        return $this->query !== null;
     }
 
     /**
