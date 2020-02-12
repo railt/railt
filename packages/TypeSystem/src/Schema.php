@@ -27,7 +27,7 @@ use Serafim\Immutable\Immutable;
 /**
  * {@inheritDoc}
  */
-final class Schema extends Definition implements SchemaInterface
+final class Schema extends Definition implements SchemaInterface, \Countable, \IteratorAggregate
 {
     /**
      * @var TypeReferenceInterface|null
@@ -313,6 +313,15 @@ final class Schema extends Definition implements SchemaInterface
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public function hasDirective(string $name): bool
+    {
+        return isset($this->directives[$name]);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getDirectives(): iterable
@@ -408,5 +417,22 @@ final class Schema extends Definition implements SchemaInterface
         }
 
         return \sprintf('schema { %s }', \implode(', ', $chunks));
+    }
+
+    /**
+     * @return \Traversable|NamedTypeInterface[]
+     */
+    public function getIterator(): \Traversable
+    {
+        yield from $this->getTypeMap();
+        yield from $this->getDirectives();
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return \count($this->directives) + \count($this->typeMap);
     }
 }
