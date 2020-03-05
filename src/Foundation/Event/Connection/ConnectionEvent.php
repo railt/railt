@@ -12,7 +12,7 @@ namespace Railt\Foundation\Event\Connection;
 use Railt\Http\Identifiable;
 use Railt\SDL\Contracts\Definitions\SchemaDefinition;
 use Railt\SDL\Reflection\Dictionary;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class ConnectionEvent

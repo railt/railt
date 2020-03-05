@@ -21,7 +21,7 @@ use Railt\SDL\Contracts\Definitions\ObjectDefinition;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent;
 use Railt\SDL\Reflection\Dictionary;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -137,11 +137,11 @@ class TypeLoader
 
     /**
      * @param TypeDefinition $type
-     * @return BuildingEvent|Event
+     * @return BuildingEvent|Event|object
      */
     private function fire(TypeDefinition $type): BuildingEvent
     {
-        return $this->events->dispatch(TypeBuilding::class, new TypeBuilding($type));
+        return $this->events->dispatch(new TypeBuilding($type));
     }
 
     /**

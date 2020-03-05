@@ -341,17 +341,17 @@ GraphQL
     {
         $document = $compiler->compile(File::fromSources(<<<'GraphQL'
 directive @test1(foo: String) on OBJECT
-type Example1 @test1() {} 
+type Example1 @test1(foo: null) {} 
     # No different from: type Example1 @test1(foo: NULL)
 
 directive @test2(foo: String! = "some") on OBJECT
-type Example2 @test2() {}
+type Example2 @test2(foo: "some") {}
     # No different from: type Example1 @test2(foo: "some")
     
 
 directive @test3(foo: Input3! = {foo: "23"}) on OBJECT
 input Input3 { foo: String! }
-type Example3 @test3() {} 
+type Example3 @test3(foo: {foo: "string"}) {} 
    # No different from: type Example1 @test2(foo: {foo: "23"})
 GraphQL
         ));

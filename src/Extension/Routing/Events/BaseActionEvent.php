@@ -13,7 +13,7 @@ use Railt\Http\Identifiable;
 use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
 use Railt\Json\Json;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class BaseActionEvent

@@ -26,18 +26,19 @@ class DirectiveTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Exception
+     * @throws \Throwable
      */
     public function provider(): array
     {
         $schema = <<<'GraphQL'
 """
- # This is a test directive allowed for GraphQL SDL (an Interface definition) 
- # and GraphQL Queries (The mutation action).
-"""        
+This is a test directive allowed for GraphQL SDL (an Interface definition) 
+and GraphQL Queries (The mutation action).
+"""
 directive @test on MUTATION | INTERFACE 
 
 """
- # This is a test directive allowed only for GraphQL SDL (an Object type definition).
+This is a test directive allowed only for GraphQL SDL (an Object type definition).
 """
 directive @some(opt: String! = "Example", opt2: String, req: ID!) on OBJECT
 
@@ -183,7 +184,7 @@ GraphQL;
         static::assertCount($some->getNumberOfArguments(), $some->getArguments());
         static::assertSame(3, $some->getNumberOfArguments());
         static::assertSame(2, $some->getNumberOfOptionalArguments());
-        static::assertSame(1, $some->getNumberOfRequiredArguments());
+        static::assertSame(2, $some->getNumberOfRequiredArguments());
 
         // Definition of `opt: String! = "Example"`
         static::assertNotNull($some->getArgument('opt'));

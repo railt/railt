@@ -240,11 +240,35 @@ trait Compiler
      */
     private function parseDescription(NodeInterface $ast): string
     {
-        $description = \trim($this->parseValue($ast->getChild(0),'String'));
+        $description = $this->parseValue($ast->getChild(0),'String');
 
-        return $description
-            ? \preg_replace('/^(?:\h*#)?(.*?)\h*$/imsu', '$1', $description)
-            : $description;
+        $depth = $this->getMinimalDescriptionDepth($description);
+
+        $result = \preg_replace_callback('/^[^\n]+$/imu', static function (array $payload) use ($depth) {
+            return \substr($payload[0], $depth);
+        }, $description);
+
+        return \trim($result);
+    }
+
+    /**
+     * @param string $description
+     * @return int
+     */
+    private function getMinimalDescriptionDepth(string $description): int
+    {
+        $min = null;
+
+        $lines = \explode("\n", $description);
+        $lines = \array_filter($lines, '\\trim');
+
+        foreach ($lines as $line) {
+            $current = \strlen($line) - \strlen(\ltrim($line));
+
+            $min = $min === null ? $current : \min($current, $min);
+        }
+
+        return $min ?? 0;
     }
 
     /**

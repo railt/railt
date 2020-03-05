@@ -24,7 +24,7 @@
         "php": ">=7.1.3",
         "railt/dumper": "1.4.*|1.4.x-dev",
         "psr/container": "~1.0",
-        "illuminate/support": "~5.5|~6.0"
+        "illuminate/support": "~5.5|~6.0|~7.0"
     },
     "autoload": {
         "psr-4": {
@@ -33,8 +33,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5",
-        "illuminate/container": "~5.5",
-        "symfony/dependency-injection": "~3.4|~4.0"
+        "illuminate/container": "~5.5|~6.0|~7.0",
+        "symfony/dependency-injection": "~3.4|~4.0|~5.0"
     },
     "autoload-dev": {
         "psr-4": {

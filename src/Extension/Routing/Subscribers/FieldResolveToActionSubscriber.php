@@ -18,7 +18,7 @@ use Railt\Http\InputInterface;
 use Railt\Http\RequestInterface;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
 use Railt\SDL\Contracts\Dependent\FieldDefinition;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -121,7 +121,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
     /**
      * @param RouteInterface $route
      * @param FieldResolve $resolving
-     * @return ActionDispatch|Event
+     * @return ActionDispatch|Event|object
      */
     private function fireDispatch(RouteInterface $route, FieldResolve $resolving): ActionDispatch
     {
@@ -129,7 +129,7 @@ class FieldResolveToActionSubscriber implements EventSubscriberInterface
 
         $event = new ActionDispatch($route->getAction(), $arguments);
 
-        return $this->events->dispatch(ActionDispatch::class, $event);
+        return $this->events->dispatch($event);
     }
 
     /**

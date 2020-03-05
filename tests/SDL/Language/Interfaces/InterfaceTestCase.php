@@ -120,7 +120,7 @@ type Object implements Test {
 }
 
 """
-# This is a test interface
+This is a test interface
 """
 interface Test @deprecated(reason: "Because") { 
     id: ID!

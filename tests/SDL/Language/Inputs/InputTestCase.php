@@ -27,9 +27,9 @@ class InputTestCase extends AbstractLanguageTestCase
     {
         $schema = <<<'GraphQL'
 """
- # This an Input type example
+This an Input type example
 """
-input Test { 
+input Test {
     id: ID! = "Hell OR World"
 }
 GraphQL;

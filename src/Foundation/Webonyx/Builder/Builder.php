@@ -18,7 +18,7 @@ use Railt\Foundation\Webonyx\Exception\BuilderMissingException;
 use Railt\Foundation\Webonyx\TypeLoader;
 use Railt\SDL\Contracts\Behavior\AllowsTypeIndication;
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -72,11 +72,11 @@ abstract class Builder implements BuilderInterface
 
     /**
      * @param Event $event
-     * @return Event
+     * @return Event|object
      */
     protected function fire(Event $event): Event
     {
-        return $this->events->dispatch(\get_class($event), $event);
+        return $this->events->dispatch($event);
     }
 
     /**
@@ -134,7 +134,7 @@ abstract class Builder implements BuilderInterface
      */
     protected function shouldSkip(TypeDefinition $type): bool
     {
-        $event = $this->events->dispatch(TypeBuilding::class, new TypeBuilding($type));
+        $event = $this->events->dispatch(new TypeBuilding($type));
 
         return $event->isPropagationStopped();
     }

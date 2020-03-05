@@ -12,7 +12,7 @@ namespace Railt\Foundation\Event\Http;
 use Railt\Http\Identifiable;
 use Railt\Http\RequestInterface;
 use Railt\Http\ResponseInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class HttpEvent

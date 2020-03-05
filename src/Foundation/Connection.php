@@ -29,7 +29,7 @@ use Railt\SDL\Contracts\Document;
 use Railt\SDL\Reflection\Dictionary;
 use Railt\SDL\Schema\CompilerInterface;
 use Railt\SDL\Schema\Configuration;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -161,7 +161,7 @@ class Connection extends Container implements ConnectionInterface
     {
         $events = $this->make(EventDispatcherInterface::class);
 
-        return $events->dispatch(\get_class($event), $event);
+        return $events->dispatch($event);
     }
 
     /**

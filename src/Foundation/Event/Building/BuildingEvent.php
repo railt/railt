@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Railt\Foundation\Event\Building;
 
 use Railt\SDL\Contracts\Definitions\TypeDefinition;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class BuildingEvent

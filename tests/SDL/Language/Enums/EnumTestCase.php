@@ -21,12 +21,13 @@ class EnumTestCase extends AbstractLanguageTestCase
     /**
      * @return array
      * @throws \Exception
+     * @throws \Throwable
      */
     public function provider(): array
     {
         $schema = <<<'GraphQL'
 """
-# This is an example ENUM
+This is an example ENUM
 """
 enum Colour {
     Red
