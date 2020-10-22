@@ -40,7 +40,7 @@
         }
     },
     "provide": {
-        "psr/container": "~1.0"
+        "psr/container-implementation": "~1.0"
     },
     "config": {
         "sort-packages": true
