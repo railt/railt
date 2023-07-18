@@ -4,22 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-abstract class NamedTypeDefinition extends Definition implements
+abstract class NamedTypeDefinition extends NamedDefinition implements
     NamedTypeDefinitionInterface
 {
-    use DescriptionAwareTrait;
-    use DirectivesProviderTrait;
-
-    /**
-     * @param non-empty-string $name
-     */
-    public function __construct(
-        private readonly string $name,
-    ) {
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
 }

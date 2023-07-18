@@ -29,6 +29,11 @@ final class Argument extends Expression implements NameAwareInterface
 
     public function __toString(): string
     {
-        return \sprintf('argument<%s>', $this->getName());
+        $definition = $this->getDefinition();
+
+        return \vsprintf('argument<%s: %s>', [
+            $this->getName(),
+            (string)$definition->getType(),
+        ]);
     }
 }
