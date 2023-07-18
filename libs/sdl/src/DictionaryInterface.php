@@ -10,24 +10,33 @@ use Railt\TypeSystem\DirectivesProviderInterface;
 use Railt\TypeSystem\NamedTypeDefinition;
 use Railt\TypeSystem\SchemaDefinition;
 
+/**
+ * Contains a list of registered GraphQL types.
+ */
 interface DictionaryInterface
 {
     /**
-     * @return SchemaDefinition|null
+     * Returns the schema object if it has been registered.
      */
     public function findSchemaDefinition(): ?SchemaDefinition;
 
     /**
-     * @return bool
+     * Returns {@see true} in the case that the schema object
+     * has been registered or {@see false} instead.
      */
     public function hasSchemaDefinition(): bool;
 
     /**
+     * Returns list of the registered GraphQL type definitions.
+     *
      * @return iterable<NamedTypeDefinition>
      */
     public function getTypeDefinitions(): iterable;
 
     /**
+     * Returns {@see true} in case of the GraphQL type definition
+     * with the given name has been registered or {@see false} instead.
+     *
      * @param non-empty-string $name
      */
     public function hasTypeDefinition(string $name): bool;
