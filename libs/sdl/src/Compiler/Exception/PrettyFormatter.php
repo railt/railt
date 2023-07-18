@@ -15,16 +15,23 @@ final class PrettyFormatter implements FormatterInterface
         $this->source = new SourceFormatter();
     }
 
+    private function isExtended(): bool
+    {
+        return \in_array(\PHP_SAPI, ['cli', 'embedded', 'phpdbg'], true);
+    }
+
     public function format(RuntimeExceptionInterface $e): RuntimeExceptionInterface
     {
-        Patcher::for($e)
+        $patcher = Patcher::for($e)
             // Set "file" and "line" properties
             ->withSourceAndPosition($e->getSource(), $e->getPosition())
-            ->withAddedMessage(\PHP_EOL)
-            // Add error source
-            ->withAddedMessage($this->source->format($e))
-            ->withAddedMessage(\PHP_EOL)
         ;
+
+        if ($this->isExtended()) {
+            $patcher->withAddedMessage(\PHP_EOL)
+                ->withAddedMessage($this->source->format($e))
+            ;
+        }
 
         return $e;
     }

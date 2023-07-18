@@ -20,13 +20,13 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.1",
         "railt/sdl": "^2.0",
         "railt/type-system": "^2.0",
         "railt/type-system-webonyx-bridge": "^2.0"
     },
     "require-dev": {
-        "graphql/type-system-contracts": "^15.5",
+        "symfony/cache": "^5.4|^6.0",
         "friendsofphp/php-cs-fixer": "^3.22",
         "phplrt/phplrt": "^3.2",
         "symfony/console": "^5.4|^6.0",

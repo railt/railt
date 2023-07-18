@@ -6,34 +6,35 @@ namespace Railt\SDL;
 
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Source\File;
+use Psr\SimpleCache\CacheInterface;
+use Psr\SimpleCache\InvalidArgumentException;
 use Railt\SDL\Compiler\Command\CompileCommand;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Compiler\Exception\FormatterInterface;
 use Railt\SDL\Compiler\Exception\PrettyFormatter;
 use Railt\SDL\Compiler\Queue;
 use Railt\SDL\Compiler\TypeLoader;
+use Railt\SDL\Exception\ParsingException;
 use Railt\SDL\Exception\RuntimeExceptionInterface;
-use Railt\SDL\Node\Statement\Statement;
 
 final class Compiler implements CompilerInterface
 {
     private readonly Parser $parser;
     private readonly TypeLoader $loader;
     private readonly Dictionary $types;
+    private readonly FormatterInterface $exceptions;
 
     public function __construct(
-        bool $bootStandardLibrary = true,
+        private readonly ?CacheInterface $cache = null,
         DictionaryInterface $types = new Dictionary(),
-        private readonly FormatterInterface $exceptions = new PrettyFormatter(),
     ) {
-        $this->parser = new Parser();
+        $this->parser = new Parser($this->cache);
         $this->loader = new TypeLoader();
+        $this->exceptions = new PrettyFormatter();
         $this->types = Dictionary::fromDictionary($types);
 
-        if ($bootStandardLibrary) {
-            /** @psalm-suppress PossiblyInvalidArgument : impure-callable to callable cast */
-            $this->loader->addLoader(new StandardLibraryLoader());
-        }
+        /** @psalm-suppress PossiblyInvalidArgument : impure-callable to callable cast */
+        $this->loader->addLoader(new StandardLibraryLoader());
     }
 
     public function getTypes(): Dictionary
@@ -76,10 +77,10 @@ final class Compiler implements CompilerInterface
 
     /**
      * @throws RuntimeExceptionInterface
+     * @throws ParsingException
      */
     private function process(ReadableInterface $source, Context $context): void
     {
-        /** @var iterable<Statement> $statements */
         $statements = $this->parser->parse($source);
 
         $context->push(new CompileCommand($context, $statements));
@@ -89,29 +90,37 @@ final class Compiler implements CompilerInterface
         }
     }
 
-    public function load(mixed $source): DictionaryInterface
+    /**
+     * @throws RuntimeExceptionInterface
+     */
+    private function eval(ReadableInterface $source, Dictionary $types): Dictionary
     {
         try {
-            $context = $this->createContext($this->types);
+            $linker = $this->createContext($types);
 
-            $this->process(File::new($source), $context);
+            $this->process(File::new($source), $linker);
 
-            return $this->types;
+            return $types;
         } catch (RuntimeExceptionInterface $e) {
             throw $this->exceptions->format($e);
         }
     }
 
+    /**
+     * @throws InvalidArgumentException
+     * @throws RuntimeExceptionInterface
+     */
+    public function load(mixed $source): DictionaryInterface
+    {
+        return $this->eval(File::new($source), $this->types);
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     * @throws RuntimeExceptionInterface
+     */
     public function compile(mixed $source): DictionaryInterface
     {
-        try {
-            $linker = $this->createContext($result = clone $this->types);
-
-            $this->process(File::new($source), $linker);
-
-            return $result;
-        } catch (RuntimeExceptionInterface $e) {
-            throw $this->exceptions->format($e);
-        }
+        return $this->eval(File::new($source), clone $this->types);
     }
 }

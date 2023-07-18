@@ -24,14 +24,14 @@ abstract class TestCase extends BaseTestCase
     protected function type(string $type, string $schema): ?NamedTypeDefinition
     {
         return $this->compile($schema)
-            ->findType($type)
+            ->findTypeDefinition($type)
         ;
     }
 
     protected function directive(string $type, string $schema): ?DirectiveDefinition
     {
         return $this->compile($schema)
-            ->findDirective($type)
+            ->findDirectiveDefinition($type)
         ;
     }
 }

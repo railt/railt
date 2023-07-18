@@ -9,12 +9,12 @@ use Railt\SDL\Compiler\Context;
 use Railt\SDL\Node\Statement\InputFieldNode;
 use Railt\TypeSystem\InputFieldDefinition;
 
-final readonly class EvaluateInputFieldDefaultValue implements CommandInterface
+final class EvaluateInputFieldDefaultValue implements CommandInterface
 {
     public function __construct(
-        private Context $ctx,
-        private InputFieldDefinition $field,
-        private InputFieldNode $node,
+        private readonly Context $ctx,
+        private readonly InputFieldDefinition $field,
+        private readonly InputFieldNode $node,
     ) {}
 
     public function exec(): void

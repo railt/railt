@@ -30,74 +30,74 @@ final class Dictionary implements DictionaryInterface
         iterable $directives = [],
     ) {
         foreach ($types as $type) {
-            $this->addType($type);
+            $this->addTypeDefinition($type);
         }
 
         foreach ($directives as $directive) {
-            $this->addDirective($directive);
+            $this->addDirectiveDefinition($directive);
         }
     }
 
     public static function fromDictionary(DictionaryInterface $dictionary): self
     {
         return new self(
-            schema: $dictionary->findSchema(),
-            types: $dictionary->getTypes(),
-            directives: $dictionary->getDirectives(),
+            schema: $dictionary->findSchemaDefinition(),
+            types: $dictionary->getTypeDefinitions(),
+            directives: $dictionary->getDirectiveDefinitions(),
         );
     }
 
-    public function findSchema(): ?SchemaDefinition
+    public function findSchemaDefinition(): ?SchemaDefinition
     {
         return $this->schema;
     }
 
-    public function hasSchema(): bool
+    public function hasSchemaDefinition(): bool
     {
         return $this->schema !== null;
     }
 
-    public function setSchema(SchemaDefinition $schema): void
+    public function setSchemaDefinition(SchemaDefinition $schema): void
     {
         $this->schema = $schema;
     }
 
-    public function getTypes(): iterable
+    public function getTypeDefinitions(): iterable
     {
         return \array_values($this->types);
     }
 
-    public function hasType(string $name): bool
+    public function hasTypeDefinition(string $name): bool
     {
         return isset($this->types[$name]);
     }
 
-    public function findType(string $name): ?NamedTypeDefinition
+    public function findTypeDefinition(string $name): ?NamedTypeDefinition
     {
         return $this->types[$name] ?? null;
     }
 
-    public function addType(NamedTypeDefinition $type): void
+    public function addTypeDefinition(NamedTypeDefinition $type): void
     {
         $this->types[$type->getName()] = $type;
     }
 
-    public function getDirectives(): iterable
+    public function getDirectiveDefinitions(): iterable
     {
         return \array_values($this->directives);
     }
 
-    public function hasDirective(string $name): bool
+    public function hasDirectiveDefinition(string $name): bool
     {
         return isset($this->directives[$name]);
     }
 
-    public function findDirective(string $name): ?DirectiveDefinition
+    public function findDirectiveDefinition(string $name): ?DirectiveDefinition
     {
         return $this->directives[$name] ?? null;
     }
 
-    public function addDirective(DirectiveDefinition $directive): void
+    public function addDirectiveDefinition(DirectiveDefinition $directive): void
     {
         $this->directives[$directive->getName()] = $directive;
     }

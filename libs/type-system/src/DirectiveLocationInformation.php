@@ -9,14 +9,14 @@ namespace Railt\TypeSystem;
  * @psalm-internal Railt\TypeSystem
  */
 #[\Attribute(\Attribute::TARGET_CLASS_CONSTANT)]
-final readonly class DirectiveLocationInformation
+final class DirectiveLocationInformation
 {
     /**
      * @param class-string|null $ref
      */
     public function __construct(
-        public ?string $ref = null,
-        public bool $isExecutable = false,
+        public readonly ?string $ref = null,
+        public readonly bool $isExecutable = false,
     ) {
     }
 }

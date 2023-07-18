@@ -13,40 +13,40 @@ interface DictionaryInterface
     /**
      * @return SchemaDefinition|null
      */
-    public function findSchema(): ?SchemaDefinition;
+    public function findSchemaDefinition(): ?SchemaDefinition;
 
     /**
      * @return bool
      */
-    public function hasSchema(): bool;
+    public function hasSchemaDefinition(): bool;
 
     /**
      * @return iterable<NamedTypeDefinition>
      */
-    public function getTypes(): iterable;
+    public function getTypeDefinitions(): iterable;
 
     /**
      * @param non-empty-string $name
      */
-    public function hasType(string $name): bool;
+    public function hasTypeDefinition(string $name): bool;
 
     /**
      * @param non-empty-string $name
      */
-    public function findType(string $name): ?NamedTypeDefinition;
+    public function findTypeDefinition(string $name): ?NamedTypeDefinition;
 
     /**
      * @return iterable<DirectiveDefinition>
      */
-    public function getDirectives(): iterable;
+    public function getDirectiveDefinitions(): iterable;
 
     /**
      * @param non-empty-string $name
      */
-    public function hasDirective(string $name): bool;
+    public function hasDirectiveDefinition(string $name): bool;
 
     /**
      * @param non-empty-string $name
      */
-    public function findDirective(string $name): ?DirectiveDefinition;
+    public function findDirectiveDefinition(string $name): ?DirectiveDefinition;
 }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-final readonly class StandardLibraryLoader
+use Railt\TypeSystem\DefinitionInterface;
+
+final class StandardLibraryLoader
 {
     /**
      * @var non-empty-string
@@ -16,7 +18,7 @@ final readonly class StandardLibraryLoader
      * @param non-empty-string $directory
      */
     public function __construct(
-        private string $directory = self::DEFAULT_DIRECTORY,
+        private readonly string $directory = self::DEFAULT_DIRECTORY,
     ) {
     }
 
@@ -41,7 +43,7 @@ final readonly class StandardLibraryLoader
     /**
      * @param non-empty-string $name
      */
-    public function __invoke(string $name): ?\SplFileInfo
+    public function __invoke(string $name, DefinitionInterface $from = null): ?\SplFileInfo
     {
         $files = [
             $this->directivePathname($name),

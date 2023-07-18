@@ -9,12 +9,12 @@ use Railt\SDL\Compiler\Context;
 use Railt\SDL\Node\Statement\ArgumentNode;
 use Railt\TypeSystem\ArgumentDefinition;
 
-final readonly class EvaluateArgumentDefaultValue implements CommandInterface
+final class EvaluateArgumentDefaultValue implements CommandInterface
 {
     public function __construct(
-        private Context $ctx,
-        private ArgumentDefinition $argument,
-        private ArgumentNode $node,
+        private readonly Context $ctx,
+        private readonly ArgumentDefinition $argument,
+        private readonly ArgumentNode $node,
     ) {}
 
     public function exec(): void

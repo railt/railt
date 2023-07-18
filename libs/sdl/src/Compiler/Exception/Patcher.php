@@ -8,12 +8,12 @@ use Phplrt\Contracts\Position\PositionInterface;
 use Phplrt\Contracts\Source\FileInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 
-final readonly class Patcher
+final class Patcher
 {
-    private \ReflectionObject $reflection;
+    private readonly \ReflectionObject $reflection;
 
     public function __construct(
-        private \Throwable $throwable,
+        private readonly \Throwable $throwable,
     ) {
         $this->reflection = new \ReflectionObject($throwable);
     }

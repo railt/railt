@@ -20,6 +20,7 @@ use Railt\SDL\Compiler\Command\Extend\ExtendScalarTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\Extend\ExtendUnionTypeDefinitionCommand;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Exception\InternalErrorException;
+use Railt\SDL\Node\Node;
 use Railt\SDL\Node\Statement\Definition\DirectiveDefinitionNode;
 use Railt\SDL\Node\Statement\Definition\EnumTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Definition\InputObjectTypeDefinitionNode;
@@ -64,18 +65,18 @@ final class CompileCommand extends Command
     private array $commandMap = self::AST_TO_COMMAND_MAP;
 
     /**
-     * @param iterable<Statement> $statements
+     * @param iterable<Node> $nodes
      */
     public function __construct(
         Context $ctx,
-        private readonly iterable $statements,
+        private readonly iterable $nodes,
     ) {
         parent::__construct($ctx);
     }
 
     public function exec(): void
     {
-        foreach ($this->statements as $stmt) {
+        foreach ($this->nodes as $stmt) {
             $this->ctx->push($this->match($stmt));
         }
     }

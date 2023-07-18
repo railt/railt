@@ -9,6 +9,6 @@ namespace Railt\SDL\Attribute;
  * @psalm-internal Railt\SDL
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-final readonly class Visitable
+final class Visitable
 {
 }

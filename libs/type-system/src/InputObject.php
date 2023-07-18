@@ -120,21 +120,37 @@ final class InputObject extends Expression implements
      * @return int<0, max>
      * @throws \Exception
      */
-    public function count(): int
+    public function count(bool $includeDefaults = true): int
     {
         /** @var int<0, max> */
-        return \iterator_count($this->getIterator());
+        return \iterator_count(
+            $this->getIterator($includeDefaults),
+        );
     }
 
-    public function getIterator(): \Traversable
+    public function getIterator(bool $includeDefaults = false): \Traversable
     {
         yield from $this->values;
 
-        foreach ($this->getFieldsWithDefaultValues() as $name => $field) {
-            if (!\array_key_exists($name, $this->values)) {
-                yield $name => $field->getDefaultValue();
+        if ($includeDefaults) {
+            foreach ($this->getFieldsWithDefaultValues() as $name => $field) {
+                if (!\array_key_exists($name, $this->values)) {
+                    yield $name => $field->getDefaultValue();
+                }
             }
         }
+    }
+
+    /**
+     * @return array<non-empty-string, mixed>
+     *
+     * @throws \Exception
+     */
+    public function toArray(bool $includeDefaults = false): array
+    {
+        return \iterator_to_array(
+            $this->getIterator($includeDefaults),
+        );
     }
 
     /**
@@ -169,31 +185,7 @@ final class InputObject extends Expression implements
      */
     public function jsonSerialize(): array
     {
-        $result = [];
-
-        /** @var mixed $value */
-        foreach ($this->getIterator() as $name => $value) {
-            /** @psalm-suppress MixedAssignment */
-            $result[$name] = $value;
-
-            if ($value instanceof self && $value === $this) {
-                $field = $this->definition->getField($name);
-                $type = $field?->getType();
-
-                if ($type instanceof NonNullType) {
-                    $message = \vsprintf('Cannot serialize to JSON non-nullable %s of type %s', [
-                        (string)$field,
-                        (string)$type,
-                    ]);
-
-                    throw new \OutOfRangeException($message);
-                }
-
-                $result[$name] = null;
-            }
-        }
-
-        return $result;
+        return $this->toArray(false);
     }
 
     public function __debugInfo(): array
