@@ -6,3 +6,4 @@ Response formats that support an appropriate double‐precision number type
 should use that type to represent this scalar.
 """
 scalar Float
+    @specifiedBy(url: "https://en.wikipedia.org/wiki/IEEE_floating_point")
