@@ -6,6 +6,7 @@ namespace Railt\TypeSystem;
 
 final class FieldDefinition extends Definition implements
     NamedDefinitionInterface,
+    DeprecationAwareInterface,
     ArgumentDefinitionProviderInterface
 {
     use DescriptionAwareTrait;

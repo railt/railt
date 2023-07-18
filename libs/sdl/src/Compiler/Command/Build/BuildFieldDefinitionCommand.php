@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildChildCommand;
+use Railt\SDL\Compiler\Command\Evaluate\ApplyDeprecationFromTypeReferenceCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\FieldNode;
@@ -56,6 +57,11 @@ final class BuildFieldDefinitionCommand extends BuildChildCommand
         }
 
         $this->definition->addField($field);
+
+        // Resolve deprecation from reference
+        $this->ctx->push(new ApplyDeprecationFromTypeReferenceCommand(
+            context: $field,
+        ));
     }
 
     /**
