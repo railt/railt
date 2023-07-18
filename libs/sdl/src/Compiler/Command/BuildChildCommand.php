@@ -23,6 +23,9 @@ use Railt\TypeSystem\WrappingTypeInterface;
  * @template TDefinition of DefinitionInterface
  *
  * @template-extends BuildCommand<TStatementNode, TDefinition>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 abstract class BuildChildCommand extends BuildCommand implements BuildChildCommandInterface
 {

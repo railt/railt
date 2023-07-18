@@ -21,6 +21,16 @@ final class TypeLoader implements TypeLoaderInterface
      */
     private array $loaders = [];
 
+    /**
+     * @param iterable<callable(non-empty-string, DefinitionInterface|null):(SourceType|null)> $loaders
+     */
+    public function __construct(iterable $loaders = [])
+    {
+        foreach ($loaders as $loader) {
+            $this->addLoader($loader);
+        }
+    }
+
     public function addLoader(callable $loader): void
     {
         $this->loaders[] = $loader;

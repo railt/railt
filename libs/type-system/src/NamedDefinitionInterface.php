@@ -8,7 +8,6 @@ interface NamedDefinitionInterface extends
     DefinitionInterface,
     NameAwareInterface,
     DescriptionAwareInterface,
-    DeprecationAwareInterface,
     DirectivesProviderInterface
 {
 }

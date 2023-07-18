@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Bridge\Webonyx;
 
 use GraphQL\Type\Definition\FieldDefinition;
+use GraphQL\Type\Definition\Type;
 use Railt\TypeSystem\FieldDefinition as SourceFieldDefinition;
 
 /**
  * @template-extends Builder<SourceFieldDefinition, FieldDefinition>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class FieldBuilder extends Builder
 {
@@ -22,10 +25,11 @@ final class FieldBuilder extends Builder
         return FieldDefinition::create([
             'name' => $input->getName(),
             'description' => $input->getDescription(),
-            'type' => function () use ($input) {
+            'type' => function () use ($input): Type {
                 return $this->type($input->getType());
             },
             'args' => $this->buildArguments($input),
+            'deprecationReason' => $input->getDeprecationReason(),
         ]);
     }
 

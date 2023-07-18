@@ -9,6 +9,8 @@ use Railt\TypeSystem\EnumTypeDefinition;
 
 /**
  * @template-extends Builder<EnumTypeDefinition, EnumType>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class EnumTypeBuilder extends Builder
 {
@@ -34,6 +36,7 @@ final class EnumTypeBuilder extends Builder
             $result[$value->getName()] = [
                 'value' => $value->getValue(),
                 'description' => $value->getDescription(),
+                'deprecationReason' => $value->getDeprecationReason(),
             ];
         }
 

@@ -12,6 +12,10 @@ use Railt\TypeSystem\NonNullType;
 use Railt\TypeSystem\TypeInterface;
 use Railt\TypeSystem\WrappingTypeInterface;
 
+/**
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler
+ */
 final class EvaluateInputObjectValue implements CommandInterface
 {
     /**

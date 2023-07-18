@@ -11,6 +11,9 @@ use Railt\TypeSystem\InputObjectTypeDefinition;
 
 /**
  * @template-extends DefineCommand<InputObjectTypeDefinitionNode>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 final class DefineInputObjectTypeDefinitionCommand extends DefineCommand
 {

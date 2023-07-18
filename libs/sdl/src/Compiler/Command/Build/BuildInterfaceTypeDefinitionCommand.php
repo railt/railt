@@ -10,6 +10,9 @@ use Railt\TypeSystem\InterfaceTypeDefinition;
 
 /**
  * @template-extends BuildObjectLikeTypeDefinitionCommand<InterfaceTypeDefinitionNode|InterfaceTypeExtensionNode, InterfaceTypeDefinition>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 final class BuildInterfaceTypeDefinitionCommand extends BuildObjectLikeTypeDefinitionCommand
 {

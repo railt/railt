@@ -16,6 +16,7 @@ use Railt\TypeSystem\EnumValueDefinition;
 use Railt\TypeSystem\FieldDefinition;
 use Railt\TypeSystem\InputFieldDefinition;
 use Railt\TypeSystem\NamedTypeDefinition;
+use Railt\TypeSystem\ScalarTypeDefinition;
 use Railt\TypeSystem\SchemaDefinition;
 
 /**
@@ -25,6 +26,9 @@ use Railt\TypeSystem\SchemaDefinition;
  * @link InputFieldDefinition
  * @link ArgumentDefinition
  * @link SchemaDefinition
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 final class EvaluateDirective implements CommandInterface
 {
@@ -65,6 +69,18 @@ final class EvaluateDirective implements CommandInterface
         }
 
         $this->parent->addDirective($directive);
+
+        // Apply "@deprecated" directive
+        $this->ctx->push(new ApplyDeprecationCommand(
+            context: $this->parent,
+        ));
+
+        if ($this->parent instanceof ScalarTypeDefinition) {
+            // Apply "@specifiedBy" directive
+            $this->ctx->push(new ApplySpecifiedByCommand(
+                scalar: $this->parent,
+            ));
+        }
     }
 
     private function assertRepetition(DirectiveDefinition $directive): void

@@ -16,7 +16,7 @@ use Railt\TypeSystem\WrappingTypeInterface;
 
 /**
  * @template TInput of object
- * @template TOutput of object
+ * @template TOutput of mixed
  *
  * @template-implements BuilderInterface<TInput, TOutput>
  */
@@ -32,7 +32,12 @@ abstract class Builder implements BuilderInterface
         if ($value instanceof InputObject || \is_iterable($value)) {
             $result = [];
 
+            /**
+             * @var array-key $key
+             * @var mixed $item
+             */
             foreach ($value as $key => $item) {
+                /** @psalm-suppress MixedAssignment : Okay */
                 $result[$key] = $this->value($item);
             }
 

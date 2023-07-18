@@ -13,6 +13,9 @@ use Railt\TypeSystem\EnumValueDefinition;
 
 /**
  * @template-extends BuildChildCommand<EnumFieldNode, EnumTypeDefinition>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 final class BuildEnumValueDefinitionCommand extends BuildChildCommand
 {

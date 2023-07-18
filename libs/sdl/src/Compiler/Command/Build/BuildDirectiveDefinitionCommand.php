@@ -13,6 +13,9 @@ use Railt\TypeSystem\DirectiveLocation;
 
 /**
  * @template-extends BuildCommand<DirectiveDefinitionNode, DirectiveDefinition>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 final class BuildDirectiveDefinitionCommand extends BuildCommand
 {

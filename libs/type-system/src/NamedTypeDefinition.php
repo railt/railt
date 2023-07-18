@@ -8,7 +8,6 @@ abstract class NamedTypeDefinition extends Definition implements
     NamedTypeDefinitionInterface
 {
     use DescriptionAwareTrait;
-    use DeprecationAwareTrait;
     use DirectivesProviderTrait;
 
     /**

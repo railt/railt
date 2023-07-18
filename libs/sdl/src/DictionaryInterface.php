@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Railt\TypeSystem\Directive;
 use Railt\TypeSystem\DirectiveDefinition;
+use Railt\TypeSystem\DirectivesProviderInterface;
 use Railt\TypeSystem\NamedTypeDefinition;
 use Railt\TypeSystem\SchemaDefinition;
 
@@ -49,4 +51,11 @@ interface DictionaryInterface
      * @param non-empty-string $name
      */
     public function findDirectiveDefinition(string $name): ?DirectiveDefinition;
+
+    /**
+     * @param non-empty-string|null $name
+     *
+     * @return iterable<Directive, DirectivesProviderInterface>
+     */
+    public function getDirectives(string $name = null): iterable;
 }

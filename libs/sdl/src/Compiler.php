@@ -28,13 +28,13 @@ final class Compiler implements CompilerInterface
         private readonly ?CacheInterface $cache = null,
         DictionaryInterface $types = new Dictionary(),
     ) {
-        $this->parser = new Parser($this->cache);
-        $this->loader = new TypeLoader();
-        $this->exceptions = new PrettyFormatter();
         $this->types = Dictionary::fromDictionary($types);
+        $this->parser = new Parser($this->cache);
+        $this->exceptions = new PrettyFormatter();
 
-        /** @psalm-suppress PossiblyInvalidArgument : impure-callable to callable cast */
-        $this->loader->addLoader(new StandardLibraryLoader());
+        $this->loader = new TypeLoader([
+            new StandardLibraryLoader(),
+        ]);
     }
 
     public function getTypes(): Dictionary

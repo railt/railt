@@ -9,6 +9,8 @@ use Railt\TypeSystem\InputObjectTypeDefinition;
 
 /**
  * @template-extends Builder<InputObjectTypeDefinition, InputObjectType>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class InputObjectTypeBuilder extends Builder
 {

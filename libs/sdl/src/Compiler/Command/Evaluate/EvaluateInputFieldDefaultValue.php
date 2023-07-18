@@ -9,6 +9,10 @@ use Railt\SDL\Compiler\Context;
 use Railt\SDL\Node\Statement\InputFieldNode;
 use Railt\TypeSystem\InputFieldDefinition;
 
+/**
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
+ */
 final class EvaluateInputFieldDefaultValue implements CommandInterface
 {
     public function __construct(

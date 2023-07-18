@@ -9,6 +9,10 @@ use Railt\SDL\Compiler\Context;
 use Railt\SDL\Node\Statement\ArgumentNode;
 use Railt\TypeSystem\ArgumentDefinition;
 
+/**
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
+ */
 final class EvaluateArgumentDefaultValue implements CommandInterface
 {
     public function __construct(

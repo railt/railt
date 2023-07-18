@@ -12,6 +12,9 @@ use Railt\TypeSystem\EnumTypeDefinition;
 
 /**
  * @template-extends ExtendCommand<EnumTypeExtensionNode>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 final class ExtendEnumTypeDefinitionCommand extends ExtendCommand
 {

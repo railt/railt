@@ -9,6 +9,8 @@ use Railt\TypeSystem\DirectiveDefinition;
 
 /**
  * @template-extends Builder<DirectiveDefinition, Directive>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class DirectiveBuilder extends Builder
 {

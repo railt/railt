@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Railt\TypeSystem\DirectiveDefinition;
+use Railt\TypeSystem\DirectivesProviderInterface;
+use Railt\TypeSystem\EnumTypeDefinition;
+use Railt\TypeSystem\InputObjectTypeDefinition;
 use Railt\TypeSystem\NamedTypeDefinition;
+use Railt\TypeSystem\ObjectLikeTypeDefinition;
 use Railt\TypeSystem\SchemaDefinition;
 
 final class Dictionary implements DictionaryInterface
@@ -100,5 +104,54 @@ final class Dictionary implements DictionaryInterface
     public function addDirectiveDefinition(DirectiveDefinition $directive): void
     {
         $this->directives[$directive->getName()] = $directive;
+    }
+
+    public function getDirectives(string $name = null): iterable
+    {
+        if ($this->schema !== null) {
+            foreach ($this->schema->getDirectives($name) as $directive) {
+                yield $directive => $this->schema;
+            }
+        }
+
+        foreach ($this->types as $type) {
+            if ($type instanceof DirectivesProviderInterface) {
+                foreach ($type->getDirectives($name) as $directive) {
+                    yield $directive => $type;
+                }
+            }
+
+            switch (true) {
+                case $type instanceof EnumTypeDefinition:
+                    foreach ($type->getValues() as $value) {
+                        foreach ($type->getDirectives($name) as $directive) {
+                            yield $directive => $value;
+                        }
+                    }
+                    break;
+
+                case $type instanceof InputObjectTypeDefinition:
+                    foreach ($type->getFields() as $field) {
+                        foreach ($type->getDirectives($name) as $directive) {
+                            yield $directive => $field;
+                        }
+                    }
+                    break;
+
+                case $type instanceof ObjectLikeTypeDefinition:
+                    foreach ($type->getFields() as $field) {
+                        foreach ($type->getDirectives($name) as $directive) {
+                            yield $directive => $field;
+                        }
+
+                        foreach ($field->getArguments() as $argument) {
+                            foreach ($type->getDirectives($name) as $directive) {
+                                yield $directive => $argument;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
     }
 }

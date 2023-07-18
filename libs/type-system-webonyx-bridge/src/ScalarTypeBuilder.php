@@ -10,6 +10,8 @@ use Railt\TypeSystem\ScalarTypeDefinition;
 
 /**
  * @template-extends Builder<ScalarTypeDefinition, ScalarType>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class ScalarTypeBuilder extends Builder
 {
@@ -38,6 +40,7 @@ final class ScalarTypeBuilder extends Builder
                 parent::__construct([
                     'name' => $scalar->getName(),
                     'description' => $scalar->getDescription(),
+                    'specifiedBy' => $scalar->getSpecificationUrl(),
                 ]);
             }
 

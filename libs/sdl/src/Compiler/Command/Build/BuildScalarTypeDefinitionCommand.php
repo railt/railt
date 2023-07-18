@@ -12,6 +12,9 @@ use Railt\TypeSystem\ScalarTypeDefinition;
 
 /**
  * @template-extends BuildCommand<ScalarTypeDefinitionNode|ScalarTypeExtensionNode, ScalarTypeDefinition>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 final class BuildScalarTypeDefinitionCommand extends BuildCommand
 {

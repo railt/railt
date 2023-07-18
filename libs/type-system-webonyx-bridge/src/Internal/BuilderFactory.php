@@ -8,6 +8,7 @@ use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Railt\SDL\DictionaryInterface;
+use Railt\TypeSystem\Bridge\Webonyx\Builder;
 use Railt\TypeSystem\Bridge\Webonyx\BuilderInterface;
 use Railt\TypeSystem\Bridge\Webonyx\DirectiveBuilder;
 use Railt\TypeSystem\Bridge\Webonyx\EnumTypeBuilder;
@@ -32,7 +33,7 @@ use Railt\TypeSystem\UnionTypeDefinition;
 final class BuilderFactory
 {
     /**
-     * @var array<class-string<NamedTypeDefinitionInterface>, class-string<BuilderInterface>>
+     * @var array<class-string<NamedTypeDefinitionInterface>, class-string<Builder>>
      */
     private const BUILDER_MAPPINGS = [
         ObjectTypeDefinition::class => ObjectTypeBuilder::class,
@@ -48,7 +49,7 @@ final class BuilderFactory
     private readonly DirectiveBuilder $directives;
 
     /**
-     * @var array<class-string, BuilderInterface>
+     * @var array<class-string<NamedTypeDefinitionInterface>, Builder>
      */
     private array $builders = [];
 
@@ -58,7 +59,10 @@ final class BuilderFactory
         $this->directives = new DirectiveBuilder($this);
     }
 
-    private function getBuilder(NamedTypeDefinitionInterface $type): BuilderInterface
+    /**
+     * @psalm-suppress all : psalm false-positive (bug)
+     */
+    private function getBuilder(NamedTypeDefinitionInterface $type): Builder
     {
         if (isset($this->builders[$type::class])) {
             return $this->builders[$type::class];
@@ -76,6 +80,7 @@ final class BuilderFactory
     {
         $builder = $this->getBuilder($type);
 
+        /** @var Type */
         return $builder->build($type);
     }
 

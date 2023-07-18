@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Compiler\Command\Build;
+namespace Railt\SDL\Compiler\Command\Evaluate;
 
-use Railt\SDL\Compiler\Command\BuildChildCommand;
+use Railt\SDL\Compiler\Command\CommandInterface;
+use Railt\SDL\Compiler\Context;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\ObjectLikeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ObjectLikeExtensionNode;
@@ -13,10 +14,18 @@ use Railt\TypeSystem\InterfaceTypeDefinition;
 use Railt\TypeSystem\ObjectLikeTypeDefinition;
 
 /**
- * @template-extends BuildChildCommand<ObjectLikeDefinitionNode|ObjectLikeExtensionNode, ObjectLikeTypeDefinition>
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
-final class ObjectLikeImplementsCommand extends BuildChildCommand
+final class InterfaceImplementsCommand implements CommandInterface
 {
+    public function __construct(
+        private readonly Context $ctx,
+        private readonly ObjectLikeDefinitionNode|ObjectLikeExtensionNode $node,
+        private readonly ObjectLikeTypeDefinition $definition,
+    ) {
+    }
+
     public function exec(): void
     {
         foreach ($this->node->interfaces as $node) {

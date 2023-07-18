@@ -71,19 +71,20 @@ final class Parser implements ParserInterface
      */
     public function parse(mixed $source): iterable
     {
-        $key = $this->getKey(
-            $source = File::new($source),
-        );
+        $key = $this->getKey($source = File::new($source));
 
         if ($this->cache?->has($key)) {
+            /** @var iterable<Node> */
             return $this->cache->get($key);
         }
 
         try {
-            $result = $this->withoutRecursionDepth(function () use ($source) {
+            /** @var iterable<Node> $result */
+            $result = $this->withoutRecursionDepth(function () use ($source): iterable {
                 return $this->parser->parse($source);
             });
 
+            /** @psalm-suppress all : cache may be null */
             $this->cache?->set($key, $result);
 
             return $result;

@@ -9,9 +9,12 @@ use Railt\SDL\Compiler\Context;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Expression\ArgumentNode;
 use Railt\TypeSystem\Argument;
-use Railt\TypeSystem\ArgumentDefinition;
 use Railt\TypeSystem\Directive;
 
+/**
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
+ */
 final class EvaluateArgumentCommand implements CommandInterface
 {
     public function __construct(

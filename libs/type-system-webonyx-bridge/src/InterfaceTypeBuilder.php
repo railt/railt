@@ -9,6 +9,8 @@ use Railt\TypeSystem\InterfaceTypeDefinition;
 
 /**
  * @template-extends ObjectLikeTypeBuilder<InterfaceTypeDefinition, InterfaceType>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class InterfaceTypeBuilder extends ObjectLikeTypeBuilder
 {

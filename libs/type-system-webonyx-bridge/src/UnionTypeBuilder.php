@@ -9,6 +9,8 @@ use Railt\TypeSystem\UnionTypeDefinition;
 
 /**
  * @template-extends Builder<UnionTypeDefinition, UnionType>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class UnionTypeBuilder extends Builder
 {

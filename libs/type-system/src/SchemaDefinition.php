@@ -6,11 +6,9 @@ namespace Railt\TypeSystem;
 
 final class SchemaDefinition extends Definition implements
     DirectivesProviderInterface,
-    DescriptionAwareInterface,
-    DeprecationAwareInterface
+    DescriptionAwareInterface
 {
     use DescriptionAwareTrait;
-    use DeprecationAwareTrait;
     use DirectivesProviderTrait;
 
     public function __construct(

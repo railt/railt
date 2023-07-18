@@ -6,6 +6,7 @@ namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
+use Railt\SDL\Compiler\Command\Evaluate\InterfaceImplementsCommand;
 use Railt\SDL\Node\Statement\Definition\ObjectLikeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ObjectLikeExtensionNode;
 use Railt\TypeSystem\ObjectLikeTypeDefinition;
@@ -15,6 +16,9 @@ use Railt\TypeSystem\ObjectLikeTypeDefinition;
  * @template TDefinition of ObjectLikeTypeDefinition
  *
  * @template-extends BuildCommand<TStatementNode, TDefinition>
+ *
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler\Command
  */
 abstract class BuildObjectLikeTypeDefinitionCommand extends BuildCommand
 {
@@ -28,7 +32,7 @@ abstract class BuildObjectLikeTypeDefinitionCommand extends BuildCommand
             ));
         }
 
-        $this->ctx->push(new ObjectLikeImplementsCommand(
+        $this->ctx->push(new InterfaceImplementsCommand(
             ctx: $this->ctx,
             node: $this->node,
             definition: $this->definition,

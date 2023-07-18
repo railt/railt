@@ -37,6 +37,10 @@ use Railt\SDL\Node\Statement\Extension\ScalarTypeExtensionNode;
 use Railt\SDL\Node\Statement\Extension\UnionTypeExtensionNode;
 use Railt\SDL\Node\Statement\Statement;
 
+/**
+ * @internal This is an internal library class, please do not use it in your code.
+ * @psalm-internal Railt\SDL\Compiler
+ */
 final class CompileCommand extends Command
 {
     /**
@@ -60,9 +64,9 @@ final class CompileCommand extends Command
     ];
 
     /**
-     * @var array<class-string<Statement>, class-string<DefineCommand>>
+     * @var array<class-string<Node>, class-string<DefineCommand>>
      */
-    private array $commandMap = self::AST_TO_COMMAND_MAP;
+    private array $map = self::AST_TO_COMMAND_MAP;
 
     /**
      * @param iterable<Node> $nodes
@@ -76,31 +80,31 @@ final class CompileCommand extends Command
 
     public function exec(): void
     {
-        foreach ($this->nodes as $stmt) {
-            $this->ctx->push($this->match($stmt));
+        foreach ($this->nodes as $node) {
+            $this->ctx->push($this->getCommand($node));
         }
     }
 
     /**
      * @return class-string<DefineCommand>
      */
-    private function resolveCommandClass(Statement $stmt): string
+    private function getCommandClass(Node $node): string
     {
-        foreach (self::AST_TO_COMMAND_MAP as $node => $command) {
-            if ($stmt instanceof $node) {
+        foreach (self::AST_TO_COMMAND_MAP as $class => $command) {
+            if ($node instanceof $class) {
                 return $command;
             }
         }
 
-        throw InternalErrorException::fromUnprocessableNode($stmt);
+        throw InternalErrorException::fromUnprocessableNode($node);
     }
 
-    private function match(Statement $stmt): CommandInterface
+    private function getCommand(Node $node): CommandInterface
     {
-        $command = $this->commandMap[$stmt::class]
-            ??= $this->resolveCommandClass($stmt)
+        $command = $this->map[$node::class]
+            ??= $this->getCommandClass($node)
         ;
 
-        return new $command($this->ctx, $stmt);
+        return new $command($this->ctx, $node);
     }
 }

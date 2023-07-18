@@ -9,6 +9,8 @@ use Railt\TypeSystem\ObjectTypeDefinition;
 
 /**
  * @template-extends ObjectLikeTypeBuilder<ObjectTypeDefinition, ObjectType>
+ *
+ * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class ObjectTypeBuilder extends ObjectLikeTypeBuilder
 {
