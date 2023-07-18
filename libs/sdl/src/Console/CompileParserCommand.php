@@ -6,6 +6,7 @@ namespace Railt\SDL\Console;
 
 use Phplrt\Compiler\Compiler;
 use Phplrt\Source\File;
+use Railt\SDL\Parser\Parser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,7 +25,7 @@ final class CompileParserCommand extends Command
     /**
      * @var non-empty-string
      */
-    private const GRAMMAR_OUTPUT = __DIR__ . '/../../resources/grammar.php';
+    private const GRAMMAR_OUTPUT = Parser::DEFAULT_GRAMMAR_PATHNAME;
 
     /**
      * @var array<array-key, non-empty-string>

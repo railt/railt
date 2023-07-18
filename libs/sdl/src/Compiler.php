@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
+use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Source\File;
 use Psr\SimpleCache\CacheInterface;
@@ -16,25 +17,49 @@ use Railt\SDL\Compiler\Queue;
 use Railt\SDL\Compiler\TypeLoader;
 use Railt\SDL\Exception\ParsingException;
 use Railt\SDL\Exception\RuntimeExceptionInterface;
+use Railt\SDL\Node\Node;
+use Railt\SDL\Parser\CachedParser;
+use Railt\SDL\Parser\Parser;
 
 final class Compiler implements CompilerInterface
 {
-    private readonly Parser $parser;
+    private readonly ParserInterface $parser;
     private readonly TypeLoader $loader;
     private readonly Dictionary $types;
     private readonly FormatterInterface $exceptions;
 
     public function __construct(
-        private readonly ?CacheInterface $cache = null,
+        ?CacheInterface $cache = null,
         DictionaryInterface $types = new Dictionary(),
     ) {
         $this->types = Dictionary::fromDictionary($types);
-        $this->parser = new Parser($this->cache);
-        $this->exceptions = new PrettyFormatter();
 
-        $this->loader = new TypeLoader([
+        $this->parser = $this->bootParser($cache);
+        $this->exceptions = $this->bootExceptionFormatter();
+        $this->loader = $this->bootTypeLoader();
+    }
+
+    private function bootExceptionFormatter(): FormatterInterface
+    {
+        return new PrettyFormatter();
+    }
+
+    private function bootTypeLoader(): TypeLoader
+    {
+        return new TypeLoader([
             new StandardLibraryLoader(),
         ]);
+    }
+
+    private function bootParser(?CacheInterface $cache = null): ParserInterface
+    {
+        $parser = new Parser();
+
+        if ($cache === null) {
+            return $parser;
+        }
+
+        return new CachedParser($cache, $parser);
     }
 
     public function getTypes(): Dictionary
@@ -81,9 +106,10 @@ final class Compiler implements CompilerInterface
      */
     private function process(ReadableInterface $source, Context $context): void
     {
-        $statements = $this->parser->parse($source);
+        /** @var iterable<Node> $nodes */
+        $nodes = $this->parser->parse($source);
 
-        $context->push(new CompileCommand($context, $statements));
+        $context->push(new CompileCommand($context, $nodes));
 
         foreach ($context as $command) {
             $command->exec();

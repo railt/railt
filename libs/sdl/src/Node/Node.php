@@ -8,7 +8,6 @@ use Phplrt\Contracts\Position\PositionInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Position\Position;
 use Phplrt\Source\File;
-use Railt\SDL\Attribute\Visitable;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

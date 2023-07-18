@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Node\Statement\Type;
 
-use Railt\SDL\Attribute\Visitable;
 use Railt\SDL\Node\NameNode;
+use Railt\SDL\Node\Visitable;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

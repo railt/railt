@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL;
+namespace Railt\SDL\Parser;
 
 use Phplrt\Contracts\Exception\RuntimeExceptionInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
-use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Exception\RuntimeException;
 use Phplrt\Lexer\Exception\UnrecognizedTokenException;
 use Phplrt\Lexer\Lexer;
@@ -16,12 +15,9 @@ use Phplrt\Parser\Grammar\RuleInterface;
 use Phplrt\Parser\Parser as ParserCombinator;
 use Phplrt\Parser\ParserConfigsInterface;
 use Phplrt\Position\Position;
-use Phplrt\Source\File;
-use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use Railt\SDL\Exception\ParsingException;
 use Railt\SDL\Node\Node;
-use Railt\SDL\Parser\Builder;
 
 /**
  * @psalm-type GrammarConfigArray = array{
@@ -37,13 +33,20 @@ use Railt\SDL\Parser\Builder;
  */
 final class Parser implements ParserInterface
 {
+    /**
+     * @var non-empty-string
+     */
+    public const DEFAULT_GRAMMAR_PATHNAME = __DIR__ . '/../../resources/grammar.php';
+
     private readonly ParserInterface $parser;
 
-    public function __construct(
-        private readonly ?CacheInterface $cache = null,
-    ) {
-        /** @psalm-var GrammarConfigArray $grammar */
-        $grammar = require __DIR__ . '/../resources/grammar.php';
+    public function __construct()
+    {
+        /**
+         * @psalm-var GrammarConfigArray $grammar
+         * @psalm-suppress UnresolvableInclude
+         */
+        $grammar = require self::DEFAULT_GRAMMAR_PATHNAME;
 
         $this->parser = new ParserCombinator(
             lexer: new Lexer($grammar['tokens']['default'], $grammar['skip']),
@@ -56,14 +59,6 @@ final class Parser implements ParserInterface
     }
 
     /**
-     * @return non-empty-string
-     */
-    private function getKey(ReadableInterface $source): string
-    {
-        return 'railt.ast.' . \hash('xxh64', $source->getHash());
-    }
-
-    /**
      * @return iterable<Node>
      *
      * @throws ParsingException
@@ -71,23 +66,12 @@ final class Parser implements ParserInterface
      */
     public function parse(mixed $source): iterable
     {
-        $key = $this->getKey($source = File::new($source));
-
-        if ($this->cache?->has($key)) {
-            /** @var iterable<Node> */
-            return $this->cache->get($key);
-        }
-
         try {
-            /** @var iterable<Node> $result */
-            $result = $this->withoutRecursionDepth(function () use ($source): iterable {
+            /** @var iterable<Node> */
+            return $this->withoutRecursionDepth(function () use ($source): iterable {
+                /** @psalm-suppress MixedArgument : Yep, its mixed */
                 return $this->parser->parse($source);
             });
-
-            /** @psalm-suppress all : cache may be null */
-            $this->cache?->set($key, $result);
-
-            return $result;
         } catch (RuntimeExceptionInterface $e) {
             $this->handle($e);
         }

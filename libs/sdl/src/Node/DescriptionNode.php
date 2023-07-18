@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Node;
 
-use Railt\SDL\Attribute\Visitable;
 use Railt\SDL\Node\Expression\Literal\StringLiteralNode;
 
 /**

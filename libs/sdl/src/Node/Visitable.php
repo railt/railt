@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Attribute;
+namespace Railt\SDL\Node;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
