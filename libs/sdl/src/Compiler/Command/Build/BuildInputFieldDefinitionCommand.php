@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildChildCommand;
+use Railt\SDL\Compiler\Command\Evaluate\ApplyDeprecationFromTypeReferenceCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateInputFieldDefaultValue;
 use Railt\SDL\Exception\CompilationException;
@@ -57,6 +58,11 @@ final class BuildInputFieldDefinitionCommand extends BuildChildCommand
         }
 
         $this->definition->addField($field);
+
+        // Resolve deprecation from reference
+        $this->ctx->push(new ApplyDeprecationFromTypeReferenceCommand(
+            context: $field,
+        ));
     }
 
     private function assertInputFieldNotDefined(): void

@@ -55,10 +55,13 @@ class ApplyDeprecationCommand implements CommandInterface
             return (string)$reason->getValue();
         }
 
-        return $directive->getDefinition()
+        /** @psalm-suppress MixedAssignment : Okay */
+        $result = $directive->getDefinition()
             ->getArgument('reason')
             ?->getDefaultValue()
         ;
+
+        return $result === null ? null : (string)$result;
     }
 
     protected function deprecate(Directive $directive, Definition $ctx): void

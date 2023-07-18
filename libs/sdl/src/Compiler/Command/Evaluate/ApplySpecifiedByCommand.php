@@ -20,7 +20,8 @@ final class ApplySpecifiedByCommand implements CommandInterface
     public function exec(): void
     {
         foreach ($this->scalar->getDirectives('specifiedBy') as $directive) {
-            if (($url = $directive->getArgument('url')) !== null) {
+            if ($url = $directive->getArgument('url')) {
+                /** @psalm-suppress ArgumentTypeCoercion : non-empty-string passed */
                 $this->scalar->setSpecificationUrl((string)$url->getValue());
             }
         }

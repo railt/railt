@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-final class EnumValueDefinition extends Definition implements NamedDefinitionInterface
+final class EnumValueDefinition extends Definition implements
+    NamedDefinitionInterface,
+    DeprecationAwareInterface
 {
     use DeprecationAwareTrait;
     use DescriptionAwareTrait;

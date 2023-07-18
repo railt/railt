@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-final class InputFieldDefinition extends Definition implements NamedDefinitionInterface
+final class InputFieldDefinition extends Definition implements
+    NamedDefinitionInterface,
+    DeprecationAwareInterface
 {
     use DescriptionAwareTrait;
     use DeprecationAwareTrait;
