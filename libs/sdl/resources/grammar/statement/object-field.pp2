@@ -1,0 +1,47 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Fields
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL Objects and Interfaces represent a list of named fields,
+ * each of which yield a value of a specific type. Object values should be
+ * serialized as ordered maps, where the queried field names (or aliases)
+ * are the keys and the result of evaluating the field is the value,
+ * ordered by the order in which they appear in the query.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#FieldDefinition
+ *
+ */
+
+OptionalFieldDefinitions -> { return new \ArrayObject($children); }
+  : FieldDefinitions()?
+  ;
+
+FieldDefinitions
+  : FieldDefinition()+
+  ;
+
+FieldDefinition -> {
+    return new Stmt\FieldNode(
+        $children[1],
+        $children[0],
+        $children[3],
+        $children[2]->getArrayCopy(),
+        $children[4]->getArrayCopy(),
+    );
+}
+  : Description()
+    Identifier() OptionalFieldDefinitionArguments() ::T_COLON:: Type()
+    Directives() ::T_COMMA::?
+  ;
+
+OptionalFieldDefinitionArguments -> { return new \ArrayObject($children); }
+  : FieldDefinitionArguments()?
+  ;
+
+FieldDefinitionArguments
+  : ::T_PARENTHESIS_OPEN::
+      ArgumentDefinition()*
+    ::T_PARENTHESIS_CLOSE::
+  ;

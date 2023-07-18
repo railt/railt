@@ -1,0 +1,18 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Float Value
+ * --------------------------------------------------------------------------
+ *
+ * A Float number includes either a decimal point (ex. 1.0) or an exponent
+ * (ex. 1e50) or both (ex. 6.0221413e23).
+ *
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Float-Value
+ */
+
+FloatLiteral -> {
+    return Expr\Literal\FloatLiteralNode::parse($children->getValue());
+}
+  : <T_FLOAT>
+  | <T_FLOAT_EXP>
+  ;

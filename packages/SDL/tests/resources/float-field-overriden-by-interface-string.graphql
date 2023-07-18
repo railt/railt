@@ -1,7 +1,0 @@
-type TFloat implements IString {
-    field: Float
-}
-
-interface IString {
-  field: String
-}

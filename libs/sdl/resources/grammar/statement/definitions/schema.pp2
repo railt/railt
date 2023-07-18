@@ -1,0 +1,80 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Schema
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL service's collective type system capabilities are referred
+ * to as that service's "schema". A schema is defined in terms of the
+ * types and directives it supports as well as the root operation types for
+ * each kind of operation: query, mutation, and subscription; this
+ * determines the place in the type system where those operations begin.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Schema
+ *
+ */
+
+SchemaDefinition -> {
+    return new Stmt\Definition\SchemaDefinitionNode(
+        $children[0],
+        $children[2]->getArrayCopy(),
+        $children[1]->getArrayCopy(),
+    );
+}
+  : Description()
+    SchemaDefinitionExceptDescription()
+  ;
+
+SchemaDefinitionExceptDescription
+  : SchemaDefinitionHead()
+    OptionalSchemaDefinitionBody()
+  ;
+
+SchemaDefinitionHead
+  : ::T_SCHEMA:: Directives()
+  ;
+
+OptionalSchemaDefinitionBody -> { return new \ArrayObject($children); }
+  : SchemaDefinitionBody()?
+  ;
+
+SchemaDefinitionBody
+  : ::T_BRACE_OPEN::
+      (OperationTypeDefinition() ::T_COMMA::?)*
+    ::T_BRACE_CLOSE::
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Schema Fields
+ * --------------------------------------------------------------------------
+ *
+ * A schema defines the initial root operation type for each kind of
+ * operation it supports: query, mutation, and subscription; this determines
+ * the place in the type system where those operations begin.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Root-Operation-Types
+ */
+
+OperationTypeDefinition -> {
+    return new Stmt\SchemaFieldNode(
+        $children[1],
+        $children[0],
+        $children[2],
+        $children[3]->getArrayCopy(),
+    );
+}
+  : Description()
+    SchemaFieldName() ::T_COLON:: NamedType()
+    Directives()
+  ;
+
+SchemaFieldName -> {
+    return new Node\IdentifierNode($children->getValue());
+}
+  : <T_QUERY>
+  | <T_MUTATION>
+  | <T_SUBSCRIPTION>
+  ;

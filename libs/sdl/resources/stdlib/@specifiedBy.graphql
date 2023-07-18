@@ -1,0 +1,10 @@
+
+"""
+The @specifiedBy built-in directive is used within the type system definition
+language to provide a _scalar specification_ URL for specifying the behavior of
+[custom scalar types](https://spec.graphql.org/draft/#sec-Scalars.Custom-Scalars).
+The URL should point to a human-readable specification of the data format,
+serialization, and coercion rules. It must not appear on built-in scalar types.
+"""
+directive @specifiedBy(url: String!) on
+    | SCALAR

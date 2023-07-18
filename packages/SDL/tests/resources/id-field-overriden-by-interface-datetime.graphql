@@ -1,7 +1,0 @@
-type TID implements IDateTime {
-    field: ID
-}
-
-interface IDateTime {
-  field: DateTime
-}

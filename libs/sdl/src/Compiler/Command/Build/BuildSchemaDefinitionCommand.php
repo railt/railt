@@ -1,0 +1,87 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Railt\SDL\Compiler\Command\Build;
+
+use Railt\SDL\Compiler\Command\BuildCommand;
+use Railt\SDL\Exception\CompilationException;
+use Railt\SDL\Node\Statement\Definition\SchemaDefinitionNode;
+use Railt\SDL\Node\Statement\SchemaFieldNode;
+use Railt\TypeSystem\ObjectTypeDefinition;
+use Railt\TypeSystem\SchemaDefinition;
+
+/**
+ * @template-extends BuildCommand<SchemaDefinitionNode, SchemaDefinition>
+ */
+final class BuildSchemaDefinitionCommand extends BuildCommand
+{
+    public function exec(): void
+    {
+        foreach ($this->node->fields as $node) {
+            $type = $this->buildFieldType($node);
+
+            switch ($node->name->value) {
+                case 'query':
+                    $this->buildQueryType($node, $type);
+                    break;
+                case 'mutation':
+                    $this->buildMutationType($node, $type);
+                    break;
+                case 'subscription':
+                    $this->buildSubscriptionType($node, $type);
+                    break;
+            }
+        }
+
+        foreach ($this->node->directives as $node) {
+            $this->addDirective($this->definition, $node);
+        }
+    }
+
+    private function buildFieldType(SchemaFieldNode $field): ObjectTypeDefinition
+    {
+        $type = $this->ctx->getType($field->type->name->value, $field->type, $this->definition);
+
+        if (!$type instanceof ObjectTypeDefinition) {
+            $message = \vsprintf('The %s schema field must be an object type, but %s given', [
+                $field->name->value,
+                (string)$type,
+            ]);
+
+            throw CompilationException::create($message, $field->type);
+        }
+
+        return $type;
+    }
+
+    private function buildSubscriptionType(SchemaFieldNode $field, ObjectTypeDefinition $type): void
+    {
+        if ($this->definition->getSubscriptionType() !== null) {
+            $message = 'Cannot redefine already defined "subscription" field';
+            throw CompilationException::create($message, $field->name);
+        }
+
+        $this->definition->setSubscriptionType($type);
+    }
+
+    private function buildMutationType(SchemaFieldNode $field, ObjectTypeDefinition $type): void
+    {
+        if ($this->definition->getMutationType() !== null) {
+            $message = 'Cannot redefine already defined "mutation" field';
+            throw CompilationException::create($message, $field->name);
+        }
+
+        $this->definition->setMutationType($type);
+    }
+
+    private function buildQueryType(SchemaFieldNode $field, ObjectTypeDefinition $type): void
+    {
+        if ($this->definition->getQueryType() !== null) {
+            $message = 'Cannot redefine already defined "query" field';
+            throw CompilationException::create($message, $field->name);
+        }
+
+        $this->definition->setQueryType($type);
+    }
+}

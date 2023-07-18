@@ -1,0 +1,23 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Scalar Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Scalar type extensions are used to represent a scalar type which has
+ * been extended from some original scalar type. For example, this might
+ * be used by a GraphQL tool or service which adds directives to an
+ * existing scalar.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Scalar-Extensions
+ *
+ */
+
+ScalarTypeExtension -> {
+    return new Stmt\Extension\ScalarTypeExtensionNode(
+        $children[0],
+        $children[1]->getArrayCopy(),
+    );
+}
+  : ::T_EXTEND:: ScalarTypeDefinitionExceptDescription()
+  ;

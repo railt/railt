@@ -1,0 +1,16 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Int Value
+ * --------------------------------------------------------------------------
+ *
+ * An Int number is specified without a decimal point or exponent (ex. 1).
+ *
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Int-Value
+ */
+
+IntLiteral -> {
+    return Expr\Literal\IntLiteralNode::parse($children->getValue());
+}
+  : <T_INT>
+  ;

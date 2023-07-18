@@ -1,0 +1,6 @@
+
+scalar Example
+    @deprecated(
+        reason: "asd"
+        reason: "asdasd"
+    )

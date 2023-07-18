@@ -1,7 +1,0 @@
-type TID implements IInt {
-    field: ID
-}
-
-interface IInt {
-  field: Int
-}

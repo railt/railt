@@ -1,0 +1,28 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Input Field
+ * --------------------------------------------------------------------------
+ *
+ * Fields are conceptually functions which return values, and occasionally
+ * accept arguments which alter their behavior. These arguments often map
+ * directly to function arguments within a GraphQL server’s implementation.
+ *
+ * @see https://graphql.github.io/graphql-spec/June2018/#sec-Field-Arguments
+ *
+ */
+
+InputFieldDefinition -> {
+    return new Stmt\InputFieldNode(
+        $children[1],
+        $children[0],
+        $children[2],
+        $children[3] instanceof \ArrayObject ? null : $children[3],
+        \end($children)->getArrayCopy(),
+    );
+}
+  : Description()
+    Identifier() ::T_COLON:: Type()
+    (::T_EQUAL:: Literal())?
+    Directives() ::T_COMMA::?
+  ;

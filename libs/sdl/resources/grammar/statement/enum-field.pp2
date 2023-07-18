@@ -1,0 +1,29 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enum Values
+ * --------------------------------------------------------------------------
+ *
+ * Enums are not references for a numeric value, but are unique values
+ * in their own right. They may serialize as a string: the name of the
+ * represented value.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#EnumValuesDefinition
+ *
+ */
+
+EnumFieldDefinitions -> { return new \ArrayObject($children); }
+  : EnumFieldDefinition()*
+  ;
+
+EnumFieldDefinition -> {
+    return new Stmt\EnumFieldNode(
+        $children[1],
+        $children[0],
+        $children[2]->getArrayCopy(),
+    );
+}
+  : Description()
+    Identifier()
+    Directives() ::T_COMMA::?
+  ;

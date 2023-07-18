@@ -1,0 +1,24 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Enum Extensions
+ * --------------------------------------------------------------------------
+ *
+ * Enum type extensions are used to represent an enum type which has been
+ * extended from some original enum type. For example, this might be used
+ * to represent additional local data, or by a GraphQL service which is
+ * itself an extension of another GraphQL service.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Enum-Extensions
+ *
+ */
+
+EnumTypeExtension -> {
+    return new Stmt\Extension\EnumTypeExtensionNode(
+        $children[0],
+        $children[2]->getArrayCopy(),
+        $children[1]->getArrayCopy(),
+    );
+}
+  : ::T_EXTEND:: EnumTypeDefinitionExceptDescription()
+  ;

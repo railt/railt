@@ -1,0 +1,68 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Interfaces
+ * --------------------------------------------------------------------------
+ *
+ * GraphQL interfaces represent a list of named fields and their arguments.
+ * GraphQL objects can then implement these interfaces which requires that
+ * the object type will define all fields defined by those interfaces.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Interfaces
+ *
+ */
+
+InterfaceTypeDefinition -> {
+    return new Stmt\Definition\InterfaceTypeDefinitionNode(
+        $children[1],
+        $children[0],
+        $children[2]->getArrayCopy(),
+        $children[4]->getArrayCopy(),
+        $children[3]->getArrayCopy(),
+    );
+}
+  : Description()
+    InterfaceTypeDefinitionExceptDescription()
+  ;
+
+InterfaceTypeDefinitionExceptDescription
+  : InterfaceTypeDefinitionHead()
+    OptionalInterfaceTypeDefinitionBody()
+  ;
+
+InterfaceTypeDefinitionHead
+  : ::T_INTERFACE:: Identifier()
+    OptionalImplementsInterfaces()
+    Directives()
+  ;
+
+OptionalInterfaceTypeDefinitionBody -> {
+    return $children === [] ? new \ArrayObject() : $children;
+}
+  : ObjectTypeDefinitionBody()?
+  ;
+
+InterfaceTypeDefinitionBody
+  : ::T_BRACE_OPEN::
+      FieldDefinitions()?
+    ::T_BRACE_CLOSE::
+  ;
+
+//
+// Implements
+//
+
+OptionalImplementsInterfaces -> { return new \ArrayObject($children); }
+  : ImplementsInterfaces()?
+  ;
+
+ImplementsInterfaces
+  : ::T_IMPLEMENTS::
+    ImplementsInterfacesDelimiter()? NamedType()
+    ( ImplementsInterfacesDelimiter() NamedType() )*
+  ;
+
+ImplementsInterfacesDelimiter
+  : ::T_COMMA::
+  | ::T_AND::
+  ;

@@ -1,7 +1,0 @@
-type TID implements IBoolean {
-    field: ID
-}
-
-interface IBoolean {
-  field: Boolean
-}

@@ -1,0 +1,81 @@
+
+/**
+ * Types description/documentation
+ */
+
+Description -> {
+    return new Node\DescriptionNode($children === [] ? null : $children);
+}
+  : StringLiteral()?
+  ;
+
+
+Name -> {
+    return new Node\NameNode($children[0]->value);
+}
+  : Identifier()
+  ;
+
+/**
+ * Represents a non-namespaced name.
+ * Namespaced names are represented using Name nodes.
+ */
+
+Identifier -> {
+    return new Node\IdentifierNode($children->getValue());
+}
+  // Literals
+  : <T_TRUE>
+  | <T_FALSE>
+  | <T_NULL>
+
+  // Keywords
+  | <T_TYPE>
+  | <T_ENUM>
+  | <T_UNION>
+  | <T_INTERFACE>
+  | <T_SCHEMA>
+  | <T_SCALAR>
+  | <T_DIRECTIVE>
+  | <T_INPUT>
+  | <T_QUERY>
+  | <T_MUTATION>
+  | <T_ON>
+  | <T_SUBSCRIPTION>
+  | <T_EXTEND>
+  | <T_EXTENDS>
+  | <T_IMPLEMENTS>
+  | <T_REPEATABLE>
+
+  // Other
+  | <T_NAME>
+  ;
+
+
+/**
+ * Type reference
+ */
+
+Type
+  : NonNullType()
+  | ListType()
+  | NamedType()
+  ;
+
+ListType -> {
+    return new Stmt\Type\ListTypeNode($children[0]);
+}
+  : ::T_BRACKET_OPEN:: Type() ::T_BRACKET_CLOSE::
+  ;
+
+NonNullType -> {
+    return new Stmt\Type\NonNullTypeNode($children[0]);
+}
+  : (ListType() | NamedType()) ::T_NON_NULL::
+  ;
+
+NamedType -> {
+    return new Stmt\Type\NamedTypeNode($children[0]);
+}
+  : Name()
+  ;

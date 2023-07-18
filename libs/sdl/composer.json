@@ -1,0 +1,50 @@
+{
+    "name": "railt/sdl",
+    "description": "GraphQL Schema Definition Language Parser",
+    "license": "MIT",
+    "keywords": ["graphql", "language", "sdl", "parser", "schema"],
+    "homepage": "https://github.com/railt",
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/sdl"
+    },
+    "require": {
+        "php": "^8.2",
+        "phplrt/lexer": "^3.2",
+        "phplrt/parser": "^3.2",
+        "railt/type-system": "^2.0",
+        "voku/portable-utf8": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\SDL\\": "src"
+        }
+    },
+    "require-dev": {
+        "symfony/console": "^5.4|^6.0",
+        "phpunit/phpunit": "^10.2",
+        "vimeo/psalm": "^5.13"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\SDL\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev",
+            "dev-main": "2.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

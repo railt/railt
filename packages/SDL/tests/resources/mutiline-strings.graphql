@@ -1,6 +1,0 @@
-
-type Some {
-    first(value: String = """
-        Mutiline text
-    """): String
-}

@@ -1,0 +1,17 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Boolean Value
+ * --------------------------------------------------------------------------
+ *
+ * The two keywords true and false represent the two boolean values.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Boolean-Value
+ */
+
+BoolLiteral -> {
+    return Expr\Literal\BoolLiteralNode::parse($children->getValue());
+}
+  : <T_FALSE>
+  | <T_TRUE>
+  ;

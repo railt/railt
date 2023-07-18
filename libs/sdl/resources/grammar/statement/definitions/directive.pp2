@@ -1,0 +1,64 @@
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL SDL Directives
+ * --------------------------------------------------------------------------
+ *
+ * A GraphQL schema describes directives which are used to annotate
+ * various parts of a GraphQL document as an indicator that they should
+ * be evaluated differently by a validator, executor, or client
+ * tool such as a code generator.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Type-System.Directives
+ *
+ */
+
+DirectiveDefinition -> {
+    return new Stmt\Definition\DirectiveDefinitionNode(
+        $children[1],
+        $children[0],
+        $children[2]->getArrayCopy(),
+        $children[3]->getArrayCopy(),
+        $children[4]->getArrayCopy(),
+    );
+}
+  : Description()
+    DirectiveDefinitionHead()
+    DirectiveDefinitionBody()
+  ;
+
+DirectiveDefinitionHead
+  : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: Identifier()
+    OptionalDirectiveArguments()
+    DirectiveModifiers()
+  ;
+
+OptionalDirectiveArguments -> { return new \ArrayObject($children); }
+  : DirectiveArguments()?
+  ;
+
+DirectiveArguments
+  : ::T_PARENTHESIS_OPEN::
+      ArgumentDefinition()*
+    ::T_PARENTHESIS_CLOSE::
+  ;
+
+DirectiveModifiers -> {
+    return new \ArrayObject(\array_filter([$children]));
+}
+  : DirectiveIsRepeatable()?
+  ;
+
+DirectiveIsRepeatable -> {
+    return Stmt\Definition\DirectiveDefinition\Modifier::REPEATABLE;
+}
+  : <T_REPEATABLE>
+  ;
+
+DirectiveDefinitionBody
+  : ::T_ON:: DirectiveDefinitionLocations()
+  ;
+
+DirectiveDefinitionLocations -> { return new \ArrayObject($children); }
+  : ::T_OR::? Identifier() (::T_OR:: Identifier())*
+  ;
