@@ -30,7 +30,7 @@ trait EnumValueDefinitionProviderTrait
     /**
      * @param iterable<EnumValueDefinition> $values
      */
-    public function withValues(iterable $values): EnumTypeDefinition
+    public function withValues(iterable $values): self
     {
         $self = clone $this;
         $self->setValues($values);
@@ -43,7 +43,7 @@ trait EnumValueDefinitionProviderTrait
         $this->values = [];
     }
 
-    public function withoutValues(): EnumTypeDefinition
+    public function withoutValues(): self
     {
         $self = clone $this;
         $self->removeValues();
@@ -56,7 +56,7 @@ trait EnumValueDefinitionProviderTrait
         $this->values[$value->getName()] = $value;
     }
 
-    public function withAddedValue(EnumValueDefinition $value): EnumTypeDefinition
+    public function withAddedValue(EnumValueDefinition $value): self
     {
         $self = clone $this;
         $self->addValue($value);
@@ -79,7 +79,7 @@ trait EnumValueDefinitionProviderTrait
     /**
      * @param EnumValueDefinition|non-empty-string $value
      */
-    public function withoutValue(EnumValueDefinition|string $value): EnumTypeDefinition
+    public function withoutValue(EnumValueDefinition|string $value): self
     {
         $self = clone $this;
         $self->removeValue($value);

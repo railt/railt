@@ -22,7 +22,7 @@ trait DeprecationAwareTrait
         $this->deprecationReason = null;
     }
 
-    public function withDeprecationReason(string $reason): SchemaDefinition
+    public function withDeprecationReason(string $reason): self
     {
         $self = clone $this;
         $self->setDeprecationReason($reason);
@@ -30,7 +30,7 @@ trait DeprecationAwareTrait
         return $self;
     }
 
-    public function withoutDeprecationReason(): SchemaDefinition
+    public function withoutDeprecationReason(): self
     {
         $self = clone $this;
         $self->removeDeprecationReason();

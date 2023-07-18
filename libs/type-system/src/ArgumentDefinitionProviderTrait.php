@@ -30,7 +30,7 @@ trait ArgumentDefinitionProviderTrait
     /**
      * @param iterable<ArgumentDefinition> $arguments
      */
-    public function withArguments(iterable $arguments): FieldDefinition
+    public function withArguments(iterable $arguments): self
     {
         $self = clone $this;
         $self->setArguments($arguments);
@@ -43,7 +43,7 @@ trait ArgumentDefinitionProviderTrait
         $this->arguments = [];
     }
 
-    public function withoutArguments(): FieldDefinition
+    public function withoutArguments(): self
     {
         $self = clone $this;
         $self->removeArguments();
@@ -56,7 +56,7 @@ trait ArgumentDefinitionProviderTrait
         $this->arguments[$argument->getName()] = $argument;
     }
 
-    public function withAddedArgument(ArgumentDefinition $argument): FieldDefinition
+    public function withAddedArgument(ArgumentDefinition $argument): self
     {
         $self = clone $this;
         $self->addArgument($argument);
@@ -79,7 +79,7 @@ trait ArgumentDefinitionProviderTrait
     /**
      * @param ArgumentDefinition|non-empty-string $argument
      */
-    public function withoutArgument(ArgumentDefinition|string $argument): FieldDefinition
+    public function withoutArgument(ArgumentDefinition|string $argument): self
     {
         $self = clone $this;
         $self->removeArgument($argument);

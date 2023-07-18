@@ -13,6 +13,15 @@ final class FieldDefinition extends Definition implements
     use DirectivesProviderTrait;
     use ArgumentDefinitionProviderTrait;
 
+    /**
+     * @param non-empty-string $name
+     */
+    public function __construct(
+        private readonly string $name,
+        private readonly OutputTypeInterface $type,
+    ) {
+    }
+
     public function getName(): string
     {
         return $this->name;

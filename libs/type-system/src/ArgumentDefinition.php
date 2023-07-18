@@ -13,6 +13,15 @@ final class ArgumentDefinition extends Definition implements NamedDefinitionInte
     private mixed $defaultValue = null;
     private bool $hasDefaultValue = false;
 
+    /**
+     * @param non-empty-string $name
+     */
+    public function __construct(
+        private readonly string $name,
+        private readonly InputTypeInterface $type,
+    ) {
+    }
+
     public function setDefaultValue(mixed $value): void
     {
         $this->defaultValue = $value;
@@ -23,6 +32,32 @@ final class ArgumentDefinition extends Definition implements NamedDefinitionInte
     {
         $this->defaultValue = null;
         $this->hasDefaultValue = false;
+    }
+
+    public function withDefaultValue(mixed $value): self
+    {
+        $self = clone $this;
+        $self->setDefaultValue($value);
+
+        return $self;
+    }
+
+    public function withoutDefaultValue(): self
+    {
+        $self = clone $this;
+        $self->removeDefaultValue();
+
+        return $self;
+    }
+
+    public function getDefaultValue(): mixed
+    {
+        return $this->defaultValue;
+    }
+
+    public function hasDefaultValue(): bool
+    {
+        return $this->hasDefaultValue;
     }
 
     public function getName(): string

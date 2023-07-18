@@ -30,7 +30,7 @@ trait FieldDefinitionProviderTrait
     /**
      * @param iterable<FieldDefinition> $fields
      */
-    public function withFields(iterable $fields): ObjectLikeTypeDefinition
+    public function withFields(iterable $fields): self
     {
         $self = clone $this;
         $self->setFields($fields);
@@ -43,7 +43,7 @@ trait FieldDefinitionProviderTrait
         $this->fields = [];
     }
 
-    public function withoutFields(): ObjectLikeTypeDefinition
+    public function withoutFields(): self
     {
         $self = clone $this;
         $self->removeFields();
@@ -56,7 +56,7 @@ trait FieldDefinitionProviderTrait
         $this->fields[$field->getName()] = $field;
     }
 
-    public function withAddedField(FieldDefinition $field): ObjectLikeTypeDefinition
+    public function withAddedField(FieldDefinition $field): self
     {
         $self = clone $this;
         $self->addField($field);
@@ -79,7 +79,7 @@ trait FieldDefinitionProviderTrait
     /**
      * @param FieldDefinition|non-empty-string $field
      */
-    public function withoutField(FieldDefinition|string $field): ObjectLikeTypeDefinition
+    public function withoutField(FieldDefinition|string $field): self
     {
         $self = clone $this;
         $self->removeField($field);

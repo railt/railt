@@ -30,7 +30,7 @@ trait InputFieldDefinitionProviderTrait
     /**
      * @param iterable<InputFieldDefinition> $fields
      */
-    public function withFields(iterable $fields): InputObjectTypeDefinition
+    public function withFields(iterable $fields): self
     {
         $self = clone $this;
         $self->setFields($fields);
@@ -43,7 +43,7 @@ trait InputFieldDefinitionProviderTrait
         $this->fields = [];
     }
 
-    public function withoutFields(): InputObjectTypeDefinition
+    public function withoutFields(): self
     {
         $self = clone $this;
         $self->removeFields();
@@ -56,7 +56,7 @@ trait InputFieldDefinitionProviderTrait
         $this->fields[$field->getName()] = $field;
     }
 
-    public function withAddedField(InputFieldDefinition $field): InputObjectTypeDefinition
+    public function withAddedField(InputFieldDefinition $field): self
     {
         $self = clone $this;
         $self->addField($field);
@@ -79,7 +79,7 @@ trait InputFieldDefinitionProviderTrait
     /**
      * @param InputFieldDefinition|non-empty-string $field
      */
-    public function withoutField(InputFieldDefinition|string $field): InputObjectTypeDefinition
+    public function withoutField(InputFieldDefinition|string $field): self
     {
         $self = clone $this;
         $self->removeField($field);

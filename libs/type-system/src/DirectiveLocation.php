@@ -63,6 +63,20 @@ enum DirectiveLocation
     #[DirectiveLocationInformation(ref: InputFieldDefinition::class)]
     case INPUT_FIELD_DEFINITION;
 
+    public static function tryFromName(string $name): ?self
+    {
+        try {
+            /** @var DirectiveLocation */
+            return (new \ReflectionEnumUnitCase(self::class, $name))
+                ->getValue();
+        } catch (\Throwable) {
+            return null;
+        }
+    }
+
+    /**
+     * @return non-empty-string
+     */
     public function getName(): string
     {
         return $this->name;
@@ -85,6 +99,20 @@ enum DirectiveLocation
         }
 
         return new DirectiveLocationInformation();
+    }
+
+    public function isExecutable(): bool
+    {
+        $metadata = $this->getInformation();
+
+        return $metadata->isExecutable;
+    }
+
+    public function isTypeSystem(): bool
+    {
+        $metadata = $this->getInformation();
+
+        return !$metadata->isExecutable;
     }
 
     public function isAvailableFor(Definition $definition): bool

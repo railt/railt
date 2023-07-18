@@ -22,7 +22,7 @@ trait DescriptionAwareTrait
         $this->description = null;
     }
 
-    public function withDescription(string $description): SchemaDefinition
+    public function withDescription(string $description): self
     {
         $self = clone $this;
         $self->setDescription($description);
@@ -30,7 +30,7 @@ trait DescriptionAwareTrait
         return $self;
     }
 
-    public function withoutDescription(): SchemaDefinition
+    public function withoutDescription(): self
     {
         $self = clone $this;
         $self->removeDescription();

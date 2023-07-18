@@ -19,14 +19,35 @@ final class EnumValueDefinition extends Definition implements NamedDefinitionInt
     ) {
     }
 
+    /**
+     * @param non-empty-string $name
+     */
+    public static function fromName(string $name): self
+    {
+        return new self($name, $name);
+    }
+
     public function getName(): string
     {
         return $this->name;
     }
 
+    public function getValue(): mixed
+    {
+        return $this->value;
+    }
+
     public function setValue(mixed $value): void
     {
         $this->value = $value;
+    }
+
+    public function withValue(mixed $value): self
+    {
+        $self = clone $this;
+        $self->setValue($value);
+
+        return $self;
     }
 
     public function __toString(): string

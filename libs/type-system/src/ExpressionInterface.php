@@ -6,7 +6,10 @@ namespace Railt\TypeSystem;
 
 interface ExpressionInterface extends \Stringable, \JsonSerializable
 {
-
+    /**
+     * @return array<non-empty-string, mixed>
+     */
+    public function jsonSerialize(): array;
 
     /**
      * An alternative to the `toString()` and `inspect()` methods, which is

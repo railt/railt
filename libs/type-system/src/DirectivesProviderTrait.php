@@ -30,7 +30,7 @@ trait DirectivesProviderTrait
     /**
      * @param iterable<Directive> $directives
      */
-    public function withDirectives(iterable $directives): SchemaDefinition
+    public function withDirectives(iterable $directives): self
     {
         $self = clone $this;
         $self->setDirectives($directives);
@@ -43,7 +43,7 @@ trait DirectivesProviderTrait
         $this->directives = [];
     }
 
-    public function withoutDirectives(): SchemaDefinition
+    public function withoutDirectives(): self
     {
         $self = clone $this;
         $self->removeDirectives();
@@ -56,7 +56,7 @@ trait DirectivesProviderTrait
         $this->directives[$this->getKey($directive)] = $directive;
     }
 
-    public function withAddedDirective(Directive $directive): SchemaDefinition
+    public function withAddedDirective(Directive $directive): self
     {
         $self = clone $this;
         $self->addDirective($directive);
@@ -96,7 +96,7 @@ trait DirectivesProviderTrait
     /**
      * @param Directive|non-empty-string $argument
      */
-    public function withoutDirective(Directive|string $argument): SchemaDefinition
+    public function withoutDirective(Directive|string $argument): self
     {
         $self = clone $this;
         $self->removeDirective($argument);
@@ -123,9 +123,9 @@ trait DirectivesProviderTrait
     /**
      * @param non-empty-string $name
      *
-     * @psalm-return \Generator<int, Directive, mixed, void>
+     * @return \Iterator<array-key, Directive>
      */
-    private function getDirectivesByName(string $name): \Generator
+    private function getDirectivesByName(string $name): \Iterator
     {
         foreach ($this->directives as $directive) {
             if ($directive->getName() === $name) {

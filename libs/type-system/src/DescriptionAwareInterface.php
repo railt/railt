@@ -6,5 +6,5 @@ namespace Railt\TypeSystem;
 
 interface DescriptionAwareInterface
 {
-
+    public function getDescription(): ?string;
 }

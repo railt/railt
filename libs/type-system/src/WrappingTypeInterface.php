@@ -11,5 +11,8 @@ namespace Railt\TypeSystem;
  */
 interface WrappingTypeInterface extends TypeInterface
 {
-
+    /**
+     * @return T
+     */
+    public function getOfType(): TypeInterface;
 }

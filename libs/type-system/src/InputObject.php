@@ -71,8 +71,6 @@ final class InputObject extends Expression implements
      *
      * @psalm-suppress RedundantConditionGivenDocblockType: Additional assertion
      * @psalm-suppress DocblockTypeContradiction : Additional assertion
-     *
-     * @return never
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -89,8 +87,6 @@ final class InputObject extends Expression implements
      *
      * @psalm-suppress RedundantConditionGivenDocblockType: Additional assertion
      * @psalm-suppress DocblockTypeContradiction : Additional assertion
-     *
-     * @return never
      */
     public function offsetUnset(mixed $offset): void
     {
@@ -100,7 +96,7 @@ final class InputObject extends Expression implements
         throw new \BadMethodCallException(self::class . ' objects are immutable');
     }
 
-    private function typeError(string $offset): \TypeError
+    private function typeError(mixed $offset): \TypeError
     {
         $trace = \debug_backtrace(\DEBUG_BACKTRACE_IGNORE_ARGS);
 
@@ -130,11 +126,6 @@ final class InputObject extends Expression implements
         return \iterator_count($this->getIterator());
     }
 
-    /**
-     * @return \Generator
-     *
-     * @psalm-return \Generator<string, mixed, mixed, void>
-     */
     public function getIterator(): \Traversable
     {
         yield from $this->values;
@@ -205,9 +196,6 @@ final class InputObject extends Expression implements
         return $result;
     }
 
-    /**
-     * @psalm-return array<string, mixed>
-     */
     public function __debugInfo(): array
     {
         return $this->values;

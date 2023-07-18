@@ -11,5 +11,7 @@ namespace Railt\TypeSystem;
  */
 interface DeprecationAwareInterface
 {
+    public function getDeprecationReason(): ?string;
 
+    public function isDeprecated(): bool;
 }

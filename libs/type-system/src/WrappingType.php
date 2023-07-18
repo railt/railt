@@ -11,7 +11,13 @@ namespace Railt\TypeSystem;
  */
 abstract class WrappingType implements WrappingTypeInterface
 {
-
+    /**
+     * @param T $type
+     */
+    public function __construct(
+        protected readonly TypeInterface $type,
+    ) {
+    }
 
     /**
      * @return T

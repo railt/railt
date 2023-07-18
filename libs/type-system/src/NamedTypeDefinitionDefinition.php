@@ -11,6 +11,14 @@ abstract class NamedTypeDefinitionDefinition extends Definition implements
     use DeprecationAwareTrait;
     use DirectivesProviderTrait;
 
+    /**
+     * @param non-empty-string $name
+     */
+    public function __construct(
+        private readonly string $name,
+    ) {
+    }
+
     public function getName(): string
     {
         return $this->name;
