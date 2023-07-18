@@ -24,6 +24,10 @@ final class DefineEnumTypeDefinitionCommand extends DefineCommand
 
         $this->ctx->addType($type, $this->stmt->name);
 
-        $this->build(BuildEnumTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildEnumTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

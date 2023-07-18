@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-final class ScalarTypeDefinition extends NamedTypeDefinitionDefinition implements
+final class ScalarTypeDefinition extends NamedTypeDefinition implements
     InputTypeInterface,
     OutputTypeInterface
 {

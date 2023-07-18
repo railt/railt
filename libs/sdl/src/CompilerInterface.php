@@ -8,6 +8,8 @@ use Phplrt\Contracts\Source\ReadableInterface;
 
 interface CompilerInterface extends TypeLoaderInterface
 {
+    public function getTypes(): DictionaryInterface;
+
     /**
      * @param string|resource|\SplFileInfo|ReadableInterface $source
      */

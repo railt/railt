@@ -3,17 +3,19 @@
     errorLevel="1"
     resolveFromConfigFile="true"
     findUnusedCode="false"
+    findUnusedBaselineEntry="true"
     findUnusedPsalmSuppress="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    findUnusedBaselineEntry="true"
 >
     <projectFiles>
-        <!--<directory name="libs/sdl/src" />-->
-        <directory name="libs/type-system/src" />
-        <!--<directory name="libs/type-system-webonyx-bridge/src" />-->
+        <directory name="libs/**/src" />
+
         <ignoreFiles>
+            <!-- generated files -->
+            <directory name="libs/**/resources" />
+            <!-- vendor -->
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>

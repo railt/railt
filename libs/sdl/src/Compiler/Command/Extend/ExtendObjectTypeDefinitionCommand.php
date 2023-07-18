@@ -27,6 +27,10 @@ final class ExtendObjectTypeDefinitionCommand extends ExtendCommand
             throw CompilationException::create($message, $this->stmt->name);
         }
 
-        $this->build(BuildObjectTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildObjectTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

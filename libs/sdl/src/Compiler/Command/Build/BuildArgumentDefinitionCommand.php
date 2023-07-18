@@ -6,6 +6,7 @@ namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildChildCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateArgumentDefaultValue;
+use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\ArgumentNode;
 use Railt\TypeSystem\ArgumentDefinition;
@@ -46,7 +47,11 @@ final class BuildArgumentDefinitionCommand extends BuildChildCommand
         }
 
         foreach ($this->node->directives as $node) {
-            $this->addDirective($argument, $node);
+            $this->ctx->push(new EvaluateDirective(
+                ctx: $this->ctx,
+                node: $node,
+                parent: $argument,
+            ));
         }
 
         $this->definition->addArgument($argument);

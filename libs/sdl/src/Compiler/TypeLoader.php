@@ -17,7 +17,7 @@ use Railt\TypeSystem\DefinitionInterface;
 final class TypeLoader implements TypeLoaderInterface
 {
     /**
-     * @var list<callable(non-empty-string, DefinitionInterface):(SourceType|null)>
+     * @var list<callable(non-empty-string, DefinitionInterface|null):(SourceType|null)>
      */
     private array $loaders = [];
 

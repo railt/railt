@@ -27,6 +27,10 @@ final class ExtendUnionTypeDefinitionCommand extends ExtendCommand
             throw CompilationException::create($message, $this->stmt->name);
         }
 
-        $this->build(BuildUnionTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildUnionTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

@@ -53,7 +53,9 @@ abstract class Node implements NodeInterface
      */
     public function hasAttribute(string $name): bool
     {
-        return $this->attributes[$name];
+        return isset($this->attributes[$name])
+            && \array_key_exists($name, $this->attributes)
+        ;
     }
 
     /**
@@ -122,6 +124,9 @@ abstract class Node implements NodeInterface
         return $this->source ??= File::empty();
     }
 
+    /**
+     * @psalm-suppress MixedReturnTypeCoercion
+     */
     public function getIterator(): \Traversable
     {
         $reflection = new \ReflectionObject($this);

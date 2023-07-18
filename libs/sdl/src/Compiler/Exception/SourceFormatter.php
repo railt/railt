@@ -88,7 +88,6 @@ final class SourceFormatter
         $from = \max(1, $position->getLine() - $this->size);
         $to = \max(1, $position->getLine() + $this->size);
 
-        /** @psalm-suppress InvalidArgument */
         return new Interval(
             Position::fromPosition($source, $from),
             Position::fromPosition($source, $to),
@@ -108,12 +107,12 @@ final class SourceFormatter
             ;
 
             if ($shouldHighlight) {
-                $result[] = \rtrim($this->formatHighlightedCodeLine($line, (string)$code));
+                $result[] = \rtrim($this->formatHighlightedCodeLine($line, $code));
 
                 continue;
             }
 
-            $result[] = \rtrim($this->formatCodeLine($line, (string)$code));
+            $result[] = \rtrim($this->formatCodeLine($line, $code));
         }
 
         return \implode($this->eol, $result);

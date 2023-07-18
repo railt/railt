@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildChildCommand;
+use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\EnumFieldNode;
 use Railt\TypeSystem\EnumTypeDefinition;
@@ -26,7 +27,11 @@ final class BuildEnumValueDefinitionCommand extends BuildChildCommand
         }
 
         foreach ($this->node->directives as $node) {
-            $this->addDirective($value, $node);
+            $this->ctx->push(new EvaluateDirective(
+                ctx: $this->ctx,
+                node: $node,
+                parent: $value,
+            ));
         }
 
         $this->definition->addValue($value);

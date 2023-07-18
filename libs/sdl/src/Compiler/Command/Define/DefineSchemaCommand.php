@@ -24,6 +24,10 @@ final class DefineSchemaCommand extends DefineCommand
 
         $this->ctx->setSchema($schema, $this->stmt);
 
-        $this->build(BuildSchemaDefinitionCommand::class, $schema);
+        $this->ctx->push(new BuildSchemaDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $schema,
+        ));
     }
 }

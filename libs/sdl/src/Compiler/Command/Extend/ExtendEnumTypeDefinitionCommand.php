@@ -27,6 +27,10 @@ final class ExtendEnumTypeDefinitionCommand extends ExtendCommand
             throw CompilationException::create($message, $this->stmt->name);
         }
 
-        $this->build(BuildEnumTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildEnumTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

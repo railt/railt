@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildChildCommand;
+use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateInputFieldDefaultValue;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\InputFieldNode;
@@ -45,7 +46,11 @@ final class BuildInputFieldDefinitionCommand extends BuildChildCommand
         }
 
         foreach ($this->node->directives as $node) {
-            $this->addDirective($field, $node);
+            $this->ctx->push(new EvaluateDirective(
+                ctx: $this->ctx,
+                node: $node,
+                parent: $field,
+            ));
         }
 
         $this->definition->addField($field);

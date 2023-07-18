@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-final class EnumTypeDefinition extends NamedTypeDefinitionDefinition implements
+final class EnumTypeDefinition extends NamedTypeDefinition implements
     InputTypeInterface,
     OutputTypeInterface,
     EnumValueDefinitionProviderInterface

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-abstract class NamedTypeDefinitionDefinition extends Definition implements
+abstract class NamedTypeDefinition extends Definition implements
     NamedTypeDefinitionInterface
 {
     use DescriptionAwareTrait;

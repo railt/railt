@@ -23,6 +23,7 @@ final readonly class EvaluateInputFieldDefaultValue implements CommandInterface
             return;
         }
 
+        /** @psalm-suppress MixedAssignment : Okay */
         $value = $this->ctx->eval($this->field->getType(), $this->node->default);
 
         $this->field->setDefaultValue($value);

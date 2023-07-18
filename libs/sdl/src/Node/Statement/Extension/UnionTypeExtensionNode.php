@@ -7,6 +7,7 @@ namespace Railt\SDL\Node\Statement\Extension;
 use Railt\SDL\Attribute\Visitable;
 use Railt\SDL\Node\Expression\DirectiveNode;
 use Railt\SDL\Node\IdentifierNode;
+use Railt\SDL\Node\Statement\Type\NamedTypeNode;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
@@ -15,7 +16,7 @@ use Railt\SDL\Node\IdentifierNode;
 final class UnionTypeExtensionNode extends TypeExtensionNode
 {
     /**
-     * @param list<IdentifierNode> $types
+     * @param list<NamedTypeNode> $types
      * @param list<DirectiveNode> $directives
      */
     public function __construct(

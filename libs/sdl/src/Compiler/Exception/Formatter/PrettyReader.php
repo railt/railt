@@ -53,8 +53,6 @@ final class PrettyReader implements ReaderInterface
         $level = \PHP_INT_MAX;
 
         foreach ($lines as $text) {
-            $text = (string)$text;
-
             // Compute minimal nesting level only if the line of code
             // contains non-empty text.
             if (\trim($text) !== '') {
@@ -73,7 +71,10 @@ final class PrettyReader implements ReaderInterface
     {
         $result = $this->reader->line($source, $position);
 
-        return \rtrim(\ltrim((string)$result, $this->depthChars), "\r\n" . $this->depthChars);
+        return \rtrim(
+            \ltrim($result, $this->depthChars),
+            "\r\n" . $this->depthChars,
+        );
     }
 
     public function lines(ReadableInterface $source, IntervalInterface $interval): iterable

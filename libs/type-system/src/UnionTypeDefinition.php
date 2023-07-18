@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-final class UnionTypeDefinition extends NamedTypeDefinitionDefinition implements
+final class UnionTypeDefinition extends NamedTypeDefinition implements
     OutputTypeInterface
 {
     /**

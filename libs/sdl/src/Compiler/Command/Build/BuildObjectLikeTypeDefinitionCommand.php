@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildCommand;
+use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Node\Statement\Definition\ObjectLikeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ObjectLikeExtensionNode;
 use Railt\TypeSystem\ObjectLikeTypeDefinition;
 
 /**
- * @template TStatementNode of ObjectLikeDefinitionNode
+ * @template TStatementNode of ObjectLikeDefinitionNode|ObjectLikeExtensionNode
  * @template TDefinition of ObjectLikeTypeDefinition
  *
- * @template-extends BuildCommand<ObjectLikeDefinitionNode|ObjectLikeExtensionNode, ObjectLikeTypeDefinition>
+ * @template-extends BuildCommand<TStatementNode, TDefinition>
  */
 abstract class BuildObjectLikeTypeDefinitionCommand extends BuildCommand
 {
@@ -34,7 +35,11 @@ abstract class BuildObjectLikeTypeDefinitionCommand extends BuildCommand
         ));
 
         foreach ($this->node->directives as $node) {
-            $this->addDirective($this->definition, $node);
+            $this->ctx->push(new EvaluateDirective(
+                ctx: $this->ctx,
+                node: $node,
+                parent: $this->definition,
+            ));
         }
     }
 }

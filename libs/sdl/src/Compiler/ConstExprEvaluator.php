@@ -14,7 +14,7 @@ use Railt\SDL\Node\Expression\Literal\StringLiteralNode;
 use Railt\TypeSystem\InputObject;
 use Railt\TypeSystem\InputObjectTypeDefinition;
 use Railt\TypeSystem\ListType;
-use Railt\TypeSystem\NamedTypeDefinitionDefinition;
+use Railt\TypeSystem\NamedTypeDefinition;
 use Railt\TypeSystem\NonNullType;
 use Railt\TypeSystem\ScalarTypeDefinition;
 use Railt\TypeSystem\TypeInterface;
@@ -30,7 +30,7 @@ final readonly class ConstExprEvaluator
         return match (true) {
             $type instanceof ListType => $this->evalListType($type, $expr),
             $type instanceof NonNullType => $this->evalNonNullType($type, $expr),
-            $type instanceof NamedTypeDefinitionDefinition => $this->evalNamedType($type, $expr),
+            $type instanceof NamedTypeDefinition => $this->evalNamedType($type, $expr),
             default => throw CompilationException::create(
                 'Cannot check expression compatibility of unknown type ' . (string)$type,
                 $expr,
@@ -38,7 +38,7 @@ final readonly class ConstExprEvaluator
         };
     }
 
-    private function evalNamedType(NamedTypeDefinitionDefinition $type, Expression $expr): mixed
+    private function evalNamedType(NamedTypeDefinition $type, Expression $expr): mixed
     {
         return match (true) {
             $type instanceof ScalarTypeDefinition => $this->evalScalarType($type, $expr),
@@ -101,6 +101,7 @@ final readonly class ConstExprEvaluator
                 throw CompilationException::create($message, $node->key);
             }
 
+            /** @psalm-suppress MixedAssignment : Okay */
             $result[$node->key->value] = $this->eval($field->getType(), $node->value);
         }
 
@@ -132,6 +133,7 @@ final readonly class ConstExprEvaluator
             $result = [];
 
             foreach ($expr->value as $literal) {
+                /** @psalm-suppress MixedAssignment : Okay */
                 $result[] = $this->eval($type->getOfType(), $literal);
             }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildCommand;
+use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\SchemaDefinitionNode;
 use Railt\SDL\Node\Statement\SchemaFieldNode;
@@ -35,7 +36,11 @@ final class BuildSchemaDefinitionCommand extends BuildCommand
         }
 
         foreach ($this->node->directives as $node) {
-            $this->addDirective($this->definition, $node);
+            $this->ctx->push(new EvaluateDirective(
+                ctx: $this->ctx,
+                node: $node,
+                parent: $this->definition,
+            ));
         }
     }
 

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 use Railt\SDL\Compiler;
 use Railt\SDL\DictionaryInterface;
 use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\NamedTypeDefinitionDefinition;
+use Railt\TypeSystem\NamedTypeDefinition;
 
 #[Group('unit'), Group('sdl')]
 abstract class TestCase extends BaseTestCase
@@ -21,7 +21,7 @@ abstract class TestCase extends BaseTestCase
         ;
     }
 
-    protected function type(string $type, string $schema): ?NamedTypeDefinitionDefinition
+    protected function type(string $type, string $schema): ?NamedTypeDefinition
     {
         return $this->compile($schema)
             ->findType($type)

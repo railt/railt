@@ -16,14 +16,18 @@ final class DefineDirectiveDefinitionCommand extends DefineCommand
 {
     public function exec(): void
     {
-        $type = new DirectiveDefinition($this->stmt->name->value);
+        $directive = new DirectiveDefinition($this->stmt->name->value);
 
         if ($this->stmt->description->value !== null) {
-            $type->setDescription($this->stmt->description->value->value);
+            $directive->setDescription($this->stmt->description->value->value);
         }
 
-        $this->ctx->addDirective($type, $this->stmt->name);
+        $this->ctx->addDirective($directive, $this->stmt->name);
 
-        $this->build(BuildDirectiveDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildDirectiveDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $directive,
+        ));
     }
 }

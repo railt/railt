@@ -23,6 +23,7 @@ final readonly class EvaluateArgumentDefaultValue implements CommandInterface
             return;
         }
 
+        /** @psalm-suppress MixedAssignment : Okay */
         $value = $this->ctx->eval($this->argument->getType(), $this->node->default);
 
         $this->argument->setDefaultValue($value);

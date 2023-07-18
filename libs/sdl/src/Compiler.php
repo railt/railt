@@ -13,6 +13,7 @@ use Railt\SDL\Compiler\Exception\PrettyFormatter;
 use Railt\SDL\Compiler\Queue;
 use Railt\SDL\Compiler\TypeLoader;
 use Railt\SDL\Exception\RuntimeExceptionInterface;
+use Railt\SDL\Node\Statement\Statement;
 
 final class Compiler implements CompilerInterface
 {
@@ -21,6 +22,7 @@ final class Compiler implements CompilerInterface
     private readonly Dictionary $types;
 
     public function __construct(
+        bool $bootStandardLibrary = true,
         DictionaryInterface $types = new Dictionary(),
         private readonly FormatterInterface $exceptions = new PrettyFormatter(),
     ) {
@@ -28,22 +30,15 @@ final class Compiler implements CompilerInterface
         $this->loader = new TypeLoader();
         $this->types = Dictionary::fromDictionary($types);
 
-        $this->booStandardLibrary();
+        if ($bootStandardLibrary) {
+            /** @psalm-suppress PossiblyInvalidArgument : impure-callable to callable cast */
+            $this->loader->addLoader(new StandardLibraryLoader());
+        }
     }
 
-    private function booStandardLibrary(): void
+    public function getTypes(): Dictionary
     {
-        $this->addLoader(static function (string $name): ?ReadableInterface {
-            if (\is_file($pathname = __DIR__ . '/../resources/stdlib/' . $name . '.graphql')) {
-                return File::fromPathname($pathname);
-            }
-
-            if (\is_file($pathname = __DIR__ . '/../resources/stdlib/@' . $name . '.graphql')) {
-                return File::fromPathname($pathname);
-            }
-
-            return null;
-        });
+        return $this->types;
     }
 
     public function addLoader(callable $loader): void
@@ -61,23 +56,30 @@ final class Compiler implements CompilerInterface
         return $this->loader->getLoaders();
     }
 
-    private function getLinker(Dictionary $types): Context
+    private function createContext(Dictionary $types): Context
     {
         return new Context(
             queue: new Queue(),
             dictionary: $types,
             loader: $this->loader,
-            process: $this->innerProcess(...),
+            process: $this->subprocess(...),
         );
     }
 
-    private function innerProcess(ReadableInterface $source, Context $context): void
+    /**
+     * @throws RuntimeExceptionInterface
+     */
+    private function subprocess(ReadableInterface $source, Context $context): void
     {
         $this->process($source, clone $context);
     }
 
+    /**
+     * @throws RuntimeExceptionInterface
+     */
     private function process(ReadableInterface $source, Context $context): void
     {
+        /** @var iterable<Statement> $statements */
         $statements = $this->parser->parse($source);
 
         $context->push(new CompileCommand($context, $statements));
@@ -90,9 +92,9 @@ final class Compiler implements CompilerInterface
     public function load(mixed $source): DictionaryInterface
     {
         try {
-            $linker = $this->getLinker($this->types);
+            $context = $this->createContext($this->types);
 
-            $this->process(File::new($source), $linker);
+            $this->process(File::new($source), $context);
 
             return $this->types;
         } catch (RuntimeExceptionInterface $e) {
@@ -103,7 +105,7 @@ final class Compiler implements CompilerInterface
     public function compile(mixed $source): DictionaryInterface
     {
         try {
-            $linker = $this->getLinker($result = clone $this->types);
+            $linker = $this->createContext($result = clone $this->types);
 
             $this->process(File::new($source), $linker);
 

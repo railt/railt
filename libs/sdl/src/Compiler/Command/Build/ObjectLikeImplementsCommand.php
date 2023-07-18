@@ -11,7 +11,6 @@ use Railt\SDL\Node\Statement\Extension\ObjectLikeExtensionNode;
 use Railt\SDL\Node\Statement\Type\NamedTypeNode;
 use Railt\TypeSystem\InterfaceTypeDefinition;
 use Railt\TypeSystem\ObjectLikeTypeDefinition;
-use Railt\TypeSystem\TypeInterface;
 
 /**
  * @template-extends BuildChildCommand<ObjectLikeDefinitionNode|ObjectLikeExtensionNode, ObjectLikeTypeDefinition>
@@ -21,10 +20,20 @@ final class ObjectLikeImplementsCommand extends BuildChildCommand
     public function exec(): void
     {
         foreach ($this->node->interfaces as $node) {
-            /** @var InterfaceTypeDefinition $interface */
             $interface = $this->ctx->getType($node->name->value, $node->name);
 
-            $this->assertTypeIsInterface($node, $interface);
+            //
+            // Check that a type is an interface
+            //
+            if (!$interface instanceof InterfaceTypeDefinition) {
+                $message = \vsprintf('%s can contain only interface types, but %s given', [
+                    (string)$this->definition,
+                    (string)$interface,
+                ]);
+
+                throw CompilationException::create($message, $node->name);
+            }
+
             $this->assertInterfaceNotDefined($node, $interface);
             $this->assertTypeSelfReference($node, $interface);
 
@@ -41,22 +50,6 @@ final class ObjectLikeImplementsCommand extends BuildChildCommand
         if ($isTypeSameOrSelfImplements) {
             $message = \vsprintf('%s cannot implement itself', [
                 (string)$this->definition,
-            ]);
-
-            throw CompilationException::create($message, $node->name);
-        }
-    }
-
-    /**
-     * @param TypeInterface $type
-     * @return ($type is InterfaceTypeDefinition ? void : never)
-     */
-    private function assertTypeIsInterface(NamedTypeNode $node, TypeInterface $type): void
-    {
-        if (!$type instanceof InterfaceTypeDefinition) {
-            $message = \vsprintf('%s can contain only interface types, but %s given', [
-                (string)$this->definition,
-                (string)$type,
             ]);
 
             throw CompilationException::create($message, $node->name);

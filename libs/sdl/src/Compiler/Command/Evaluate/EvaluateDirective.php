@@ -8,17 +8,39 @@ use Railt\SDL\Compiler\Command\CommandInterface;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Expression\DirectiveNode;
+use Railt\TypeSystem\ArgumentDefinition;
 use Railt\TypeSystem\Definition;
 use Railt\TypeSystem\Directive;
 use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\DirectivesProviderInterface;
+use Railt\TypeSystem\EnumValueDefinition;
+use Railt\TypeSystem\FieldDefinition;
+use Railt\TypeSystem\InputFieldDefinition;
+use Railt\TypeSystem\NamedTypeDefinition;
+use Railt\TypeSystem\SchemaDefinition;
 
+/**
+ * @link NamedTypeDefinition
+ * @link FieldDefinition
+ * @link EnumValueDefinition
+ * @link InputFieldDefinition
+ * @link ArgumentDefinition
+ * @link SchemaDefinition
+ */
 final class EvaluateDirective implements CommandInterface
 {
+    /**
+     * @param ( NamedTypeDefinition
+     *        | FieldDefinition
+     *        | EnumValueDefinition
+     *        | InputFieldDefinition
+     *        | ArgumentDefinition
+     *        | SchemaDefinition
+     * ) $parent
+     */
     public function __construct(
         private readonly Context $ctx,
         private readonly DirectiveNode $node,
-        private readonly Definition&DirectivesProviderInterface $parent,
+        private readonly Definition $parent,
     ) {}
 
     public function exec(): void

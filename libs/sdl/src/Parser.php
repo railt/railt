@@ -49,9 +49,6 @@ final readonly class Parser implements ParserInterface
         );
     }
 
-    /**
-     * @psalm-suppress MixedArgument
-     */
     public function parse(mixed $source): iterable
     {
         try {

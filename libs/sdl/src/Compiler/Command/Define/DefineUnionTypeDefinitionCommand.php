@@ -24,6 +24,10 @@ final class DefineUnionTypeDefinitionCommand extends DefineCommand
 
         $this->ctx->addType($type, $this->stmt->name);
 
-        $this->build(BuildUnionTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildUnionTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

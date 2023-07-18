@@ -24,6 +24,10 @@ final class DefineInputObjectTypeDefinitionCommand extends DefineCommand
 
         $this->ctx->addType($type, $this->stmt->name);
 
-        $this->build(BuildInputObjectTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildInputObjectTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

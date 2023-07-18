@@ -24,6 +24,10 @@ final class DefineInterfaceTypeDefinitionCommand extends DefineCommand
 
         $this->ctx->addType($type, $this->stmt->name);
 
-        $this->build(BuildInterfaceTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildInterfaceTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

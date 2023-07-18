@@ -14,19 +14,19 @@ use Railt\TypeSystem\DefinitionInterface;
 interface TypeLoaderInterface
 {
     /**
-     * @param callable(non-empty-string,DefinitionInterface):(SourceType|null) $loader
+     * @param callable(non-empty-string,DefinitionInterface|null):(SourceType|null) $loader
      * @return void
      */
     public function addLoader(callable $loader): void;
 
     /**
-     * @param callable(non-empty-string,DefinitionInterface):(SourceType|null) $loader
+     * @param callable(non-empty-string,DefinitionInterface|null):(SourceType|null) $loader
      * @return void
      */
     public function removeLoader(callable $loader): void;
 
     /**
-     * @return iterable<callable(non-empty-string,DefinitionInterface):(SourceType|null)>
+     * @return iterable<callable(non-empty-string,DefinitionInterface|null):(SourceType|null)>
      */
     public function getLoaders(): iterable;
 }

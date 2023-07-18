@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Compiler\Command\BuildChildCommand;
+use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\FieldNode;
 use Railt\TypeSystem\FieldDefinition;
@@ -44,7 +45,11 @@ final class BuildFieldDefinitionCommand extends BuildChildCommand
         }
 
         foreach ($this->node->directives as $node) {
-            $this->addDirective($field, $node);
+            $this->ctx->push(new EvaluateDirective(
+                ctx: $this->ctx,
+                node: $node,
+                parent: $field,
+            ));
         }
 
         $this->definition->addField($field);

@@ -24,6 +24,10 @@ final class DefineScalarTypeDefinitionCommand extends DefineCommand
 
         $this->ctx->addType($type, $this->stmt->name);
 
-        $this->build(BuildScalarTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildScalarTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

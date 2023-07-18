@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\NamedTypeDefinitionDefinition;
+use Railt\TypeSystem\NamedTypeDefinition;
 use Railt\TypeSystem\SchemaDefinition;
 
 interface DictionaryInterface
@@ -21,7 +21,7 @@ interface DictionaryInterface
     public function hasSchema(): bool;
 
     /**
-     * @return iterable<NamedTypeDefinitionDefinition>
+     * @return iterable<NamedTypeDefinition>
      */
     public function getTypes(): iterable;
 
@@ -33,7 +33,7 @@ interface DictionaryInterface
     /**
      * @param non-empty-string $name
      */
-    public function findType(string $name): ?NamedTypeDefinitionDefinition;
+    public function findType(string $name): ?NamedTypeDefinition;
 
     /**
      * @return iterable<DirectiveDefinition>

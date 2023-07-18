@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Railt\SDL;
 
 use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\NamedTypeDefinitionDefinition;
+use Railt\TypeSystem\NamedTypeDefinition;
 use Railt\TypeSystem\SchemaDefinition;
 
 final class Dictionary implements DictionaryInterface
 {
     /**
-     * @var array<non-empty-string, NamedTypeDefinitionDefinition>
+     * @var array<non-empty-string, NamedTypeDefinition>
      */
     private array $types = [];
 
@@ -21,7 +21,7 @@ final class Dictionary implements DictionaryInterface
     private array $directives = [];
 
     /**
-     * @param iterable<NamedTypeDefinitionDefinition> $types
+     * @param iterable<NamedTypeDefinition> $types
      * @param iterable<DirectiveDefinition> $directives
      */
     public function __construct(
@@ -72,12 +72,12 @@ final class Dictionary implements DictionaryInterface
         return isset($this->types[$name]);
     }
 
-    public function findType(string $name): ?NamedTypeDefinitionDefinition
+    public function findType(string $name): ?NamedTypeDefinition
     {
         return $this->types[$name] ?? null;
     }
 
-    public function addType(NamedTypeDefinitionDefinition $type): void
+    public function addType(NamedTypeDefinition $type): void
     {
         $this->types[$type->getName()] = $type;
     }

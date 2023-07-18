@@ -27,6 +27,10 @@ final class ExtendInputObjectTypeDefinitionCommand extends ExtendCommand
             throw CompilationException::create($message, $this->stmt->name);
         }
 
-        $this->build(BuildInputObjectTypeDefinitionCommand::class, $type);
+        $this->ctx->push(new BuildInputObjectTypeDefinitionCommand(
+            ctx: $this->ctx,
+            node: $this->stmt,
+            definition: $type,
+        ));
     }
 }

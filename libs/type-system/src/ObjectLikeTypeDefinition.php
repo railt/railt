@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-abstract class ObjectLikeTypeDefinition extends NamedTypeDefinitionDefinition implements
+abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
     OutputTypeInterface,
     FieldDefinitionProviderInterface
 {

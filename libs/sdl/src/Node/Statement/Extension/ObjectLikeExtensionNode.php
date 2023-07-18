@@ -8,6 +8,7 @@ use Railt\SDL\Attribute\Visitable;
 use Railt\SDL\Node\Expression\DirectiveNode;
 use Railt\SDL\Node\IdentifierNode;
 use Railt\SDL\Node\Statement\FieldNode;
+use Railt\SDL\Node\Statement\Type\NamedTypeNode;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
@@ -16,7 +17,7 @@ use Railt\SDL\Node\Statement\FieldNode;
 abstract class ObjectLikeExtensionNode extends TypeExtensionNode
 {
     /**
-     * @param list<IdentifierNode> $interfaces
+     * @param list<NamedTypeNode> $interfaces
      * @param list<FieldNode> $fields
      * @param list<DirectiveNode> $directives
      */

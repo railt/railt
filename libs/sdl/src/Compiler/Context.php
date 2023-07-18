@@ -14,7 +14,7 @@ use Railt\SDL\Node\Expression\Expression;
 use Railt\SDL\Node\NodeInterface;
 use Railt\TypeSystem\DefinitionInterface;
 use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\NamedTypeDefinitionDefinition;
+use Railt\TypeSystem\NamedTypeDefinition;
 use Railt\TypeSystem\SchemaDefinition;
 use Railt\TypeSystem\TypeInterface;
 
@@ -70,7 +70,7 @@ final class Context implements \IteratorAggregate
         return $schema;
     }
 
-    public function addType(NamedTypeDefinitionDefinition $type, NodeInterface $node): void
+    public function addType(NamedTypeDefinition $type, NodeInterface $node): void
     {
         if ($this->dictionary->hasType($type->getName())) {
             throw TypeAlreadyDefinedException::fromTypeName(
@@ -86,7 +86,7 @@ final class Context implements \IteratorAggregate
     /**
      * @param non-empty-string $name
      */
-    public function getType(string $name, NodeInterface $node, DefinitionInterface $from = null): NamedTypeDefinitionDefinition
+    public function getType(string $name, NodeInterface $node, DefinitionInterface $from = null): NamedTypeDefinition
     {
         if (!$this->dictionary->hasType($name)) {
             $source = ($this->loader)($name, $from);

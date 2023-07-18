@@ -27,38 +27,25 @@ final class EvaluateArgumentCommand implements CommandInterface
         $directive = $this->directive->getDefinition();
         $argument = $directive->getArgument($this->node->name->value);
 
-        $this->assertArgumentDefinedInDefinition($argument);
-
-        $value = $this->ctx->eval($argument->getType(), $this->node->value);
-
-        $this->directive->addArgument(
-            new Argument(
-                argument: $directive->getArgument($this->node->name->value),
-                value: $value,
-            )
-        );
-    }
-
-    private function assertArgumentNotDefined(): void
-    {
-        if ($this->directive->hasArgument($this->node->name->value)) {
-            $message = \vsprintf('Cannot redefine already defined argument "%s" in %s', [
+        if ($argument === null) {
+            $message = \vsprintf('Argument "%s" not defined in %s', [
                 $this->node->name->value,
                 (string)$this->directive,
             ]);
 
             throw CompilationException::create($message, $this->node->name);
         }
+
+        /** @psalm-suppress MixedAssignment : Okay */
+        $value = $this->ctx->eval($argument->getType(), $this->node->value);
+
+        $this->directive->addArgument(new Argument($argument, $value));
     }
 
-    /**
-     * @param ArgumentDefinition|null $definition
-     * @return ($definition is null ? never : void)
-     */
-    private function assertArgumentDefinedInDefinition(?ArgumentDefinition $definition): void
+    private function assertArgumentNotDefined(): void
     {
-        if ($definition === null) {
-            $message = \vsprintf('Argument "%s" not defined in %s', [
+        if ($this->directive->hasArgument($this->node->name->value)) {
+            $message = \vsprintf('Cannot redefine already defined argument "%s" in %s', [
                 $this->node->name->value,
                 (string)$this->directive,
             ]);

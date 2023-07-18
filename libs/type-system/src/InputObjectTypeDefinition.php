@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-final class InputObjectTypeDefinition extends NamedTypeDefinitionDefinition implements
+final class InputObjectTypeDefinition extends NamedTypeDefinition implements
     InputTypeInterface,
     InputFieldDefinitionProviderInterface
 {
