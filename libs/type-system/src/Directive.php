@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-final class Directive implements NameAwareInterface
+final class Directive extends Expression implements NameAwareInterface
 {
     /**
      * @var array<non-empty-string, Argument>

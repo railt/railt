@@ -53,7 +53,7 @@ trait DirectivesProviderTrait
 
     public function addDirective(Directive $directive): void
     {
-        $this->directives[$this->getKey($directive)] = $directive;
+        $this->directives[$directive->getHash()] = $directive;
     }
 
     public function withAddedDirective(Directive $directive): self
@@ -78,7 +78,7 @@ trait DirectivesProviderTrait
 
     private function removeDirectiveByInstance(Directive $directive): void
     {
-        unset($this->directives[$this->getKey($directive)]);
+        unset($this->directives[$directive->getHash()]);
     }
 
     /**
@@ -162,14 +162,5 @@ trait DirectivesProviderTrait
 
         /** @var int<0, max> */
         return \iterator_count($this->getDirectivesByName($name));
-    }
-
-    /**
-     * @return non-empty-string
-     */
-    private function getKey(Directive $directive): string
-    {
-        /** @var non-empty-string */
-        return \spl_object_hash($directive);
     }
 }

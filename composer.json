@@ -27,7 +27,7 @@
     },
     "require-dev": {
         "graphql/type-system-contracts": "^15.5",
-        "friendsofphp/php-cs-fixer": "^3.21",
+        "friendsofphp/php-cs-fixer": "^3.22",
         "phplrt/phplrt": "^3.2",
         "symfony/console": "^5.4|^6.0",
         "symfony/var-dumper": "^5.4|^6.0",
@@ -48,7 +48,7 @@
             "@psalm"
         ],
         "psalm": "psalm --no-cache",
-        "psalm:fix": "psalm --alter --issues=all --no-cache",
+        "psalm:fix": "psalm --alter --no-cache",
         "phpcs": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --dry-run",
         "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes",
         "phpunit": "phpunit --testdox"

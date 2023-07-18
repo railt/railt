@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3050f1671f3795ff806fdd87a898691",
+    "content-hash": "58796309fcafa709284ac12a7c4f1bfd",
     "packages": [
         {
             "name": "laminas/laminas-code",
@@ -172,7 +172,7 @@
         },
         {
             "name": "railt/sdl",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "libs/sdl",
@@ -235,7 +235,7 @@
         },
         {
             "name": "railt/type-system",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "libs/type-system",
@@ -294,7 +294,7 @@
         },
         {
             "name": "railt/type-system-webonyx-bridge",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "libs/type-system-webonyx-bridge",
@@ -1788,16 +1788,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.21.1",
+            "version": "v3.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "229b55b3eae4729a8e2a321441ba40fcb3720b86"
+                "reference": "92b019f6c8d79aa26349d0db7671d37440dc0ff3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/229b55b3eae4729a8e2a321441ba40fcb3720b86",
-                "reference": "229b55b3eae4729a8e2a321441ba40fcb3720b86",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/92b019f6c8d79aa26349d0db7671d37440dc0ff3",
+                "reference": "92b019f6c8d79aa26349d0db7671d37440dc0ff3",
                 "shasum": ""
             },
             "require": {
@@ -1807,7 +1807,7 @@
                 "doctrine/lexer": "^2 || ^3",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
-                "php": "^8.0.1",
+                "php": "^7.4 || ^8.0",
                 "sebastian/diff": "^4.0 || ^5.0",
                 "symfony/console": "^5.4 || ^6.0",
                 "symfony/event-dispatcher": "^5.4 || ^6.0",
@@ -1821,6 +1821,7 @@
                 "symfony/stopwatch": "^5.4 || ^6.0"
             },
             "require-dev": {
+                "facile-it/paraunit": "^1.3 || ^2.0",
                 "justinrainbow/json-schema": "^5.2",
                 "keradus/cli-executor": "^2.0",
                 "mikey179/vfsstream": "^1.6.11",
@@ -1872,7 +1873,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.21.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.22.0"
             },
             "funding": [
                 {
@@ -1880,7 +1881,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-07-05T21:50:25+00:00"
+            "time": "2023-07-16T23:08:06+00:00"
         },
         {
             "name": "graphql/type-system-contracts",
@@ -2758,16 +2759,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.2.3",
+            "version": "10.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "35c8cac1734ede2ae354a6644f7088356ff5b08e"
+                "reference": "1c17815c129f133f3019cc18e8d0c8622e6d9bcd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/35c8cac1734ede2ae354a6644f7088356ff5b08e",
-                "reference": "35c8cac1734ede2ae354a6644f7088356ff5b08e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1c17815c129f133f3019cc18e8d0c8622e6d9bcd",
+                "reference": "1c17815c129f133f3019cc18e8d0c8622e6d9bcd",
                 "shasum": ""
             },
             "require": {
@@ -2839,7 +2840,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.2.3"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.2.6"
             },
             "funding": [
                 {
@@ -2855,7 +2856,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-30T06:17:38+00:00"
+            "time": "2023-07-17T12:08:28+00:00"
         },
         {
             "name": "psr/cache",
