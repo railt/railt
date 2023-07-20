@@ -7,7 +7,7 @@ namespace Railt\TypeSystem\Tests;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
-#[Group('unit'), Group('type-system')]
+#[Group('railt/type-system')]
 abstract class TestCase extends BaseTestCase
 {
 }

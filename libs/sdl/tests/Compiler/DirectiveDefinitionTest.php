@@ -12,7 +12,7 @@ use Railt\TypeSystem\DirectiveDefinition;
 use Railt\TypeSystem\DirectiveLocation;
 use Railt\TypeSystem\ScalarTypeDefinition;
 
-#[Group('unit'), Group('sdl')]
+#[Group('railt/sdl')]
 final class DirectiveDefinitionTest extends TestCase
 {
     public function testName(): void

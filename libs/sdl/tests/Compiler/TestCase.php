@@ -11,7 +11,7 @@ use Railt\SDL\DictionaryInterface;
 use Railt\TypeSystem\DirectiveDefinition;
 use Railt\TypeSystem\NamedTypeDefinition;
 
-#[Group('unit'), Group('sdl')]
+#[Group('railt/sdl')]
 abstract class TestCase extends BaseTestCase
 {
     protected function compile(string $schema): DictionaryInterface

@@ -7,7 +7,7 @@ namespace Railt\SDL\Tests\Compiler;
 use PHPUnit\Framework\Attributes\Group;
 use Railt\TypeSystem\UnionTypeDefinition;
 
-#[Group('unit'), Group('sdl')]
+#[Group('railt/sdl')]
 final class UnionTypeDefinitionTest extends TestCase
 {
     public function testName(): void

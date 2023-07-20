@@ -9,9 +9,70 @@
         "source": "https://github.com/railt/railt"
     },
     "repositories": [
-        {"type": "path", "url": "libs/sdl"},
-        {"type": "path", "url": "libs/type-system"},
-        {"type": "path", "url": "libs/type-system-webonyx-bridge"}
+        {
+            "type": "path",
+            "url": "libs/contracts/http",
+            "package": {
+                "name": "railt/http-contracts",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/contracts/http-factory",
+            "package": {
+                "name": "railt/http-factory-contracts",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/http",
+            "package": {
+                "name": "railt/http",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/http-emitter",
+            "package": {
+                "name": "railt/http-emitter",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/http-factory",
+            "package": {
+                "name": "railt/http-factory",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/sdl",
+            "package": {
+                "name": "railt/sdl",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/type-system",
+            "package": {
+                "name": "railt/type-system",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/type-system-webonyx",
+            "package": {
+                "name": "railt/type-system-webonyx",
+                "version": "2.0.0"
+            }
+        }
     ],
     "authors": [
         {
@@ -21,24 +82,34 @@
     ],
     "require": {
         "php": "^8.1",
+        "railt/http": "^2.0",
+        "railt/http-emitter": "^2.0",
+        "railt/http-factory": "^2.0",
         "railt/sdl": "^2.0",
         "railt/type-system": "^2.0",
-        "railt/type-system-webonyx-bridge": "^2.0"
+        "railt/type-system-webonyx": "^2.0"
     },
     "require-dev": {
-        "symfony/cache": "^5.4|^6.0",
         "friendsofphp/php-cs-fixer": "^3.22",
+        "httpsoft/http-server-request": "^1.1",
         "phplrt/phplrt": "^3.2",
-        "symfony/console": "^5.4|^6.0",
-        "symfony/var-dumper": "^5.4|^6.0",
         "phpunit/phpunit": "^10.2",
+        "symfony/cache": "^5.4|^6.0",
+        "symfony/console": "^5.4|^6.0",
+        "symfony/http-foundation": "^5.4|^6.0",
+        "symfony/var-dumper": "^5.4|^6.0",
         "vimeo/psalm": "^5.13"
     },
     "autoload-dev": {
         "psr-4": {
+            "Railt\\Contracts\\Http\\Tests\\": "libs/contracts/http/tests",
+            "Railt\\Contracts\\Http\\Factory\\Tests\\": "libs/contracts/http-factory/tests",
+            "Railt\\Http\\Tests\\": "libs/http/tests",
+            "Railt\\Http\\Emitter\\Tests\\": "libs/http-emitter/tests",
+            "Railt\\Http\\Factory\\Tests\\": "libs/http-factory/tests",
             "Railt\\SDL\\Tests\\": "libs/sdl/tests",
             "Railt\\TypeSystem\\Tests\\": "libs/type-system/tests",
-            "Railt\\TypeSystem\\Bridge\\Webonyx\\": "libs/type-system-webonyx-bridge/tests"
+            "Railt\\TypeSystem\\Webonyx\\Tests\\": "libs/type-system-webonyx/tests"
         }
     },
     "scripts": {

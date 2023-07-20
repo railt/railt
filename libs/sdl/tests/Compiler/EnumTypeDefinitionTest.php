@@ -7,7 +7,7 @@ namespace Railt\SDL\Tests\Compiler;
 use PHPUnit\Framework\Attributes\Group;
 use Railt\TypeSystem\EnumTypeDefinition;
 
-#[Group('unit'), Group('sdl')]
+#[Group('railt/sdl')]
 final class EnumTypeDefinitionTest extends TestCase
 {
     public function testName(): void
