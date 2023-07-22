@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Node\Statement\Extension;
 
-use Railt\SDL\Node\Expression\DirectiveNode;
 use Railt\SDL\Node\IdentifierNode;
+use Railt\SDL\Node\Statement\Execution\DirectiveNode;
 use Railt\SDL\Node\Statement\Type\NamedTypeNode;
 use Railt\SDL\Node\Visitable;
 

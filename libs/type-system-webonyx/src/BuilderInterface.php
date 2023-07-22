@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 /**
  * @template TInput of object

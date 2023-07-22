@@ -11,7 +11,7 @@ namespace Railt\TypeSystem;
  * to the `toJSON()` method, which is defined in the reference JS
  * implementation.
  */
-interface DefinitionInterface extends TypeInterface, \JsonSerializable
+interface DefinitionInterface extends \Stringable, \JsonSerializable
 {
     /**
      * @return array<non-empty-string, mixed>
@@ -19,10 +19,9 @@ interface DefinitionInterface extends TypeInterface, \JsonSerializable
     public function jsonSerialize(): array;
 
     /**
-     * An alternative to the `toString()` and `inspect()` methods, which is
-     * described in the reference implementation.
+     * Definition string representation.
      *
-     * {@inheritDoc}
+     * @return non-empty-string
      */
     public function __toString(): string;
 }

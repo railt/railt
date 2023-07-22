@@ -7,17 +7,17 @@ namespace Railt\SDL\Compiler\Command\Evaluate;
 use Railt\SDL\Compiler\Command\CommandInterface;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Exception\CompilationException;
-use Railt\SDL\Node\Expression\DirectiveNode;
-use Railt\TypeSystem\ArgumentDefinition;
+use Railt\SDL\Node\Statement\Execution\DirectiveNode;
 use Railt\TypeSystem\Definition;
-use Railt\TypeSystem\Directive;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\EnumValueDefinition;
-use Railt\TypeSystem\FieldDefinition;
-use Railt\TypeSystem\InputFieldDefinition;
-use Railt\TypeSystem\NamedTypeDefinition;
-use Railt\TypeSystem\ScalarTypeDefinition;
-use Railt\TypeSystem\SchemaDefinition;
+use Railt\TypeSystem\Definition\ArgumentDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\EnumValueDefinition;
+use Railt\TypeSystem\Definition\FieldDefinition;
+use Railt\TypeSystem\Definition\InputFieldDefinition;
+use Railt\TypeSystem\Definition\NamedTypeDefinition;
+use Railt\TypeSystem\Definition\SchemaDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Execution\Directive;
 
 /**
  * @link NamedTypeDefinition

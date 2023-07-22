@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\EnumType;
-use Railt\TypeSystem\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
 
 /**
  * @template-extends Builder<EnumTypeDefinition, EnumType>

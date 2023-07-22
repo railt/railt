@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
 
 #[Group('railt/sdl')]
 final class ObjectTypeDefinitionTest extends TestCase

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
 
 #[Group('railt/sdl')]
 final class UnionTypeDefinitionTest extends TestCase

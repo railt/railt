@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
 
 #[Group('railt/sdl')]
 final class EnumTypeDefinitionTest extends TestCase

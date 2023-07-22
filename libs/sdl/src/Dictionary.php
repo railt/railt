@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\DirectivesProviderInterface;
-use Railt\TypeSystem\EnumTypeDefinition;
-use Railt\TypeSystem\InputObjectTypeDefinition;
-use Railt\TypeSystem\NamedTypeDefinition;
-use Railt\TypeSystem\ObjectLikeTypeDefinition;
-use Railt\TypeSystem\SchemaDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\NamedTypeDefinition;
+use Railt\TypeSystem\Definition\SchemaDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
 
 final class Dictionary implements DictionaryInterface
 {
@@ -115,7 +115,7 @@ final class Dictionary implements DictionaryInterface
         }
 
         foreach ($this->types as $type) {
-            if ($type instanceof DirectivesProviderInterface) {
+            if ($type instanceof HasDirectivesInterface) {
                 foreach ($type->getDirectives($name) as $directive) {
                     yield $type => $directive;
                 }

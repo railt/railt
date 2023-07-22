@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildUnionTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\UnionTypeDefinitionNode;
-use Railt\TypeSystem\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
 
 /**
  * @template-extends DefineCommand<UnionTypeDefinitionNode>

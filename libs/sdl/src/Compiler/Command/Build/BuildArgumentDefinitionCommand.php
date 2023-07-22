@@ -10,9 +10,9 @@ use Railt\SDL\Compiler\Command\Evaluate\EvaluateArgumentDefaultValue;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\ArgumentNode;
-use Railt\TypeSystem\ArgumentDefinition;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\FieldDefinition;
+use Railt\TypeSystem\Definition\ArgumentDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\FieldDefinition;
 use Railt\TypeSystem\InputTypeInterface;
 use Railt\TypeSystem\TypeInterface;
 

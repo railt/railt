@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Schema;
 use Railt\SDL\DictionaryInterface;

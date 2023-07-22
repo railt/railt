@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildInterfaceTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\InterfaceTypeExtensionNode;
-use Railt\TypeSystem\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
 
 /**
  * @template-extends ExtendCommand<InterfaceTypeExtensionNode>

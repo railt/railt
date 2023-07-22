@@ -1,0 +1,25 @@
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Arguments
+ * --------------------------------------------------------------------------
+ *
+ * Fields are conceptually functions which return values, and occasionally
+ * accept arguments which alter their behavior. These arguments often map
+ * directly to function arguments within a GraphQL server’s implementation.
+ *
+ * @see https://facebook.github.io/graphql/June2018/#Arguments
+ */
+
+Arguments -> { return new \ArrayObject($children); }
+  : ::T_PARENTHESIS_OPEN::
+      (Argument() ::T_COMMA::?)*
+    ::T_PARENTHESIS_CLOSE::
+  ;
+
+Argument -> {
+    return new Stmt\Execution\ArgumentNode($children[0], $children[1]);
+}
+  : Identifier() ::T_COLON:: Literal()
+  ;

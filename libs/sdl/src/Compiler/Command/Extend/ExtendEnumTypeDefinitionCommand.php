@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildEnumTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\EnumTypeExtensionNode;
-use Railt\TypeSystem\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
 
 /**
  * @template-extends ExtendCommand<EnumTypeExtensionNode>

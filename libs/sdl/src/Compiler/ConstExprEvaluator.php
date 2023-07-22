@@ -15,13 +15,13 @@ use Railt\SDL\Node\Expression\Literal\ListLiteralNode;
 use Railt\SDL\Node\Expression\Literal\NullLiteralNode;
 use Railt\SDL\Node\Expression\Literal\ObjectLiteralNode;
 use Railt\SDL\Node\Expression\Literal\StringLiteralNode;
-use Railt\TypeSystem\EnumTypeDefinition;
-use Railt\TypeSystem\InputObject;
-use Railt\TypeSystem\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\NamedTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Execution\InputObject;
 use Railt\TypeSystem\ListType;
-use Railt\TypeSystem\NamedTypeDefinition;
 use Railt\TypeSystem\NonNullType;
-use Railt\TypeSystem\ScalarTypeDefinition;
 use Railt\TypeSystem\TypeInterface;
 
 final class ConstExprEvaluator

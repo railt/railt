@@ -6,7 +6,7 @@ namespace Railt\SDL\Compiler\Command\Build;
 
 use Railt\SDL\Node\Statement\Definition\ObjectTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ObjectTypeExtensionNode;
-use Railt\TypeSystem\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
 
 /**
  * @template-extends BuildObjectLikeTypeDefinitionCommand<ObjectTypeDefinitionNode|ObjectTypeExtensionNode, ObjectTypeDefinition>

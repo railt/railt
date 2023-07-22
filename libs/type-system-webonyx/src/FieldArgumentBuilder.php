@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\Type;
-use Railt\TypeSystem\ArgumentDefinition;
+use Railt\TypeSystem\Definition\ArgumentDefinition;
 
 /**
  * @template-extends Builder<ArgumentDefinition, array>

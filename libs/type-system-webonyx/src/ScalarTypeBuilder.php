@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\ScalarType;
-use Railt\TypeSystem\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
 
 /**
  * @template-extends Builder<ScalarTypeDefinition, ScalarType>

@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\BuildCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Node\Statement\Definition\EnumTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\EnumTypeExtensionNode;
-use Railt\TypeSystem\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
 
 /**
  * @template-extends BuildCommand<EnumTypeDefinitionNode|EnumTypeExtensionNode, EnumTypeDefinition>

@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildInputObjectTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\InputObjectTypeDefinitionNode;
-use Railt\TypeSystem\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
 
 /**
  * @template-extends DefineCommand<InputObjectTypeDefinitionNode>

@@ -8,8 +8,8 @@ use Railt\SDL\Compiler\Command\BuildChildCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\EnumFieldNode;
-use Railt\TypeSystem\EnumTypeDefinition;
-use Railt\TypeSystem\EnumValueDefinition;
+use Railt\TypeSystem\Definition\EnumValueDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
 
 /**
  * @template-extends BuildChildCommand<EnumFieldNode, EnumTypeDefinition>

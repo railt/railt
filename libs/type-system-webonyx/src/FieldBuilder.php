@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\Type;
-use Railt\TypeSystem\FieldDefinition as SourceFieldDefinition;
+use Railt\TypeSystem\Definition\FieldDefinition as SourceFieldDefinition;
 
 /**
  * @template-extends Builder<SourceFieldDefinition, FieldDefinition>

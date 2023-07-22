@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\Command\Evaluate;
 
-use Railt\TypeSystem\ArgumentDefinition;
-use Railt\TypeSystem\FieldDefinition;
-use Railt\TypeSystem\InputFieldDefinition;
+use Railt\TypeSystem\Definition\ArgumentDefinition;
+use Railt\TypeSystem\Definition\FieldDefinition;
+use Railt\TypeSystem\Definition\InputFieldDefinition;
 
 /**
  * @template-extends ApplyDeprecationCommand<ArgumentDefinition|FieldDefinition|InputFieldDefinition>

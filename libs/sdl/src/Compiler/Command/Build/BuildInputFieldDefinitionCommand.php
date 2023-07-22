@@ -10,8 +10,8 @@ use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateInputFieldDefaultValue;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\InputFieldNode;
-use Railt\TypeSystem\InputFieldDefinition;
-use Railt\TypeSystem\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\InputFieldDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
 use Railt\TypeSystem\InputTypeInterface;
 use Railt\TypeSystem\TypeInterface;
 

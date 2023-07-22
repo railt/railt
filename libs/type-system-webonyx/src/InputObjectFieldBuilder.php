@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\Type;
-use Railt\TypeSystem\InputFieldDefinition;
+use Railt\TypeSystem\Definition\InputFieldDefinition;
 
 /**
  * @template-extends Builder<InputFieldDefinition, array>

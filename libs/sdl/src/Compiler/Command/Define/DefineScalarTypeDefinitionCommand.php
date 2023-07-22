@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildScalarTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\ScalarTypeDefinitionNode;
-use Railt\TypeSystem\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
 
 /**
  * @template-extends DefineCommand<ScalarTypeDefinitionNode>

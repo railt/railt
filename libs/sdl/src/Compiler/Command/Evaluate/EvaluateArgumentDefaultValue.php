@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Evaluate;
 use Railt\SDL\Compiler\Command\CommandInterface;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Node\Statement\ArgumentNode;
-use Railt\TypeSystem\ArgumentDefinition;
+use Railt\TypeSystem\Definition\ArgumentDefinition;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

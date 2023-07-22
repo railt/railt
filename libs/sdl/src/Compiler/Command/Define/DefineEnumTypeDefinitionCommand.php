@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildEnumTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\EnumTypeDefinitionNode;
-use Railt\TypeSystem\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
 
 /**
  * @template-extends DefineCommand<EnumTypeDefinitionNode>

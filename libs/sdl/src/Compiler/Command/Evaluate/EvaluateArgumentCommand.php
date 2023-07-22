@@ -7,9 +7,9 @@ namespace Railt\SDL\Compiler\Command\Evaluate;
 use Railt\SDL\Compiler\Command\CommandInterface;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Exception\CompilationException;
-use Railt\SDL\Node\Expression\ArgumentNode;
-use Railt\TypeSystem\Argument;
-use Railt\TypeSystem\Directive;
+use Railt\SDL\Node\Statement\Execution\ArgumentNode;
+use Railt\TypeSystem\Execution\Argument;
+use Railt\TypeSystem\Execution\Directive;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

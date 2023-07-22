@@ -9,9 +9,7 @@ namespace Railt\TypeSystem;
  *
  * @template-extends WrappingType<T>
  */
-final class ListType extends WrappingType implements
-    InputTypeInterface,
-    OutputTypeInterface
+final class ListType extends WrappingType implements InputTypeInterface, OutputTypeInterface
 {
     public function __toString(): string
     {

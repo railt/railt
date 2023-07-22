@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\UnionType;
-use Railt\TypeSystem\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
 
 /**
  * @template-extends Builder<UnionTypeDefinition, UnionType>

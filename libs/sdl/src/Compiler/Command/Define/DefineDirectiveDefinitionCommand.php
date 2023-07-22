@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildDirectiveDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\DirectiveDefinitionNode;
-use Railt\TypeSystem\DirectiveDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
 
 /**
  * @template-extends DefineCommand<DirectiveDefinitionNode>

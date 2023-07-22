@@ -9,8 +9,8 @@ use Railt\SDL\Compiler\Command\Evaluate\ApplyDeprecationFromTypeReferenceCommand
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\FieldNode;
-use Railt\TypeSystem\FieldDefinition;
-use Railt\TypeSystem\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Definition\FieldDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
 use Railt\TypeSystem\OutputTypeInterface;
 use Railt\TypeSystem\TypeInterface;
 

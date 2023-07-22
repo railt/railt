@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\BuildCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Node\Statement\Definition\InputObjectTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\InputObjectTypeExtensionNode;
-use Railt\TypeSystem\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
 
 /**
  * @template-extends BuildCommand<InputObjectTypeDefinitionNode|InputObjectTypeExtensionNode, InputObjectTypeDefinition>

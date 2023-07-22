@@ -8,8 +8,8 @@ use Railt\SDL\Compiler\Command\BuildCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\IdentifierNode;
 use Railt\SDL\Node\Statement\Definition\DirectiveDefinitionNode;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\DirectiveLocation;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\DirectiveLocation;
 
 /**
  * @template-extends BuildCommand<DirectiveDefinitionNode, DirectiveDefinition>

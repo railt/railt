@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Evaluate;
 
 use Railt\SDL\Compiler\Command\CommandInterface;
-use Railt\TypeSystem\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

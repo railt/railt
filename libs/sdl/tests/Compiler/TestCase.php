@@ -8,8 +8,8 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Railt\SDL\Compiler;
 use Railt\SDL\DictionaryInterface;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\NamedTypeDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\NamedTypeDefinition;
 
 #[Group('railt/sdl')]
 abstract class TestCase extends BaseTestCase

@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildObjectTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\ObjectTypeDefinitionNode;
-use Railt\TypeSystem\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
 
 /**
  * @template-extends DefineCommand<ObjectTypeDefinitionNode>

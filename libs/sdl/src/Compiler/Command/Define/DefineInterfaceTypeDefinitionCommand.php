@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildInterfaceTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\InterfaceTypeDefinitionNode;
-use Railt\TypeSystem\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
 
 /**
  * @template-extends DefineCommand<InterfaceTypeDefinitionNode>

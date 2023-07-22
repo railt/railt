@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\TypeSystem\Directive;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\DirectivesProviderInterface;
-use Railt\TypeSystem\NamedTypeDefinition;
-use Railt\TypeSystem\SchemaDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\NamedTypeDefinition;
+use Railt\TypeSystem\Definition\SchemaDefinition;
+use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
+use Railt\TypeSystem\Execution\Directive;
 
 /**
  * Contains a list of registered GraphQL types.
@@ -64,7 +64,7 @@ interface DictionaryInterface
     /**
      * @param non-empty-string|null $name
      *
-     * @return iterable<DirectivesProviderInterface, Directive>
+     * @return iterable<HasDirectivesInterface, Directive>
      */
     public function getDirectives(string $name = null): iterable;
 }

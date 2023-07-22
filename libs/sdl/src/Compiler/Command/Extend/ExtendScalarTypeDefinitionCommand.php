@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildScalarTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\ScalarTypeExtensionNode;
-use Railt\TypeSystem\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
 
 /**
  * @template-extends ExtendCommand<ScalarTypeExtensionNode>

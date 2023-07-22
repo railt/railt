@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildObjectTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\ObjectTypeExtensionNode;
-use Railt\TypeSystem\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
 
 /**
  * @template-extends ExtendCommand<ObjectTypeExtensionNode>

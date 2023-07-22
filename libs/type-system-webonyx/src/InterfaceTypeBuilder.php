@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\InterfaceType;
-use Railt\TypeSystem\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
 
 /**
  * @template-extends ObjectLikeTypeBuilder<InterfaceTypeDefinition, InterfaceType>

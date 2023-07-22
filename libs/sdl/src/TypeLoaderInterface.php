@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\TypeSystem\DefinitionInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
+use Railt\TypeSystem\DefinitionInterface;
 
 /**
  * @psalm-type SourceType = resource|string|\SplFileInfo|ReadableInterface

@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildInputObjectTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\InputObjectTypeExtensionNode;
-use Railt\TypeSystem\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
 
 /**
  * @template-extends ExtendCommand<InputObjectTypeExtensionNode>

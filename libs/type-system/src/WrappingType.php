@@ -9,7 +9,7 @@ namespace Railt\TypeSystem;
  *
  * @template-implements WrappingTypeInterface<T>
  */
-abstract class WrappingType implements WrappingTypeInterface
+abstract class WrappingType extends Type implements WrappingTypeInterface
 {
     /**
      * @param T $type
@@ -26,9 +26,4 @@ abstract class WrappingType implements WrappingTypeInterface
     {
         return $this->type;
     }
-
-    /**
-     * @return non-empty-string
-     */
-    abstract public function __toString(): string;
 }

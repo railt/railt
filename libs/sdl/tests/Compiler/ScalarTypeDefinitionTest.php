@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
 
 #[Group('railt/sdl')]
 final class ScalarTypeDefinitionTest extends TestCase

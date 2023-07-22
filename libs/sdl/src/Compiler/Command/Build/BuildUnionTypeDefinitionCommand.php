@@ -10,9 +10,9 @@ use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\UnionTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\UnionTypeExtensionNode;
 use Railt\SDL\Node\Statement\Type\NamedTypeNode;
-use Railt\TypeSystem\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
 use Railt\TypeSystem\TypeInterface;
-use Railt\TypeSystem\UnionTypeDefinition;
 
 /**
  * @template-extends BuildCommand<UnionTypeDefinitionNode|UnionTypeExtensionNode, UnionTypeDefinition>

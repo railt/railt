@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildUnionTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\UnionTypeExtensionNode;
-use Railt\TypeSystem\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
 
 /**
  * @template-extends ExtendCommand<UnionTypeExtensionNode>

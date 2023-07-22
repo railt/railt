@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx;
+namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\Directive;
-use Railt\TypeSystem\DirectiveDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
 
 /**
  * @template-extends Builder<DirectiveDefinition, Directive>

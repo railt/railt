@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
 
 #[Group('railt/sdl')]
 final class InterfaceTypeDefinitionTest extends TestCase

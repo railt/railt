@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
 
 #[Group('railt/sdl')]
 final class InputObjectTypeDefinitionTest extends TestCase

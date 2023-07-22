@@ -10,8 +10,8 @@ use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\ObjectLikeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ObjectLikeExtensionNode;
 use Railt\SDL\Node\Statement\Type\NamedTypeNode;
-use Railt\TypeSystem\InterfaceTypeDefinition;
-use Railt\TypeSystem\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

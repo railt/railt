@@ -9,8 +9,8 @@ use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\SchemaDefinitionNode;
 use Railt\SDL\Node\Statement\SchemaFieldNode;
-use Railt\TypeSystem\ObjectTypeDefinition;
-use Railt\TypeSystem\SchemaDefinition;
+use Railt\TypeSystem\Definition\SchemaDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
 
 /**
  * @template-extends BuildCommand<SchemaDefinitionNode, SchemaDefinition>

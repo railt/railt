@@ -8,9 +8,9 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Exception\TypeAlreadyDefinedException;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\DirectiveLocation;
-use Railt\TypeSystem\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\DirectiveLocation;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
 
 #[Group('railt/sdl')]
 final class DirectiveDefinitionTest extends TestCase

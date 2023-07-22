@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Webonyx\Internal;
+namespace Railt\TypeSystem\Statement\Webonyx\Internal;
 
-use Railt\TypeSystem\Type\NamedTypeInterface;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Railt\SDL\DictionaryInterface;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\EnumTypeDefinition;
-use Railt\TypeSystem\InputObjectTypeDefinition;
-use Railt\TypeSystem\InterfaceTypeDefinition;
-use Railt\TypeSystem\ObjectTypeDefinition;
-use Railt\TypeSystem\ScalarTypeDefinition;
-use Railt\TypeSystem\UnionTypeDefinition;
-use Railt\TypeSystem\Webonyx\Builder;
-use Railt\TypeSystem\Webonyx\DirectiveBuilder;
-use Railt\TypeSystem\Webonyx\EnumTypeBuilder;
-use Railt\TypeSystem\Webonyx\InputObjectTypeBuilder;
-use Railt\TypeSystem\Webonyx\InterfaceTypeBuilder;
-use Railt\TypeSystem\Webonyx\ObjectTypeBuilder;
-use Railt\TypeSystem\Webonyx\ScalarTypeBuilder;
-use Railt\TypeSystem\Webonyx\UnionTypeBuilder;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Statement\Type\NamedTypeInterface;
+use Railt\TypeSystem\Statement\Webonyx\Builder;
+use Railt\TypeSystem\Statement\Webonyx\DirectiveBuilder;
+use Railt\TypeSystem\Statement\Webonyx\EnumTypeBuilder;
+use Railt\TypeSystem\Statement\Webonyx\InputObjectTypeBuilder;
+use Railt\TypeSystem\Statement\Webonyx\InterfaceTypeBuilder;
+use Railt\TypeSystem\Statement\Webonyx\ObjectTypeBuilder;
+use Railt\TypeSystem\Statement\Webonyx\ScalarTypeBuilder;
+use Railt\TypeSystem\Statement\Webonyx\UnionTypeBuilder;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

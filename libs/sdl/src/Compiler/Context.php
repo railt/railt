@@ -12,10 +12,10 @@ use Railt\SDL\Exception\TypeAlreadyDefinedException;
 use Railt\SDL\Exception\TypeNotFoundException;
 use Railt\SDL\Node\Expression\Expression;
 use Railt\SDL\Node\NodeInterface;
+use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\NamedTypeDefinition;
+use Railt\TypeSystem\Definition\SchemaDefinition;
 use Railt\TypeSystem\DefinitionInterface;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\NamedTypeDefinition;
-use Railt\TypeSystem\SchemaDefinition;
 use Railt\TypeSystem\TypeInterface;
 
 /**

@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildSchemaDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\SchemaDefinitionNode;
-use Railt\TypeSystem\SchemaDefinition;
+use Railt\TypeSystem\Definition\SchemaDefinition;
 
 /**
  * @template-extends DefineCommand<SchemaDefinitionNode>
