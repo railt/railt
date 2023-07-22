@@ -7,16 +7,16 @@ namespace Railt\TypeSystem\Definition\Type;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\OutputTypeInterface;
 
-final class UnionTypeDefinition extends NamedTypeDefinition implements
+final class UnionType extends NamedTypeDefinition implements
     OutputTypeInterface
 {
     /**
-     * @var array<non-empty-string, ObjectTypeDefinition>
+     * @var array<non-empty-string, ObjectType>
      */
     private array $types = [];
 
     /**
-     * @param iterable<ObjectTypeDefinition> $types
+     * @param iterable<ObjectType> $types
      */
     public function setTypes(iterable $types): void
     {
@@ -28,7 +28,7 @@ final class UnionTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @param iterable<ObjectTypeDefinition> $types
+     * @param iterable<ObjectType> $types
      */
     public function withTypes(iterable $types): self
     {
@@ -51,12 +51,12 @@ final class UnionTypeDefinition extends NamedTypeDefinition implements
         return $self;
     }
 
-    public function addType(ObjectTypeDefinition $type): void
+    public function addType(ObjectType $type): void
     {
         $this->types[$type->getName()] = $type;
     }
 
-    public function withAddedType(ObjectTypeDefinition $type): self
+    public function withAddedType(ObjectType $type): self
     {
         $self = clone $this;
         $self->addType($type);
@@ -65,11 +65,11 @@ final class UnionTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @param ObjectTypeDefinition|non-empty-string $type
+     * @param ObjectType|non-empty-string $type
      */
-    public function removeType(ObjectTypeDefinition|string $type): void
+    public function removeType(ObjectType|string $type): void
     {
-        if ($type instanceof ObjectTypeDefinition) {
+        if ($type instanceof ObjectType) {
             $type = $type->getName();
         }
 
@@ -77,9 +77,9 @@ final class UnionTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @param ObjectTypeDefinition|non-empty-string $type
+     * @param ObjectType|non-empty-string $type
      */
-    public function withoutType(ObjectTypeDefinition|string $type): self
+    public function withoutType(ObjectType|string $type): self
     {
         $self = clone $this;
         $self->removeType($type);
@@ -90,7 +90,7 @@ final class UnionTypeDefinition extends NamedTypeDefinition implements
     /**
      * @param non-empty-string $name
      */
-    public function getType(string $name): ?ObjectTypeDefinition
+    public function getType(string $name): ?ObjectType
     {
         return $this->types[$name] ?? null;
     }
@@ -113,7 +113,7 @@ final class UnionTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @return iterable<ObjectTypeDefinition>
+     * @return iterable<ObjectType>
      */
     public function getTypes(): iterable
     {

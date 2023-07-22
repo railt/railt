@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\TypeWithFields;
-use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectLikeType;
 
 /**
- * @template TInput of ObjectLikeTypeDefinition
+ * @template TInput of ObjectLikeType
  * @template TOutput of TypeWithFields
  *
  * @template-extends Builder<TInput, TOutput>
  */
 abstract class ObjectLikeTypeBuilder extends Builder
 {
-    protected function buildInterfaces(ObjectLikeTypeDefinition $object): array
+    protected function buildInterfaces(ObjectLikeType $object): array
     {
         $result = [];
 
@@ -26,7 +26,7 @@ abstract class ObjectLikeTypeBuilder extends Builder
         return $result;
     }
 
-    protected function buildFields(ObjectLikeTypeDefinition $object): array
+    protected function buildFields(ObjectLikeType $object): array
     {
         $builder = new FieldBuilder($this->builder);
         $result = [];

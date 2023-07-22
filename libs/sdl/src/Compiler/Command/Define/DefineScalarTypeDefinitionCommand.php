@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildScalarTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\ScalarTypeDefinitionNode;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 
 /**
  * @template-extends DefineCommand<ScalarTypeDefinitionNode>
@@ -19,7 +19,7 @@ final class DefineScalarTypeDefinitionCommand extends DefineCommand
 {
     public function exec(): void
     {
-        $type = new ScalarTypeDefinition($this->stmt->name->value);
+        $type = new ScalarType($this->stmt->name->value);
 
         if ($this->stmt->description->value !== null) {
             $type->setDescription($this->stmt->description->value->value);

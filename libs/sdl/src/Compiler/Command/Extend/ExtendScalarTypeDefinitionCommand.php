@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildScalarTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\ScalarTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 
 /**
  * @template-extends ExtendCommand<ScalarTypeExtensionNode>
@@ -22,7 +22,7 @@ final class ExtendScalarTypeDefinitionCommand extends ExtendCommand
     {
         $type = $this->ctx->getType($this->stmt->name->value, $this->stmt->name);
 
-        if (!$type instanceof ScalarTypeDefinition) {
+        if (!$type instanceof ScalarType) {
             $message = \vsprintf('Cannot extend %s by scalar extension', [
                 (string)$type,
             ]);

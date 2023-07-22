@@ -9,11 +9,11 @@ use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Compiler\Command\Evaluate\InterfaceImplementsCommand;
 use Railt\SDL\Node\Statement\Definition\ObjectLikeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ObjectLikeExtensionNode;
-use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectLikeType;
 
 /**
  * @template TStatementNode of ObjectLikeDefinitionNode|ObjectLikeExtensionNode
- * @template TDefinition of ObjectLikeTypeDefinition
+ * @template TDefinition of ObjectLikeType
  *
  * @template-extends BuildCommand<TStatementNode, TDefinition>
  *

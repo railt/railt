@@ -16,9 +16,9 @@ use Railt\SDL\Node\Expression\Literal\NullLiteralNode;
 use Railt\SDL\Node\Expression\Literal\ObjectLiteralNode;
 use Railt\SDL\Node\Expression\Literal\StringLiteralNode;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\Execution\InputObject;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
@@ -50,9 +50,9 @@ final class ConstExprEvaluator
         }
 
         return match (true) {
-            $type instanceof ScalarTypeDefinition => $this->evalScalarType($type, $expr),
-            $type instanceof InputObjectTypeDefinition => $this->evalInputType($type, $expr),
-            $type instanceof EnumTypeDefinition => $this->evalEnumType($type, $expr),
+            $type instanceof ScalarType => $this->evalScalarType($type, $expr),
+            $type instanceof InputObjectType => $this->evalInputType($type, $expr),
+            $type instanceof EnumType => $this->evalEnumType($type, $expr),
             default => throw CompilationException::create(
                 'Cannot check expression compatibility of unknown named type ' . (string)$type,
                 $expr,
@@ -60,7 +60,7 @@ final class ConstExprEvaluator
         };
     }
 
-    private function evalEnumType(EnumTypeDefinition $enum, Expression $expr): string
+    private function evalEnumType(EnumType $enum, Expression $expr): string
     {
         if (!$expr instanceof ConstLiteralNode) {
             $message = \vsprintf('Cannot pass non-identifier literal to %s', [
@@ -82,7 +82,7 @@ final class ConstExprEvaluator
         return $expr->value->value;
     }
 
-    private function evalScalarType(ScalarTypeDefinition $type, Expression $expr): mixed
+    private function evalScalarType(ScalarType $type, Expression $expr): mixed
     {
         return match ($type->getName()) {
             'String', 'ID' => $this->evalStringScalarType($type, $expr),
@@ -96,7 +96,7 @@ final class ConstExprEvaluator
         };
     }
 
-    private function evalBoolScalarType(ScalarTypeDefinition $type, Expression $expr): bool
+    private function evalBoolScalarType(ScalarType $type, Expression $expr): bool
     {
         if ($expr instanceof BoolLiteralNode) {
             return $expr->value;
@@ -108,7 +108,7 @@ final class ConstExprEvaluator
         );
     }
 
-    private function evalFloatScalarType(ScalarTypeDefinition $type, Expression $expr): float
+    private function evalFloatScalarType(ScalarType $type, Expression $expr): float
     {
         if ($expr instanceof IntLiteralNode) {
             return (float)$expr->value;
@@ -124,7 +124,7 @@ final class ConstExprEvaluator
         );
     }
 
-    private function evalIntScalarType(ScalarTypeDefinition $type, Expression $expr): int
+    private function evalIntScalarType(ScalarType $type, Expression $expr): int
     {
         if ($expr instanceof IntLiteralNode) {
             return $expr->value;
@@ -136,7 +136,7 @@ final class ConstExprEvaluator
         );
     }
 
-    private function evalStringScalarType(ScalarTypeDefinition $type, Expression $expr): string
+    private function evalStringScalarType(ScalarType $type, Expression $expr): string
     {
         if ($expr instanceof StringLiteralNode) {
             return $expr->value;
@@ -148,7 +148,7 @@ final class ConstExprEvaluator
         );
     }
 
-    private function evalInputType(InputObjectTypeDefinition $type, Expression $expr): InputObject
+    private function evalInputType(InputObjectType $type, Expression $expr): InputObject
     {
         if (!$expr instanceof ObjectLiteralNode) {
             $message = \vsprintf('Cannot pass non-object literal value to input object type %s', [

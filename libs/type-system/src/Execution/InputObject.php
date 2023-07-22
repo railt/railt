@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Execution;
 
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
 use Railt\TypeSystem\NamedExecution;
 
 /**
@@ -17,11 +17,11 @@ final class InputObject extends NamedExecution implements
     \Countable
 {
     /**
-     * @param InputObjectTypeDefinition $definition
+     * @param InputObjectType $definition
      * @param array<non-empty-string, mixed> $values
      */
     public function __construct(
-        private readonly InputObjectTypeDefinition $definition,
+        private readonly InputObjectType $definition,
         private readonly array $values = [],
     ) {
     }
@@ -176,7 +176,7 @@ final class InputObject extends NamedExecution implements
         return $this->definition->getName();
     }
 
-    public function getDefinition(): InputObjectTypeDefinition
+    public function getDefinition(): InputObjectType
     {
         return $this->definition;
     }

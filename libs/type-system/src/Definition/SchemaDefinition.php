@@ -7,7 +7,7 @@ namespace Railt\TypeSystem\Definition;
 use Railt\TypeSystem\Common\HasDescriptionInterface;
 use Railt\TypeSystem\Common\HasDescriptionTrait;
 use Railt\TypeSystem\Definition;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectType;
 use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
 use Railt\TypeSystem\Execution\Common\HasDirectivesTrait;
 
@@ -19,18 +19,18 @@ final class SchemaDefinition extends Definition implements
     use HasDirectivesTrait;
 
     public function __construct(
-        private ?ObjectTypeDefinition $query = null,
-        private ?ObjectTypeDefinition $mutation = null,
-        private ?ObjectTypeDefinition $subscription = null,
+        private ?ObjectType $query = null,
+        private ?ObjectType $mutation = null,
+        private ?ObjectType $subscription = null,
     ) {
     }
 
-    public function setQueryType(ObjectTypeDefinition $query): void
+    public function setQueryType(ObjectType $query): void
     {
         $this->query = $query;
     }
 
-    public function withQueryType(ObjectTypeDefinition $query): self
+    public function withQueryType(ObjectType $query): self
     {
         $self = clone $this;
         $self->setQueryType($query);
@@ -51,17 +51,17 @@ final class SchemaDefinition extends Definition implements
         return $self;
     }
 
-    public function getQueryType(): ?ObjectTypeDefinition
+    public function getQueryType(): ?ObjectType
     {
         return $this->query;
     }
 
-    public function setMutationType(ObjectTypeDefinition $mutation): void
+    public function setMutationType(ObjectType $mutation): void
     {
         $this->mutation = $mutation;
     }
 
-    public function withMutationType(ObjectTypeDefinition $mutation): self
+    public function withMutationType(ObjectType $mutation): self
     {
         $self = clone $this;
         $self->setMutationType($mutation);
@@ -82,17 +82,17 @@ final class SchemaDefinition extends Definition implements
         return $self;
     }
 
-    public function getMutationType(): ?ObjectTypeDefinition
+    public function getMutationType(): ?ObjectType
     {
         return $this->mutation;
     }
 
-    public function setSubscriptionType(ObjectTypeDefinition $subscription): void
+    public function setSubscriptionType(ObjectType $subscription): void
     {
         $this->subscription = $subscription;
     }
 
-    public function withSubscriptionType(ObjectTypeDefinition $subscription): self
+    public function withSubscriptionType(ObjectType $subscription): self
     {
         $self = clone $this;
         $self->setSubscriptionType($subscription);
@@ -113,7 +113,7 @@ final class SchemaDefinition extends Definition implements
         return $self;
     }
 
-    public function getSubscriptionType(): ?ObjectTypeDefinition
+    public function getSubscriptionType(): ?ObjectType
     {
         return $this->subscription;
     }

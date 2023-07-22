@@ -16,7 +16,7 @@ use Railt\TypeSystem\Definition\FieldDefinition;
 use Railt\TypeSystem\Definition\InputFieldDefinition;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\Definition\SchemaDefinition;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\Execution\Directive;
 
 /**
@@ -75,7 +75,7 @@ final class EvaluateDirective implements CommandInterface
             context: $this->parent,
         ));
 
-        if ($this->parent instanceof ScalarTypeDefinition) {
+        if ($this->parent instanceof ScalarType) {
             // Apply "@specifiedBy" directive
             $this->ctx->push(new ApplySpecifiedByCommand(
                 scalar: $this->parent,

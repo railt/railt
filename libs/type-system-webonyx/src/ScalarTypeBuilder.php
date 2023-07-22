@@ -6,10 +6,10 @@ namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\ScalarType;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 
 /**
- * @template-extends Builder<ScalarTypeDefinition, ScalarType>
+ * @template-extends Builder<ScalarType, ScalarType>
  *
  * @psalm-suppress RedundantConditionGivenDocblockType
  */
@@ -17,8 +17,8 @@ final class ScalarTypeBuilder extends Builder
 {
     public function build(object $input): ScalarType
     {
-        assert($input instanceof ScalarTypeDefinition, self::typeError(
-            ScalarTypeDefinition::class,
+        assert($input instanceof ScalarType, self::typeError(
+            ScalarType::class,
             $input,
         ));
 
@@ -32,10 +32,10 @@ final class ScalarTypeBuilder extends Builder
         };
     }
 
-    private function create(ScalarTypeDefinition $scalar): ScalarType
+    private function create(ScalarType $scalar): ScalarType
     {
         return new class($scalar) extends CustomScalarType {
-            public function __construct(ScalarTypeDefinition $scalar)
+            public function __construct(ScalarType $scalar)
             {
                 parent::__construct([
                     'name' => $scalar->getName(),

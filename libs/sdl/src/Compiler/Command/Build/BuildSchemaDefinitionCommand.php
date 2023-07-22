@@ -10,7 +10,7 @@ use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\SchemaDefinitionNode;
 use Railt\SDL\Node\Statement\SchemaFieldNode;
 use Railt\TypeSystem\Definition\SchemaDefinition;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectType;
 
 /**
  * @template-extends BuildCommand<SchemaDefinitionNode, SchemaDefinition>
@@ -47,11 +47,11 @@ final class BuildSchemaDefinitionCommand extends BuildCommand
         }
     }
 
-    private function buildFieldType(SchemaFieldNode $field): ObjectTypeDefinition
+    private function buildFieldType(SchemaFieldNode $field): ObjectType
     {
         $type = $this->ctx->getType($field->type->name->value, $field->type, $this->definition);
 
-        if (!$type instanceof ObjectTypeDefinition) {
+        if (!$type instanceof ObjectType) {
             $message = \vsprintf('The %s schema field must be an object type, but %s given', [
                 $field->name->value,
                 (string)$type,
@@ -63,7 +63,7 @@ final class BuildSchemaDefinitionCommand extends BuildCommand
         return $type;
     }
 
-    private function buildSubscriptionType(SchemaFieldNode $field, ObjectTypeDefinition $type): void
+    private function buildSubscriptionType(SchemaFieldNode $field, ObjectType $type): void
     {
         if ($this->definition->getSubscriptionType() !== null) {
             $message = 'Cannot redefine already defined "subscription" field';
@@ -73,7 +73,7 @@ final class BuildSchemaDefinitionCommand extends BuildCommand
         $this->definition->setSubscriptionType($type);
     }
 
-    private function buildMutationType(SchemaFieldNode $field, ObjectTypeDefinition $type): void
+    private function buildMutationType(SchemaFieldNode $field, ObjectType $type): void
     {
         if ($this->definition->getMutationType() !== null) {
             $message = 'Cannot redefine already defined "mutation" field';
@@ -83,7 +83,7 @@ final class BuildSchemaDefinitionCommand extends BuildCommand
         $this->definition->setMutationType($type);
     }
 
-    private function buildQueryType(SchemaFieldNode $field, ObjectTypeDefinition $type): void
+    private function buildQueryType(SchemaFieldNode $field, ObjectType $type): void
     {
         if ($this->definition->getQueryType() !== null) {
             $message = 'Cannot redefine already defined "query" field';

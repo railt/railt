@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\ObjectType;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectType;
 
 /**
- * @template-extends ObjectLikeTypeBuilder<ObjectTypeDefinition, ObjectType>
+ * @template-extends ObjectLikeTypeBuilder<ObjectType, ObjectType>
  *
  * @psalm-suppress RedundantConditionGivenDocblockType
  */
@@ -16,8 +16,8 @@ final class ObjectTypeBuilder extends ObjectLikeTypeBuilder
 {
     public function build(object $input): ObjectType
     {
-        assert($input instanceof ObjectTypeDefinition, self::typeError(
-            ObjectTypeDefinition::class,
+        assert($input instanceof ObjectType, self::typeError(
+            ObjectType::class,
             $input,
         ));
 

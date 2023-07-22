@@ -10,12 +10,12 @@ use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\UnionTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\UnionTypeExtensionNode;
 use Railt\SDL\Node\Statement\Type\NamedTypeNode;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
-use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectType;
+use Railt\TypeSystem\Definition\Type\UnionType;
 use Railt\TypeSystem\TypeInterface;
 
 /**
- * @template-extends BuildCommand<UnionTypeDefinitionNode|UnionTypeExtensionNode, UnionTypeDefinition>
+ * @template-extends BuildCommand<UnionTypeDefinitionNode|UnionTypeExtensionNode, UnionType>
  *
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command
@@ -44,11 +44,11 @@ final class BuildUnionTypeDefinitionCommand extends BuildCommand
 
     /**
      * @param TypeInterface $type
-     * @return ($type is ObjectTypeDefinition ? void : never)
+     * @return ($type is ObjectType ? void : never)
      */
     private function assertTypeIsObject(NamedTypeNode $node, TypeInterface $type): void
     {
-        if (!$type instanceof ObjectTypeDefinition) {
+        if (!$type instanceof ObjectType) {
             $message = \vsprintf('%s can contain only object types, but %s given', [
                 (string)$this->definition,
                 (string)$type,

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Definition;
 
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
-use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
-use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
+use Railt\TypeSystem\Definition\Type\InterfaceType;
+use Railt\TypeSystem\Definition\Type\ObjectType;
+use Railt\TypeSystem\Definition\Type\ScalarType;
+use Railt\TypeSystem\Definition\Type\UnionType;
 use Railt\TypeSystem\DefinitionInterface;
 
 enum DirectiveLocation implements DirectiveLocationInterface
@@ -41,10 +41,10 @@ enum DirectiveLocation implements DirectiveLocationInterface
     #[DirectiveLocationInformation(ref: SchemaDefinition::class)]
     case SCHEMA;
 
-    #[DirectiveLocationInformation(ref: ScalarTypeDefinition::class)]
+    #[DirectiveLocationInformation(ref: ScalarType::class)]
     case SCALAR;
 
-    #[DirectiveLocationInformation(ref: ObjectTypeDefinition::class)]
+    #[DirectiveLocationInformation(ref: ObjectType::class)]
     case OBJECT;
 
     #[DirectiveLocationInformation(ref: FieldDefinition::class)]
@@ -53,19 +53,19 @@ enum DirectiveLocation implements DirectiveLocationInterface
     #[DirectiveLocationInformation(ref: ArgumentDefinition::class)]
     case ARGUMENT_DEFINITION;
 
-    #[DirectiveLocationInformation(ref: InterfaceTypeDefinition::class)]
+    #[DirectiveLocationInformation(ref: InterfaceType::class)]
     case INTERFACE;
 
-    #[DirectiveLocationInformation(ref: UnionTypeDefinition::class)]
+    #[DirectiveLocationInformation(ref: UnionType::class)]
     case UNION;
 
-    #[DirectiveLocationInformation(ref: EnumTypeDefinition::class)]
+    #[DirectiveLocationInformation(ref: EnumType::class)]
     case ENUM;
 
     #[DirectiveLocationInformation(ref: EnumValueDefinition::class)]
     case ENUM_VALUE;
 
-    #[DirectiveLocationInformation(ref: InputObjectTypeDefinition::class)]
+    #[DirectiveLocationInformation(ref: InputObjectType::class)]
     case INPUT_OBJECT;
 
     #[DirectiveLocationInformation(ref: InputFieldDefinition::class)]

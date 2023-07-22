@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 
 #[Group('railt/sdl')]
 final class ScalarTypeDefinitionTest extends TestCase
 {
     public function testName(): void
     {
-        /** @var ScalarTypeDefinition $scalar */
+        /** @var ScalarType $scalar */
         $scalar = $this->type('Example', <<<'GraphQL'
             scalar Example
             GraphQL);
@@ -22,7 +22,7 @@ final class ScalarTypeDefinitionTest extends TestCase
 
     public function testEmptyDescription(): void
     {
-        /** @var ScalarTypeDefinition $scalar */
+        /** @var ScalarType $scalar */
         $scalar = $this->type('Example', <<<'GraphQL'
             scalar Example
             GraphQL);
@@ -32,7 +32,7 @@ final class ScalarTypeDefinitionTest extends TestCase
 
     public function testInlineDescription(): void
     {
-        /** @var ScalarTypeDefinition $scalar */
+        /** @var ScalarType $scalar */
         $scalar = $this->type('Example', <<<'GraphQL'
             "example description"
             scalar Example
@@ -43,7 +43,7 @@ final class ScalarTypeDefinitionTest extends TestCase
 
     public function testMultilineDescription(): void
     {
-        /** @var ScalarTypeDefinition $scalar */
+        /** @var ScalarType $scalar */
         $scalar = $this->type('Example', <<<'GraphQL'
             """
             example multiline description

@@ -10,7 +10,7 @@ use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Exception\TypeAlreadyDefinedException;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
 use Railt\TypeSystem\Definition\DirectiveLocation;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 
 #[Group('railt/sdl')]
 final class DirectiveDefinitionTest extends TestCase
@@ -160,7 +160,7 @@ final class DirectiveDefinitionTest extends TestCase
         $argument = $directive->getArgument('arg');
         self::assertNotNull($argument);
 
-        self::assertInstanceOf(ScalarTypeDefinition::class, $argument->getType());
+        self::assertInstanceOf(ScalarType::class, $argument->getType());
         self::assertSame('String', $argument->getType()->getName());
     }
 

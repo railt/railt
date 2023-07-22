@@ -9,19 +9,19 @@ use Railt\TypeSystem\Definition\Common\HasFieldsTrait;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\OutputTypeInterface;
 
-abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
+abstract class ObjectLikeType extends NamedTypeDefinition implements
     OutputTypeInterface,
     HasFieldsInterface
 {
     use HasFieldsTrait;
 
     /**
-     * @var array<non-empty-string, InterfaceTypeDefinition>
+     * @var array<non-empty-string, InterfaceType>
      */
     private array $interfaces = [];
 
     /**
-     * @param iterable<InterfaceTypeDefinition> $interfaces
+     * @param iterable<InterfaceType> $interfaces
      */
     public function setInterfaces(iterable $interfaces): void
     {
@@ -33,7 +33,7 @@ abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @param iterable<InterfaceTypeDefinition> $interfaces
+     * @param iterable<InterfaceType> $interfaces
      */
     public function withInterfaces(iterable $interfaces): self
     {
@@ -56,12 +56,12 @@ abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
         return $self;
     }
 
-    public function addInterface(InterfaceTypeDefinition $interface): void
+    public function addInterface(InterfaceType $interface): void
     {
         $this->interfaces[$interface->getName()] = $interface;
     }
 
-    public function withAddedInterface(InterfaceTypeDefinition $interface): self
+    public function withAddedInterface(InterfaceType $interface): self
     {
         $self = clone $this;
         $self->addInterface($interface);
@@ -70,11 +70,11 @@ abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @param InterfaceTypeDefinition|non-empty-string $interface
+     * @param InterfaceType|non-empty-string $interface
      */
-    public function removeInterface(InterfaceTypeDefinition|string $interface): void
+    public function removeInterface(InterfaceType|string $interface): void
     {
-        if ($interface instanceof InterfaceTypeDefinition) {
+        if ($interface instanceof InterfaceType) {
             $interface = $interface->getName();
         }
 
@@ -82,9 +82,9 @@ abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @param InterfaceTypeDefinition|non-empty-string $interface
+     * @param InterfaceType|non-empty-string $interface
      */
-    public function withoutInterface(InterfaceTypeDefinition|string $interface): self
+    public function withoutInterface(InterfaceType|string $interface): self
     {
         $self = clone $this;
         $self->removeInterface($interface);
@@ -95,7 +95,7 @@ abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
     /**
      * @param non-empty-string $name
      */
-    public function getInterface(string $name): ?InterfaceTypeDefinition
+    public function getInterface(string $name): ?InterfaceType
     {
         return $this->interfaces[$name] ?? null;
     }
@@ -136,7 +136,7 @@ abstract class ObjectLikeTypeDefinition extends NamedTypeDefinition implements
     }
 
     /**
-     * @return iterable<InterfaceTypeDefinition>
+     * @return iterable<InterfaceType>
      */
     public function getInterfaces(): iterable
     {

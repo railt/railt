@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildInterfaceTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\InterfaceTypeDefinitionNode;
-use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceType;
 
 /**
  * @template-extends DefineCommand<InterfaceTypeDefinitionNode>
@@ -19,7 +19,7 @@ final class DefineInterfaceTypeDefinitionCommand extends DefineCommand
 {
     public function exec(): void
     {
-        $type = new InterfaceTypeDefinition($this->stmt->name->value);
+        $type = new InterfaceType($this->stmt->name->value);
 
         if ($this->stmt->description->value !== null) {
             $type->setDescription($this->stmt->description->value->value);

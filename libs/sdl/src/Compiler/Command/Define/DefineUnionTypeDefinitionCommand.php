@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildUnionTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\UnionTypeDefinitionNode;
-use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionType;
 
 /**
  * @template-extends DefineCommand<UnionTypeDefinitionNode>
@@ -19,7 +19,7 @@ final class DefineUnionTypeDefinitionCommand extends DefineCommand
 {
     public function exec(): void
     {
-        $type = new UnionTypeDefinition($this->stmt->name->value);
+        $type = new UnionType($this->stmt->name->value);
 
         if ($this->stmt->description->value !== null) {
             $type->setDescription($this->stmt->description->value->value);

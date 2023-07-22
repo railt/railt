@@ -11,12 +11,12 @@ use Railt\SDL\Compiler\Command\Evaluate\EvaluateInputFieldDefaultValue;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\InputFieldNode;
 use Railt\TypeSystem\Definition\InputFieldDefinition;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
 use Railt\TypeSystem\InputTypeInterface;
 use Railt\TypeSystem\TypeInterface;
 
 /**
- * @template-extends BuildChildCommand<InputFieldNode, InputObjectTypeDefinition>
+ * @template-extends BuildChildCommand<InputFieldNode, InputObjectType>
  *
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command

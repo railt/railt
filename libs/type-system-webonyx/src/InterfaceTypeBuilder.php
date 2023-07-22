@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\InterfaceType;
-use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceType;
 
 /**
- * @template-extends ObjectLikeTypeBuilder<InterfaceTypeDefinition, InterfaceType>
+ * @template-extends ObjectLikeTypeBuilder<InterfaceType, InterfaceType>
  *
  * @psalm-suppress RedundantConditionGivenDocblockType
  */
@@ -16,8 +16,8 @@ final class InterfaceTypeBuilder extends ObjectLikeTypeBuilder
 {
     public function build(object $input): InterfaceType
     {
-        assert($input instanceof InterfaceTypeDefinition, self::typeError(
-            InterfaceTypeDefinition::class,
+        assert($input instanceof InterfaceType, self::typeError(
+            InterfaceType::class,
             $input,
         ));
 

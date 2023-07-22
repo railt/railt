@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildEnumTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\EnumTypeDefinitionNode;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
 
 /**
  * @template-extends DefineCommand<EnumTypeDefinitionNode>
@@ -19,7 +19,7 @@ final class DefineEnumTypeDefinitionCommand extends DefineCommand
 {
     public function exec(): void
     {
-        $type = new EnumTypeDefinition($this->stmt->name->value);
+        $type = new EnumType($this->stmt->name->value);
 
         if ($this->stmt->description->value !== null) {
             $type->setDescription($this->stmt->description->value->value);

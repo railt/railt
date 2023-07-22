@@ -10,12 +10,12 @@ use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\FieldNode;
 use Railt\TypeSystem\Definition\FieldDefinition;
-use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectLikeType;
 use Railt\TypeSystem\OutputTypeInterface;
 use Railt\TypeSystem\TypeInterface;
 
 /**
- * @template-extends BuildChildCommand<FieldNode, ObjectLikeTypeDefinition>
+ * @template-extends BuildChildCommand<FieldNode, ObjectLikeType>
  *
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command

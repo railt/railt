@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\EnumType;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
 
 /**
- * @template-extends Builder<EnumTypeDefinition, EnumType>
+ * @template-extends Builder<EnumType, EnumType>
  *
  * @psalm-suppress RedundantConditionGivenDocblockType
  */
@@ -16,8 +16,8 @@ final class EnumTypeBuilder extends Builder
 {
     public function build(object $input): EnumType
     {
-        assert($input instanceof EnumTypeDefinition, self::typeError(
-            EnumTypeDefinition::class,
+        assert($input instanceof EnumType, self::typeError(
+            EnumType::class,
             $input,
         ));
 
@@ -28,7 +28,7 @@ final class EnumTypeBuilder extends Builder
         ]);
     }
 
-    protected function buildEnumValues(EnumTypeDefinition $enum): array
+    protected function buildEnumValues(EnumType $enum): array
     {
         $result = [];
 

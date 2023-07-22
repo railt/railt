@@ -76,6 +76,10 @@ final class InputFieldDefinition extends NamedDefinition implements
 
     public function __toString(): string
     {
-        return \sprintf('input-field<%s>', $this->getName());
+        /** @var non-empty-string */
+        return \vsprintf('input-field<%s: %s>', [
+            $this->getName(),
+            (string)$this->getType(),
+        ]);
     }
 }

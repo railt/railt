@@ -9,10 +9,10 @@ use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\EnumFieldNode;
 use Railt\TypeSystem\Definition\EnumValueDefinition;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
 
 /**
- * @template-extends BuildChildCommand<EnumFieldNode, EnumTypeDefinition>
+ * @template-extends BuildChildCommand<EnumFieldNode, EnumType>
  *
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command

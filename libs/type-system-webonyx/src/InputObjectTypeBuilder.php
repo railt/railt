@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\InputObjectType;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
 
 /**
- * @template-extends Builder<InputObjectTypeDefinition, InputObjectType>
+ * @template-extends Builder<InputObjectType, InputObjectType>
  *
  * @psalm-suppress RedundantConditionGivenDocblockType
  */
@@ -16,8 +16,8 @@ final class InputObjectTypeBuilder extends Builder
 {
     public function build(object $input): InputObjectType
     {
-        assert($input instanceof InputObjectTypeDefinition, self::typeError(
-            InputObjectTypeDefinition::class,
+        assert($input instanceof InputObjectType, self::typeError(
+            InputObjectType::class,
             $input,
         ));
 
@@ -28,7 +28,7 @@ final class InputObjectTypeBuilder extends Builder
         ]);
     }
 
-    private function buildFields(InputObjectTypeDefinition $input): array
+    private function buildFields(InputObjectType $input): array
     {
         $builder = new InputObjectFieldBuilder($this->builder);
         $result = [];

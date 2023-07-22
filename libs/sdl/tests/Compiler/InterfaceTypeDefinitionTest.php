@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceType;
 
 #[Group('railt/sdl')]
 final class InterfaceTypeDefinitionTest extends TestCase
 {
     public function testName(): void
     {
-        /** @var InterfaceTypeDefinition $interface */
+        /** @var InterfaceType $interface */
         $interface = $this->type('Example', <<<'GraphQL'
             interface Example
             GraphQL);
@@ -22,7 +22,7 @@ final class InterfaceTypeDefinitionTest extends TestCase
 
     public function testEmptyDescription(): void
     {
-        /** @var InterfaceTypeDefinition $interface */
+        /** @var InterfaceType $interface */
         $interface = $this->type('Example', <<<'GraphQL'
             interface Example
             GraphQL);
@@ -32,7 +32,7 @@ final class InterfaceTypeDefinitionTest extends TestCase
 
     public function testInlineDescription(): void
     {
-        /** @var InterfaceTypeDefinition $interface */
+        /** @var InterfaceType $interface */
         $interface = $this->type('Example', <<<'GraphQL'
             "example description"
             interface Example
@@ -43,7 +43,7 @@ final class InterfaceTypeDefinitionTest extends TestCase
 
     public function testMultilineDescription(): void
     {
-        /** @var InterfaceTypeDefinition $interface */
+        /** @var InterfaceType $interface */
         $interface = $this->type('Example', <<<'GraphQL'
             """
             example multiline description
@@ -56,7 +56,7 @@ final class InterfaceTypeDefinitionTest extends TestCase
 
     public function testNoFields(): void
     {
-        /** @var InterfaceTypeDefinition $interface */
+        /** @var InterfaceType $interface */
         $interface = $this->type('Example', <<<'GraphQL'
             interface Example
             GraphQL);
@@ -67,7 +67,7 @@ final class InterfaceTypeDefinitionTest extends TestCase
 
     public function testFieldName(): void
     {
-        /** @var InterfaceTypeDefinition $interface */
+        /** @var InterfaceType $interface */
         $interface = $this->type('Example', <<<'GraphQL'
             interface Example {
                 EXAMPLE: String

@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildInterfaceTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\InterfaceTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceType;
 
 /**
  * @template-extends ExtendCommand<InterfaceTypeExtensionNode>
@@ -22,7 +22,7 @@ final class ExtendInterfaceTypeDefinitionCommand extends ExtendCommand
     {
         $type = $this->ctx->getType($this->stmt->name->value, $this->stmt->name);
 
-        if (!$type instanceof InterfaceTypeDefinition) {
+        if (!$type instanceof InterfaceType) {
             $message = \vsprintf('Cannot extend %s by interface extension', [
                 (string)$type,
             ]);

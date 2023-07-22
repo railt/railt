@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildEnumTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\EnumTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
 
 /**
  * @template-extends ExtendCommand<EnumTypeExtensionNode>
@@ -22,7 +22,7 @@ final class ExtendEnumTypeDefinitionCommand extends ExtendCommand
     {
         $type = $this->ctx->getType($this->stmt->name->value, $this->stmt->name);
 
-        if (!$type instanceof EnumTypeDefinition) {
+        if (!$type instanceof EnumType) {
             $message = \vsprintf('Cannot extend %s by enum extension', [
                 (string)$type,
             ]);

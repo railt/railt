@@ -9,12 +9,12 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Railt\SDL\DictionaryInterface;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
-use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
-use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
+use Railt\TypeSystem\Definition\Type\InterfaceType;
+use Railt\TypeSystem\Definition\Type\ObjectType;
+use Railt\TypeSystem\Definition\Type\ScalarType;
+use Railt\TypeSystem\Definition\Type\UnionType;
 use Railt\TypeSystem\Statement\Type\NamedTypeInterface;
 use Railt\TypeSystem\Statement\Webonyx\Builder;
 use Railt\TypeSystem\Statement\Webonyx\DirectiveBuilder;
@@ -35,12 +35,12 @@ final class BuilderFactory
      * @var array<class-string<NamedTypeInterface>, class-string<Builder>>
      */
     private const BUILDER_MAPPINGS = [
-        ObjectTypeDefinition::class => ObjectTypeBuilder::class,
-        InterfaceTypeDefinition::class => InterfaceTypeBuilder::class,
-        ScalarTypeDefinition::class => ScalarTypeBuilder::class,
-        InputObjectTypeDefinition::class => InputObjectTypeBuilder::class,
-        UnionTypeDefinition::class => UnionTypeBuilder::class,
-        EnumTypeDefinition::class => EnumTypeBuilder::class,
+        ObjectType::class => ObjectTypeBuilder::class,
+        InterfaceType::class => InterfaceTypeBuilder::class,
+        ScalarType::class => ScalarTypeBuilder::class,
+        InputObjectType::class => InputObjectTypeBuilder::class,
+        UnionType::class => UnionTypeBuilder::class,
+        EnumType::class => EnumTypeBuilder::class,
     ];
 
     private readonly Registry $types;

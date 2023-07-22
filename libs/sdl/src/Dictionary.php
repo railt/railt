@@ -7,9 +7,9 @@ namespace Railt\SDL;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\Definition\SchemaDefinition;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
-use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
+use Railt\TypeSystem\Definition\Type\ObjectLikeType;
 use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
 
 final class Dictionary implements DictionaryInterface
@@ -122,7 +122,7 @@ final class Dictionary implements DictionaryInterface
             }
 
             switch (true) {
-                case $type instanceof EnumTypeDefinition:
+                case $type instanceof EnumType:
                     foreach ($type->getValues() as $value) {
                         foreach ($value->getDirectives($name) as $directive) {
                             yield $value => $directive;
@@ -130,7 +130,7 @@ final class Dictionary implements DictionaryInterface
                     }
                     break;
 
-                case $type instanceof InputObjectTypeDefinition:
+                case $type instanceof InputObjectType:
                     foreach ($type->getFields() as $field) {
                         foreach ($field->getDirectives($name) as $directive) {
                             yield $field => $directive;
@@ -138,7 +138,7 @@ final class Dictionary implements DictionaryInterface
                     }
                     break;
 
-                case $type instanceof ObjectLikeTypeDefinition:
+                case $type instanceof ObjectLikeType:
                     foreach ($type->getFields() as $field) {
                         foreach ($field->getDirectives($name) as $directive) {
                             yield $field => $directive;

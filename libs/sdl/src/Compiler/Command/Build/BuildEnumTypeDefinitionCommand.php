@@ -8,10 +8,10 @@ use Railt\SDL\Compiler\Command\BuildCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Node\Statement\Definition\EnumTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\EnumTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
 
 /**
- * @template-extends BuildCommand<EnumTypeDefinitionNode|EnumTypeExtensionNode, EnumTypeDefinition>
+ * @template-extends BuildCommand<EnumTypeDefinitionNode|EnumTypeExtensionNode, EnumType>
  *
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command

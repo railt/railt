@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Evaluate;
 
 use Railt\SDL\Compiler\Command\CommandInterface;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
@@ -14,7 +14,7 @@ use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
 final class ApplySpecifiedByCommand implements CommandInterface
 {
     public function __construct(
-        private readonly ScalarTypeDefinition $scalar,
+        private readonly ScalarType $scalar,
     ) {}
 
     public function exec(): void

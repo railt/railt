@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectType;
 
 #[Group('railt/sdl')]
 final class ObjectTypeDefinitionTest extends TestCase
 {
     public function testName(): void
     {
-        /** @var ObjectTypeDefinition $type */
+        /** @var ObjectType $type */
         $type = $this->type('Example', <<<'GraphQL'
             type Example
             GraphQL);
@@ -22,7 +22,7 @@ final class ObjectTypeDefinitionTest extends TestCase
 
     public function testEmptyDescription(): void
     {
-        /** @var ObjectTypeDefinition $type */
+        /** @var ObjectType $type */
         $type = $this->type('Example', <<<'GraphQL'
             type Example
             GraphQL);
@@ -32,7 +32,7 @@ final class ObjectTypeDefinitionTest extends TestCase
 
     public function testInlineDescription(): void
     {
-        /** @var ObjectTypeDefinition $type */
+        /** @var ObjectType $type */
         $type = $this->type('Example', <<<'GraphQL'
             "example description"
             type Example
@@ -43,7 +43,7 @@ final class ObjectTypeDefinitionTest extends TestCase
 
     public function testMultilineDescription(): void
     {
-        /** @var ObjectTypeDefinition $type */
+        /** @var ObjectType $type */
         $type = $this->type('Example', <<<'GraphQL'
             """
             example multiline description
@@ -56,7 +56,7 @@ final class ObjectTypeDefinitionTest extends TestCase
 
     public function testNoFields(): void
     {
-        /** @var ObjectTypeDefinition $type */
+        /** @var ObjectType $type */
         $type = $this->type('Example', <<<'GraphQL'
             type Example
             GraphQL);
@@ -67,7 +67,7 @@ final class ObjectTypeDefinitionTest extends TestCase
 
     public function testFieldName(): void
     {
-        /** @var ObjectTypeDefinition $type */
+        /** @var ObjectType $type */
         $type = $this->type('Example', <<<'GraphQL'
             type Example {
                 EXAMPLE: String

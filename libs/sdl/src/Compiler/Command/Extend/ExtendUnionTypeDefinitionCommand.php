@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildUnionTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\UnionTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionType;
 
 /**
  * @template-extends ExtendCommand<UnionTypeExtensionNode>
@@ -22,7 +22,7 @@ final class ExtendUnionTypeDefinitionCommand extends ExtendCommand
     {
         $type = $this->ctx->getType($this->stmt->name->value, $this->stmt->name);
 
-        if (!$type instanceof UnionTypeDefinition) {
+        if (!$type instanceof UnionType) {
             $message = \vsprintf('Cannot extend %s by union extension', [
                 (string)$type,
             ]);

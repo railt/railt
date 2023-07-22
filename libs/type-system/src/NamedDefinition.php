@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-use Railt\TypeSystem\Common\HasDescriptionInterface;
 use Railt\TypeSystem\Common\HasDescriptionTrait;
 
 abstract class NamedDefinition extends Definition implements
-    NamedDefinitionInterface,
-    HasDescriptionInterface
+    NamedDefinitionInterface
 {
     use HasDescriptionTrait;
 

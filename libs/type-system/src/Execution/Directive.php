@@ -15,18 +15,18 @@ final class Directive extends NamedExecution
     private array $arguments = [];
 
     public function __construct(
-        private readonly DirectiveDefinition $directive,
+        private readonly DirectiveDefinition $definition,
     ) {
     }
 
     public function getName(): string
     {
-        return $this->directive->getName();
+        return $this->definition->getName();
     }
 
     public function getDefinition(): DirectiveDefinition
     {
-        return $this->directive;
+        return $this->definition;
     }
 
     /**

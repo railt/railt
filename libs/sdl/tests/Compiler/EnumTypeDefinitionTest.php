@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\Definition\Type\EnumTypeDefinition;
+use Railt\TypeSystem\Definition\Type\EnumType;
 
 #[Group('railt/sdl')]
 final class EnumTypeDefinitionTest extends TestCase
 {
     public function testName(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example
             GraphQL);
@@ -22,7 +22,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testEmptyDescription(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example
             GraphQL);
@@ -32,7 +32,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testInlineDescription(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             "example description"
             enum Example
@@ -43,7 +43,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testMultilineDescription(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             """
             example multiline description
@@ -56,7 +56,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testNoValues(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example
             GraphQL);
@@ -67,7 +67,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testValueName(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example {
                 EXAMPLE
@@ -82,7 +82,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testValueValue(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example {
                 EXAMPLE
@@ -96,7 +96,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testValueNoDescription(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example {
                 EXAMPLE
@@ -110,7 +110,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testValueInlineDescription(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example {
                 "description" EXAMPLE
@@ -124,7 +124,7 @@ final class EnumTypeDefinitionTest extends TestCase
 
     public function testValueMultilineDescription(): void
     {
-        /** @var EnumTypeDefinition $enum */
+        /** @var EnumType $enum */
         $enum = $this->type('Example', <<<'GraphQL'
             enum Example {
                 """

@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildInputObjectTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\InputObjectTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
 
 /**
  * @template-extends ExtendCommand<InputObjectTypeExtensionNode>
@@ -22,7 +22,7 @@ final class ExtendInputObjectTypeDefinitionCommand extends ExtendCommand
     {
         $type = $this->ctx->getType($this->stmt->name->value, $this->stmt->name);
 
-        if (!$type instanceof InputObjectTypeDefinition) {
+        if (!$type instanceof InputObjectType) {
             $message = \vsprintf('Cannot extend %s by input object extension', [
                 (string)$type,
             ]);

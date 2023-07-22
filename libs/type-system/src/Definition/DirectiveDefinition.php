@@ -8,6 +8,7 @@ use Railt\TypeSystem\Common\HasDescriptionTrait;
 use Railt\TypeSystem\Definition;
 use Railt\TypeSystem\Definition\Common\HasArgumentsInterface;
 use Railt\TypeSystem\Definition\Common\HasArgumentsTrait;
+use Railt\TypeSystem\DefinitionInterface;
 use Railt\TypeSystem\NamedDefinition;
 
 final class DirectiveDefinition extends NamedDefinition implements
@@ -17,14 +18,14 @@ final class DirectiveDefinition extends NamedDefinition implements
     use HasArgumentsTrait;
 
     /**
-     * @var array<non-empty-string, DirectiveLocation>
+     * @var array<non-empty-string, DirectiveLocationInterface>
      */
     private array $locations = [];
 
     private bool $isRepeatable = false;
 
     /**
-     * @param iterable<DirectiveLocation> $locations
+     * @param iterable<DirectiveLocationInterface> $locations
      */
     public function setLocations(iterable $locations): void
     {
@@ -36,7 +37,7 @@ final class DirectiveDefinition extends NamedDefinition implements
     }
 
     /**
-     * @param iterable<DirectiveLocation> $locations
+     * @param iterable<DirectiveLocationInterface> $locations
      */
     public function withLocations(iterable $locations): self
     {
@@ -59,12 +60,12 @@ final class DirectiveDefinition extends NamedDefinition implements
         return $self;
     }
 
-    public function addLocation(DirectiveLocation $location): void
+    public function addLocation(DirectiveLocationInterface $location): void
     {
         $this->locations[$location->getName()] = $location;
     }
 
-    public function withAddedLocation(DirectiveLocation $location): self
+    public function withAddedLocation(DirectiveLocationInterface $location): self
     {
         $self = clone $this;
         $self->addLocation($location);
@@ -73,9 +74,9 @@ final class DirectiveDefinition extends NamedDefinition implements
     }
 
     /**
-     * @param DirectiveLocation|non-empty-string $location
+     * @param DirectiveLocationInterface|non-empty-string $location
      */
-    public function removeLocation(DirectiveLocation|string $location): void
+    public function removeLocation(DirectiveLocationInterface|string $location): void
     {
         if ($location instanceof DirectiveLocation) {
             $location = $location->getName();
@@ -85,9 +86,9 @@ final class DirectiveDefinition extends NamedDefinition implements
     }
 
     /**
-     * @param DirectiveLocation|non-empty-string $location
+     * @param DirectiveLocationInterface|non-empty-string $location
      */
-    public function withoutLocation(DirectiveLocation|string $location): self
+    public function withoutLocation(DirectiveLocationInterface|string $location): self
     {
         $self = clone $this;
         $self->removeLocation($location);
@@ -95,9 +96,9 @@ final class DirectiveDefinition extends NamedDefinition implements
         return $self;
     }
 
-    public function hasLocation(DirectiveLocation|string $location): bool
+    public function hasLocation(DirectiveLocationInterface|string $location): bool
     {
-        if ($location instanceof DirectiveLocation) {
+        if ($location instanceof DirectiveLocationInterface) {
             $location = $location->getName();
         }
 
@@ -105,7 +106,7 @@ final class DirectiveDefinition extends NamedDefinition implements
     }
 
     /**
-     * @return iterable<DirectiveLocation>
+     * @return iterable<DirectiveLocationInterface>
      */
     public function getLocations(): iterable
     {
@@ -121,7 +122,7 @@ final class DirectiveDefinition extends NamedDefinition implements
         return \count($this->locations);
     }
 
-    public function isAvailableFor(Definition $definition): bool
+    public function isAvailableFor(DefinitionInterface $definition): bool
     {
         foreach ($this->locations as $location) {
             if ($location->isAvailableFor($definition)) {

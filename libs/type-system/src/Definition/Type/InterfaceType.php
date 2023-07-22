@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Definition\Type;
 
-final class InterfaceTypeDefinition extends ObjectLikeTypeDefinition
+final class InterfaceType extends ObjectLikeType
 {
     public function __toString(): string
     {

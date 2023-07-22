@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Statement\Webonyx;
 
 use GraphQL\Type\Definition\UnionType;
-use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionType;
 
 /**
- * @template-extends Builder<UnionTypeDefinition, UnionType>
+ * @template-extends Builder<UnionType, UnionType>
  *
  * @psalm-suppress RedundantConditionGivenDocblockType
  */
@@ -16,8 +16,8 @@ final class UnionTypeBuilder extends Builder
 {
     public function build(object $input): UnionType
     {
-        assert($input instanceof UnionTypeDefinition, self::typeError(
-            UnionTypeDefinition::class,
+        assert($input instanceof UnionType, self::typeError(
+            UnionType::class,
             $input,
         ));
 
@@ -28,7 +28,7 @@ final class UnionTypeBuilder extends Builder
         ]);
     }
 
-    protected function buildObjectTypes(UnionTypeDefinition $union): array
+    protected function buildObjectTypes(UnionType $union): array
     {
         $result = [];
 

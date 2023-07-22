@@ -8,7 +8,7 @@ use Railt\SDL\Compiler\Command\Build\BuildObjectTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\ExtendCommand;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Extension\ObjectTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\ObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ObjectType;
 
 /**
  * @template-extends ExtendCommand<ObjectTypeExtensionNode>
@@ -22,7 +22,7 @@ final class ExtendObjectTypeDefinitionCommand extends ExtendCommand
     {
         $type = $this->ctx->getType($this->stmt->name->value, $this->stmt->name);
 
-        if (!$type instanceof ObjectTypeDefinition) {
+        if (!$type instanceof ObjectType) {
             $message = \vsprintf('Cannot extend %s by object extension', [
                 (string)$type,
             ]);

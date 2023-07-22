@@ -10,8 +10,8 @@ use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\Statement\Definition\ObjectLikeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ObjectLikeExtensionNode;
 use Railt\SDL\Node\Statement\Type\NamedTypeNode;
-use Railt\TypeSystem\Definition\Type\InterfaceTypeDefinition;
-use Railt\TypeSystem\Definition\Type\ObjectLikeTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InterfaceType;
+use Railt\TypeSystem\Definition\Type\ObjectLikeType;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
@@ -22,7 +22,7 @@ final class InterfaceImplementsCommand implements CommandInterface
     public function __construct(
         private readonly Context $ctx,
         private readonly ObjectLikeDefinitionNode|ObjectLikeExtensionNode $node,
-        private readonly ObjectLikeTypeDefinition $definition,
+        private readonly ObjectLikeType $definition,
     ) {
     }
 
@@ -34,7 +34,7 @@ final class InterfaceImplementsCommand implements CommandInterface
             //
             // Check that a type is an interface
             //
-            if (!$interface instanceof InterfaceTypeDefinition) {
+            if (!$interface instanceof InterfaceType) {
                 $message = \vsprintf('%s can contain only interface types, but %s given', [
                     (string)$this->definition,
                     (string)$interface,
@@ -50,7 +50,7 @@ final class InterfaceImplementsCommand implements CommandInterface
         }
     }
 
-    private function assertTypeSelfReference(NamedTypeNode $node, InterfaceTypeDefinition $interface): void
+    private function assertTypeSelfReference(NamedTypeNode $node, InterfaceType $interface): void
     {
         $isTypeSameOrSelfImplements = $this->node->name->value === $node->name->value
             || $interface->implements($this->node->name->value)
@@ -65,7 +65,7 @@ final class InterfaceImplementsCommand implements CommandInterface
         }
     }
 
-    private function assertInterfaceNotDefined(NamedTypeNode $node, InterfaceTypeDefinition $interface): void
+    private function assertInterfaceNotDefined(NamedTypeNode $node, InterfaceType $interface): void
     {
         if ($this->definition->implements($node->name->value)) {
             $message = \vsprintf('Cannot implement already implemented type "%s" in %s', [

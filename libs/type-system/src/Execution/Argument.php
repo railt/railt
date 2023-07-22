@@ -10,19 +10,19 @@ use Railt\TypeSystem\NamedExecution;
 final class Argument extends NamedExecution
 {
     public function __construct(
-        private readonly ArgumentDefinition $argument,
+        private readonly ArgumentDefinition $definition,
         private readonly mixed $value,
     ) {
     }
 
     public function getName(): string
     {
-        return $this->argument->getName();
+        return $this->definition->getName();
     }
 
     public function getDefinition(): ArgumentDefinition
     {
-        return $this->argument;
+        return $this->definition;
     }
 
     public function getValue(): mixed

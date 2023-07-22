@@ -8,10 +8,10 @@ use Railt\SDL\Compiler\Command\BuildCommand;
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateDirective;
 use Railt\SDL\Node\Statement\Definition\ScalarTypeDefinitionNode;
 use Railt\SDL\Node\Statement\Extension\ScalarTypeExtensionNode;
-use Railt\TypeSystem\Definition\Type\ScalarTypeDefinition;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 
 /**
- * @template-extends BuildCommand<ScalarTypeDefinitionNode|ScalarTypeExtensionNode, ScalarTypeDefinition>
+ * @template-extends BuildCommand<ScalarTypeDefinitionNode|ScalarTypeExtensionNode, ScalarType>
  *
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command

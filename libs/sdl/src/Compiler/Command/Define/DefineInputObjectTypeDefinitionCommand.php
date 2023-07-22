@@ -7,7 +7,7 @@ namespace Railt\SDL\Compiler\Command\Define;
 use Railt\SDL\Compiler\Command\Build\BuildInputObjectTypeDefinitionCommand;
 use Railt\SDL\Compiler\Command\DefineCommand;
 use Railt\SDL\Node\Statement\Definition\InputObjectTypeDefinitionNode;
-use Railt\TypeSystem\Definition\Type\InputObjectTypeDefinition;
+use Railt\TypeSystem\Definition\Type\InputObjectType;
 
 /**
  * @template-extends DefineCommand<InputObjectTypeDefinitionNode>
@@ -19,7 +19,7 @@ final class DefineInputObjectTypeDefinitionCommand extends DefineCommand
 {
     public function exec(): void
     {
-        $type = new InputObjectTypeDefinition($this->stmt->name->value);
+        $type = new InputObjectType($this->stmt->name->value);
 
         if ($this->stmt->description->value !== null) {
             $type->setDescription($this->stmt->description->value->value);

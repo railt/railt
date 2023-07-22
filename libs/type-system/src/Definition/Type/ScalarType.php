@@ -8,7 +8,7 @@ use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\InputTypeInterface;
 use Railt\TypeSystem\OutputTypeInterface;
 
-final class ScalarTypeDefinition extends NamedTypeDefinition implements
+final class ScalarType extends NamedTypeDefinition implements
     InputTypeInterface,
     OutputTypeInterface
 {

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Railt\SDL\Tests\Compiler;
 
 use PHPUnit\Framework\Attributes\Group;
-use Railt\TypeSystem\Definition\Type\UnionTypeDefinition;
+use Railt\TypeSystem\Definition\Type\UnionType;
 
 #[Group('railt/sdl')]
 final class UnionTypeDefinitionTest extends TestCase
 {
     public function testName(): void
     {
-        /** @var UnionTypeDefinition $union */
+        /** @var UnionType $union */
         $union = $this->type('Example', <<<'GraphQL'
             type Obj
             union Example = Obj
@@ -23,7 +23,7 @@ final class UnionTypeDefinitionTest extends TestCase
 
     public function testEmptyDescription(): void
     {
-        /** @var UnionTypeDefinition $union */
+        /** @var UnionType $union */
         $union = $this->type('Example', <<<'GraphQL'
             type Obj
             union Example = Obj
@@ -34,7 +34,7 @@ final class UnionTypeDefinitionTest extends TestCase
 
     public function testInlineDescription(): void
     {
-        /** @var UnionTypeDefinition $union */
+        /** @var UnionType $union */
         $union = $this->type('Example', <<<'GraphQL'
             type Obj
             "example description"
@@ -46,7 +46,7 @@ final class UnionTypeDefinitionTest extends TestCase
 
     public function testMultilineDescription(): void
     {
-        /** @var UnionTypeDefinition $union */
+        /** @var UnionType $union */
         $union = $this->type('Example', <<<'GraphQL'
             type Obj
             """
