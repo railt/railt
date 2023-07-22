@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Railt\Http\Factory\Parser;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Railt\Contracts\Http\Factory\AdapterInterface;
 use Railt\Contracts\Http\Factory\RequestFactoryInterface;
 use Railt\Contracts\Http\Factory\RequestParserInterface;
 use Railt\Http\Factory\Exception\ParsingException;
-use Railt\Http\Factory\RequestFactory;
+use Railt\Http\Factory\GraphQLRequestFactory;
 
 /**
  * POST requests provides body arguments in the given format:
@@ -30,20 +31,20 @@ use Railt\Http\Factory\RequestFactory;
  */
 final class JsonBodyHttpRequestParser extends JsonRequestParser
 {
-    public function parse(AdapterInterface $adapter): iterable
+    public function createFromServerRequest(ServerRequestInterface $request): iterable
     {
         // Check if the request is a JSON.
-        if (!$this->providesJsonContent($adapter)) {
+        if (!$this->providesJsonContent($request)) {
             return;
         }
 
-        $request = $this->jsonDecode($adapter);
+        $data = $this->jsonDecode($request);
 
         // Check if it contains a GraphQL request.
-        if ($request === null || !isset($request[RequestFactory::FIELD_QUERY])) {
+        if ($data === null || !$this->looksLikeGraphQLRequest($data)) {
             return;
         }
 
-        yield $this->requests->createRequestFromArray($request);
+        yield $this->requests->createRequestFromArray($data);
     }
 }

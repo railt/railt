@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Factory\Parser;
 
-use Railt\Contracts\Http\Factory\AdapterInterface;
-use Railt\Http\Factory\RequestFactory;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Apollo provides request body in the given format:
@@ -27,24 +26,27 @@ use Railt\Http\Factory\RequestFactory;
  */
 final class ApolloBatchingRequestParser extends JsonRequestParser
 {
-    public function parse(AdapterInterface $adapter): iterable
+    /**
+     * @psalm-suppress MixedAssignment : Okay
+     */
+    public function createFromServerRequest(ServerRequestInterface $request): iterable
     {
         // Check if the request is a JSON.
-        if (!$this->providesJsonContent($adapter)) {
+        if (!$this->providesJsonContent($request)) {
             return;
         }
 
-        $requests = $this->jsonDecode($adapter);
+        $data = $this->jsonDecode($request);
 
         // Skip non-ordered arrays
-        if ($requests === null || !\array_is_list($requests)) {
+        if ($data === null || !\array_is_list($data)) {
             return;
         }
 
-        foreach ($requests as $request) {
+        foreach ($data as $item) {
             // Check if sub-request contains a GraphQL request.
-            if (\is_array($request) && isset($request[RequestFactory::FIELD_QUERY])) {
-                yield $this->requests->createRequestFromArray($request);
+            if ($this->looksLikeGraphQLRequest($item)) {
+                yield $this->requests->createRequestFromArray($item);
             }
         }
     }

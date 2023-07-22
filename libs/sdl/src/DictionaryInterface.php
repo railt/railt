@@ -64,7 +64,7 @@ interface DictionaryInterface
     /**
      * @param non-empty-string|null $name
      *
-     * @return iterable<Directive, DirectivesProviderInterface>
+     * @return iterable<DirectivesProviderInterface, Directive>
      */
     public function getDirectives(string $name = null): iterable;
 }

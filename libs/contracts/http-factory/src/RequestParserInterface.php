@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Http\Factory;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Railt\Contracts\Http\Factory\Exception\ParsingExceptionInterface;
 use Railt\Contracts\Http\RequestInterface;
 
@@ -16,5 +17,5 @@ interface RequestParserInterface
      *
      * @throws ParsingExceptionInterface
      */
-    public function parse(AdapterInterface $adapter): iterable;
+    public function createFromServerRequest(ServerRequestInterface $request): iterable;
 }

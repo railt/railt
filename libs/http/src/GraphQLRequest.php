@@ -6,7 +6,7 @@ namespace Railt\Http;
 
 use Railt\Contracts\Http\RequestInterface;
 
-class Request implements RequestInterface
+class GraphQLRequest implements RequestInterface
 {
     /**
      * @var array<non-empty-string, mixed>

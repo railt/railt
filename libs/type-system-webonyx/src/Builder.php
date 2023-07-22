@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Webonyx;
 
+use Railt\TypeSystem\Type\TypeInterface;
+use Railt\TypeSystem\Type\WrappingTypeInterface;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\Type;
-use Railt\TypeSystem\Webonyx\Internal\BuilderFactory;
 use Railt\TypeSystem\InputObject;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
-use Railt\TypeSystem\TypeInterface;
-use Railt\TypeSystem\WrappingTypeInterface;
+use Railt\TypeSystem\Webonyx\Internal\BuilderFactory;
 
 /**
  * @template TInput of object

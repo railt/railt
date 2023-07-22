@@ -27,17 +27,17 @@
         },
         {
             "type": "path",
-            "url": "libs/http",
+            "url": "libs/contracts/type-system",
             "package": {
-                "name": "railt/http",
+                "name": "railt/type-system-contracts",
                 "version": "2.0.0"
             }
         },
         {
             "type": "path",
-            "url": "libs/http-emitter",
+            "url": "libs/http",
             "package": {
-                "name": "railt/http-emitter",
+                "name": "railt/http",
                 "version": "2.0.0"
             }
         },
@@ -83,7 +83,6 @@
     "require": {
         "php": "^8.1",
         "railt/http": "^2.0",
-        "railt/http-emitter": "^2.0",
         "railt/http-factory": "^2.0",
         "railt/sdl": "^2.0",
         "railt/type-system": "^2.0",
@@ -105,7 +104,6 @@
             "Railt\\Contracts\\Http\\Tests\\": "libs/contracts/http/tests",
             "Railt\\Contracts\\Http\\Factory\\Tests\\": "libs/contracts/http-factory/tests",
             "Railt\\Http\\Tests\\": "libs/http/tests",
-            "Railt\\Http\\Emitter\\Tests\\": "libs/http-emitter/tests",
             "Railt\\Http\\Factory\\Tests\\": "libs/http-factory/tests",
             "Railt\\SDL\\Tests\\": "libs/sdl/tests",
             "Railt\\TypeSystem\\Tests\\": "libs/type-system/tests",

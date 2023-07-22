@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Webonyx\Internal;
 
+use Railt\TypeSystem\Type\NamedTypeInterface;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Railt\SDL\DictionaryInterface;
+use Railt\TypeSystem\DirectiveDefinition;
+use Railt\TypeSystem\EnumTypeDefinition;
+use Railt\TypeSystem\InputObjectTypeDefinition;
+use Railt\TypeSystem\InterfaceTypeDefinition;
+use Railt\TypeSystem\ObjectTypeDefinition;
+use Railt\TypeSystem\ScalarTypeDefinition;
+use Railt\TypeSystem\UnionTypeDefinition;
 use Railt\TypeSystem\Webonyx\Builder;
-use Railt\TypeSystem\Webonyx\BuilderInterface;
 use Railt\TypeSystem\Webonyx\DirectiveBuilder;
 use Railt\TypeSystem\Webonyx\EnumTypeBuilder;
 use Railt\TypeSystem\Webonyx\InputObjectTypeBuilder;
@@ -17,14 +24,6 @@ use Railt\TypeSystem\Webonyx\InterfaceTypeBuilder;
 use Railt\TypeSystem\Webonyx\ObjectTypeBuilder;
 use Railt\TypeSystem\Webonyx\ScalarTypeBuilder;
 use Railt\TypeSystem\Webonyx\UnionTypeBuilder;
-use Railt\TypeSystem\DirectiveDefinition;
-use Railt\TypeSystem\EnumTypeDefinition;
-use Railt\TypeSystem\InputObjectTypeDefinition;
-use Railt\TypeSystem\InterfaceTypeDefinition;
-use Railt\TypeSystem\NamedTypeDefinitionInterface;
-use Railt\TypeSystem\ObjectTypeDefinition;
-use Railt\TypeSystem\ScalarTypeDefinition;
-use Railt\TypeSystem\UnionTypeDefinition;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
@@ -33,7 +32,7 @@ use Railt\TypeSystem\UnionTypeDefinition;
 final class BuilderFactory
 {
     /**
-     * @var array<class-string<NamedTypeDefinitionInterface>, class-string<Builder>>
+     * @var array<class-string<NamedTypeInterface>, class-string<Builder>>
      */
     private const BUILDER_MAPPINGS = [
         ObjectTypeDefinition::class => ObjectTypeBuilder::class,
@@ -49,7 +48,7 @@ final class BuilderFactory
     private readonly DirectiveBuilder $directives;
 
     /**
-     * @var array<class-string<NamedTypeDefinitionInterface>, Builder>
+     * @var array<class-string<NamedTypeInterface>, Builder>
      */
     private array $builders = [];
 
@@ -62,7 +61,7 @@ final class BuilderFactory
     /**
      * @psalm-suppress all : psalm false-positive (bug)
      */
-    private function getBuilder(NamedTypeDefinitionInterface $type): Builder
+    private function getBuilder(NamedTypeInterface $type): Builder
     {
         if (isset($this->builders[$type::class])) {
             return $this->builders[$type::class];
@@ -76,7 +75,7 @@ final class BuilderFactory
         return $this->builders[$type::class] = new $class($this);
     }
 
-    private function buildType(NamedTypeDefinitionInterface $type): Type
+    private function buildType(NamedTypeInterface $type): Type
     {
         $builder = $this->getBuilder($type);
 
@@ -100,7 +99,7 @@ final class BuilderFactory
         return $result;
     }
 
-    public function getType(NamedTypeDefinitionInterface $type): Type
+    public function getType(NamedTypeInterface $type): Type
     {
         if ($this->types->hasType($type->getName())) {
             return $this->types->getType($type->getName());

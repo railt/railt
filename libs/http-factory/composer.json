@@ -25,7 +25,6 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
-        "symfony/polyfill-php83": "^1.27",
         "railt/http-factory-contracts": "^2.0"
     },
     "autoload": {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Railt\Http\Factory;
 
+use Psr\Http\Message\ResponseFactoryInterface as PsrResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Railt\Contracts\Http\ErrorInterface;
 use Railt\Contracts\Http\Error\LocationInterface;
 use Railt\Contracts\Http\Factory\ResponseSerializerInterface;
@@ -11,7 +13,7 @@ use Railt\Contracts\Http\Response\ExtensionInterface;
 use Railt\Contracts\Http\ResponseInterface;
 use Railt\Http\Factory\Exception\SerializingException;
 
-final class ResponseSerializer implements ResponseSerializerInterface
+final class GraphQLResponseSerializer implements ResponseSerializerInterface
 {
     /**
      * @param LocationInterface $location
@@ -146,5 +148,50 @@ final class ResponseSerializer implements ResponseSerializerInterface
         } catch (\JsonException $e) {
             throw SerializingException::fromJsonException($e);
         }
+    }
+
+    public function toResponse(
+        PsrResponseFactoryInterface $factory,
+        ResponseInterface $response,
+        int $json = self::DEFAULT_JSON_FLAGS,
+    ): PsrResponseInterface {
+        [$code, $reason] = $this->getResponseStatus($response);
+
+        $psr = $factory->createResponse($code, $reason);
+
+        foreach ($this->getResponseHeaders() as $name => $value) {
+            $psr = $psr->withAddedHeader($name, $value);
+        }
+
+        $content = $this->toJson($response, $json);
+
+        $body = $psr->getBody();
+        $body->rewind();
+        $body->write($content);
+        $body->rewind();
+
+        return $psr;
+    }
+
+    /**
+     * @return array<non-empty-string, non-empty-string>
+     */
+    private function getResponseHeaders(): array
+    {
+        return [
+            'Content-Type' => 'application/json',
+        ];
+    }
+
+    /**
+     * @return array{int<1, max>, non-empty-string}
+     */
+    private function getResponseStatus(ResponseInterface $response): array
+    {
+        if ($response->isSuccessful()) {
+            return [200, 'OK'];
+        }
+
+        return [500, 'Internal Server Error'];
     }
 }

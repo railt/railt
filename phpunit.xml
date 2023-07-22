@@ -5,18 +5,21 @@
          colors="true"
          cacheDirectory="vendor/.phpunit.cache"
 >
-    <coverage/>
-    <testsuites>
-        <testsuite name="libraries">
-            <directory>libs/**/tests</directory>
-        </testsuite>
-    </testsuites>
     <php>
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="-1"/>
         <env name="APP_ENV" value="testing"/>
         <env name="RAILT_DEBUG" value="1"/>
     </php>
+
+    <testsuites>
+        <testsuite name="libraries">
+            <directory>libs/**/tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <coverage/>
+
     <source>
         <include>
             <directory suffix=".php">libs/**/src</directory>

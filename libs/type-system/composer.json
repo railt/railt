@@ -2,7 +2,14 @@
     "name": "railt/type-system",
     "description": "Interoperable GraphQL Type System",
     "license": "MIT",
-    "keywords": ["graphql", "language", "sdl", "type system", "interop", "abstraction"],
+    "keywords": [
+        "graphql",
+        "language",
+        "sdl",
+        "type system",
+        "interop",
+        "abstraction"
+    ],
     "homepage": "https://github.com/railt",
     "authors": [
         {

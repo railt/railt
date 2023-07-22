@@ -7,7 +7,7 @@ namespace Railt\Http;
 use Railt\Contracts\Http\ErrorInterface;
 use Railt\Contracts\Http\ResponseInterface;
 
-class Response implements ResponseInterface
+class GraphQLResponse implements ResponseInterface
 {
     /**
      * @var list<\Throwable>

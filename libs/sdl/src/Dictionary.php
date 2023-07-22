@@ -110,43 +110,43 @@ final class Dictionary implements DictionaryInterface
     {
         if ($this->schema !== null) {
             foreach ($this->schema->getDirectives($name) as $directive) {
-                yield $directive => $this->schema;
+                yield $this->schema => $directive;
             }
         }
 
         foreach ($this->types as $type) {
             if ($type instanceof DirectivesProviderInterface) {
                 foreach ($type->getDirectives($name) as $directive) {
-                    yield $directive => $type;
+                    yield $type => $directive;
                 }
             }
 
             switch (true) {
                 case $type instanceof EnumTypeDefinition:
                     foreach ($type->getValues() as $value) {
-                        foreach ($type->getDirectives($name) as $directive) {
-                            yield $directive => $value;
+                        foreach ($value->getDirectives($name) as $directive) {
+                            yield $value => $directive;
                         }
                     }
                     break;
 
                 case $type instanceof InputObjectTypeDefinition:
                     foreach ($type->getFields() as $field) {
-                        foreach ($type->getDirectives($name) as $directive) {
-                            yield $directive => $field;
+                        foreach ($field->getDirectives($name) as $directive) {
+                            yield $field => $directive;
                         }
                     }
                     break;
 
                 case $type instanceof ObjectLikeTypeDefinition:
                     foreach ($type->getFields() as $field) {
-                        foreach ($type->getDirectives($name) as $directive) {
-                            yield $directive => $field;
+                        foreach ($field->getDirectives($name) as $directive) {
+                            yield $field => $directive;
                         }
 
                         foreach ($field->getArguments() as $argument) {
-                            foreach ($type->getDirectives($name) as $directive) {
-                                yield $directive => $argument;
+                            foreach ($argument->getDirectives($name) as $directive) {
+                                yield $argument => $directive;
                             }
                         }
                     }

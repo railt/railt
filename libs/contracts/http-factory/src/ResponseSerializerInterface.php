@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Railt\Contracts\Http\Factory;
 
+use Psr\Http\Message\ResponseFactoryInterface as PsrResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 use Railt\Contracts\Http\Factory\Exception\SerializingExceptionInterface;
 use Railt\Contracts\Http\ResponseInterface;
 
@@ -30,7 +32,7 @@ interface ResponseSerializerInterface
      *         path?: list<non-empty-string|int<0, max>>,
      *         extensions?: array<non-empty-string, mixed>
      *     }>,
-     *     data: array|null
+     *     data?: array|null
      * }
      *
      * @throws SerializingExceptionInterface
@@ -44,4 +46,15 @@ interface ResponseSerializerInterface
      * @throws SerializingExceptionInterface
      */
     public function toJson(ResponseInterface $response, int $json = self::DEFAULT_JSON_FLAGS): string;
+
+    /**
+     * @param int-mask-of<\JSON_*> $json
+     *
+     * @throws SerializingExceptionInterface
+     */
+    public function toResponse(
+        PsrResponseFactoryInterface $factory,
+        ResponseInterface $response,
+        int $json = self::DEFAULT_JSON_FLAGS,
+    ): PsrResponseInterface;
 }

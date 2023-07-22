@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Http\Factory\Parser;
 
-use Railt\Contracts\Http\Factory\AdapterInterface;
-use Railt\Contracts\Http\Factory\RequestFactoryInterface;
-use Railt\Contracts\Http\Factory\RequestParserInterface;
-use Railt\Http\Factory\RequestFactory;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Simple http requests provides query arguments in the given format:
@@ -20,15 +17,15 @@ use Railt\Http\Factory\RequestFactory;
  */
 final class GetHttpRequestParser extends GenericRequestParser
 {
-    public function parse(AdapterInterface $adapter): iterable
+    public function createFromServerRequest(ServerRequestInterface $request): iterable
     {
-        $request = $adapter->getQueryParams();
+        $params = $request->getQueryParams();
 
         // Skip requests without query field
-        if (!isset($request[RequestFactory::FIELD_QUERY])) {
+        if (!$this->looksLikeGraphQLRequest($params)) {
             return;
         }
 
-        yield $this->requests->createRequestFromArray($request);
+        yield $this->requests->createRequestFromArray($params);
     }
 }

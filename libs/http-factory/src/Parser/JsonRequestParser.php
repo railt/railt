@@ -4,30 +4,29 @@ declare(strict_types=1);
 
 namespace Railt\Http\Factory\Parser;
 
-use Railt\Contracts\Http\Factory\AdapterInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Railt\Http\Factory\Exception\ParsingException;
 
 abstract class JsonRequestParser extends GenericRequestParser
 {
-    protected function providesJsonContent(AdapterInterface $adapter): bool
+    protected function providesJsonContent(ServerRequestInterface $request): bool
     {
-        $contentType = $adapter->getContentType();
-
-        if ($contentType === null) {
-            return false;
-        }
+        $contentType = $request->getHeaderLine('content-type');
 
         return \str_contains($contentType, '/json')
             || \str_contains($contentType, '+json');
     }
 
-    protected function jsonDecode(AdapterInterface $adapter): ?array
+    /**
+     * @param int<1, max> $depth
+     */
+    protected function jsonDecode(ServerRequestInterface $request, int $depth = 512): ?array
     {
-        $json = $adapter->getBody();
+        $json = $this->getContents($request);
 
         /** @psalm-suppress MixedAssignment */
         try {
-            $data = \json_decode($json, true, 512, \JSON_THROW_ON_ERROR);
+            $data = \json_decode($json, true, $depth, \JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
             throw ParsingException::fromJsonException($e);
         }

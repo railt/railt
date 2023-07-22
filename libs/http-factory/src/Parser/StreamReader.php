@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Railt\Http\Factory\Adapter;
+namespace Railt\Http\Factory\Parser;
 
+use Psr\Http\Message\StreamInterface;
 use Railt\Http\Factory\Exception\MemoryOverflowException;
 
 final class StreamReader
@@ -60,31 +61,16 @@ final class StreamReader
         ));
     }
 
-    /**
-     * @param resource $stream
-     *
-     * @throws \Throwable
-     */
-    public function read(mixed $stream): string
+    public function read(StreamInterface $stream): string
     {
-        assert(\is_resource($stream), new \TypeError(
-            \vsprintf('Argument #1 ($stream) must be of type resource stream, %s given', [
-                \get_debug_type($stream),
-            ])
-        ));
-
         $result = '';
         $length = 0;
 
-        while (!\feof($stream)) {
-            $chunk = \fread($stream, $this->readChunkSize);
+        while (!$stream->eof()) {
+            $chunk = $stream->read($this->readChunkSize);
 
             if ($this->fiber && \Fiber::getCurrent() !== null) {
                 \Fiber::suspend($chunk);
-            }
-
-            if ($chunk === false) {
-                continue;
             }
 
             $length += \strlen($chunk);
