@@ -15,7 +15,6 @@ use Railt\SDL\Node\Expression\Literal\ListLiteralNode;
 use Railt\SDL\Node\Expression\Literal\NullLiteralNode;
 use Railt\SDL\Node\Expression\Literal\ObjectLiteralNode;
 use Railt\SDL\Node\Expression\Literal\StringLiteralNode;
-use Railt\SDL\Node\IdentifierNode;
 use Railt\TypeSystem\EnumTypeDefinition;
 use Railt\TypeSystem\InputObject;
 use Railt\TypeSystem\InputObjectTypeDefinition;

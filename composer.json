@@ -27,14 +27,6 @@
         },
         {
             "type": "path",
-            "url": "libs/contracts/type-system",
-            "package": {
-                "name": "railt/type-system-contracts",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
             "url": "libs/http",
             "package": {
                 "name": "railt/http",

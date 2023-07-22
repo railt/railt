@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d7ee8dda8bd322b69f5dc727bd9cb12",
+    "content-hash": "5320eed20cbca30dadf56b27bcf4398b",
     "packages": [
         {
             "name": "laminas/laminas-code",
@@ -648,11 +648,10 @@
             "dist": {
                 "type": "path",
                 "url": "libs/type-system",
-                "reference": "2561b89ccf8f5d614955a336c0699fb4e10dbc6f"
+                "reference": "ee5019e45f5b638e903b61ba99ada0a54f878c57"
             },
             "require": {
-                "php": "^8.1",
-                "railt/type-system-contracts": "^2.0"
+                "php": "^8.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^10.2",
@@ -697,67 +696,6 @@
             "support": {
                 "issues": "https://github.com/railt/railt/issues",
                 "source": "https://github.com/railt/type-system"
-            },
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
-            "name": "railt/type-system-contracts",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "libs/contracts/type-system",
-                "reference": "3f6752b845643c2add32d75eb02afbb3a55aca4d"
-            },
-            "require": {
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^10.2",
-                "vimeo/psalm": "^5.13"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev",
-                    "dev-main": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Railt\\Contracts\\TypeSystem\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Railt\\Contracts\\TypeSystem\\Tests\\": "tests"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "GraphQL HTTP Type System Contracts",
-            "homepage": "https://github.com/railt",
-            "keywords": [
-                "abstractions",
-                "contracts",
-                "decoupling",
-                "graphql",
-                "interfaces",
-                "interoperability",
-                "sdl",
-                "standards"
-            ],
-            "support": {
-                "issues": "https://github.com/railt/railt/issues",
-                "source": "https://github.com/railt/type-system-contracts"
             },
             "transport-options": {
                 "relative": true
