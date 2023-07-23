@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace Railt\Http\Factory\Parser;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Railt\Contracts\Http\Factory\AdapterInterface;
-use Railt\Contracts\Http\Factory\RequestFactoryInterface;
-use Railt\Contracts\Http\Factory\RequestParserInterface;
-use Railt\Http\Factory\Exception\ParsingException;
-use Railt\Http\Factory\GraphQLRequestFactory;
+use Railt\Contracts\Http\Factory\Exception\ParsingExceptionInterface;
 
 /**
  * POST requests provides body arguments in the given format:
@@ -31,6 +27,11 @@ use Railt\Http\Factory\GraphQLRequestFactory;
  */
 final class JsonBodyHttpRequestParser extends JsonRequestParser
 {
+    /**
+     * @psalm-suppress ArgumentTypeCoercion
+     *
+     * @throws ParsingExceptionInterface
+     */
     public function createFromServerRequest(ServerRequestInterface $request): iterable
     {
         // Check if the request is a JSON.

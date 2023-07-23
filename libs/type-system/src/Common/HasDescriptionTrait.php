@@ -22,6 +22,9 @@ trait HasDescriptionTrait
         $this->description = $description;
     }
 
+    /**
+     * @psalm-suppress MethodSignatureMismatch
+     */
     public function withDescription(string $description): self
     {
         $self = clone $this;
@@ -35,6 +38,9 @@ trait HasDescriptionTrait
         $this->description = null;
     }
 
+    /**
+     * @psalm-suppress MethodSignatureMismatch
+     */
     public function withoutDescription(): self
     {
         $self = clone $this;

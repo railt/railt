@@ -18,7 +18,7 @@ abstract class JsonRequestParser extends GenericRequestParser
     }
 
     /**
-     * @param int<1, max> $depth
+     * @param int<1, 2147483647> $depth
      */
     protected function jsonDecode(ServerRequestInterface $request, int $depth = 512): ?array
     {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\Http\Factory\Parser;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Railt\Contracts\Http\Factory\Exception\ParsingExceptionInterface;
 
 /**
  * Simple http requests provides query arguments in the given format:
@@ -17,6 +18,11 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class GetHttpRequestParser extends GenericRequestParser
 {
+    /**
+     * @psalm-suppress ArgumentTypeCoercion
+     *
+     * @throws ParsingExceptionInterface
+     */
     public function createFromServerRequest(ServerRequestInterface $request): iterable
     {
         $params = $request->getQueryParams();

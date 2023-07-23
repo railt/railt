@@ -109,7 +109,7 @@ trait HasEnumValuesTrait
     }
 
     /**
-     * @return EnumValueDefinition
+     * @return list<EnumValueDefinition>
      */
     public function getValues(): array
     {

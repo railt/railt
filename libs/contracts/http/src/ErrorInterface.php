@@ -68,6 +68,8 @@ interface ErrorInterface extends \Throwable
      * Returns new instance of {@see ErrorInterface} with the passed
      * location items.
      *
+     * @param iterable<LocationInterface> $locations
+     *
      * @psalm-immutable This method MUST retain the state of the current
      *                  instance, and return an instance that contains the
      *                  specified location items.

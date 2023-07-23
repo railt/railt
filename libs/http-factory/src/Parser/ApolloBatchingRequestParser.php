@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\Http\Factory\Parser;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Railt\Contracts\Http\Factory\Exception\ParsingExceptionInterface;
 
 /**
  * Apollo provides request body in the given format:
@@ -27,7 +28,10 @@ use Psr\Http\Message\ServerRequestInterface;
 final class ApolloBatchingRequestParser extends JsonRequestParser
 {
     /**
-     * @psalm-suppress MixedAssignment : Okay
+     * @psalm-suppress MixedArgument
+     * @psalm-suppress MixedAssignment
+     *
+     * @throws ParsingExceptionInterface
      */
     public function createFromServerRequest(ServerRequestInterface $request): iterable
     {

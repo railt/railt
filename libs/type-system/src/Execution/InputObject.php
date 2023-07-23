@@ -203,7 +203,7 @@ final class InputObject extends NamedExecution implements
     /**
      * @param non-empty-string $name
      */
-    public function __set(string $name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         $this->offsetSet($name, $value);
     }

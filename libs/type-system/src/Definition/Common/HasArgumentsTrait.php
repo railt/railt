@@ -109,7 +109,7 @@ trait HasArgumentsTrait
     }
 
     /**
-     * @return ArgumentDefinition
+     * @return list<ArgumentDefinition>
      */
     public function getArguments(): array
     {

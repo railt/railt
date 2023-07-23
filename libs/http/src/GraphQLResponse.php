@@ -29,6 +29,9 @@ class GraphQLResponse implements ResponseInterface
         protected ?array $data = null,
         iterable $exceptions = [],
     ) {
+        /**
+         * @psalm-suppress PropertyTypeCoercion
+         */
         $this->map = new \WeakMap();
 
         $this->setExceptions($exceptions);
@@ -89,6 +92,9 @@ class GraphQLResponse implements ResponseInterface
                 continue;
             }
 
+            /**
+             * @psalm-suppress InaccessibleProperty
+             */
             yield $this->map[$exception] ??= GraphQLError::fromException($exception);
         }
     }

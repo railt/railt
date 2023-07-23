@@ -28,7 +28,7 @@ class GraphQLError extends \Exception implements ErrorInterface
      * clients to identify whether an empty (empty {@see array}) result is
      * intentional or caused by a runtime error.
      *
-     * @var list<non-empty-string|int<1, max>>
+     * @var list<non-empty-string|int<0, max>>
      */
     protected array $path = [];
 
@@ -74,7 +74,7 @@ class GraphQLError extends \Exception implements ErrorInterface
     }
 
     /**
-     * @return list<non-empty-string|int<1, max>>
+     * @return list<non-empty-string|int<0, max>>
      */
     public function getPath(): array
     {
@@ -102,7 +102,7 @@ class GraphQLError extends \Exception implements ErrorInterface
      *
      * @link ExceptionInterface::withPath() method description.
      *
-     * @param iterable<non-empty-string|int<1, max>> $path
+     * @param iterable<non-empty-string|int<0, max>> $path
      */
     public function setPath(iterable $path): void
     {
@@ -118,7 +118,7 @@ class GraphQLError extends \Exception implements ErrorInterface
      *
      * @link ExceptionInterface::withAddedPath() method description.
      *
-     * @param non-empty-string|int<1, max> $path
+     * @param non-empty-string|int<0, max> $path
      */
     public function addPath(string|int $path): void
     {
@@ -254,6 +254,7 @@ class GraphQLError extends \Exception implements ErrorInterface
 
     protected function syncMessageWithCategory(): void
     {
+        /** @psalm-suppress PossiblyNullPropertyAssignmentValue */
         $this->message = $this->category->isClientSafe()
             ? $this->originalMessage
             : self::INTERNAL_EXCEPTION_MESSAGE

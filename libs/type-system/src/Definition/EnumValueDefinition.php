@@ -35,11 +35,6 @@ final class EnumValueDefinition extends NamedDefinition implements
         return new self($name, $name);
     }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
     public function getValue(): mixed
     {
         return $this->value;

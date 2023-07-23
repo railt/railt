@@ -114,7 +114,7 @@ trait HasDirectivesTrait
     public function getDirectives(string $name = null): iterable
     {
         if ($name === null) {
-            /** @var Directive */
+            /** @var list<Directive> */
             return \array_values($this->directives);
         }
 

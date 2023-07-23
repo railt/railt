@@ -40,7 +40,7 @@ interface ResponseSerializerInterface
     public function toArray(ResponseInterface $response): array;
 
     /**
-     * @param int-mask-of<\JSON_*> $json
+     * @param int<0, max> $json
      * @return non-empty-string
      *
      * @throws SerializingExceptionInterface
@@ -48,7 +48,7 @@ interface ResponseSerializerInterface
     public function toJson(ResponseInterface $response, int $json = self::DEFAULT_JSON_FLAGS): string;
 
     /**
-     * @param int-mask-of<\JSON_*> $json
+     * @param int<0, max> $json
      *
      * @throws SerializingExceptionInterface
      */

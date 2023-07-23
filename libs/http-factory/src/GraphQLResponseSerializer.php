@@ -50,7 +50,7 @@ final class GraphQLResponseSerializer implements ResponseSerializerInterface
 
     /**
      * @param iterable<non-empty-string|int<0, max>> $path
-     * @return list<list<non-empty-string|int<0, max>>>
+     * @return list<non-empty-string|int<0, max>>
      */
     private function pathToArray(iterable $path): array
     {
@@ -88,6 +88,8 @@ final class GraphQLResponseSerializer implements ResponseSerializerInterface
      *     path?: list<non-empty-string|int<0, max>>,
      *     extensions?: array<non-empty-string, mixed>
      * }
+     *
+     * @psalm-suppress all
      */
     private function errorToArray(ErrorInterface $error): array
     {

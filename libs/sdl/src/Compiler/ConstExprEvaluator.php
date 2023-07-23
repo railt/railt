@@ -296,12 +296,16 @@ final class ConstExprEvaluator
         return new InputObject($type, $result);
     }
 
+    /**
+     * @psalm-suppress MixedAssignment : Okay
+     */
     private function evalInputTypeWithValue(InputObjectType $type, Expression $expr, mixed $object): InputObject
     {
         if (!\is_iterable($object)) {
             throw ExpressionException::fromInvalidInputValueTypeWithValue($type, $expr, $object);
         }
 
+        /** @var array<non-empty-string, mixed> $result */
         $result = [];
 
         foreach ($object as $key => $value) {
@@ -321,6 +325,9 @@ final class ConstExprEvaluator
             $result[$key] = $this->evalWithValue($field->getType(), $expr, $value);
         }
 
+        /**
+         * @psalm-suppress ArgumentTypeCoercion
+         */
         $this->queue->push(new EvaluateInputObjectValue(
             node: $expr,
             input: $type,
@@ -378,13 +385,15 @@ final class ConstExprEvaluator
         throw ExpressionException::fromInvalidListValue($type, $expr);
     }
 
+    /**
+     * @psalm-suppress MixedAssignment : Okay
+     */
     private function evalListTypeWithValue(ListType $type, Expression $ctx, mixed $value): array
     {
         if (\is_iterable($value)) {
             $result = [];
 
             foreach ($value as $literal) {
-                /** @psalm-suppress MixedAssignment : Okay */
                 $result[] = $this->evalWithValue($type->getOfType(), $ctx, $literal);
             }
 

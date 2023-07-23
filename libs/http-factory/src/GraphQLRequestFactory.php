@@ -208,6 +208,10 @@ final class GraphQLRequestFactory implements
             throw ParsingException::fromInvalidVariablesField($data[self::FIELD_OPERATION_NAME]);
         }
 
+        /**
+         * @psalm-suppress ArgumentTypeCoercion
+         * @psalm-suppress MixedArgumentTypeCoercion
+         */
         return $this->createRequest(
             $data[self::FIELD_QUERY],
             $data[self::FIELD_VARIABLES],

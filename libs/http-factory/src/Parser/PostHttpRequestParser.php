@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\Http\Factory\Parser;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Railt\Contracts\Http\Factory\Exception\ParsingExceptionInterface;
 
 /**
  * POST requests provides body arguments in the given format:
@@ -44,6 +45,12 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 final class PostHttpRequestParser extends GenericRequestParser
 {
+    /**
+     * @psalm-suppress PossiblyNullArgument
+     * @psalm-suppress ArgumentTypeCoercion
+     *
+     * @throws ParsingExceptionInterface
+     */
     public function createFromServerRequest(ServerRequestInterface $request): iterable
     {
         $data = $request->getParsedBody();

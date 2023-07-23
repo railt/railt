@@ -19,6 +19,7 @@ abstract class Composite implements RequestParserInterface
     public function __construct(
         iterable $parsers = [],
     ) {
+        /** @psalm-suppress InvalidOperand : false-positive */
         $this->parsers = [...$parsers];
     }
 }

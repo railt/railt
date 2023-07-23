@@ -109,7 +109,7 @@ trait HasFieldsTrait
     }
 
     /**
-     * @return FieldDefinition
+     * @return list<FieldDefinition>
      */
     public function getFields(): array
     {
