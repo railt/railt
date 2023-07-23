@@ -19,4 +19,17 @@ final class ObjectLiteralNode extends LiteralNode
         #[Visitable]
         public array $fields = [],
     ) {}
+
+    public function __toString(): string
+    {
+        $result = [];
+
+        foreach ($this->fields as $field) {
+            $result[] = (string)$field;
+        }
+
+        return \vsprintf('{%s}', [
+            \implode(', ', $result),
+        ]);
+    }
 }

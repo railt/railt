@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Node\Statement;
 
 use Railt\SDL\Node\DescriptionNode;
+use Railt\SDL\Node\Expression\Expression;
 use Railt\SDL\Node\Expression\Literal\LiteralNode;
 use Railt\SDL\Node\IdentifierNode;
 use Railt\SDL\Node\Statement\Execution\DirectiveNode;
@@ -28,7 +29,7 @@ final class InputFieldNode extends Statement
         #[Visitable]
         public TypeNode $type,
         #[Visitable]
-        public ?LiteralNode $default = null,
+        public ?Expression $default = null,
         #[Visitable]
         public array $directives = [],
     ) {}

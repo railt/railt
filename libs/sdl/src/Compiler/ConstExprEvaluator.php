@@ -6,6 +6,7 @@ namespace Railt\SDL\Compiler;
 
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateInputObjectValue;
 use Railt\SDL\Exception\CompilationException;
+use Railt\SDL\Exception\ExpressionException;
 use Railt\SDL\Node\Expression\Expression;
 use Railt\SDL\Node\Expression\Literal\BoolLiteralNode;
 use Railt\SDL\Node\Expression\Literal\ConstLiteralNode;
@@ -42,10 +43,17 @@ final class ConstExprEvaluator
             $type instanceof ListType => $this->evalListType($type, $expr),
             $type instanceof NonNullType => $this->evalNonNullType($type, $expr),
             $type instanceof NamedTypeDefinition => $this->evalNamedType($type, $expr),
-            default => throw CompilationException::create(
-                'Cannot check expression compatibility of unknown type ' . (string)$type,
-                $expr,
-            ),
+            default => throw ExpressionException::fromUnprocessableExpr($type, $expr),
+        };
+    }
+
+    public function evalWithValue(TypeInterface $type, Expression $ctx, mixed $value): mixed
+    {
+        return match (true) {
+            $type instanceof ListType => $this->evalListTypeWithValue($type, $ctx, $value),
+            $type instanceof NonNullType => $this->evalNonNullTypeWithValue($type, $ctx, $value),
+            $type instanceof NamedTypeDefinition => $this->evalNamedTypeWithValue($type, $ctx, $value),
+            default => throw ExpressionException::fromUnprocessableExpr($type, $ctx),
         };
     }
 
@@ -55,10 +63,7 @@ final class ConstExprEvaluator
             return $this->variables[$expr->name];
         }
 
-        throw CompilationException::create(
-            'Undefined variable $' . $expr->name,
-            $expr,
-        );
+        throw ExpressionException::fromUndefinedVariable($expr);
     }
 
     private function evalNamedType(NamedTypeDefinition $type, Expression $expr): mixed
@@ -71,32 +76,56 @@ final class ConstExprEvaluator
             $type instanceof ScalarType => $this->evalScalarType($type, $expr),
             $type instanceof InputObjectType => $this->evalInputType($type, $expr),
             $type instanceof EnumType => $this->evalEnumType($type, $expr),
-            default => throw CompilationException::create(
-                'Cannot check expression compatibility of unknown named type ' . (string)$type,
-                $expr,
-            ),
+            default => throw ExpressionException::fromUnprocessableExpr($type, $expr),
+        };
+    }
+
+    private function evalNamedTypeWithValue(NamedTypeDefinition $type, Expression $ctx, mixed $value): mixed
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return match (true) {
+            $type instanceof ScalarType => $this->evalScalarTypeWithValue($type, $ctx, $value),
+            $type instanceof InputObjectType => $this->evalInputTypeWithValue($type, $ctx, $value),
+            $type instanceof EnumType => $this->evalEnumTypeWithValue($type, $ctx, $value),
+            default => throw ExpressionException::fromUnprocessableExpr($type, $ctx),
         };
     }
 
     private function evalEnumType(EnumType $enum, Expression $expr): EnumValue
     {
-        if (!$expr instanceof ConstLiteralNode) {
-            $message = \vsprintf('Cannot pass non-identifier literal to %s', [
-                (string)$enum,
-            ]);
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
 
-            throw CompilationException::create($message, $expr);
+            return $this->evalEnumTypeWithValue($enum, $expr, $value);
+        }
+
+        if (!$expr instanceof ConstLiteralNode) {
+            throw ExpressionException::fromInvalidEnumValueType($enum, $expr);
         }
 
         $definition = $enum->getValue($expr->value->value);
 
         if ($definition === null) {
-            $message = \vsprintf('Invalid enum value "%s" of %s', [
-                $expr->value->value,
-                (string)$enum,
-            ]);
+            throw ExpressionException::fromInvalidEnumValue($enum, $expr);
+        }
 
-            throw CompilationException::create($message, $expr);
+        return new EnumValue($definition);
+    }
+
+    private function evalEnumTypeWithValue(EnumType $enum, Expression $expr, mixed $value): EnumValue
+    {
+        if (!\is_string($value) && !$value instanceof \Stringable) {
+            throw ExpressionException::fromInvalidEnumValueTypeWithValue($enum, $expr, $value);
+        }
+
+        $definition = $enum->getValue((string)$value);
+
+        if ($definition === null) {
+            throw ExpressionException::fromInvalidEnumValueWithValue($enum, $expr, $value);
         }
 
         return new EnumValue($definition);
@@ -109,10 +138,18 @@ final class ConstExprEvaluator
             'Int' => $this->evalIntScalarType($type, $expr),
             'Float' => $this->evalFloatScalarType($type, $expr),
             'Boolean' => $this->evalBoolScalarType($type, $expr),
-            default => throw CompilationException::create(
-                'Cannot check expression compatibility of unknown scalar ' . (string)$type,
-                $expr,
-            ),
+            default => throw ExpressionException::fromUnprocessableExpr($type, $expr),
+        };
+    }
+
+    private function evalScalarTypeWithValue(ScalarType $type, Expression $ctx, mixed $value): mixed
+    {
+        return match ($type->getName()) {
+            'String', 'ID' => $this->evalStringScalarTypeWithValue($type, $ctx, $value),
+            'Int' => $this->evalIntScalarTypeWithValue($type, $ctx, $value),
+            'Float' => $this->evalFloatScalarTypeWithValue($type, $ctx, $value),
+            'Boolean' => $this->evalBoolScalarTypeWithValue($type, $ctx, $value),
+            default => throw ExpressionException::fromUnprocessableExprWithValue($type, $ctx, $value),
         };
     }
 
@@ -123,15 +160,22 @@ final class ConstExprEvaluator
         }
 
         /** @psalm-suppress MixedAssignment */
-        if ($expr instanceof VariableNode
-            && \is_bool($value = $this->fetchVariable($expr))) {
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
+
+            return $this->evalBoolScalarTypeWithValue($type, $expr, $value);
+        }
+
+        throw ExpressionException::fromInvalidBoolValueType($type, $expr);
+    }
+
+    private function evalBoolScalarTypeWithValue(ScalarType $type, Expression $ctx, mixed $value): bool
+    {
+        if (\is_bool($value)) {
             return $value;
         }
 
-        throw CompilationException::create(
-            'Cannot pass non-bool literal value to ' . (string)$type,
-            $expr
-        );
+        throw ExpressionException::fromInvalidBoolValueTypeWithValue($type, $ctx, $value);
     }
 
     private function evalFloatScalarType(ScalarType $type, Expression $expr): float
@@ -148,19 +192,23 @@ final class ConstExprEvaluator
         if ($expr instanceof VariableNode) {
             $value = $this->fetchVariable($expr);
 
-            if (\is_int($value)) {
-                return (float)$value;
-            }
-
-            if (\is_float($value)) {
-                return $value;
-            }
+            return $this->evalFloatScalarTypeWithValue($type, $expr, $value);
         }
 
-        throw CompilationException::create(
-            'Cannot pass non-float literal value to ' . (string)$type,
-            $expr
-        );
+        throw ExpressionException::fromInvalidFloatValueType($type, $expr);
+    }
+
+    private function evalFloatScalarTypeWithValue(ScalarType $type, Expression $ctx, mixed $value): float
+    {
+        if (\is_int($value)) {
+            return (float)$value;
+        }
+
+        if (\is_float($value)) {
+            return $value;
+        }
+
+        throw ExpressionException::fromInvalidFloatValueTypeWithValue($type, $ctx, $value);
     }
 
     private function evalIntScalarType(ScalarType $type, Expression $expr): int
@@ -170,15 +218,22 @@ final class ConstExprEvaluator
         }
 
         /** @psalm-suppress MixedAssignment */
-        if ($expr instanceof VariableNode
-            && \is_int($value = $this->fetchVariable($expr))) {
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
+
+            return $this->evalIntScalarTypeWithValue($type, $expr, $value);
+        }
+
+        throw ExpressionException::fromInvalidIntValueType($type, $expr);
+    }
+
+    private function evalIntScalarTypeWithValue(ScalarType $type, Expression $ctx, mixed $value): int
+    {
+        if (\is_int($value)) {
             return $value;
         }
 
-        throw CompilationException::create(
-            'Cannot pass non-int literal value to ' . (string)$type,
-            $expr
-        );
+        throw ExpressionException::fromInvalidIntValueTypeWithValue($type, $ctx, $value);
     }
 
     private function evalStringScalarType(ScalarType $type, Expression $expr): string
@@ -188,25 +243,35 @@ final class ConstExprEvaluator
         }
 
         /** @psalm-suppress MixedAssignment */
-        if ($expr instanceof VariableNode
-            && \is_string($value = $this->fetchVariable($expr))) {
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
+
+            return $this->evalStringScalarTypeWithValue($type, $expr, $value);
+        }
+
+        throw ExpressionException::fromInvalidStringValueType($type, $expr);
+    }
+
+    private function evalStringScalarTypeWithValue(ScalarType $type, Expression $ctx, mixed $value): string
+    {
+        if (\is_string($value)) {
             return $value;
         }
 
-        throw CompilationException::create(
-            'Cannot pass non-string literal value to ' . (string)$type,
-            $expr
-        );
+        throw ExpressionException::fromInvalidStringValueTypeWithValue($type, $ctx, $value);
     }
 
     private function evalInputType(InputObjectType $type, Expression $expr): InputObject
     {
-        if (!$expr instanceof ObjectLiteralNode) {
-            $message = \vsprintf('Cannot pass non-object literal value to input object type %s', [
-                (string)$type,
-            ]);
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
 
-            throw CompilationException::create($message, $expr);
+            return $this->evalInputTypeWithValue($type, $expr, $value);
+        }
+
+        if (!$expr instanceof ObjectLiteralNode) {
+            throw ExpressionException::fromInvalidInputValueType($type, $expr);
         }
 
         $result = [];
@@ -215,12 +280,7 @@ final class ConstExprEvaluator
             $field = $type->getField($node->key->value);
 
             if ($field === null) {
-                $message = \vsprintf('Unknown input object field "%s" of %s', [
-                    $node->key->value,
-                    (string)$type,
-                ]);
-
-                throw CompilationException::create($message, $node->key);
+                throw ExpressionException::fromInvalidInputField($type, $node);
             }
 
             /** @psalm-suppress MixedAssignment : Okay */
@@ -236,17 +296,63 @@ final class ConstExprEvaluator
         return new InputObject($type, $result);
     }
 
+    private function evalInputTypeWithValue(InputObjectType $type, Expression $expr, mixed $object): InputObject
+    {
+        if (!\is_iterable($object)) {
+            throw ExpressionException::fromInvalidInputValueTypeWithValue($type, $expr, $object);
+        }
+
+        $result = [];
+
+        foreach ($object as $key => $value) {
+            if (!\is_string($key) && !$key instanceof \Stringable) {
+                throw ExpressionException::fromInvalidInputFieldWithValue($type, $expr, $key);
+            }
+
+            $field = $type->getField(
+                $key = (string)$key,
+            );
+
+            if ($field === null) {
+                throw ExpressionException::fromInvalidInputFieldWithValue($type, $expr, $key);
+            }
+
+            /** @psalm-suppress MixedAssignment : Okay */
+            $result[$key] = $this->evalWithValue($field->getType(), $expr, $value);
+        }
+
+        $this->queue->push(new EvaluateInputObjectValue(
+            node: $expr,
+            input: $type,
+            defaults: $result,
+        ));
+
+        return new InputObject($type, $result);
+    }
+
     private function evalNonNullType(NonNullType $type, Expression $expr): mixed
     {
         if ($expr instanceof NullLiteralNode) {
-            $message = \vsprintf('Cannot pass null literal value to non-null type %s', [
-                (string)$type,
-            ]);
+            throw ExpressionException::fromInvalidNonNullValue($type, $expr);
+        }
 
-            throw CompilationException::create($message, $expr);
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
+
+            return $this->evalNonNullTypeWithValue($type, $expr, $value);
         }
 
         return $this->eval($type->getOfType(), $expr);
+    }
+
+    private function evalNonNullTypeWithValue(NonNullType $type, Expression $ctx, mixed $value): mixed
+    {
+        if ($value === null) {
+            throw ExpressionException::fromInvalidNonNullValue($type, $ctx);
+        }
+
+        return $this->evalWithValue($type->getOfType(), $ctx, $value);
     }
 
     private function evalListType(ListType $type, Expression $expr): array
@@ -262,10 +368,29 @@ final class ConstExprEvaluator
             return $result;
         }
 
-        $message = \vsprintf('Passed value must be a type of %s, but non-list type given', [
-            (string)$type,
-        ]);
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
 
-        throw CompilationException::create($message, $expr);
+            return $this->evalListTypeWithValue($type, $expr, $value);
+        }
+
+        throw ExpressionException::fromInvalidListValue($type, $expr);
+    }
+
+    private function evalListTypeWithValue(ListType $type, Expression $ctx, mixed $value): array
+    {
+        if (\is_iterable($value)) {
+            $result = [];
+
+            foreach ($value as $literal) {
+                /** @psalm-suppress MixedAssignment : Okay */
+                $result[] = $this->evalWithValue($type->getOfType(), $ctx, $literal);
+            }
+
+            return $result;
+        }
+
+        throw ExpressionException::fromInvalidListValueWithValue($type, $ctx, $value);
     }
 }

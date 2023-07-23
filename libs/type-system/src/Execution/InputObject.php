@@ -192,6 +192,38 @@ final class InputObject extends NamedExecution implements
         return $this->toArray(false);
     }
 
+    /**
+     * @param non-empty-string $name
+     */
+    public function __get(string $name): mixed
+    {
+        return $this->offsetGet($name);
+    }
+
+    /**
+     * @param non-empty-string $name
+     */
+    public function __set(string $name, $value): void
+    {
+        $this->offsetSet($name, $value);
+    }
+
+    /**
+     * @param non-empty-string $name
+     */
+    public function __isset(string $name): bool
+    {
+        return $this->offsetExists($name);
+    }
+
+    /**
+     * @param non-empty-string $name
+     */
+    public function __unset(string $name): void
+    {
+        $this->offsetUnset($name);
+    }
+
     public function __debugInfo(): array
     {
         return $this->values;

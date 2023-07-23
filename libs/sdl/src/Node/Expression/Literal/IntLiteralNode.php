@@ -12,6 +12,7 @@ final class IntLiteralNode extends LiteralNode
 {
     public function __construct(
         public int $value,
+        public ?string $representation = null,
     ) {}
 
     /**
@@ -19,6 +20,11 @@ final class IntLiteralNode extends LiteralNode
      */
     public static function parse(string $value): self
     {
-        return new self((int)$value);
+        return new self((int)$value, $value);
+    }
+
+    public function __toString(): string
+    {
+        return $this->representation ?? (string)$this->value;
     }
 }

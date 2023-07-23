@@ -16,4 +16,17 @@ final class ListLiteralNode extends LiteralNode
     public function __construct(
         public array $value,
     ) {}
+
+    public function __toString(): string
+    {
+        $result = [];
+
+        foreach ($this->value as $literal) {
+            $result[] = (string)$literal;
+        }
+
+        return \vsprintf('[%s]', [
+            \implode(', ', $result),
+        ]);
+    }
 }

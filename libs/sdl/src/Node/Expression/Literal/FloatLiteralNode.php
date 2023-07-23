@@ -12,6 +12,7 @@ final class FloatLiteralNode extends LiteralNode
 {
     public function __construct(
         public float $value,
+        public ?string $representation = null,
     ) {}
 
     /**
@@ -19,6 +20,11 @@ final class FloatLiteralNode extends LiteralNode
      */
     public static function parse(string $value): self
     {
-        return new self((float)$value);
+        return new self((float)$value, $value);
+    }
+
+    public function __toString(): string
+    {
+        return $this->representation ?? \sprintf('%g', $this->value);
     }
 }

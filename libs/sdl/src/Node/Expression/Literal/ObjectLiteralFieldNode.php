@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Node\Expression\Literal;
 
+use Railt\SDL\Node\Expression\Expression;
 use Railt\SDL\Node\IdentifierNode;
 use Railt\SDL\Node\Visitable;
 
@@ -17,6 +18,14 @@ final class ObjectLiteralFieldNode extends LiteralNode
         #[Visitable]
         public IdentifierNode $key,
         #[Visitable]
-        public LiteralNode $value,
+        public Expression $value,
     ) {}
+
+    public function __toString(): string
+    {
+        return \vsprintf('%s: %s', [
+            $this->key->value,
+            (string)$this->value,
+        ]);
+    }
 }

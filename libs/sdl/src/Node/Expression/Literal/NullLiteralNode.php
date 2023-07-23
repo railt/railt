@@ -10,4 +10,8 @@ namespace Railt\SDL\Node\Expression\Literal;
  */
 final class NullLiteralNode extends LiteralNode
 {
+    public function __toString(): string
+    {
+        return 'null';
+    }
 }

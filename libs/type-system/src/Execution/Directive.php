@@ -10,6 +10,11 @@ use Railt\TypeSystem\NamedExecution;
 final class Directive extends NamedExecution
 {
     /**
+     * @var non-empty-string|null
+     */
+    private ?string $hash = null;
+
+    /**
      * @var array<non-empty-string, Argument>
      */
     private array $arguments = [];
@@ -17,6 +22,20 @@ final class Directive extends NamedExecution
     public function __construct(
         private readonly DirectiveDefinition $definition,
     ) {
+    }
+
+    /**
+     * @return non-empty-string
+     *
+     * @throws \Exception
+     */
+    public function getHash(): string
+    {
+        try {
+            return $this->hash ??= \hash('xxh3', \random_bytes(64));
+        } catch (\ValueError) {
+            return $this->hash = \hash('crc32', \random_bytes(64));
+        }
     }
 
     public function getName(): string

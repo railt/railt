@@ -36,18 +36,19 @@ final class StringLiteralNode extends LiteralNode
 
     public function __construct(
         public string $value,
+        public ?string $representation = null,
     ) {}
 
     public static function parse(string $value): self
     {
         if ($value === '') {
-            return new self('');
+            return new self('', '');
         }
 
-        $value = self::parseAscii($value);
-        $value = self::parseUnicode($value);
+        $parsed = self::parseAscii($value);
+        $parsed = self::parseUnicode($parsed);
 
-        return new self($value);
+        return new self($parsed, $value);
     }
 
     /**
@@ -76,5 +77,12 @@ final class StringLiteralNode extends LiteralNode
             \array_values(self::ESCAPE_CHARACTERS_MAP),
             $value,
         );
+    }
+
+    public function __toString(): string
+    {
+        $expression = $this->representation ?? $this->value;
+
+        return \sprintf('"%s"', \addslashes($expression));
     }
 }

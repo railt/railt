@@ -17,4 +17,9 @@ final class ConstLiteralNode extends LiteralNode
         #[Visitable]
         public IdentifierNode $value,
     ) {}
+
+    public function __toString(): string
+    {
+        return $this->value->value;
+    }
 }
