@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Node\Expression\Literal;
+namespace Railt\SDL\Node\Expression;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL
  */
-final class VariableLiteralNode extends LiteralNode
+final class VariableNode extends Expression
 {
     /**
      * @param non-empty-string $name

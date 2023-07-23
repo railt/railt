@@ -82,9 +82,13 @@ final class Compiler implements CompilerInterface
         return $this->loader->getLoaders();
     }
 
-    private function createContext(Dictionary $types): Context
+    /**
+     * @param array<non-empty-string, mixed> $variables
+     */
+    private function createContext(Dictionary $types, array $variables): Context
     {
         return new Context(
+            variables: $variables,
             queue: new Queue(),
             dictionary: $types,
             loader: $this->loader,
@@ -117,12 +121,17 @@ final class Compiler implements CompilerInterface
     }
 
     /**
+     * @param array<non-empty-string, mixed> $variables
+     *
      * @throws RuntimeExceptionInterface
      */
-    private function eval(ReadableInterface $source, Dictionary $types): Dictionary
-    {
+    private function eval(
+        ReadableInterface $source,
+        Dictionary $types,
+        array $variables,
+    ): Dictionary {
         try {
-            $linker = $this->createContext($types);
+            $linker = $this->createContext($types, $variables);
 
             $this->process(File::new($source), $linker);
 
@@ -136,17 +145,21 @@ final class Compiler implements CompilerInterface
      * @throws InvalidArgumentException
      * @throws RuntimeExceptionInterface
      */
-    public function load(mixed $source): DictionaryInterface
+    public function load(mixed $source, array $variables = []): DictionaryInterface
     {
-        return $this->eval(File::new($source), $this->types);
+        $source = File::new($source);
+
+        return $this->eval($source, $this->types, $variables);
     }
 
     /**
      * @throws InvalidArgumentException
      * @throws RuntimeExceptionInterface
      */
-    public function compile(mixed $source): DictionaryInterface
+    public function compile(mixed $source, array $variables = []): DictionaryInterface
     {
-        return $this->eval(File::new($source), clone $this->types);
+        $source = File::new($source);
+
+        return $this->eval($source, clone $this->types, $variables);
     }
 }

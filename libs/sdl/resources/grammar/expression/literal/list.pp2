@@ -18,6 +18,6 @@ ListLiteral -> {
     return new Expr\Literal\ListLiteralNode($children);
 }
   : ::T_BRACKET_OPEN::
-      (Literal() ::T_COMMA::?)*
+      (Expression() ::T_COMMA::?)*
     ::T_BRACKET_CLOSE::
   ;

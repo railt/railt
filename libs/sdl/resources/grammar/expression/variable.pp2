@@ -17,8 +17,8 @@
  *
  */
 
-VariableLiteral -> {
-    return new Expr\Literal\VariableLiteralNode($children[0]->getValue());
+Variable -> {
+    return new Expr\VariableNode($children[0]->getValue());
 }
   : <T_VARIABLE>
   ;

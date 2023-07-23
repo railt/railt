@@ -18,14 +18,16 @@ interface CompilerInterface extends TypeLoaderInterface
      * into the dictionary.
      *
      * @param string|resource|\SplFileInfo|ReadableInterface $source
+     * @param array<non-empty-string, mixed> $variables
      */
-    public function load(mixed $source): DictionaryInterface;
+    public function load(mixed $source, array $variables = []): DictionaryInterface;
 
     /**
      * Parses the GraphQL SDL source code and returns a list of loaded
      * types for the specified source.
      *
      * @param string|resource|\SplFileInfo|ReadableInterface $source
+     * @param array<non-empty-string, mixed> $variables
      */
-    public function compile(mixed $source): DictionaryInterface;
+    public function compile(mixed $source, array $variables = []): DictionaryInterface;
 }

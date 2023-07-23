@@ -109,7 +109,7 @@ trait HasInputFieldsTrait
     }
 
     /**
-     * @return InputFieldDefinition
+     * @return list<InputFieldDefinition>
      */
     public function getFields(): array
     {

@@ -18,8 +18,6 @@
 
 %include statement/common
 
-%include expression/literal
-
 /**
  * --------------------------------------------------------------------------
  *  GraphQL Document
@@ -58,6 +56,50 @@ Document
 Definition
   : TypeSystemDefinition()
   | TypeSystemExtension()
+  ;
+
+
+/**
+ * --------------------------------------------------------------------------
+ *  GraphQL Values (Input Values)
+ * --------------------------------------------------------------------------
+ *
+ * Field and directive arguments accept input values of various literal
+ * primitives; input values can be scalars, enumeration values, lists, or
+ * input objects.
+ *
+ * If not defined as constant (for example, in DefaultValue), input
+ * values can be specified as a variable. List and inputs objects may
+ * also contain variables (unless defined to be constant).
+ *
+ * @see https://facebook.github.io/graphql/June2018/#sec-Input-Values
+ */
+
+%include expression/literal/boolean
+%include expression/literal/const
+%include expression/literal/float
+%include expression/literal/int
+%include expression/literal/list
+%include expression/literal/null
+%include expression/literal/object
+%include expression/literal/string
+
+%include expression/variable
+
+Expression
+  : Variable()
+  | Literal()
+  ;
+
+Literal
+  : IntLiteral()
+  | FloatLiteral()
+  | StringLiteral()
+  | BoolLiteral()
+  | NullLiteral()
+  | ConstLiteral()
+  | ListLiteral()
+  | ObjectLiteral()
   ;
 
 

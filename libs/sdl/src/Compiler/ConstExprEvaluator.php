@@ -15,6 +15,7 @@ use Railt\SDL\Node\Expression\Literal\ListLiteralNode;
 use Railt\SDL\Node\Expression\Literal\NullLiteralNode;
 use Railt\SDL\Node\Expression\Literal\ObjectLiteralNode;
 use Railt\SDL\Node\Expression\Literal\StringLiteralNode;
+use Railt\SDL\Node\Expression\VariableNode;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\Definition\Type\EnumType;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
@@ -27,8 +28,12 @@ use Railt\TypeSystem\TypeInterface;
 
 final class ConstExprEvaluator
 {
+    /**
+     * @param array<non-empty-string, mixed> $variables
+     */
     public function __construct(
         private readonly Queue $queue,
+        private readonly array $variables,
     ) {}
 
     public function eval(TypeInterface $type, Expression $expr): mixed
@@ -42,6 +47,18 @@ final class ConstExprEvaluator
                 $expr,
             ),
         };
+    }
+
+    private function fetchVariable(VariableNode $expr): mixed
+    {
+        if (\array_key_exists($expr->name, $this->variables)) {
+            return $this->variables[$expr->name];
+        }
+
+        throw CompilationException::create(
+            'Undefined variable $' . $expr->name,
+            $expr,
+        );
     }
 
     private function evalNamedType(NamedTypeDefinition $type, Expression $expr): mixed
@@ -105,6 +122,12 @@ final class ConstExprEvaluator
             return $expr->value;
         }
 
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode
+            && \is_bool($value = $this->fetchVariable($expr))) {
+            return $value;
+        }
+
         throw CompilationException::create(
             'Cannot pass non-bool literal value to ' . (string)$type,
             $expr
@@ -121,6 +144,19 @@ final class ConstExprEvaluator
             return $expr->value;
         }
 
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode) {
+            $value = $this->fetchVariable($expr);
+
+            if (\is_int($value)) {
+                return (float)$value;
+            }
+
+            if (\is_float($value)) {
+                return $value;
+            }
+        }
+
         throw CompilationException::create(
             'Cannot pass non-float literal value to ' . (string)$type,
             $expr
@@ -133,6 +169,12 @@ final class ConstExprEvaluator
             return $expr->value;
         }
 
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode
+            && \is_int($value = $this->fetchVariable($expr))) {
+            return $value;
+        }
+
         throw CompilationException::create(
             'Cannot pass non-int literal value to ' . (string)$type,
             $expr
@@ -143,6 +185,12 @@ final class ConstExprEvaluator
     {
         if ($expr instanceof StringLiteralNode) {
             return $expr->value;
+        }
+
+        /** @psalm-suppress MixedAssignment */
+        if ($expr instanceof VariableNode
+            && \is_string($value = $this->fetchVariable($expr))) {
+            return $value;
         }
 
         throw CompilationException::create(

@@ -30,14 +30,16 @@ final class Context implements \IteratorAggregate
 
     /**
      * @param \Closure(ReadableInterface,Context):void $process
+     * @param array<non-empty-string, mixed> $variables
      */
     public function __construct(
+        array $variables,
         private Queue $queue,
         private readonly Dictionary $dictionary,
         private readonly TypeLoader $loader,
         private readonly \Closure $process,
     ) {
-        $this->expr = new ConstExprEvaluator($this->queue);
+        $this->expr = new ConstExprEvaluator($this->queue, $variables);
     }
 
     public function push(CommandInterface $command): void

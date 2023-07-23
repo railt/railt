@@ -23,6 +23,6 @@ ArgumentDefinition -> {
 }
   : Description()
     Identifier() ::T_COLON:: Type()
-    (::T_EQUAL:: Literal())?
+    (::T_EQUAL:: Expression())?
     Directives() ::T_COMMA::?
   ;

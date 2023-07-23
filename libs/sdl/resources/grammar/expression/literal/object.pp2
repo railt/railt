@@ -28,5 +28,5 @@ ObjectLiteralField -> {
         $children[1],
     );
 }
-  : Identifier() ::T_COLON:: Literal()
+  : Identifier() ::T_COLON:: Expression()
   ;

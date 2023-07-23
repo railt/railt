@@ -9,7 +9,7 @@ abstract class NamedExecution extends Execution implements NamedExecutionInterfa
     /**
      * @var non-empty-string|null
      */
-    private ?string $hash = null;
+    protected ?string $hash = null;
 
     /**
      * @return non-empty-string
@@ -18,6 +18,6 @@ abstract class NamedExecution extends Execution implements NamedExecutionInterfa
      */
     public function getHash(): string
     {
-        return $this->hash ??= \hash('xxh64', \random_bytes(64));
+        return $this->hash ??= \hash('xxh3', (string)$this);
     }
 }
