@@ -6,9 +6,9 @@ namespace Railt\SDL\Compiler\Command\Evaluate;
 
 use Railt\SDL\Compiler\Command\CommandInterface;
 use Railt\TypeSystem\Definition;
+use Railt\TypeSystem\DefinitionInterface;
 use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
 use Railt\TypeSystem\Execution\Directive;
-use Railt\TypeSystem\TypeInterface;
 use Railt\TypeSystem\WrappingTypeInterface;
 
 /**
@@ -36,14 +36,14 @@ class ApplyDeprecationCommand implements CommandInterface
     /**
      * @return iterable<Directive>
      */
-    protected function getDeprecationDirectives(TypeInterface $type): iterable
+    protected function getDeprecationDirectives(DefinitionInterface $def): iterable
     {
-        if ($type instanceof WrappingTypeInterface) {
-            return $this->getDeprecationDirectives($type->getOfType());
+        if ($def instanceof WrappingTypeInterface) {
+            return $this->getDeprecationDirectives($def->getOfType());
         }
 
-        if ($type instanceof HasDirectivesInterface) {
-            return $type->getDirectives('deprecated');
+        if ($def instanceof HasDirectivesInterface) {
+            return $def->getDirectives('deprecated');
         }
 
         return [];
