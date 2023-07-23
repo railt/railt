@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Statement\Webonyx;
+namespace Railt\TypeSystem\Webonyx;
 
 use GraphQL\Type\Definition\Type;
 use Railt\TypeSystem\Definition\InputFieldDefinition;

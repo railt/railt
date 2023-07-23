@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Statement\Webonyx\Internal;
+namespace Railt\TypeSystem\Webonyx\Internal;
 
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use Railt\SDL\DictionaryInterface;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
+use Railt\TypeSystem\Definition\NamedTypeDefinitionInterface;
 use Railt\TypeSystem\Definition\Type\EnumType;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
 use Railt\TypeSystem\Definition\Type\InterfaceType;
 use Railt\TypeSystem\Definition\Type\ObjectType;
 use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\Definition\Type\UnionType;
-use Railt\TypeSystem\Statement\Type\NamedTypeInterface;
-use Railt\TypeSystem\Statement\Webonyx\Builder;
-use Railt\TypeSystem\Statement\Webonyx\DirectiveBuilder;
-use Railt\TypeSystem\Statement\Webonyx\EnumTypeBuilder;
-use Railt\TypeSystem\Statement\Webonyx\InputObjectTypeBuilder;
-use Railt\TypeSystem\Statement\Webonyx\InterfaceTypeBuilder;
-use Railt\TypeSystem\Statement\Webonyx\ObjectTypeBuilder;
-use Railt\TypeSystem\Statement\Webonyx\ScalarTypeBuilder;
-use Railt\TypeSystem\Statement\Webonyx\UnionTypeBuilder;
+use Railt\TypeSystem\Webonyx\Builder;
+use Railt\TypeSystem\Webonyx\DirectiveBuilder;
+use Railt\TypeSystem\Webonyx\EnumTypeBuilder;
+use Railt\TypeSystem\Webonyx\InputObjectTypeBuilder;
+use Railt\TypeSystem\Webonyx\InterfaceTypeBuilder;
+use Railt\TypeSystem\Webonyx\ObjectTypeBuilder;
+use Railt\TypeSystem\Webonyx\ScalarTypeBuilder;
+use Railt\TypeSystem\Webonyx\UnionTypeBuilder;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.
@@ -32,7 +32,7 @@ use Railt\TypeSystem\Statement\Webonyx\UnionTypeBuilder;
 final class BuilderFactory
 {
     /**
-     * @var array<class-string<NamedTypeInterface>, class-string<Builder>>
+     * @var array<class-string<NamedTypeDefinitionInterface>, class-string<Builder>>
      */
     private const BUILDER_MAPPINGS = [
         ObjectType::class => ObjectTypeBuilder::class,
@@ -48,7 +48,7 @@ final class BuilderFactory
     private readonly DirectiveBuilder $directives;
 
     /**
-     * @var array<class-string<NamedTypeInterface>, Builder>
+     * @var array<class-string<NamedTypeDefinitionInterface>, Builder>
      */
     private array $builders = [];
 
@@ -61,7 +61,7 @@ final class BuilderFactory
     /**
      * @psalm-suppress all : psalm false-positive (bug)
      */
-    private function getBuilder(NamedTypeInterface $type): Builder
+    private function getBuilder(NamedTypeDefinitionInterface $type): Builder
     {
         if (isset($this->builders[$type::class])) {
             return $this->builders[$type::class];
@@ -75,7 +75,7 @@ final class BuilderFactory
         return $this->builders[$type::class] = new $class($this);
     }
 
-    private function buildType(NamedTypeInterface $type): Type
+    private function buildType(NamedTypeDefinitionInterface $type): Type
     {
         $builder = $this->getBuilder($type);
 
@@ -99,7 +99,7 @@ final class BuilderFactory
         return $result;
     }
 
-    public function getType(NamedTypeInterface $type): Type
+    public function getType(NamedTypeDefinitionInterface $type): Type
     {
         if ($this->types->hasType($type->getName())) {
             return $this->types->getType($type->getName());

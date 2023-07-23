@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Statement\Webonyx;
+namespace Railt\TypeSystem\Webonyx;
 
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
@@ -10,9 +10,9 @@ use GraphQL\Type\Definition\Type;
 use Railt\TypeSystem\Execution\InputObject;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
-use Railt\TypeSystem\Statement\Type\TypeInterface;
-use Railt\TypeSystem\Statement\Type\WrappingTypeInterface;
-use Railt\TypeSystem\Statement\Webonyx\Internal\BuilderFactory;
+use Railt\TypeSystem\TypeInterface;
+use Railt\TypeSystem\WrappingTypeInterface;
+use Railt\TypeSystem\Webonyx\Internal\BuilderFactory;
 
 /**
  * @template TInput of object

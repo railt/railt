@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Statement\Webonyx;
+namespace Railt\TypeSystem\Webonyx;
 
-use GraphQL\Type\Definition\EnumType;
+use GraphQL\Type\Definition\EnumType as WebonyxEnumType;
 use Railt\TypeSystem\Definition\Type\EnumType;
 
 /**
- * @template-extends Builder<EnumType, EnumType>
+ * @template-extends Builder<EnumType, WebonyxEnumType>
  *
  * @psalm-suppress RedundantConditionGivenDocblockType
  */
 final class EnumTypeBuilder extends Builder
 {
-    public function build(object $input): EnumType
+    public function build(object $input): WebonyxEnumType
     {
         assert($input instanceof EnumType, self::typeError(
             EnumType::class,
             $input,
         ));
 
-        return new EnumType([
+        return new WebonyxEnumType([
             'name' => $input->getName(),
             'description' => $input->getDescription(),
             'values' => $this->buildEnumValues($input),

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Statement\Webonyx\Internal;
+namespace Railt\TypeSystem\Webonyx\Internal;
 
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;

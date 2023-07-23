@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Railt\TypeSystem\Statement\Webonyx;
+namespace Railt\TypeSystem\Webonyx;
 
 use GraphQL\Type\Schema;
 use Railt\SDL\DictionaryInterface;
-use Railt\TypeSystem\Statement\Webonyx\Internal\BuilderFactory;
+use Railt\TypeSystem\Webonyx\Internal\BuilderFactory;
 
 final class Factory implements FactoryInterface
 {
