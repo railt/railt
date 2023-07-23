@@ -130,6 +130,6 @@ final class Directive extends NamedExecution
 
     public function __toString(): string
     {
-        return \sprintf('directive<@%s>', $this->getName());
+        return (string)$this->definition;
     }
 }

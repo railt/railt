@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Railt\TypeSystem\Definition;
 
 use Railt\TypeSystem\Common\HasDescriptionTrait;
-use Railt\TypeSystem\Definition;
 use Railt\TypeSystem\Definition\Common\HasArgumentsInterface;
 use Railt\TypeSystem\Definition\Common\HasArgumentsTrait;
 use Railt\TypeSystem\DefinitionInterface;

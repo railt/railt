@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem\Execution;
 
+use Railt\TypeSystem\Definition\InputFieldDefinition;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
 use Railt\TypeSystem\NamedExecution;
 
@@ -12,6 +13,7 @@ use Railt\TypeSystem\NamedExecution;
  * @template-implements \IteratorAggregate<non-empty-string, mixed>
  */
 final class InputObject extends NamedExecution implements
+    ExpressionInterface,
     \IteratorAggregate,
     \ArrayAccess,
     \Countable
@@ -197,6 +199,6 @@ final class InputObject extends NamedExecution implements
 
     public function __toString(): string
     {
-        return \sprintf('input<%s>', $this->getName());
+        return (string)$this->definition;
     }
 }

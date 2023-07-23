@@ -19,6 +19,7 @@ use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\Definition\Type\EnumType;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
 use Railt\TypeSystem\Definition\Type\ScalarType;
+use Railt\TypeSystem\Execution\EnumValue;
 use Railt\TypeSystem\Execution\InputObject;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
@@ -60,7 +61,7 @@ final class ConstExprEvaluator
         };
     }
 
-    private function evalEnumType(EnumType $enum, Expression $expr): string
+    private function evalEnumType(EnumType $enum, Expression $expr): EnumValue
     {
         if (!$expr instanceof ConstLiteralNode) {
             $message = \vsprintf('Cannot pass non-identifier literal to %s', [
@@ -70,7 +71,9 @@ final class ConstExprEvaluator
             throw CompilationException::create($message, $expr);
         }
 
-        if (!$enum->hasValue($expr->value->value)) {
+        $definition = $enum->getValue($expr->value->value);
+
+        if ($definition === null) {
             $message = \vsprintf('Invalid enum value "%s" of %s', [
                 $expr->value->value,
                 (string)$enum,
@@ -79,7 +82,7 @@ final class ConstExprEvaluator
             throw CompilationException::create($message, $expr);
         }
 
-        return $expr->value->value;
+        return new EnumValue($definition);
     }
 
     private function evalScalarType(ScalarType $type, Expression $expr): mixed
