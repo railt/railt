@@ -33,7 +33,7 @@ if (!class_exists(Application::class)) {
 $app = new Application('Railt Framework');
 
 if (\class_exists(Compiler::class)) {
-    $app->add(new \Railt\SDL\Console\CompileParserCommand());
+    $app->add(new \Railt\SDL\Command\CompileParserCommand());
 }
 
 exit($app->run());

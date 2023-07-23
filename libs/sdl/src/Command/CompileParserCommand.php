@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Console;
+namespace Railt\SDL\Command;
 
 use Phplrt\Compiler\Compiler;
 use Phplrt\Source\File;
@@ -11,10 +11,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-/**
- * @internal This is an internal library class, please do not use it in your code.
- * @psalm-internal Railt\SDL
- */
 final class CompileParserCommand extends Command
 {
     /**
