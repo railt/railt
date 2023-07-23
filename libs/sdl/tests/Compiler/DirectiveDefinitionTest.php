@@ -239,7 +239,7 @@ final class DirectiveDefinitionTest extends TestCase
     public function testInvalidDefault(): void
     {
         $this->expectException(CompilationException::class);
-        $this->expectExceptionMessage('non-string literal');
+        $this->expectExceptionMessage('non-string value');
 
         $this->compile(<<<'GraphQL'
             directive @example(arg: String = 42) on OBJECT
