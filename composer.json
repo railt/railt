@@ -27,6 +27,30 @@
         },
         {
             "type": "path",
+            "url": "libs/contracts/http-middleware",
+            "package": {
+                "name": "railt/http-middleware-contracts",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/bridge-webonyx",
+            "package": {
+                "name": "railt/bridge-webonyx",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/foundation",
+            "package": {
+                "name": "railt/foundation",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
             "url": "libs/http",
             "package": {
                 "name": "railt/http",
@@ -38,6 +62,14 @@
             "url": "libs/http-factory",
             "package": {
                 "name": "railt/http-factory",
+                "version": "2.0.0"
+            }
+        },
+        {
+            "type": "path",
+            "url": "libs/http-middleware",
+            "package": {
+                "name": "railt/http-middleware",
                 "version": "2.0.0"
             }
         },
@@ -56,14 +88,6 @@
                 "name": "railt/type-system",
                 "version": "2.0.0"
             }
-        },
-        {
-            "type": "path",
-            "url": "libs/type-system-webonyx",
-            "package": {
-                "name": "railt/type-system-webonyx",
-                "version": "2.0.0"
-            }
         }
     ],
     "authors": [
@@ -74,11 +98,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "railt/http": "^2.0",
-        "railt/http-factory": "^2.0",
-        "railt/sdl": "^2.0",
-        "railt/type-system": "^2.0",
-        "railt/type-system-webonyx": "^2.0"
+        "railt/bridge-webonyx": "^2.0",
+        "railt/foundation": "^2.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.22",
@@ -96,6 +117,7 @@
             "Railt\\Contracts\\Http\\Tests\\": "libs/contracts/http/tests",
             "Railt\\Contracts\\Http\\Factory\\Tests\\": "libs/contracts/http-factory/tests",
             "Railt\\Http\\Tests\\": "libs/http/tests",
+            "Railt\\Foundation\\Tests\\": "libs/foundation/tests",
             "Railt\\Http\\Factory\\Tests\\": "libs/http-factory/tests",
             "Railt\\SDL\\Tests\\": "libs/sdl/tests",
             "Railt\\TypeSystem\\Tests\\": "libs/type-system/tests",

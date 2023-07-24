@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5320eed20cbca30dadf56b27bcf4398b",
+    "content-hash": "67d57563c5712fdffc9e31394aa0a699",
     "packages": [
         {
             "name": "laminas/laminas-code",
@@ -171,6 +171,59 @@
             "time": "2023-06-03T16:14:39+00:00"
         },
         {
+            "name": "psr/container",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/2.0.2"
+            },
+            "time": "2021-11-05T16:47:00+00:00"
+        },
+        {
             "name": "psr/http-factory",
             "version": "1.0.2",
             "source": {
@@ -330,12 +383,134 @@
             "time": "2021-10-29T13:26:27+00:00"
         },
         {
+            "name": "railt/bridge-webonyx",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "libs/bridge-webonyx",
+                "reference": "bdf37d34a2e3697782a7da80656d8e43c0e3cb04"
+            },
+            "require": {
+                "php": "^8.1",
+                "railt/foundation": "^2.0",
+                "railt/type-system": "^2.0",
+                "webonyx/graphql-php": "^14.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.2",
+                "vimeo/psalm": "^5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev",
+                    "dev-main": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Railt\\Bridge\\Webonyx\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Railt\\Bridge\\Webonyx\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "homepage": "https://github.com/railt",
+            "keywords": [
+                "bridge",
+                "executor",
+                "graphql",
+                "language",
+                "webonyx"
+            ],
+            "support": {
+                "issues": "https://github.com/railt/railt/issues",
+                "source": "https://github.com/railt/bridge-webonyx"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "railt/foundation",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "libs/foundation",
+                "reference": "9d2e2c96fb0942b2054b4fa4a4fa0715131d7df3"
+            },
+            "require": {
+                "php": "^8.1",
+                "psr/container": "^1.0|^2.0",
+                "railt/http": "^2.0",
+                "railt/http-factory": "^2.0",
+                "railt/http-middleware": "^2.0",
+                "railt/sdl": "^2.0",
+                "railt/type-system": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.2",
+                "vimeo/psalm": "^5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev",
+                    "dev-main": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Railt\\Foundation\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Railt\\Foundation\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "homepage": "https://github.com/railt",
+            "keywords": [
+                "foundation",
+                "graphql",
+                "kernel",
+                "sdl"
+            ],
+            "support": {
+                "issues": "https://github.com/railt/railt/issues",
+                "source": "https://github.com/railt/foundation"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "railt/http",
             "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "libs/http",
-                "reference": "5ab8c0695f4c5b3b3f062b944affc9a5ace67168"
+                "reference": "5f84c9bb7c51adcaf7c65ebb3acda19ca7982bf2"
             },
             "require": {
                 "php": "^8.1",
@@ -371,7 +546,6 @@
                     "email": "nesk@xakep.ru"
                 }
             ],
-            "description": "GraphQL HTTP Layer",
             "homepage": "https://github.com/railt",
             "keywords": [
                 "batching",
@@ -395,7 +569,7 @@
             "dist": {
                 "type": "path",
                 "url": "libs/contracts/http",
-                "reference": "75954795f3fb24709d863824e864e6e0e44bd910"
+                "reference": "c125fc4d438e839da779147f0ec907ec47656dce"
             },
             "require": {
                 "ext-json": "*",
@@ -431,7 +605,6 @@
                     "email": "nesk@xakep.ru"
                 }
             ],
-            "description": "GraphQL HTTP Contracts",
             "homepage": "https://github.com/railt",
             "keywords": [
                 "batching",
@@ -579,12 +752,133 @@
             }
         },
         {
+            "name": "railt/http-middleware",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "libs/http-middleware",
+                "reference": "aa32156dbf2589acd6667ca447de180f1ad886d6"
+            },
+            "require": {
+                "php": "^8.1",
+                "railt/http-middleware-contracts": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.2",
+                "vimeo/psalm": "^5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev",
+                    "dev-main": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Railt\\Http\\Middleware\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Railt\\Http\\Middleware\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "homepage": "https://github.com/railt",
+            "keywords": [
+                "graphql",
+                "http",
+                "middleware",
+                "request",
+                "request",
+                "response",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/railt/railt/issues",
+                "source": "https://github.com/railt/http-middleware"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "railt/http-middleware-contracts",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "libs/contracts/http-middleware",
+                "reference": "a228584242bffccee6fe8c1e916d65939fe3a4dc"
+            },
+            "require": {
+                "php": "^8.1",
+                "railt/http-contracts": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.2",
+                "vimeo/psalm": "^5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev",
+                    "dev-main": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Railt\\Contracts\\Http\\Middleware\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Railt\\Contracts\\Http\\Middleware\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "homepage": "https://github.com/railt",
+            "keywords": [
+                "graphql",
+                "http",
+                "http-interop",
+                "middleware",
+                "request",
+                "request",
+                "response",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/railt/railt/issues",
+                "source": "https://github.com/railt/http-middleware-contracts"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "railt/sdl",
             "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "libs/sdl",
-                "reference": "dde3ac0a8ebb10354ea8dd77cbf3d8e333858aa9"
+                "reference": "1e459fc70f492a707000bd53a9887e78590d3f3b"
             },
             "require": {
                 "php": "^8.1",
@@ -625,7 +919,6 @@
                     "email": "nesk@xakep.ru"
                 }
             ],
-            "description": "GraphQL Schema Definition Language Parser",
             "homepage": "https://github.com/railt",
             "keywords": [
                 "graphql",
@@ -648,7 +941,7 @@
             "dist": {
                 "type": "path",
                 "url": "libs/type-system",
-                "reference": "ee5019e45f5b638e903b61ba99ada0a54f878c57"
+                "reference": "9b63119c4925977e0b7ebd4ecd31eacc26ea6a84"
             },
             "require": {
                 "php": "^8.1"
@@ -683,7 +976,6 @@
                     "email": "nesk@xakep.ru"
                 }
             ],
-            "description": "Interoperable GraphQL Type System",
             "homepage": "https://github.com/railt",
             "keywords": [
                 "abstraction",
@@ -696,66 +988,6 @@
             "support": {
                 "issues": "https://github.com/railt/railt/issues",
                 "source": "https://github.com/railt/type-system"
-            },
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
-            "name": "railt/type-system-webonyx",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "libs/type-system-webonyx",
-                "reference": "ba5285d288b9c92c424a6bf71a86f9c25e2dbf8f"
-            },
-            "require": {
-                "php": "^8.1",
-                "webonyx/graphql-php": "^14.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^10.2",
-                "vimeo/psalm": "^5.13"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev",
-                    "dev-main": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Railt\\TypeSystem\\Webonyx\\": "src"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "Railt\\TypeSystem\\Webonyx\\Tests\\": "tests"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kirill Nesmeyanov",
-                    "email": "nesk@xakep.ru"
-                }
-            ],
-            "description": "Railt Type System Webonyx Bridge",
-            "homepage": "https://github.com/railt",
-            "keywords": [
-                "bridge",
-                "graphql",
-                "language",
-                "sdl",
-                "type system",
-                "webonyx"
-            ],
-            "support": {
-                "issues": "https://github.com/railt/railt/issues",
-                "source": "https://github.com/railt/type-system-webonyx"
             },
             "transport-options": {
                 "relative": true
@@ -3376,59 +3608,6 @@
                 "source": "https://github.com/php-fig/cache/tree/3.0.0"
             },
             "time": "2021-02-03T23:26:27+00:00"
-        },
-        {
-            "name": "psr/container",
-            "version": "2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/container.git",
-                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
-                "reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Container\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common Container Interface (PHP FIG PSR-11)",
-            "homepage": "https://github.com/php-fig/container",
-            "keywords": [
-                "PSR-11",
-                "container",
-                "container-interface",
-                "container-interop",
-                "psr"
-            ],
-            "support": {
-                "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/2.0.2"
-            },
-            "time": "2021-11-05T16:47:00+00:00"
         },
         {
             "name": "psr/event-dispatcher",

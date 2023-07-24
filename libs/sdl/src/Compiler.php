@@ -23,9 +23,10 @@ use Railt\SDL\Parser\Parser;
 
 final class Compiler implements CompilerInterface
 {
+    private Dictionary $types;
+
     private readonly ParserInterface $parser;
     private readonly TypeLoader $loader;
-    private readonly Dictionary $types;
     private readonly FormatterInterface $exceptions;
 
     public function __construct(
@@ -161,5 +162,10 @@ final class Compiler implements CompilerInterface
         $source = File::new($source);
 
         return $this->eval($source, clone $this->types, $variables);
+    }
+
+    public function __clone()
+    {
+        $this->types = clone $this->types;
     }
 }

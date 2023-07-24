@@ -21,7 +21,7 @@ interface VariablesProviderInterface
      *
      * @param iterable<non-empty-string, mixed> $variables
      */
-    public function withVariables(iterable $variables): self;
+    public function withVariables(iterable $variables): static;
 
     /**
      * Returns new instance of {@see VariablesProviderInterface} with the
@@ -33,7 +33,19 @@ interface VariablesProviderInterface
      *
      * @param non-empty-string $name
      */
-    public function withAddedVariable(string $name, mixed $value): self;
+    public function withAddedVariable(string $name, mixed $value): static;
+
+    /**
+     * Returns new instance of {@see VariablesProviderInterface} without the
+     * variable item.
+     *
+     * @psalm-immutable This method MUST retain the state of the current
+     *                  instance, and return an instance that not contains
+     *                  the variable item.
+     *
+     * @param non-empty-string $name
+     */
+    public function withoutVariable(string $name): static;
 
     /**
      * @template TResult of mixed

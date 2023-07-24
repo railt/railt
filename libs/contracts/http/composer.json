@@ -1,6 +1,5 @@
 {
     "name": "railt/http-contracts",
-    "description": "GraphQL HTTP Contracts",
     "license": "MIT",
     "keywords": ["http", "response", "request", "batching", "parsing", "graphql"],
     "homepage": "https://github.com/railt",

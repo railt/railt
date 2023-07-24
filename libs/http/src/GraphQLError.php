@@ -48,7 +48,7 @@ class GraphQLError extends \Exception implements ErrorInterface
      */
     protected array $extensions = [];
 
-    protected CategoryInterface $category = Category::SERVER;
+    protected CategoryInterface $category = Category::INTERNAL;
 
     /**
      * An original short, human-readable summary of the
@@ -81,7 +81,7 @@ class GraphQLError extends \Exception implements ErrorInterface
         return $this->path;
     }
 
-    public function withAddedPath(int|string $item): self
+    public function withAddedPath(int|string $item): static
     {
         $self = $this->clone();
         $self->addPath($item);
@@ -89,7 +89,19 @@ class GraphQLError extends \Exception implements ErrorInterface
         return $self;
     }
 
-    public function withPath(iterable $path): self
+    /**
+     * Mutable equivalent of {@see ExceptionInterface::withAddedPath()} method.
+     *
+     * @link ExceptionInterface::withAddedPath() method description.
+     *
+     * @param non-empty-string|int<0, max> $path
+     */
+    public function addPath(string|int $path): void
+    {
+        $this->path[] = $path;
+    }
+
+    public function withPath(iterable $path): static
     {
         $self = $this->clone();
         $self->setPath($path);
@@ -114,23 +126,37 @@ class GraphQLError extends \Exception implements ErrorInterface
     }
 
     /**
-     * Mutable equivalent of {@see ExceptionInterface::withAddedPath()} method.
-     *
-     * @link ExceptionInterface::withAddedPath() method description.
-     *
-     * @param non-empty-string|int<0, max> $path
-     */
-    public function addPath(string|int $path): void
-    {
-        $this->path[] = $path;
-    }
-
-    /**
      * @return list<LocationInterface>
      */
     public function getLocations(): array
     {
         return $this->locations;
+    }
+
+    public function withAddedLocation(LocationInterface $location): static
+    {
+        $self = $this->clone();
+        $self->addLocation($location);
+
+        return $self;
+    }
+
+    /**
+     * Mutable equivalent of {@see ExceptionInterface::withAddedLocation()} method.
+     *
+     * @link ExceptionInterface::withAddedLocation() method description.
+     */
+    public function addLocation(LocationInterface $location): void
+    {
+        $this->locations[] = $location;
+    }
+
+    public function withLocations(iterable $locations): static
+    {
+        $self = $this->clone();
+        $self->setLocations($locations);
+
+        return $self;
     }
 
     /**
@@ -150,32 +176,6 @@ class GraphQLError extends \Exception implements ErrorInterface
     }
 
     /**
-     * Mutable equivalent of {@see ExceptionInterface::withAddedLocation()} method.
-     *
-     * @link ExceptionInterface::withAddedLocation() method description.
-     */
-    public function addLocation(LocationInterface $location): void
-    {
-        $this->locations[] = $location;
-    }
-
-    public function withAddedLocation(LocationInterface $location): self
-    {
-        $self = $this->clone();
-        $self->addLocation($location);
-
-        return $self;
-    }
-
-    public function withLocations(iterable $locations): self
-    {
-        $self = $this->clone();
-        $self->setLocations($locations);
-
-        return $self;
-    }
-
-    /**
      * @return array<non-empty-string, ExtensionInterface>
      */
     public function getExtensions(): array
@@ -183,20 +183,12 @@ class GraphQLError extends \Exception implements ErrorInterface
         return $this->extensions;
     }
 
-    /**
-     * Mutable equivalent of {@see ExceptionInterface::withExtensions()} method.
-     *
-     * @link ExceptionInterface::withExtensions() method description.
-     *
-     * @param iterable<non-empty-string|array-key, ExtensionInterface> $extensions
-     */
-    public function setExtensions(iterable $extensions): void
+    public function withAddedExtension(ExtensionInterface $extension, string $name = null): static
     {
-        foreach ($extensions as $key => $extension) {
-            $key = \is_string($key) && $key !== '' ? $key : $extension->getName();
+        $self = $this->clone();
+        $self->addExtension($extension, $name);
 
-            $this->extensions[$key] = $extension;
-        }
+        return $self;
     }
 
     /**
@@ -211,15 +203,7 @@ class GraphQLError extends \Exception implements ErrorInterface
         $this->extensions[$name ?: $extension->getName()] = $extension;
     }
 
-    public function withAddedExtension(ExtensionInterface $extension, string $name = null): self
-    {
-        $self = $this->clone();
-        $self->addExtension($extension, $name);
-
-        return $self;
-    }
-
-    public function withExtensions(iterable $extensions): self
+    public function withExtensions(iterable $extensions): static
     {
         $self = $this->clone();
         $self->setExtensions($extensions);
@@ -227,9 +211,33 @@ class GraphQLError extends \Exception implements ErrorInterface
         return $self;
     }
 
+    /**
+     * Mutable equivalent of {@see ExceptionInterface::withExtensions()} method.
+     *
+     * @link ExceptionInterface::withExtensions() method description.
+     *
+     * @param iterable<mixed, ExtensionInterface> $extensions
+     */
+    public function setExtensions(iterable $extensions): void
+    {
+        foreach ($extensions as $key => $extension) {
+            $key = \is_string($key) && $key !== '' ? $key : $extension->getName();
+
+            $this->extensions[$key] = $extension;
+        }
+    }
+
     public function getCategory(): CategoryInterface
     {
         return $this->category;
+    }
+
+    public function withCategory(CategoryInterface $category): static
+    {
+        $self = $this->clone();
+        $self->setCategory($category);
+
+        return $self;
     }
 
     /**
@@ -242,14 +250,6 @@ class GraphQLError extends \Exception implements ErrorInterface
         $this->category = $category;
 
         $this->syncMessageWithCategory();
-    }
-
-    public function withCategory(CategoryInterface $category): self
-    {
-        $self = $this->clone();
-        $self->setCategory($category);
-
-        return $self;
     }
 
     protected function syncMessageWithCategory(): void
@@ -268,11 +268,13 @@ class GraphQLError extends \Exception implements ErrorInterface
 
     protected function clone(): self
     {
-        $instance = new self($this->message, $this->code, $this->getPrevious());
+        $instance = new static($this->message, $this->code, $this->getPrevious());
 
         $instance->file = $this->file;
         $instance->line = $this->line;
 
+        $instance->message = $this->message;
+        $instance->code = $this->code;
         $instance->path = $this->path;
         $instance->locations = $this->locations;
         $instance->extensions = $this->extensions;

@@ -1,6 +1,5 @@
 {
     "name": "railt/sdl",
-    "description": "GraphQL Schema Definition Language Parser",
     "license": "MIT",
     "keywords": ["graphql", "language", "sdl", "parser", "schema"],
     "homepage": "https://github.com/railt",

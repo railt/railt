@@ -9,10 +9,10 @@ use Railt\Contracts\Http\Error\CategoryInterface;
 enum Category implements CategoryInterface
 {
     #[CategoryInfo(isClientSafe: true)]
-    case REQUEST;
+    case QUERY;
 
     #[CategoryInfo(isClientSafe: false)]
-    case SERVER;
+    case INTERNAL;
 
     private function getCategoryInfo(): CategoryInfo
     {

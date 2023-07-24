@@ -38,7 +38,7 @@ interface ExceptionProviderInterface
      *
      * @param iterable<\Throwable> $exceptions
      */
-    public function withExceptions(iterable $exceptions): self;
+    public function withExceptions(iterable $exceptions): static;
 
     /**
      * Returns new instance of {@see ExceptionProviderInterface} with the passed
@@ -48,5 +48,15 @@ interface ExceptionProviderInterface
      *                  instance, and return an instance that contains the
      *                  specified exception instance.
      */
-    public function withAddedException(\Throwable $exception): self;
+    public function withAddedException(\Throwable $exception): static;
+
+    /**
+     * Returns new instance of {@see ExceptionProviderInterface} without passed
+     * exception instance.
+     *
+     * @psalm-immutable This method MUST retain the state of the current
+     *                  instance, and return an instance that not contains
+     *                  the specified exception instance.
+     */
+    public function withoutException(\Throwable $exception): static;
 }

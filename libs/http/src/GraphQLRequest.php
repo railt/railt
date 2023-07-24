@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Http;
 
-use Railt\Contracts\Http\RequestInterface;
-
-class GraphQLRequest implements RequestInterface
+class GraphQLRequest implements MutableRequestInterface
 {
     /**
      * @var array<non-empty-string, mixed>
@@ -30,7 +28,7 @@ class GraphQLRequest implements RequestInterface
         return $this->query;
     }
 
-    public function withQuery(string $query): self
+    public function withQuery(string $query): static
     {
         $self = clone $this;
         $self->setQuery($query);
@@ -38,11 +36,6 @@ class GraphQLRequest implements RequestInterface
         return $self;
     }
 
-    /**
-     * Mutable equivalent of {@see RequestInterface::withQuery()} method.
-     *
-     * @link RequestInterface::withQuery() method description.
-     */
     public function setQuery(string $query): void
     {
         $this->query = $query;
@@ -58,7 +51,7 @@ class GraphQLRequest implements RequestInterface
         return $this->variables;
     }
 
-    public function withVariables(iterable $variables): self
+    public function withVariables(iterable $variables): static
     {
         $self = clone $this;
         $self->setVariables($variables);
@@ -66,21 +59,6 @@ class GraphQLRequest implements RequestInterface
         return $self;
     }
 
-    public function withAddedVariable(string $name, mixed $value): self
-    {
-        $self = clone $this;
-        $self->setVariable($name, $value);
-
-        return $self;
-    }
-
-    /**
-     * Mutable equivalent of {@see RequestInterface::withVariables()} method.
-     *
-     * @link RequestInterface::withVariables() method description.
-     *
-     * @param iterable<non-empty-string, mixed> $variables
-     */
     public function setVariables(iterable $variables): void
     {
         /** @psalm-suppress MixedAssignment */
@@ -89,16 +67,30 @@ class GraphQLRequest implements RequestInterface
         }
     }
 
-    /**
-     * Mutable equivalent of {@see RequestInterface::withAddedVariable()} method.
-     *
-     * @link RequestInterface::withAddedVariable() method description.
-     *
-     * @param non-empty-string $name
-     */
+    public function withAddedVariable(string $name, mixed $value): static
+    {
+        $self = clone $this;
+        $self->setVariable($name, $value);
+
+        return $self;
+    }
+
     public function setVariable(string $name, mixed $value): void
     {
         $this->variables[$name] = $value;
+    }
+
+    public function withoutVariable(string $name): static
+    {
+        $self = clone $this;
+        $self->removeVariable($name);
+
+        return $self;
+    }
+
+    public function removeVariable(string $name): void
+    {
+        unset($this->variables[$name]);
     }
 
     public function getVariable(string $name, mixed $default = null): mixed
@@ -118,7 +110,7 @@ class GraphQLRequest implements RequestInterface
         return $this->operationName;
     }
 
-    public function withOperationName(string $name): self
+    public function withOperationName(string $name): static
     {
         $self = clone $this;
         $self->setOperationName($name);
@@ -126,7 +118,12 @@ class GraphQLRequest implements RequestInterface
         return $self;
     }
 
-    public function withoutOperationName(): self
+    public function setOperationName(string $name): void
+    {
+        $this->operationName = $name;
+    }
+
+    public function withoutOperationName(): static
     {
         $self = clone $this;
         $self->removeOperationName();
@@ -134,23 +131,6 @@ class GraphQLRequest implements RequestInterface
         return $self;
     }
 
-    /**
-     * Mutable equivalent of {@see RequestInterface::withOperationName()} method.
-     *
-     * @link RequestInterface::withOperationName() method description.
-     *
-     * @param non-empty-string $name
-     */
-    public function setOperationName(string $name): void
-    {
-        $this->operationName = $name;
-    }
-
-    /**
-     * Mutable equivalent of {@see RequestInterface::withoutOperationName()} method.
-     *
-     * @link RequestInterface::withoutOperationName() method description.
-     */
     public function removeOperationName(): void
     {
         $this->operationName = null;

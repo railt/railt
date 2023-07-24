@@ -1,6 +1,5 @@
 {
     "name": "railt/type-system",
-    "description": "Interoperable GraphQL Type System",
     "license": "MIT",
     "keywords": [
         "graphql",

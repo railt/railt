@@ -26,7 +26,7 @@ interface OperationNameProviderInterface
      *
      * @param non-empty-string $name
      */
-    public function withOperationName(string $name): self;
+    public function withOperationName(string $name): static;
 
     /**
      * Returns new instance of {@see OperationNameProviderInterface} without
@@ -36,7 +36,7 @@ interface OperationNameProviderInterface
      *                  instance, and return an instance that does not contain
      *                  the operation name.
      */
-    public function withoutOperationName(): self;
+    public function withoutOperationName(): static;
 
     /**
      * Returns {@see true} in case of operation name is not {@see null}

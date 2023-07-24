@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Railt\Http;
 
 use Railt\Contracts\Http\ErrorInterface;
-use Railt\Contracts\Http\ResponseInterface;
 
-class GraphQLResponse implements ResponseInterface
+class GraphQLResponse implements MutableResponseInterface
 {
     /**
-     * @var list<\Throwable>
+     * @var array<non-empty-string, \Throwable>
      */
     protected array $exceptions = [];
 
@@ -42,7 +41,7 @@ class GraphQLResponse implements ResponseInterface
         return $this->data;
     }
 
-    public function withData(array $data): self
+    public function withData(array $data): static
     {
         $self = clone $this;
         $self->setData($data);
@@ -50,7 +49,12 @@ class GraphQLResponse implements ResponseInterface
         return $self;
     }
 
-    public function withoutData(): self
+    public function setData(array $data): void
+    {
+        $this->data = $data;
+    }
+
+    public function withoutData(): static
     {
         $self = clone $this;
         $self->removeData();
@@ -58,21 +62,6 @@ class GraphQLResponse implements ResponseInterface
         return $self;
     }
 
-    /**
-     * Mutable equivalent of {@see DataProviderInterface::withData()} method.
-     *
-     * @link DataProviderInterface::withData() method description.
-     */
-    public function setData(array $data): void
-    {
-        $this->data = $data;
-    }
-
-    /**
-     * Mutable equivalent of {@see DataProviderInterface::withoutData()} method.
-     *
-     * @link DataProviderInterface::withoutData() method description.
-     */
     public function removeData(): void
     {
         $this->data = null;
@@ -99,36 +88,15 @@ class GraphQLResponse implements ResponseInterface
         }
     }
 
-    public function getExceptions(): iterable
-    {
-        return $this->exceptions;
-    }
-
     /**
-     * Mutable equivalent of {@see ExceptionProviderInterface::withExceptions()} method.
-     *
-     * @link ExceptionProviderInterface::withExceptions() method description.
-     *
-     * @param iterable<\Throwable> $exceptions
+     * @return list<\Throwable>
      */
-    public function setExceptions(iterable $exceptions): void
+    public function getExceptions(): array
     {
-        foreach ($exceptions as $exception) {
-            $this->addException($exception);
-        }
+        return \array_values($this->exceptions);
     }
 
-    /**
-     * Mutable equivalent of {@see ExceptionProviderInterface::withAddedException()} method.
-     *
-     * @link ExceptionProviderInterface::withAddedException() method description.
-     */
-    public function addException(\Throwable $exception): void
-    {
-        $this->exceptions[] = $exception;
-    }
-
-    public function withExceptions(iterable $exceptions): self
+    public function withExceptions(iterable $exceptions): static
     {
         $self = clone $this;
         $self->setExceptions($exceptions);
@@ -136,11 +104,45 @@ class GraphQLResponse implements ResponseInterface
         return $self;
     }
 
-    public function withAddedException(\Throwable $exception): self
+    public function setExceptions(iterable $exceptions): void
+    {
+        foreach ($exceptions as $exception) {
+            $this->addException($exception);
+        }
+    }
+
+    public function withAddedException(\Throwable $exception): static
     {
         $self = clone $this;
         $self->addException($exception);
 
         return $self;
+    }
+
+    public function addException(\Throwable $exception): void
+    {
+        $this->exceptions[$this->keyOf($exception)] = $exception;
+    }
+
+    public function withoutException(\Throwable $exception): static
+    {
+        $self = clone $this;
+        $self->removeException($exception);
+
+        return $self;
+    }
+
+    public function removeException(\Throwable $exception): void
+    {
+        unset($this->exceptions[$this->keyOf($exception)]);
+    }
+
+    /**
+     * @return non-empty-string
+     */
+    private function keyOf(\Throwable $exception): string
+    {
+        /** @var non-empty-string */
+        return \spl_object_hash($exception);
     }
 }

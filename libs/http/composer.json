@@ -1,6 +1,5 @@
 {
     "name": "railt/http",
-    "description": "GraphQL HTTP Layer",
     "license": "MIT",
     "keywords": ["http", "response", "request", "batching", "parsing", "graphql"],
     "homepage": "https://github.com/railt",

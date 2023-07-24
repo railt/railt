@@ -1,0 +1,55 @@
+{
+    "name": "railt/foundation",
+    "license": "MIT",
+    "keywords": [
+        "graphql",
+        "foundation",
+        "sdl",
+        "kernel"
+    ],
+    "homepage": "https://github.com/railt",
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/foundation"
+    },
+    "require": {
+        "php": "^8.1",
+        "psr/container": "^1.0|^2.0",
+        "railt/http": "^2.0",
+        "railt/http-factory": "^2.0",
+        "railt/http-middleware": "^2.0",
+        "railt/sdl": "^2.0",
+        "railt/type-system": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Foundation\\": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.2",
+        "vimeo/psalm": "^5.13"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Foundation\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev",
+            "dev-main": "2.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
