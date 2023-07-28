@@ -12,6 +12,11 @@ namespace Railt\TypeSystem;
 interface WrappingTypeInterface extends TypeInterface
 {
     /**
+     * @param class-string<TypeInterface> $class
+     */
+    public function is(string $class): bool;
+
+    /**
      * @return T
      */
     public function getOfType(): TypeInterface;

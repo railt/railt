@@ -7,7 +7,7 @@ namespace Railt\TypeSystem\Execution;
 use Railt\TypeSystem\Definition\EnumValueDefinition;
 use Railt\TypeSystem\NamedExecution;
 
-final class EnumValue extends NamedExecution implements ExpressionInterface
+class EnumValue extends NamedExecution implements ExpressionInterface
 {
     public function __construct(
         private readonly EnumValueDefinition $definition,

@@ -11,7 +11,7 @@ use Railt\TypeSystem\Definition\Type\ObjectType;
 use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
 use Railt\TypeSystem\Execution\Common\HasDirectivesTrait;
 
-final class SchemaDefinition extends Definition implements
+class SchemaDefinition extends Definition implements
     HasDirectivesInterface,
     HasDescriptionInterface
 {

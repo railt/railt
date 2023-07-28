@@ -10,7 +10,7 @@ use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\InputTypeInterface;
 use Railt\TypeSystem\OutputTypeInterface;
 
-final class EnumType extends NamedTypeDefinition implements
+class EnumType extends NamedTypeDefinition implements
     InputTypeInterface,
     OutputTypeInterface,
     HasEnumValuesInterface

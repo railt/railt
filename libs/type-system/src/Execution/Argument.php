@@ -7,7 +7,7 @@ namespace Railt\TypeSystem\Execution;
 use Railt\TypeSystem\Definition\ArgumentDefinition;
 use Railt\TypeSystem\NamedExecution;
 
-final class Argument extends NamedExecution
+class Argument extends NamedExecution
 {
     public function __construct(
         private readonly ArgumentDefinition $definition,

@@ -19,6 +19,19 @@ abstract class WrappingType extends Type implements WrappingTypeInterface
     ) {
     }
 
+    public function is(string $class): bool
+    {
+        if ($this instanceof $class) {
+            return true;
+        }
+
+        if ($this->type instanceof WrappingTypeInterface) {
+            return $this->type->is($class);
+        }
+
+        return $this->type instanceof $class;
+    }
+
     /**
      * @return T
      */

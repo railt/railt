@@ -9,7 +9,7 @@ use Railt\TypeSystem\Definition\Common\HasInputFieldsTrait;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\InputTypeInterface;
 
-final class InputObjectType extends NamedTypeDefinition implements
+class InputObjectType extends NamedTypeDefinition implements
     InputTypeInterface,
     HasInputFieldsInterface
 {

@@ -10,7 +10,7 @@ use Railt\TypeSystem\Definition\Common\HasArgumentsTrait;
 use Railt\TypeSystem\DefinitionInterface;
 use Railt\TypeSystem\NamedDefinition;
 
-final class DirectiveDefinition extends NamedDefinition implements
+class DirectiveDefinition extends NamedDefinition implements
     HasArgumentsInterface
 {
     use HasDescriptionTrait;

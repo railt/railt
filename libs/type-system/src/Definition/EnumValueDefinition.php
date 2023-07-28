@@ -10,7 +10,7 @@ use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
 use Railt\TypeSystem\Execution\Common\HasDirectivesTrait;
 use Railt\TypeSystem\NamedDefinition;
 
-final class EnumValueDefinition extends NamedDefinition implements
+class EnumValueDefinition extends NamedDefinition implements
     HasDeprecationInterface,
     HasDirectivesInterface
 {

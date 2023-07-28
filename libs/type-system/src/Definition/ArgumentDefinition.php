@@ -11,7 +11,7 @@ use Railt\TypeSystem\Execution\Common\HasDirectivesTrait;
 use Railt\TypeSystem\InputTypeInterface;
 use Railt\TypeSystem\NamedDefinition;
 
-final class ArgumentDefinition extends NamedDefinition implements
+class ArgumentDefinition extends NamedDefinition implements
     HasDeprecationInterface,
     HasDirectivesInterface
 {

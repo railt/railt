@@ -7,7 +7,7 @@ namespace Railt\TypeSystem\Definition\Type;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
 use Railt\TypeSystem\OutputTypeInterface;
 
-final class UnionType extends NamedTypeDefinition implements
+class UnionType extends NamedTypeDefinition implements
     OutputTypeInterface
 {
     /**

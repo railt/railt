@@ -7,7 +7,7 @@ namespace Railt\TypeSystem\Execution;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
 use Railt\TypeSystem\NamedExecution;
 
-final class Directive extends NamedExecution
+class Directive extends NamedExecution
 {
     /**
      * @var non-empty-string|null
@@ -19,9 +19,14 @@ final class Directive extends NamedExecution
      */
     private array $arguments = [];
 
+    /**
+     * @param iterable<Argument> $arguments
+     */
     public function __construct(
         private readonly DirectiveDefinition $definition,
+        iterable $arguments = [],
     ) {
+        $this->setArguments($arguments);
     }
 
     /**

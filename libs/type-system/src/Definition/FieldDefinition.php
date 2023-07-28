@@ -13,7 +13,7 @@ use Railt\TypeSystem\Execution\Common\HasDirectivesTrait;
 use Railt\TypeSystem\NamedDefinition;
 use Railt\TypeSystem\OutputTypeInterface;
 
-final class FieldDefinition extends NamedDefinition implements
+class FieldDefinition extends NamedDefinition implements
     HasDeprecationInterface,
     HasDirectivesInterface,
     HasArgumentsInterface

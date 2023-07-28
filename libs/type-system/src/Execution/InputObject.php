@@ -12,7 +12,7 @@ use Railt\TypeSystem\NamedExecution;
  * @template-implements \ArrayAccess<non-empty-string, mixed>
  * @template-implements \IteratorAggregate<non-empty-string, mixed>
  */
-final class InputObject extends NamedExecution implements
+class InputObject extends NamedExecution implements
     ExpressionInterface,
     \IteratorAggregate,
     \ArrayAccess,
