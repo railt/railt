@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 interface ExtensionInterface
 {

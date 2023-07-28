@@ -9,6 +9,7 @@ use Railt\Foundation\Connection\OnDestructor;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Schema\SchemaCompiled;
+use Railt\Foundation\Event\Schema\SchemaCompiling;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
 use Railt\SDL\Compiler;
@@ -65,18 +66,21 @@ final class Application implements ApplicationInterface
 
     private function establish(mixed $schema): ConnectionInterface
     {
-        $this->dispatcher->dispatch(new SchemaCompiled(
-            $types = $this->compiler->compile($schema),
+        $compiling = $this->dispatcher->dispatch(new SchemaCompiling(
+            clone $this->compiler,
         ));
 
-        $event = $this->dispatcher->dispatch(new ConnectionEstablished(
-            new Connection($this->executor, $types, $this->dispatcher),
+        $compiled = $this->dispatcher->dispatch(new SchemaCompiled(
+            $compiling->compiler,
+            $compiling->compiler->compile($schema),
         ));
 
-        if ($event instanceof ConnectionEstablished) {
-            return $event->connection;
-        }
+        $established = $this->dispatcher->dispatch(new ConnectionEstablished(new Connection(
+            $this->executor,
+            $compiled->types,
+            $this->dispatcher,
+        )));
 
-        return $connection;
+        return $established->connection;
     }
 }
