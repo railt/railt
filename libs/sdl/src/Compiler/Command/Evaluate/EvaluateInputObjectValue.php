@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Evaluate;
 
 use Railt\SDL\Compiler\Command\CommandInterface;
+use Railt\SDL\Compiler\ConfigInfo;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\NodeInterface;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
+use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
 use Railt\TypeSystem\TypeInterface;
 use Railt\TypeSystem\WrappingTypeInterface;
@@ -22,6 +24,7 @@ final class EvaluateInputObjectValue implements CommandInterface
      * @param array<non-empty-string, mixed> $defaults
      */
     public function __construct(
+        private readonly ConfigInfo $config,
         private readonly NodeInterface $node,
         private readonly InputObjectType $input,
         private array &$defaults,
@@ -32,21 +35,29 @@ final class EvaluateInputObjectValue implements CommandInterface
         foreach ($this->input->getFields() as $field) {
             // In case of field already defined
             // Or default value is defined
-            if (\array_key_exists($field->getName(), $this->defaults)
-                || $field->hasDefaultValue()
-            ) {
+            if ($field->hasDefaultValue() || \array_key_exists($field->getName(), $this->defaults)) {
                 continue;
             }
 
-            // In case of field is nullable - allow NULL as default value.
-            if ($this->isNullable($field->getType())) {
+            // In case of input field is nullable - set "NULL" as default value.
+            if ($this->config->castNullableTypeToDefaultValue
+                && $this->isNullable($field->getType())
+            ) {
                 $this->defaults[$field->getName()] = null;
                 continue;
             }
 
+            // In case of input field is list - set "[]" as default value.
+            if ($this->config->castListTypeToDefaultValue
+                && $this->isList($field->getType())
+            ) {
+                $this->defaults[$field->getName()] = [];
+                continue;
+            }
+
             // Otherwise an exception will be thrown
-            $message = \vsprintf('Missing required input field "%s" of %s', [
-                $field->getName(),
+            $message = \vsprintf('Missing required %s defined in %s', [
+                (string)$field,
                 (string)$this->input,
             ]);
 
@@ -54,16 +65,13 @@ final class EvaluateInputObjectValue implements CommandInterface
         }
     }
 
+    private function isList(TypeInterface $type): bool
+    {
+        return $type instanceof WrappingTypeInterface && $type->is(ListType::class);
+    }
+
     private function isNullable(TypeInterface $type): bool
     {
-        if ($type instanceof NonNullType) {
-            return false;
-        }
-
-        if ($type instanceof WrappingTypeInterface) {
-            return $this->isNullable($type->getOfType());
-        }
-
-        return true;
+        return !$type instanceof WrappingTypeInterface || !$type->is(NonNullType::class);
     }
 }

@@ -68,6 +68,12 @@ final class EvaluateDirective implements CommandInterface
             ));
         }
 
+        $this->ctx->push(new CheckMissingDirectiveArgumentsCommand(
+            ctx: $this->ctx,
+            node: $this->node,
+            directive: $directive,
+        ));
+
         $this->parent->addDirective($directive);
 
         // Apply "@deprecated" directive

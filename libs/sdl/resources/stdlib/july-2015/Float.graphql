@@ -1,0 +1,8 @@
+
+"""
+The Float scalar type represents signed double‐precision fractional values as
+specified by [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point).
+Response formats that support an appropriate double‐precision number type
+should use that type to represent this scalar.
+"""
+scalar Float

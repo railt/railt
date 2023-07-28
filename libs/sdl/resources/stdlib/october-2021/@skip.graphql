@@ -1,0 +1,10 @@
+
+"""
+The @skip directive may be provided for fields, fragment spreads, and inline
+fragments, and allows for conditional exclusion during execution as described
+by the if argument.
+"""
+directive @skip(if: Boolean!) on
+    | FIELD
+    | FRAGMENT_SPREAD
+    | INLINE_FRAGMENT

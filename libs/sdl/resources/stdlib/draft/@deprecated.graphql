@@ -5,12 +5,7 @@ indicate deprecated portions of a GraphQL service’s schema, such as deprecated
 fields on a type or deprecated enum values.
 """
 directive @deprecated(reason: String = "No longer supported") on
-    | OBJECT
-    | INTERFACE
     | FIELD_DEFINITION
-    | SCALAR
-    | UNION
-    | ENUM
-    | ENUM_VALUE
-    | INPUT_OBJECT
+    | ARGUMENT_DEFINITION
     | INPUT_FIELD_DEFINITION
+    | ENUM_VALUE

@@ -36,10 +36,11 @@ final class Context implements \IteratorAggregate
         array $variables,
         private Queue $queue,
         private readonly Dictionary $dictionary,
+        public readonly ConfigInfo $config,
         private readonly TypeLoader $loader,
         private readonly \Closure $process,
     ) {
-        $this->expr = new ConstExprEvaluator($this->queue, $variables);
+        $this->expr = new ConstExprEvaluator($this->queue, $variables, $this->config);
     }
 
     public function push(CommandInterface $command): void
@@ -129,7 +130,7 @@ final class Context implements \IteratorAggregate
         DefinitionInterface $from = null
     ): DirectiveDefinition {
         if (!$this->dictionary->hasDirectiveDefinition($name)) {
-            $source = ($this->loader)($name, $from);
+            $source = ($this->loader)('@' . $name, $from);
 
             if ($source !== null) {
                 ($this->process)(File::new($source), $this);

@@ -20,6 +20,9 @@ final class PrettyFormatter implements FormatterInterface
         return \in_array(\PHP_SAPI, ['cli', 'embedded', 'phpdbg'], true);
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     public function format(RuntimeExceptionInterface $e): RuntimeExceptionInterface
     {
         $patcher = Patcher::for($e)

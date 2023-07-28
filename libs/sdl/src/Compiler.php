@@ -10,6 +10,7 @@ use Phplrt\Source\File;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use Railt\SDL\Compiler\Command\CompileCommand;
+use Railt\SDL\Compiler\ConfigInfo;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Compiler\Exception\FormatterInterface;
 use Railt\SDL\Compiler\Exception\PrettyFormatter;
@@ -30,6 +31,7 @@ final class Compiler implements CompilerInterface
     private readonly FormatterInterface $exceptions;
 
     public function __construct(
+        private readonly ConfigInfo $config = new ConfigInfo(),
         ?CacheInterface $cache = null,
         DictionaryInterface $types = new Dictionary(),
     ) {
@@ -48,7 +50,9 @@ final class Compiler implements CompilerInterface
     private function bootTypeLoader(): TypeLoader
     {
         return new TypeLoader([
-            new StandardLibraryLoader(),
+            new StandardLibraryLoader(
+                config: $this->config,
+            ),
         ]);
     }
 
@@ -92,6 +96,7 @@ final class Compiler implements CompilerInterface
             variables: $variables,
             queue: new Queue(),
             dictionary: $types,
+            config: $this->config,
             loader: $this->loader,
             process: $this->subprocess(...),
         );

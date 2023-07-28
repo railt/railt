@@ -34,6 +34,7 @@ final class ConstExprEvaluator
     public function __construct(
         private readonly Queue $queue,
         private readonly array $variables,
+        private readonly ConfigInfo $config,
     ) {}
 
     public function eval(TypeInterface $type, Expression $expr): mixed
@@ -179,12 +180,12 @@ final class ConstExprEvaluator
 
     private function evalFloatScalarType(ScalarType $type, Expression $expr): float
     {
-        if ($expr instanceof IntLiteralNode) {
-            return (float)$expr->value;
-        }
-
         if ($expr instanceof FloatLiteralNode) {
             return $expr->value;
+        }
+
+        if ($this->config->castIntToFloat && $expr instanceof IntLiteralNode) {
+            return (float)$expr->value;
         }
 
         /** @psalm-suppress MixedAssignment */
@@ -199,12 +200,12 @@ final class ConstExprEvaluator
 
     private function evalFloatScalarTypeWithValue(ScalarType $type, Expression $ctx, mixed $value): float
     {
-        if (\is_int($value)) {
-            return (float)$value;
-        }
-
         if (\is_float($value)) {
             return $value;
+        }
+
+        if ($this->config->castIntToFloat && \is_int($value)) {
+            return (float)$value;
         }
 
         throw ExpressionException::fromInvalidFloatValueTypeWithValue($type, $ctx, $value);
@@ -241,6 +242,20 @@ final class ConstExprEvaluator
             return $expr->value;
         }
 
+        if ($this->config->castScalarToString) {
+            switch (true) {
+                case $expr instanceof BoolLiteralNode:
+                    return $expr->representation ?? ($expr->value ? 'true' : 'false');
+                case $expr instanceof ConstLiteralNode:
+                    return $expr->value->value;
+                case $expr instanceof FloatLiteralNode:
+                case $expr instanceof IntLiteralNode:
+                    return $expr->representation ?? (string)$expr->value;
+                case $expr instanceof NullLiteralNode:
+                    return 'null';
+            }
+        }
+
         /** @psalm-suppress MixedAssignment */
         if ($expr instanceof VariableNode) {
             $value = $this->fetchVariable($expr);
@@ -255,6 +270,18 @@ final class ConstExprEvaluator
     {
         if (\is_string($value)) {
             return $value;
+        }
+
+        if ($this->config->castScalarToString) {
+            switch (true) {
+                case \is_bool($value):
+                    return $value ? 'true' : 'false';
+                case \is_float($value):
+                case \is_int($value):
+                    return (string)$value;
+                case $value === null:
+                    return 'null';
+            }
         }
 
         throw ExpressionException::fromInvalidStringValueTypeWithValue($type, $ctx, $value);
@@ -287,6 +314,7 @@ final class ConstExprEvaluator
         }
 
         $this->queue->push(new EvaluateInputObjectValue(
+            config: $this->config,
             node: $expr,
             input: $type,
             defaults: $result,
@@ -328,6 +356,7 @@ final class ConstExprEvaluator
          * @psalm-suppress ArgumentTypeCoercion
          */
         $this->queue->push(new EvaluateInputObjectValue(
+            config: $this->config,
             node: $expr,
             input: $type,
             defaults: $result,

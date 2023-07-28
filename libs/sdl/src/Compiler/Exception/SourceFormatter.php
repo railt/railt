@@ -129,10 +129,12 @@ final class SourceFormatter
 
     private function formatHighlightedCodeLine(int $line, string $code): string
     {
+        $code = \rtrim($code);
+
         if ($this->colors) {
-            return \sprintf("\e[48;5;160m %03d \e[0m\e[38;5;160m|\e[0m\e[48;5;160m %s\e[0m", $line, $code);
+            return \sprintf("\e[48;5;160m %03d \e[0m\e[38;5;160m|\e[0m\e[48;5;160m %s \e[0m", $line, $code);
         }
 
-        return \sprintf('➜ %3d | %s', $line, $code);
+        return \sprintf('➜ %3d | %s ', $line, $code);
     }
 }
