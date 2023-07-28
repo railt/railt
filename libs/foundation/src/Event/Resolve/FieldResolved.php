@@ -10,6 +10,7 @@ final class FieldResolved extends ResolveEvent
 {
     public function __construct(
         InputInterface $input,
+        public readonly mixed $result,
     ) {
         parent::__construct($input);
     }

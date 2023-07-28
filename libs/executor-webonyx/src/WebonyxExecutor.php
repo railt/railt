@@ -8,7 +8,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Railt\Contracts\Http\Factory\ErrorFactoryInterface;
 use Railt\Contracts\Http\Factory\ResponseFactoryInterface;
 use Railt\Contracts\Http\Middleware\RequestHandlerInterface;
-use Railt\Contracts\Http\ConnectionInterface;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\ExecutorInterface;
 use Railt\Http\Factory\GraphQLErrorFactory;
 use Railt\Http\Factory\GraphQLResponseFactory;

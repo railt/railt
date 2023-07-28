@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Connection;
 
-use Railt\Contracts\Http\ConnectionInterface;
+use Railt\Foundation\ConnectionInterface;
 
 abstract class ConnectionEvent
 {

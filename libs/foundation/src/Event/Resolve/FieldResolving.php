@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Railt\Foundation\Event\Resolve;
 
 use Psr\EventDispatcher\StoppableEventInterface;
-use Railt\Contracts\Http\InputInterface;
+use Railt\Foundation\Event\PropagationStoppableEvent;
 
+/**
+ * @property mixed $result
+ */
 final class FieldResolving extends ResolveEvent implements StoppableEventInterface
 {
-    private bool $isPropagationStopped = false;
+    use PropagationStoppableEvent;
 
     private mixed $result = null;
 
@@ -20,24 +23,27 @@ final class FieldResolving extends ResolveEvent implements StoppableEventInterfa
         return $this->hasResult;
     }
 
-    public function getResult(): mixed
+    public function __get(string $name): mixed
     {
-        return $this->result;
+        if ($name === 'result') {
+            return $this->result;
+        }
+
+        $message = \sprintf('Undefined property: %s::$%s', self::class, $name);
+        \trigger_error($message, \E_USER_WARNING);
+
+        return null;
     }
 
-    public function setResult(mixed $result): void
+    public function __set(string $name, mixed $value): void
     {
-        $this->hasResult = true;
-        $this->result = $result;
-    }
+        if ($name === 'result') {
+            $this->hasResult = true;
+            $this->result = $value;
+            return;
+        }
 
-    public function stopPropagation(): void
-    {
-        $this->isPropagationStopped = true;
-    }
-
-    public function isPropagationStopped(): bool
-    {
-        return $this->isPropagationStopped;
+        $message = \sprintf('Creation of dynamic property %s::$%s is deprecated', self::class, $name);
+        \trigger_error($message, \E_USER_DEPRECATED);
     }
 }

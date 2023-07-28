@@ -130,6 +130,15 @@ class Directive extends NamedExecution
         return $this->arguments[$name] ?? null;
     }
 
+    public function getValue(string $name, mixed $default = null): mixed
+    {
+        if (!isset($this->arguments[$name])) {
+            return $default;
+        }
+
+        return $this->arguments[$name]->getValue();
+    }
+
     /**
      * @return int<0, max>
      */

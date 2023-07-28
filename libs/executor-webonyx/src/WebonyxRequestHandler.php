@@ -8,15 +8,15 @@ use GraphQL\Executor\ExecutionResult;
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use Railt\Executor\Webonyx\Executor\Context;
-use Railt\Executor\Webonyx\Executor\ErrorBuilder;
 use Railt\Contracts\Http\ErrorInterface;
 use Railt\Contracts\Http\Factory\ErrorFactoryInterface;
 use Railt\Contracts\Http\Factory\ResponseFactoryInterface;
 use Railt\Contracts\Http\Middleware\RequestHandlerInterface;
 use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
-use Railt\Contracts\Http\ConnectionInterface;
+use Railt\Executor\Webonyx\Executor\Context;
+use Railt\Executor\Webonyx\Executor\ErrorBuilder;
+use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
 

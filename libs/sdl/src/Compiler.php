@@ -31,7 +31,7 @@ final class Compiler implements CompilerInterface
     private readonly FormatterInterface $exceptions;
 
     public function __construct(
-        private readonly ConfigInfo $config = new ConfigInfo(),
+        public readonly ConfigInfo $config = new ConfigInfo(),
         ?CacheInterface $cache = null,
         DictionaryInterface $types = new Dictionary(),
     ) {

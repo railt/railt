@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Railt\Foundation\Event\Resolve;
+namespace Railt\Router\Event;
 
 use Railt\Contracts\Http\InputInterface;
 
-abstract class ResolveEvent
+abstract class ParameterEvent
 {
     public function __construct(
         public readonly InputInterface $input,
-    ) {}
+        public readonly \ReflectionParameter $parameter,
+    ) {
+    }
 }

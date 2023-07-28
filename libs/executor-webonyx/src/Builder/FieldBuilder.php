@@ -7,21 +7,15 @@ namespace Railt\Executor\Webonyx\Builder;
 use GraphQL\Type\Definition\FieldDefinition as WebonyxFieldDefinition;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-use Psr\EventDispatcher\EventDispatcherInterface;
-use Psr\EventDispatcher\StoppableEventInterface;
 use Railt\Executor\Webonyx\Builder\Builder\Builder;
 use Railt\Executor\Webonyx\Builder\Internal\BuilderFactory;
 use Railt\Executor\Webonyx\Executor\Context;
 use Railt\Executor\Webonyx\Http\WebonyxInput;
-use Railt\Contracts\Http\InputInterface;
 use Railt\Foundation\Event\Resolve\FieldResolved;
 use Railt\Foundation\Event\Resolve\FieldResolving;
 use Railt\TypeSystem\Definition\FieldDefinition;
-use Railt\TypeSystem\Definition\Type\InputObjectType;
 use Railt\TypeSystem\Definition\Type\ScalarType;
-use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
-use Railt\TypeSystem\OutputTypeInterface;
 
 /**
  * @template-extends Builder<FieldDefinition, WebonyxFieldDefinition>
@@ -80,14 +74,15 @@ final class FieldBuilder extends Builder
                 $event = $updated;
             }
 
+            $result = null;
             try {
-                if ($event->isPropagationStopped() || !$event->hasResult()) {
-                    return $this->getDefaultResultValue($field, $parent);
+                if ($event->hasResult()) {
+                    return $result = $event->getResult();
                 }
 
-                return $event->getResult();
+                return $result = $this->getDefaultResultValue($field, $parent);
             } finally {
-                $ctx->dispatcher->dispatch(new FieldResolved($event->input));
+                $ctx->dispatcher->dispatch(new FieldResolved($event->input, $result));
             }
         };
     }
