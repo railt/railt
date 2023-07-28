@@ -40,7 +40,7 @@ final class CachedParser implements ParserInterface
 
         if ($this->cache->has($key)) {
             /** @var iterable<Node> */
-            return $this->cache->get($key);
+            return (array)$this->cache->get($key);
         }
 
         /** @var iterable<Node> $result */

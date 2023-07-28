@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler;
 
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateInputObjectValue;
-use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Exception\ExpressionException;
 use Railt\SDL\Node\Expression\Expression;
 use Railt\SDL\Node\Expression\Literal\BoolLiteralNode;
@@ -53,7 +52,7 @@ final class ConstExprEvaluator
             $type instanceof ListType => $this->evalListTypeWithValue($type, $ctx, $value),
             $type instanceof NonNullType => $this->evalNonNullTypeWithValue($type, $ctx, $value),
             $type instanceof NamedTypeDefinition => $this->evalNamedTypeWithValue($type, $ctx, $value),
-            default => throw ExpressionException::fromUnprocessableExpr($type, $ctx),
+            default => throw ExpressionException::fromUnprocessableExprWithValue($type, $ctx, $value),
         };
     }
 
@@ -90,7 +89,7 @@ final class ConstExprEvaluator
             $type instanceof ScalarType => $this->evalScalarTypeWithValue($type, $ctx, $value),
             $type instanceof InputObjectType => $this->evalInputTypeWithValue($type, $ctx, $value),
             $type instanceof EnumType => $this->evalEnumTypeWithValue($type, $ctx, $value),
-            default => throw ExpressionException::fromUnprocessableExpr($type, $ctx),
+            default => throw ExpressionException::fromUnprocessableExprWithValue($type, $ctx, $value),
         };
     }
 

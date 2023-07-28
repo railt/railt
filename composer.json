@@ -9,86 +9,17 @@
         "source": "https://github.com/railt/railt"
     },
     "repositories": [
-        {
-            "type": "path",
-            "url": "libs/contracts/http",
-            "package": {
-                "name": "railt/http-contracts",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/contracts/http-factory",
-            "package": {
-                "name": "railt/http-factory-contracts",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/contracts/http-middleware",
-            "package": {
-                "name": "railt/http-middleware-contracts",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/bridge-webonyx",
-            "package": {
-                "name": "railt/bridge-webonyx",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/foundation",
-            "package": {
-                "name": "railt/foundation",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/http",
-            "package": {
-                "name": "railt/http",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/http-factory",
-            "package": {
-                "name": "railt/http-factory",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/http-middleware",
-            "package": {
-                "name": "railt/http-middleware",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/sdl",
-            "package": {
-                "name": "railt/sdl",
-                "version": "2.0.0"
-            }
-        },
-        {
-            "type": "path",
-            "url": "libs/type-system",
-            "package": {
-                "name": "railt/type-system",
-                "version": "2.0.0"
-            }
-        }
+        {"type": "path", "url": "libs/contracts/http"},
+        {"type": "path", "url": "libs/contracts/http-factory"},
+        {"type": "path", "url": "libs/contracts/http-middleware"},
+        {"type": "path", "url": "libs/executor-webonyx"},
+        {"type": "path", "url": "libs/foundation"},
+        {"type": "path", "url": "libs/http"},
+        {"type": "path", "url": "libs/http-factory"},
+        {"type": "path", "url": "libs/http-middleware"},
+        {"type": "path", "url": "libs/router"},
+        {"type": "path", "url": "libs/sdl"},
+        {"type": "path", "url": "libs/type-system"}
     ],
     "authors": [
         {
@@ -98,7 +29,8 @@
     ],
     "require": {
         "php": "^8.1",
-        "railt/bridge-webonyx": "^2.0",
+        "railt/router": "^2.0",
+        "railt/executor-webonyx": "^2.0",
         "railt/foundation": "^2.0"
     },
     "require-dev": {
@@ -114,14 +46,16 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Railt\\Bridge\\Webonyx\\Tests\\": "libs/bridge-webonyx/tests",
             "Railt\\Contracts\\Http\\Tests\\": "libs/contracts/http/tests",
             "Railt\\Contracts\\Http\\Factory\\Tests\\": "libs/contracts/http-factory/tests",
-            "Railt\\Http\\Tests\\": "libs/http/tests",
+            "Railt\\Contracts\\Http\\Middleware\\Tests\\": "libs/contracts/http-middleware/tests",
             "Railt\\Foundation\\Tests\\": "libs/foundation/tests",
+            "Railt\\Http\\Tests\\": "libs/http/tests",
             "Railt\\Http\\Factory\\Tests\\": "libs/http-factory/tests",
+            "Railt\\Router\\Tests\\": "libs/router/tests",
             "Railt\\SDL\\Tests\\": "libs/sdl/tests",
-            "Railt\\TypeSystem\\Tests\\": "libs/type-system/tests",
-            "Railt\\TypeSystem\\Webonyx\\Tests\\": "libs/type-system-webonyx/tests"
+            "Railt\\TypeSystem\\Tests\\": "libs/type-system/tests"
         }
     },
     "scripts": {

@@ -27,7 +27,6 @@
         }
     },
     "require-dev": {
-        "symfony/console": "^5.4|^6.0",
         "phpunit/phpunit": "^10.2",
         "vimeo/psalm": "^5.13"
     },

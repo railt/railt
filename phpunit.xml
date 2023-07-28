@@ -19,20 +19,32 @@
         <testsuite name="railt/http-factory-contracts">
             <directory>libs/contracts/http-factory/tests</directory>
         </testsuite>
+        <testsuite name="railt/http-middleware">
+            <directory>libs/contracts/http-middleware/tests</directory>
+        </testsuite>
+        <testsuite name="railt/executor-webonyx">
+            <directory>libs/executor-webonyx/tests</directory>
+        </testsuite>
+        <testsuite name="railt/foundation">
+            <directory>libs/foundation/tests</directory>
+        </testsuite>
         <testsuite name="railt/http">
             <directory>libs/http/tests</directory>
         </testsuite>
         <testsuite name="railt/http-factory">
             <directory>libs/http-factory/tests</directory>
         </testsuite>
+        <testsuite name="railt/http-middleware">
+            <directory>libs/http-middleware/tests</directory>
+        </testsuite>
+        <testsuite name="railt/router">
+            <directory>libs/router/tests</directory>
+        </testsuite>
         <testsuite name="railt/sdl">
             <directory>libs/sdl/tests</directory>
         </testsuite>
         <testsuite name="railt/type-system">
             <directory>libs/type-system/tests</directory>
-        </testsuite>
-        <testsuite name="railt/type-system-webonyx">
-            <directory>libs/type-system-webonyx/tests</directory>
         </testsuite>
     </testsuites>
 

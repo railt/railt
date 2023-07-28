@@ -43,7 +43,7 @@ class GraphQLRequest implements MutableRequestInterface
 
     public function isEmpty(): bool
     {
-        return \trim($this->query) !== '';
+        return \trim($this->query) === '';
     }
 
     public function getVariables(): array
