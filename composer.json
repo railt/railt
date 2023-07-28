@@ -36,6 +36,7 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.22",
         "httpsoft/http-server-request": "^1.1",
+        "phpat/phpat": "^0.10.6",
         "phplrt/phplrt": "^3.2",
         "phpunit/phpunit": "^10.2",
         "symfony/cache": "^5.4|^6.0",
@@ -46,13 +47,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\Bridge\\Webonyx\\Tests\\": "libs/bridge-webonyx/tests",
             "Railt\\Contracts\\Http\\Tests\\": "libs/contracts/http/tests",
             "Railt\\Contracts\\Http\\Factory\\Tests\\": "libs/contracts/http-factory/tests",
             "Railt\\Contracts\\Http\\Middleware\\Tests\\": "libs/contracts/http-middleware/tests",
+            "Railt\\Executor\\Webonyx\\Tests\\": "libs/executor-webonyx/tests",
             "Railt\\Foundation\\Tests\\": "libs/foundation/tests",
             "Railt\\Http\\Tests\\": "libs/http/tests",
             "Railt\\Http\\Factory\\Tests\\": "libs/http-factory/tests",
+            "Railt\\Http\\Middleware\\Tests\\": "libs/http-middleware/tests",
             "Railt\\Router\\Tests\\": "libs/router/tests",
             "Railt\\SDL\\Tests\\": "libs/sdl/tests",
             "Railt\\TypeSystem\\Tests\\": "libs/type-system/tests"
@@ -60,15 +62,25 @@
     },
     "scripts": {
         "test": [
+            "@test",
             "@phpcs",
-            "@phpunit",
             "@psalm"
         ],
-        "psalm": "psalm --no-cache",
-        "psalm:fix": "psalm --alter --no-cache",
-        "phpcs": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --dry-run",
+        "psalm": "@psalm:check",
+        "psalm:check": "psalm --no-cache",
+        "psalm:fix": "psalm --no-cache --alter",
+        "phpcs": "@phpcs:check",
+        "phpcs:check": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --dry-run",
         "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes",
-        "phpunit": "phpunit --testdox"
+        "test": [
+            "@test:unit",
+            "@test:architecture"
+        ],
+        "test:unit": "phpunit --testdox",
+        "test:architecture": [
+            "phpstan clear-result-cache",
+            "phpstan analyse -c phpstan.neon"
+        ]
     },
     "extra": {
         "branch-alias": {

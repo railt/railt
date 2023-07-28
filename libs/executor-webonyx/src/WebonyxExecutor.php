@@ -12,7 +12,7 @@ use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\ExecutorInterface;
 use Railt\Http\Factory\GraphQLErrorFactory;
 use Railt\Http\Factory\GraphQLResponseFactory;
-use Railt\SDL\DictionaryInterface;
+use Railt\TypeSystem\DictionaryInterface;
 
 final class WebonyxExecutor implements ExecutorInterface
 {

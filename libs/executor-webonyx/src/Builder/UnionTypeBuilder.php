@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\Executor\Webonyx\Builder;
 
 use GraphQL\Type\Definition\UnionType as WebonyxUnionType;
-use Railt\Executor\Webonyx\Builder\Builder\Builder;
+use Railt\Executor\Webonyx\Builder\Builder;
 use Railt\TypeSystem\Definition\Type\UnionType;
 
 /**

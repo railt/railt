@@ -22,9 +22,8 @@ use Railt\Foundation\Event\Http\ResponseProceed;
 
 final class WebonyxRequestHandler implements RequestHandlerInterface
 {
-    private const ERROR_MESSAGE_EMPTY_REQUEST
-        = 'GraphQL request must contain a valid query data, but it came empty'
-    ;
+    private const ERROR_MESSAGE_EMPTY_REQUEST = 'GraphQL request must contain '
+        . 'a valid query data, but it came empty';
 
     private readonly ErrorBuilder $errorsBuilder;
 

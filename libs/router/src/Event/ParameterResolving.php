@@ -10,24 +10,24 @@ final class ParameterResolving extends ParameterEvent implements StoppableEventI
 {
     private bool $isPropagationStopped = false;
 
-    private mixed $result = null;
+    private mixed $value = null;
 
-    private bool $hasResult = false;
+    private bool $hasValue = false;
 
     public function hasResult(): bool
     {
-        return $this->hasResult;
+        return $this->hasValue;
     }
 
-    public function getResult(): mixed
+    public function getValue(): mixed
     {
-        return $this->result;
+        return $this->value;
     }
 
-    public function setResult(mixed $result): void
+    public function setValue(mixed $value): void
     {
-        $this->hasResult = true;
-        $this->result = $result;
+        $this->hasValue = true;
+        $this->value = $value;
     }
 
     public function stopPropagation(): void

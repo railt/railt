@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\Executor\Webonyx\Builder;
 
 use GraphQL\Type\Definition\Type;
-use Railt\Executor\Webonyx\Builder\Builder\Builder;
+use Railt\Executor\Webonyx\Builder\Builder;
 use Railt\TypeSystem\Definition\InputFieldDefinition;
 
 /**

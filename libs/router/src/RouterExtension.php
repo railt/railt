@@ -89,7 +89,7 @@ final class RouterExtension implements ExtensionInterface
      */
     private function getRoutes(EventDispatcherInterface $dispatcher, InputInterface $input): iterable
     {
-        $field = $input->getField();
+        $field = $input->getDefinition();
 
         if (isset($this->routes[$field])) {
             return $this->routes[$field];

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Phplrt\Contracts\Source\ReadableInterface;
+use Railt\TypeSystem\DictionaryInterface;
 
 interface CompilerInterface extends TypeLoaderInterface
 {
@@ -17,7 +17,7 @@ interface CompilerInterface extends TypeLoaderInterface
      * Parses the GraphQL SDL source code and loads the recognized types
      * into the dictionary.
      *
-     * @param string|resource|\SplFileInfo|ReadableInterface $source
+     * @param string|resource|\SplFileInfo $source
      * @param array<non-empty-string, mixed> $variables
      */
     public function load(mixed $source, array $variables = []): DictionaryInterface;
@@ -26,7 +26,7 @@ interface CompilerInterface extends TypeLoaderInterface
      * Parses the GraphQL SDL source code and returns a list of loaded
      * types for the specified source.
      *
-     * @param string|resource|\SplFileInfo|ReadableInterface $source
+     * @param string|resource|\SplFileInfo $source
      * @param array<non-empty-string, mixed> $variables
      */
     public function compile(mixed $source, array $variables = []): DictionaryInterface;

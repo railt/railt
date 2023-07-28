@@ -9,7 +9,7 @@ use Railt\Contracts\Http\RequestInterface;
 use Railt\Contracts\Http\ResponseInterface;
 use Railt\Http\Middleware\MutablePipelineInterface;
 use Railt\Http\Middleware\Pipeline;
-use Railt\SDL\DictionaryInterface;
+use Railt\TypeSystem\DictionaryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class Connection implements ConnectionInterface

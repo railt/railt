@@ -1,0 +1,37 @@
+includes:
+  - vendor/phpat/phpat/extension.neon
+
+parameters:
+  level: 1
+  tmpDir: vendor/.phpstan.cache
+  paths:
+    - libs
+  excludePaths:
+    - libs/*/tests/*
+    - libs/contacts/*/tests/*
+  phpat:
+    ignore_built_in_classes: true
+
+services:
+  - class: Railt\Contracts\Http\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Contracts\Http\Factory\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Contracts\Http\Middleware\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Executor\Webonyx\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Foundation\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Http\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Http\Factory\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Http\Middleware\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\Router\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\SDL\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+  - class: Railt\TypeSystem\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]

@@ -15,8 +15,11 @@
     },
     "require": {
         "php": "^8.1",
+        "psr/event-dispatcher": "^1.0",
         "railt/foundation": "^2.0",
-        "railt/connection-contracts": "^2.0",
+        "railt/http-contracts": "^2.0",
+        "railt/http-factory-contracts": "^2.0",
+        "railt/http-factory": "^2.0",
         "railt/http-middleware-contracts": "^2.0",
         "railt/type-system": "^2.0",
         "webonyx/graphql-php": "^14.0"

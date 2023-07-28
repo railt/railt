@@ -7,6 +7,9 @@ namespace Railt\Contracts\Http;
 use Railt\Contracts\Http\Input\ArgumentsProviderInterface;
 use Railt\Contracts\Http\Input\PathProviderInterface;
 
+/**
+ * @template TDefinition of object
+ */
 interface InputInterface extends
     PathProviderInterface,
     ArgumentsProviderInterface
@@ -23,5 +26,8 @@ interface InputInterface extends
 
     public function getRequest(): RequestInterface;
 
-    public function getField(): object;
+    /**
+     * @return TDefinition
+     */
+    public function getDefinition(): object;
 }

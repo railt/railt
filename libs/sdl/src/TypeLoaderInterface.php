@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Phplrt\Contracts\Source\ReadableInterface;
 use Railt\TypeSystem\DefinitionInterface;
 
 /**
- * @psalm-type SourceType = resource|string|\SplFileInfo|ReadableInterface
- * @phpstan-type SourceType resource|string|\SplFileInfo|ReadableInterface
+ * @psalm-type SourceType = resource|string|\SplFileInfo
+ * @phpstan-type SourceType resource|string|\SplFileInfo
  */
 interface TypeLoaderInterface
 {

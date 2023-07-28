@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\Executor\Webonyx;
 
 use GraphQL\Type\Schema;
-use Railt\SDL\DictionaryInterface;
+use Railt\TypeSystem\DictionaryInterface;
 
 interface FactoryInterface
 {

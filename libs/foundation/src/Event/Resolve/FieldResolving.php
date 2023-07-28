@@ -7,9 +7,6 @@ namespace Railt\Foundation\Event\Resolve;
 use Psr\EventDispatcher\StoppableEventInterface;
 use Railt\Foundation\Event\PropagationStoppableEvent;
 
-/**
- * @property mixed $result
- */
 final class FieldResolving extends ResolveEvent implements StoppableEventInterface
 {
     use PropagationStoppableEvent;
@@ -23,27 +20,14 @@ final class FieldResolving extends ResolveEvent implements StoppableEventInterfa
         return $this->hasResult;
     }
 
-    public function __get(string $name): mixed
+    public function getResult(): mixed
     {
-        if ($name === 'result') {
-            return $this->result;
-        }
-
-        $message = \sprintf('Undefined property: %s::$%s', self::class, $name);
-        \trigger_error($message, \E_USER_WARNING);
-
-        return null;
+        return $this->result;
     }
 
-    public function __set(string $name, mixed $value): void
+    public function setResult(mixed $value): void
     {
-        if ($name === 'result') {
-            $this->hasResult = true;
-            $this->result = $value;
-            return;
-        }
-
-        $message = \sprintf('Creation of dynamic property %s::$%s is deprecated', self::class, $name);
-        \trigger_error($message, \E_USER_DEPRECATED);
+        $this->hasResult = true;
+        $this->result = $value;
     }
 }

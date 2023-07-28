@@ -15,7 +15,7 @@ use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
 use Railt\SDL\Compiler;
 use Railt\SDL\CompilerInterface;
-use Railt\SDL\DictionaryInterface;
+use Railt\TypeSystem\DictionaryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 final class Application implements ApplicationInterface
@@ -47,25 +47,26 @@ final class Application implements ApplicationInterface
     {
         $this->extensions->load($this->dispatcher);
 
-        $types = $this->compile(File::new($schema), $variables);
+        $types = $this->compile($schema, $variables);
 
         return $this->establish($types);
     }
 
     /**
+     * @param resource|string|\SplFileInfo $schema
      * @param array<non-empty-string, mixed> $variables
      */
-    private function compile(ReadableInterface $source, array $variables): DictionaryInterface
+    private function compile(mixed $schema, array $variables): DictionaryInterface
     {
         $compiling = $this->dispatcher->dispatch(new SchemaCompiling(
             compiler: clone $this->compiler,
-            source: $source,
+            source: $schema,
         ));
 
         $compiled = $this->dispatcher->dispatch(new SchemaCompiled(
             compiler: $compiling->compiler,
             source: $compiling->source,
-            types: $compiling->compiler->compile($source, $variables),
+            types: $compiling->compiler->compile($schema, $variables),
         ));
 
         return $compiled->types;

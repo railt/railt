@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Event\Schema;
 
-use Phplrt\Contracts\Source\ReadableInterface;
 use Railt\SDL\CompilerInterface;
-use Railt\SDL\DictionaryInterface;
+use Railt\TypeSystem\DictionaryInterface;
 
 final class SchemaCompiled extends SchemaEvent
 {
+    /**
+     * @param resource|string|\SplFileInfo $source
+     */
     public function __construct(
         CompilerInterface $compiler,
-        ReadableInterface $source,
+        mixed $source,
         public readonly DictionaryInterface $types,
     ) {
         parent::__construct($compiler, $source);

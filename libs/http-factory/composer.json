@@ -25,6 +25,8 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
+        "railt/http": "^2.0",
+        "railt/http-contracts": "^2.0",
         "railt/http-factory-contracts": "^2.0"
     },
     "autoload": {

@@ -7,7 +7,7 @@ namespace Railt\Executor\Webonyx\Builder\Internal;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
-use Railt\Executor\Webonyx\Builder\Builder\Builder;
+use Railt\Executor\Webonyx\Builder\Builder;
 use Railt\Executor\Webonyx\Builder\DirectiveBuilder;
 use Railt\Executor\Webonyx\Builder\EnumTypeBuilder;
 use Railt\Executor\Webonyx\Builder\InputObjectTypeBuilder;
@@ -15,7 +15,6 @@ use Railt\Executor\Webonyx\Builder\InterfaceTypeBuilder;
 use Railt\Executor\Webonyx\Builder\ObjectTypeBuilder;
 use Railt\Executor\Webonyx\Builder\ScalarTypeBuilder;
 use Railt\Executor\Webonyx\Builder\UnionTypeBuilder;
-use Railt\SDL\DictionaryInterface;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
 use Railt\TypeSystem\Definition\NamedTypeDefinitionInterface;
 use Railt\TypeSystem\Definition\Type\EnumType;
@@ -24,6 +23,7 @@ use Railt\TypeSystem\Definition\Type\InterfaceType;
 use Railt\TypeSystem\Definition\Type\ObjectType;
 use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\Definition\Type\UnionType;
+use Railt\TypeSystem\DictionaryInterface;
 
 /**
  * @internal This is an internal library class, please do not use it in your code.

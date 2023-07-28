@@ -10,6 +10,7 @@ use Railt\TypeSystem\Definition\SchemaDefinition;
 use Railt\TypeSystem\Definition\Type\EnumType;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
 use Railt\TypeSystem\Definition\Type\ObjectLikeType;
+use Railt\TypeSystem\DictionaryInterface;
 use Railt\TypeSystem\Execution\Common\HasDirectivesInterface;
 
 final class Dictionary implements DictionaryInterface

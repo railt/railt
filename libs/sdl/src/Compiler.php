@@ -21,6 +21,7 @@ use Railt\SDL\Exception\RuntimeExceptionInterface;
 use Railt\SDL\Node\Node;
 use Railt\SDL\Parser\CachedParser;
 use Railt\SDL\Parser\Parser;
+use Railt\TypeSystem\DictionaryInterface;
 
 final class Compiler implements CompilerInterface
 {

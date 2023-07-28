@@ -6,7 +6,7 @@ namespace Railt\Executor\Webonyx\Builder;
 
 use GraphQL\Type\Definition\CustomScalarType;
 use GraphQL\Type\Definition\ScalarType as WebonyxScalarType;
-use Railt\Executor\Webonyx\Builder\Builder\Builder;
+use Railt\Executor\Webonyx\Builder\Builder;
 use Railt\TypeSystem\Definition\Type\ScalarType;
 
 /**
