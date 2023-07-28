@@ -132,9 +132,20 @@ final class SourceFormatter
         $code = \rtrim($code);
 
         if ($this->colors) {
-            return \sprintf("\e[48;5;160m %03d \e[0m\e[38;5;160m|\e[0m\e[48;5;160m %s \e[0m", $line, $code);
+            $codeStartsAt = $this->codeStartsAt($code);
+
+            return \vsprintf("\e[38;5;160m %03d |%s\e[0m\e[48;5;160m %s \e[0m", [
+                $line,
+                \substr($code, 0, $codeStartsAt),
+                \substr($code, $codeStartsAt),
+            ]);
         }
 
         return \sprintf('➜ %3d | %s ', $line, $code);
+    }
+
+    private function codeStartsAt(string $code): int
+    {
+        return \strlen($code) - \strlen(\ltrim($code));
     }
 }
