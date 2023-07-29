@@ -40,7 +40,17 @@ final class RouteCompiler
             default => $this->parseFunction($action),
         };
 
-        return new Route($handler, $on);
+        try {
+            $function = new \ReflectionFunction($handler);
+        } catch (\ReflectionException $e) {
+            throw new RouteDefinitionException($e->getMessage(), (int)$e->getCode(), $e);
+        }
+
+        return new Route(
+            handler: $handler,
+            parameters: $function->getParameters(),
+            on: $on,
+        );
     }
 
     /**

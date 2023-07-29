@@ -6,9 +6,13 @@ namespace Railt\Router\Instantiator;
 
 use Railt\Contracts\Http\InputInterface;
 use Railt\Router\ParamResolver\ParamResolverInterface;
+use Railt\TypeSystem\Definition\FieldDefinition;
 
 final class ParamResolverAwareInstantiator implements InstantiatorInterface
 {
+    /**
+     * @param InputInterface<FieldDefinition> $input
+     */
     public function __construct(
         private readonly ParamResolverInterface $resolver,
         private readonly InputInterface $input,
@@ -29,7 +33,13 @@ final class ParamResolverAwareInstantiator implements InstantiatorInterface
             return $reflection->newInstanceArgs();
         }
 
-        $arguments = $this->resolver->resolve($this->input, ...$constructor->getParameters());
+        $arguments = [];
+
+        foreach ($constructor->getParameters() as $parameter) {
+            foreach ($this->resolver->resolve($this->input, $parameter) as $value) {
+                $arguments[] = $value;
+            }
+        }
 
         return $reflection->newInstanceArgs($arguments);
     }

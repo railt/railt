@@ -16,14 +16,12 @@ final class DispatcherAwareParamResolver implements ParamResolverInterface
     ) {
     }
 
-    public function resolve(InputInterface $input, \ReflectionParameter ...$parameters): iterable
+    public function resolve(InputInterface $input, \ReflectionParameter $parameter): iterable
     {
-        foreach ($parameters as $parameter) {
-            yield $this->dispatch($input, $parameter);
-        }
+        yield from $this->dispatch($input, $parameter);
     }
 
-    private function dispatch(InputInterface $input, \ReflectionParameter $parameter): mixed
+    private function dispatch(InputInterface $input, \ReflectionParameter $parameter): array
     {
         $resolving = new ParameterResolving(
             input: $input,
@@ -37,8 +35,8 @@ final class DispatcherAwareParamResolver implements ParamResolverInterface
         /** @var ParameterResolving $resolving */
         $resolving = $this->dispatcher->dispatch($resolving);
 
-        if (!$resolving->hasResult()) {
-            $message = 'Could not resolve parameter #%d $%s value';
+        if (!$resolving->hasValue()) {
+            $message = 'Could not resolve value of #%d ($%s) parameter';
             $message = \sprintf($message, $parameter->getPosition(), $parameter->getName());
             throw new \InvalidArgumentException($message);
         }
@@ -47,9 +45,9 @@ final class DispatcherAwareParamResolver implements ParamResolverInterface
         $resolved = $this->dispatcher->dispatch(new ParameterResolved(
             input: $input,
             parameter: $parameter,
-            result: $resolving->getValue(),
+            value: $resolving->getValue(),
         ));
 
-        return $resolved->result;
+        return $resolved->value;
     }
 }

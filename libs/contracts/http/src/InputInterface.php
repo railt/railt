@@ -6,28 +6,41 @@ namespace Railt\Contracts\Http;
 
 use Railt\Contracts\Http\Input\ArgumentsProviderInterface;
 use Railt\Contracts\Http\Input\PathProviderInterface;
+use Railt\Contracts\Http\Input\SelectionProviderInterface;
+use Railt\Contracts\Http\Input\TypeProviderInterface;
 
 /**
  * @template TDefinition of object
  */
 interface InputInterface extends
     PathProviderInterface,
-    ArgumentsProviderInterface
+    ArgumentsProviderInterface,
+    SelectionProviderInterface
 {
     /**
-     * @return non-empty-string
+     * Returns the GraphQL {@see RequestInterface} instance associated with
+     * the given input payload.
      */
-    public function getName(): string;
-
-    /**
-     * @return non-empty-string|null
-     */
-    public function getAlias(): ?string;
-
     public function getRequest(): RequestInterface;
 
     /**
+     * Returns GraphQL query field name.
+     *
+     * @return non-empty-string
+     */
+    public function getFieldName(): string;
+
+    /**
+     * Returns GraphQL query field alias if it is or {@see null} instead.
+     *
+     * @return non-empty-string|null
+     */
+    public function getFieldAlias(): ?string;
+
+    /**
+     * Returns an instance of the field definition.
+     *
      * @return TDefinition
      */
-    public function getDefinition(): object;
+    public function getFieldDefinition(): object;
 }

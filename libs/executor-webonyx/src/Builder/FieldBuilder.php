@@ -10,7 +10,7 @@ use GraphQL\Type\Definition\Type;
 use Railt\Executor\Webonyx\Builder\Builder;
 use Railt\Executor\Webonyx\Builder\Internal\BuilderFactory;
 use Railt\Executor\Webonyx\Executor\Context;
-use Railt\Executor\Webonyx\Http\WebonyxFieldInput;
+use Railt\Executor\Webonyx\Http\WebonyxInput;
 use Railt\Foundation\Event\Resolve\FieldResolved;
 use Railt\Foundation\Event\Resolve\FieldResolving;
 use Railt\TypeSystem\Definition\FieldDefinition;
@@ -60,7 +60,7 @@ final class FieldBuilder extends Builder
     private function getResolver(FieldDefinition $field): \Closure
     {
         return function (mixed $parent, array $args, Context $ctx, ResolveInfo $info) use ($field): mixed {
-            $input = new WebonyxFieldInput(
+            $input = new WebonyxInput(
                 request: $ctx->request,
                 field: $field,
                 info: $info,

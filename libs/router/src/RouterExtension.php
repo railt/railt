@@ -11,10 +11,12 @@ use Railt\Contracts\Http\InputInterface;
 use Railt\Foundation\Event\Resolve\FieldResolving;
 use Railt\Foundation\Event\Schema\SchemaCompiling;
 use Railt\Foundation\Extension\ExtensionInterface;
+use Railt\Router\Event\ParameterResolving;
 use Railt\Router\Instantiator\InstantiatorInterface;
 use Railt\Router\Instantiator\ParamResolverAwareInstantiator;
 use Railt\Router\ParamResolver\DispatcherAwareParamResolver;
 use Railt\Router\ParamResolver\ParamResolverInterface;
+use Railt\Router\ParamResolver\SimpleParamResolver;
 use Railt\TypeSystem\Definition\FieldDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -25,35 +27,29 @@ final class RouterExtension implements ExtensionInterface
      */
     private readonly \WeakMap $routes;
 
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    private EventDispatcherInterface $dispatcher;
+
+    private readonly SimpleParamResolver $simpleResolver;
+
     public function __construct(
         private readonly ?ContainerInterface $container = null,
-        private readonly ?InstantiatorInterface $instantiator = null,
-        private readonly ?ParamResolverInterface $paramResolver = null,
+        private ?InstantiatorInterface $instantiator = null,
+        private ?ParamResolverInterface $paramResolver = null,
     ) {
         $this->routes = new \WeakMap();
+        $this->simpleResolver = new SimpleParamResolver();
     }
 
     public function load(EventDispatcherInterface $dispatcher): void
     {
+        $this->dispatcher = $dispatcher;
+
         $dispatcher->addListener(SchemaCompiling::class, $this->onSchemaCompiling(...));
-        $dispatcher->addListener(FieldResolving::class, function (FieldResolving $e) use ($dispatcher) {
-            $this->onFieldResolving($dispatcher, $e);
-        });
-    }
-
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    private function onFieldResolving(EventDispatcherInterface $dispatcher, FieldResolving $event): void
-    {
-        foreach ($this->getRoutes($dispatcher, $event->input) as $route) {
-            $result = ($route->handler)($event->input);
-
-            $event->setResult($result);
-
-            break; // TODO add "on" matching
-        }
+        $dispatcher->addListener(FieldResolving::class, $this->onFieldResolving(...));
+        $dispatcher->addListener(ParameterResolving::class, $this->onParamResolving(...));
     }
 
     private function onSchemaCompiling(SchemaCompiling $event): void
@@ -61,6 +57,57 @@ final class RouterExtension implements ExtensionInterface
         $event->compiler->addLoader(new RouterTypeLoader());
     }
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    private function onFieldResolving(FieldResolving $event): void
+    {
+        $input = $event->input;
+
+        $resolver = $this->getParamResolver($this->dispatcher);
+
+        foreach ($this->getRoutes($this->dispatcher, $input) as $route) {
+            if (!$this->matchRoute($route, $event->input)) {
+                continue;
+            }
+
+            $arguments = [];
+
+            foreach ($route->parameters as $parameter) {
+                foreach ($resolver->resolve($input, $parameter) as $value) {
+                    $arguments[] = $value;
+                }
+            }
+
+            $result = ($route->handler)(...$arguments);
+
+            $event->setResult($result);
+        }
+    }
+
+    private function matchRoute(Route $route, InputInterface $input): bool
+    {
+        if ($route->on === null) {
+            return true;
+        }
+
+        return \in_array($route->on, [...$input->getSelectedTypes()], true);
+    }
+
+    private function onParamResolving(ParameterResolving $event): void
+    {
+        $resolved = [...$this->simpleResolver->resolve($event->input, $event->parameter)];
+
+        if ($resolved !== []) {
+            $event->setValue(...$resolved);
+            $event->stopPropagation();
+        }
+    }
+
+    /**
+     * @param InputInterface<FieldDefinition> $input
+     */
     private function getRouteCompiler(InputInterface $input, EventDispatcherInterface $dispatcher): RouteCompiler
     {
         return new RouteCompiler(
@@ -69,9 +116,12 @@ final class RouterExtension implements ExtensionInterface
         );
     }
 
+    /**
+     * @param InputInterface<FieldDefinition> $input
+     */
     private function getInstantiator(InputInterface $input, EventDispatcherInterface $dispatcher): InstantiatorInterface
     {
-        return $this->instantiator ?? new ParamResolverAwareInstantiator(
+        return $this->instantiator ??= new ParamResolverAwareInstantiator(
             resolver: $this->getParamResolver($dispatcher),
             input: $input,
         );
@@ -79,17 +129,19 @@ final class RouterExtension implements ExtensionInterface
 
     private function getParamResolver(EventDispatcherInterface $dispatcher): ParamResolverInterface
     {
-        return $this->paramResolver ?? new DispatcherAwareParamResolver($dispatcher);
+        return $this->paramResolver ??= new DispatcherAwareParamResolver($dispatcher);
     }
 
     /**
+     * @param InputInterface<FieldDefinition> $input
+     *
      * @return iterable<Route>
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
     private function getRoutes(EventDispatcherInterface $dispatcher, InputInterface $input): iterable
     {
-        $field = $input->getDefinition();
+        $field = $input->getFieldDefinition();
 
         if (isset($this->routes[$field])) {
             return $this->routes[$field];

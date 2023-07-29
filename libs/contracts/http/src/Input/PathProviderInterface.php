@@ -9,7 +9,7 @@ interface PathProviderInterface
     public const DEFAULT_PATH_DELIMITER = '.';
 
     /**
-     * @return list<non-empty-string>
+     * @return non-empty-list<non-empty-string>
      */
     public function getPath(): array;
 
