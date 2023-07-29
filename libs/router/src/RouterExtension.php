@@ -20,13 +20,12 @@ use Railt\Router\Instantiator\ParamResolverAwareInstantiator;
 use Railt\Router\ParamResolver\DispatcherAwareParamResolver;
 use Railt\Router\ParamResolver\ParamResolverInterface;
 use Railt\Router\ParamResolver\SimpleParamResolver;
-use Railt\TypeSystem\Definition\FieldDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class RouterExtension implements ExtensionInterface
 {
     /**
-     * @var \WeakMap<FieldDefinition, list<Route>>
+     * @var \WeakMap<object, list<Route>>
      */
     private readonly \WeakMap $routes;
 
@@ -63,6 +62,7 @@ final class RouterExtension implements ExtensionInterface
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
+     * @throws \Throwable
      */
     private function onFieldResolving(FieldResolving $event): void
     {
@@ -128,7 +128,7 @@ final class RouterExtension implements ExtensionInterface
     }
 
     /**
-     * @param InputInterface<FieldDefinition> $input
+     * @param InputInterface<object> $input
      */
     private function getRouteCompiler(InputInterface $input, EventDispatcherInterface $dispatcher): RouteCompiler
     {
@@ -139,7 +139,7 @@ final class RouterExtension implements ExtensionInterface
     }
 
     /**
-     * @param InputInterface<FieldDefinition> $input
+     * @param InputInterface<object> $input
      */
     private function getInstantiator(InputInterface $input, EventDispatcherInterface $dispatcher): InstantiatorInterface
     {
@@ -155,9 +155,10 @@ final class RouterExtension implements ExtensionInterface
     }
 
     /**
-     * @param InputInterface<FieldDefinition> $input
+     * @param InputInterface<object> $input
      *
      * @return iterable<Route>
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

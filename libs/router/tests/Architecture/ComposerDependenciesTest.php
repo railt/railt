@@ -26,14 +26,21 @@ final class ComposerDependenciesTest
         ;
     }
 
-    /*public function testDevDependencies(): Rule
+    public function testDevDependencies(): Rule
     {
         return PHPat::rule()
             ->classes(Selector::classname('Railt\Router\RouterExtension'))
             ->canOnlyDependOn()
             ->classes(
                 Selector::namespace('Railt\Router'),
+                // @dependencies
+                Selector::namespace('Psr\Container'),
+                Selector::namespace('Psr\EventDispatcher'),
+                // @dev-dependencies
+                Selector::namespace('Railt\Contracts\Http'),
+                Selector::namespace('Railt\Foundation'),
+                Selector::namespace('Symfony\Component\EventDispatcher'),
             )
         ;
-    }*/
+    }
 }

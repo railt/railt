@@ -6,12 +6,11 @@ namespace Railt\Router\Instantiator;
 
 use Railt\Contracts\Http\InputInterface;
 use Railt\Router\ParamResolver\ParamResolverInterface;
-use Railt\TypeSystem\Definition\FieldDefinition;
 
 final class ParamResolverAwareInstantiator implements InstantiatorInterface
 {
     /**
-     * @param InputInterface<FieldDefinition> $input
+     * @param InputInterface<object> $input
      */
     public function __construct(
         private readonly ParamResolverInterface $resolver,

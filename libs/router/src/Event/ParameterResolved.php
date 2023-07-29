@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Railt\Router\Event;
 
 use Railt\Contracts\Http\InputInterface;
-use Railt\TypeSystem\Definition\FieldDefinition;
 
 final class ParameterResolved extends ParameterEvent
 {
     /**
-     * @param InputInterface<FieldDefinition> $input
+     * @param InputInterface<object> $input
      */
     public function __construct(
         InputInterface $input,

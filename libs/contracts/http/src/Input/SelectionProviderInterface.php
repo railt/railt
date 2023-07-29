@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Railt\Contracts\Http\Input;
 
 /**
- * @psalm-type SelectionType = iterable<non-empty-string, true|SelectionType>
- * @phpstan-type SelectionType iterable<non-empty-string, true|SelectionType>
+ * @psalm-type SelectionType = iterable<non-empty-string, true|iterable>
+ * @phpstan-type SelectionType iterable<non-empty-string, true|iterable>
  */
 interface SelectionProviderInterface
 {

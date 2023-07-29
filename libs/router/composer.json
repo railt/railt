@@ -25,6 +25,9 @@
         }
     },
     "require-dev": {
+        "railt/foundation": "^2.0",
+        "railt/http-contracts": "^2.0",
+        "symfony/event-dispatcher": "^5.4|^6.0",
         "phpunit/phpunit": "^10.2",
         "vimeo/psalm": "^5.13"
     },
@@ -34,7 +37,7 @@
         }
     },
     "suggest": {
-        "railt/foundation": "(^2.0) For extension loading"
+        "railt/foundation": "(^2.0) For router extension loading"
     },
     "extra": {
         "branch-alias": {

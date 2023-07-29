@@ -36,6 +36,8 @@
     },
     "require-dev": {
         "sebastian/environment": "^5.1|^6.0",
+        "phplrt/compiler": "^3.2",
+        "symfony/console": "^5.4|^6.0",
         "phpunit/phpunit": "^10.2",
         "vimeo/psalm": "^5.13"
     },
@@ -43,6 +45,11 @@
         "psr-4": {
             "Railt\\SDL\\Tests\\": "tests"
         }
+    },
+    "suggest": {
+        "sebastian/environment": "(^5.1|^6.0) For console highlighting detection in exceptions",
+        "phplrt/compiler": "(^3.2) For grammar compilation support",
+        "symfony/console": "(^5.4|^6.0) For console commands support"
     },
     "extra": {
         "branch-alias": {

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
-use Phplrt\Contracts\Source\ReadableInterface;
-use Phplrt\Source\File;
+use Railt\Contracts\Http\Middleware\MiddlewareInterface;
 use Railt\Foundation\Connection\OnDestructor;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
@@ -13,6 +12,8 @@ use Railt\Foundation\Event\Schema\SchemaCompiled;
 use Railt\Foundation\Event\Schema\SchemaCompiling;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
+use Railt\Http\Middleware\MutablePipelineInterface;
+use Railt\Http\Middleware\Pipeline;
 use Railt\SDL\Compiler;
 use Railt\SDL\CompilerInterface;
 use Railt\TypeSystem\DictionaryInterface;
@@ -29,13 +30,20 @@ final class Application implements ApplicationInterface
 
     private readonly Repository $extensions;
 
+    private readonly MutablePipelineInterface $pipeline;
+
+    /**
+     * @param list<MiddlewareInterface> $middleware
+     */
     public function __construct(
         private readonly ExecutorInterface $executor,
         private readonly CompilerInterface $compiler = new Compiler(),
+        private array $middleware = [],
     ) {
         $this->connections = new \WeakMap();
         $this->dispatcher = new EventDispatcher();
         $this->extensions = new Repository();
+        $this->pipeline = new Pipeline($this->middleware);
     }
 
     public function extend(ExtensionInterface $extension): void
@@ -78,6 +86,7 @@ final class Application implements ApplicationInterface
             $this->executor,
             $types,
             $this->dispatcher,
+            $this->pipeline,
         )));
 
         $this->connections[$established->connection] = OnDestructor::create(
