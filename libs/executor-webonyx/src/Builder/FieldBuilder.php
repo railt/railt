@@ -70,8 +70,16 @@ final class FieldBuilder extends Builder
                 arguments: $args,
             );
 
+            $resolving = new FieldResolving($input);
+
+            if (\is_array($parent) && \array_key_exists($input->getFieldName(), $parent)) {
+                $resolving->setResult($parent[$input->getFieldName()]);
+            } elseif ($parent instanceof \ArrayAccess && $parent->offsetExists($input->getFieldName())) {
+                $resolving->setResult($parent->offsetGet($input->getFieldName()));
+            }
+
             /** @var FieldResolving $resolving */
-            $resolving = $ctx->dispatcher->dispatch(new FieldResolving($input));
+            $resolving = $ctx->dispatcher->dispatch($resolving);
 
             $result = null;
             try {
