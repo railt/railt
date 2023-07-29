@@ -70,7 +70,7 @@ final class FieldBuilder extends Builder
                 arguments: $args,
             );
 
-            $resolving = new FieldResolving($input);
+            $resolving = new FieldResolving($input, $parent);
 
             if (\is_array($parent) && \array_key_exists($input->getFieldName(), $parent)) {
                 $resolving->setResult($parent[$input->getFieldName()]);
@@ -89,7 +89,11 @@ final class FieldBuilder extends Builder
 
                 return $result = $this->getDefaultResultValue($field, $parent);
             } finally {
-                $ctx->dispatcher->dispatch(new FieldResolved($resolving->input, $result));
+                $ctx->dispatcher->dispatch(new FieldResolved(
+                    $resolving->input,
+                    $resolving->parent,
+                    $result,
+                ));
             }
         };
     }
