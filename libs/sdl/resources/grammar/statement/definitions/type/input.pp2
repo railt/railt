@@ -31,7 +31,7 @@ InputObjectTypeDefinitionExceptDescription
   ;
 
 InputObjectTypeDefinitionHead
-  : ::T_INPUT:: Identifier() Directives()
+  : ::T_INPUT:: Name() Directives()
   ;
 
 OptionalInputObjectTypeDefinitionBody -> {

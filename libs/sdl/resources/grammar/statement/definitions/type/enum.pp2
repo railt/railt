@@ -30,7 +30,7 @@ EnumTypeDefinitionExceptDescription
   ;
 
 EnumTypeDefinitionHead
-  : ::T_ENUM:: Identifier() Directives()
+  : ::T_ENUM:: Name() Directives()
   ;
 
 OptionalEnumTypeDefinitionBody -> {

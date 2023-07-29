@@ -57,7 +57,7 @@ final class ConstExprEvaluator
         };
     }
 
-    private function fetchVariable(VariableNode $expr): mixed
+    public function fetchVariable(VariableNode $expr): mixed
     {
         if (\array_key_exists($expr->name, $this->variables)) {
             return $this->variables[$expr->name];

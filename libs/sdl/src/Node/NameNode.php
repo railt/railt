@@ -7,15 +7,10 @@ namespace Railt\SDL\Node;
 final class NameNode extends Node
 {
     /**
-     * @var non-empty-string
-     */
-    public string $value;
-
-    /**
      * @param non-empty-string $value
      */
-    public function __construct(string $value)
-    {
-        $this->value = $value;
+    public function __construct(
+        public string $value,
+    ) {
     }
 }

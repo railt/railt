@@ -33,6 +33,7 @@ class ExpressionException extends CompilationException
     public const CODE_INPUT_INVALID_FIELD = 0x10;
     public const CODE_NON_NULL_INVALID_TYPE = 0x11;
     public const CODE_LIST_INVALID_TYPE = 0x12;
+    public const CODE_IDENTIFIER_INVALID_TYPE = 0x13;
 
     public static function fromUnprocessableExpr(TypeInterface $type, Expression $expr): static
     {
@@ -51,7 +52,7 @@ class ExpressionException extends CompilationException
 
     public static function fromUndefinedVariable(VariableNode $expr): static
     {
-        $message = \sprintf('Undefined variable $%s', (string)$expr);
+        $message = \sprintf('Undefined variable %s', (string)$expr);
 
         return static::create($message, $expr, self::CODE_UNDEFINED_VARIABLE);
     }
@@ -211,6 +212,20 @@ class ExpressionException extends CompilationException
         ]);
 
         return static::create($message, $expr, self::CODE_LIST_INVALID_TYPE);
+    }
+
+    public static function fromInvalidIdentifier(Expression $expr): static
+    {
+        return self::fromInvalidIdentifierWithValue($expr, $expr);
+    }
+
+    public static function fromInvalidIdentifierWithValue(Expression $expr, mixed $value): static
+    {
+        $message = \vsprintf('Cannot pass non-string value %s to identifier', [
+            self::valueToString($value),
+        ]);
+
+        return static::create($message, $expr, self::CODE_IDENTIFIER_INVALID_TYPE);
     }
 
     private static function valueToString(mixed $value): string

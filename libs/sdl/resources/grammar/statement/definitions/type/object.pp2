@@ -31,7 +31,7 @@ ObjectTypeDefinitionExceptDescription
   ;
 
 ObjectTypeDefinitionHead
-  : ::T_TYPE:: Identifier()
+  : ::T_TYPE:: Name()
     OptionalImplementsInterfaces()
     Directives()
   ;

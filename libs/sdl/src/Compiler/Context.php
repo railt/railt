@@ -11,6 +11,7 @@ use Railt\SDL\Dictionary;
 use Railt\SDL\Exception\TypeAlreadyDefinedException;
 use Railt\SDL\Exception\TypeNotFoundException;
 use Railt\SDL\Node\Expression\Expression;
+use Railt\SDL\Node\Expression\VariableNode;
 use Railt\SDL\Node\NodeInterface;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
 use Railt\TypeSystem\Definition\NamedTypeDefinition;
@@ -51,6 +52,11 @@ final class Context implements \IteratorAggregate
     public function eval(TypeInterface $type, Expression $expr): mixed
     {
         return $this->expr->eval($type, $expr);
+    }
+
+    public function var(VariableNode $var): mixed
+    {
+        return $this->expr->fetchVariable($var);
     }
 
     public function setSchema(SchemaDefinition $schema, NodeInterface $node): void

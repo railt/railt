@@ -11,10 +11,13 @@ Description -> {
 
 
 Name -> {
-    return new Node\NameNode($children[0]->value);
+    return new Node\NameNode(
+        $children[0]->value,
+    );
 }
   : Identifier()
   ;
+
 
 /**
  * Represents a non-namespaced name.
@@ -75,7 +78,9 @@ NonNullType -> {
   ;
 
 NamedType -> {
-    return new Stmt\Type\NamedTypeNode($children[0]);
+    return new Stmt\Type\NamedTypeNode(
+        $children,
+    );
 }
-  : Name()
+  : Identifier() | Variable()
   ;

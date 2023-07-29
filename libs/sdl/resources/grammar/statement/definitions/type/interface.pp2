@@ -31,7 +31,7 @@ InterfaceTypeDefinitionExceptDescription
   ;
 
 InterfaceTypeDefinitionHead
-  : ::T_INTERFACE:: Identifier()
+  : ::T_INTERFACE:: Name()
     OptionalImplementsInterfaces()
     Directives()
   ;

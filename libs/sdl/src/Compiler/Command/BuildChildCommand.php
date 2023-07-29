@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Compiler\Command;
 
+use Railt\SDL\Exception\ExpressionException;
 use Railt\SDL\Exception\InternalErrorException;
+use Railt\SDL\Node\Expression\VariableNode;
 use Railt\SDL\Node\Statement\Statement;
 use Railt\SDL\Node\Statement\Type\ListTypeNode;
 use Railt\SDL\Node\Statement\Type\NamedTypeNode;
 use Railt\SDL\Node\Statement\Type\NonNullTypeNode;
 use Railt\SDL\Node\Statement\Type\TypeNode;
+use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\DefinitionInterface;
 use Railt\TypeSystem\InputTypeInterface;
 use Railt\TypeSystem\ListType;
@@ -52,6 +55,16 @@ abstract class BuildChildCommand extends BuildCommand implements BuildChildComma
         }
 
         if ($node instanceof NamedTypeNode) {
+            if ($node->name instanceof VariableNode) {
+                $value = $this->ctx->var($node->name);
+
+                if (!\is_string($value)) {
+                    throw ExpressionException::fromInvalidIdentifierWithValue($node->name, $value);
+                }
+
+                return $this->ctx->getType($value, $node->name, $from);
+            }
+
             return $this->ctx->getType($node->name->value, $node->name, $from);
         }
 

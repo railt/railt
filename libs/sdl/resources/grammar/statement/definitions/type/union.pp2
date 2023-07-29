@@ -33,7 +33,7 @@ UnionTypeDefinitionExceptDescription
   ;
 
 UnionTypeDefinitionHead
-  : ::T_UNION:: Identifier() Directives()
+  : ::T_UNION:: Name() Directives()
   ;
 
 OptionalUnionTypeDefinitionBody -> {

@@ -27,6 +27,9 @@
 %token T_COLON                  :
 %token T_COMMA                  ,
 
+%token T_ANGLE_OPEN             <
+%token T_ANGLE_CLOSE            >
+
 /**
  * Values
  */

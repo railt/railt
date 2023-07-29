@@ -6,6 +6,7 @@ namespace Railt\SDL\Node\Statement\Definition;
 
 use Railt\SDL\Node\DescriptionNode;
 use Railt\SDL\Node\IdentifierNode;
+use Railt\SDL\Node\NameNode;
 use Railt\SDL\Node\Statement\ArgumentNode;
 use Railt\SDL\Node\Statement\Definition\DirectiveDefinition\Modifier;
 use Railt\SDL\Node\Statement\Statement;
@@ -24,7 +25,7 @@ final class DirectiveDefinitionNode extends Statement
      */
     public function __construct(
         #[Visitable]
-        public IdentifierNode $name,
+        public NameNode $name,
         #[Visitable]
         public DescriptionNode $description,
         #[Visitable]

@@ -28,7 +28,7 @@ DirectiveDefinition -> {
   ;
 
 DirectiveDefinitionHead
-  : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: Identifier()
+  : ::T_DIRECTIVE:: ::T_DIRECTIVE_AT:: Name()
     OptionalDirectiveArguments()
     DirectiveModifiers()
   ;
