@@ -242,7 +242,7 @@ final class DirectiveDefinitionTest extends TestCase
         $this->expectExceptionMessage('non-string value');
 
         $this->compile(<<<'GraphQL'
-            directive @example(arg: String = 42) on OBJECT
+            directive @example(arg: String = {}) on OBJECT
             GraphQL);
     }
 
