@@ -8,6 +8,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Railt\Contracts\Http\InputInterface;
 use Railt\Router\Event\ParameterResolved;
 use Railt\Router\Event\ParameterResolving;
+use Railt\TypeSystem\Definition\FieldDefinition;
 
 final class DispatcherAwareParamResolver implements ParamResolverInterface
 {
@@ -21,6 +22,9 @@ final class DispatcherAwareParamResolver implements ParamResolverInterface
         yield from $this->dispatch($input, $parameter);
     }
 
+    /**
+     * @param InputInterface<FieldDefinition> $input
+     */
     private function dispatch(InputInterface $input, \ReflectionParameter $parameter): array
     {
         $resolving = new ParameterResolving(

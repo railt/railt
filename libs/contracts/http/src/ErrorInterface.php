@@ -32,7 +32,7 @@ interface ErrorInterface extends \Throwable
      *
      * @param non-empty-string|int<0, max> $item
      */
-    public function withAddedPath(string|int $item): static;
+    public function withAddedPath(string|int $item): self;
 
     /**
      * Returns new instance of {@see ErrorInterface} with the passed
@@ -44,7 +44,7 @@ interface ErrorInterface extends \Throwable
      *
      * @param iterable<non-empty-string|int<0, max>> $path
      */
-    public function withPath(iterable $path): static;
+    public function withPath(iterable $path): self;
 
     /**
      * Returns list of associations to a particular point
@@ -62,7 +62,7 @@ interface ErrorInterface extends \Throwable
      *                  instance, and return an instance that contains the
      *                  specified location item.
      */
-    public function withAddedLocation(LocationInterface $location): static;
+    public function withAddedLocation(LocationInterface $location): self;
 
     /**
      * Returns new instance of {@see ErrorInterface} with the passed
@@ -74,7 +74,7 @@ interface ErrorInterface extends \Throwable
      *                  instance, and return an instance that contains the
      *                  specified location items.
      */
-    public function withLocations(iterable $locations): static;
+    public function withLocations(iterable $locations): self;
 
     /**
      * Returns list of implementors to extend the protocol however they see
@@ -96,7 +96,7 @@ interface ErrorInterface extends \Throwable
      *        then the value of the {@see ExtensionInterface::getName()} method
      *        will be used as the default extension's field name.
      */
-    public function withAddedExtension(ExtensionInterface $extension, string $name = null): static;
+    public function withAddedExtension(ExtensionInterface $extension, string $name = null): self;
 
     /**
      * Returns new instance of {@see ErrorInterface} with the passed
@@ -111,7 +111,7 @@ interface ErrorInterface extends \Throwable
      *        then the value of the {@see ExtensionInterface::getName()} method
      *        will be used as the default extension's field name.
      */
-    public function withExtensions(iterable $extensions): static;
+    public function withExtensions(iterable $extensions): self;
 
     /**
      * Returns category of the exception.
@@ -126,5 +126,5 @@ interface ErrorInterface extends \Throwable
      *                  instance, and return an instance that contains the
      *                  specified category.
      */
-    public function withCategory(CategoryInterface $category): static;
+    public function withCategory(CategoryInterface $category): self;
 }

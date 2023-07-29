@@ -19,7 +19,7 @@ interface QueryProviderInterface
      *                  instance, and return an instance that contains the
      *                  query argument.
      */
-    public function withQuery(string $query): static;
+    public function withQuery(string $query): self;
 
     /**
      * Returns {@see true} in case of GraphQL request is empty

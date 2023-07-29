@@ -7,7 +7,6 @@ namespace Railt\Executor\Webonyx\Builder;
 use GraphQL\Type\Definition\FieldDefinition as WebonyxFieldDefinition;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
-use Railt\Executor\Webonyx\Builder\Builder;
 use Railt\Executor\Webonyx\Builder\Internal\BuilderFactory;
 use Railt\Executor\Webonyx\Executor\Context;
 use Railt\Executor\Webonyx\Http\WebonyxInput;
@@ -57,9 +56,13 @@ final class FieldBuilder extends Builder
         };
     }
 
+    /**
+     * @psalm-suppress MixedAssignment : Allow mixed types
+     */
     private function getResolver(FieldDefinition $field): \Closure
     {
         return function (mixed $parent, array $args, Context $ctx, ResolveInfo $info) use ($field): mixed {
+            /** @var array<non-empty-string, mixed> $args */
             $input = new WebonyxInput(
                 request: $ctx->request,
                 field: $field,
@@ -67,22 +70,18 @@ final class FieldBuilder extends Builder
                 arguments: $args,
             );
 
-            $event = new FieldResolving($input);
-            $updated = $ctx->dispatcher->dispatch($event) ?? $event;
-
-            if ($updated instanceof FieldResolving) {
-                $event = $updated;
-            }
+            /** @var FieldResolving $resolving */
+            $resolving = $ctx->dispatcher->dispatch(new FieldResolving($input));
 
             $result = null;
             try {
-                if ($event->hasResult()) {
-                    return $result = $event->getResult();
+                if ($resolving->hasResult()) {
+                    return $result = $resolving->getResult();
                 }
 
                 return $result = $this->getDefaultResultValue($field, $parent);
             } finally {
-                $ctx->dispatcher->dispatch(new FieldResolved($event->input, $result));
+                $ctx->dispatcher->dispatch(new FieldResolved($resolving->input, $result));
             }
         };
     }

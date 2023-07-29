@@ -102,6 +102,7 @@ final class WebonyxRequestHandler implements RequestHandlerInterface
             $response = $response->withAddedException($e);
         }
 
+        /** @var ResponseInterface */
         return $response;
     }
 }

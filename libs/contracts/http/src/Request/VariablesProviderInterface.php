@@ -21,7 +21,7 @@ interface VariablesProviderInterface
      *
      * @param iterable<non-empty-string, mixed> $variables
      */
-    public function withVariables(iterable $variables): static;
+    public function withVariables(iterable $variables): self;
 
     /**
      * Returns new instance of {@see VariablesProviderInterface} with the
@@ -33,7 +33,7 @@ interface VariablesProviderInterface
      *
      * @param non-empty-string $name
      */
-    public function withAddedVariable(string $name, mixed $value): static;
+    public function withAddedVariable(string $name, mixed $value): self;
 
     /**
      * Returns new instance of {@see VariablesProviderInterface} without the
@@ -45,7 +45,7 @@ interface VariablesProviderInterface
      *
      * @param non-empty-string $name
      */
-    public function withoutVariable(string $name): static;
+    public function withoutVariable(string $name): self;
 
     /**
      * @template TResult of mixed

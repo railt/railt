@@ -38,7 +38,7 @@ interface ExceptionProviderInterface
      *
      * @param iterable<\Throwable> $exceptions
      */
-    public function withExceptions(iterable $exceptions): static;
+    public function withExceptions(iterable $exceptions): self;
 
     /**
      * Returns new instance of {@see ExceptionProviderInterface} with the passed
@@ -48,7 +48,7 @@ interface ExceptionProviderInterface
      *                  instance, and return an instance that contains the
      *                  specified exception instance.
      */
-    public function withAddedException(\Throwable $exception): static;
+    public function withAddedException(\Throwable $exception): self;
 
     /**
      * Returns new instance of {@see ExceptionProviderInterface} without passed
@@ -58,5 +58,5 @@ interface ExceptionProviderInterface
      *                  instance, and return an instance that not contains
      *                  the specified exception instance.
      */
-    public function withoutException(\Throwable $exception): static;
+    public function withoutException(\Throwable $exception): self;
 }

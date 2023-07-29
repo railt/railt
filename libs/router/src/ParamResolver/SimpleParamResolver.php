@@ -15,6 +15,11 @@ use Railt\Contracts\Http\RequestInterface;
 
 final class SimpleParamResolver implements ParamResolverInterface
 {
+    /**
+     * @psalm-suppress MixedReturnStatement
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
     public function resolve(InputInterface $input, \ReflectionParameter $parameter): iterable
     {
         $type = $parameter->getType();

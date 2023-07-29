@@ -6,11 +6,12 @@ namespace Railt\Router\Instantiator;
 
 use Railt\Contracts\Http\InputInterface;
 use Railt\Router\ParamResolver\ParamResolverInterface;
+use Railt\TypeSystem\Definition\FieldDefinition;
 
 final class ParamResolverAwareInstantiator implements InstantiatorInterface
 {
     /**
-     * @param InputInterface<object> $input
+     * @param InputInterface<FieldDefinition> $input
      */
     public function __construct(
         private readonly ParamResolverInterface $resolver,
@@ -18,9 +19,15 @@ final class ParamResolverAwareInstantiator implements InstantiatorInterface
     ) {}
 
     /**
-     * {@inheritDoc}
+     * @template TObject of object
+     *
+     * @param class-string<TObject> $class
+     *
+     * @return TObject
      *
      * @throws \ReflectionException
+     *
+     * @psalm-suppress MixedAssignment
      */
     public function create(string $class): object
     {
@@ -28,8 +35,9 @@ final class ParamResolverAwareInstantiator implements InstantiatorInterface
 
         $constructor = $reflection->getConstructor();
 
-        if ($constructor === null) {
-            return $reflection->newInstanceArgs();
+        if ($constructor === null || $constructor->getNumberOfParameters() === 0) {
+            /** @psalm-suppress MixedMethodCall */
+            return new $class();
         }
 
         $arguments = [];

@@ -28,7 +28,7 @@ class GraphQLRequest implements MutableRequestInterface
         return $this->query;
     }
 
-    public function withQuery(string $query): static
+    public function withQuery(string $query): self
     {
         $self = clone $this;
         $self->setQuery($query);
@@ -51,7 +51,7 @@ class GraphQLRequest implements MutableRequestInterface
         return $this->variables;
     }
 
-    public function withVariables(iterable $variables): static
+    public function withVariables(iterable $variables): self
     {
         $self = clone $this;
         $self->setVariables($variables);
@@ -67,7 +67,7 @@ class GraphQLRequest implements MutableRequestInterface
         }
     }
 
-    public function withAddedVariable(string $name, mixed $value): static
+    public function withAddedVariable(string $name, mixed $value): self
     {
         $self = clone $this;
         $self->setVariable($name, $value);
@@ -80,7 +80,7 @@ class GraphQLRequest implements MutableRequestInterface
         $this->variables[$name] = $value;
     }
 
-    public function withoutVariable(string $name): static
+    public function withoutVariable(string $name): self
     {
         $self = clone $this;
         $self->removeVariable($name);
@@ -110,7 +110,7 @@ class GraphQLRequest implements MutableRequestInterface
         return $this->operationName;
     }
 
-    public function withOperationName(string $name): static
+    public function withOperationName(string $name): self
     {
         $self = clone $this;
         $self->setOperationName($name);
@@ -123,7 +123,7 @@ class GraphQLRequest implements MutableRequestInterface
         $this->operationName = $name;
     }
 
-    public function withoutOperationName(): static
+    public function withoutOperationName(): self
     {
         $self = clone $this;
         $self->removeOperationName();

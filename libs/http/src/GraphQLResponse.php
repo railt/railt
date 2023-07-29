@@ -41,7 +41,7 @@ class GraphQLResponse implements MutableResponseInterface
         return $this->data;
     }
 
-    public function withData(array $data): static
+    public function withData(array $data): self
     {
         $self = clone $this;
         $self->setData($data);
@@ -54,7 +54,7 @@ class GraphQLResponse implements MutableResponseInterface
         $this->data = $data;
     }
 
-    public function withoutData(): static
+    public function withoutData(): self
     {
         $self = clone $this;
         $self->removeData();
@@ -96,7 +96,7 @@ class GraphQLResponse implements MutableResponseInterface
         return \array_values($this->exceptions);
     }
 
-    public function withExceptions(iterable $exceptions): static
+    public function withExceptions(iterable $exceptions): self
     {
         $self = clone $this;
         $self->setExceptions($exceptions);
@@ -111,7 +111,7 @@ class GraphQLResponse implements MutableResponseInterface
         }
     }
 
-    public function withAddedException(\Throwable $exception): static
+    public function withAddedException(\Throwable $exception): self
     {
         $self = clone $this;
         $self->addException($exception);
@@ -124,7 +124,7 @@ class GraphQLResponse implements MutableResponseInterface
         $this->exceptions[$this->keyOf($exception)] = $exception;
     }
 
-    public function withoutException(\Throwable $exception): static
+    public function withoutException(\Throwable $exception): self
     {
         $self = clone $this;
         $self->removeException($exception);

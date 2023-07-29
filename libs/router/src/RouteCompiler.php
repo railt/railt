@@ -27,8 +27,6 @@ final class RouteCompiler
      *
      * @return Route
      *
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws RouteDefinitionException
      */
     public function compile(string $action, ?string $on = null): Route
@@ -43,7 +41,7 @@ final class RouteCompiler
         try {
             $function = new \ReflectionFunction($handler);
         } catch (\ReflectionException $e) {
-            throw new RouteDefinitionException($e->getMessage(), (int)$e->getCode(), $e);
+            throw new RouteDefinitionException($e->getMessage(), $e->getCode(), $e);
         }
 
         return new Route(
@@ -54,8 +52,7 @@ final class RouteCompiler
     }
 
     /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
+     * @param non-empty-string $action
      */
     private function parseServiceMethod(string $action): \Closure
     {
@@ -74,7 +71,6 @@ final class RouteCompiler
      * @param non-empty-string $action
      *
      * @psalm-suppress InvalidStringClass
-     * @psalm-suppress UnusedVariable
      */
     private function parseStaticMethod(string $action): \Closure
     {
@@ -88,8 +84,14 @@ final class RouteCompiler
         }
     }
 
+    /**
+     * @param non-empty-string $action
+     */
     private function parseInstanceMethod(string $action): \Closure
     {
+        /**
+         * @psalm-suppress ArgumentTypeCoercion
+         */
         return $this->parseMethod(
             $action,
             self::INSTANCE_METHOD_DELIMITER,
@@ -165,7 +167,6 @@ final class RouteCompiler
         }
 
         if (\class_exists($action)) {
-            /** @psalm-suppress MixedMethodCall */
             return match(true) {
                 \method_exists($action, '__invoke')
                     => $this->parseInstanceMethod($action . '->__invoke'),

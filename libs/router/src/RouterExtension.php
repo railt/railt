@@ -20,6 +20,7 @@ use Railt\Router\Instantiator\ParamResolverAwareInstantiator;
 use Railt\Router\ParamResolver\DispatcherAwareParamResolver;
 use Railt\Router\ParamResolver\ParamResolverInterface;
 use Railt\Router\ParamResolver\SimpleParamResolver;
+use Railt\TypeSystem\Definition\FieldDefinition;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class RouterExtension implements ExtensionInterface
@@ -41,8 +42,9 @@ final class RouterExtension implements ExtensionInterface
         private ?InstantiatorInterface $instantiator = null,
         private ?ParamResolverInterface $paramResolver = null,
     ) {
-        $this->routes = new \WeakMap();
         $this->simpleResolver = new SimpleParamResolver();
+        /** @psalm-suppress MixedPropertyTypeCoercion */
+        $this->routes = new \WeakMap();
     }
 
     public function load(EventDispatcherInterface $dispatcher): void
@@ -63,6 +65,8 @@ final class RouterExtension implements ExtensionInterface
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      * @throws \Throwable
+     *
+     * @psalm-suppress MixedAssignment
      */
     private function onFieldResolving(FieldResolving $event): void
     {
@@ -108,13 +112,21 @@ final class RouterExtension implements ExtensionInterface
         }
     }
 
+    /**
+     * @param InputInterface<FieldDefinition> $input
+     */
     private function matchRoute(Route $route, InputInterface $input): bool
     {
         if ($route->on === null) {
             return true;
         }
 
-        return \in_array($route->on, [...$input->getSelectedTypes()], true);
+        /**
+         * @psalm-suppress InvalidOperand : Spread operator psalm false-positive
+         */
+        return \in_array($route->on, [
+            ...$input->getSelectedTypes(),
+        ], true);
     }
 
     private function onParamResolving(ParameterResolving $event): void
@@ -128,7 +140,7 @@ final class RouterExtension implements ExtensionInterface
     }
 
     /**
-     * @param InputInterface<object> $input
+     * @param InputInterface<FieldDefinition> $input
      */
     private function getRouteCompiler(InputInterface $input, EventDispatcherInterface $dispatcher): RouteCompiler
     {
@@ -139,7 +151,7 @@ final class RouterExtension implements ExtensionInterface
     }
 
     /**
-     * @param InputInterface<object> $input
+     * @param InputInterface<FieldDefinition> $input
      */
     private function getInstantiator(InputInterface $input, EventDispatcherInterface $dispatcher): InstantiatorInterface
     {
@@ -155,7 +167,7 @@ final class RouterExtension implements ExtensionInterface
     }
 
     /**
-     * @param InputInterface<object> $input
+     * @param InputInterface<FieldDefinition> $input
      *
      * @return iterable<Route>
      *
@@ -175,12 +187,18 @@ final class RouterExtension implements ExtensionInterface
         $routes = [];
 
         foreach ($field->getDirectives(RouterTypeLoader::DIRECTIVE_NAME) as $directive) {
+            /**
+             * @psalm-suppress MixedArgument
+             */
             $routes[] = $compiler->compile(
                 action: $directive->getValue('action'),
                 on: $directive->getValue('on'),
             );
         }
 
+        /**
+         * @psalm-suppress InaccessibleProperty : Readonly objects can be array-accessible
+         */
         return $this->routes[$field] = $routes;
     }
 }

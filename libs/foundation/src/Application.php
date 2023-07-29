@@ -33,17 +33,19 @@ final class Application implements ApplicationInterface
     private readonly MutablePipelineInterface $pipeline;
 
     /**
-     * @param list<MiddlewareInterface> $middleware
+     * @param iterable<MiddlewareInterface> $middleware
      */
     public function __construct(
         private readonly ExecutorInterface $executor,
         private readonly CompilerInterface $compiler = new Compiler(),
-        private array $middleware = [],
+        iterable $middleware = [],
     ) {
+        /** @psalm-suppress PropertyTypeCoercion */
         $this->connections = new \WeakMap();
+
         $this->dispatcher = new EventDispatcher();
         $this->extensions = new Repository();
-        $this->pipeline = new Pipeline($this->middleware);
+        $this->pipeline = new Pipeline($middleware);
     }
 
     public function extend(ExtensionInterface $extension): void
@@ -89,6 +91,7 @@ final class Application implements ApplicationInterface
             $this->pipeline,
         )));
 
+        /** @psalm-suppress InaccessibleProperty : Readonly properties is array-accessible */
         $this->connections[$established->connection] = OnDestructor::create(
             entry: $established->connection,
             onRelease: function (ConnectionInterface $connection): void {

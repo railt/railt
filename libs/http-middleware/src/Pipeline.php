@@ -23,6 +23,7 @@ final class Pipeline implements MutablePipelineInterface
 
     /**
      * @param iterable<MiddlewareInterface> $middleware
+     * @psalm-suppress PropertyTypeCoercion
      */
     public function __construct(
         iterable $middleware = [],
@@ -139,7 +140,7 @@ final class Pipeline implements MutablePipelineInterface
         $this->middleware = [];
 
         foreach ($middleware as $item) {
-            $this->middleware[] = $item;
+            $this->middleware[$this->keyOf($item)] = $item;
         }
     }
 
@@ -167,6 +168,9 @@ final class Pipeline implements MutablePipelineInterface
         return \spl_object_hash($middleware);
     }
 
+    /**
+     * @psalm-suppress PropertyTypeCoercion
+     */
     private function reset(): void
     {
         $this->compiled = new \WeakMap();

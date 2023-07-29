@@ -10,6 +10,7 @@ interface InstantiatorInterface
      * @template TObject of object
      *
      * @param class-string<TObject> $class
+     *
      * @return TObject
      */
     public function create(string $class): object;

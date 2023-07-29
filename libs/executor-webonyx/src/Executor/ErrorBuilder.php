@@ -62,8 +62,6 @@ final class ErrorBuilder
     }
 
     /**
-     * @psalm-suppress ArgumentTypeCoercion
-     *
      * @return iterable<ExtensionInterface>
      */
     private function createExtensionsFromWebonyx(Error $error): iterable
@@ -93,6 +91,9 @@ final class ErrorBuilder
         ;
     }
 
+    /**
+     * @psalm-suppress PossiblyNullReference : Exception cannot be null
+     */
     private function createErrorFromWebonyx(Error $error): ErrorInterface
     {
         $exception = $error;

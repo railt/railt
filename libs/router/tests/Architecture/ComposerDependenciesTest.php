@@ -22,6 +22,7 @@ final class ComposerDependenciesTest
                 Selector::namespace('Psr\Container'),
                 Selector::namespace('Psr\EventDispatcher'),
                 Selector::namespace('Railt\Contracts\Http'),
+                Selector::namespace('Railt\TypeSystem'),
             )
         ;
     }
@@ -36,6 +37,7 @@ final class ComposerDependenciesTest
                 // @dependencies
                 Selector::namespace('Psr\Container'),
                 Selector::namespace('Psr\EventDispatcher'),
+                Selector::namespace('Railt\TypeSystem'),
                 // @dev-dependencies
                 Selector::namespace('Railt\Contracts\Http'),
                 Selector::namespace('Railt\Foundation'),

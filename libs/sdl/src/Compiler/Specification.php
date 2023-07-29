@@ -64,6 +64,9 @@ enum Specification: string
     final public const ACTUAL = self::OCTOBER_2021;
     final public const DEFAULT = self::RAILT;
 
+    /**
+     * @psalm-suppress DeprecatedConstant : Allow deprecation relations
+     */
     private function getPrevious(): ?self
     {
         return match ($this) {

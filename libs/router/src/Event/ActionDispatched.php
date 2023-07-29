@@ -6,6 +6,7 @@ namespace Railt\Router\Event;
 
 use Railt\Contracts\Http\InputInterface;
 use Railt\Router\Route;
+use Railt\TypeSystem\Definition\FieldDefinition;
 
 /**
  * @template TResult of mixed
@@ -13,6 +14,7 @@ use Railt\Router\Route;
 class ActionDispatched extends ActionEvent
 {
     /**
+     * @param InputInterface<FieldDefinition> $input
      * @param TResult $result
      */
     public function __construct(

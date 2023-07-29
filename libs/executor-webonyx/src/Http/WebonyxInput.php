@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Railt\Executor\Webonyx\Http;
 
 use GraphQL\Language\AST\FieldNode;
-use GraphQL\Language\AST\FragmentDefinitionNode;
 use GraphQL\Language\AST\FragmentSpreadNode;
 use GraphQL\Language\AST\InlineFragmentNode;
 use GraphQL\Language\AST\SelectionSetNode;
@@ -120,7 +119,10 @@ final class WebonyxInput implements InputInterface
 
     /**
      * @param int<0, max> $depth
-     * @return non-empty-list<non-empty-string, true|non-empty-list>
+     * @return non-empty-array<non-empty-string, true|non-empty-array>
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
     private static function getFieldSelection(ResolveInfo $info, int $depth = 0): array
     {
@@ -141,7 +143,10 @@ final class WebonyxInput implements InputInterface
 
     /**
      * @param int<0, max> $descend
-     * @return non-empty-list<non-empty-string, true|non-empty-list>
+     * @return non-empty-array<non-empty-string, true|non-empty-array>
+     *
+     * @psalm-suppress MoreSpecificReturnType
+     * @psalm-suppress LessSpecificReturnStatement
      */
     private static function foldSelectionSet(ResolveInfo $info, SelectionSetNode $selectionSet, int $descend): array
     {
@@ -194,6 +199,8 @@ final class WebonyxInput implements InputInterface
 
     /**
      * @return iterable<non-empty-string>
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
     private static function getSelectionSet(ResolveInfo $info, SelectionSetNode $set): iterable
     {

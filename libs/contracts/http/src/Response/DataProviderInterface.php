@@ -18,7 +18,7 @@ interface DataProviderInterface
      *                  instance, and return an instance that contains the
      *                  specified data.
      */
-    public function withData(array $data): static;
+    public function withData(array $data): self;
 
     /**
      * Returns new instance of {@see DataProviderInterface} without the data.
@@ -27,5 +27,5 @@ interface DataProviderInterface
      *                  instance, and return an instance that does not contain
      *                  the data.
      */
-    public function withoutData(): static;
+    public function withoutData(): self;
 }
