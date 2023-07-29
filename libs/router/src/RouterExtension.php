@@ -11,6 +11,9 @@ use Railt\Contracts\Http\InputInterface;
 use Railt\Foundation\Event\Resolve\FieldResolving;
 use Railt\Foundation\Event\Schema\SchemaCompiling;
 use Railt\Foundation\Extension\ExtensionInterface;
+use Railt\Router\Event\ActionDispatched;
+use Railt\Router\Event\ActionDispatching;
+use Railt\Router\Event\ActionFailed;
 use Railt\Router\Event\ParameterResolving;
 use Railt\Router\Instantiator\InstantiatorInterface;
 use Railt\Router\Instantiator\ParamResolverAwareInstantiator;
@@ -63,26 +66,45 @@ final class RouterExtension implements ExtensionInterface
      */
     private function onFieldResolving(FieldResolving $event): void
     {
-        $input = $event->input;
-
         $resolver = $this->getParamResolver($this->dispatcher);
 
-        foreach ($this->getRoutes($this->dispatcher, $input) as $route) {
+        foreach ($this->getRoutes($this->dispatcher, $event->input) as $route) {
             if (!$this->matchRoute($route, $event->input)) {
                 continue;
             }
 
+            $dispatching = $this->dispatcher->dispatch(new ActionDispatching(
+                input: $event->input,
+                route: $route,
+            ));
+
             $arguments = [];
 
-            foreach ($route->parameters as $parameter) {
-                foreach ($resolver->resolve($input, $parameter) as $value) {
+            foreach ($dispatching->route->parameters as $parameter) {
+                foreach ($resolver->resolve($dispatching->input, $parameter) as $value) {
                     $arguments[] = $value;
                 }
             }
 
-            $result = ($route->handler)(...$arguments);
+            try {
+                $result = ($route->handler)(...$arguments);
 
-            $event->setResult($result);
+                $dispatched = $this->dispatcher->dispatch(new ActionDispatched(
+                    input: $dispatching->input,
+                    route: $dispatching->route,
+                    result: $result,
+                ));
+
+                $event->setResult($dispatched->result);
+            } catch (\Throwable $e) {
+                $this->dispatcher->dispatch(new ActionFailed(
+                    input: $dispatching->input,
+                    route: $dispatching->route,
+                    result: $e,
+                ));
+
+                throw $e;
+            }
         }
     }
 
