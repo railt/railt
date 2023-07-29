@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Node\Statement\Extension;
 
-use Railt\SDL\Node\IdentifierNode;
+use Railt\SDL\Node\NameNode;
 use Railt\SDL\Node\Statement\EnumFieldNode;
 use Railt\SDL\Node\Statement\Execution\DirectiveNode;
 use Railt\SDL\Node\Visitable;
@@ -20,7 +20,7 @@ final class EnumTypeExtensionNode extends TypeExtensionNode
      * @param list<DirectiveNode> $directives
      */
     public function __construct(
-        IdentifierNode $name,
+        NameNode $name,
         #[Visitable]
         public array $fields = [],
         array $directives = [],
