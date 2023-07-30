@@ -303,9 +303,7 @@ return [
             return new Stmt\Type\NonNullTypeNode($children[0]);
         },
         27 => function (\Phplrt\Parser\Context $ctx, $children) {
-            return new Stmt\Type\NamedTypeNode(
-            $children,
-        );
+            return new Stmt\Type\NamedTypeNode($children[0]);
         },
         38 => function (\Phplrt\Parser\Context $ctx, $children) {
             return Expr\Literal\BoolLiteralNode::parse($children->getValue());

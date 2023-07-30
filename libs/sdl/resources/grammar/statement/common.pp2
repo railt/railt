@@ -78,9 +78,7 @@ NonNullType -> {
   ;
 
 NamedType -> {
-    return new Stmt\Type\NamedTypeNode(
-        $children,
-    );
+    return new Stmt\Type\NamedTypeNode($children[0]);
 }
   : Identifier()
   ;
