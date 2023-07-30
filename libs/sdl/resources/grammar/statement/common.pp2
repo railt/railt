@@ -82,5 +82,5 @@ NamedType -> {
         $children,
     );
 }
-  : Identifier() | Variable()
+  : Identifier()
   ;

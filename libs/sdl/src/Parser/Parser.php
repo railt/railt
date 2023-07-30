@@ -58,6 +58,7 @@ final class Parser implements ParserInterface
 
     public function __construct()
     {
+        /** @psalm-suppress PropertyTypeCoercion */
         $this->stringPool = new \WeakMap();
 
         /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Node\Statement\Type;
 
-use Railt\SDL\Node\Expression\VariableNode;
 use Railt\SDL\Node\IdentifierNode;
 use Railt\SDL\Node\Visitable;
 
@@ -16,7 +15,7 @@ final class NamedTypeNode extends TypeNode
 {
     public function __construct(
         #[Visitable]
-        public IdentifierNode|VariableNode $name,
+        public IdentifierNode $name,
     ) {
     }
 }
