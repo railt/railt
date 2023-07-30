@@ -21,7 +21,7 @@
         "phplrt/lexer": "^3.2",
         "phplrt/lexer-contracts": "^3.2",
         "phplrt/parser": "^3.2",
-        "phplrt/parser-contracts": "^3.2",
+        "phplrt/parser-contracts": "^3.2.1",
         "phplrt/position": "^3.2",
         "phplrt/position-contracts": "^3.2",
         "phplrt/source": "^3.2",
