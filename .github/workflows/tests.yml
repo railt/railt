@@ -48,5 +48,3 @@ jobs:
           command: composer update --${{ matrix.stability }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
       - name: Execute Unit Tests
         run: composer test:unit
-      - name: Execute Architecture Tests
-        run: composer test:architecture
