@@ -59,6 +59,7 @@
             "Railt\\Http\\Middleware\\Tests\\": "libs/http-middleware/tests",
             "Railt\\Router\\Tests\\": "libs/router/tests",
             "Railt\\SDL\\Tests\\": "libs/sdl/tests",
+            "Railt\\SDL\\Generator\\Tests\\": "libs/sdl-generator/tests",
             "Railt\\TypeSystem\\Tests\\": "libs/type-system/tests"
         }
     },
