@@ -19,11 +19,11 @@ final class StringLiteralNode extends LiteralNode
         '\\"' => '"',
         '\\\\' => '\\',
         '\\/' => '/',
-        '\\b' => 'b',
-        '\\f' => 'f',
-        '\\n' => 'n',
-        '\\r' => 'r',
-        '\\t' => 't',
+        '\\b' => "\x08",
+        '\\f' => "\f",
+        '\\n' => "\n",
+        '\\r' => "\r",
+        '\\t' => "\t",
     ];
 
     /**
@@ -38,6 +38,65 @@ final class StringLiteralNode extends LiteralNode
         public string $value,
         public ?string $representation = null,
     ) {}
+
+    public static function parseInlineString(string $value): self
+    {
+        $value = \substr($value, 1, -1);
+
+        return self::parse($value);
+    }
+
+    public static function parseMultilineString(string $value): self
+    {
+        $value = \substr($value, 3, -3);
+
+        $indentation = self::getMinIndentation($value);
+
+        if ($indentation !== 0) {
+            $lines = [];
+
+            foreach (\explode("\n", $value) as $i => $line) {
+                // Skip first line (GraphQL.js compatibility)
+                if ($i === 0) {
+                    $lines[] = $line;
+                    continue;
+                }
+
+                $lines[] = \substr($line, $indentation);
+            }
+
+            $value = \implode("\n", $lines);
+        }
+
+        $value = \rtrim(\ltrim($value, "\n"));
+
+        return self::parse($value);
+    }
+
+    /**
+     * @return int<0, max>
+     */
+    private static function getMinIndentation(string $text): int
+    {
+        $indentation = \PHP_INT_MAX;
+
+        foreach (\explode("\n", $text) as $i => $line) {
+            // Skip first line (GraphQL.js compatibility)
+            if ($i === 0) {
+                continue;
+            }
+
+            $current = \strlen($line) - \strlen(\ltrim($line));
+            $indentation = \min($current, $indentation);
+
+            if ($indentation === 0) {
+                break;
+            }
+        }
+
+        /** @var int<0, max> */
+        return $indentation;
+    }
 
     public static function parse(string $value): self
     {
