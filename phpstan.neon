@@ -33,5 +33,7 @@ services:
     tags: [ phpat.test ]
   - class: Railt\SDL\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
+  - class: Railt\SDL\Generator\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
   - class: Railt\TypeSystem\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]

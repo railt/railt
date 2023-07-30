@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c54b78b59c6349b45f751aa48078f94c",
+    "content-hash": "0388b732952fb38f62c9430dbe35da0e",
     "packages": [
         {
             "name": "laminas/laminas-code",
@@ -274,114 +274,6 @@
             "time": "2019-01-08T18:20:26+00:00"
         },
         {
-            "name": "psr/http-factory",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-factory.git",
-                "reference": "e616d01114759c4c489f93b099585439f795fe35"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-factory/zipball/e616d01114759c4c489f93b099585439f795fe35",
-                "reference": "e616d01114759c4c489f93b099585439f795fe35",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0.0",
-                "psr/http-message": "^1.0 || ^2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interfaces for PSR-7 HTTP message factories",
-            "keywords": [
-                "factory",
-                "http",
-                "message",
-                "psr",
-                "psr-17",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "support": {
-                "source": "https://github.com/php-fig/http-factory/tree/1.0.2"
-            },
-            "time": "2023-04-10T20:10:41+00:00"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "402d35bcb92c70c026d1a6a9883f06b2ead23d71"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/402d35bcb92c70c026d1a6a9883f06b2ead23d71",
-                "reference": "402d35bcb92c70c026d1a6a9883f06b2ead23d71",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "homepage": "https://github.com/php-fig/http-message",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "support": {
-                "source": "https://github.com/php-fig/http-message/tree/2.0"
-            },
-            "time": "2023-04-04T09:54:51+00:00"
-        },
-        {
             "name": "psr/simple-cache",
             "version": "3.0.0",
             "source": {
@@ -438,11 +330,15 @@
             "dist": {
                 "type": "path",
                 "url": "libs/executor-webonyx",
-                "reference": "8426bfb41c76a023e9ff747aed96dcc85408f136"
+                "reference": "3f23f0db1e23be6850256b6c41877d6d95147138"
             },
             "require": {
                 "php": "^8.1",
+                "psr/event-dispatcher": "^1.0",
                 "railt/foundation": "^2.0",
+                "railt/http-contracts": "^2.0",
+                "railt/http-factory": "^2.0",
+                "railt/http-factory-contracts": "^2.0",
                 "railt/http-middleware-contracts": "^2.0",
                 "railt/type-system": "^2.0",
                 "webonyx/graphql-php": "^14.0"
@@ -682,11 +578,13 @@
             "dist": {
                 "type": "path",
                 "url": "libs/http-factory",
-                "reference": "a5a3a18c58321a108a28033a1cc33bd79858e601"
+                "reference": "615afd38a99e24d32e4ca163685087542cad8103"
             },
             "require": {
                 "ext-json": "*",
                 "php": "^8.1",
+                "railt/http": "^2.0",
+                "railt/http-contracts": "^2.0",
                 "railt/http-factory-contracts": "^2.0"
             },
             "require-dev": {
@@ -748,12 +646,10 @@
             "dist": {
                 "type": "path",
                 "url": "libs/contracts/http-factory",
-                "reference": "4b27888b3a574ac28318d524d1bbb9b19ac5abb2"
+                "reference": "ad4850908422dc58ff1a755576e10c69049c2271"
             },
             "require": {
                 "php": "^8.1",
-                "psr/http-factory": "^1.0",
-                "psr/http-message": "^1.0|^2.0",
                 "railt/http-contracts": "^2.0"
             },
             "require-dev": {
@@ -811,10 +707,11 @@
             "dist": {
                 "type": "path",
                 "url": "libs/http-middleware",
-                "reference": "aa32156dbf2589acd6667ca447de180f1ad886d6"
+                "reference": "de0323464eaeab6c24c6747037db1b852b939cee"
             },
             "require": {
                 "php": "^8.1",
+                "railt/http-contracts": "^2.0",
                 "railt/http-middleware-contracts": "^2.0"
             },
             "require-dev": {
@@ -932,20 +829,23 @@
             "dist": {
                 "type": "path",
                 "url": "libs/router",
-                "reference": "4ffc3d93ee4d41da5b8d0a3ec7be5e148a8bede4"
+                "reference": "43d8483fd8909d51c2632dd9ef76181937d7d6ba"
             },
             "require": {
                 "php": "^8.1",
                 "psr/container": "^1.0|^2.0",
                 "psr/event-dispatcher": "^1.0",
-                "railt/http-contracts": "^2.0"
+                "railt/http-contracts": "^2.0",
+                "railt/type-system": "^2.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^10.2",
+                "railt/foundation": "^2.0",
+                "symfony/event-dispatcher": "^5.4|^6.0",
                 "vimeo/psalm": "^5.13"
             },
             "suggest": {
-                "railt/foundation": "(^2.0) For extension loading"
+                "railt/foundation": "(^2.0) For router extension loading"
             },
             "type": "library",
             "extra": {
@@ -992,19 +892,35 @@
             "dist": {
                 "type": "path",
                 "url": "libs/sdl",
-                "reference": "fe99a19b66b24a81a52b755a6298157cc176a58b"
+                "reference": "0073bf7a094d5bdb070e04800336ccc0feee2fd2"
             },
             "require": {
                 "php": "^8.1",
+                "phplrt/ast-contracts": "^3.2",
+                "phplrt/exception-contracts": "^3.2",
                 "phplrt/lexer": "^3.2",
+                "phplrt/lexer-contracts": "^3.2",
                 "phplrt/parser": "^3.2",
+                "phplrt/parser-contracts": "^3.2",
+                "phplrt/position": "^3.2",
+                "phplrt/position-contracts": "^3.2",
+                "phplrt/source": "^3.2",
+                "phplrt/source-contracts": "^3.2",
                 "psr/simple-cache": "^1.0|^2.0|^3.0",
                 "railt/type-system": "^2.0",
                 "voku/portable-utf8": "^6.0"
             },
             "require-dev": {
+                "phplrt/compiler": "^3.2",
                 "phpunit/phpunit": "^10.2",
+                "sebastian/environment": "^5.1|^6.0",
+                "symfony/console": "^5.4|^6.0",
                 "vimeo/psalm": "^5.13"
+            },
+            "suggest": {
+                "phplrt/compiler": "(^3.2) For grammar compilation support",
+                "sebastian/environment": "(^5.1|^6.0) For console highlighting detection in exceptions",
+                "symfony/console": "(^5.4|^6.0) For console commands support"
             },
             "type": "library",
             "extra": {
@@ -1043,6 +959,64 @@
             "support": {
                 "issues": "https://github.com/railt/railt/issues",
                 "source": "https://github.com/railt/sdl"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "railt/sdl-generator",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "libs/sdl-generator",
+                "reference": "c3e5efd2d2d57d05fa01cf4fe02792df5a7d317c"
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10.2",
+                "vimeo/psalm": "^5.13"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev",
+                    "dev-main": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Railt\\SDL\\Generator\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Railt\\SDL\\Generator\\Tests\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Nesmeyanov",
+                    "email": "nesk@xakep.ru"
+                }
+            ],
+            "homepage": "https://github.com/railt",
+            "keywords": [
+                "abstraction",
+                "graphql",
+                "interop",
+                "language",
+                "sdl",
+                "type system"
+            ],
+            "support": {
+                "issues": "https://github.com/railt/railt/issues",
+                "source": "https://github.com/railt/sdl-generator"
             },
             "transport-options": {
                 "relative": true
@@ -3995,6 +3969,114 @@
                 "source": "https://github.com/php-fig/cache/tree/3.0.0"
             },
             "time": "2021-02-03T23:26:27+00:00"
+        },
+        {
+            "name": "psr/http-factory",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-factory.git",
+                "reference": "e616d01114759c4c489f93b099585439f795fe35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-factory/zipball/e616d01114759c4c489f93b099585439f795fe35",
+                "reference": "e616d01114759c4c489f93b099585439f795fe35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "psr/http-message": "^1.0 || ^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for PSR-7 HTTP message factories",
+            "keywords": [
+                "factory",
+                "http",
+                "message",
+                "psr",
+                "psr-17",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/http-factory/tree/1.0.2"
+            },
+            "time": "2023-04-10T20:10:41+00:00"
+        },
+        {
+            "name": "psr/http-message",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message.git",
+                "reference": "402d35bcb92c70c026d1a6a9883f06b2ead23d71"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/402d35bcb92c70c026d1a6a9883f06b2ead23d71",
+                "reference": "402d35bcb92c70c026d1a6a9883f06b2ead23d71",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2 || ^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "source": "https://github.com/php-fig/http-message/tree/2.0"
+            },
+            "time": "2023-04-04T09:54:51+00:00"
         },
         {
             "name": "psr/log",

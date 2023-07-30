@@ -43,6 +43,9 @@
         <testsuite name="railt/sdl">
             <directory>libs/sdl/tests/Unit</directory>
         </testsuite>
+        <testsuite name="railt/sdl-generator">
+            <directory>libs/sdl-generator/tests/Unit</directory>
+        </testsuite>
         <testsuite name="railt/type-system">
             <directory>libs/type-system/tests/Unit</directory>
         </testsuite>
