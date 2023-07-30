@@ -18,6 +18,8 @@ final class ComposerDependenciesTest
             ->classes(
                 Selector::namespace('Railt\SDL\Generator'),
                 Selector::classname(\Attribute::class),
+                // @dependencies
+                Selector::namespace('Railt\TypeSystem'),
             )
         ;
     }
