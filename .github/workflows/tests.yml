@@ -46,5 +46,7 @@ jobs:
           timeout_minutes: 5
           max_attempts: 5
           command: composer update --${{ matrix.stability }} --ignore-platform-reqs --prefer-dist --no-interaction --no-progress
-      - name: Execute Tests
+      - name: Execute Unit Tests
         run: composer phpunit
+      - name: Execute Architecture Tests
+        run: phpstan analyse -c phpstan.neon
