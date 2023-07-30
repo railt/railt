@@ -335,10 +335,12 @@ return [
         );
         },
         63 => function (\Phplrt\Parser\Context $ctx, $children) {
-            return Expr\Literal\StringLiteralNode::parse(\substr($children->getValue(), 3, -3));
+            return $this->stringPool[$children]
+            ??= Expr\Literal\StringLiteralNode::parseMultilineString($children->getValue());
         },
         64 => function (\Phplrt\Parser\Context $ctx, $children) {
-            return Expr\Literal\StringLiteralNode::parse(\substr($children->getValue(), 1, -1));
+            return $this->stringPool[$children]
+            ??= Expr\Literal\StringLiteralNode::parseInlineString($children->getValue());
         },
         33 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Expr\VariableNode($children[0]->getValue());

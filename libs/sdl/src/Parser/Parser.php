@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Parser;
 
 use Phplrt\Contracts\Exception\RuntimeExceptionInterface;
+use Phplrt\Contracts\Lexer\TokenInterface;
 use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Exception\RuntimeException;
 use Phplrt\Lexer\Exception\UnrecognizedTokenException;
@@ -17,6 +18,7 @@ use Phplrt\Parser\ParserConfigsInterface;
 use Phplrt\Position\Position;
 use Psr\SimpleCache\InvalidArgumentException;
 use Railt\SDL\Exception\ParsingException;
+use Railt\SDL\Node\Expression\Literal\StringLiteralNode;
 use Railt\SDL\Node\Node;
 
 /**
@@ -34,6 +36,20 @@ use Railt\SDL\Node\Node;
 final class Parser implements ParserInterface
 {
     /**
+     * A string pool that contains the token as a key and the
+     * processed {@see StringLiteralNode} object.
+     *
+     * Subsequent retrieval of an identical object from this pool will not
+     * require the string to be parsed again.
+     *
+     * Note that the relation to this pool is available from within
+     * the grammar `.pp2` files.
+     *
+     * @var \WeakMap<TokenInterface, StringLiteralNode>
+     */
+    private readonly \WeakMap $stringPool;
+
+    /**
      * @var non-empty-string
      */
     public const DEFAULT_GRAMMAR_PATHNAME = __DIR__ . '/../../resources/grammar.php';
@@ -42,6 +58,8 @@ final class Parser implements ParserInterface
 
     public function __construct()
     {
+        $this->stringPool = new \WeakMap();
+
         /**
          * @psalm-var GrammarConfigArray $grammar
          * @psalm-suppress UnresolvableInclude

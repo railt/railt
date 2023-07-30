@@ -21,13 +21,15 @@ StringLiteral
   ;
 
 BlockStringLiteral -> {
-    return Expr\Literal\StringLiteralNode::parse(\substr($children->getValue(), 3, -3));
+    return $this->stringPool[$children]
+        ??= Expr\Literal\StringLiteralNode::parseMultilineString($children->getValue());
 }
   : <T_BLOCK_STRING>
   ;
 
 InlineStringLiteral -> {
-    return Expr\Literal\StringLiteralNode::parse(\substr($children->getValue(), 1, -1));
+    return $this->stringPool[$children]
+        ??= Expr\Literal\StringLiteralNode::parseInlineString($children->getValue());
 }
   : <T_STRING>
   ;
