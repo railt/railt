@@ -55,16 +55,6 @@ abstract class BuildChildCommand extends BuildCommand implements BuildChildComma
         }
 
         if ($node instanceof NamedTypeNode) {
-            if ($node->name instanceof VariableNode) {
-                $value = $this->ctx->var($node->name);
-
-                if (!\is_string($value)) {
-                    throw ExpressionException::fromInvalidIdentifierWithValue($node->name, $value);
-                }
-
-                return $this->ctx->getType($value, $node->name, $from);
-            }
-
             return $this->ctx->getType($node->name->value, $node->name, $from);
         }
 
