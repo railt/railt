@@ -51,6 +51,6 @@ final class ScalarTypeDefinitionTest extends TestCase
             scalar Example
             GraphQL);
 
-        self::assertSame("\nexample multiline description\n", $scalar->getDescription());
+        self::assertSame("example multiline description", $scalar->getDescription());
     }
 }

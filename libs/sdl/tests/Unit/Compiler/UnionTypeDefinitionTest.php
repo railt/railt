@@ -55,6 +55,6 @@ final class UnionTypeDefinitionTest extends TestCase
             union Example = Obj
             GraphQL);
 
-        self::assertSame("\nexample multiline description\n", $union->getDescription());
+        self::assertSame("example multiline description", $union->getDescription());
     }
 }

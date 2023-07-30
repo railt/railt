@@ -51,7 +51,7 @@ final class EnumTypeDefinitionTest extends TestCase
             enum Example
             GraphQL);
 
-        self::assertSame("\nexample multiline description\n", $enum->getDescription());
+        self::assertSame("example multiline description", $enum->getDescription());
     }
 
     public function testNoValues(): void
@@ -136,6 +136,6 @@ final class EnumTypeDefinitionTest extends TestCase
 
         $value = $enum->getValue('EXAMPLE');
         self::assertNotNull($value);
-        self::assertSame("\n    description\n    ", $value->getDescription());
+        self::assertSame("description", $value->getDescription());
     }
 }

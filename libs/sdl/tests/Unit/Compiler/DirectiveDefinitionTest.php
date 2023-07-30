@@ -56,7 +56,7 @@ final class DirectiveDefinitionTest extends TestCase
             directive @example on OBJECT
             GraphQL);
 
-        self::assertSame("\nexample multiline description\n", $directive->getDescription());
+        self::assertSame("example multiline description", $directive->getDescription());
     }
 
     public function testDirectiveRedefine(): void
@@ -205,7 +205,7 @@ final class DirectiveDefinitionTest extends TestCase
         $argument = $directive->getArgument('arg');
 
         self::assertNotNull($argument);
-        self::assertSame("\n    description\n    ", $argument->getDescription());
+        self::assertSame("description", $argument->getDescription());
     }
 
     public function testArgumentNoDefault(): void
@@ -242,8 +242,7 @@ final class DirectiveDefinitionTest extends TestCase
         $this->expectExceptionMessage('non-string value');
 
         $this->compile(<<<'GraphQL'
-            directive @example(arg: String = {
-    }) on OBJECT
+            directive @example(arg: String = {}) on OBJECT
             GraphQL);
     }
 

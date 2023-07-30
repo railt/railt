@@ -51,7 +51,7 @@ final class InterfaceTypeDefinitionTest extends TestCase
             interface Example
             GraphQL);
 
-        self::assertSame("\nexample multiline description\n", $interface->getDescription());
+        self::assertSame("example multiline description", $interface->getDescription());
     }
 
     public function testNoFields(): void

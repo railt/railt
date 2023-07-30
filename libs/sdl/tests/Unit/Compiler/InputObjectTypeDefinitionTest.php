@@ -51,7 +51,7 @@ final class InputObjectTypeDefinitionTest extends TestCase
             input Example
             GraphQL);
 
-        self::assertSame("\nexample multiline description\n", $input->getDescription());
+        self::assertSame("example multiline description", $input->getDescription());
     }
 
     public function testNoFields(): void
