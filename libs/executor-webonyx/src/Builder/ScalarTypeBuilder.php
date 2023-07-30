@@ -39,7 +39,7 @@ final class ScalarTypeBuilder extends Builder
 
     private function create(ScalarType $scalar): WebonyxScalarType
     {
-        return new class($scalar) extends CustomScalarType {
+        return new class ($scalar) extends CustomScalarType {
             public function __construct(ScalarType $scalar)
             {
                 parent::__construct([

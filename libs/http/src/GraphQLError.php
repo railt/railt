@@ -286,5 +286,3 @@ class GraphQLError extends \Exception implements ErrorInterface
         return $instance;
     }
 }
-
-
