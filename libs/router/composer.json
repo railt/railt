@@ -29,7 +29,7 @@
         "railt/foundation": "^2.0",
         "symfony/event-dispatcher": "^5.4|^6.0",
         "phpunit/phpunit": "^10.2",
-        "vimeo/psalm": "^5.13"
+        "vimeo/psalm": "^5.14"
     },
     "autoload-dev": {
         "psr-4": {

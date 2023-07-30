@@ -39,7 +39,7 @@
         "phplrt/compiler": "^3.2",
         "symfony/console": "^5.4|^6.0",
         "phpunit/phpunit": "^10.2",
-        "vimeo/psalm": "^5.13"
+        "vimeo/psalm": "^5.14"
     },
     "autoload-dev": {
         "psr-4": {
