@@ -2,7 +2,7 @@
     <a href="https://railt.org"><img src="https://avatars.githubusercontent.com/u/31258828?s=200" width="200" alt="Railt" /></a>
 </p>
 <p align="center">
-    <a href="https://github.com/railt/railt/actions?workflow=Testing"><img src="https://github.com/railt/railt/workflows/Testing/badge.svg" alt="Testing" /></a>
+    <a href="https://github.com/railt/railt/actions?workflow=Testing"><img src="https://github.com/railt/railt/workflows/tests/badge.svg" alt="Testing" /></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-8.1+-6f4ca5.svg" alt="PHP 8.1+"></a>
     <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
     <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
