@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Generator;
+namespace Railt\SDL\Generator\Execution;
 
+use Railt\SDL\Generator\Config;
+use Railt\SDL\Generator\Generator;
 use Railt\TypeSystem\Execution\Directive;
 
 final class DirectiveGenerator extends Generator

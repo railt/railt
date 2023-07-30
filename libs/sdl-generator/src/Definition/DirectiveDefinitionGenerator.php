@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Generator;
+namespace Railt\SDL\Generator\Definition;
 
-use Railt\SDL\Generator\Value\ValueGeneratorFactory;
+use Railt\SDL\Generator\Config;
+use Railt\SDL\Generator\Type\DefinitionGenerator;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
 
-final class DirectiveDefinitionGenerator extends Generator
+/**
+ * @template-extends DefinitionGenerator<DirectiveDefinition>
+ */
+final class DirectiveDefinitionGenerator extends DefinitionGenerator
 {
     public function __construct(
         private readonly DirectiveDefinition $directive,

@@ -7,9 +7,9 @@ namespace Railt\SDL\Generator\Type;
 use Railt\TypeSystem\Definition\Type\UnionType;
 
 /**
- * @template-extends TypeGenerator<UnionType>
+ * @template-extends TypeDefinitionGenerator<UnionType>
  */
-final class UnionTypeDefinitionGenerator extends TypeGenerator
+final class UnionTypeDefinitionGenerator extends TypeDefinitionGenerator
 {
     public function __toString(): string
     {

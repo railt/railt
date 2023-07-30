@@ -32,7 +32,7 @@ class InputValueGenerator extends Generator
         foreach ($this->values as $key => $value) {
             $result[] = $this->printer->prefixed(1, '%s: %s', [
                 $key,
-                new ValueGeneratorFactory($value, $this->config),
+                $this->value($value),
             ]);
         }
 
@@ -51,9 +51,7 @@ class InputValueGenerator extends Generator
         $result = [];
 
         foreach ($this->values as $key => $value) {
-            $formatted = new ValueGeneratorFactory($value, $this->config);
-
-            $result[] = \sprintf('%s: %s', $key, $formatted);
+            $result[] = \sprintf('%s: %s', $key, $this->value($value));
         }
 
         if ($this->asInput) {

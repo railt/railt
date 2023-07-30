@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Generator;
+namespace Railt\SDL\Generator\Definition;
 
+use Railt\SDL\Generator\Config;
+use Railt\SDL\Generator\Type\DefinitionGenerator;
 use Railt\TypeSystem\Definition\FieldDefinition;
 
-final class FieldDefinitionGenerator extends Generator
+/**
+ * @template-extends DefinitionGenerator<FieldDefinition>
+ */
+final class FieldDefinitionGenerator extends DefinitionGenerator
 {
     public function __construct(
         private readonly FieldDefinition $field,

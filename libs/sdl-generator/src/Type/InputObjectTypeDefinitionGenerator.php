@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Generator\Type;
 
-use Railt\SDL\Generator\InputFieldDefinitionGenerator;
-use Railt\SDL\Generator\Value\ValueGeneratorFactory;
+use Railt\SDL\Generator\Definition\InputFieldDefinitionGenerator;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
 
 /**
- * @template-extends TypeGenerator<InputObjectType>
+ * @template-extends TypeDefinitionGenerator<InputObjectType>
  */
-final class InputObjectTypeDefinitionGenerator extends TypeGenerator
+final class InputObjectTypeDefinitionGenerator extends TypeDefinitionGenerator
 {
     public function __toString(): string
     {

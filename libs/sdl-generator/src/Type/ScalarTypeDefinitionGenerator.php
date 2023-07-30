@@ -7,9 +7,9 @@ namespace Railt\SDL\Generator\Type;
 use Railt\TypeSystem\Definition\Type\ScalarType;
 
 /**
- * @template-extends TypeGenerator<ScalarType>
+ * @template-extends TypeDefinitionGenerator<ScalarType>
  */
-final class ScalarTypeDefinitionGenerator extends TypeGenerator
+final class ScalarTypeDefinitionGenerator extends TypeDefinitionGenerator
 {
     public function __toString(): string
     {

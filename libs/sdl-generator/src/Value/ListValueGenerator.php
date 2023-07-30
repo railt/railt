@@ -25,9 +25,7 @@ final class ListValueGenerator extends Generator
         $result = [];
 
         foreach ($this->values as $value) {
-            $formatted = new ValueGeneratorFactory($value, $this->config);
-
-            $result[] = $this->printer->prefixed(1, (string)$formatted);
+            $result[] = $this->printer->prefixed(1, (string)$this->value($value));
         }
 
         return \vsprintf('[%s%s%s]', [
@@ -42,7 +40,7 @@ final class ListValueGenerator extends Generator
         $result = [];
 
         foreach ($this->values as $value) {
-            $result[] = new ValueGeneratorFactory($value, $this->config);
+            $result[] = $this->value($value);
         }
 
         return \sprintf('[%s]', \implode(', ', $result));

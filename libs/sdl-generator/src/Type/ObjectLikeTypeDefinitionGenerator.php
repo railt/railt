@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Generator\Type;
 
-use Railt\SDL\Generator\FieldDefinitionGenerator;
+use Railt\SDL\Generator\Definition\FieldDefinitionGenerator;
 use Railt\TypeSystem\Definition\Type\ObjectLikeType;
 
 /**
  * @template TDefinition of ObjectLikeType
  *
- * @template-extends TypeGenerator<TDefinition>
+ * @template-extends TypeDefinitionGenerator<TDefinition>
  */
-abstract class ObjectLikeTypeDefinitionGenerator extends TypeGenerator
+abstract class ObjectLikeTypeDefinitionGenerator extends TypeDefinitionGenerator
 {
     abstract protected function getTitle(): string;
 

@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Generator;
+namespace Railt\SDL\Generator\Definition;
 
-use Railt\SDL\Generator\Value\ValueGeneratorFactory;
+use Railt\SDL\Generator\Config;
+use Railt\SDL\Generator\Type\DefinitionGenerator;
 use Railt\TypeSystem\Definition\InputFieldDefinition;
 
-final class InputFieldDefinitionGenerator extends Generator
+/**
+ * @template-extends DefinitionGenerator<InputFieldDefinition>
+ */
+final class InputFieldDefinitionGenerator extends DefinitionGenerator
 {
     public function __construct(
         private readonly InputFieldDefinition $field,
@@ -30,9 +34,7 @@ final class InputFieldDefinitionGenerator extends Generator
         ]);
 
         if ($this->field->hasDefaultValue()) {
-            $value = new ValueGeneratorFactory($this->field->getDefaultValue(), $this->config);
-
-            $definition .= ' = ' . (string)$value;
+            $definition .= ' = ' . (string)$this->value($this->field->getDefaultValue());
         }
 
         $result[] = $definition;

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Generator;
+namespace Railt\SDL\Generator\Definition;
 
-use Railt\SDL\Generator\Type\TypeGenerator;
+use Railt\SDL\Generator\Type\DefinitionGenerator;
 use Railt\TypeSystem\Definition\SchemaDefinition;
 
 /**
- * @template-extends TypeGenerator<SchemaDefinition>
+ * @template-extends DefinitionGenerator<SchemaDefinition>
  */
-final class SchemaDefinitionGenerator extends TypeGenerator
+final class SchemaDefinitionGenerator extends DefinitionGenerator
 {
     public function __toString(): string
     {

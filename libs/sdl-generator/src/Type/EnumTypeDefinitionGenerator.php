@@ -7,9 +7,9 @@ namespace Railt\SDL\Generator\Type;
 use Railt\TypeSystem\Definition\Type\EnumType;
 
 /**
- * @template-extends TypeGenerator<EnumType>
+ * @template-extends TypeDefinitionGenerator<EnumType>
  */
-final class EnumTypeDefinitionGenerator extends TypeGenerator
+final class EnumTypeDefinitionGenerator extends TypeDefinitionGenerator
 {
     public function __toString(): string
     {

@@ -11,7 +11,7 @@ use Railt\TypeSystem\DefinitionInterface;
 /**
  * @template TDefinition of DefinitionInterface
  */
-abstract class TypeGenerator extends Generator
+abstract class DefinitionGenerator extends Generator
 {
     /**
      * @param TDefinition $type

@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Generator;
+namespace Railt\SDL\Generator\Execution;
 
+use Railt\SDL\Generator\Config;
 use Railt\SDL\Generator\Value\InputValueGenerator;
 use Railt\TypeSystem\Execution\Argument;
 

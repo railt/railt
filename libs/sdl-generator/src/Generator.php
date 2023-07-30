@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Generator;
 
+use Railt\SDL\Generator\Execution\DirectiveGenerator;
 use Railt\SDL\Generator\Internal\Printer;
 use Railt\SDL\Generator\Value\StringValueGenerator;
+use Railt\SDL\Generator\Value\ValueGeneratorFactory;
 use Railt\TypeSystem\Definition\NamedTypeDefinitionInterface;
 use Railt\TypeSystem\Execution\Directive;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
 use Railt\TypeSystem\TypeInterface;
-use Railt\TypeSystem\WrappingTypeInterface;
 
 abstract class Generator implements GeneratorInterface
 {
@@ -21,6 +22,11 @@ abstract class Generator implements GeneratorInterface
         protected readonly Config $config,
     ) {
         $this->printer = new Printer($this->config);
+    }
+
+    protected function value(mixed $value): \Stringable
+    {
+        return new ValueGeneratorFactory($value, $this->config);
     }
 
     /**

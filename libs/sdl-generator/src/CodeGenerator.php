@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Generator;
 
+use Railt\SDL\Generator\Definition\DirectiveDefinitionGenerator;
+use Railt\SDL\Generator\Definition\SchemaDefinitionGenerator;
 use Railt\SDL\Generator\Type\EnumTypeDefinitionGenerator;
 use Railt\SDL\Generator\Type\InputObjectTypeDefinitionGenerator;
 use Railt\SDL\Generator\Type\InterfaceTypeDefinitionGenerator;
