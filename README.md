@@ -3,7 +3,7 @@
 </p>
 <p align="center">
     <a href="https://github.com/railt/railt/actions?workflow=Testing"><img src="https://github.com/railt/railt/workflows/tests/badge.svg" alt="Testing" /></a>
-    <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-8.1+-6f4ca5.svg" alt="PHP 8.1+"></a>
+    <a href="https://packagist.org/packages/railt/railt"><img src="https://img.shields.io/badge/PHP-^8.1-6f4ca5.svg" alt="PHP ^8.1"></a>
     <a href="https://railt.org"><img src="https://img.shields.io/badge/official-site-6f4ca5.svg" alt="railt.org"></a>
     <a href="https://discord.gg/ND7SpD4"><img src="https://img.shields.io/badge/discord-chat-6f4ca5.svg" alt="Discord"></a>
     <a href="https://packagist.org/packages/railt/railt"><img src="https://poser.pugx.org/railt/railt/version" alt="Latest Stable Version"></a>
