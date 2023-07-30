@@ -18,6 +18,9 @@ final class ValueGeneratorFactory extends Generator
         parent::__construct($config);
     }
 
+    /**
+     * @psalm-suppress MixedArgumentTypeCoercion
+     */
     public function __toString(): string
     {
         return (string)match (true) {

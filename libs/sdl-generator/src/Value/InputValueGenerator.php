@@ -9,6 +9,9 @@ use Railt\SDL\Generator\Generator;
 
 class InputValueGenerator extends Generator
 {
+    /**
+     * @param iterable<non-empty-string, mixed> $values
+     */
     public function __construct(
         public readonly iterable $values,
         Config $config = new Config(),
@@ -51,7 +54,7 @@ class InputValueGenerator extends Generator
         $result = [];
 
         foreach ($this->values as $key => $value) {
-            $result[] = \sprintf('%s: %s', $key, $this->value($value));
+            $result[] = \sprintf('%s: %s', $key, (string)$this->value($value));
         }
 
         if ($this->asInput) {

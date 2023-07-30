@@ -49,21 +49,8 @@ final class Printer
     }
 
     /**
-     * @param int<0, max> $level
-     * @param iterable<string> $messages
-     */
-    public function prefixedAll(int $level, iterable $messages): string
-    {
-        $result = [];
-
-        foreach ($messages as $message) {
-            $result[] = $this->prefixed($level, $message);
-        }
-
-        return $this->join($result);
-    }
-
-    /**
+     * @psalm-suppress InvalidOperand : psalm bug
+     *
      * @param iterable<string|\Stringable> $messages
      */
     public function join(iterable $messages): string

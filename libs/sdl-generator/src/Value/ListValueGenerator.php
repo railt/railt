@@ -24,6 +24,7 @@ final class ListValueGenerator extends Generator
     {
         $result = [];
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($this->values as $value) {
             $result[] = $this->printer->prefixed(1, (string)$this->value($value));
         }
@@ -39,6 +40,7 @@ final class ListValueGenerator extends Generator
     {
         $result = [];
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($this->values as $value) {
             $result[] = $this->value($value);
         }
@@ -46,9 +48,6 @@ final class ListValueGenerator extends Generator
         return \sprintf('[%s]', \implode(', ', $result));
     }
 
-    /**
-     * @psalm-suppress MixedAssignment
-     */
     public function __toString(): string
     {
         if (StringValueGenerator::isOneOfMultilineString($this->values)) {

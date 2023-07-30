@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Generator\Definition;
 
-use Railt\SDL\Generator\Config;
 use Railt\SDL\Generator\Type\DefinitionGenerator;
 use Railt\TypeSystem\Definition\DirectiveDefinition;
 
@@ -13,30 +12,23 @@ use Railt\TypeSystem\Definition\DirectiveDefinition;
  */
 final class DirectiveDefinitionGenerator extends DefinitionGenerator
 {
-    public function __construct(
-        private readonly DirectiveDefinition $directive,
-        Config $config = new Config(),
-    ) {
-        parent::__construct($config);
-    }
-
     private function getRepeatable(): string
     {
-        return $this->directive->isRepeatable() ? ' repeatable' : '';
+        return $this->type->isRepeatable() ? ' repeatable' : '';
     }
 
     public function __toString(): string
     {
         $result = [];
 
-        if ($description = $this->directive->getDescription()) {
+        if ($description = $this->type->getDescription()) {
             $result[] = $this->description($description);
         }
 
-        if ($this->directive->getNumberOfArguments()) {
-            $result[] = \sprintf('directive @%s(', $this->directive->getName());
+        if ($this->type->getNumberOfArguments()) {
+            $result[] = \sprintf('directive @%s(', $this->type->getName());
 
-            foreach ($this->directive->getArguments() as $argument) {
+            foreach ($this->type->getArguments() as $argument) {
                 $formatted = new ArgumentDefinitionGenerator($argument);
 
                 $result[] = $this->printer->prefixed(1, (string)$formatted);
@@ -44,11 +36,11 @@ final class DirectiveDefinitionGenerator extends DefinitionGenerator
 
             $result[] = ')' . ($this->getRepeatable()) . ' on';
         } else {
-            $result[] = \sprintf('directive @%s', $this->directive->getName())
+            $result[] = \sprintf('directive @%s', $this->type->getName())
                 . ($this->getRepeatable()) . ' on';
         }
 
-        foreach ($this->directive->getLocations() as $location) {
+        foreach ($this->type->getLocations() as $location) {
             $result[] = $this->printer->prefixed(1, '| %s', [
                 $location->getName(),
             ]);
