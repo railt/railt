@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://railt.org"><img src="https://avatars.githubusercontent.com/u/31258828?s=140" width="140" alt="Railt" /></a>
+    <a href="https://railt.org"><img src="https://avatars.githubusercontent.com/u/31258828?s=300" width="150" alt="Railt" /></a>
 </p>
 <p align="center">
     <a href="https://github.com/railt/railt/actions?workflow=Testing"><img src="https://github.com/railt/railt/workflows/tests/badge.svg" alt="Testing" /></a>
