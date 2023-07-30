@@ -17,7 +17,8 @@ final class ErrorBuilder
 {
     public function __construct(
         private readonly ErrorFactoryInterface $errors = new GraphQLErrorFactory(),
-    ) {}
+    ) {
+    }
 
     public function create(\Throwable $e): ErrorInterface
     {

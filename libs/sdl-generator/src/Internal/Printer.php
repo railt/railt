@@ -14,7 +14,8 @@ final class Printer
 {
     public function __construct(
         private readonly Config $config,
-    ) {}
+    ) {
+    }
 
     /**
      * @param int<0, max> $level

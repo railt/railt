@@ -31,5 +31,6 @@ final class FieldNode extends Statement
         public array $arguments = [],
         #[Visitable]
         public array $directives = [],
-    ) {}
+    ) {
+    }
 }

@@ -16,7 +16,8 @@ final class ConstLiteralNode extends LiteralNode
     public function __construct(
         #[Visitable]
         public IdentifierNode $value,
-    ) {}
+    ) {
+    }
 
     public function __toString(): string
     {

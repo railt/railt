@@ -10,5 +10,6 @@ abstract class ConnectionEvent
 {
     public function __construct(
         public readonly ConnectionInterface $connection,
-    ) {}
+    ) {
+    }
 }

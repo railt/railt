@@ -26,5 +26,6 @@ abstract class TypeDefinitionNode extends Statement
         public DescriptionNode $description,
         #[Visitable]
         public array $directives = [],
-    ) {}
+    ) {
+    }
 }

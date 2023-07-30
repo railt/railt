@@ -17,5 +17,6 @@ final class NamedTypeNode extends TypeNode
     public function __construct(
         #[Visitable]
         public IdentifierNode|VariableNode $name,
-    ) {}
+    ) {
+    }
 }

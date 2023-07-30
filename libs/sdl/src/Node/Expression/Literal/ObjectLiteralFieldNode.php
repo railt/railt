@@ -19,7 +19,8 @@ final class ObjectLiteralFieldNode extends LiteralNode
         public IdentifierNode $key,
         #[Visitable]
         public Expression $value,
-    ) {}
+    ) {
+    }
 
     public function __toString(): string
     {

@@ -14,5 +14,6 @@ abstract class Command implements CommandInterface
 {
     public function __construct(
         protected readonly Context $ctx,
-    ) {}
+    ) {
+    }
 }

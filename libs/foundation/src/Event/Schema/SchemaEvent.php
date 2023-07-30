@@ -14,5 +14,6 @@ abstract class SchemaEvent
     public function __construct(
         public readonly CompilerInterface $compiler,
         public readonly mixed $source,
-    ) {}
+    ) {
+    }
 }

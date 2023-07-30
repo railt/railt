@@ -15,5 +15,6 @@ abstract class GenericTypeNode extends TypeNode
     public function __construct(
         #[Visitable]
         public TypeNode $type,
-    ) {}
+    ) {
+    }
 }

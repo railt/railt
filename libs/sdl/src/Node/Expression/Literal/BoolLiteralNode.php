@@ -13,7 +13,8 @@ final class BoolLiteralNode extends LiteralNode
     public function __construct(
         public bool $value,
         public ?string $representation = null,
-    ) {}
+    ) {
+    }
 
     public static function parse(string $value): self
     {

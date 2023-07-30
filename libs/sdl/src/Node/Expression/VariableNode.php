@@ -15,7 +15,8 @@ final class VariableNode extends Expression
      */
     public function __construct(
         public string $name,
-    ) {}
+    ) {
+    }
 
     public function __toString(): string
     {

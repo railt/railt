@@ -15,5 +15,6 @@ final class DescriptionNode extends Node
     public function __construct(
         #[Visitable]
         public ?StringLiteralNode $value = null,
-    ) {}
+    ) {
+    }
 }

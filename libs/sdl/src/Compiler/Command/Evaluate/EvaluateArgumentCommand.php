@@ -21,7 +21,8 @@ final class EvaluateArgumentCommand implements CommandInterface
         private readonly Context $ctx,
         private readonly ArgumentNode $node,
         private readonly Directive $directive,
-    ) {}
+    ) {
+    }
 
     public function exec(): void
     {

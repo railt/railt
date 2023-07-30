@@ -13,7 +13,8 @@ final class IntLiteralNode extends LiteralNode
     public function __construct(
         public int $value,
         public ?string $representation = null,
-    ) {}
+    ) {
+    }
 
     /**
      * @param numeric-string $value

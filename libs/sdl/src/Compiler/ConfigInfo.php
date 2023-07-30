@@ -51,7 +51,8 @@ final class ConfigInfo
         public readonly bool $castScalarToString = true,
         public readonly bool $castNullableTypeToDefaultValue = true,
         public readonly bool $castListTypeToDefaultValue = true,
-    ) {}
+    ) {
+    }
 
     public static function strict(Specification $spec = Specification::DEFAULT): self
     {

@@ -35,7 +35,8 @@ final class ConstExprEvaluator
         private readonly Queue $queue,
         private readonly array $variables,
         private readonly ConfigInfo $config,
-    ) {}
+    ) {
+    }
 
     public function eval(TypeInterface $type, Expression $expr): mixed
     {

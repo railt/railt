@@ -19,7 +19,8 @@ final class RouteCompiler
     public function __construct(
         private readonly InstantiatorInterface $instantiator,
         private readonly ?ContainerInterface $container = null,
-    ) {}
+    ) {
+    }
 
     /**
      * @param non-empty-string $action

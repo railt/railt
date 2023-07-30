@@ -32,11 +32,15 @@ directive @route(
     Interfaces:
 
     ```
-    interface ExampleInterface {}
+    interface ExampleInterface {
+    }
 
-    type A implements ExampleInterface {}
-    type B implements ExampleInterface {}
-    type C implements ExampleInterface {}
+    type A implements ExampleInterface {
+    }
+    type B implements ExampleInterface {
+    }
+    type C implements ExampleInterface {
+    }
 
     type ExampleType {
         field: ExampleInterface!

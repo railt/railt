@@ -24,5 +24,6 @@ final class SchemaExtensionNode extends Statement
         public array $fields = [],
         #[Visitable]
         public array $directives = [],
-    ) {}
+    ) {
+    }
 }

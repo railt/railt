@@ -19,7 +19,8 @@ final class EvaluateInputFieldDefaultValue implements CommandInterface
         private readonly Context $ctx,
         private readonly InputFieldDefinition $field,
         private readonly InputFieldNode $node,
-    ) {}
+    ) {
+    }
 
     public function exec(): void
     {

@@ -23,5 +23,6 @@ abstract class TypeExtensionNode extends Statement
         public NameNode $name,
         #[Visitable]
         public array $directives = [],
-    ) {}
+    ) {
+    }
 }

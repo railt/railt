@@ -28,7 +28,8 @@ final class EvaluateInputObjectValue implements CommandInterface
         private readonly NodeInterface $node,
         private readonly InputObjectType $input,
         private array &$defaults,
-    ) {}
+    ) {
+    }
 
     public function exec(): void
     {
