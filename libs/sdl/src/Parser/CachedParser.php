@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Railt\SDL\Parser;
 
-use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Source\File;
 use Psr\SimpleCache\CacheInterface;

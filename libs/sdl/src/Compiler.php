@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Source\File;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use Railt\SDL\Compiler\Command\CompileCommand;
-use Railt\SDL\Config;
+use Railt\SDL\Compiler\Command\Evaluate\GenerateSchemaCommand;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Compiler\Exception\FormatterInterface;
 use Railt\SDL\Compiler\Exception\PrettyFormatter;
@@ -21,6 +20,7 @@ use Railt\SDL\Exception\RuntimeExceptionInterface;
 use Railt\SDL\Node\Node;
 use Railt\SDL\Parser\CachedParser;
 use Railt\SDL\Parser\Parser;
+use Railt\SDL\Parser\ParserInterface;
 use Railt\TypeSystem\DictionaryInterface;
 
 final class Compiler implements CompilerInterface
@@ -96,7 +96,7 @@ final class Compiler implements CompilerInterface
         return new Context(
             variables: $variables,
             queue: new Queue(),
-            dictionary: $types,
+            types: $types,
             config: $this->config,
             loader: $this->loader,
             process: $this->subprocess(...),
@@ -128,21 +128,14 @@ final class Compiler implements CompilerInterface
     }
 
     /**
-     * @param array<non-empty-string, mixed> $variables
-     *
      * @throws RuntimeExceptionInterface
      */
-    private function eval(
-        ReadableInterface $source,
-        Dictionary $types,
-        array $variables,
-    ): Dictionary {
+    private function eval(ReadableInterface $source, Context $context): Dictionary
+    {
         try {
-            $linker = $this->createContext($types, $variables);
+            $this->process(File::new($source), $context);
 
-            $this->process(File::new($source), $linker);
-
-            return $types;
+            return $context->types;
         } catch (RuntimeExceptionInterface $e) {
             throw $this->exceptions->format($e);
         }
@@ -156,7 +149,9 @@ final class Compiler implements CompilerInterface
     {
         $source = File::new($source);
 
-        return $this->eval($source, $this->types, $variables);
+        $context = $this->createContext(clone $this->types, $variables);
+
+        return $this->eval($source, $context);
     }
 
     /**
@@ -167,7 +162,17 @@ final class Compiler implements CompilerInterface
     {
         $source = File::new($source);
 
-        return $this->eval($source, clone $this->types, $variables);
+        $context = $this->createContext(clone $this->types, $variables);
+
+        $result = $this->eval($source, $context);
+
+        try {
+            $context->exec(new GenerateSchemaCommand($context));
+        } catch (RuntimeExceptionInterface $e) {
+            throw $this->exceptions->format($e);
+        }
+
+        return $result;
     }
 
     public function __clone()

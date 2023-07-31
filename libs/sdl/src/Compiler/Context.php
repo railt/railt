@@ -37,7 +37,7 @@ final class Context implements \IteratorAggregate
     public function __construct(
         array $variables,
         private Queue $queue,
-        private readonly Dictionary $dictionary,
+        public readonly Dictionary $types,
         public readonly Config $config,
         private readonly TypeLoader $loader,
         private readonly \Closure $process,
@@ -48,6 +48,11 @@ final class Context implements \IteratorAggregate
     public function push(CommandInterface $command): void
     {
         $this->queue->push($command);
+    }
+
+    public function exec(CommandInterface $command): void
+    {
+        $command->exec();
     }
 
     public function eval(TypeInterface $type, Expression $expr): mixed
@@ -62,16 +67,16 @@ final class Context implements \IteratorAggregate
 
     public function setSchema(SchemaDefinition $schema, NodeInterface $node): void
     {
-        if ($this->dictionary->findSchemaDefinition()) {
+        if ($this->types->findSchemaDefinition()) {
             throw TypeAlreadyDefinedException::fromSchema($node->getSource(), $node->getPosition());
         }
 
-        $this->dictionary->setSchemaDefinition($schema);
+        $this->types->setSchemaDefinition($schema);
     }
 
     public function getSchema(NodeInterface $node): SchemaDefinition
     {
-        $schema = $this->dictionary->findSchemaDefinition();
+        $schema = $this->types->findSchemaDefinition();
 
         if ($schema === null) {
             throw TypeNotFoundException::fromTypeName('schema', $node->getSource(), $node->getPosition());
@@ -82,7 +87,7 @@ final class Context implements \IteratorAggregate
 
     public function addType(NamedTypeDefinition $type, NodeInterface $node): void
     {
-        if ($this->dictionary->hasTypeDefinition($type->getName())) {
+        if ($this->types->hasTypeDefinition($type->getName())) {
             throw TypeAlreadyDefinedException::fromTypeName(
                 $type->getName(),
                 $node->getSource(),
@@ -90,7 +95,7 @@ final class Context implements \IteratorAggregate
             );
         }
 
-        $this->dictionary->addTypeDefinition($type);
+        $this->types->addTypeDefinition($type);
     }
 
     /**
@@ -98,7 +103,7 @@ final class Context implements \IteratorAggregate
      */
     public function getType(string $name, NodeInterface $node, DefinitionInterface $from = null): NamedTypeDefinition
     {
-        if (!$this->dictionary->hasTypeDefinition($name)) {
+        if (!$this->types->hasTypeDefinition($name)) {
             $source = ($this->loader)($name, $from);
 
             if ($source !== null) {
@@ -106,7 +111,7 @@ final class Context implements \IteratorAggregate
             }
         }
 
-        $result = $this->dictionary->findTypeDefinition($name);
+        $result = $this->types->findTypeDefinition($name);
 
         if ($result === null) {
             throw TypeNotFoundException::fromTypeName($name, $node->getSource(), $node->getPosition());
@@ -117,7 +122,7 @@ final class Context implements \IteratorAggregate
 
     public function addDirective(DirectiveDefinition $directive, NodeInterface $node): void
     {
-        if ($this->dictionary->hasDirectiveDefinition($directive->getName())) {
+        if ($this->types->hasDirectiveDefinition($directive->getName())) {
             throw TypeAlreadyDefinedException::fromDirectiveName(
                 $directive->getName(),
                 $node->getSource(),
@@ -125,7 +130,7 @@ final class Context implements \IteratorAggregate
             );
         }
 
-        $this->dictionary->addDirectiveDefinition($directive);
+        $this->types->addDirectiveDefinition($directive);
     }
 
     /**
@@ -136,7 +141,7 @@ final class Context implements \IteratorAggregate
         NodeInterface $node,
         DefinitionInterface $from = null
     ): DirectiveDefinition {
-        if (!$this->dictionary->hasDirectiveDefinition($name)) {
+        if (!$this->types->hasDirectiveDefinition($name)) {
             $source = ($this->loader)('@' . $name, $from);
 
             if ($source !== null) {
@@ -144,7 +149,7 @@ final class Context implements \IteratorAggregate
             }
         }
 
-        $result = $this->dictionary->findDirectiveDefinition($name);
+        $result = $this->types->findDirectiveDefinition($name);
 
         if ($result === null) {
             throw TypeNotFoundException::fromDirectiveName($name, $node->getSource(), $node->getPosition());

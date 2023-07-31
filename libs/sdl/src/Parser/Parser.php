@@ -6,7 +6,6 @@ namespace Railt\SDL\Parser;
 
 use Phplrt\Contracts\Exception\RuntimeExceptionInterface;
 use Phplrt\Contracts\Lexer\TokenInterface;
-use Phplrt\Contracts\Parser\ParserInterface;
 use Phplrt\Exception\RuntimeException;
 use Phplrt\Lexer\Exception\UnrecognizedTokenException;
 use Phplrt\Lexer\Lexer;
@@ -54,7 +53,7 @@ final class Parser implements ParserInterface
      */
     public const DEFAULT_GRAMMAR_PATHNAME = __DIR__ . '/../../resources/grammar.php';
 
-    private readonly ParserInterface $parser;
+    private readonly ParserCombinator $parser;
 
     public function __construct()
     {
