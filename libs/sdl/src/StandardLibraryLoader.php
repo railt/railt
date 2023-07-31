@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\SDL;
 
-use Railt\SDL\Compiler\ConfigInfo;
+use Railt\SDL\Config;
 use Railt\TypeSystem\DefinitionInterface;
 
 final class StandardLibraryLoader
@@ -19,7 +19,7 @@ final class StandardLibraryLoader
      */
     private array $directories = [];
 
-    public function __construct(ConfigInfo $config)
+    public function __construct(Config $config)
     {
         foreach ($config->spec->getDependencies() as $spec) {
             $this->directories[] = self::DEFAULT_DIRECTORY . '/' . $spec->value;

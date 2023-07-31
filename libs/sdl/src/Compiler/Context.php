@@ -7,6 +7,7 @@ namespace Railt\SDL\Compiler;
 use Phplrt\Contracts\Source\ReadableInterface;
 use Phplrt\Source\File;
 use Railt\SDL\Compiler\Command\CommandInterface;
+use Railt\SDL\Config;
 use Railt\SDL\Dictionary;
 use Railt\SDL\Exception\TypeAlreadyDefinedException;
 use Railt\SDL\Exception\TypeNotFoundException;
@@ -37,7 +38,7 @@ final class Context implements \IteratorAggregate
         array $variables,
         private Queue $queue,
         private readonly Dictionary $dictionary,
-        public readonly ConfigInfo $config,
+        public readonly Config $config,
         private readonly TypeLoader $loader,
         private readonly \Closure $process,
     ) {

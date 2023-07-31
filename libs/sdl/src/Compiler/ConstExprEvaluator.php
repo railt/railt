@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler;
 
 use Railt\SDL\Compiler\Command\Evaluate\EvaluateInputObjectValue;
+use Railt\SDL\Config;
 use Railt\SDL\Exception\ExpressionException;
 use Railt\SDL\Node\Expression\Expression;
 use Railt\SDL\Node\Expression\Literal\BoolLiteralNode;
@@ -34,7 +35,7 @@ final class ConstExprEvaluator
     public function __construct(
         private readonly Queue $queue,
         private readonly array $variables,
-        private readonly ConfigInfo $config,
+        private readonly Config $config,
     ) {
     }
 

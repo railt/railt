@@ -2,13 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Compiler;
+namespace Railt\SDL;
 
-final class ConfigInfo
+use Railt\SDL\Config\GenerateSchema;
+use Railt\SDL\Config\Specification;
+use Railt\TypeSystem\Definition\SchemaDefinition;
+
+final class Config
 {
     /**
      * @param Specification $spec The version of the GraphQL specification that
      *        is used as the basis for the compiler.
+     * @param GenerateSchema|null $generateSchema Setting is responsible for
+     *        automatically generating the schema ({@see SchemaDefinition}) if
+     *        it is missing. In that case, the value is specified as {@see null},
+     *        then the schema is not generated.
      * @param bool $castIntToFloat Allow Integers to be converted to
      *        Floats. Thus, any argument that requires a Float scalar type will
      *        also accept Integer scalars, which will be automatically converted
@@ -21,6 +29,10 @@ final class ConfigInfo
      *        is defined as a nullable type, then that argument may be omitted
      *        during use.
      *        ```
+     *          directive @param bool $castListTypeToDefaultValue In the case that an argument is
+     *        defined as a list type, then that argument may be omitted
+     *        during use.
+     *        ```
      *          directive @example(nullable: String) on FIELD_DEFINITION
      *
      *          type Example {
@@ -30,11 +42,7 @@ final class ConfigInfo
      *              field: String! @example
      *          }
      *        ```
-     * @param bool $castListTypeToDefaultValue In the case that an argument is
-     *        defined as a list type, then that argument may be omitted
-     *        during use.
-     *        ```
-     *          directive @example(list: [String!]!) on FIELD_DEFINITION
+     * @example(list: [String!]!) on FIELD_DEFINITION
      *
      *          type Example {
      *              # - Ok: Default value is empty list "[]" in case of this
@@ -47,6 +55,7 @@ final class ConfigInfo
      */
     public function __construct(
         public readonly Specification $spec = Specification::DEFAULT,
+        public readonly ?GenerateSchema $generateSchema = new GenerateSchema(),
         public readonly bool $castIntToFloat = true,
         public readonly bool $castScalarToString = true,
         public readonly bool $castNullableTypeToDefaultValue = true,

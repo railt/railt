@@ -10,7 +10,7 @@ use Phplrt\Source\File;
 use Psr\SimpleCache\CacheInterface;
 use Psr\SimpleCache\InvalidArgumentException;
 use Railt\SDL\Compiler\Command\CompileCommand;
-use Railt\SDL\Compiler\ConfigInfo;
+use Railt\SDL\Config;
 use Railt\SDL\Compiler\Context;
 use Railt\SDL\Compiler\Exception\FormatterInterface;
 use Railt\SDL\Compiler\Exception\PrettyFormatter;
@@ -32,7 +32,7 @@ final class Compiler implements CompilerInterface
     private readonly FormatterInterface $exceptions;
 
     public function __construct(
-        public readonly ConfigInfo $config = new ConfigInfo(),
+        public readonly Config $config = new Config(),
         ?CacheInterface $cache = null,
         DictionaryInterface $types = new Dictionary(),
     ) {

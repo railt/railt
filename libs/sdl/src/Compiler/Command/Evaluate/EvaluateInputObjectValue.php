@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Railt\SDL\Compiler\Command\Evaluate;
 
 use Railt\SDL\Compiler\Command\CommandInterface;
-use Railt\SDL\Compiler\ConfigInfo;
+use Railt\SDL\Config;
 use Railt\SDL\Exception\CompilationException;
 use Railt\SDL\Node\NodeInterface;
 use Railt\TypeSystem\Definition\Type\InputObjectType;
@@ -24,7 +24,7 @@ final class EvaluateInputObjectValue implements CommandInterface
      * @param array<non-empty-string, mixed> $defaults
      */
     public function __construct(
-        private readonly ConfigInfo $config,
+        private readonly Config $config,
         private readonly NodeInterface $node,
         private readonly InputObjectType $input,
         private array &$defaults,

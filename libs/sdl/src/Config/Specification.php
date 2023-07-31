@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Railt\SDL\Compiler;
+namespace Railt\SDL\Config;
 
 enum Specification: string
 {
