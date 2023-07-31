@@ -1,6 +1,5 @@
 {
     "name": "railt/http-factory",
-    "description": "GraphQL HTTP Factories",
     "license": "MIT",
     "keywords": [
         "http",
