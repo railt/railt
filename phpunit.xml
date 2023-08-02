@@ -13,17 +13,20 @@
     </php>
 
     <testsuites>
-        <testsuite name="railt/http-contracts">
+        <testsuite name="railt/contracts/http">
             <directory>libs/contracts/http/tests/Unit</directory>
         </testsuite>
-        <testsuite name="railt/http-factory-contracts">
+        <testsuite name="railt/contracts/http-factory">
             <directory>libs/contracts/http-factory/tests/Unit</directory>
         </testsuite>
-        <testsuite name="railt/http-middleware">
+        <testsuite name="railt/contracts/http-middleware">
             <directory>libs/contracts/http-middleware/tests/Unit</directory>
         </testsuite>
-        <testsuite name="railt/executor-webonyx">
-            <directory>libs/executor-webonyx/tests/Unit</directory>
+        <testsuite name="railt/executors/webonyx">
+            <directory>libs/executors/webonyx/tests/Unit</directory>
+        </testsuite>
+        <testsuite name="railt/extensions/router">
+            <directory>libs/extensions/router/tests/Unit</directory>
         </testsuite>
         <testsuite name="railt/foundation">
             <directory>libs/foundation/tests/Unit</directory>
@@ -36,9 +39,6 @@
         </testsuite>
         <testsuite name="railt/http-middleware">
             <directory>libs/http-middleware/tests/Unit</directory>
-        </testsuite>
-        <testsuite name="railt/router">
-            <directory>libs/router/tests/Unit</directory>
         </testsuite>
         <testsuite name="railt/sdl">
             <directory>libs/sdl/tests/Unit</directory>

@@ -19,8 +19,13 @@ services:
     tags: [ phpat.test ]
   - class: Railt\Contracts\Http\Middleware\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
+
   - class: Railt\Executor\Webonyx\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
+
+  - class: Railt\Extension\Router\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
+
   - class: Railt\Foundation\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
   - class: Railt\Http\Tests\Architecture\ComposerDependenciesTest
@@ -28,8 +33,6 @@ services:
   - class: Railt\Http\Factory\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
   - class: Railt\Http\Middleware\Tests\Architecture\ComposerDependenciesTest
-    tags: [ phpat.test ]
-  - class: Railt\Router\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
   - class: Railt\SDL\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
