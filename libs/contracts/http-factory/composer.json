@@ -1,5 +1,6 @@
 {
     "name": "railt/http-factory-contracts",
+    "type": "library",
     "license": "MIT",
     "keywords": ["http", "response", "request", "batching", "parsing", "graphql", "factory"],
     "homepage": "https://github.com/railt",

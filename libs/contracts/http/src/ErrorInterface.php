@@ -127,4 +127,14 @@ interface ErrorInterface extends \Throwable
      *                  specified category.
      */
     public function withCategory(CategoryInterface $category): self;
+
+    /**
+     * @return array{
+     *  message: string,
+     *  locations?: list<array{line: int<1, max>, column: int<1, max>}>,
+     *  path?: list<non-empty-string|int>,
+     *  extensions?: array<non-empty-string, mixed>
+     * }
+     */
+    public function toArray(): array;
 }

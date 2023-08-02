@@ -1,5 +1,6 @@
 {
     "name": "railt/http-factory",
+    "type": "library",
     "license": "MIT",
     "keywords": [
         "http",

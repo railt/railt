@@ -67,4 +67,12 @@ final class Location implements LocationInterface
     {
         $this->column = $column;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'line' => $this->line,
+            'column' => $this->column,
+        ];
+    }
 }

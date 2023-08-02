@@ -1,5 +1,6 @@
 {
     "name": "railt/sdl-generator",
+    "type": "library",
     "license": "MIT",
     "keywords": [
         "graphql",

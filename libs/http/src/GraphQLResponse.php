@@ -145,4 +145,23 @@ class GraphQLResponse implements MutableResponseInterface
         /** @var non-empty-string */
         return \spl_object_hash($exception);
     }
+
+    public function toArray(): array
+    {
+        return \array_filter([
+            'data' => $this->getData(),
+            'errors' => $this->getErrorsAsArray(),
+        ]);
+    }
+
+    private function getErrorsAsArray(): array
+    {
+        $result = [];
+
+        foreach ($this->getErrors() as $error) {
+            $result[] = $error->toArray();
+        }
+
+        return $result;
+    }
 }

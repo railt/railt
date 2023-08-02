@@ -33,10 +33,10 @@ final class BuildArgumentDefinitionCommand extends BuildChildCommand
 
         $this->assertTypeIsInput($type);
 
-        $argument = new ArgumentDefinition(
+        $this->definition->addArgument($argument = new ArgumentDefinition(
             name: $this->node->name->value,
             type: $type,
-        );
+        ));
 
         if ($this->node->description->value !== null) {
             $argument->setDescription($this->node->description->value->value);
@@ -57,8 +57,6 @@ final class BuildArgumentDefinitionCommand extends BuildChildCommand
                 parent: $argument,
             ));
         }
-
-        $this->definition->addArgument($argument);
 
         // Resolve deprecation from reference
         $this->ctx->push(new ApplyDeprecationFromTypeReferenceCommand(

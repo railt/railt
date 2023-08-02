@@ -50,4 +50,9 @@ interface LocationInterface
      * @param int<1, max> $column This value (must be greater than 0).
      */
     public function withColumn(int $column = 1): self;
+
+    /**
+     * @return array{line: int<1, max>, column: int<1, max>}
+     */
+    public function toArray(): array;
 }

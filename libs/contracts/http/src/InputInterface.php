@@ -7,7 +7,6 @@ namespace Railt\Contracts\Http;
 use Railt\Contracts\Http\Input\ArgumentsProviderInterface;
 use Railt\Contracts\Http\Input\PathProviderInterface;
 use Railt\Contracts\Http\Input\SelectionProviderInterface;
-use Railt\Contracts\Http\Input\TypeProviderInterface;
 
 /**
  * @template TDefinition of object
@@ -43,4 +42,11 @@ interface InputInterface extends
      * @return TDefinition
      */
     public function getFieldDefinition(): object;
+
+    /**
+     * Returns result of the parent value.
+     *
+     * @return mixed
+     */
+    public function getParentValue(): mixed;
 }

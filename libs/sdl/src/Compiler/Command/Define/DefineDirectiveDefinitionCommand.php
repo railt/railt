@@ -27,7 +27,7 @@ final class DefineDirectiveDefinitionCommand extends DefineCommand
 
         $this->ctx->addDirective($directive, $this->stmt->name);
 
-        $this->ctx->push(new BuildDirectiveDefinitionCommand(
+        $this->ctx->exec(new BuildDirectiveDefinitionCommand(
             ctx: $this->ctx,
             node: $this->stmt,
             definition: $directive,

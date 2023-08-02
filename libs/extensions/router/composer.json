@@ -1,15 +1,8 @@
 {
-    "name": "railt/type-system",
+    "name": "railt/router-extension",
     "type": "library",
     "license": "MIT",
-    "keywords": [
-        "graphql",
-        "language",
-        "sdl",
-        "type system",
-        "interop",
-        "abstraction"
-    ],
+    "keywords": ["graphql", "router", "extension", "railt"],
     "homepage": "https://github.com/railt",
     "authors": [
         {
@@ -19,24 +12,33 @@
     ],
     "support": {
         "issues": "https://github.com/railt/railt/issues",
-        "source": "https://github.com/railt/type-system"
+        "source": "https://github.com/railt/router-extension"
     },
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "psr/container": "^1.0|^2.0",
+        "psr/event-dispatcher": "^1.0",
+        "railt/http-contracts": "^2.0",
+        "railt/type-system": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "Railt\\TypeSystem\\": "src"
+            "Railt\\Extension\\Router\\": "src"
         }
     },
     "require-dev": {
+        "railt/foundation": "^2.0",
+        "symfony/event-dispatcher": "^5.4|^6.0",
         "phpunit/phpunit": "^10.2",
         "vimeo/psalm": "^5.14"
     },
     "autoload-dev": {
         "psr-4": {
-            "Railt\\TypeSystem\\Tests\\": "tests"
+            "Railt\\Extension\\Router\\Tests\\": "tests"
         }
+    },
+    "suggest": {
+        "railt/foundation": "(^2.0) For router extension loading"
     },
     "extra": {
         "branch-alias": {

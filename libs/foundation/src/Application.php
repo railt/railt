@@ -10,6 +10,7 @@ use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Schema\SchemaCompiled;
 use Railt\Foundation\Event\Schema\SchemaCompiling;
+use Railt\Foundation\Extension\DefaultValueResolverExtension;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
 use Railt\Http\Middleware\MutablePipelineInterface;
@@ -46,6 +47,13 @@ final class Application implements ApplicationInterface
         $this->dispatcher = new EventDispatcher();
         $this->extensions = new Repository();
         $this->pipeline = new Pipeline($middleware);
+
+        $this->bootDefaultExtensions();
+    }
+
+    private function bootDefaultExtensions(): void
+    {
+        $this->extensions->register(new DefaultValueResolverExtension());
     }
 
     public function extend(ExtensionInterface $extension): void

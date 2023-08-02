@@ -11,4 +11,8 @@ interface ResponseInterface extends
     ExceptionProviderInterface,
     DataProviderInterface
 {
+    /**
+     * @return array{data?:mixed, errors?:list<array>}
+     */
+    public function toArray(): array;
 }

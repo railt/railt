@@ -9,7 +9,7 @@ use Railt\SDL\Compiler\Command\CommandInterface;
 /**
  * @template-implements \IteratorAggregate<CommandInterface>
  */
-final class Queue implements \IteratorAggregate
+final class Queue implements \IteratorAggregate, \Countable
 {
     /**
      * @var list<CommandInterface>
@@ -26,5 +26,10 @@ final class Queue implements \IteratorAggregate
         while ($this->commands !== []) {
             yield \array_shift($this->commands);
         }
+    }
+
+    public function count(): int
+    {
+        return \count($this->commands);
     }
 }

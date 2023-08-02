@@ -32,7 +32,7 @@ final class BuildDirectiveDefinitionCommand extends BuildCommand
         }
 
         foreach ($this->node->arguments as $node) {
-            $this->ctx->push(new BuildArgumentDefinitionCommand(
+            $this->ctx->exec(new BuildArgumentDefinitionCommand(
                 ctx: $this->ctx,
                 node: $node,
                 definition: $this->definition,

@@ -120,10 +120,10 @@ final class Compiler implements CompilerInterface
         /** @var iterable<Node> $nodes */
         $nodes = $this->parser->parse($source);
 
-        $context->push(new CompileCommand($context, $nodes));
+        $context->exec(new CompileCommand($context, $nodes));
 
         foreach ($context as $command) {
-            $command->exec();
+            $context->exec($command);
         }
     }
 

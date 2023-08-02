@@ -1,5 +1,6 @@
 {
     "name": "railt/foundation",
+    "type": "library",
     "license": "MIT",
     "keywords": [
         "graphql",

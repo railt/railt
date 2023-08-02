@@ -1,5 +1,6 @@
 {
     "name": "railt/http-middleware",
+    "type": "library",
     "license": "MIT",
     "keywords": [
         "http",

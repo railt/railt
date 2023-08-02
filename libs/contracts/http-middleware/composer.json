@@ -1,5 +1,6 @@
 {
     "name": "railt/http-middleware-contracts",
+    "type": "library",
     "license": "MIT",
     "keywords": [
         "http",

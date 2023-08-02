@@ -285,4 +285,24 @@ class GraphQLError extends \Exception implements ErrorInterface
 
         return $instance;
     }
+
+    public function toArray(): array
+    {
+        $extensions = $locations = [];
+
+        foreach ($this->getLocations() as $location) {
+            $locations[] = $location->toArray();
+        }
+
+        foreach ($this->getExtensions() as $name => $extension) {
+            $extensions[$name] = $extension->getValue();
+        }
+
+        return \array_filter([
+            'message' => $this->getMessage() ?: self::INTERNAL_EXCEPTION_MESSAGE,
+            'locations' => $locations,
+            'path' => $this->getPath(),
+            'extensions' => $extensions,
+        ]);
+    }
 }

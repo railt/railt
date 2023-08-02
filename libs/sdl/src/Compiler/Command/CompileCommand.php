@@ -81,7 +81,7 @@ final class CompileCommand extends Command
     public function exec(): void
     {
         foreach ($this->nodes as $node) {
-            $this->ctx->push($this->getCommand($node));
+            $this->ctx->exec($this->getCommand($node));
         }
     }
 
