@@ -29,8 +29,8 @@
     "require-dev": {
         "railt/foundation": "^2.0",
         "symfony/event-dispatcher": "^5.4|^6.0",
-        "phpunit/phpunit": "^10.2",
-        "vimeo/psalm": "^5.14"
+        "phpunit/phpunit": "^10.3",
+        "vimeo/psalm": "^5.15"
     },
     "autoload-dev": {
         "psr-4": {
