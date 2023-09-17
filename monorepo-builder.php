@@ -28,7 +28,6 @@ return static function (MBConfig $config): void {
             'phpat/phpat'=> '^0.10',
             'phplrt/phplrt'=> '^3.2.7',
             'phpunit/phpunit'=> '^10.3',
-            'rector/rector'=> '^0.15',
             'symfony/cache'=> '^5.4|^6.0',
             'symfony/console'=> '^5.4|^6.0',
             'symfony/var-dumper'=> '^5.4|^6.0',

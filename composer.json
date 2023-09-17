@@ -40,7 +40,6 @@
         "phpat/phpat": "^0.10",
         "phplrt/phplrt": "^3.2.7",
         "phpunit/phpunit": "^10.3",
-        "rector/rector": "^0.15",
         "symfony/cache": "^5.4|^6.0",
         "symfony/console": "^5.4|^6.0",
         "symfony/var-dumper": "^5.4|^6.0",
@@ -70,9 +69,6 @@
         "phpcs": "@phpcs:check",
         "phpcs:check": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes --dry-run",
         "phpcs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes",
-        "rector": "@rector:check",
-        "rector:check": "rector --config=rector.php --dry-run",
-        "rector:fix": "rector --config=rector.php",
         "test": [
             "@test:unit",
             "@test:architecture"
