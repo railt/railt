@@ -43,4 +43,4 @@ jobs:
           command: composer update --prefer-dist --no-interaction --no-progress
       - name: Static Analysis
         continue-on-error: true
-        run: composer psalm:check
+        run: composer linter:check
