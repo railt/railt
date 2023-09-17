@@ -1,0 +1,74 @@
+name: build
+
+on:
+  push:
+    tags:
+      - '*'
+    branches:
+      - '*'
+
+jobs:
+  subsplit:
+    name: Split Packages (${{ matrix.package.local_path }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          # Contracts
+          - local_path: 'libs/contracts/http'
+            split_repository: 'http-contracts'
+          - local_path: 'libs/contracts/http-factory'
+            split_repository: 'http-factory-contracts'
+          - local_path: 'libs/contracts/http-middleware'
+            split_repository: 'http-middleware-contracts'
+          # Executors
+          - local_path: 'libs/executors/webonyx'
+            split_repository: 'webonyx-executor'
+          # Extensions
+          - local_path: 'libs/extensions/router'
+            split_repository: 'router-extension'
+          # Kernel Libraries
+          - local_path: 'libs/foundation'
+            split_repository: 'foundation'
+          - local_path: 'libs/http'
+            split_repository: 'http'
+          - local_path: 'libs/http-factory'
+            split_repository: 'http-factory'
+          - local_path: 'libs/http-middleware'
+            split_repository: 'http-middleware'
+          - local_path: 'libs/sdl'
+            split_repository: 'sdl'
+          - local_path: 'libs/sdl-generator'
+            split_repository: 'sdl-generator'
+          - local_path: 'libs/type-system'
+            split_repository: 'type-system'
+
+    steps:
+      - uses: actions/checkout@v3
+      - if: "!startsWith(github.ref, 'refs/tags/')"
+        name: Monorepo Split of ${{ matrix.package.split_repository }}
+        uses: danharrin/monorepo-split-github-action@v2.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          branch: "master"
+          package_directory: '${{ matrix.package.local_path }}'
+          repository_organization: 'railt'
+          repository_name: '${{ matrix.package.split_repository }}'
+          user_name: "SerafimArts"
+          user_email: "nesk@xakep.ru"
+      - if: "startsWith(github.ref, 'refs/tags/')"
+        name: Monorepo Tagged Split of ${{ matrix.package }}
+        uses: danharrin/monorepo-split-github-action@v2.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          tag: ${GITHUB_REF#refs/tags/}
+          branch: "master"
+          package_directory: '${{ matrix.package.local_path }}'
+          repository_organization: 'railt'
+          repository_name: '${{ matrix.package.split_repository }}'
+          user_name: "SerafimArts"
+          user_email: "nesk@xakep.ru"
