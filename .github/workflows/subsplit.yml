@@ -30,6 +30,8 @@ jobs:
           - local_path: 'libs/extensions/router'
             split_repository: 'router-extension'
           # Kernel Libraries
+          - local_path: 'libs/event-dispatcher'
+            split_repository: 'event-dispatcher'
           - local_path: 'libs/foundation'
             split_repository: 'foundation'
           - local_path: 'libs/http'

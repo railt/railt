@@ -28,6 +28,8 @@ services:
   - class: Railt\Extension\Router\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
 
+  - class: Railt\EventDispatcher\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
   - class: Railt\Foundation\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
   - class: Railt\Http\Tests\Architecture\ComposerDependenciesTest

@@ -27,6 +27,7 @@
             "Railt\\Contracts\\Http\\": "libs/contracts/http/src",
             "Railt\\Contracts\\Http\\Factory\\": "libs/contracts/http-factory/src",
             "Railt\\Contracts\\Http\\Middleware\\": "libs/contracts/http-middleware/src",
+            "Railt\\EventDispatcher\\": "libs/event-dispatcher/src",
             "Railt\\Executor\\Webonyx\\": "libs/executors/webonyx/src",
             "Railt\\Extension\\Router\\": "libs/extensions/router/src",
             "Railt\\Foundation\\": "libs/foundation/src",
@@ -56,6 +57,7 @@
             "Railt\\Contracts\\Http\\Factory\\Tests\\": "libs/contracts/http-factory/tests",
             "Railt\\Contracts\\Http\\Middleware\\Tests\\": "libs/contracts/http-middleware/tests",
             "Railt\\Contracts\\Http\\Tests\\": "libs/contracts/http/tests",
+            "Railt\\EventDispatcher\\Tests\\": "libs/event-dispatcher/tests",
             "Railt\\Executor\\Webonyx\\Tests\\": "libs/executors/webonyx/tests",
             "Railt\\Extension\\Router\\Tests\\": "libs/extensions/router/tests",
             "Railt\\Foundation\\Tests\\": "libs/foundation/tests",
@@ -68,6 +70,7 @@
         }
     },
     "replace": {
+        "railt/event-dispatcher": "*",
         "railt/foundation": "*",
         "railt/http": "*",
         "railt/http-contracts": "*",

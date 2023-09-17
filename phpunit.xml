@@ -13,6 +13,7 @@
     </php>
 
     <testsuites>
+        <!-- contracts -->
         <testsuite name="railt/contracts/http">
             <directory>libs/contracts/http/tests/Unit</directory>
         </testsuite>
@@ -22,11 +23,20 @@
         <testsuite name="railt/contracts/http-middleware">
             <directory>libs/contracts/http-middleware/tests/Unit</directory>
         </testsuite>
+
+        <!-- executors -->
         <testsuite name="railt/executors/webonyx">
             <directory>libs/executors/webonyx/tests/Unit</directory>
         </testsuite>
+
+        <!-- extensions -->
         <testsuite name="railt/extensions/router">
             <directory>libs/extensions/router/tests/Unit</directory>
+        </testsuite>
+
+        <!-- packages -->
+        <testsuite name="railt/event-dispatcher">
+            <directory>libs/event-dispatcher/tests/Unit</directory>
         </testsuite>
         <testsuite name="railt/foundation">
             <directory>libs/foundation/tests/Unit</directory>
