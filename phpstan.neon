@@ -9,6 +9,8 @@ parameters:
   excludePaths:
     - libs/*/tests/*
     - libs/contacts/*/tests/*
+    - libs/*/resources/*
+    - libs/contacts/*/resources/*
   phpat:
     ignore_built_in_classes: true
 
