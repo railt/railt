@@ -21,6 +21,14 @@ final class Repository implements ExtensionInterface, \IteratorAggregate, \Count
      */
     private array $registered = [];
 
+    /**
+     * @param iterable<array-key, ExtensionInterface> $extensions
+     */
+    public function __construct(iterable $extensions = [])
+    {
+        $this->registered = [...$extensions];
+    }
+
     public function register(ExtensionInterface $extension): void
     {
         $this->registered[] = $extension;

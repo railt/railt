@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Railt\Extension\Router;
 
-use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
 use Railt\Extension\Router\Exception\RouteDefinitionException;
 use Railt\Extension\Router\Instantiator\InstantiatorInterface;
 

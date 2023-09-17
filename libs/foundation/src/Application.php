@@ -19,6 +19,7 @@ use Railt\SDL\Compiler;
 use Railt\SDL\CompilerInterface;
 use Railt\TypeSystem\DictionaryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 final class Application implements ApplicationInterface
 {
@@ -27,26 +28,34 @@ final class Application implements ApplicationInterface
      */
     private readonly \WeakMap $connections;
 
-    private readonly EventDispatcher $dispatcher;
-
     private readonly Repository $extensions;
 
     private readonly MutablePipelineInterface $pipeline;
 
     /**
-     * @param iterable<MiddlewareInterface> $middleware
+     * @param iterable<array-key, MiddlewareInterface>|MutablePipelineInterface $middleware
+     * @param iterable<array-key, ExtensionInterface>|Repository $extensions
      */
     public function __construct(
         private readonly ExecutorInterface $executor,
         private readonly CompilerInterface $compiler = new Compiler(),
-        iterable $middleware = [],
+        iterable|MutablePipelineInterface $middleware = [],
+        iterable|Repository $extensions = [],
+        private readonly EventDispatcherInterface $dispatcher = new EventDispatcher(),
     ) {
+        if (!$middleware instanceof MutablePipelineInterface) {
+            $middleware = new Pipeline($middleware);
+        }
+
+        if (!$extensions instanceof Repository) {
+            $extensions = new Repository($extensions);
+        }
+
         /** @psalm-suppress PropertyTypeCoercion */
         $this->connections = new \WeakMap();
 
-        $this->dispatcher = new EventDispatcher();
-        $this->extensions = new Repository();
-        $this->pipeline = new Pipeline($middleware);
+        $this->extensions = $extensions;
+        $this->pipeline = $middleware;
 
         $this->bootDefaultExtensions();
     }
