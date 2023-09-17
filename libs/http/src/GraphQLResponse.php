@@ -148,6 +148,7 @@ class GraphQLResponse implements MutableResponseInterface
 
     public function toArray(): array
     {
+        /** @var array{data?:mixed, errors?:list<array>} */
         return \array_filter([
             'data' => $this->getData(),
             'errors' => $this->getErrorsAsArray(),

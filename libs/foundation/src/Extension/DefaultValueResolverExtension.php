@@ -9,6 +9,7 @@ use Railt\TypeSystem\Definition\Type\EnumType;
 use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
+use Railt\TypeSystem\WrappingTypeInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class DefaultValueResolverExtension implements ExtensionInterface
@@ -201,6 +202,10 @@ final class DefaultValueResolverExtension implements ExtensionInterface
             return;
         }
 
+        // Skip in case of "field" is not a wrapped type
+        if (!$field instanceof WrappingTypeInterface) {
+            return;
+        }
 
         //
         // In the case that the field is NonNullType that
@@ -211,8 +216,6 @@ final class DefaultValueResolverExtension implements ExtensionInterface
 
         if (!$inner instanceof ScalarType && !$inner instanceof EnumType) {
             $event->setResult([]);
-
-            return;
         }
     }
 }

@@ -69,6 +69,7 @@ final class FieldBuilder extends Builder
                 arguments: $args,
             );
 
+            /** @var FieldResolving $resolving */
             $resolving = $ctx->dispatcher->dispatch(
                 new FieldResolving($input, $parent),
             );

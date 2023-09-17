@@ -288,6 +288,10 @@ class GraphQLError extends \Exception implements ErrorInterface
 
     public function toArray(): array
     {
+        /**
+         * @var array<non-empty-string, mixed> $extensions
+         * @var array<non-empty-string, array> $locations
+         */
         $extensions = $locations = [];
 
         foreach ($this->getLocations() as $location) {
@@ -295,6 +299,7 @@ class GraphQLError extends \Exception implements ErrorInterface
         }
 
         foreach ($this->getExtensions() as $name => $extension) {
+            /** @psalm-suppress MixedAssignment : Allow mixed value */
             $extensions[$name] = $extension->getValue();
         }
 

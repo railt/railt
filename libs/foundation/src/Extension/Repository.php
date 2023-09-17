@@ -23,6 +23,7 @@ final class Repository implements ExtensionInterface, \IteratorAggregate, \Count
 
     /**
      * @param iterable<array-key, ExtensionInterface> $extensions
+     * @psalm-suppress PropertyTypeCoercion
      */
     public function __construct(iterable $extensions = [])
     {

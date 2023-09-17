@@ -19,7 +19,7 @@ use Railt\SDL\Compiler;
 use Railt\SDL\CompilerInterface;
 use Railt\TypeSystem\DictionaryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class Application implements ApplicationInterface
 {
