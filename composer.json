@@ -64,11 +64,6 @@
         }
     },
     "scripts": {
-        "test": [
-            "@test",
-            "@phpcs",
-            "@psalm"
-        ],
         "psalm": "@psalm:check",
         "psalm:check": "psalm --no-cache",
         "psalm:fix": "psalm --no-cache --alter",

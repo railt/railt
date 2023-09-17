@@ -1,4 +1,4 @@
-The Railt code of conduct is derived from the Ruby code of conduct. 
+The Railt code of conduct is derived from the Ruby code of conduct.
 Any violations of the code of conduct may be reported to Kirill Nesmeyanov (nesk@xakep.ru)
 
 - Participants will be tolerant of opposing views.
