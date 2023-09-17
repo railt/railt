@@ -21,8 +21,7 @@ final class CheckMissingDirectiveArgumentsCommand implements CommandInterface
         private readonly Context $ctx,
         private readonly NodeInterface $node,
         private readonly Directive $directive,
-    ) {
-    }
+    ) {}
 
     public function exec(): void
     {

@@ -32,6 +32,5 @@ final class InputFieldNode extends Statement
         public ?Expression $default = null,
         #[Visitable]
         public array $directives = [],
-    ) {
-    }
+    ) {}
 }

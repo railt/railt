@@ -6,6 +6,4 @@ namespace Railt\SDL\Node\Statement\Execution;
 
 use Railt\SDL\Node\Statement\Statement;
 
-abstract class Execution extends Statement
-{
-}
+abstract class Execution extends Statement {}

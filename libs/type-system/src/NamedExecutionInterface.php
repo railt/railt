@@ -6,6 +6,4 @@ namespace Railt\TypeSystem;
 
 use Railt\TypeSystem\Common\HasNameInterface;
 
-interface NamedExecutionInterface extends ExecutionInterface, HasNameInterface
-{
-}
+interface NamedExecutionInterface extends ExecutionInterface, HasNameInterface {}

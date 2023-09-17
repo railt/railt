@@ -20,8 +20,7 @@ final class CachedParser implements ParserInterface
         private readonly CacheInterface $cache,
         private readonly ParserInterface $parent,
         private readonly string $prefix = self::DEFAULT_CACHE_PREFIX,
-    ) {
-    }
+    ) {}
 
     /**
      * @return non-empty-string

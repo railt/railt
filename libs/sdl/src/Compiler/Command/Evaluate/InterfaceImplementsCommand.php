@@ -23,8 +23,7 @@ final class InterfaceImplementsCommand implements CommandInterface
         private readonly Context $ctx,
         private readonly ObjectLikeDefinitionNode|ObjectLikeExtensionNode $node,
         private readonly ObjectLikeType $definition,
-    ) {
-    }
+    ) {}
 
     public function exec(): void
     {

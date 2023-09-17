@@ -14,6 +14,4 @@ use Railt\TypeSystem\Definition\Type\InterfaceType;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command
  */
-final class BuildInterfaceTypeDefinitionCommand extends BuildObjectLikeTypeDefinitionCommand
-{
-}
+final class BuildInterfaceTypeDefinitionCommand extends BuildObjectLikeTypeDefinitionCommand {}

@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace Railt\TypeSystem;
 
-interface TypeInterface extends DefinitionInterface
-{
-}
+interface TypeInterface extends DefinitionInterface {}

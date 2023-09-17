@@ -13,8 +13,7 @@ final class FloatLiteralNode extends LiteralNode
     public function __construct(
         public float $value,
         public ?string $representation = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @param numeric-string $value

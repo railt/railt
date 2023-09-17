@@ -19,8 +19,7 @@ final class OnDestructor
     public function __construct(
         private readonly object $entry,
         private readonly \Closure $onRelease,
-    ) {
-    }
+    ) {}
 
     /**
      * @template TIn of object

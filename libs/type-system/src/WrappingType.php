@@ -16,8 +16,7 @@ abstract class WrappingType extends Type implements WrappingTypeInterface
      */
     public function __construct(
         protected readonly TypeInterface $type,
-    ) {
-    }
+    ) {}
 
     public function is(string $class): bool
     {

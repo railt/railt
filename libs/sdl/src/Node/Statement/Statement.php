@@ -10,6 +10,4 @@ use Railt\SDL\Node\Node;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL
  */
-abstract class Statement extends Node
-{
-}
+abstract class Statement extends Node {}

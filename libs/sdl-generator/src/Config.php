@@ -12,6 +12,5 @@ final class Config
     public function __construct(
         public readonly string $delimiter = "\n",
         public readonly string $indentation = '    ',
-    ) {
-    }
+    ) {}
 }

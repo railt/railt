@@ -19,8 +19,7 @@ final class EvaluateArgumentDefaultValue implements CommandInterface
         private readonly Context $ctx,
         private readonly ArgumentDefinition $argument,
         private readonly ArgumentNode $node,
-    ) {
-    }
+    ) {}
 
     public function exec(): void
     {

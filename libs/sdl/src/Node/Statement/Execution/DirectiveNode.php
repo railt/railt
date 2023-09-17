@@ -21,6 +21,5 @@ final class DirectiveNode extends Execution
         public IdentifierNode $name,
         #[Visitable]
         public array $arguments = [],
-    ) {
-    }
+    ) {}
 }

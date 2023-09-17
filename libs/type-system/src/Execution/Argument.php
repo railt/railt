@@ -12,8 +12,7 @@ class Argument extends NamedExecution
     public function __construct(
         private readonly ArgumentDefinition $definition,
         private readonly mixed $value,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

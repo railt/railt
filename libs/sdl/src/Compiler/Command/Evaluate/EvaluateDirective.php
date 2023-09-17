@@ -45,8 +45,7 @@ final class EvaluateDirective implements CommandInterface
         private readonly Context $ctx,
         private readonly DirectiveNode $node,
         private readonly Definition $parent,
-    ) {
-    }
+    ) {}
 
     public function exec(): void
     {

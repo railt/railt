@@ -27,6 +27,5 @@ final class SchemaDefinitionNode extends Statement
         public array $fields = [],
         #[Visitable]
         public array $directives = [],
-    ) {
-    }
+    ) {}
 }

@@ -28,6 +28,5 @@ final class SchemaFieldNode extends Statement
         public NamedTypeNode $type,
         #[Visitable]
         public array $directives = [],
-    ) {
-    }
+    ) {}
 }

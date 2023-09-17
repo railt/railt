@@ -24,8 +24,7 @@ class ApplyDeprecationCommand implements CommandInterface
      */
     public function __construct(
         protected readonly Definition $context,
-    ) {
-    }
+    ) {}
 
     public function exec(): void
     {

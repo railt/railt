@@ -8,6 +8,4 @@ namespace Railt\SDL\Node\Statement\Definition;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL
  */
-final class ObjectTypeDefinitionNode extends ObjectLikeDefinitionNode
-{
-}
+final class ObjectTypeDefinitionNode extends ObjectLikeDefinitionNode {}

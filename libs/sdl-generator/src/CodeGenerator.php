@@ -25,8 +25,7 @@ final class CodeGenerator implements GeneratorInterface
     public function __construct(
         private readonly DictionaryInterface $types,
         private readonly Config $config = new Config()
-    ) {
-    }
+    ) {}
 
     /**
      * @return iterable<GeneratorInterface>

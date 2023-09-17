@@ -25,8 +25,7 @@ class InputObject extends NamedExecution implements
     public function __construct(
         private readonly InputObjectType $definition,
         private readonly array $values = [],
-    ) {
-    }
+    ) {}
 
     /**
      * @param non-empty-string $offset

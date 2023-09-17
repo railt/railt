@@ -19,6 +19,5 @@ final class ArgumentNode extends Execution
         public IdentifierNode $name,
         #[Visitable]
         public Expression $value,
-    ) {
-    }
+    ) {}
 }

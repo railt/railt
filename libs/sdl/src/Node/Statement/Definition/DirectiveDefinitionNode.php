@@ -33,8 +33,7 @@ final class DirectiveDefinitionNode extends Statement
         public array $modifiers = [],
         #[Visitable]
         public array $locations = [],
-    ) {
-    }
+    ) {}
 
     public function isRepeatable(): bool
     {

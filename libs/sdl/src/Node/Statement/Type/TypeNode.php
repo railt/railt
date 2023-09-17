@@ -10,6 +10,4 @@ use Railt\SDL\Node\Statement\Statement;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL
  */
-abstract class TypeNode extends Statement
-{
-}
+abstract class TypeNode extends Statement {}

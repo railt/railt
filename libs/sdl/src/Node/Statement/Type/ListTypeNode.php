@@ -8,6 +8,4 @@ namespace Railt\SDL\Node\Statement\Type;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL
  */
-final class ListTypeNode extends GenericTypeNode
-{
-}
+final class ListTypeNode extends GenericTypeNode {}

@@ -15,8 +15,7 @@ final class Location implements LocationInterface
     public function __construct(
         private int $line = 1,
         private int $column = 1,
-    ) {
-    }
+    ) {}
 
     public function getLine(): int
     {

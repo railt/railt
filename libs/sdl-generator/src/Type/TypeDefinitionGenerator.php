@@ -11,6 +11,4 @@ use Railt\TypeSystem\Definition\NamedTypeDefinition;
  *
  * @template-extends DefinitionGenerator<TDefinition>
  */
-abstract class TypeDefinitionGenerator extends DefinitionGenerator
-{
-}
+abstract class TypeDefinitionGenerator extends DefinitionGenerator {}

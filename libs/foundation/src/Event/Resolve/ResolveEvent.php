@@ -15,6 +15,5 @@ abstract class ResolveEvent
     public function __construct(
         public readonly InputInterface $input,
         public readonly mixed $parent = null,
-    ) {
-    }
+    ) {}
 }

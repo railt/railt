@@ -11,6 +11,5 @@ final class NameNode extends Node
      */
     public function __construct(
         public string $value,
-    ) {
-    }
+    ) {}
 }

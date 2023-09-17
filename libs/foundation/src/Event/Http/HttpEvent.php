@@ -16,6 +16,5 @@ abstract class HttpEvent implements StoppableEventInterface
     public function __construct(
         public readonly ConnectionInterface $connection,
         public readonly RequestInterface $request,
-    ) {
-    }
+    ) {}
 }

@@ -9,6 +9,4 @@ namespace Railt\SDL\Node;
  * @psalm-internal Railt\SDL
  */
 #[\Attribute(\Attribute::TARGET_PROPERTY)]
-final class Visitable
-{
-}
+final class Visitable {}

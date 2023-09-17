@@ -14,6 +14,4 @@ use Railt\SDL\Node\Statement\Statement;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command
  */
-abstract class ExtendCommand extends DefineCommand implements ExtendCommandInterface
-{
-}
+abstract class ExtendCommand extends DefineCommand implements ExtendCommandInterface {}

@@ -11,8 +11,7 @@ class EnumValue extends NamedExecution implements ExpressionInterface
 {
     public function __construct(
         private readonly EnumValueDefinition $definition,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

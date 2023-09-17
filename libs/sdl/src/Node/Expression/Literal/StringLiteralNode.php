@@ -37,8 +37,7 @@ final class StringLiteralNode extends LiteralNode
     public function __construct(
         public string $value,
         public ?string $representation = null,
-    ) {
-    }
+    ) {}
 
     public static function parseInlineString(string $value): self
     {

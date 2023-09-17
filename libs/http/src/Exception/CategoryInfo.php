@@ -17,6 +17,5 @@ final class CategoryInfo
     public function __construct(
         public readonly ?string $name = null,
         public readonly bool $isClientSafe = false,
-    ) {
-    }
+    ) {}
 }

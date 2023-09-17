@@ -22,8 +22,7 @@ class SchemaDefinition extends Definition implements
         private ?ObjectType $query = null,
         private ?ObjectType $mutation = null,
         private ?ObjectType $subscription = null,
-    ) {
-    }
+    ) {}
 
     public function setQueryType(ObjectType $query): void
     {

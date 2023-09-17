@@ -14,6 +14,4 @@ use Railt\TypeSystem\Definition\Type\ObjectType;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL\Compiler\Command
  */
-final class BuildObjectTypeDefinitionCommand extends BuildObjectLikeTypeDefinitionCommand
-{
-}
+final class BuildObjectTypeDefinitionCommand extends BuildObjectLikeTypeDefinitionCommand {}

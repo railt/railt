@@ -8,6 +8,4 @@ namespace Railt\SDL\Node\Statement\Extension;
  * @internal This is an internal library class, please do not use it in your code.
  * @psalm-internal Railt\SDL
  */
-final class InterfaceTypeExtensionNode extends ObjectLikeExtensionNode
-{
-}
+final class InterfaceTypeExtensionNode extends ObjectLikeExtensionNode {}

@@ -17,8 +17,7 @@ final class GenerateSchemaCommand implements CommandInterface
 {
     public function __construct(
         private readonly Context $ctx,
-    ) {
-    }
+    ) {}
 
     public function exec(): void
     {

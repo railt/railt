@@ -17,6 +17,5 @@ final class DirectiveLocationInformation
     public function __construct(
         public readonly ?string $ref = null,
         public readonly bool $isExecutable = false,
-    ) {
-    }
+    ) {}
 }

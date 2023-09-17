@@ -15,8 +15,7 @@ final class ApplySpecifiedByCommand implements CommandInterface
 {
     public function __construct(
         private readonly ScalarType $scalar,
-    ) {
-    }
+    ) {}
 
     public function exec(): void
     {

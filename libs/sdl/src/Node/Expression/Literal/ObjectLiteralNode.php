@@ -18,8 +18,7 @@ final class ObjectLiteralNode extends LiteralNode
     public function __construct(
         #[Visitable]
         public array $fields = [],
-    ) {
-    }
+    ) {}
 
     public function __toString(): string
     {

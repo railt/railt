@@ -6,6 +6,4 @@ namespace Railt\Foundation;
 
 use Railt\Contracts\Http\Middleware\RequestHandlerInterface;
 
-interface ConnectionInterface extends RequestHandlerInterface
-{
-}
+interface ConnectionInterface extends RequestHandlerInterface {}

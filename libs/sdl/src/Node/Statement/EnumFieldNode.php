@@ -25,6 +25,5 @@ final class EnumFieldNode extends Statement
         public DescriptionNode $description,
         #[Visitable]
         public array $directives = [],
-    ) {
-    }
+    ) {}
 }

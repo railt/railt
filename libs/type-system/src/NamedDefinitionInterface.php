@@ -10,6 +10,4 @@ use Railt\TypeSystem\Common\HasNameInterface;
 interface NamedDefinitionInterface extends
     HasNameInterface,
     HasDescriptionInterface,
-    DefinitionInterface
-{
-}
+    DefinitionInterface {}
