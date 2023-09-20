@@ -13,9 +13,9 @@
     <a href="https://github.com/railt/railt/actions?workflow=Testing"><img src="https://github.com/railt/railt/workflows/tests/badge.svg" alt="Testing" /></a>
 </p>
 
-## Webonyx Executor
+## Event Dispatcher
 
-This is a subtree split of the `railt/webonyx-executor` component.
+This is a subtree split of the `railt/event-dispatcher` component.
 
 ### Resources
 
