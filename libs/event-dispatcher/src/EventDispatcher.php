@@ -7,7 +7,7 @@ namespace Railt\EventDispatcher;
 use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
-final class Dispatcher implements EventDispatcherInterface, EventListenerInterface
+final class EventDispatcher implements EventDispatcherInterface
 {
     /**
      * @var array<class-string, list<callable(object=):void>>

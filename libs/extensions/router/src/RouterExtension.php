@@ -21,7 +21,7 @@ use Railt\Extension\Router\ParamResolver\DispatcherAwareParamResolver;
 use Railt\Extension\Router\ParamResolver\ParamResolverInterface;
 use Railt\Extension\Router\ParamResolver\SimpleParamResolver;
 use Railt\TypeSystem\Definition\FieldDefinition;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Railt\EventDispatcher\EventDispatcherInterface;
 
 final class RouterExtension implements ExtensionInterface
 {
@@ -37,6 +37,21 @@ final class RouterExtension implements ExtensionInterface
 
     private readonly SimpleParamResolver $simpleResolver;
 
+    /**
+     * @var \Closure(SchemaCompiling):void
+     */
+    private readonly \Closure $schemaCompiling;
+
+    /**
+     * @var \Closure(FieldResolving):void
+     */
+    private readonly \Closure $fieldResolving;
+
+    /**
+     * @var \Closure(ParameterResolving):void
+     */
+    private readonly \Closure $parameterResolving;
+
     public function __construct(
         private readonly ?ContainerInterface $container = null,
         private ?InstantiatorInterface $instantiator = null,
@@ -45,15 +60,26 @@ final class RouterExtension implements ExtensionInterface
         $this->simpleResolver = new SimpleParamResolver();
         /** @psalm-suppress MixedPropertyTypeCoercion */
         $this->routes = new \WeakMap();
+
+        $this->schemaCompiling = $this->onSchemaCompiling(...);
+        $this->fieldResolving = $this->onFieldResolving(...);
+        $this->parameterResolving = $this->onParamResolving(...);
     }
 
     public function load(EventDispatcherInterface $dispatcher): void
     {
         $this->dispatcher = $dispatcher;
 
-        $dispatcher->addListener(SchemaCompiling::class, $this->onSchemaCompiling(...));
-        $dispatcher->addListener(FieldResolving::class, $this->onFieldResolving(...));
-        $dispatcher->addListener(ParameterResolving::class, $this->onParamResolving(...));
+        $dispatcher->addListener(SchemaCompiling::class, $this->schemaCompiling);
+        $dispatcher->addListener(FieldResolving::class, $this->fieldResolving);
+        $dispatcher->addListener(ParameterResolving::class, $this->parameterResolving);
+    }
+
+    public function unload(EventDispatcherInterface $dispatcher): void
+    {
+        $dispatcher->removeListener(SchemaCompiling::class, $this->schemaCompiling);
+        $dispatcher->removeListener(FieldResolving::class, $this->fieldResolving);
+        $dispatcher->removeListener(ParameterResolving::class, $this->parameterResolving);
     }
 
     private function onSchemaCompiling(SchemaCompiling $event): void

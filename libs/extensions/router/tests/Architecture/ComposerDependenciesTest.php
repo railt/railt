@@ -41,7 +41,7 @@ final class ComposerDependenciesTest
                 // @dev-dependencies
                 Selector::namespace('Railt\Contracts\Http'),
                 Selector::namespace('Railt\Foundation'),
-                Selector::namespace('Symfony\Component\EventDispatcher'),
+                Selector::namespace('Railt\EventDispatcher'),
             )
         ;
     }

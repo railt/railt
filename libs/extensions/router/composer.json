@@ -17,7 +17,7 @@
     "require": {
         "php": "^8.1",
         "psr/container": "^1.0|^2.0",
-        "psr/event-dispatcher": "^1.0",
+        "railt/event-dispatcher": "^2.0",
         "railt/http-contracts": "^2.0",
         "railt/type-system": "^2.0"
     },
@@ -28,7 +28,6 @@
     },
     "require-dev": {
         "railt/foundation": "^2.0",
-        "symfony/event-dispatcher": "^5.4|^6.0",
         "phpunit/phpunit": "^10.3",
         "vimeo/psalm": "^5.15"
     },
@@ -36,9 +35,6 @@
         "psr-4": {
             "Railt\\Extension\\Router\\Tests\\": "tests"
         }
-    },
-    "suggest": {
-        "railt/foundation": "(^2.0) For router extension loading"
     },
     "extra": {
         "branch-alias": {

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Railt\Foundation;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Railt\Contracts\Http\Middleware\MiddlewareInterface;
+use Railt\EventDispatcher\EventDispatcher;
 use Railt\Foundation\Connection\OnDestructor;
 use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
@@ -18,8 +20,6 @@ use Railt\Http\Middleware\Pipeline;
 use Railt\SDL\Compiler;
 use Railt\SDL\CompilerInterface;
 use Railt\TypeSystem\DictionaryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class Application implements ApplicationInterface
 {
@@ -32,6 +32,8 @@ final class Application implements ApplicationInterface
 
     private readonly MutablePipelineInterface $pipeline;
 
+    private readonly EventDispatcherInterface $dispatcher;
+
     /**
      * @param iterable<array-key, MiddlewareInterface>|MutablePipelineInterface $middleware
      * @param iterable<array-key, ExtensionInterface>|Repository $extensions
@@ -41,21 +43,17 @@ final class Application implements ApplicationInterface
         private readonly CompilerInterface $compiler = new Compiler(),
         iterable|MutablePipelineInterface $middleware = [],
         iterable|Repository $extensions = [],
-        private readonly EventDispatcherInterface $dispatcher = new EventDispatcher(),
+        ?EventDispatcherInterface $dispatcher = null,
     ) {
-        if (!$middleware instanceof MutablePipelineInterface) {
-            $middleware = new Pipeline($middleware);
-        }
-
-        if (!$extensions instanceof Repository) {
-            $extensions = new Repository($extensions);
-        }
-
+        $this->pipeline = !$middleware instanceof MutablePipelineInterface
+            ? new Pipeline($middleware)
+            : $middleware;
+        $this->extensions = !$extensions instanceof Repository
+            ? new Repository($extensions)
+            : $extensions;
+        $this->dispatcher = new EventDispatcher($dispatcher);
         /** @psalm-suppress PropertyTypeCoercion */
         $this->connections = new \WeakMap();
-
-        $this->extensions = $extensions;
-        $this->pipeline = $middleware;
 
         $this->bootDefaultExtensions();
     }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Railt\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @template-implements \IteratorAggregate<array-key, ExtensionInterface>
  */
-final class Repository implements ExtensionInterface, \IteratorAggregate, \Countable
+final class Repository implements RepositoryInterface, \IteratorAggregate
 {
     /**
      * @var list<ExtensionInterface>
@@ -43,6 +43,17 @@ final class Repository implements ExtensionInterface, \IteratorAggregate, \Count
             $extension->load($dispatcher);
 
             $this->loaded[] = $extension;
+        }
+    }
+
+    public function unload(EventDispatcherInterface $dispatcher): void
+    {
+        while ($this->loaded !== []) {
+            $extension = \array_shift($this->loaded);
+
+            $extension->unload($dispatcher);
+
+            $this->registered[] = $extension;
         }
     }
 

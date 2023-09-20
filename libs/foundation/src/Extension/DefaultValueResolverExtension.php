@@ -10,13 +10,28 @@ use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
 use Railt\TypeSystem\WrappingTypeInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Railt\EventDispatcher\EventDispatcherInterface;
 
 final class DefaultValueResolverExtension implements ExtensionInterface
 {
+    /**
+     * @var \Closure(FieldResolving):void
+     */
+    private readonly \Closure $fieldResolving;
+
+    public function __construct()
+    {
+        $this->fieldResolving = $this->tryFieldResolving(...);
+    }
+
     public function load(EventDispatcherInterface $dispatcher): void
     {
-        $dispatcher->addListener(FieldResolving::class, $this->tryFieldResolving(...));
+        $dispatcher->addListener(FieldResolving::class, $this->fieldResolving);
+    }
+
+    public function unload(EventDispatcherInterface $dispatcher): void
+    {
+        $dispatcher->removeListener(FieldResolving::class, $this->fieldResolving);
     }
 
     private function tryFieldResolving(FieldResolving $event): void

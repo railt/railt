@@ -7,11 +7,11 @@ namespace Railt\EventDispatcher;
 use Psr\EventDispatcher\ListenerProviderInterface;
 
 /**
- * The EventListenerInterface is the central point of Railt's event listener
- * system.
+ * The {@see EventListenerInterface} is the central point of Railt's event
+ * listener system.
  *
- * Listeners are registered on the manager and events are dispatched through the
- * manager.
+ * Listeners are registered on the manager and events are dispatched through
+ * the manager.
  */
 interface EventListenerInterface extends ListenerProviderInterface
 {

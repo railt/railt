@@ -9,7 +9,7 @@ use Psr\EventDispatcher\EventDispatcherInterface as PsrEventDispatcherInterface;
 /**
  * Allows providing hooks on domain-specific lifecycles by dispatching events.
  */
-interface EventDispatcherInterface extends PsrEventDispatcherInterface
+interface EventDispatcherInterface extends PsrEventDispatcherInterface, EventListenerInterface
 {
     /**
      * Dispatches an event to all registered listeners.

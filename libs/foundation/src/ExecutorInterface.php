@@ -6,7 +6,7 @@ namespace Railt\Foundation;
 
 use Railt\Contracts\Http\Middleware\RequestHandlerInterface;
 use Railt\TypeSystem\DictionaryInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Railt\EventDispatcher\EventDispatcherInterface;
 
 interface ExecutorInterface
 {

@@ -1,6 +1,6 @@
 {
     "name": "railt/event-dispatcher",
-    "description": "The Railt Event Dispatcher is a simple chaining memleak-free event system",
+    "description": "The Railt Event Dispatcher is a simple chaining event system",
     "license": "MIT",
     "keywords": ["events", "event", "listener", "dispatcher"],
     "homepage": "https://github.com/railt",

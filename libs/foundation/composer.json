@@ -22,13 +22,12 @@
     "require": {
         "php": "^8.1",
         "psr/container": "^1.0|^2.0",
-        "psr/event-dispatcher": "^1.0",
+        "railt/event-dispatcher": "^2.0",
         "railt/http": "^2.0",
         "railt/http-factory": "^2.0",
         "railt/http-middleware": "^2.0",
         "railt/sdl": "^2.0",
-        "railt/type-system": "^2.0",
-        "symfony/event-dispatcher": "^5.4|^6.0"
+        "railt/type-system": "^2.0"
     },
     "autoload": {
         "psr-4": {

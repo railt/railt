@@ -28,7 +28,7 @@ final class ComposerDependenciesTest
                 Selector::namespace('Railt\Http\Middleware'),
                 Selector::namespace('Railt\SDL'),
                 Selector::namespace('Railt\TypeSystem'),
-                Selector::namespace('Symfony\Component\EventDispatcher'),
+                Selector::namespace('Railt\EventDispatcher'),
             )
         ;
     }
