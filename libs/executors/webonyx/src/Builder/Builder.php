@@ -7,6 +7,7 @@ namespace Railt\Executor\Webonyx\Builder;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\Type;
+use Railt\TypeSystem\Definition\NamedTypeDefinitionInterface;
 use Railt\TypeSystem\Execution\InputObject;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
@@ -59,8 +60,13 @@ abstract class Builder implements BuilderInterface
             $type instanceof ListType => new ListOfType(
                 $this->type($type->getOfType()),
             ),
-            $type instanceof WrappingTypeInterface => $this->type($type->getOfType()),
-            default => $this->builder->getType($type),
+            $type instanceof WrappingTypeInterface => $this->type(
+                $type->getOfType(),
+            ),
+            $type instanceof NamedTypeDefinitionInterface => $this->builder->getType($type),
+            default => throw new \InvalidArgumentException(
+                \sprintf('Could not build non-compatible type %s', $type::class),
+            )
         };
     }
 

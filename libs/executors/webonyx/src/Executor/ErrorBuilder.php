@@ -86,7 +86,7 @@ final class ErrorBuilder
 
     private function createCategoryFromWebonyx(Error $error): CategoryInterface
     {
-        return $error->isClientSafe() || $error->getCategory() === Error::CATEGORY_GRAPHQL
+        return $error->isClientSafe()
             ? $this->errors->createClientErrorCategory()
             : $this->errors->createInternalErrorCategory()
         ;

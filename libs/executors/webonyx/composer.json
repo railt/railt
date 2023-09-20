@@ -22,7 +22,7 @@
         "railt/http-factory": "^2.0",
         "railt/http-middleware-contracts": "^2.0",
         "railt/type-system": "^2.0",
-        "webonyx/graphql-php": "^14.0"
+        "webonyx/graphql-php": "^15.0"
     },
     "autoload": {
         "psr-4": {

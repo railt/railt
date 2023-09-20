@@ -37,7 +37,7 @@ final class FieldBuilder extends Builder
             $input,
         ));
 
-        return WebonyxFieldDefinition::create([
+        return new WebonyxFieldDefinition([
             'name' => $input->getName(),
             'description' => $input->getDescription(),
             'type' => $this->getTypeLoader($input),
