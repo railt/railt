@@ -48,7 +48,7 @@ class GraphQLError extends \Exception implements ErrorInterface
      */
     protected array $extensions = [];
 
-    protected CategoryInterface $category = Category::INTERNAL;
+    protected CategoryInterface $category = Category::QUERY;
 
     /**
      * An original short, human-readable summary of the
@@ -59,9 +59,11 @@ class GraphQLError extends \Exception implements ErrorInterface
     final public function __construct(
         string $message,
         int $code = 0,
-        ?\Throwable $previous = null
+        ?\Throwable $previous = null,
+        CategoryInterface $category = Category::QUERY,
     ) {
         $this->originalMessage = $message;
+        $this->category = $category;
 
         parent::__construct($message, $code, $previous);
 

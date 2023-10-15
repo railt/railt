@@ -22,18 +22,22 @@ final class ErrorBuilder
 
     public function create(\Throwable $e): ErrorInterface
     {
+        if ($exception = $this->unwrap($e)) {
+            return $exception;
+        }
+
         if ($e instanceof Error) {
             return $this->createErrorFromWebonyx($e)
                 ->withCategory($this->createCategoryFromWebonyx($e))
                 ->withLocations($this->createLocationsFromWebonyx($e))
                 ->withPath($this->createPathFromWebonyx($e))
                 ->withExtensions($this->createExtensionsFromWebonyx($e))
-            ;
+                ;
         }
 
         return $this->errors->createError($e->getMessage(), (int)$e->getCode(), $e)
             ->withCategory($this->errors->createInternalErrorCategory())
-        ;
+            ;
     }
 
     /**
@@ -89,7 +93,18 @@ final class ErrorBuilder
         return $error->isClientSafe()
             ? $this->errors->createClientErrorCategory()
             : $this->errors->createInternalErrorCategory()
-        ;
+            ;
+    }
+
+    private function unwrap(Error $error): ?ErrorInterface
+    {
+        $previous = $error->getPrevious();
+
+        if ($previous instanceof ErrorInterface) {
+            return $previous;
+        }
+
+        return null;
     }
 
     /**
@@ -97,24 +112,16 @@ final class ErrorBuilder
      */
     private function createErrorFromWebonyx(Error $error): ErrorInterface
     {
-        $exception = $error;
+        $previous = $error->getPrevious();
 
-        while ($exception?->getPrevious() !== null) {
-            if ($exception instanceof ErrorInterface) {
-                break;
-            }
-
-            $exception = $exception->getPrevious();
+        if ($previous instanceof ErrorInterface) {
+            return $previous;
         }
 
-        if ($exception instanceof ErrorInterface) {
-            return $exception;
+        if ($previous instanceof InvariantViolation) {
+            return $this->errors->createError('Schema Error: ' . $error->getMessage(), 0, $error);
         }
 
-        if ($exception instanceof InvariantViolation) {
-            return $this->errors->createError('Schema Error: ' . $exception->getMessage(), 0, $error);
-        }
-
-        return $this->errors->createError($exception->getMessage(), 0, $error);
+        return $this->errors->createError($error->getMessage(), 0, $error);
     }
 }

@@ -85,7 +85,7 @@ final class WebonyxRequestHandler implements RequestHandlerInterface
             variableValues: $request->getVariables(),
             operationName: $request->getOperationName(),
             fieldResolver: $fieldResolver = null,
-            validationRules: $validationRules = null
+            validationRules: $validationRules = null,
         );
 
         return $this->createResponse($result);
