@@ -120,12 +120,12 @@ final class WebonyxInput implements InputInterface
 
     public function isSelected(string $field): bool
     {
-        return \in_array($field, $this->getSelection(), true);
+        return \in_array($field, $this->getSelectedFields(), true);
     }
 
     public function isSelectedOneOf(string $field, string ...$fields): bool
     {
-        $actual = $this->getSelection();
+        $actual = $this->getSelectedFields();
 
         foreach ([$field, ...$fields] as $expected) {
             if (\in_array($expected, $actual, true)) {
@@ -138,7 +138,7 @@ final class WebonyxInput implements InputInterface
 
     public function isSelectedAllOf(string $field, string ...$fields): bool
     {
-        $actual = $this->getSelection();
+        $actual = $this->getSelectedFields();
 
         foreach ([$field, ...$fields] as $expected) {
             if (!\in_array($expected, $actual, true)) {
