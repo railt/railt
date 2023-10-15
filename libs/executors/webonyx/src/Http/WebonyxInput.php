@@ -118,6 +118,37 @@ final class WebonyxInput implements InputInterface
         return $this->selection[$depth] ??= self::getFieldSelection($this->info, $depth);
     }
 
+    public function isSelected(string $field): bool
+    {
+        return \in_array($field, $this->getSelection(), true);
+    }
+
+    public function isSelectedOneOf(string $field, string ...$fields): bool
+    {
+        $actual = $this->getSelection();
+
+        foreach ([$field, ...$fields] as $expected) {
+            if (\in_array($expected, $actual, true)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isSelectedAllOf(string $field, string ...$fields): bool
+    {
+        $actual = $this->getSelection();
+
+        foreach ([$field, ...$fields] as $expected) {
+            if (!\in_array($expected, $actual, true)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @param int<0, max> $depth
      * @return non-empty-array<non-empty-string, true|non-empty-array>

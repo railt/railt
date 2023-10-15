@@ -23,6 +23,31 @@ interface SelectionProviderInterface
     public function getSelection(int $depth = 0): iterable;
 
     /**
+     * Returns {@see true} in case of graphql query contains expected field.
+     *
+     * @param non-empty-string $field
+     */
+    public function isSelected(string $field): bool;
+
+    /**
+     * Returns {@see true} in case of graphql query contains
+     * ANY of expected fields or {@see false} otherwise.
+     *
+     * @param non-empty-string $field
+     * @param non-empty-string ...$fields
+     */
+    public function isSelectedOneOf(string $field, string ...$fields): bool;
+
+    /**
+     * Returns {@see true} in case of graphql query contains
+     * ALL of expected fields or {@see false} otherwise.
+     *
+     * @param non-empty-string $field
+     * @param non-empty-string ...$fields
+     */
+    public function isSelectedAllOf(string $field, string ...$fields): bool;
+
+    /**
      * @return iterable<non-empty-string>
      */
     public function getSelectedTypes(): iterable;
