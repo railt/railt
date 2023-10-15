@@ -32,12 +32,12 @@ final class ErrorBuilder
                 ->withLocations($this->createLocationsFromWebonyx($e))
                 ->withPath($this->createPathFromWebonyx($e))
                 ->withExtensions($this->createExtensionsFromWebonyx($e))
-                ;
+            ;
         }
 
         return $this->errors->createError($e->getMessage(), (int)$e->getCode(), $e)
             ->withCategory($this->errors->createInternalErrorCategory())
-            ;
+        ;
     }
 
     /**
@@ -96,13 +96,15 @@ final class ErrorBuilder
             ;
     }
 
-    private function unwrap(Error $error): ?ErrorInterface
+    private function unwrap(\Throwable $error): ?ErrorInterface
     {
-        $previous = $error->getPrevious();
+        do {
+            if ($error instanceof ErrorInterface) {
+                return $error;
+            }
 
-        if ($previous instanceof ErrorInterface) {
-            return $previous;
-        }
+            $error = $error->getPrevious();
+        } while ($error !== null);
 
         return null;
     }
