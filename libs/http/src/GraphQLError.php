@@ -72,7 +72,7 @@ class GraphQLError extends \Exception implements ErrorInterface
 
     public static function fromException(\Throwable $e): self
     {
-        return new static($e->getMessage(), (int)$e->getCode(), $e);
+        return new static($e->getMessage(), (int)$e->getCode(), $e, Category::INTERNAL);
     }
 
     /**

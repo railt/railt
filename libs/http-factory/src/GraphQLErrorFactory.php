@@ -13,7 +13,7 @@ final class GraphQLErrorFactory implements ErrorFactoryInterface
 {
     public function createError(string $message, int $code = 0, \Throwable $prev = null): GraphQLError
     {
-        return new GraphQLError($message, $code, $prev);
+        return new GraphQLError($message, $code, $prev, $this->createInternalErrorCategory());
     }
 
     public function createInternalErrorCategory(): Category
