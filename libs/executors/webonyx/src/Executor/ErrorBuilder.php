@@ -93,14 +93,15 @@ final class ErrorBuilder
      */
     private function createErrorFromWebonyx(Error $error): ErrorInterface
     {
-        $previous = $exception = $error->getPrevious();
-        do {
-            if ($exception instanceof ErrorInterface) {
-                return $exception;
+        $previous = $current = $error->getPrevious();
+
+        while ($current !== null) {
+            if ($current instanceof ErrorInterface) {
+                return $current;
             }
 
-            $exception = $exception->getPrevious();
-        } while ($exception !== null);
+            $current = $current->getPrevious();
+        }
 
         if ($previous instanceof InvariantViolation) {
             return $this->errors->createError('Schema Error: ' . $error->getMessage(), 0, $error);
