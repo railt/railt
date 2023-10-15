@@ -19,6 +19,8 @@ use Railt\Executor\Webonyx\Executor\ErrorBuilder;
 use Railt\Foundation\ConnectionInterface;
 use Railt\Foundation\Event\Http\RequestReceived;
 use Railt\Foundation\Event\Http\ResponseProceed;
+use Railt\Http\Exception\Category;
+use Railt\Http\GraphQLError;
 
 final class WebonyxRequestHandler implements RequestHandlerInterface
 {
@@ -33,6 +35,7 @@ final class WebonyxRequestHandler implements RequestHandlerInterface
         private readonly ResponseFactoryInterface $responses,
         private readonly ErrorFactoryInterface $errors,
         private readonly EventDispatcherInterface $dispatcher,
+        private readonly bool $debug = false,
     ) {
         $this->errorsBuilder = new ErrorBuilder($errors);
     }
@@ -100,6 +103,14 @@ final class WebonyxRequestHandler implements RequestHandlerInterface
             }
         } catch (\Throwable $e) {
             $response = $response->withAddedException($e);
+        }
+
+        if ($this->debug) {
+            foreach ($response->getErrors() as $error) {
+                if ($error instanceof GraphQLError) {
+                    $error->setCategory(Category::QUERY);
+                }
+            }
         }
 
         /** @var ResponseInterface */

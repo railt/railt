@@ -112,9 +112,9 @@ final class ErrorBuilder
         }
 
         if ($exception instanceof InvariantViolation) {
-            return $this->errors->createError('Schema Error: ' . $exception->getMessage());
+            return $this->errors->createError('Schema Error: ' . $exception->getMessage(), 0, $error);
         }
 
-        return $this->errors->createError($exception->getMessage());
+        return $this->errors->createError($exception->getMessage(), 0, $error);
     }
 }

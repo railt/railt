@@ -20,6 +20,7 @@ final class WebonyxExecutor implements ExecutorInterface
         private readonly ResponseFactoryInterface $responses = new GraphQLResponseFactory(),
         private readonly ErrorFactoryInterface $errors = new GraphQLErrorFactory(),
         private readonly FactoryInterface $factory = new Factory(),
+        private readonly bool $debug = false,
     ) {
     }
 
@@ -34,6 +35,7 @@ final class WebonyxExecutor implements ExecutorInterface
             responses: $this->responses,
             errors: $this->errors,
             dispatcher: $dispatcher,
+            debug: $this->debug,
         );
     }
 }
