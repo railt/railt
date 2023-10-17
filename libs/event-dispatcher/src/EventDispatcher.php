@@ -21,8 +21,7 @@ final class EventDispatcher implements EventDispatcherInterface
 
     public function __construct(
         private readonly ?PsrEventDispatcherInterface $parent = null,
-    ) {
-    }
+    ) {}
 
     public function dispatch(object $event): object
     {

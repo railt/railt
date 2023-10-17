@@ -12,7 +12,6 @@ use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Schema\SchemaCompiled;
 use Railt\Foundation\Event\Schema\SchemaCompiling;
-use Railt\Foundation\Extension\DefaultValueResolverExtension;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
 use Railt\Http\Middleware\MutablePipelineInterface;
@@ -36,31 +35,44 @@ final class Application implements ApplicationInterface
 
     /**
      * @param iterable<array-key, MiddlewareInterface>|MutablePipelineInterface $middleware
-     * @param iterable<array-key, ExtensionInterface>|Repository $extensions
+     * @param iterable<array-key, ExtensionInterface> $extensions
      */
     public function __construct(
         private readonly ExecutorInterface $executor,
         private readonly CompilerInterface $compiler = new Compiler(),
         iterable|MutablePipelineInterface $middleware = [],
-        iterable|Repository $extensions = [],
+        iterable $extensions = [],
         ?EventDispatcherInterface $dispatcher = null,
     ) {
-        $this->pipeline = !$middleware instanceof MutablePipelineInterface
-            ? new Pipeline($middleware)
-            : $middleware;
-        $this->extensions = !$extensions instanceof Repository
-            ? new Repository($extensions)
-            : $extensions;
-        $this->dispatcher = new EventDispatcher($dispatcher);
         /** @psalm-suppress PropertyTypeCoercion */
         $this->connections = new \WeakMap();
-
-        $this->bootDefaultExtensions();
+        $this->dispatcher = new EventDispatcher($dispatcher);
+        $this->extensions = $this->bootExtensions($extensions);
+        $this->pipeline = $this->bootPipeline($middleware);
     }
 
-    private function bootDefaultExtensions(): void
+    /**
+     * @param iterable<array-key, MiddlewareInterface>|MutablePipelineInterface $middleware
+     */
+    private function bootPipeline(iterable|MutablePipelineInterface $middleware): MutablePipelineInterface
     {
-        $this->extensions->register(new DefaultValueResolverExtension());
+        if ($middleware instanceof MutablePipelineInterface) {
+            return $middleware;
+        }
+
+        return new Pipeline($middleware);
+    }
+
+    /**
+     * @param iterable<array-key, ExtensionInterface> $extensions
+     */
+    private function bootExtensions(iterable $extensions): Repository
+    {
+        if ($extensions instanceof Repository) {
+            return $extensions;
+        }
+
+        return new Repository($extensions);
     }
 
     public function extend(ExtensionInterface $extension): void

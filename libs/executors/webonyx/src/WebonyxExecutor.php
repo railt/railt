@@ -21,8 +21,7 @@ final class WebonyxExecutor implements ExecutorInterface
         private readonly ErrorFactoryInterface $errors = new GraphQLErrorFactory(),
         private readonly FactoryInterface $factory = new Factory(),
         private readonly bool $debug = false,
-    ) {
-    }
+    ) {}
 
     public function load(
         ConnectionInterface $connection,

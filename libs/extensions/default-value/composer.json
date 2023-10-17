@@ -1,0 +1,49 @@
+{
+    "name": "railt/default-value-extension",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["graphql", "default", "extension", "railt"],
+    "homepage": "https://github.com/railt",
+    "authors": [
+        {
+            "name": "Kirill Nesmeyanov",
+            "email": "nesk@xakep.ru"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/railt/railt/issues",
+        "source": "https://github.com/railt/default-value-extension"
+    },
+    "require": {
+        "php": "^8.1",
+        "psr/container": "^1.0|^2.0",
+        "railt/event-dispatcher": "^2.0",
+        "railt/type-system": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Railt\\Extension\\DefaultValue\\": "src"
+        }
+    },
+    "require-dev": {
+        "railt/foundation": "^2.0",
+        "phpunit/phpunit": "^10.3",
+        "vimeo/psalm": "^5.15"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Railt\\Extension\\DefaultValue\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev",
+            "dev-main": "2.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}

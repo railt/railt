@@ -58,7 +58,7 @@ return [
         'T_WHITESPACE',
     ],
     'transitions' => [
-        
+
     ],
     'grammar' => [
         0 => new \Phplrt\Parser\Grammar\Repetition(33, 0, INF),
@@ -290,8 +290,8 @@ return [
         },
         4 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Node\NameNode(
-            $children[0]->value,
-        );
+                $children[0]->value,
+            );
         },
         3 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Node\IdentifierNode($children->getValue());
@@ -328,9 +328,9 @@ return [
         },
         53 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Expr\Literal\ObjectLiteralFieldNode(
-            $children[0],
-            $children[1],
-        );
+                $children[0],
+                $children[1],
+            );
         },
         62 => function (\Phplrt\Parser\Context $ctx, $children) {
             return $this->stringPool[$children]
@@ -345,76 +345,76 @@ return [
         },
         73 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\ArgumentNode(
-            $children[1],
-            $children[0],
-            $children[2],
-            $children[3] instanceof \ArrayObject ? null : $children[3],
-            \end($children)->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2],
+                $children[3] instanceof \ArrayObject ? null : $children[3],
+                \end($children)->getArrayCopy(),
+            );
         },
         75 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new \ArrayObject($children);
         },
         74 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\EnumFieldNode(
-            $children[1],
-            $children[0],
-            $children[2]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2]->getArrayCopy(),
+            );
         },
         79 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new \ArrayObject($children);
         },
         80 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\FieldNode(
-            $children[1],
-            $children[0],
-            $children[3],
-            $children[2]->getArrayCopy(),
-            $children[4]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[3],
+                $children[2]->getArrayCopy(),
+                $children[4]->getArrayCopy(),
+            );
         },
         81 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new \ArrayObject($children);
         },
         95 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\InputFieldNode(
-            $children[1],
-            $children[0],
-            $children[2],
-            $children[3] instanceof \ArrayObject ? null : $children[3],
-            \end($children)->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2],
+                $children[3] instanceof \ArrayObject ? null : $children[3],
+                \end($children)->getArrayCopy(),
+            );
         },
         97 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\SchemaDefinitionNode(
-            $children[0],
-            $children[2]->getArrayCopy(),
-            $children[1]->getArrayCopy(),
-        );
+                $children[0],
+                $children[2]->getArrayCopy(),
+                $children[1]->getArrayCopy(),
+            );
         },
         99 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new \ArrayObject($children);
         },
         102 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\SchemaFieldNode(
-            $children[1],
-            $children[0],
-            $children[2],
-            $children[3]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2],
+                $children[3]->getArrayCopy(),
+            );
         },
         109 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Node\IdentifierNode($children->getValue());
         },
         116 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\DirectiveDefinitionNode(
-            $children[1],
-            $children[0],
-            $children[2]->getArrayCopy(),
-            $children[3]->getArrayCopy(),
-            $children[4]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2]->getArrayCopy(),
+                $children[3]->getArrayCopy(),
+                $children[4]->getArrayCopy(),
+            );
         },
         117 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new \ArrayObject($children);
@@ -430,11 +430,11 @@ return [
         },
         134 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\EnumTypeDefinitionNode(
-            $children[1],
-            $children[0],
-            $children[3]->getArrayCopy(),
-            $children[2]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[3]->getArrayCopy(),
+                $children[2]->getArrayCopy(),
+            );
         },
         136 => function (\Phplrt\Parser\Context $ctx, $children) {
             return $children === [] ? new \ArrayObject() : $children;
@@ -444,11 +444,11 @@ return [
         },
         143 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\InputObjectTypeDefinitionNode(
-            $children[1],
-            $children[0],
-            $children[3]->getArrayCopy(),
-            $children[2]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[3]->getArrayCopy(),
+                $children[2]->getArrayCopy(),
+            );
         },
         145 => function (\Phplrt\Parser\Context $ctx, $children) {
             return $children === [] ? new \ArrayObject() : $children;
@@ -458,12 +458,12 @@ return [
         },
         152 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\InterfaceTypeDefinitionNode(
-            $children[1],
-            $children[0],
-            $children[2]->getArrayCopy(),
-            $children[4]->getArrayCopy(),
-            $children[3]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2]->getArrayCopy(),
+                $children[4]->getArrayCopy(),
+                $children[3]->getArrayCopy(),
+            );
         },
         154 => function (\Phplrt\Parser\Context $ctx, $children) {
             return $children === [] ? new \ArrayObject() : $children;
@@ -473,30 +473,30 @@ return [
         },
         171 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\ObjectTypeDefinitionNode(
-            $children[1],
-            $children[0],
-            $children[2]->getArrayCopy(),
-            $children[4]->getArrayCopy(),
-            $children[3]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2]->getArrayCopy(),
+                $children[4]->getArrayCopy(),
+                $children[3]->getArrayCopy(),
+            );
         },
         173 => function (\Phplrt\Parser\Context $ctx, $children) {
             return $children === [] ? new \ArrayObject() : $children;
         },
         178 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\ScalarTypeDefinitionNode(
-            $children[1],
-            $children[0],
-            $children[2]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[2]->getArrayCopy(),
+            );
         },
         182 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Definition\UnionTypeDefinitionNode(
-            $children[1],
-            $children[0],
-            $children[3]->getArrayCopy(),
-            $children[2]->getArrayCopy(),
-        );
+                $children[1],
+                $children[0],
+                $children[3]->getArrayCopy(),
+                $children[2]->getArrayCopy(),
+            );
         },
         186 => function (\Phplrt\Parser\Context $ctx, $children) {
             return $children === [] ? new \ArrayObject() : $children;
@@ -509,9 +509,9 @@ return [
         },
         194 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Execution\DirectiveNode(
-            $children[0],
-            isset($children[1]) ? $children[1]->getArrayCopy() : [],
-        );
+                $children[0],
+                isset($children[1]) ? $children[1]->getArrayCopy() : [],
+            );
         },
         195 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new \ArrayObject($children);
@@ -521,52 +521,52 @@ return [
         },
         208 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Extension\SchemaExtensionNode(
-            $children[0]->getArrayCopy(),
-            $children[1]->getArrayCopy(),
-        );
+                $children[0]->getArrayCopy(),
+                $children[1]->getArrayCopy(),
+            );
         },
         210 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Extension\EnumTypeExtensionNode(
-            $children[0],
-            $children[2]->getArrayCopy(),
-            $children[1]->getArrayCopy(),
-        );
+                $children[0],
+                $children[2]->getArrayCopy(),
+                $children[1]->getArrayCopy(),
+            );
         },
         212 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Extension\InputObjectTypeExtensionNode(
-            $children[0],
-            $children[2]->getArrayCopy(),
-            $children[1]->getArrayCopy(),
-        );
+                $children[0],
+                $children[2]->getArrayCopy(),
+                $children[1]->getArrayCopy(),
+            );
         },
         214 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Extension\InterfaceTypeExtensionNode(
-            $children[0],
-            $children[1]->getArrayCopy(),
-            $children[3]->getArrayCopy(),
-            $children[2]->getArrayCopy(),
-        );
+                $children[0],
+                $children[1]->getArrayCopy(),
+                $children[3]->getArrayCopy(),
+                $children[2]->getArrayCopy(),
+            );
         },
         216 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Extension\ObjectTypeExtensionNode(
-            $children[0],
-            $children[1]->getArrayCopy(),
-            $children[3]->getArrayCopy(),
-            $children[2]->getArrayCopy(),
-        );
+                $children[0],
+                $children[1]->getArrayCopy(),
+                $children[3]->getArrayCopy(),
+                $children[2]->getArrayCopy(),
+            );
         },
         218 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Extension\ScalarTypeExtensionNode(
-            $children[0],
-            $children[1]->getArrayCopy(),
-        );
+                $children[0],
+                $children[1]->getArrayCopy(),
+            );
         },
         220 => function (\Phplrt\Parser\Context $ctx, $children) {
             return new Stmt\Extension\UnionTypeExtensionNode(
-            $children[0],
-            $children[2]->getArrayCopy(),
-            $children[1]->getArrayCopy(),
-        );
+                $children[0],
+                $children[2]->getArrayCopy(),
+                $children[1]->getArrayCopy(),
+            );
         }
     ]
 ];

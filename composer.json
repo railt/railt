@@ -28,6 +28,7 @@
             "Railt\\Contracts\\Http\\Middleware\\": "libs/contracts/http-middleware/src",
             "Railt\\EventDispatcher\\": "libs/event-dispatcher/src",
             "Railt\\Executor\\Webonyx\\": "libs/executors/webonyx/src",
+            "Railt\\Extension\\DefaultValue\\": "libs/extensions/default-value/src",
             "Railt\\Extension\\Router\\": "libs/extensions/router/src",
             "Railt\\Foundation\\": "libs/foundation/src",
             "Railt\\Http\\": "libs/http/src",
@@ -39,7 +40,7 @@
         }
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.27",
+        "friendsofphp/php-cs-fixer": "^3.35",
         "phpat/phpat": "^0.10",
         "phplrt/phplrt": "^3.2.7",
         "phpunit/phpunit": "^10.3",
@@ -58,6 +59,7 @@
             "Railt\\Contracts\\Http\\Tests\\": "libs/contracts/http/tests",
             "Railt\\EventDispatcher\\Tests\\": "libs/event-dispatcher/tests",
             "Railt\\Executor\\Webonyx\\Tests\\": "libs/executors/webonyx/tests",
+            "Railt\\Extension\\DefaultValue\\Tests\\": "libs/extensions/default-value/tests",
             "Railt\\Extension\\Router\\Tests\\": "libs/extensions/router/tests",
             "Railt\\Foundation\\Tests\\": "libs/foundation/tests",
             "Railt\\Http\\Factory\\Tests\\": "libs/http-factory/tests",
@@ -69,6 +71,7 @@
         }
     },
     "replace": {
+        "railt/default-value-extension": "*",
         "railt/event-dispatcher": "*",
         "railt/foundation": "*",
         "railt/http": "*",

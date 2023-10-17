@@ -14,6 +14,5 @@ final class Context
         public readonly ConnectionInterface $connection,
         public readonly RequestInterface $request,
         public readonly EventDispatcherInterface $dispatcher,
-    ) {
-    }
+    ) {}
 }

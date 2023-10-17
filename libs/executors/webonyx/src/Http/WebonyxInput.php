@@ -37,8 +37,7 @@ final class WebonyxInput implements InputInterface
         private readonly ResolveInfo $info,
         private readonly mixed $parent = null,
         private readonly array $arguments = [],
-    ) {
-    }
+    ) {}
 
     public function hasArgument(string $name): bool
     {

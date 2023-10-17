@@ -11,6 +11,4 @@ use Railt\Contracts\Http\Request\VariablesProviderInterface;
 interface RequestInterface extends
     QueryProviderInterface,
     VariablesProviderInterface,
-    OperationNameProviderInterface
-{
-}
+    OperationNameProviderInterface {}

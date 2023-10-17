@@ -9,6 +9,4 @@ namespace Railt\Extension\Router\Event;
  *
  * @template-extends ActionDispatched<TResult>
  */
-final class ActionFailed extends ActionDispatched
-{
-}
+final class ActionFailed extends ActionDispatched {}

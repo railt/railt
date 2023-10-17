@@ -15,6 +15,5 @@ abstract class ParameterEvent
     public function __construct(
         public readonly InputInterface $input,
         public readonly \ReflectionParameter $parameter,
-    ) {
-    }
+    ) {}
 }

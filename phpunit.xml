@@ -30,6 +30,9 @@
         </testsuite>
 
         <!-- extensions -->
+        <testsuite name="railt/extensions/default-value">
+            <directory>libs/extensions/default-value/tests/Unit</directory>
+        </testsuite>
         <testsuite name="railt/extensions/router">
             <directory>libs/extensions/router/tests/Unit</directory>
         </testsuite>

@@ -53,7 +53,7 @@ interface EventListenerInterface extends ListenerProviderInterface
      * @return iterable<callable(TArgEvent=):void> An iterable
      *         (array, iterator, or generator) of callables.
      */
-    public function getListeners(string $eventName) : iterable;
+    public function getListeners(string $eventName): iterable;
 
     /**
      * @template TArgEvent of object
@@ -64,5 +64,5 @@ interface EventListenerInterface extends ListenerProviderInterface
      * @return iterable<callable(TArgEvent=):void> An iterable
      *         (array, iterator, or generator) of callables.
      */
-    public function getListenersForEvent(object $event) : iterable;
+    public function getListenersForEvent(object $event): iterable;
 }

@@ -17,8 +17,7 @@ final class RouteCompiler
     public function __construct(
         private readonly InstantiatorInterface $instantiator,
         private readonly ?ContainerInterface $container = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @param non-empty-string $action
@@ -122,7 +121,7 @@ final class RouteCompiler
             \method_exists($instance, $method)
                 => $instance->$method(...),
             \method_exists($instance, '__call')
-                => static fn (array $arguments = []): mixed
+                => static fn(array $arguments = []): mixed
                     => $instance->$method(...$arguments),
             default => throw RouteDefinitionException::fromActionNotDefined($action, $method),
         };

@@ -7,7 +7,5 @@ namespace Railt\Extension\Router\Tests\Unit;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
-#[Group('railt/extension-router')]
-abstract class TestCase extends BaseTestCase
-{
-}
+#[Group('railt/router-extension')]
+abstract class TestCase extends BaseTestCase {}

@@ -16,8 +16,7 @@ final class ParamResolverAwareInstantiator implements InstantiatorInterface
     public function __construct(
         private readonly ParamResolverInterface $resolver,
         private readonly InputInterface $input,
-    ) {
-    }
+    ) {}
 
     /**
      * @template TObject of object

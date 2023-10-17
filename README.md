@@ -131,7 +131,7 @@ $application = new Railt\Foundation\Application(
     executor: new Railt\Executor\Webonyx\WebonyxExecutor(),
 );
 
-$application->extend(new Railt\Extension\Router\RouterExtension());
+$application->extend(new Railt\Extension\Router\DispatcherExtension());
 
 //
 // Creating a connection instance that will process

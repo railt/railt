@@ -20,8 +20,7 @@ final class Extension implements ExtensionInterface
     public function __construct(
         private readonly string $name,
         private readonly mixed $value,
-    ) {
-    }
+    ) {}
 
     public function getName(): string
     {

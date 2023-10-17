@@ -16,6 +16,5 @@ abstract class ActionEvent
     public function __construct(
         public readonly InputInterface $input,
         public readonly Route $route,
-    ) {
-    }
+    ) {}
 }

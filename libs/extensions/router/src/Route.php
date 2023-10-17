@@ -14,6 +14,5 @@ final class Route
         public readonly \Closure $handler,
         public readonly array $parameters = [],
         public readonly ?string $on = null,
-    ) {
-    }
+    ) {}
 }

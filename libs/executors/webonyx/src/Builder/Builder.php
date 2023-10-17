@@ -25,8 +25,7 @@ abstract class Builder implements BuilderInterface
 {
     public function __construct(
         protected readonly BuilderFactory $builder,
-    ) {
-    }
+    ) {}
 
     protected function value(mixed $value): mixed
     {

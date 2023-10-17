@@ -27,6 +27,8 @@ services:
 
   - class: Railt\Extension\Router\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]
+  - class: Railt\Extension\DefaultValue\Tests\Architecture\ComposerDependenciesTest
+    tags: [ phpat.test ]
 
   - class: Railt\EventDispatcher\Tests\Architecture\ComposerDependenciesTest
     tags: [ phpat.test ]

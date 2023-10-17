@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Railt\Foundation\Extension;
+namespace Railt\Extension\DefaultValue;
 
+use Railt\EventDispatcher\EventDispatcherInterface;
 use Railt\Foundation\Event\Resolve\FieldResolving;
+use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\TypeSystem\Definition\Type\EnumType;
 use Railt\TypeSystem\Definition\Type\ScalarType;
 use Railt\TypeSystem\ListType;
 use Railt\TypeSystem\NonNullType;
 use Railt\TypeSystem\WrappingTypeInterface;
-use Railt\EventDispatcher\EventDispatcherInterface;
 
-final class DefaultValueResolverExtension implements ExtensionInterface
+final class DefaultValueExtension implements ExtensionInterface
 {
     /**
      * @var \Closure(FieldResolving):void

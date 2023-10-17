@@ -8,6 +8,4 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
 #[Group('railt/sdl-generator')]
-abstract class TestCase extends BaseTestCase
-{
-}
+abstract class TestCase extends BaseTestCase {}
