@@ -27,6 +27,8 @@ jobs:
           - local_path: 'libs/executors/webonyx'
             split_repository: 'webonyx-executor'
           # Extensions
+          - local_path: 'libs/extensions/default-value'
+            split_repository: 'default-value-extension'
           - local_path: 'libs/extensions/router'
             split_repository: 'router-extension'
           # Kernel Libraries
