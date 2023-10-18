@@ -83,9 +83,9 @@ final class Application implements ApplicationInterface
 
     public function connect(mixed $schema, array $variables = []): ConnectionInterface
     {
-        $types = $this->compile($schema, $variables);
+        $context = $this->extensions->load($this->dispatcher);
 
-        $context = $this->extensions->load($types, $this->dispatcher);
+        $types = $this->compile($schema, $variables);
 
         return $this->establish($types, $context);
     }

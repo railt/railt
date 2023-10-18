@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Railt\Foundation\Extension;
 
+use Railt\EventDispatcher\EventDispatcher;
 use Railt\EventDispatcher\EventDispatcherInterface;
-use Railt\TypeSystem\DictionaryInterface;
 
 /**
  * @template-implements \IteratorAggregate<array-key, ExtensionInterface>
@@ -32,12 +32,12 @@ final class Repository implements RepositoryInterface, \IteratorAggregate
         $this->registered[] = $extension;
     }
 
-    public function load(DictionaryInterface $schema, EventDispatcherInterface $dispatcher): Context
+    public function load(EventDispatcherInterface $dispatcher): Context
     {
         $context = new \WeakMap();
 
         foreach ($this->registered as $extension) {
-            $context[$extension] = $extension->load($schema, $dispatcher);
+            $context[$extension] = $extension->load($dispatcher);
         }
 
         return new Context($context);
@@ -47,6 +47,7 @@ final class Repository implements RepositoryInterface, \IteratorAggregate
     {
         assert($context instanceof Context);
 
+        /** @var ExtensionInterface $extension */
         foreach ($context as $extension => $ctx) {
             $extension->unload($ctx);
         }

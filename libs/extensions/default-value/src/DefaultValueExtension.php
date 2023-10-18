@@ -6,14 +6,13 @@ namespace Railt\Extension\DefaultValue;
 
 use Railt\EventDispatcher\EventDispatcherInterface;
 use Railt\Foundation\Extension\ExtensionInterface;
-use Railt\TypeSystem\DictionaryInterface;
 
 /**
  * @template-implements ExtensionInterface<DefaultValueContext>
  */
 final class DefaultValueExtension implements ExtensionInterface
 {
-    public function load(DictionaryInterface $schema, EventDispatcherInterface $dispatcher): object
+    public function load(EventDispatcherInterface $dispatcher): object
     {
         return new DefaultValueContext($dispatcher);
     }
