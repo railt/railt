@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace Railt\Foundation\Extension;
 
 use Railt\EventDispatcher\EventDispatcherInterface;
+use Railt\TypeSystem\DictionaryInterface;
 
 /**
  * @template-implements \IteratorAggregate<array-key, ExtensionInterface>
+ * @template-implements RepositoryInterface<Context>
  */
 final class Repository implements RepositoryInterface, \IteratorAggregate
 {
-    /**
-     * @var list<ExtensionInterface>
-     */
-    private array $loaded = [];
-
     /**
      * @var list<ExtensionInterface>
      */
@@ -35,36 +32,33 @@ final class Repository implements RepositoryInterface, \IteratorAggregate
         $this->registered[] = $extension;
     }
 
-    public function load(EventDispatcherInterface $dispatcher): void
+    public function load(DictionaryInterface $schema, EventDispatcherInterface $dispatcher): Context
     {
-        while ($this->registered !== []) {
-            $extension = \array_shift($this->registered);
+        $context = new \WeakMap();
 
-            $extension->load($dispatcher);
-
-            $this->loaded[] = $extension;
+        foreach ($this->registered as $extension) {
+            $context[$extension] = $extension->load($schema, $dispatcher);
         }
+
+        return new Context($context);
     }
 
-    public function unload(EventDispatcherInterface $dispatcher): void
+    public function unload(object $context): void
     {
-        while ($this->loaded !== []) {
-            $extension = \array_shift($this->loaded);
+        assert($context instanceof Context);
 
-            $extension->unload($dispatcher);
-
-            $this->registered[] = $extension;
+        foreach ($context as $extension => $ctx) {
+            $extension->unload($ctx);
         }
     }
 
     public function count(): int
     {
-        return \count($this->loaded) + \count($this->registered);
+        return \count($this->registered);
     }
 
     public function getIterator(): \Traversable
     {
-        yield from $this->loaded;
-        yield from $this->registered;
+        return new \ArrayIterator($this->registered);
     }
 }

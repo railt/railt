@@ -12,6 +12,7 @@ use Railt\Foundation\Event\Connection\ConnectionClosed;
 use Railt\Foundation\Event\Connection\ConnectionEstablished;
 use Railt\Foundation\Event\Schema\SchemaCompiled;
 use Railt\Foundation\Event\Schema\SchemaCompiling;
+use Railt\Foundation\Extension\Context;
 use Railt\Foundation\Extension\ExtensionInterface;
 use Railt\Foundation\Extension\Repository;
 use Railt\Http\Middleware\MutablePipelineInterface;
@@ -82,11 +83,11 @@ final class Application implements ApplicationInterface
 
     public function connect(mixed $schema, array $variables = []): ConnectionInterface
     {
-        $this->extensions->load($this->dispatcher);
-
         $types = $this->compile($schema, $variables);
 
-        return $this->establish($types);
+        $context = $this->extensions->load($types, $this->dispatcher);
+
+        return $this->establish($types, $context);
     }
 
     /**
@@ -109,9 +110,11 @@ final class Application implements ApplicationInterface
         return $compiled->types;
     }
 
-    private function establish(DictionaryInterface $types): ConnectionInterface
+    private function establish(DictionaryInterface $types, Context $context): ConnectionInterface
     {
         $established = $this->dispatcher->dispatch(new ConnectionEstablished(new Connection(
+            $context,
+            $this->extensions,
             $this->executor,
             $types,
             $this->dispatcher,

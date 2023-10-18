@@ -14,7 +14,7 @@ final class ComposerDependenciesTest
     {
         return PHPat::rule()
             ->classes(Selector::namespace('Railt\Extension\Router'))
-                ->excluding(Selector::classname('Railt\Extension\Router\RouterExtension'))
+                ->excluding(Selector::classname('Railt\Extension\Router\RouterContext'))
             ->canOnlyDependOn()
             ->classes(
                 Selector::namespace('Railt\Extension\Router'),
@@ -30,7 +30,7 @@ final class ComposerDependenciesTest
     public function testDevDependencies(): Rule
     {
         return PHPat::rule()
-            ->classes(Selector::classname('Railt\Extension\Router\RouterExtension'))
+            ->classes(Selector::classname('Railt\Extension\Router\RouterContext'))
             ->canOnlyDependOn()
             ->classes(
                 Selector::namespace('Railt\Extension\Router'),
